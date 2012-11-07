@@ -61,6 +61,12 @@ namespace Bluz;
  */
 trait Package
 {
+
+    /**
+     * @var array
+     */
+    protected $options;
+
     /**
      * Constructor
      *
@@ -79,11 +85,13 @@ trait Package
      * init
      *
      * @param array $options
-     * @return void
+     * @return self
      */
     public function init($options = null)
     {
-        // do nothing by default
+        // store options by default
+        $this->options = $options;
+        return $this;
     }
 
     /**
@@ -97,6 +105,29 @@ trait Package
             if (method_exists($this, $method)) {
                 $this->$method($value);
             }
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    /**
+     * getOption
+     *
+     * @param string $key
+     * @return mixed
+     */
+    public function getOption($key)
+    {
+        if (isset($this->options[$key])) {
+            return $this->options[$key];
+        } else {
+            return false;
         }
     }
 

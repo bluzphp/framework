@@ -50,7 +50,6 @@ require_once 'Application.php';
 // packages and support
 require_once 'Acl/Acl.php';
 require_once 'Auth/Auth.php';
-require_once 'Auth/AbstractAdapter.php';
 require_once 'Cache/Cache.php';
 require_once 'Config/Config.php';
 require_once 'Db/Db.php';

@@ -42,51 +42,6 @@ class Auth
     use \Bluz\Package;
 
     /**
-     * @var AbstractAdapter
-     */
-    protected $adapter;
-
-    /**
-     * setAdapter
-     *
-     * @param array $options
-     * @throws AuthException
-     * @return Auth
-     */
-    public function setAdapter($options)
-    {
-        if (!isset($options['name'])) {
-            throw new AuthException('Auth: adapter name is not present in configuration');
-        }
-
-        if (!isset($options['options']) or !is_array($options['options'])) {
-            throw new AuthException('Auth: adapter settings is not present in configuration');
-        }
-
-        $className = '\\Bluz\\Auth\\Adapter\\'.ucfirst(strtolower($options['name']));
-        $this->adapter = new $className($options['options']);
-        $this->adapter->setAuth($this);
-        return $this;
-    }
-
-    /**
-     * authenticate
-     *
-     * @param string $login
-     * @param string $password
-     * @param \Bluz\Auth\AbstractEntity $entity
-     * @return bool
-     */
-    public function authenticate($login, $password, \Bluz\Auth\AbstractEntity $entity = null)
-    {
-        $result = $this->adapter->authenticate($login, $password, $entity);
-        if ($result) {
-            $this->setIdentity($entity);
-        }
-        return $result;
-    }
-
-    /**
      * setIdentity
      *
      * @param \Bluz\Auth\AbstractEntity $identity
@@ -106,5 +61,15 @@ class Auth
     public function getIdentity()
     {
         return $this->getApplication()->getSession()->identity;
+    }
+
+    /**
+     * clearIdentity
+     *
+     * @return \Bluz\Auth\AbstractEntity|null
+     */
+    public function clearIdentity()
+    {
+        return $this->setIdentity(null);
     }
 }

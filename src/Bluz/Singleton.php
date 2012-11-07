@@ -72,7 +72,7 @@ trait Singleton
      * getInstance
      *
      * @throws Exception
-     * @return self
+     * @return static
      */
     final static public function getInstance()
     {

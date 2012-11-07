@@ -1,11 +1,10 @@
 {
-    "name": "bluzphp/bluz",
+    "name": "bluzphp/Bluz",
     "description": "Lightweight PHP framework",
     "type": "library",
     "require": {
         "php": ">=5.4"
     },
-    "target-dir": "Bluz",
     "authors": [
         {
             "name": "Anton Shevchuk",

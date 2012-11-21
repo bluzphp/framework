@@ -36,6 +36,7 @@ return
  * return string|View
  */
 function ($title = null, $position = View::POS_REPLACE, $separator = ' :: ') {
+    /** @var View $this */
     if ($title === null) {
         return $this->system('title');
     } else {

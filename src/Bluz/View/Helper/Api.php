@@ -47,11 +47,8 @@ return
  * @param array $params
  * @return View
  */
-function ($module, $method, $params = array())
-{
-    /**
-     * @var View $this
-     */
+function ($module, $method, $params = array()) {
+    /** @var View $this */
     $application = $this->getApplication();
     try {
         $apiClosure = $application->api($module, $method);

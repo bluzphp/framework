@@ -40,7 +40,7 @@ class Messages
 
     const TYPE_ERROR   = 'error';
     const TYPE_SUCCESS = 'success';
-    const TYPE_INFO    = 'info';
+    const TYPE_NOTICE  = 'notice';
 
     /**
      * @var array
@@ -48,7 +48,7 @@ class Messages
     protected $types = array(
         self::TYPE_ERROR,
         self::TYPE_SUCCESS,
-        self::TYPE_INFO
+        self::TYPE_NOTICE
     );
 
     /**
@@ -90,7 +90,7 @@ class Messages
     {
         $this->init();
 
-        $this->getApplication()->getSession()->MessagesStore[self::TYPE_INFO][] = $text;
+        $this->getApplication()->getSession()->MessagesStore[self::TYPE_NOTICE][] = $text;
         return $this;
     }
 
@@ -174,7 +174,7 @@ class Messages
         $this->getApplication()->getSession()->MessagesStore = new \ArrayObject(array(
             self::TYPE_ERROR   => array(),
             self::TYPE_SUCCESS => array(),
-            self::TYPE_INFO    => array()
+            self::TYPE_NOTICE  => array()
         ));
     }
 }

@@ -36,8 +36,6 @@ use Bluz\Exception;
  */
 class Connector implements LdapIterator
 {
-    use \Bluz\Package;
-
     /**
      * Connection resource
      *

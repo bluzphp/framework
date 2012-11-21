@@ -36,11 +36,8 @@ return
  * @param string $module
  * @return string|boolean
  */
-function ($module = null)
-{
-    /**
-     * @var View $this
-     */
+function ($module = null) {
+    /** @var View $this */
     $request = $this->getApplication()->getRequest();
     if (null == $module) {
         return $request->getModule();

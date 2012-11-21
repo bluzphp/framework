@@ -32,6 +32,7 @@ use Bluz\Cache\Cache;
 use Bluz\Config\Config;
 use Bluz\Db\Db;
 use Bluz\EventManager\EventManager;
+use Bluz\Ldap\Ldap;
 use Bluz\Messages\Messages;
 use Bluz\Rcl\Rcl;
 use Bluz\Registry\Registry;
@@ -51,6 +52,7 @@ use Bluz\View\View;
  * @method void reload()
  * @method void redirect(\string $url)
  * @method void redirectTo(\string $module, \string $controller, array $params=array())
+ * @method \Bluz\Auth\AbstractEntity user()
  *
  * @author   Anton Shevchuk
  * @created  06.07.11 16:25
@@ -99,6 +101,11 @@ class Application
      * @var Layout
      */
     protected $layout;
+
+    /**
+     * @var Ldap
+     */
+    protected $ldap;
 
     /**
      * @var Messages
@@ -339,6 +346,19 @@ class Application
             $this->layout = new Layout($conf);
         }
         return $this->layout;
+    }
+
+    /**
+     * getLdap
+     *
+     * @return Ldap
+     */
+    public function getLdap()
+    {
+        if (!$this->ldap && $conf = $this->getConfigData('ldap')) {
+            $this->ldap = new Ldap($conf);
+        }
+        return $this->ldap;
     }
 
     /**
@@ -650,8 +670,11 @@ class Application
 
         $result = $this->dispatchResult;
 
-        if ('cli' == PHP_SAPI) {
-            // console render
+        // browser render
+        if ($this->jsonFlag) {
+            //override response code so javascript can process it
+            header('Content-type: application/json', true, 200);
+
             // get data from layout
             $data = $this->getLayout()->toArray();
 
@@ -660,52 +683,68 @@ class Application
                 $data = array_merge($data, $result->toArray());
             }
 
+            // enable Bluz AJAX handler
+            if (!isset($data['_handler'])) {
+                $data['_handler'] = true;
+            }
+
             // inject messages if exists
             if (!isset($data['_messages']) && $this->hasMessages()) {
                 $data['_messages'] = $this->getMessages()->popAll();
             }
-            foreach ($data as $key => $value) {
-                if (strpos($key, '_') === 0) {
-                    echo "\033[1;31m$key\033[m:\n";
-                } else {
-                    echo "\033[1;33m$key\033[m:\n";
-                }
-                var_dump($value);
-                echo "\n";
-            }
+
+            // output
+            echo json_encode($data);
+        } elseif (!$this->layoutFlag) {
+            echo ($result instanceof \Closure) ? $result() : $result;
         } else {
-            // browser render
-            if ($this->jsonFlag) {
-                //override response code so javascript can process it
-                header('Content-type: application/json', true, 200);
-
-                // get data from layout
-                $data = $this->getLayout()->toArray();
-
-                // merge it with view data
-                if ($result instanceof View) {
-                    $data = array_merge($data, $result->toArray());
-                }
-
-                // enable Bluz AJAX handler
-                if (!isset($data['_handler'])) {
-                    $data['_handler'] = true;
-                }
-
-                // inject messages if exists
-                if (!isset($data['_messages']) && $this->hasMessages()) {
-                    $data['_messages'] = $this->getMessages()->popAll();
-                }
-
-                // output
-                echo json_encode($data);
-            } elseif (!$this->layoutFlag) {
-                echo ($result instanceof \Closure) ? $result() : $result;
-            } else {
-                $this->getLayout()->setContent($result);
-                echo $this->getLayout();
-            }
+            $this->getLayout()->setContent($result);
+            echo $this->getLayout();
         }
+        return $this;
+    }
+
+    /**
+     * render for CLI
+     *
+     * @return Application
+     */
+    public function output()
+    {
+        $this->log(__METHOD__);
+
+        $result = $this->dispatchResult;
+
+        // get data from layout
+        $data = $this->getLayout()->toArray();
+
+        // merge it with view data
+        if ($result instanceof View) {
+            $data = array_merge($data, $result->toArray());
+        }
+
+        // inject messages if exists
+        if ($this->hasMessages()) {
+            while ($msg = $this->getMessages()->pop(Messages::TYPE_ERROR)) {
+                echo "\033[41m\033[1;37mError    \033[m\033m: ";
+                echo $msg->text ."\n";
+            }
+            while ($msg = $this->getMessages()->pop(Messages::TYPE_NOTICE)) {
+                echo "\033[44m\033[1;37mInfo     \033[m\033m: ";
+                echo $msg->text ."\n";
+            }
+            while ($msg = $this->getMessages()->pop(Messages::TYPE_SUCCESS)) {
+                echo "\033[42m\033[1;37mSuccess  \033[m\033m: ";
+                echo $msg->text ."\n";
+            }
+            echo "\n";
+        }
+        foreach ($data as $key => $value) {
+            echo "\033[1;33m$key\033[m:\n";
+            var_dump($value);
+            echo "\n";
+        }
+
         return $this;
     }
 
@@ -787,18 +826,16 @@ class Application
      *
      * @param string $module
      * @param string $method
-     * @param array  $params
      * @throws Exception
      * @return \Closure
      */
-    public function api($module, $method, $params = array())
+    public function api($module, $method)
     {
         $this->log(__METHOD__.": ".$module.'/'.$method);
 
         $this->getEventManager()->trigger('api', $this, array(
             'module' => $module,
-            'method' => $method,
-            'params' => $params
+            'method' => $method
         ));
 
         /**

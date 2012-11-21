@@ -35,6 +35,7 @@ use Bluz\View\View;
  * @return string|View
  */
 return function ($link = null, $rel = 'stylesheet') {
+    /** @var View $this */
     if (null === $link) {
         return $this->headLinkFiles;
     } else {

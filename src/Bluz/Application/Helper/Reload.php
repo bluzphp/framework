@@ -37,6 +37,7 @@ return
  * @return void
  */
 function () {
+    /** @var Application $this */
     // for AJAX controllers
     if ($this->jsonFlag) {
         $this->getLayout()->_reload = true;

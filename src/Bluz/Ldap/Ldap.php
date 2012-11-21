@@ -69,38 +69,71 @@ namespace Bluz\Ldap;
  */
 class Ldap
 {
+    use \Bluz\Package;
+
     /**
      * @var array
      */
     private $connectors = array();
 
     /**
+     * init connectors by first call Application->getLdap()
+     *
+     * @param $options
+     * @throws LdapException
+     * @return \Bluz\Ldap\Ldap
+     */
+    protected function init($options = null)
+    {
+        if (!$options or !sizeof($options)) {
+            throw new LdapException();
+        }
+
+        if (array_key_exists('host', $options)) {
+            $options = array($options);
+        }
+
+        $this->options = $options;
+
+        foreach ($options as $ldap) {
+            $this->initConnector($ldap['host'], $ldap['domain'], $ldap['baseDn']);
+        }
+
+        return $this;
+    }
+
+    /**
      * init connector with options
      * @param $host
      * @param $domain
      * @param $baseDn
+     * @return \Bluz\Ldap\Ldap
      */
-    public function initConnector($host, $domain, $baseDn)
+    protected function initConnector($host, $domain, $baseDn)
     {
         $connector = new \Bluz\Ldap\Connector();
-        $connector->setHost($host)->setDomain($domain)->setBaseDn($baseDn)->connect();
+        $connector->setHost($host)
+            ->setDomain($domain)
+            ->setBaseDn($baseDn)
+            ->connect();
         $this->connectors[] = $connector;
+        return $this;
     }
 
     /**
      * check user can authenticate to Ldap
      *
-     * @param string $loginName
-     * @param string $pass
+     * @param string $username
+     * @param string $password
      * @return bool
      * @access public
      */
-    public function checkAuth($loginName, $pass)
+    public function checkAuth($username, $password)
     {
         // bind
         foreach($this->connectors as $connector) {
             /* @var \Bluz\Ldap\Connector $connector */
-            if ($connector->bind($loginName, $pass)) {
+            if ($connector->bind($username, $password)) {
                 return true;
             }
         }

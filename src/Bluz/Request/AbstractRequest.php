@@ -58,6 +58,11 @@ class AbstractRequest
     const METHOD_CONNECT = 'CONNECT';
 
     /**
+     * Command line interface only
+     */
+    const METHOD_CLI = 'CLI';
+
+    /**
      * REQUEST_URI
      *
      * @var string;
@@ -345,7 +350,7 @@ class AbstractRequest
      * Accept header, 'Accept-Encoding' to get the Accept-Encoding header.
      *
      * @param string $header HTTP header name
-     * @return string|false HTTP header value, or false if not found
+     * @return string|boolean HTTP header value, or false if not found
      */
     public function getHeader($header)
     {

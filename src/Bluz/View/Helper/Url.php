@@ -40,9 +40,7 @@ return
  * @return string|null
  */
 function ($module, $controller, array $params = [], $checkAccess = false) {
-    /**
-     * @var View $this
-     */
+    /** @var View $this */
     $app = $this->getApplication();
 
     try {

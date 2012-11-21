@@ -36,11 +36,8 @@ return
  * @param string $controller
  * @return string|boolean
  */
-function ($controller = null)
-{
-    /**
-     * @var View $this
-     */
+function ($controller = null) {
+    /** @var View $this */
     $request = $this->getApplication()->getRequest();
     if (null == $controller) {
         return $request->getController();

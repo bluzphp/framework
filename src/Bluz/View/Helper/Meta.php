@@ -34,7 +34,7 @@ use Bluz\View\View;
  * @return string|View
  */
 return function ($name = null, $content = null) {
-
+    /** @var View $this */
     if (!$meta = $this->system('meta')) {
         $meta = array();
     }

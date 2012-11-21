@@ -35,6 +35,7 @@ return
  * @return string|View
  */
 function ($script = null) {
+    /** @var View $this */
     if (null === $script) {
         $return = $this->headScriptFiles;
         if ($this->headScriptContent) {

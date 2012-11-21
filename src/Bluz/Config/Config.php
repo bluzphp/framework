@@ -66,7 +66,7 @@ class Config
            $customConfig = PATH_APPLICATION .'/configs/app.'.$environment.'.php';
            if (is_file($customConfig)) {
                $customConfig = require $customConfig;
-               $this->config = $this->mergeArrays($this->config, $customConfig);
+               $this->config = array_replace_recursive($this->config, $customConfig);
            }
        }
     }
@@ -98,22 +98,5 @@ class Config
         } else {
             return $this->config;
         }
-    }
-
-    /**
-     * @param $array1
-     * @param $array2
-     * @return array
-     */
-    protected function mergeArrays($array1, $array2)
-    {
-        foreach ($array2 as $key => $value) {
-            if (array_key_exists($key, $array1) && is_array($value)) {
-                $array1[$key] = $this->mergeArrays($array1[$key], $array2[$key]);
-            } else {
-                $array1[$key] = $value;
-            }
-        }
-        return $array1;
     }
 }

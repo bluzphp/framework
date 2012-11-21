@@ -37,6 +37,7 @@ return
  * @return string
  */
 function ($file) {
+    /** @var View $this */
     // setup baseUrl
     if (!$this->baseUrl) {
         $this->baseUrl = $this->getApplication()

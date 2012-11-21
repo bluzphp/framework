@@ -34,6 +34,7 @@ return
  * @return array|null
  */
 function (array $data = []) {
+    /** @var View $this */
     if (sizeof($data)) {
         $this->system['breadcrumbs'] = $data;
     } else {

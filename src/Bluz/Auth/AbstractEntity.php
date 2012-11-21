@@ -26,6 +26,8 @@
  */
 namespace Bluz\Auth;
 
+use Bluz\Application;
+
 /**
  *
  */
@@ -41,9 +43,10 @@ abstract class AbstractEntity extends \Bluz\Db\Row
     /**
      * Can entity login
      *
+     * @throws AuthException
      * @return boolean
      */
-    abstract function canLogin();
+    abstract function tryLogin();
 
     /**
      * Has user a resource
@@ -89,10 +92,12 @@ abstract class AbstractEntity extends \Bluz\Db\Row
 
     /**
      * Login
+     * @throw AuthException
      */
     public function login()
     {
-        \Bluz\Application::getInstance()->getAuth()->setIdentity($this);
+        $this->tryLogin();
+        Application::getInstance()->getAuth()->setIdentity($this);
     }
 
     /**
@@ -100,7 +105,7 @@ abstract class AbstractEntity extends \Bluz\Db\Row
      */
     public function logout()
     {
-        $auth = \Bluz\Application::getInstance()->getAuth();
+        $auth = Application::getInstance()->getAuth();
 
         if ($auth->getIdentity() === $this) {
             $auth->clearIdentity();

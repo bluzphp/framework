@@ -35,7 +35,7 @@ namespace Bluz\Session;
  * @author   Anton Shevchuk
  * @created  11.07.11 19:19
  *
- * @property mixed _messages
+ * @property mixed MessagesStore
  * @property mixed identity
  */
 class Session

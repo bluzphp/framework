@@ -26,48 +26,15 @@
  */
 namespace Bluz\View\Helper;
 
-use Bluz\Application;
 use Bluz\View\View;
 
 return
-
 /**
- * dispatch
- *
- * <code>
- * $this->dispatch($module, $controller, array $params);
- * </code>
- *
- * @param string $module
- * @param string $controller
- * @param array $params
- * @return View|null
- */
-function ($module, $controller, $params = array()) {
+* get current user
+*
+* @return \Bluz\Auth\AbstractEntity|null
+*/
+function () {
     /** @var View $this */
-    $application = $this->getApplication();
-    try {
-        $view = $application->dispatch($module, $controller, $params);
-    } catch (\Bluz\Acl\AclException $e) {
-        // nothing for Acl exception
-        return null;
-    } catch (\Exception $e) {
-        if (DEBUG) {
-            // exception message for developers
-            return
-                '<div class="alert alert-error">'.
-                '<strong>Dispatch of "'.$module.'/'.$controller.'"</strong>: '.
-                $e->getMessage().
-                '</div>';
-        } else {
-            // nothing for production
-            return null;
-        }
-    }
-
-    // run closure
-    if ($view instanceof \Closure) {
-        return $view();
-    }
-    return $view;
+    return $this->getApplication()->getAuth()->getIdentity();
 };

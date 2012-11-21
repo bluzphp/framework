@@ -47,9 +47,7 @@ return
  */
 function ($module, $widget, $params = array())
 {
-    /**
-     * @var View $this
-     */
+    /** @var View $this */
     $application = $this->getApplication();
     try {
         $widgetClosure = $application->widget($module, $widget);

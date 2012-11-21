@@ -47,36 +47,29 @@ class CliRequest extends AbstractRequest
     public function __construct()
     {
         parent::__construct();
-        $this->method = 'CLI';
+        $this->method = self::METHOD_CLI;
 
         $args = $_SERVER["argv"];
-        unset($args['0']);
 
-        $searchActions =  true;
-        $actions = array();
+        // unset script name
+        unset($args[0]);
 
-        foreach ($args as $arg) {
-            if (strpos($arg, '-') === 0) {
-                $searchActions = false;
-                $this->params[trim($arg, '-')] = null;
-            } elseif ($searchActions) {
-                $actions[] = $arg;
-            } else {
-                if (count($this->params)) {
-                    end($this->params);
-
-                    $optionName = key($this->params);
-                    if (!empty($this->params[ $optionName ])) {
-                        $this->params[ $optionName ] = (array) $this->params[ $optionName ];
-                        $this->params[ $optionName ][] = $arg;
-                    } else {
-                        $this->params[ $optionName ] = $arg;
-                    }
-                }
-            }
+        if (!in_array('--uri', $args)) {
+            throw new \Bluz\Exception('Attribute "--uri" is required');
         }
 
-        $this->setRequestUri(join('/', $actions));
+        $uriOrder = array_search('--uri', $args) + 1;
+
+        if (isset($args[$uriOrder])) {
+            $uri = $args[$uriOrder];
+            $this->setRequestUri($uri);
+            if ($query = parse_url($uri, PHP_URL_QUERY)) {
+                parse_str($query, $params);
+                $this->setParams($params);
+            }
+        } else {
+            throw new \Bluz\Exception('Attribute "--uri" is required');
+        }
     }
 
     /**
@@ -92,6 +85,15 @@ class CliRequest extends AbstractRequest
         return $this->requestUri;
     }
 
+    /**
+     * Get the request URI.
+     *
+     * @return string
+     */
+    public function getCleanUri()
+    {
+        return ltrim($this->getRequestUri(), '/');
+    }
 
     /**
      * Get the base URL.

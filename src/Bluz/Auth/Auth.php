@@ -47,7 +47,7 @@ class Auth
      * @param \Bluz\Auth\AbstractEntity $identity
      * @return Auth
      */
-    public function setIdentity($identity)
+    public function setIdentity(AbstractEntity $identity)
     {
         $this->getApplication()->getSession()->identity = $identity;
         return $this;
@@ -66,10 +66,11 @@ class Auth
     /**
      * clearIdentity
      *
-     * @return \Bluz\Auth\AbstractEntity|null
+     * @return Auth
      */
     public function clearIdentity()
     {
-        return $this->setIdentity(null);
+        $this->getApplication()->getSession()->identity = null;
+        return $this;
     }
 }

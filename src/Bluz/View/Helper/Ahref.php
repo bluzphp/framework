@@ -39,6 +39,7 @@ return
  * @return \Closure
  */
 function ($text, $href, array $attributes = []) {
+    /** @var View $this */
     // if href is settings for url helper
     if (is_array($href)) {
         $href = call_user_func_array(array($this, 'url'), $href);

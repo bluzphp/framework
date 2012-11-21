@@ -42,6 +42,7 @@ return
  * @return string
  */
 function ($__template, $__params = array()) {
+    /** @var View $this */
     if (!file_exists($this->path .'/'. $__template)) {
         throw new ViewException("Template '{$__template}' not found");
     }

@@ -31,13 +31,14 @@ use Bluz\Exception;
 
 return
 /**
-* redirect to url
-*
-* @param string $url
-* @throws Exception
-* @return void
-*/
+ * redirect to url
+ *
+ * @param string $url
+ * @throws Exception
+ * @return void
+ */
 function ($url) {
+    /** @var Application $this */
     // for AJAX controllers
     if ($this->jsonFlag) {
         $this->getLayout()->_redirect = $url;

@@ -1,5 +1,5 @@
 {
-    "name": "bluzphp/Bluz",
+    "name": "bluzphp/framework",
     "description": "Lightweight PHP framework",
     "type": "library",
     "require": {

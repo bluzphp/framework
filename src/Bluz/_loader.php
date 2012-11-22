@@ -43,8 +43,7 @@ require_once 'Helper.php';
 require_once 'Singleton.php';
 require_once 'Package.php';
 
-// loader and application
-require_once 'Loader.php';
+// application
 require_once 'Application.php';
 
 // packages and support

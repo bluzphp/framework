@@ -93,11 +93,6 @@ class Application
     protected $eventManager;
 
     /**
-     * @var Loader
-     */
-    protected $loader;
-
-    /**
      * @var Layout
      */
     protected $layout;
@@ -185,7 +180,6 @@ class Application
 
         try {
             $this->getConfig($environment);
-            $this->getLoader();
 
             $this->log(__METHOD__);
 
@@ -241,33 +235,6 @@ class Application
     public function getConfigData($section = null, $subsection = null)
     {
         return $this->getConfig()->get($section, $subsection);
-    }
-
-    /**
-     * getLoader
-     *
-     * @return Loader
-     */
-    public function getLoader()
-    {
-        if (!$this->loader) {
-            $this->loader = new Loader();
-
-            $conf = $this->getConfigData('loader');
-            if (isset($conf['namespaces'])) {
-                foreach ($conf['namespaces'] as $ns => $path) {
-                    $this->loader -> registerNamespace($ns, $path);
-                }
-            }
-            if (isset($conf['prefixes'])) {
-                foreach ($conf['prefixes'] as $prefix => $path) {
-                    $this->loader -> registerPrefix($prefix, $path);
-                }
-            }
-
-            $this->loader -> register();
-        }
-        return $this->loader;
     }
 
     /**

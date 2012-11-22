@@ -307,7 +307,7 @@ class Router
         $request = $this->getApplication()->getRequest();
         $uri = $request->getCleanUri();
         $uri = trim($uri, '/');
-        $params = preg_split('/\//', $uri);
+        $params = explode('/', $uri);
 
         if (sizeof($params)) {
             $request->setModule(array_shift($params));

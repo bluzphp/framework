@@ -5,15 +5,21 @@ Easy to setup, easy to use.
 
 ## Installation
 
-Bluz works with PHP 5.4 or later and MySQL 5.1 and later
+Bluz works with PHP 5.4 or later and MySQL 5.1 or later
 
-First you need to download composer.phar
+First you should clone Bluz skeleton project from github repository
+
+```
+git clone git://github.com/bluzphp/skeleton.git
+```
+
+Then you need to download composer.phar
 
 ```
 curl -s https://getcomposer.org/installer | php
 ```
 
-Then you need to install all the necessary project dependencies by this command:
+After that, you need to install all the necessary project dependencies by this command:
 
 ```
 php composer.phar install
@@ -25,17 +31,10 @@ Requried FollowSymlinks option. Create symlink to public directory:
 ln -s /path/to/public /var/www/htdocs
 ```
 
-Run install.sh:
-
-```
-./install.sh
-```
-
 Restore database structure from `structure.ddl` file.
 Restore default database data from `dump.sql`
 
 Edit your own configuration file ```/path/to/application/configs/app.dev.php```
-
 
 ## Usage
 
@@ -48,7 +47,7 @@ return
  * @privilege View-User-Profile
  * @cache 5 minutes
  * @param integer $id
- * @return closure
+ * @return \closure
  */
 function($id) use ($view) {
     /**

@@ -99,7 +99,7 @@ class Cache
      * @param string  $file
      * @param array   $keys
      * @param integer $ttl in minutes
-     * @return View
+     * @return View|boolean
      */
     public function load($file, $keys = array(), $ttl = 5)
     {
@@ -142,6 +142,9 @@ class Cache
      */
     public function save($content)
     {
+        if (!$this->cache) {
+            return;
+        }
         $this->createDir();
         file_put_contents($this->fullPath, $content);
         @chmod($this->fullPath, 0755);

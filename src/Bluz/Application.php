@@ -489,7 +489,7 @@ class Application
 
             // move vars from layout to view instance
             if ($dispatchResult instanceof View) {
-                $dispatchResult -> setData(
+                $dispatchResult -> addData(
                     $this->getLayout()->toArray()
                 );
             }

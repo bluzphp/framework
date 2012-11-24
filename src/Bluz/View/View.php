@@ -164,7 +164,19 @@ class View
      * @param array $data
      * @return View
      */
-    public function setData($data = array())
+    public function setData(array $data)
+    {
+        $this->data = $data;
+        return $this;
+    }
+
+    /**
+     * set data from array
+     *
+     * @param array $data
+     * @return View
+     */
+    public function addData(array $data)
     {
         $this->data = array_merge($this->data, $data);
         return $this;
@@ -176,27 +188,10 @@ class View
      * @param array $data
      * @return View
      */
-    public function mergeData($data = array())
+    public function mergeData(array $data)
     {
-        $this->data = $this->mergeArrays($this->data, $data);
+        $this->data = array_replace_recursive($this->data, $data);
         return $this;
-    }
-
-    /**
-     * @param $array1
-     * @param $array2
-     * @return array
-     */
-    protected function mergeArrays($array1, $array2)
-    {
-        foreach ($array2 as $key => $value) {
-            if (array_key_exists($key, $array1) && is_array($value)) {
-                $array1[$key] = $this->mergeArrays($array1[$key], $array2[$key]);
-            } else {
-                $array1[$key] = $value;
-            }
-        }
-        return $array1;
     }
 
     /**

@@ -8,7 +8,10 @@
     "autoload": {
         "psr-0": {
             "Bluz": "src/"
-        }
+        },
+        "files": [
+            "src/Bluz/_loader.php"
+        ]
     },
     "authors": [
         {

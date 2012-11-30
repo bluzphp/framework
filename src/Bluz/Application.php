@@ -832,6 +832,7 @@ class Application
      * reflection for anonymous function
      *
      * @param string  $file
+     * @throws Exception
      * @return array
      */
     public function reflection($file)
@@ -842,6 +843,10 @@ class Application
             // TODO: workaround for get reflection of closure function
             $bootstrap = $request = $identity = $view = $module = $controller = null;
             $closure = include $file;
+
+            if (!is_callable($closure)) {
+                throw new Exception("There is no closure in file $file");
+            }
 
             $reflection = new \ReflectionFunction($closure);
 

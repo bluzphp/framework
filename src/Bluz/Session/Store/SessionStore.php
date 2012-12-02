@@ -90,9 +90,9 @@ class SessionStore extends AbstractStore
     /**
      * set
      *
-     * @param string $key
-     * @param mixed  $value
-     * @return bool|void
+     * @param $key
+     * @param $value
+     * @deprecated
      */
     public function set($key, $value)
     {
@@ -101,10 +101,20 @@ class SessionStore extends AbstractStore
     }
 
     /**
+     * @param $key
+     * @param $value
+     */
+    public function __set($key, $value)
+    {
+        $this->set($key, $value);
+    }
+
+    /**
      * get
      *
      * @param string $key
      * @return mixed
+     * @deprecated
      */
     public function get($key)
     {
@@ -113,6 +123,15 @@ class SessionStore extends AbstractStore
             return null;
         }
         return $_SESSION[$this->namespace][$key];
+    }
+
+    /**
+     * @param string $key
+     * @return mixed
+     */
+    public function __get($key)
+    {
+        return $this->get($key);
     }
 
 

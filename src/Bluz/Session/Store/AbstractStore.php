@@ -66,21 +66,17 @@ abstract class AbstractStore
     public abstract function start();
 
     /**
-     * set
-     *
      * @param string $key
      * @param mixed $value
-     * @return boolean
+     * @return void
      */
-    public abstract function set($key, $value);
+    public abstract function __set($key, $value);
 
     /**
-     * get
-     *
      * @param string $key
      * @return mixed
      */
-    public abstract function get($key);
+    public abstract function __get($key);
 
     /**
      * destroy

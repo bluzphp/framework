@@ -59,6 +59,7 @@ class ArrayStore extends AbstractStore
      * @param string $key
      * @param mixed $value
      * @return boolean
+     * @deprecated
      */
     public function set($key, $value)
     {
@@ -66,14 +67,33 @@ class ArrayStore extends AbstractStore
     }
 
     /**
+     * @param string $key
+     * @param mixed $value
+     */
+    public function __set($key, $value)
+    {
+        $this->set($key, $value);
+    }
+
+    /**
      * __get
      *
      * @param string $key
      * @return mixed
+     * @deprecated
      */
     public function get($key)
     {
         return isset($this->store[$this->namespace][$key])?$this->store[$this->namespace][$key]:null;
+    }
+
+    /**
+     * @param string $key
+     * @return mixed
+     */
+    public function __get($key)
+    {
+        return $this->get($key);
     }
 
     /**

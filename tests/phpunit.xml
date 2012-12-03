@@ -1,0 +1,23 @@
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         colors="true"
+         verbose="true"
+         bootstrap="./bootstrap.php">
+    <testsuites>
+        <testsuite name="Framework Test Suite">
+            <directory>./Bluz/</directory>
+        </testsuite>
+    </testsuites>
+    <listeners>
+        <listener class="\Application\TestListener" file="./TestListener.php"/>
+    </listeners>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">../Bluz</directory>
+            <exclude>
+                <directory suffix=".phtml">../Bluz</directory>
+                <directory suffix=".php">../Bluz/configs</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+</phpunit>

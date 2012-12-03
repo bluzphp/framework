@@ -58,43 +58,24 @@ class ArrayStore extends AbstractStore
      *
      * @param string $key
      * @param mixed $value
-     * @return boolean
-     * @deprecated
+     * @return void
      */
     public function set($key, $value)
     {
-        return $this->store[$this->namespace][$key] = $value;
-    }
-
-    /**
-     * @param string $key
-     * @param mixed $value
-     */
-    public function __set($key, $value)
-    {
-        $this->set($key, $value);
+        $this->store[$this->namespace][$key] = $value;
     }
 
     /**
      * __get
      *
      * @param string $key
-     * @return mixed
-     * @deprecated
+     * @return mixed|null
      */
     public function get($key)
     {
         return isset($this->store[$this->namespace][$key])?$this->store[$this->namespace][$key]:null;
     }
 
-    /**
-     * @param string $key
-     * @return mixed
-     */
-    public function __get($key)
-    {
-        return $this->get($key);
-    }
 
     /**
      * destroy

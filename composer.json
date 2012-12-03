@@ -29,5 +29,10 @@
             "name": "EagleMoor"
         }
     ],
+    "support": {
+        "email": "AntonShevchuk@gmail.com",
+        "issues": "https://github.com/bluzphp/framework/issues",
+        "wiki": "https://github.com/bluzphp/framework/wiki"
+    },
     "license": "MIT"
 }

@@ -249,7 +249,7 @@ class AbstractRequest
     {
         // TODO SHOULD IT BE CLEANED FIRST??
         foreach ($params as $key => $value) {
-            $this->setParam($key, $value);
+            $this->__set($key, $value);
         }
         return $this;
     }
@@ -263,16 +263,6 @@ class AbstractRequest
     {
         return $this->params;
     }
-
-    /**
-     * Get all request parameters
-     *
-     * @return array
-     */
-//    public function getAllParams()
-//    {
-//        return $this->params;
-//    }
 
     /**
      * Retrieve a member of the $_ENV superglobal

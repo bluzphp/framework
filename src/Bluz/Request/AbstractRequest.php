@@ -165,10 +165,7 @@ class AbstractRequest
      */
     public function __get($key)
     {
-        if ($this->__isset($key)) {
-            return $this->params[$key];
-        }
-        return null;
+        return (isset($this->params[$key]) ? $this->params[$key] : null);
     }
 
     /**
@@ -178,7 +175,7 @@ class AbstractRequest
      *
      * @param string $key
      * @param mixed $value
-     * @return AbstractRequest
+     * @return void
      */
     public function __set($key, $value)
     {
@@ -189,8 +186,6 @@ class AbstractRequest
         } elseif (null !== $value) {
             $this->params[$key] = $value;
         }
-
-        return $this;
     }
 
     /**
@@ -201,7 +196,7 @@ class AbstractRequest
      */
     public function __isset($key)
     {
-        return array_key_exists($key, $this->params);
+        return isset($this->params[$key]);
     }
 
     /**
@@ -211,9 +206,7 @@ class AbstractRequest
      */
     public function __unset($key)
     {
-        if ($this->__isset($key)) {
-            unset($this->params[$key]);
-        }
+        unset($this->params[$key]);
     }
 
     /**
@@ -223,11 +216,12 @@ class AbstractRequest
      *
      * @param string $key
      * @param mixed $value
-     * @return AbstractRequest
+     * @return void
+     * @deprecated
      */
     public function setParam($key, $value)
     {
-        return $this->__set($key, $value);
+        $this->__set($key, $value);
     }
 
     /**
@@ -239,10 +233,7 @@ class AbstractRequest
      */
     public function getParam($key, $default = null)
     {
-        if ($this->__isset($key)) {
-            return $this->__get($key);
-        }
-        return $default;
+        return (isset($this->params[$key]) ? $this->params[$key] : $default);
     }
 
     /**

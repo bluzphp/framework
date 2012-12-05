@@ -237,20 +237,14 @@ class AbstractRequest
     }
 
     /**
-     * Set parameters
-     *
-     * Set one or more parameters. Parameters are set as userland parameters,
-     * using the keys specified in the array.
+     * Overwrite all parameters
      *
      * @param array $params
      * @return AbstractRequest
      */
     public function setParams(array $params)
     {
-        // TODO SHOULD IT BE CLEANED FIRST??
-        foreach ($params as $key => $value) {
-            $this->__set($key, $value);
-        }
+        $this->params = $params;
         return $this;
     }
 

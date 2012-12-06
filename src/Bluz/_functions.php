@@ -50,17 +50,10 @@ if (!function_exists('debug')) {
             }
             var_dump(func_get_args());
         } else {
-            echo '<div class="textleft clear">';
-            if (extension_loaded('xdebug')) {
-                xdebug_print_function_stack();
-                var_dump(func_get_args());
-            } else {
-                echo '<pre>';
-                debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
-                var_dump(func_get_args());
-                echo '</pre>';
-            }
-            echo '</div>';
+            echo '<div class="textleft clear"><pre>';
+            debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+            var_dump(func_get_args());
+            echo '</pre></div>';
         }
     }
 }

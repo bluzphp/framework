@@ -39,4 +39,5 @@ class ConcreteTable extends Bluz\Db\Table
 {
     protected $table = 'foo';
     protected $primary = array('bar', 'baz');
+    protected $rowClass = 'ConcreteRow';
 }

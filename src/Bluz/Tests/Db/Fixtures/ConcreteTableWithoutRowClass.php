@@ -28,14 +28,15 @@ use Bluz;
 use Bluz\Db;
 
 /**
- * Concrete realization of Table class with invalid table specified.
+ * Concrete realization of Table class without row class specified.
  *
  * @category Tests
  * @package  Bluz\Db
  * 
  * @author Dmitriy Savchenko <login.was.here@gmail.com>
  */
-class ConcreteRowWithInvalidTable extends Bluz\Db\Row
+class ConcreteTableWithoutRowClass extends Bluz\Db\Table
 {
-    protected $table = 'InvalidTable';
+    protected $table = 'foo';
+    protected $primary = array('bar', 'baz');
 }

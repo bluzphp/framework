@@ -57,28 +57,25 @@ class TableTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @todo Implement testSetAdapter().
+     * @covers Table::setAdapter
+     * @expectedException Bluz\Db\DbException
      */
-    public function testSetAdapter()
+    public function testSetAdapterWithoutConfig()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->table->setAdapter();
     }
 
     /**
-     * @todo Implement testGetAdapter().
+     * @covers Table::setAdapter
+     * @expectedException Bluz\Db\DbException
      */
-    public function testGetAdapter()
+    public function testGetAdapterWithoutConfig()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->table->getAdapter();
     }
     
     /**
+     * @covers Table::getAdapter
      * @expectedException Bluz\Db\InvalidPrimaryKeyException
      */
     public function testGetPrimaryKeyException()
@@ -88,25 +85,30 @@ class TableTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @todo Implement testGetPrimaryKey().
+     * @covers Table::getAdapter
      */
     public function testGetPrimaryKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $table = Bluz\Tests\Db\Fixtures\ConcreteTable::getInstance();
+        $this->assertEquals(array('bar', 'baz'), $table->getPrimaryKey());
     }
 
     /**
-     * @todo Implement testGetRowClass().
+     * @covers Table::getRowClass
      */
     public function testGetRowClass()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $table = Bluz\Tests\Db\Fixtures\ConcreteTable::getInstance();
+        $this->assertEquals('ConcreteRow', $table->getRowClass());
+    }
+
+    /**
+     * @covers Table::getRowClass
+     */
+    public function testGetRowClassFromTableWithoutRowClass()
+    {
+        $table = Bluz\Tests\Db\Fixtures\ConcreteTableWithoutRowClass::getInstance();
+        $this->assertEquals('Bluz\Tests\Db\Fixtures\Row', $table->getRowClass());
     }
 
     /**

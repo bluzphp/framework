@@ -2,7 +2,7 @@
 /**
  *
  */
-namespace Bluz;
+namespace Bluz\Tests;
 
 class TestListener implements \PHPUnit_Framework_TestListener
 {

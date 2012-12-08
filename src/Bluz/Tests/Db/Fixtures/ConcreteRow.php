@@ -22,7 +22,10 @@
  * THE SOFTWARE.
  */
 
-namespace Bluz\Db;
+namespace Bluz\Tests\Db\Fixtures;
+
+use Bluz;
+use Bluz\Db;
 
 /**
  * Concrete realization of Table class.
@@ -32,8 +35,7 @@ namespace Bluz\Db;
  * 
  * @author Eugene Zabolotniy <realbaziak@gmail.com>
  */
-class ConcreteTable extends Table
+class ConcreteRow extends Bluz\Db\Row
 {
-    protected $table = 'foo';
-    protected $primary = array('bar', 'baz');
+    protected $table = 'Bluz\Tests\Db\Fixtures\ConcreteTable';
 }

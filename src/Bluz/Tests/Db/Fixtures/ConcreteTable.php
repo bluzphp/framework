@@ -22,17 +22,21 @@
  * THE SOFTWARE.
  */
 
+namespace Bluz\Tests\Db\Fixtures;
 
-namespace Bluz\Db;
+use Bluz;
+use Bluz\Db;
 
 /**
- * Wrong realization of Table class.
+ * Concrete realization of Table class.
  *
  * @category Tests
  * @package  Bluz\Db
  * 
  * @author Eugene Zabolotniy <realbaziak@gmail.com>
  */
-class WrongKeysTable extends Table {
+class ConcreteTable extends Bluz\Db\Table
+{
     protected $table = 'foo';
+    protected $primary = array('bar', 'baz');
 }

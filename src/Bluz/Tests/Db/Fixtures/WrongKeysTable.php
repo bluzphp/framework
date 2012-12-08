@@ -22,8 +22,10 @@
  * THE SOFTWARE.
  */
 
+namespace Bluz\Tests\Db\Fixtures;
 
-namespace Bluz\Db;
+use Bluz;
+use Bluz\Db;
 
 /**
  * Wrong realization of Table class.
@@ -33,5 +35,6 @@ namespace Bluz\Db;
  * 
  * @author Eugene Zabolotniy <realbaziak@gmail.com>
  */
-class WrongTable extends Table {
+class WrongKeysTable extends Bluz\Db\Table {
+    protected $table = 'foo';
 }

@@ -38,7 +38,7 @@ class RowsetTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @covers Rowset::rewind
+     * @covers Bluz\Db\Rowset::rewind
      */
     public function testRewind()
     {
@@ -47,7 +47,7 @@ class RowsetTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @covers Rowset::current
+     * @covers Bluz\Db\Rowset::current
      */
     public function testCurrentOfEmptyRowset()
     {
@@ -56,7 +56,7 @@ class RowsetTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @covers Rowset::current
+     * @covers Bluz\Db\Rowset::current
      */
     public function testCurrentOfNotEmptyRowset()
     {
@@ -65,7 +65,7 @@ class RowsetTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @covers Rowset::key
+     * @covers Bluz\Db\Rowset::key
      */
     public function testKey()
     {
@@ -73,7 +73,7 @@ class RowsetTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @covers Rowset::next
+     * @covers Bluz\Db\Rowset::next
      */
     public function testNext()
     {
@@ -82,14 +82,14 @@ class RowsetTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @covers Rowset::valid
+     * @covers Bluz\Db\Rowset::valid
      */
     public function testValidEmptyRowset() {
         $this->assertEquals(false, $this->object->valid());
     }
 
     /**
-     * @covers Rowset::valid
+     * @covers Bluz\Db\Rowset::valid
      */
     public function testValidNotEmpty() {
         $this->object = new Bluz\Db\Rowset(
@@ -104,7 +104,7 @@ class RowsetTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @covers Rowset::count
+     * @covers Bluz\Db\Rowset::count
      */
     public function testCountEmptyRowset()
     {
@@ -112,7 +112,7 @@ class RowsetTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @covers Rowset::count
+     * @covers Bluz\Db\Rowset::count
      */
     public function testCountNotEmptyRowset()
     {
@@ -128,7 +128,7 @@ class RowsetTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @covers Rowset::seek
+     * @covers Bluz\Db\Rowset::seek
      * @expectedException \OutOfBoundsException
      */
     public function testSeekOutOfBoundsException()
@@ -137,7 +137,7 @@ class RowsetTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @covers Rowset::seek
+     * @covers Bluz\Db\Rowset::seek
      */
     public function testSeek()
     {
@@ -154,7 +154,7 @@ class RowsetTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @covers Rowset::offsetExists
+     * @covers Bluz\Db\Rowset::offsetExists
      */
     public function testOffsetExists()
     {
@@ -171,7 +171,7 @@ class RowsetTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @covers Rowset::offsetExists
+     * @covers Bluz\Db\Rowset::offsetExists
      */
     public function testOffsetExistsException()
     {
@@ -179,7 +179,7 @@ class RowsetTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @covers Rowset::offsetGet
+     * @covers Bluz\Db\Rowset::offsetGet
      */
     public function testOffsetGet()
     {
@@ -198,7 +198,7 @@ class RowsetTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @covers Rowset::offsetGet
+     * @covers Bluz\Db\Rowset::offsetGet
      * @expectedException \OutOfBoundsException
      */
     public function testOffsetGetException()

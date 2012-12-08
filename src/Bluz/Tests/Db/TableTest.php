@@ -39,6 +39,7 @@ class TableTest extends Bluz\Tests\TestCase
 
     /**
      * testGetInstance
+     * @covers Bluz\Db\Table::getInstance
      */
     public function testGetInstance()
     {
@@ -57,7 +58,7 @@ class TableTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @covers Table::setAdapter
+     * @covers Bluz\Db\Table::setAdapter
      * @expectedException Bluz\Db\DbException
      */
     public function testSetAdapterWithoutConfig()
@@ -66,7 +67,7 @@ class TableTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @covers Table::setAdapter
+     * @covers Bluz\Db\Table::setAdapter
      * @expectedException Bluz\Db\DbException
      */
     public function testGetAdapterWithoutConfig()
@@ -75,7 +76,7 @@ class TableTest extends Bluz\Tests\TestCase
     }
     
     /**
-     * @covers Table::getAdapter
+     * @covers Bluz\Db\Table::getAdapter
      * @expectedException Bluz\Db\InvalidPrimaryKeyException
      */
     public function testGetPrimaryKeyException()
@@ -85,7 +86,7 @@ class TableTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @covers Table::getAdapter
+     * @covers Bluz\Db\Table::getAdapter
      */
     public function testGetPrimaryKey()
     {
@@ -94,7 +95,7 @@ class TableTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @covers Table::getRowClass
+     * @covers Bluz\Db\Table::getRowClass
      */
     public function testGetRowClass()
     {
@@ -103,7 +104,7 @@ class TableTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @covers Table::getRowClass
+     * @covers Bluz\Db\Table::getRowClass
      */
     public function testGetRowClassFromTableWithoutRowClass()
     {
@@ -120,7 +121,10 @@ class TableTest extends Bluz\Tests\TestCase
     {
         call_user_func_array(array($this->table, 'find'), $keyValues);
     }
-    
+
+    /**
+     * @return array
+     */
     public function getFindWrongData()
     {
         return array(

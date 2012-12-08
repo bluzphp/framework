@@ -38,7 +38,7 @@ class RowTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @covers Row::__get
+     * @covers Bluz\Db\Row::__get
      */
     public function test__get()
     {
@@ -46,7 +46,7 @@ class RowTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @covers Row::__set
+     * @covers Bluz\Db\Row::__set
      */
     public function test__set()
     {
@@ -98,7 +98,7 @@ class RowTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @covers Row::getTable
+     * @covers Bluz\Db\Row::getTable
      */
     public function testGetTable()
     {
@@ -107,7 +107,7 @@ class RowTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @covers Row::getTable
+     * @covers Bluz\Db\Row::getTable
      * @expectedException Bluz\Db\TableNotFoundException
      */
     public function testGetTableException()

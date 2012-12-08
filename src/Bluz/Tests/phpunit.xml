@@ -5,7 +5,7 @@
          bootstrap="./bootstrap.php">
     <testsuites>
         <testsuite name="Framework Test Suite">
-            <directory>./Bluz/</directory>
+            <directory>./Db/</directory>
         </testsuite>
     </testsuites>
     <listeners>

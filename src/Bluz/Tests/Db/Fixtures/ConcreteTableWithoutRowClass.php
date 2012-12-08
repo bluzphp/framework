@@ -22,17 +22,20 @@
  * THE SOFTWARE.
  */
 
-namespace Bluz\Db;
+namespace Bluz\Tests\Db\Fixtures;
+
+use Bluz;
+use Bluz\Db;
 
 /**
- * Concrete realization of Table class.
+ * Concrete realization of Table class without row class specified.
  *
  * @category Tests
  * @package  Bluz\Db
  * 
- * @author Eugene Zabolotniy <realbaziak@gmail.com>
+ * @author Dmitriy Savchenko <login.was.here@gmail.com>
  */
-class ConcreteTable extends Table
+class ConcreteTableWithoutRowClass extends Bluz\Db\Table
 {
     protected $table = 'foo';
     protected $primary = array('bar', 'baz');

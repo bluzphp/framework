@@ -22,19 +22,20 @@
  * THE SOFTWARE.
  */
 
-namespace Bluz\Db;
+namespace Bluz\Tests\Db\Fixtures;
 
-require_once 'ConcreteTable.php';
+use Bluz;
+use Bluz\Db;
 
 /**
- * Concrete realization of Table class.
+ * Concrete realization of Table class with invalid table specified.
  *
  * @category Tests
  * @package  Bluz\Db
  * 
- * @author Eugene Zabolotniy <realbaziak@gmail.com>
+ * @author Dmitriy Savchenko <login.was.here@gmail.com>
  */
-class ConcreteRow extends Row
+class ConcreteRowWithInvalidTable extends Bluz\Db\Row
 {
-    protected $table = 'NoTable';
+    protected $table = 'InvalidTable';
 }

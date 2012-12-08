@@ -8,7 +8,7 @@
  * @author   Anton Shevchuk
  * @created  20.07.11 17:38
  */
-namespace Bluz;
+namespace Bluz\Tests;
 
 use Bluz\Application;
 use Bluz\Exception;

@@ -489,7 +489,7 @@ class Row
                 throw new DbException('"'.$classTable.'" not found');
             }
         } catch (\Exception $e) {
-            throw new TableNotFoundException('Can\'t found table class with message: '.$e->getMessage());
+            throw new TableNotFoundException('Can\'t find table class with message: '.$e->getMessage());
         }
 
     }

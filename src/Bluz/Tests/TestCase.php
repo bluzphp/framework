@@ -8,14 +8,16 @@
  * @author   Anton Shevchuk
  * @created  04.08.11 20:01
  */
-namespace Bluz;
+namespace Bluz\Tests;
+
+use Bluz;
 
 class TestCase extends \PHPUnit_Framework_TestCase
 {
     /**
      * Application entity
      *
-     * @var \Application\Bootstrap
+     * @var Bluz\Bootstrap
      */
     protected $app;
 

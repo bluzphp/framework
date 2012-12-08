@@ -65,101 +65,144 @@ class RowsetTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @todo Implement testKey().
+     * @covers Rowset::key
      */
     public function testKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertEquals(0, $this->object->key());
     }
 
     /**
-     * @todo Implement testNext().
+     * @covers Rowset::next
      */
     public function testNext()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->object->next();
+        $this->assertEquals(1, $this->object->key());
     }
 
     /**
-     * @todo Implement testValid().
+     * @covers Rowset::valid
      */
-    public function testValid() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+    public function testValidEmptyRowset() {
+        $this->assertEquals(false, $this->object->valid());
     }
 
     /**
-     * @todo Implement testCount().
+     * @covers Rowset::valid
      */
-    public function testCount()
+    public function testValidNotEmpty() {
+        $this->object = new Bluz\Db\Rowset(
+            array(
+                'data' => array(
+                    new Bluz\Tests\Db\Fixtures\ConcreteRow(),
+                    new Bluz\Tests\Db\Fixtures\ConcreteRowWithInvalidTable()
+                )
+            )
+        );
+        $this->assertEquals(true, $this->object->valid());
+    }
+
+    /**
+     * @covers Rowset::count
+     */
+    public function testCountEmptyRowset()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertEquals(0, $this->object->count());
     }
 
     /**
-     * @todo Implement testSeek().
+     * @covers Rowset::count
+     */
+    public function testCountNotEmptyRowset()
+    {
+        $this->object = new Bluz\Db\Rowset(
+            array(
+                'data' => array(
+                    new Bluz\Tests\Db\Fixtures\ConcreteRow(),
+                    new Bluz\Tests\Db\Fixtures\ConcreteRowWithInvalidTable()
+                )
+            )
+        );
+        $this->assertEquals(2, $this->object->count());
+    }
+
+    /**
+     * @covers Rowset::seek
+     * @expectedException \OutOfBoundsException
+     */
+    public function testSeekOutOfBoundsException()
+    {
+        $this->object->seek(42);
+    }
+
+    /**
+     * @covers Rowset::seek
      */
     public function testSeek()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
+        $this->object = new Bluz\Db\Rowset(
+            array(
+                'data' => array(
+                    new Bluz\Tests\Db\Fixtures\ConcreteRow(),
+                    new Bluz\Tests\Db\Fixtures\ConcreteRowWithInvalidTable()
+                )
+            )
         );
+        $this->object->seek(1);
+        $this->assertEquals(1, $this->object->key());
     }
 
     /**
-     * @todo Implement testOffsetExists().
+     * @covers Rowset::offsetExists
      */
     public function testOffsetExists()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
+        $this->object = new Bluz\Db\Rowset(
+            array(
+                'data' => array(
+                    new Bluz\Tests\Db\Fixtures\ConcreteRow(),
+                    new Bluz\Tests\Db\Fixtures\ConcreteRowWithInvalidTable()
+                )
+            )
         );
+        $this->object->seek(1);
+        $this->assertTrue($this->object->offsetExists(1));
     }
 
     /**
-     * @todo Implement testOffsetGet().
+     * @covers Rowset::offsetExists
+     */
+    public function testOffsetExistsException()
+    {
+        $this->assertFalse($this->object->offsetExists(1));
+    }
+
+    /**
+     * @covers Rowset::offsetGet
      */
     public function testOffsetGet()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
+        $this->object = new Bluz\Db\Rowset(
+            array(
+                'data' => array(
+                    new Bluz\Tests\Db\Fixtures\ConcreteRow(),
+                    new Bluz\Tests\Db\Fixtures\ConcreteRowWithInvalidTable()
+                )
+            )
+        );
+        $this->assertInstanceOf(
+            'Bluz\Tests\Db\Fixtures\ConcreteRowWithInvalidTable',
+            $this->object->offsetGet(1)
         );
     }
 
     /**
-     * @todo Implement testOffsetSet().
+     * @covers Rowset::offsetGet
+     * @expectedException \OutOfBoundsException
      */
-    public function testOffsetSet()
+    public function testOffsetGetException()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->object->offsetGet(1);
     }
-
-    /**
-     * @todo Implement testOffsetUnset().
-     */
-    public function testOffsetUnset()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
 }

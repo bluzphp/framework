@@ -38,25 +38,20 @@ class RowTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @todo Implement test__get().
+     * @covers Row::__get
      */
     public function test__get()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertNull($this->row->someValue);
     }
 
     /**
-     * @todo Implement test__set().
+     * @covers Row::__set
      */
     public function test__set()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->row->someValue = 'foo';
+        $this->assertEquals('foo', $this->row->someValue);
     }
 
     /**

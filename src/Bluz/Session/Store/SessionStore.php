@@ -91,8 +91,8 @@ class SessionStore extends AbstractStore
      * set
      *
      * @param string $key
-     * @param mixed  $value
-     * @return bool|void
+     * @param mixed $value
+     * @return mixed
      */
     public function set($key, $value)
     {
@@ -104,7 +104,8 @@ class SessionStore extends AbstractStore
      * get
      *
      * @param string $key
-     * @return mixed
+     * @param string $key
+     * @return mixed|null
      */
     public function get($key)
     {

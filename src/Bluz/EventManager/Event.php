@@ -106,7 +106,7 @@ class Event
         if (!is_array($params) && !is_object($params)) {
             throw new EventException(sprintf(
                 'Event parameters must be an array or object; received "%s"',
-                (is_object($params) ? get_class($params) : gettype($params))
+                gettype($params)
             ));
         }
 

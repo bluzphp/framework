@@ -124,11 +124,11 @@ class Session
      *
      * @param string $key
      * @param mixed $value
-     * @return boolean
+     * @return void
      */
     public function __set($key, $value)
     {
-        return $this->getStore()->set($key, $value);
+        $this->getStore()->set($key, $value);
     }
 
     /**

@@ -29,7 +29,7 @@ namespace Bluz\Request;
 use Bluz\Request;
 
 /**
- * Request
+ * HTTP Request
  *
  * @category Bluz
  * @package  Request

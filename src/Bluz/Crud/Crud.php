@@ -121,11 +121,17 @@ class Crud
             $this->getApplication()->getMessages()->addError("Please fix all errors");
             return [
                 'errors' => $this->getErrors(),
-                'callback' => 'validateForm'
+                'callback' => 'validateForm' // FIXME: hardcoded function name
             ];
         }
 
+        // check result
+        if ($result === false) {
+            return true;
+        }
+
         // switch statement for $this->getMethod()
+        // FIXME: hardcoded messages and reload process
         switch ($this->getMethod()) {
             case AbstractRequest::METHOD_POST:
                 // CREATE record

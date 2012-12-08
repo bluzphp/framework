@@ -30,7 +30,7 @@
  */
 if (!function_exists('debug')) {
     /**
-     * Debug variables with \Bluz\Debug::dump
+     * Debug variables
      *
      * @return void
      */
@@ -40,28 +40,20 @@ if (!function_exists('debug')) {
             return;
         }
 
-        //
-        // try to get caller information
-        //
-        $backtrace = debug_backtrace();
-
-        // get variable name
-        $arrLines = file($backtrace[0]["file"]);
-        $code = $arrLines[($backtrace[0]["line"] - 1)];
-        $arrMatches = array();
-
-        // find call to debug() by regexp
-        preg_match('/\b\s*debug\s*\(\s*(.+)\s*\);\s*/i', $code, $arrMatches);
-
-        $varName = isset($arrMatches[1]) ? $arrMatches[1] : '???';
-
-        $where = basename($backtrace[0]["file"]) . ':' . $backtrace[0]["line"];
-
-        echo "<h2>Debug: {$varName} ({$where})</h2>";
-
-        //
-        // call \Bluz\Debug::dump()
-        //
-        call_user_func_array(['\Bluz\Debug', 'dump'], func_get_args());
+        if ('cli' == PHP_SAPI) {
+            if (extension_loaded('xdebug')) {
+                // try to enable CLI colors
+                ini_set('xdebug.cli_color', 1);
+                xdebug_print_function_stack();
+            } else {
+                debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+            }
+            var_dump(func_get_args());
+        } else {
+            echo '<div class="textleft clear"><pre>';
+            debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+            var_dump(func_get_args());
+            echo '</pre></div>';
+        }
     }
 }

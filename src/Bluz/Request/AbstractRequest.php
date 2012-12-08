@@ -165,10 +165,7 @@ class AbstractRequest
      */
     public function __get($key)
     {
-        if ($this->__isset($key)) {
-            return $this->params[$key];
-        }
-        return null;
+        return (isset($this->params[$key]) ? $this->params[$key] : null);
     }
 
     /**
@@ -178,7 +175,7 @@ class AbstractRequest
      *
      * @param string $key
      * @param mixed $value
-     * @return AbstractRequest
+     * @return void
      */
     public function __set($key, $value)
     {
@@ -189,8 +186,6 @@ class AbstractRequest
         } elseif (null !== $value) {
             $this->params[$key] = $value;
         }
-
-        return $this;
     }
 
     /**
@@ -201,7 +196,7 @@ class AbstractRequest
      */
     public function __isset($key)
     {
-        return array_key_exists($key, $this->params);
+        return isset($this->params[$key]);
     }
 
     /**
@@ -211,9 +206,7 @@ class AbstractRequest
      */
     public function __unset($key)
     {
-        if ($this->__isset($key)) {
-            unset($this->params[$key]);
-        }
+        unset($this->params[$key]);
     }
 
     /**
@@ -223,11 +216,12 @@ class AbstractRequest
      *
      * @param string $key
      * @param mixed $value
-     * @return AbstractRequest
+     * @return void
+     * @deprecated
      */
     public function setParam($key, $value)
     {
-        return $this->__set($key, $value);
+        $this->__set($key, $value);
     }
 
     /**
@@ -239,27 +233,18 @@ class AbstractRequest
      */
     public function getParam($key, $default = null)
     {
-        if ($this->__isset($key)) {
-            return $this->__get($key);
-        }
-        return $default;
+        return (isset($this->params[$key]) ? $this->params[$key] : $default);
     }
 
     /**
-     * Set parameters
-     *
-     * Set one or more parameters. Parameters are set as userland parameters,
-     * using the keys specified in the array.
+     * Overwrite all parameters
      *
      * @param array $params
      * @return AbstractRequest
      */
     public function setParams(array $params)
     {
-        // TODO SHOULD IT BE CLEANED FIRST??
-        foreach ($params as $key => $value) {
-            $this->setParam($key, $value);
-        }
+        $this->params = $params;
         return $this;
     }
 
@@ -272,16 +257,6 @@ class AbstractRequest
     {
         return $this->params;
     }
-
-    /**
-     * Get all request parameters
-     *
-     * @return array
-     */
-//    public function getAllParams()
-//    {
-//        return $this->params;
-//    }
 
     /**
      * Retrieve a member of the $_ENV superglobal

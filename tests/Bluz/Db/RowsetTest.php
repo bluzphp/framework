@@ -38,10 +38,12 @@ class RowsetTest extends Bluz\TestCase
      */
     public function testRewind()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->object->rewind();
+        $this->assertEquals(0, $this->object->key());
+//        Remove the following lines when you implement this test.
+//        $this->markTestIncomplete(
+//                'This test has not been implemented yet.'
+//        );
     }
 
     /**

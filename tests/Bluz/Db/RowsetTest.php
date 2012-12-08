@@ -40,10 +40,6 @@ class RowsetTest extends Bluz\TestCase
     {
         $this->object->rewind();
         $this->assertEquals(0, $this->object->key());
-//        Remove the following lines when you implement this test.
-//        $this->markTestIncomplete(
-//                'This test has not been implemented yet.'
-//        );
     }
 
     /**

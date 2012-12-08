@@ -34,7 +34,7 @@ class RowsetTest extends Bluz\TestCase
     }
 
     /**
-     * @todo Implement testRewind().
+     * @covers Rowset::rewind
      */
     public function testRewind()
     {

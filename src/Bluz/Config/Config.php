@@ -64,7 +64,7 @@ class Config
 
        if (null !== $environment) {
            $customConfig = PATH_APPLICATION .'/configs/app.'.$environment.'.php';
-           if (is_file($customConfig)) {
+           if (is_file($customConfig) && is_readable($customConfig)) {
                $customConfig = require $customConfig;
                $this->config = array_replace_recursive($this->config, $customConfig);
            }

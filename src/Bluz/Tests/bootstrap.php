@@ -4,7 +4,7 @@ define('APPLICATION_ENV', 'testing');
 define('DEBUG', true);
 
 // Paths
-define('PATH_ROOT', realpath(dirname(__FILE__). '/../'));
+define('PATH_ROOT', realpath(dirname(__FILE__). '/../../../'));
 define('PATH_APPLICATION', PATH_ROOT . '/application');
 define('PATH_DATA', PATH_ROOT . '/data');
 define('PATH_LIBRARY', PATH_ROOT . '/library');

@@ -3,4 +3,4 @@ php:
   - 5.4
 before_script:
   - COMPOSER_ROOT_VERSION=dev-master composer --prefer-source --dev install
-script: phpunit --configuration src/Bluz/Tests/phpunit.xml --coverage-text
+script: phpunit --configuration tests/Bluz/Tests/phpunit.xml --coverage-text

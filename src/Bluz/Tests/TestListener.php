@@ -4,6 +4,8 @@
  */
 namespace Bluz\Tests;
 
+//echo (new \ReflectionClass('Bluz\Tests\TestListener'))->getFileName();exit();
+
 class TestListener implements \PHPUnit_Framework_TestListener
 {
     /**

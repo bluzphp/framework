@@ -10,7 +10,8 @@
     },
     "autoload": {
         "psr-0": {
-            "Bluz": "src/"
+            "Bluz": "src/",
+            "Bluz\\Tests": "tests/"
         }
     },
     "authors": [

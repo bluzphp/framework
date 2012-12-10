@@ -9,7 +9,7 @@
         </testsuite>
     </testsuites>
     <listeners>
-        <listener class="\Application\TestListener" file="./TestListener.php"/>
+        <listener class="\Bluz\Tests\TestListener" file="./TestListener.php"/>
     </listeners>
     <filter>
         <whitelist>

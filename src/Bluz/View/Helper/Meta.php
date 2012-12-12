@@ -35,9 +35,7 @@ use Bluz\View\View;
  */
 return function ($name = null, $content = null) {
     /** @var View $this */
-    if (!$meta = $this->system('meta')) {
-        $meta = array();
-    }
+    $meta = $this->system('meta') ?: [];
 
     if ($name && $content) {
         $meta[] = ['name' => $name, 'content' => $content];

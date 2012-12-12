@@ -36,16 +36,25 @@ return
  */
 function ($script = null) {
     /** @var View $this */
+    $headScriptFiles = $this->system('headScriptFiles') ?: [];
+    $headScriptContent = $this->system('headScriptContent') ?: [];
+
     if (null === $script) {
-        $return = $this->headScriptFiles;
-        if ($this->headScriptContent) {
-            $return .= '
-            <script type="text/javascript">
-            <!--
-                '. $this->headScriptContent .'
-            //-->
-            </script>
-            ';
+        $return = '';
+        // clear system vars
+        $this->system('headScriptFiles', []);
+        $this->system('headScriptContent', []);
+
+        foreach ($headScriptFiles as $script) {
+            $return .= "\t<script src=\"" . $script ."\"></script>\n";
+        }
+        if (sizeof($headScriptContent)) {
+            $return .= "\t<script type=\"text/javascript\">\n"
+                    .  "\t\t<!--\n\t\t"
+                    .  join("\n", $headScriptContent)
+                    .  "\t\t//-->\n"
+                    .  "\t</script>"
+            ;
         }
         return $return;
     } elseif ('.js' == substr($script, -3, 3)) {
@@ -55,8 +64,12 @@ function ($script = null) {
         } else {
             $src = $this->baseUrl($script);
         }
-        $this->headScriptFiles .= '<script src="' . $src .'"></script>'."\n";
+        $headScriptFiles[] = $src;
+        $this->system('headScriptFiles', $headScriptFiles);
+        return $this;
     } else {
-        $this->headScriptContent .= $script . ';';
+        $headScriptContent[] = $script . ";\n";
+        $this->system('headScriptContent', $headScriptContent);
+        return $this;
     }
 };

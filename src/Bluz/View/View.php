@@ -47,6 +47,7 @@ use Bluz\Application;
  * @method string|View script(\string $src = null)
  * @method string|View title(\string $title = null, $position = 'replace', $separator = ' :: ')
  * @method string|View url(\string $module, \string $controller, array $params = [], boolean $checkAccess = false)
+ * @method \Bluz\Auth\AbstractEntity|null user()
  * @method void widget($module, $widget, $params = [])
  *
  * @author   Anton Shevchuk, ErgallM
@@ -57,6 +58,9 @@ class View
     use \Bluz\Package;
     use \Bluz\Helper;
 
+    /**
+     * Constants for define positions
+     */
     const POS_PREPEND = 1;
     const POS_REPLACE = 2;
     const POS_APPEND  = 3;

@@ -36,8 +36,12 @@ use Bluz\View\View;
  */
 return function ($link = null, $rel = 'stylesheet') {
     /** @var View $this */
+    $headLinkFiles = $this->system('headLinkFiles') ?: [];
+
     if (null === $link) {
-        return $this->headLinkFiles;
+        // clear system vars
+        $this->system('headLinkFiles', []);
+        return join("\n", $headLinkFiles);
     } else {
         if (strpos($link, 'http://') === 0
             or strpos($link, 'https://') === 0) {
@@ -45,7 +49,9 @@ return function ($link = null, $rel = 'stylesheet') {
         } else {
             $href = $this->baseUrl($link);
         }
-        $this->headLinkFiles .= '<link href="' . $href . '" rel="' . $rel .'"/>'."\n";
+
+        $headLinkFiles[] = '<link href="' . $href . '" rel="' . $rel .'"/>';
+        $this->system('headLinkFiles', $headLinkFiles);
         return $this;
     }
 };

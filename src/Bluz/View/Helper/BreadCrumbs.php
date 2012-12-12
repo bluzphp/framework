@@ -36,12 +36,8 @@ return
 function (array $data = []) {
     /** @var View $this */
     if (sizeof($data)) {
-        $this->system['breadcrumbs'] = $data;
+        $this->system('breadcrumbs', $data);
     } else {
-        if (isset($this->system['breadcrumbs'])) {
-            return $this->system['breadcrumbs'];
-        } else {
-            return null;
-        }
+        return $this->system('breadcrumbs');
     }
 };

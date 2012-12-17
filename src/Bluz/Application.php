@@ -49,6 +49,7 @@ use Bluz\View\View;
  * @category Bluz
  * @package  Application
  *
+ * @method void denied()
  * @method void reload()
  * @method void redirect(\string $url)
  * @method void redirectTo(\string $module, \string $controller, array $params=array())
@@ -385,11 +386,7 @@ class Application
     public function getRequest()
     {
         if (!$this->request) {
-            if ('cli' == PHP_SAPI) {
-                $this->request = new Request\CliRequest($this->getConfigData('request'));
-            } else {
-                $this->request = new Request\HttpRequest($this->getConfigData('request'));
-            }
+            $this->request = new Request\HttpRequest($this->getConfigData('request'));
 
             if ($this->request->isXmlHttpRequest()) {
                 $this->useLayout(false);
@@ -549,10 +546,7 @@ class Application
 
         // check acl
         if (!$this->isAllowedController($module, $controller, $params)) {
-            if (!$identity) {
-                $this->redirectTo('users', 'login');
-            }
-            throw new Exception('You don\'t have permissions', 403);
+            $this->denied();
         }
 
         // cache initialization

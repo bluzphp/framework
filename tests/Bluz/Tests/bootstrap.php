@@ -16,7 +16,3 @@ require_once PATH_VENDOR . '/autoload.php';
 require_once 'BootstrapTest.php';
 require_once 'TestCase.php';
 require_once 'TestListener.php';
-
-
-//$app = \Application\BootstrapTest::getInstance();
-//$app->init(APPLICATION_ENV);

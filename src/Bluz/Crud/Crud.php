@@ -69,41 +69,9 @@ class Crud
     protected $result;
 
     /**
-     * @return Crud
-     */
-    public function processRequest()
-    {
-        $request = $this->getApplication()->getRequest();
-
-        // get data from request
-        $this->data = $request->getParam('data')?:[];
-
-        // rewrite REST with "method" param
-        $this->method = $request->getParam('_method', $request->getMethod());
-
-        // switch by method
-        switch ($this->method) {
-            case AbstractRequest::METHOD_POST:
-                $this->result = $this->create();
-                break;
-            case AbstractRequest::METHOD_PUT:
-                $this->result = $this->update();
-                break;
-            case AbstractRequest::METHOD_DELETE:
-                $this->result = $this->delete();
-                break;
-            case AbstractRequest::METHOD_GET:
-            default:
-                $this->result = $this->get();
-                break;
-        }
-
-        return $this;
-    }
-
-    /**
-     * processView
-     * 
+     * process CRUD from controller
+     *
+     * @throws CrudException
      * @return mixed
      */
     public function processController()
@@ -136,20 +104,16 @@ class Crud
             case AbstractRequest::METHOD_POST:
                 // CREATE record
                 $this->getApplication()->getMessages()->addSuccess("Row was created");
-                $this->getApplication()->reload();
                 break;
             case AbstractRequest::METHOD_PUT:
                 // UPDATE record
                 $this->getApplication()->getMessages()->addSuccess("Row was updated");
-                $this->getApplication()->reload();
                 break;
             case AbstractRequest::METHOD_DELETE:
                 // DELETE record
                 $this->getApplication()->getMessages()->addSuccess("Row was deleted");
-                $this->getApplication()->reload();
                 break;
             case AbstractRequest::METHOD_GET:
-            default:
                 // always HTML
                 $this->getApplication()->useJson(false);
 
@@ -173,7 +137,46 @@ class Crud
                     ];
                 }
                 break;
+            default:
+                throw new CrudException("Unsopported method");
+                break;
         }
+
+        $this->getApplication()->reload();
+        return false;
+    }
+
+    /**
+     * @return Crud
+     */
+    public function processRequest()
+    {
+        $request = $this->getApplication()->getRequest();
+
+        // get data from request
+        $this->data = $request->data?:[];
+
+        // rewrite REST with "method" param
+        $this->method = $request->getParam('_method', $request->getMethod());
+
+        // switch by method
+        switch ($this->method) {
+            case AbstractRequest::METHOD_POST:
+                $this->result = $this->create();
+                break;
+            case AbstractRequest::METHOD_PUT:
+                $this->result = $this->update();
+                break;
+            case AbstractRequest::METHOD_DELETE:
+                $this->result = $this->delete();
+                break;
+            case AbstractRequest::METHOD_GET:
+            default:
+                $this->result = $this->get();
+                break;
+        }
+
+        return $this;
     }
 
     /**
@@ -216,8 +219,8 @@ class Crud
      */
     protected function getPrimaryKey()
     {
-        $primary = array_flip( $this->getTable()->getPrimaryKey() );
-        return array_intersect_key( $this->getData(), $primary );
+        $primary = array_flip($this->getTable()->getPrimaryKey());
+        return array_intersect_key($this->getData(), $primary);
     }
 
     /**

@@ -26,7 +26,7 @@
  */
 namespace Bluz\Crud;
 
-use Bluz\Application;
+use Bluz\Db;
 use Bluz\Request\AbstractRequest;
 
 /**
@@ -112,11 +112,11 @@ class Crud
         try {
             $result = $this->processRequest()
                 ->getResult();
-        } catch (\Bluz\Crud\CrudException $e) {
+        } catch (CrudException $e) {
             // all "not found" errors
             $this->getApplication()->getMessages()->addError($e->getMessage());
             return false;
-        } catch (\Bluz\Crud\ValidationException $e) {
+        } catch (ValidationException $e) {
             // validate errors
             $this->getApplication()->getMessages()->addError("Please fix all errors");
             return [
@@ -159,7 +159,7 @@ class Crud
                 }
 
                 // EDIT or CREATE form
-                if ($result instanceof \Bluz\Db\Row) {
+                if ($result instanceof Db\Row) {
                     // edit form
                     return [
                         'row' => $result,
@@ -179,10 +179,10 @@ class Crud
     /**
      * setTable
      *
-     * @param \Bluz\Db\Table $table
+     * @param Db\Table $table
      * @return self
      */
-    public function setTable(\Bluz\Db\Table $table)
+    public function setTable(Db\Table $table)
     {
         $this->table = $table;
         return $this;
@@ -191,7 +191,7 @@ class Crud
     /**
      * getTable
      *
-     * @return \Bluz\Db\Table
+     * @return Db\Table
      */
     public function getTable()
     {
@@ -200,7 +200,7 @@ class Crud
             $tableClass = substr($crudClass, 0, strrpos($crudClass, '\\', 1)+1) . 'Table';
 
             /**
-             * @var \Bluz\Db\Table $tableClass
+             * @var Db\Table $tableClass
              */
             $table = $tableClass::getInstance();
 
@@ -286,19 +286,19 @@ class Crud
     }
 
     /**
-     * @throws \Bluz\Crud\ValidationException
+     * @throws ValidationException
      */
     public function validate()
     {
         // validate entity
         // ...
         if (sizeof($this->errors)) {
-            throw new \Bluz\Crud\ValidationException('Validation error, please check errors stack');
+            throw new ValidationException('Validation error, please check errors stack');
         }
     }
 
     /**
-     * @throws \Bluz\Crud\ValidationException
+     * @throws ValidationException
      */
     public function validateCreate()
     {
@@ -306,7 +306,7 @@ class Crud
     }
 
     /**
-     * @throws \Bluz\Crud\ValidationException
+     * @throws ValidationException
      */
     public function validateUpdate($originalRow)
     {

@@ -7,7 +7,6 @@ define('DEBUG', true);
 define('PATH_ROOT', realpath(dirname(__FILE__). '/../../../'));
 define('PATH_APPLICATION', PATH_ROOT . '/application');
 define('PATH_DATA', PATH_ROOT . '/data');
-define('PATH_LIBRARY', PATH_ROOT . '/library');
 define('PATH_VENDOR', PATH_ROOT . '/vendor');
 define('PATH_PUBLIC', PATH_ROOT . '/public');
 define('PATH_THEME', PATH_ROOT . '/themes');

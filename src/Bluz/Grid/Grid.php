@@ -109,6 +109,11 @@ abstract class Grid
     protected $defaultLimit = 25;
 
     /**
+     * @var string
+     */
+    protected $defaultOrder;
+
+    /**
      * <pre>
      * <code>
      * [
@@ -375,10 +380,10 @@ abstract class Grid
     public function getSettings()
     {
         $settings = array();
-        $settings['page'] = $this->page;
-        $settings['limit'] = $this->limit;
-        $settings['orders'] = $this->orders;
-        $settings['filters'] = $this->filters;
+        $settings['page'] = $this->getPage();
+        $settings['limit'] = $this->getLimit();
+        $settings['orders'] = $this->getOrders();
+        $settings['filters'] = $this->getFilters();
         return $settings;
     }
 
@@ -412,8 +417,9 @@ abstract class Grid
         if (isset($rewrite['orders'])) {
             $orders = $rewrite['orders'];
         } else {
-            $orders = $this->orders;
+            $orders = $this->getOrders();
         }
+
         foreach($orders as $column => $order) {
             $params[$this->prefix.'order-'.$column] = $order;
         }
@@ -422,7 +428,7 @@ abstract class Grid
         if (isset($rewrite['filters'])) {
             $filters = $rewrite['filters'];
         } else {
-            $filters = $this->filters;
+            $filters = $this->getFilters();
         }
         foreach ($filters as $column => $columnFilters) {
             $columnFilter = [];
@@ -527,6 +533,17 @@ abstract class Grid
      */
     public function getOrders()
     {
+        $default = $this->getDefaultOrder();
+
+        // remove default order when another one is set
+        if (is_array($default)
+            && count($this->orders) > 1
+            && isset($this->orders[key($default)])
+            && $this->orders[key($default)] == reset($default)
+        ) {
+            unset($this->orders[key($default)]);
+        }
+
         return $this->orders;
     }
 
@@ -691,4 +708,35 @@ abstract class Grid
     {
         return $this->defaultLimit;
     }
+
+    /**
+     * setDefaultOrder
+     *
+     * @param string $column
+     * @param string $order
+     * @throws GridException
+     * @return Grid
+     */
+    public function setDefaultOrder($column, $order = Grid::ORDER_ASC)
+    {
+        if (empty($column)) {
+            throw new GridException('Wrong default order value, should be not empty');
+        }
+        $this->setOrder($column, $order);
+
+        $this->defaultOrder = array($column => $order);
+        return $this;
+    }
+
+    /**
+     * getDefaultOrder
+     *
+     * @return integer
+     */
+    public function getDefaultOrder()
+    {
+        return $this->defaultOrder;
+    }
+
+
 }

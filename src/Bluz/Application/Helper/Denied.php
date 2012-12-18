@@ -35,5 +35,5 @@ return
 * @return void
 */
 function () {
-    throw new \Bluz\Application\Exception('You don\'t have permissions', 403);
+    throw new \Bluz\Application\ApplicationException('You don\'t have permissions', 403);
 };

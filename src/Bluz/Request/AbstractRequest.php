@@ -233,7 +233,7 @@ class AbstractRequest
      */
     public function getParam($key, $default = null)
     {
-        return (isset($this->params[$key]) ? $this->params[$key] : $default);
+        return $this->__get($key)?:$default;
     }
 
     /**

@@ -472,7 +472,7 @@ class Application
         $this->getRouter()
              ->process();
 
-        if ($this->request->getParam('_json')) {
+        if ($this->getRequest()->__get('_json')) {
             $this->useJson(true);
         }
 

@@ -424,6 +424,15 @@ class Application
         return $this->session;
     }
 
+    /**
+     * hasLayout
+     *
+     * @return boolean|string
+     */
+    public function hasLayout()
+    {
+        return $this->layoutFlag;
+    }
 
     /**
      * useLayout
@@ -472,7 +481,7 @@ class Application
         $this->getRouter()
              ->process();
 
-        if ($this->getRequest()->__get('_json')) {
+        if ($this->getRequest()->getParam('_json')) {
             $this->useJson(true);
         }
 

@@ -31,22 +31,29 @@ use Bluz\View\View;
 return
 /**
  * @param string $script
- * @return string|View
+ * @return string|void
  */
-function ($script) {
+function ($script = null) {
     /** @var View $this */
-    if ('.js' == substr($script, -3)) {
-        if (strpos($script, 'http://') !== 0
-            && strpos($script, 'https://') !== 0) {
-            $script = $this->baseUrl($script);
+    if ($this->getApplication()->hasLayout()) {
+        // it's stack for <head>
+        $view = $this->getApplication()->getLayout();
+
+        $headScripts = $view->system('headScripts') ?: [];
+
+        if (null === $script) {
+            $headScripts = array_unique($headScripts);
+            // clear system vars
+            $view->system('headScripts', []);
+
+            $headScripts = array_map([$this, 'script'], $headScripts);
+            return join("\n", $headScripts);
+        } else {
+            $headScripts[] = $script;
+            $view->system('headScripts', $headScripts);
         }
-        return "\t<script src=\"" . $script ."\"></script>\n";
     } else {
-        return "\t<script type=\"text/javascript\">\n"
-            .  "\t\t<!--\n\t\t"
-            .  $script ."\n"
-            .  "\t\t//-->\n"
-            .  "\t</script>"
-        ;
+        // it's just alias to script() call
+        return $this->script($script);
     }
 };

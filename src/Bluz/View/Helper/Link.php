@@ -36,11 +36,18 @@ use Bluz\View\View;
  */
 return function ($link = null, $rel = 'stylesheet') {
     /** @var View $this */
-    $headLinkFiles = $this->system('headLinkFiles') ?: [];
+    if ($this->getApplication()->hasLayout()) {
+        $view = $this->getApplication()->getLayout();
+    } else {
+        $view = $this;
+    }
+
+    $headLinkFiles = $view->system('headLinkFiles') ?: [];
 
     if (null === $link) {
+        $headLinkFiles = array_unique($headLinkFiles);
         // clear system vars
-        $this->system('headLinkFiles', []);
+        $view->system('headLinkFiles', []);
         return join("\n", $headLinkFiles);
     } else {
         if (strpos($link, 'http://') === 0
@@ -51,7 +58,7 @@ return function ($link = null, $rel = 'stylesheet') {
         }
 
         $headLinkFiles[] = '<link href="' . $href . '" rel="' . $rel .'"/>';
-        $this->system('headLinkFiles', $headLinkFiles);
+        $view->system('headLinkFiles', $headLinkFiles);
         return $this;
     }
 };

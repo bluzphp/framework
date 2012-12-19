@@ -30,23 +30,22 @@ use Bluz\View\View;
 
 return
 /**
- * @param string $script
+ * @param string $style
+ * @param string $media
  * @return string|View
  */
-function ($script) {
+function ($style, $media = 'all') {
     /** @var View $this */
-    if ('.js' == substr($script, -3)) {
-        if (strpos($script, 'http://') !== 0
-            && strpos($script, 'https://') !== 0) {
-            $script = $this->baseUrl($script);
+    if ('.css' == substr($style, -4)) {
+        if (strpos($style, 'http://') !== 0
+            && strpos($style, 'https://') !== 0) {
+            $style = $this->baseUrl($style);
         }
-        return "\t<script src=\"" . $script ."\"></script>\n";
+        return "\t<link href=\"" . $style ."\" rel=\"stylesheet\" media=\"".$media."\"/>\n";
     } else {
-        return "\t<script type=\"text/javascript\">\n"
-            .  "\t\t<!--\n\t\t"
-            .  $script ."\n"
-            .  "\t\t//-->\n"
-            .  "\t</script>"
+        return "\t<style type=\"text/css\" media=\"".$media."\">\n"
+            .  $style ."\n"
+            .  "\t</style>"
         ;
     }
 };

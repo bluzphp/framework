@@ -30,23 +30,30 @@ use Bluz\View\View;
 
 return
 /**
- * @param string $script
- * @return string|View
+ * Setup redactorjs
+ *
+ * @param string $selector
+ * @param array|string|null $settings
+ * @return string
  */
-function ($script) {
+function ($selector, $settings = null) {
     /** @var View $this */
-    if ('.js' == substr($script, -3)) {
-        if (strpos($script, 'http://') !== 0
-            && strpos($script, 'https://') !== 0) {
-            $script = $this->baseUrl($script);
-        }
-        return "\t<script src=\"" . $script ."\"></script>\n";
-    } else {
-        return "\t<script type=\"text/javascript\">\n"
-            .  "\t\t<!--\n\t\t"
-            .  $script ."\n"
-            .  "\t\t//-->\n"
-            .  "\t</script>"
-        ;
+    if ($settings === null) {
+        $settings = "{}";
+    } elseif (is_array($settings)) {
+        $settings = json_encode($settings);
+    } elseif (!is_string($settings)) {
+        $settings = "{}";
     }
+
+
+    $html  = "";
+    $html .= $this->headScript('redactor/redactor.js');
+    $html .= $this->headStyle('redactor/redactor.css');
+    $html .= $this->script('
+        jQuery(function(){
+            jQuery("'.$selector.'").redactor('.$settings.');
+        });
+    ');
+    return $html;
 };

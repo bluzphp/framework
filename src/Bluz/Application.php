@@ -537,19 +537,13 @@ class Application
             'reflection' => $reflectionData
         ));
 
-        // check user auth
-        if ($this->getAuth()) {
-            $identity = $this->getAuth()->getIdentity();
-        } else {
-            $identity = null;
-        }
-
         // check acl
         if (!$this->isAllowedController($module, $controller, $params)) {
             $this->denied();
         }
 
         // cache initialization
+        // TODO: refactoring with new Bluz\Cache
         if (isset($reflectionData['cache'])) {
             $cache = new CacheView($this->getConfigData('cache'));
             if ($cache -> load($module .'/'. $controller, $reflectionData['params'], $reflectionData['cache'])) {
@@ -582,6 +576,7 @@ class Application
         } else {
             $bootstrap = null;
         }
+        unset($bootstrapPath);
 
         /**
          * @var \closure $controllerClosure
@@ -592,9 +587,7 @@ class Application
             throw new Exception("Controller is not callable '$module/$controller'");
         }
 
-        $params = $this->params($reflectionData);
-
-        $result = call_user_func_array($controllerClosure, $params);
+        $result = call_user_func_array($controllerClosure, $this->params($reflectionData));
 
         // return false is equal to disable view and layout
         if ($result === false) {

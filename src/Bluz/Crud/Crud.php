@@ -48,6 +48,11 @@ class Crud
     protected $method = AbstractRequest::METHOD_GET;
 
     /**
+     * @var string
+     */
+    protected $formId;
+
+    /**
      * @var array
      */
     protected $data = array();
@@ -89,7 +94,8 @@ class Crud
             $this->getApplication()->getMessages()->addError("Please fix all errors");
             return [
                 'errors' => $this->getErrors(),
-                'callback' => 'validateForm' // FIXME: hardcoded function name
+                'formId' => $this->formId,
+                'callback' => 'bluz.validate.notices' // FIXME: hardcoded function name
             ];
         }
 
@@ -155,6 +161,9 @@ class Crud
 
         // get data from request
         $this->data = $request->data?:[];
+
+        // get form id
+        $this->formId = $request->formId;
 
         // rewrite REST with "method" param
         $this->method = $request->getParam('_method', $request->getMethod());

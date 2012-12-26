@@ -35,7 +35,8 @@ use Bluz\Application;
  * @package  View
  *
  * @method string ahref(\string $text, \string $href, array $attributes = [])
- * @method string baseUrl(\string $file)
+ * @method string api(\string $module, \string $method, $params = array())
+ * @method string baseUrl(\string $file = null)
  * @method array|null breadCrumbs(array $data = [])
  * @method string|boolean controller(\string $controller = null)
  * @method string|View dispatch($module, $controller, $params = array())

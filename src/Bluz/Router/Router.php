@@ -72,8 +72,6 @@ class Router
     {
         $routers = $this->getApplication()->getCache()->get('router:routers');
         $reverse = $this->getApplication()->getCache()->get('router:reverse');
-        // FIXME: disable cache for test
-//        $routers = $reverse = null;
 
         if (!$routers or !$reverse) {
             $routers = array();
@@ -115,6 +113,7 @@ class Router
             $this->getApplication()->getCache()->set('router:routers', $routers);
             $this->getApplication()->getCache()->set('router:reverse', $reverse);
         }
+
         $this->routers = $routers;
         $this->reverse = $reverse;
     }
@@ -281,7 +280,7 @@ class Router
         $request = $this->getApplication()->getRequest();
         $uri = '/'. $request->getCleanUri();
 
-        foreach ($this->routers as $key => $router) {
+        foreach ($this->routers as $router) {
             if (preg_match($router['pattern'], $uri, $matches)) {
                 $request->setModule($router['module']);
                 $request->setController($router['controller']);

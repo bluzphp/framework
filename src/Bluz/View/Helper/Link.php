@@ -29,36 +29,35 @@ namespace Bluz\View\Helper;
 use Bluz\View\View;
 
 /**
- * TODO: move variable to system section
- * @param string $link
- * @param string $rel
- * @return string|View
+ * @param array $link
+ * @return string
  */
-return function ($link = null, $rel = 'stylesheet') {
+return function (array $link = null) {
     /** @var View $this */
     if ($this->getApplication()->hasLayout()) {
-        $view = $this->getApplication()->getLayout();
-    } else {
-        $view = $this;
-    }
+        // it's stack for <head>
+        $layout = $this->getApplication()->getLayout();
 
-    $headLinkFiles = $view->system('headLinkFiles') ?: [];
+        $links = $layout->system('link') ?: [];
 
-    if (null === $link) {
-        $headLinkFiles = array_unique($headLinkFiles);
-        // clear system vars
-        $view->system('headLinkFiles', []);
-        return join("\n", $headLinkFiles);
-    } else {
-        if (strpos($link, 'http://') === 0
-            or strpos($link, 'https://') === 0) {
-            $href = $link;
+        if (null === $link) {
+            $links = array_unique($links);
+            // prepare to output
+            $links = array_map(function($arr){
+                $str = '<link ';
+                foreach ($arr as $key => $value) {
+                    $str .= $key .'="'. addcslashes($value, '"') .'" ';
+                }
+                $str .= '/>';
+                return $str;
+            }, $links);
+            // clear system vars
+            $layout->system('link', []);
+            return join("\n", $links);
         } else {
-            $href = $this->baseUrl($link);
+            $links[] = $link;
+            $layout->system('link', $links);
         }
-
-        $headLinkFiles[] = '<link href="' . $href . '" rel="' . $rel .'"/>';
-        $view->system('headLinkFiles', $headLinkFiles);
-        return $this;
     }
+    return '';
 };

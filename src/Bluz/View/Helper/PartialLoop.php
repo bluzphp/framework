@@ -80,8 +80,8 @@ function ($template, $data = array(), $params = array()) {
     }
 
     foreach ($data as $key => $value) {
-        $params['key'] = $key;
-        $params['value'] = $value;
+        $params['partialKey'] = $key;
+        $params['partialValue'] = $value;
         $this->partial($template, $params);
     }
 };

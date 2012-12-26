@@ -50,7 +50,7 @@ function ($selector, $settings = null) {
     $html  = "";
     $html .= $this->headScript('redactor/redactor.js');
     $html .= $this->headStyle('redactor/redactor.css');
-    $html .= $this->script('require(["jquery", "bluz"], function($, bluz) {
+    $html .= $this->headScript('require(["jquery", "bluz"], function($, bluz) {
         bluz.ready(function(){
             $("'.$selector.'").redactor('.$settings.');
         });

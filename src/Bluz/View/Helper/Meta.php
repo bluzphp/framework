@@ -31,35 +31,40 @@ use Bluz\View\View;
 /**
  * @param string|array|null $name
  * @param string|null $content
- * @return string|View
+ * @return string
  */
 return function ($name = null, $content = null) {
     /** @var View $this */
-    $meta = $this->system('meta') ?: [];
+    if ($this->getApplication()->hasLayout()) {
+        // it's stack for <head>
+        $layout = $this->getApplication()->getLayout();
 
-    if ($name && $content) {
-        $meta[] = ['name' => $name, 'content' => $content];
-    } elseif (is_array($name)) {
-        $meta[] = $name;
-    } elseif (!$name && !$content) {
-        if (sizeof($meta)) {
-            // prepare to output
-            $meta = array_map(function($arr){
-                $str = '<meta ';
-                foreach ($arr as $key => $value) {
-                    $str .= $key .'="'. addcslashes($value, '"') .'" ';
-                }
-                $str .= '/>';
-                return $str;
-            }, $meta);
-            // clear system vars
-            $this->system('meta', []);
-            return join("\n", $meta);
-        } else {
-            return '';
+        $meta = $layout->system('meta') ?: [];
+
+        if ($name && $content) {
+            $meta[] = ['name' => $name, 'content' => $content];
+            $layout->system('meta', $meta);
+        } elseif (is_array($name)) {
+            $meta[] = $name;
+            $layout->system('meta', $meta);
+        } elseif (!$name && !$content) {
+            if (sizeof($meta)) {
+                // prepare to output
+                $meta = array_map(function($arr){
+                    $str = '<meta ';
+                    foreach ($arr as $key => $value) {
+                        $str .= $key .'="'. addcslashes($value, '"') .'" ';
+                    }
+                    $str .= '/>';
+                    return $str;
+                }, $meta);
+                // clear system vars
+                $layout->system('meta', []);
+                return join("\n", $meta);
+            } else {
+                return '';
+            }
         }
     }
-
-    $this->system('meta', $meta);
-    return $this;
+    return '';
 };

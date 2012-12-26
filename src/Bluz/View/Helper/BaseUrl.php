@@ -36,7 +36,7 @@ return
  * @param string $file
  * @return string
  */
-function ($file) {
+function ($file = null) {
     /** @var View $this */
     // setup baseUrl
     if (!$this->baseUrl) {

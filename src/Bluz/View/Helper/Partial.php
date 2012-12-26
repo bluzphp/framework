@@ -36,7 +36,7 @@ return
  *
  * be careful, method rewrites the View variables with params
  *
- * @param       $__template
+ * @param string $__template
  * @param array $__params
  * @throws ViewException
  * @return string

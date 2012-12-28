@@ -40,6 +40,8 @@ if (!function_exists('debug')) {
             return;
         }
 
+        ini_set('xdebug.var_display_max_children', 512);
+
         if ('cli' == PHP_SAPI) {
             if (extension_loaded('xdebug')) {
                 // try to enable CLI colors

@@ -132,6 +132,10 @@ class Db
      */
     public static function getDefaultAdapter()
     {
+        // try to init Db
+        \Bluz\Application::getInstance()->getDb();
+
+        // check default adapter
         if (self::$adapter) {
             return self::$adapter;
         } else {
@@ -189,20 +193,6 @@ class Db
             }
         }
         return $this;
-    }
-
-    /**
-     * getAdapter
-     *
-     * @throws DbException
-     * @return Db
-     */
-    public function getAdapter()
-    {
-        if (!self::$adapter) {
-            throw new DbException('Default Db adapter not found');
-        }
-        return self::$adapter;
     }
 
     /**

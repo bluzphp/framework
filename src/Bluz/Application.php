@@ -34,7 +34,6 @@ use Bluz\Db\Db;
 use Bluz\EventManager\EventManager;
 use Bluz\Ldap\Ldap;
 use Bluz\Messages\Messages;
-use Bluz\Rcl\Rcl;
 use Bluz\Registry\Registry;
 use Bluz\Request;
 use Bluz\Router\Router;
@@ -109,11 +108,6 @@ class Application
     protected $messages;
 
     /**
-     * @var Rcl
-     */
-    protected $rcl;
-
-    /**
      * @var Registry
      */
     protected $registry;
@@ -180,6 +174,7 @@ class Application
         $this->environment = $environment;
 
         try {
+            // setup configuration for current environment
             $this->getConfig($environment);
 
             $this->log(__METHOD__);
@@ -187,13 +182,8 @@ class Application
             // initial default helper path
             $this->addHelperPath(dirname(__FILE__) . '/Application/Helper/');
 
-            $this->getCache();
-            $this->getRegistry();
+            // session start inside
             $this->getSession();
-            $this->getMessages();
-            $this->getAuth();
-            $this->getAcl();
-            $this->getDb();
         } catch (Exception $e) {
             throw new Exception("Application can't be loaded: ". $e->getMessage());
         }
@@ -353,19 +343,6 @@ class Application
     }
 
     /**
-     * getRcl
-     *
-     * @return Rcl
-     */
-    public function getRcl()
-    {
-        if (!$this->rcl) {
-            $this->rcl = new Rcl();
-        }
-        return $this->rcl;
-    }
-
-    /**
      * getRegistry
      *
      * @return Registry
@@ -418,7 +395,6 @@ class Application
         if (!$this->session) {
             $this->session = new Session($this->getConfigData('session'));
             $this->session->start();
-
             $this->getMessages();
         }
         return $this->session;
@@ -944,14 +920,6 @@ class Application
             return false;
         }
 
-        if (isset($data['privilege']) && isset($data['resourceType'])) {
-            $resourceId = null;
-            if (!empty($data['resourceParam'])) {
-                $resourceId = isset($params[$data['resourceParam']]) ? $params[$data['resourceParam']] : null;
-            }
-            return $this->getRcl()->isAllowed($module, $data['privilege'], $data['resourceType'], $resourceId);
-        }
-
         return true;
     }
 
@@ -973,14 +941,6 @@ class Application
             !$this->getAcl()->isAllowed($module, $data['privilege'])) {
             // privilege is described and deny
             return false;
-        }
-
-        if (isset($data['privilege']) && isset($data['resourceType'])) {
-            $resourceId = null;
-            if (!empty($data['resourceParam'])) {
-                $resourceId = isset($params[$data['resourceParam']]) ? $params[$data['resourceParam']] : null;
-            }
-            return $this->getRcl()->isAllowed($data['privilege'], $data['resourceType'], $resourceId);
         }
 
         return true;

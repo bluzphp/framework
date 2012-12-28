@@ -45,18 +45,17 @@ require_once 'Package.php';
 
 // application
 require_once 'Application.php';
+require_once 'Application/ApplicationException.php';
 
 // packages and support
-require_once 'Acl/Acl.php';
-require_once 'Auth/Auth.php';
 require_once 'Cache/Cache.php';
 require_once 'Config/Config.php';
-require_once 'Db/Db.php';
 require_once 'EventManager/Event.php';
 require_once 'EventManager/EventManager.php';
-require_once 'Rcl/Rcl.php';
+require_once 'Messages/Messages.php';
 require_once 'Request/AbstractRequest.php';
-require_once 'Request/HttpRequest.php';
 require_once 'Router/Router.php';
 require_once 'Session/Session.php';
+require_once 'Session/Store/AbstractStore.php';
 require_once 'View/View.php';
+require_once 'View/Layout.php';

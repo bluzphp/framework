@@ -45,7 +45,7 @@ class Router
     const DEFAULT_MODULE = 'index';
     const DEFAULT_CONTROLLER = 'index';
     const ERROR_MODULE = 'error';
-    const ERROR_CONTROLLER = 'error';
+    const ERROR_CONTROLLER = 'index';
 
     /**
      * @var array

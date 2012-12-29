@@ -472,7 +472,7 @@ class Application
                 $this->request->getParams()
             );
         } catch (\Exception $e) {
-             $dispatchResult = $this->dispatch('error', 'error', array(
+            $dispatchResult = $this->dispatch(Router::ERROR_MODULE, Router::ERROR_CONTROLLER, array(
                 'code' => $e->getCode(),
                 'message' => $e->getMessage()
             ));

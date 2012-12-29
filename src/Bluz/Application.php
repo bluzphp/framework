@@ -851,12 +851,6 @@ class Application
             if (preg_match('/\s*\*\s*\@privilege\s+(\w+).*/i', $docComment, $matches)) {
                 $data['privilege'] = $matches[1];
             }
-            // check rcl settings
-            if (preg_match('/\s*\*\s*\@resource\s+(\w+)(\s\w+|).*/i', $docComment, $matches)) {
-                $data['resourceType'] = $matches[1];
-                $data['resourceParam'] = trim($matches[2]);
-            }
-
             $this->getCache()->set('reflection:'.$file, $data);
         }
         return $data;

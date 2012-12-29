@@ -39,8 +39,8 @@ return
  */
 function ($url) {
     /** @var Application $this */
-    // for AJAX controllers
-    if ($this->jsonFlag) {
+    // for AJAX requests
+    if ($this->getRequest()->isXmlHttpRequest()) {
         $this->getLayout()->_redirect = $url;
         return;
     }

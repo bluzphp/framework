@@ -163,7 +163,7 @@ class Crud
         $this->data = $request->data?:[];
 
         // get form id
-        $this->formId = $request->formId;
+        $this->formId = $request->_formId;
 
         // rewrite REST with "method" param
         $this->method = $request->getParam('_method', $request->getMethod());

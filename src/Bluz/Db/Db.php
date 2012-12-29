@@ -132,9 +132,6 @@ class Db
      */
     public static function getDefaultAdapter()
     {
-        // try to init Db
-        \Bluz\Application::getInstance()->getDb();
-
         // check default adapter
         if (self::$adapter) {
             return self::$adapter;

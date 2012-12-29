@@ -184,6 +184,9 @@ class Application
 
             // session start inside
             $this->getSession();
+
+            // initial DB configuration
+            $this->getDb();
         } catch (Exception $e) {
             throw new Exception("Application can't be loaded: ". $e->getMessage());
         }
@@ -468,18 +471,17 @@ class Application
                 $this->request->getController(),
                 $this->request->getParams()
             );
-
-            // move vars from layout to view instance
-            if ($dispatchResult instanceof View) {
-                $dispatchResult -> setData(
-                    $this->getLayout()->toArray()
-                );
-            }
         } catch (\Exception $e) {
              $dispatchResult = $this->dispatch('error', 'error', array(
                 'code' => $e->getCode(),
                 'message' => $e->getMessage()
             ));
+        }
+        // move vars from layout to view instance
+        if ($dispatchResult instanceof View) {
+            $dispatchResult -> setData(
+                $this->getLayout()->toArray()
+            );
         }
         $this->dispatchResult = $dispatchResult;
         return $this;

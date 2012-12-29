@@ -33,6 +33,7 @@ use Bluz\Config\Config;
 use Bluz\Db\Db;
 use Bluz\EventManager\EventManager;
 use Bluz\Ldap\Ldap;
+use Bluz\Mailer\Mailer;
 use Bluz\Messages\Messages;
 use Bluz\Registry\Registry;
 use Bluz\Request;
@@ -101,6 +102,11 @@ class Application
      * @var Ldap
      */
     protected $ldap;
+
+    /**
+     * @var Mailer
+     */
+    protected $mailer;
 
     /**
      * @var Messages
@@ -320,6 +326,19 @@ class Application
             $this->ldap = new Ldap($conf);
         }
         return $this->ldap;
+    }
+
+    /**
+     * getMailer
+     *
+     * @return Mailer
+     */
+    public function getMailer()
+    {
+        if (!$this->mailer) {
+            $this->mailer = new Mailer();
+        }
+        return $this->mailer;
     }
 
     /**

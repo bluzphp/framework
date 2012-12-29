@@ -21,22 +21,53 @@
  * THE SOFTWARE.
  */
 
-/**
- * @namespace
- */
 namespace Bluz\Cache;
 
-use Bluz\Exception;
-
-/**
- * Exception
- *
- * @category Bluz
- * @package  Cache
- *
- * @author   Anton Shevchuk
- * @created  06.03.12 15:52
- */
-class CacheException extends Exception
+class MemcachedAdapter extends AdapterBase
 {
+    /**
+     * @var \Memcached
+     */
+    protected $memcached = null;
+
+    protected $servers = array();
+
+
+    public function __construct()
+    {
+        throw new CacheException("implement me please");
+    }
+    protected function doGet($id)
+    {
+
+    }
+
+    protected function doAdd($id, $data, $ttl = 0)
+    {
+
+    }
+    protected function doSet($id, $data, $ttl = 0)
+    {
+
+    }
+
+    protected function doContains($id)
+    {
+
+    }
+
+    protected function doDelete($id)
+    {
+
+    }
+
+    protected function doFlush()
+    {
+
+    }
+
+    public function getMemcached()
+    {
+        return $this->memcached;
+    }
 }

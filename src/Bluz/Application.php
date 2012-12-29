@@ -837,7 +837,12 @@ class Application
                 $data['types'][$matches[2][$i]] = $type;
             }
 
-            $data['params'] = $reflection->getParameters();
+            // get params and convert it to simple array
+            $params = $reflection->getParameters();
+            foreach ($params as $key => $param) {
+                $params[$key] = $param->getName();
+            }
+            $data['params'] = $params;
 
             // check cache settings
             if (preg_match('/\s*\*\s*\@cache\s+([0-9\.]+).*/i', $docComment, $matches)) {

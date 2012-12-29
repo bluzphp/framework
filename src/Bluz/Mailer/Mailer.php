@@ -40,11 +40,6 @@ class Mailer
     use \Bluz\Package;
 
     /**
-     * @var PHPMailer
-     */
-    protected $mail;
-
-    /**
      * @var array
      */
     protected $config;
@@ -75,7 +70,7 @@ class Mailer
     {
         $this->config = $this->getApplication()->getConfigData('mail');
 
-        $this->mail = new \PHPMailer();
+        $mail = new \PHPMailer();
 
         if (!isset($this->config['from']['email'])) {
             throw new MailerException('Missed `from.email` option in `mail` config');
@@ -84,11 +79,11 @@ class Mailer
         $fromEmail = $this->config['from']['email'];
         $fromName = isset($this->config['from']['name']) ? $this->config['from']['name'] : '';
 
-        $this->mail->SetFrom($fromEmail, $fromName, false);
+        $mail->SetFrom($fromEmail, $fromName, false);
 
-        $this->_useSmtp();
+        $this->_useSmtp($mail);
 
-        return $this->mail;
+        return $mail;
     }
 
     /**
@@ -96,20 +91,20 @@ class Mailer
      *
      * @return bool
      */
-    private function _useSmtp()
+    private function _useSmtp(\PHPMailer $mail)
     {
         if (!isset($this->config['smtp'])) {
             return false;
         }
 
-        $this->mail->IsSMTP(); // telling the class to use SMTP
-        $this->mail->SMTPSecure = "ssl";                 // sets the prefix to the server
-        $this->mail->SMTPDebug = 2; // enables SMTP debug information (for testing)
+        $mail->IsSMTP(); // telling the class to use SMTP
+        $mail->SMTPSecure = "ssl";                 // sets the prefix to the server
+        $mail->SMTPDebug = 2; // enables SMTP debug information (for testing)
         // 1 = errors and messages
         // 2 = messages only
 
-        $this->mail->Host = $this->config['smtp']['host']; // sets the SMTP server
-        $this->mail->Port = $this->config['smtp']['port']; // set the SMTP port for the GMAIL server
+        $mail->Host = $this->config['smtp']['host']; // sets the SMTP server
+        $mail->Port = $this->config['smtp']['port']; // set the SMTP port for the GMAIL server
 
         if (!isset($this->config['smtp']['username'])
             || !isset($this->config['smtp']['password'])
@@ -117,9 +112,9 @@ class Mailer
             return true;
         }
 
-        $this->mail->SMTPAuth = true; // enable SMTP authentication
-        $this->mail->Username = $this->config['smtp']['username']; // SMTP account username
-        $this->mail->Password = $this->config['smtp']['password']; // SMTP account password
+        $mail->SMTPAuth = true; // enable SMTP authentication
+        $mail->Username = $this->config['smtp']['username']; // SMTP account username
+        $mail->Password = $this->config['smtp']['password']; // SMTP account password
 
         return true;
     }
@@ -127,16 +122,20 @@ class Mailer
     /**
      * Send email
      *
+     * @todo Add mail to queue
+     *
+     * @param \PHPMailer $mail
      * @return bool
-     * @throws Exception
+     * @throws MailerException
      */
-    public function send()
+    public function send(\PHPMailer $mail)
     {
         if (isset($this->config['subjectPrefix'])) {
-            $this->mail->Subject = $this->config['subjectPrefix'] . $this->mail->Subject;
+            $mail->Subject = $this->config['subjectPrefix'] . $mail->Subject;
         }
 
-        if (!$this->mail->Send()) {
+        // TODO: add to queue
+        if (!$mail->Send()) {
             throw new MailerException('Error mail send');
         }
 

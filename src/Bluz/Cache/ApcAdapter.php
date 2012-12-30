@@ -21,22 +21,48 @@
  * THE SOFTWARE.
  */
 
-/**
- * @namespace
- */
 namespace Bluz\Cache;
-
-use Bluz\Exception;
-
 /**
- * Exception
- *
- * @category Bluz
- * @package  Cache
- *
- * @author   Anton Shevchuk
- * @created  06.03.12 15:52
+ * APC cache adapter
+ * @author murzik
  */
-class CacheException extends Exception
+class ApcAdapter extends AdapterBase
 {
+    public function __construct()
+    {
+        if(!extension_loaded('apc')) {
+            $msg = "APC extension not installed/enabled.
+                    Install and/or enable APC extension. See phpinfo() for more information";
+            throw new CacheException($msg);
+        }
+    }
+    protected function doGet($id)
+    {
+        return apc_fetch($id);
+    }
+
+    protected function doAdd($id, $data, $ttl = 0)
+    {
+        return apc_add($id, $data, $ttl);
+    }
+
+    protected function doSet($id, $data, $ttl = 0)
+    {
+        return apc_store($id, $data, $ttl);
+    }
+
+    protected function doContains($id)
+    {
+        return apc_exists($id);
+    }
+
+    protected function doDelete($id)
+    {
+        return apc_delete($id);
+    }
+
+    protected function doFlush()
+    {
+        return apc_clear_cache("user");
+    }
 }

@@ -21,132 +21,238 @@
  * THE SOFTWARE.
  */
 
-/**
- * @namespace
- */
 namespace Bluz\Cache;
-
+use Bluz\Cache\CacheInterface;
+use Bluz\Cache\TagableInterface;
+use Bluz\Cache\CacheException;
 /**
- * Cache
- *
- * @category Bluz
- * @package  Cache
- *
- * @method get($key) variable from cache
- * @method add($key, $value, $ttl = 0)
- * @method set($key, $value, $ttl = 0)
- * @method delete($key, $time = 0)
- *
- * @author   Anton Shevchuk
- * @created  12.07.11 12:47
+ * Cache Frontend for Bluz\Cache system
+ * @author murzik
  */
-class Cache
+class Cache implements CacheInterface,TagableInterface
 {
-    use \Bluz\Package;
+    /**
+     * @var \Bluz\Cache\AdapterBase
+     */
+    protected $cacheDriver = null;
+    /**
+     * @var \Bluz\Cache\AdapterBase
+     */
+    protected $tagDriver = null;
+
+    protected $tagPrefix = '__tag__';
+
+    protected $enabled = true;
+
 
     /**
-     * @var \Memcached
+     * Cache frontend constructor
+     * @param array $options Available options are:
+     *  - 'enabled' => Boolean,optional, true by default
+     *  - 'cacheAdapter' => Instance of Bluz\Cache\CacheInterface. Required if option 'enabled' set to true
+     *  - 'tagAdapter' => Instance of Bluz\Cache\CacheInterface. Optional.
+     *                    If it is not set, 'cacheAdapter' instance will be used as a tag adapter
+     * @throws Bluz\Cache\InvalidArgumentException if cache enabled and 'cacheAdapter' option is missing
      */
-    protected $memcached;
-
-	/**
-	 * Cache flag
-	 * @var boolean
-	 */
-	protected $cache = true;
-
-	/**
-	 * Servers settings
-	 * @var array
-	 */
-	protected $servers = array();
-
-    /**
-     * init handler
-     *
-     * @return \Memcached
-     */
-    public function handler()
+    public function __construct($options = array())
     {
-        if (!$this->cache or !sizeof($this->servers) or !class_exists('Memcached', false)) {
+        if(isset($options['enabled'])) {
+            $this->enabled = (bool) $options['enabled'];
+        }
+
+        //if cache disabled by default - we can fall through cacheAdapter check
+        if( ! isset($options['cacheAdapter']) && $this->enabled) {
+            $msg = "Missing cacheAdapter configuration option";
+            throw new InvalidArgumentException($msg);
+        }
+
+        $this->setCacheAdapter($options['cacheAdapter']);
+
+        if( ! isset($options['tagAdapter'])) {
+            $this->setTagAdapter($options['cacheAdapter']);
+        } else {
+            $this->setTagAdapter($options['tagAdapter']);
+        }
+
+
+    }
+
+    /**
+     * Enable/Disable cache.
+     * If cache is disabled, any calls to Bluz\Cache\CacheInterface methods will do nothing.
+     * Note that you can't enable Bluz\Cache if cacheAdapter not set
+     * @param bool $flag [OPTIONAL] default to true
+     * @throws Bluz\CacheException during attempt to enable misconfigured \Bluz\Cache\Cache instance
+     */
+    public function setEnabled($flag = true)
+    {
+        $flag = (bool) $flag;
+        if( ! $this->enabled && $flag) {
+
+            if( ! $this->cacheDriver) {
+                //we going to enable cache. we can't do that if there is no cache adapter instance
+                $msg = "You can't enable cache. Cache adapter is missing.
+                        Use \\Bluz\\Cache#setCacheAdapter method to set adapter instance";
+                throw new CacheException($msg);
+            }
+
+            if( ! $this->tagDriver) {
+                //use cacheDriver for tagable if it is missing
+                $this->tagDriver = $this->cacheDriver;
+            }
+
+        }
+
+        $this->enabled = (bool) $flag;
+    }
+
+    public function setCacheAdapter(CacheInterface $adapter)
+    {
+        $this->cacheDriver = $adapter;
+    }
+
+    public function setTagAdapter(CacheInterface $adapter)
+    {
+        $this->tagDriver = $adapter;
+    }
+
+    /**
+     * Check whether cache enabled or not
+     * @return bool $isEnabled
+     */
+    public function isEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function get($id)
+    {
+        if( ! $this->enabled) {
             return false;
         }
 
-        if (!$this->memcached) {
-            $this->memcached = new \Memcached();
-            $this->memcached->addServers($this->servers);
-        }
-        return $this->memcached;
+        return $this->cacheDriver->get($id);
     }
 
     /**
-     * setServers
-     *
-     * @param array $settings
-     * @return Cache
+     * {@inheritdoc}
      */
-    public function setServers(array $settings)
+    public function add($id, $data, $ttl = 0)
     {
-        $this->servers = $settings;
-        return $this;
-    }
-
-    /**
-     * setCache
-     *
-     * @param boolean $flag
-     * @return Cache
-     */
-    public function setCache($flag)
-    {
-        $this->cache = $flag;
-        return $this;
-    }
-
-    /**
-     * Get data from cache
-     * otherwise call callback function
-     *
-     * @param string   $key
-     * @param \closure $callback
-     * @param int      $ttl
-     * @throws \Bluz\Exception
-     * @return mixed
-     */
-    public function getData($key, $callback, $ttl = 0)
-    {
-        if (!is_callable($callback)) {
-            throw new \Bluz\Exception('Callback parameter should be callable, like closure');
-        }
-        if (!$handler = $this->handler()) {
-             return $callback();
-        }
-
-        if (!$data = $handler->get($key)) {
-            $data = $callback();
-            $handler->set($key, $data, $ttl);
-        }
-        return $data;
-    }
-
-    /**
-     * __call
-     *
-     * @param string $method
-     * @param array  $params
-     * @throws CacheException
-     * @return mixed
-     */
-    public function __call($method, $params)
-    {
-        if (!$handler = $this->handler()) {
+        if( ! $this->enabled) {
             return false;
         }
 
-        if (!method_exists($handler, $method)) {
-            throw new CacheException('Method "'.$method.'" is not support by cache handler');
+        return $this->cacheDriver->add($id, $data, $ttl);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function set($id, $data, $ttl = 0)
+    {
+        if( ! $this->enabled) {
+            return false;
         }
 
-        return call_user_func_array(array($handler, $method), $params);
+        return $this->cacheDriver->set($id, $data, $ttl);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function contains($id)
+    {
+        if( ! $this->enabled) {
+            return false;
+        }
+
+        return $this->cacheDriver->contains($id);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function delete($id)
+    {
+        if( ! $this->enabled) {
+            return false;
+        }
+
+        return $this->cacheDriver->delete($id);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function flush()
+    {
+        if( ! $this->enabled) {
+            return false;
+        }
+
+        return $this->cacheDriver->flush();
+    }
+
+    /**
+     * Get underlying cache driver
+     * @return AdapterBase
+     */
+    public function getAdapter()
+    {
+        return $this->cacheDriver;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addTag($id, $tag)
+    {
+        if( ! $this->enabled) {
+            return false;
+        }
+
+        $identifiers = array();
+        $tag = $this->tagPrefix . $tag;
+
+        if($this->tagDriver->contains($tag)) {
+            $identifiers = $this->tagDriver->get($tag);
+        }
+
+        //array may contain not unique values, but I can't see problem here
+        $identifiers[] = $id;
+
+        return $this->tagDriver->set($tag, $identifiers);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function deleteByTag($tag)
+    {
+        if( ! $this->enabled) {
+            return false;
+        }
+
+        //maybe it makes sense to add check for prefix existence in tag name
+        $tag = $this->tagPrefix . $tag;
+        $identifiers  = $this->tagDriver->get($tag);
+
+        if( ! $identifiers) {
+            return false;
+        }
+
+        foreach($identifiers as $identifier) {
+            $this->cacheDriver->delete($identifier);
+        }
+
+        //TODO: m-m-m-m..... not sure about line below. Do we need this?
+//        $this->tagDriver->delete($tag);
+
+        return true;
+    }
+
 }

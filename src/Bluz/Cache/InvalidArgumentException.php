@@ -21,22 +21,9 @@
  * THE SOFTWARE.
  */
 
-/**
- * @namespace
- */
 namespace Bluz\Cache;
 
-use Bluz\Exception;
-
 /**
- * Exception
- *
- * @category Bluz
- * @package  Cache
- *
- * @author   Anton Shevchuk
- * @created  06.03.12 15:52
+ * @author murzik
  */
-class CacheException extends Exception
-{
-}
+class InvalidArgumentException extends CacheException{}

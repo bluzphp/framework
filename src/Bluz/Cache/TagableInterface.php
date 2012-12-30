@@ -21,22 +21,25 @@
  * THE SOFTWARE.
  */
 
-/**
- * @namespace
- */
 namespace Bluz\Cache;
 
-use Bluz\Exception;
-
 /**
- * Exception
- *
- * @category Bluz
- * @package  Cache
- *
- * @author   Anton Shevchuk
- * @created  06.03.12 15:52
+ * @author murzik
  */
-class CacheException extends Exception
+interface TagableInterface
 {
-}
+    /**
+     * Add tag $tag for cache entry with $id identifier
+     * @param string $id
+     * @param string $tag
+     * @return boolean
+     */
+    public function addTag($id, $tag);
+
+    /**
+     * Delete all cache entries associated with given $tag
+     * @param string $tag
+     * @return boolean
+     */
+    public function deleteByTag($tag);
+} //TODO: public function getByTag?

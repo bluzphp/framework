@@ -21,7 +21,11 @@
  * THE SOFTWARE.
  */
 
+/**
+ * @namespace
+ */
 namespace Bluz\Cache;
+
 /**
  * Bluz cache driver interface
  * @author Murzik
@@ -61,7 +65,6 @@ interface CacheInterface
      * @return boolean
      */
     public function contains($id);
-
 
     /**
      * Delete cache entry

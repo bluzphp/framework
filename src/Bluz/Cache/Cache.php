@@ -21,99 +21,77 @@
  * THE SOFTWARE.
  */
 
+/**
+ * @namespace
+ */
 namespace Bluz\Cache;
-use Bluz\Cache\CacheInterface;
-use Bluz\Cache\TagableInterface;
-use Bluz\Cache\CacheException;
+
 /**
  * Cache Frontend for Bluz\Cache system
+ *
+ *  - 'enabled' => Boolean,optional, true by default
+ *  - 'settings' =>
+ *     - 'cacheAdapter' => Settings for setup Instance of Bluz\Cache\CacheInterface. Required if option 'enabled' set to true
+ *     - 'tagAdapter' => Settings fir setup Instance of Bluz\Cache\CacheInterface. Optional.
+ *                    If it is not set, 'cacheAdapter' instance will be used as a tag adapter
+ *
  * @author murzik
  */
-class Cache implements CacheInterface,TagableInterface
+class Cache implements CacheInterface, TagableInterface
 {
+    use \Bluz\Package;
+
     /**
-     * @var \Bluz\Cache\AdapterBase
+     * @var AbstractAdapter
      */
-    protected $cacheDriver = null;
+    protected $cacheAdapter = null;
+
     /**
-     * @var \Bluz\Cache\AdapterBase
+     * @var AbstractAdapter
      */
-    protected $tagDriver = null;
+    protected $tagAdapter = null;
 
     protected $tagPrefix = '__tag__';
 
     protected $enabled = true;
-
-
-    /**
-     * Cache frontend constructor
-     * @param array $options Available options are:
-     *  - 'enabled' => Boolean,optional, true by default
-     *  - 'cacheAdapter' => Instance of Bluz\Cache\CacheInterface. Required if option 'enabled' set to true
-     *  - 'tagAdapter' => Instance of Bluz\Cache\CacheInterface. Optional.
-     *                    If it is not set, 'cacheAdapter' instance will be used as a tag adapter
-     * @throws Bluz\Cache\InvalidArgumentException if cache enabled and 'cacheAdapter' option is missing
-     */
-    public function __construct($options = array())
-    {
-        if(isset($options['enabled'])) {
-            $this->enabled = (bool) $options['enabled'];
-        }
-
-        //if cache disabled by default - we can fall through cacheAdapter check
-        if( ! isset($options['cacheAdapter']) && $this->enabled) {
-            $msg = "Missing cacheAdapter configuration option";
-            throw new InvalidArgumentException($msg);
-        }
-
-        $this->setCacheAdapter($options['cacheAdapter']);
-
-        if( ! isset($options['tagAdapter'])) {
-            $this->setTagAdapter($options['cacheAdapter']);
-        } else {
-            $this->setTagAdapter($options['tagAdapter']);
-        }
-
-
-    }
 
     /**
      * Enable/Disable cache.
      * If cache is disabled, any calls to Bluz\Cache\CacheInterface methods will do nothing.
      * Note that you can't enable Bluz\Cache if cacheAdapter not set
      * @param bool $flag [OPTIONAL] default to true
-     * @throws Bluz\CacheException during attempt to enable misconfigured \Bluz\Cache\Cache instance
+     * @throws CacheException during attempt to enable misconfigured \Bluz\Cache\Cache instance
      */
     public function setEnabled($flag = true)
     {
-        $flag = (bool) $flag;
-        if( ! $this->enabled && $flag) {
-
-            if( ! $this->cacheDriver) {
-                //we going to enable cache. we can't do that if there is no cache adapter instance
-                $msg = "You can't enable cache. Cache adapter is missing.
-                        Use \\Bluz\\Cache#setCacheAdapter method to set adapter instance";
-                throw new CacheException($msg);
-            }
-
-            if( ! $this->tagDriver) {
-                //use cacheDriver for tagable if it is missing
-                $this->tagDriver = $this->cacheDriver;
-            }
-
-        }
-
-        $this->enabled = (bool) $flag;
+        $this->enabled = (bool)$flag;
     }
 
+    /**
+     * setSettings
+     *
+     * @param array $settings
+     * @return self
+     */
+    public function setSettings($settings = array())
+    {
+        return $this;
+    }
+
+    /**
+     * @param CacheInterface $adapter
+     */
     public function setCacheAdapter(CacheInterface $adapter)
     {
-        $this->cacheDriver = $adapter;
+        $this->cacheAdapter = $adapter;
     }
 
+    /**
+     * @param CacheInterface $adapter
+     */
     public function setTagAdapter(CacheInterface $adapter)
     {
-        $this->tagDriver = $adapter;
+        $this->tagAdapter = $adapter;
     }
 
     /**
@@ -130,11 +108,11 @@ class Cache implements CacheInterface,TagableInterface
      */
     public function get($id)
     {
-        if( ! $this->enabled) {
+        if (!$this->enabled) {
             return false;
         }
 
-        return $this->cacheDriver->get($id);
+        return $this->cacheAdapter->get($id);
     }
 
     /**
@@ -142,11 +120,11 @@ class Cache implements CacheInterface,TagableInterface
      */
     public function add($id, $data, $ttl = 0)
     {
-        if( ! $this->enabled) {
+        if (!$this->enabled) {
             return false;
         }
 
-        return $this->cacheDriver->add($id, $data, $ttl);
+        return $this->cacheAdapter->add($id, $data, $ttl);
     }
 
     /**
@@ -154,11 +132,11 @@ class Cache implements CacheInterface,TagableInterface
      */
     public function set($id, $data, $ttl = 0)
     {
-        if( ! $this->enabled) {
+        if (!$this->enabled) {
             return false;
         }
 
-        return $this->cacheDriver->set($id, $data, $ttl);
+        return $this->cacheAdapter->set($id, $data, $ttl);
     }
 
     /**
@@ -166,11 +144,11 @@ class Cache implements CacheInterface,TagableInterface
      */
     public function contains($id)
     {
-        if( ! $this->enabled) {
+        if (!$this->enabled) {
             return false;
         }
 
-        return $this->cacheDriver->contains($id);
+        return $this->cacheAdapter->contains($id);
     }
 
     /**
@@ -178,11 +156,11 @@ class Cache implements CacheInterface,TagableInterface
      */
     public function delete($id)
     {
-        if( ! $this->enabled) {
+        if (!$this->enabled) {
             return false;
         }
 
-        return $this->cacheDriver->delete($id);
+        return $this->cacheAdapter->delete($id);
     }
 
     /**
@@ -190,20 +168,20 @@ class Cache implements CacheInterface,TagableInterface
      */
     public function flush()
     {
-        if( ! $this->enabled) {
+        if (!$this->enabled) {
             return false;
         }
 
-        return $this->cacheDriver->flush();
+        return $this->cacheAdapter->flush();
     }
 
     /**
-     * Get underlying cache driver
+     * Get underlying cache Adapter
      * @return AdapterBase
      */
     public function getAdapter()
     {
-        return $this->cacheDriver;
+        return $this->cacheAdapter;
     }
 
     /**
@@ -211,21 +189,21 @@ class Cache implements CacheInterface,TagableInterface
      */
     public function addTag($id, $tag)
     {
-        if( ! $this->enabled) {
+        if (!$this->enabled) {
             return false;
         }
 
         $identifiers = array();
         $tag = $this->tagPrefix . $tag;
 
-        if($this->tagDriver->contains($tag)) {
-            $identifiers = $this->tagDriver->get($tag);
+        if ($this->tagAdapter->contains($tag)) {
+            $identifiers = $this->tagAdapter->get($tag);
         }
 
-        //array may contain not unique values, but I can't see problem here
+        // array may contain not unique values, but I can't see problem here
         $identifiers[] = $id;
 
-        return $this->tagDriver->set($tag, $identifiers);
+        return $this->tagAdapter->set($tag, $identifiers);
     }
 
     /**
@@ -233,24 +211,24 @@ class Cache implements CacheInterface,TagableInterface
      */
     public function deleteByTag($tag)
     {
-        if( ! $this->enabled) {
+        if (!$this->enabled) {
             return false;
         }
 
-        //maybe it makes sense to add check for prefix existence in tag name
+        // maybe it makes sense to add check for prefix existence in tag name
         $tag = $this->tagPrefix . $tag;
-        $identifiers  = $this->tagDriver->get($tag);
+        $identifiers = $this->tagAdapter->get($tag);
 
-        if( ! $identifiers) {
+        if (!$identifiers) {
             return false;
         }
 
-        foreach($identifiers as $identifier) {
-            $this->cacheDriver->delete($identifier);
+        foreach ($identifiers as $identifier) {
+            $this->cacheAdapter->delete($identifier);
         }
 
-        //TODO: m-m-m-m..... not sure about line below. Do we need this?
-//        $this->tagDriver->delete($tag);
+        // TODO: m-m-m-m..... not sure about line below. Do we need this?
+//        $this->tagAdapter->delete($tag);
 
         return true;
     }

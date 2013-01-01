@@ -21,28 +21,34 @@
  * THE SOFTWARE.
  */
 
-namespace Bluz\Cache;
+/**
+ * @namespace
+ */
+namespace Bluz\Cache\Adapter;
+
+use Bluz\Cache\InvalidArgumentException;
 
 /**
  * Base class for all filesystem-based cache adapters
  * @author murzik
  */
-abstract class FileCacheBase extends AdapterBase
+abstract class FileBase extends AbstractAdapter
 {
     protected $cacheDir = null;
     protected $extension = ".bluzcache";
+
     public function __construct($cacheDir)
     {
-        if(!is_dir($cacheDir)) {
+        if (!is_dir($cacheDir)) {
             $msg = "'$cacheDir' is not directory";
             throw new InvalidArgumentException($msg);
         }
 
-        if(!is_writable($cacheDir)) {
+        if (!is_writable($cacheDir)) {
             $msg = "'$cacheDir' is not writeable";
             throw new InvalidArgumentException($msg);
         }
-        //get rid of trailing slash
+        // get rid of trailing slash
         $this->cacheDir = realpath($cacheDir);
     }
 
@@ -52,8 +58,8 @@ abstract class FileCacheBase extends AdapterBase
      */
     protected function doFlush()
     {
-        //copypaste from Doctrine\Common\Cache\FileCache.
-        $pattern  = '/^.+\\' . $this->extension . '$/i';
+        // copypaste from Doctrine\Common\Cache\FileCache.
+        $pattern = '/^.+\\' . $this->extension . '$/i';
         $iterator = new \RecursiveDirectoryIterator($this->cacheDir);
         $iterator = new \RecursiveIteratorIterator($iterator);
         $iterator = new \RegexIterator($iterator, $pattern);
@@ -72,7 +78,7 @@ abstract class FileCacheBase extends AdapterBase
      */
     protected function getFilename($id)
     {
-        //Copypasted from Doctrine\Common\Cache\FileCache
+        // Copypasted from Doctrine\Common\Cache\FileCache
         $path = implode(str_split(md5($id), 12), DIRECTORY_SEPARATOR);
         $path = $this->cacheDir . DIRECTORY_SEPARATOR . $path;
 

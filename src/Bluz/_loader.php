@@ -48,7 +48,6 @@ require_once 'Application.php';
 require_once 'Application/ApplicationException.php';
 
 // packages and support
-require_once 'Cache/Cache.php';
 require_once 'Config/Config.php';
 require_once 'EventManager/Event.php';
 require_once 'EventManager/EventManager.php';

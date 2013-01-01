@@ -21,12 +21,18 @@
  * THE SOFTWARE.
  */
 
-namespace Bluz\Cache;
+/**
+ * @namespace
+ */
+namespace Bluz\Cache\Adapter;
+
+use Bluz\Cache\CacheInterface;
+
 /**
  * Base class for all cache adapters within Bluz\Cache package
  * @author murzik
  */
-abstract class AdapterBase implements CacheInterface
+abstract class AbstractAdapter implements CacheInterface
 {
     /**
      * {@inheritdoc}
@@ -85,7 +91,7 @@ abstract class AdapterBase implements CacheInterface
     /**
      * Cast given $inputValue to string.
      * @param mixed $inputValue
-     * @throws \Bluz\Cache\InvalidArgumentException if given $input value not a number or string
+     * @throws InvalidArgumentException if given $input value not a number or string
      * @return string $castedToString
      * @internal defence from "fool".
      *           Attempt to cast to string object will lead to cache entry with id "Object".
@@ -93,13 +99,13 @@ abstract class AdapterBase implements CacheInterface
      */
     protected function castToString($inputValue)
     {
-        if( ! is_string($inputValue) &&  ! is_int($inputValue)) {
+        if (!is_string($inputValue) && !is_int($inputValue)) {
             $msg = "<String> or <Integer> expected. But "
-                   . "<" . gettype($inputValue) . "> given.";
+                . "<" . gettype($inputValue) . "> given.";
             throw new InvalidArgumentException($msg);
         }
 
-        return (string) $inputValue;
+        return (string)$inputValue;
     }
 
     /**

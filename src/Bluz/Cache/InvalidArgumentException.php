@@ -21,9 +21,14 @@
  * THE SOFTWARE.
  */
 
+/**
+ * @namespace
+ */
 namespace Bluz\Cache;
 
 /**
  * @author murzik
  */
-class InvalidArgumentException extends CacheException{}
+class InvalidArgumentException extends CacheException
+{
+}

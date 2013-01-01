@@ -21,48 +21,69 @@
  * THE SOFTWARE.
  */
 
-namespace Bluz\Cache;
 /**
- * APC cache adapter
- * @author murzik
+ * @namespace
  */
-class ApcAdapter extends AdapterBase
+namespace Bluz\Cache\Adapter;
+
+use Bluz\Cache\CacheException;
+
+/**
+ *
+ */
+class Memcached extends AbstractAdapter
 {
+    /**
+     * @var \Memcached
+     */
+    protected $memcached = null;
+
+    protected $servers = array();
+
+
     public function __construct()
     {
-        if(!extension_loaded('apc')) {
-            $msg = "APC extension not installed/enabled.
-                    Install and/or enable APC extension. See phpinfo() for more information";
+        throw new CacheException("implement me please");
+
+        if (!extension_loaded('memcached')) {
+            $msg = "Memcached extension not installed/enabled.
+                    Install and/or enable memcached extension. See phpinfo() for more information";
             throw new CacheException($msg);
         }
     }
+
     protected function doGet($id)
     {
-        return apc_fetch($id);
+
     }
 
     protected function doAdd($id, $data, $ttl = 0)
     {
-        return apc_add($id, $data, $ttl);
+
     }
 
     protected function doSet($id, $data, $ttl = 0)
     {
-        return apc_store($id, $data, $ttl);
+
     }
 
     protected function doContains($id)
     {
-        return apc_exists($id);
+
     }
 
     protected function doDelete($id)
     {
-        return apc_delete($id);
+
     }
 
     protected function doFlush()
     {
-        return apc_clear_cache("user");
+
+    }
+
+    public function getMemcached()
+    {
+        return $this->memcached;
     }
 }

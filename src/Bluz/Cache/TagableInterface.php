@@ -21,6 +21,9 @@
  * THE SOFTWARE.
  */
 
+/**
+ * @namespace
+ */
 namespace Bluz\Cache;
 
 /**

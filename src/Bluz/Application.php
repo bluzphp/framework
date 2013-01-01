@@ -891,30 +891,29 @@ class Application
         $request = $this->getRequest();
         $params = array();
         foreach ($reflectionData['params'] as $param) {
-            /* @var \ReflectionParameter $param */
-            if (isset($reflectionData['types'][$param->name])
-                && $type = $reflectionData['types'][$param->name]) {
+            if (isset($reflectionData['types'][$param])
+                && $type = $reflectionData['types'][$param]) {
                 switch ($type) {
                     case 'bool':
                     case 'boolean':
-                        $params[] = (bool) $request->{$param->name};
+                        $params[] = (bool) $request->{$param};
                         break;
                     case 'int':
                     case 'integer':
-                        $params[] = (int) $request->{$param->name};
+                        $params[] = (int) $request->{$param};
                         break;
                     case 'float':
-                        $params[] = (float) $request->{$param->name};
+                        $params[] = (float) $request->{$param};
                         break;
                     case 'string':
-                        $params[] = (string) $request->{$param->name};
+                        $params[] = (string) $request->{$param};
                         break;
                     case 'array':
-                        $params[] = (array) $request->{$param->name};
+                        $params[] = (array) $request->{$param};
                         break;
                 }
             } else {
-                $params[] = $request->{$param->name};
+                $params[] = $request->{$param};
             }
         }
         return $params;

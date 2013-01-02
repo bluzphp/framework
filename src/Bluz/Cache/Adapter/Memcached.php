@@ -61,7 +61,7 @@ class Memcached extends AbstractAdapter
             );
         }
 
-        $this->settings = $settings;
+        parent::__construct($settings);
     }
 
     /**

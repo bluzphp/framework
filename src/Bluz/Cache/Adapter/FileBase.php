@@ -38,19 +38,30 @@ abstract class FileBase extends AbstractAdapter
     protected $cacheDir = null;
     protected $extension = ".bluzcache";
 
-    public function __construct($cacheDir)
+    /**
+     * Check configuration and permissions
+     *
+     * @param array $settings
+     * @throws \Bluz\Cache\InvalidArgumentException
+     */
+    public function __construct($settings = array())
     {
+        if (!isset($settings['cacheDir'])) {
+            throw new InvalidArgumentException("FileBase adapters is required 'cacheDir' option");
+        }
+        $cacheDir = $settings['cacheDir'];
+
         if (!is_dir($cacheDir)) {
-            $msg = "'$cacheDir' is not directory";
-            throw new InvalidArgumentException($msg);
+            throw new InvalidArgumentException("'$cacheDir' is not directory");
         }
 
         if (!is_writable($cacheDir)) {
-            $msg = "'$cacheDir' is not writeable";
-            throw new InvalidArgumentException($msg);
+            throw new InvalidArgumentException("Directory '$cacheDir' is not writable");
         }
         // get rid of trailing slash
         $this->cacheDir = realpath($cacheDir);
+
+        parent::__construct($settings);
     }
 
     /**
@@ -86,6 +97,9 @@ abstract class FileBase extends AbstractAdapter
         return $path . DIRECTORY_SEPARATOR . $id . $this->extension;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function doDelete($id)
     {
         return @unlink($this->getFilename($id));

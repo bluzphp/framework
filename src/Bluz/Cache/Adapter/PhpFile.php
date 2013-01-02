@@ -41,6 +41,9 @@ class PhpFile extends FileBase
 {
     protected $data = array();
 
+    /**
+     * {@inheritdoc}
+     */
     protected function doContains($id)
     {
         $filename = $this->getFilename($id);
@@ -54,6 +57,9 @@ class PhpFile extends FileBase
         return $cacheEntry['ttl'] === 0 || $cacheEntry['ttl'] > time();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function doGet($id)
     {
         $filename = $this->getFilename($id);
@@ -71,6 +77,9 @@ class PhpFile extends FileBase
         return $cacheEntry['data'];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function doSet($id, $data, $ttl = 0)
     {
         if ($ttl > 0) {
@@ -103,6 +112,9 @@ class PhpFile extends FileBase
         return file_put_contents($fileName, $code);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function doAdd($id, $data, $ttl = 0)
     {
         if (!$this->doContains($id)) {

@@ -30,6 +30,7 @@ use Bluz\Cache\InvalidArgumentException;
 
 /**
  * Base class for all filesystem-based cache adapters
+ * @todo http://habrahabr.ru/post/148527/#comment_5014715
  * @author murzik
  */
 abstract class FileBase extends AbstractAdapter

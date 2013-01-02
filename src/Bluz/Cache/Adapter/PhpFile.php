@@ -26,6 +26,8 @@
  */
 namespace Bluz\Cache\Adapter;
 
+use Bluz\Cache\InvalidArgumentException;
+
 /**
  * Adapter that caches data into php array.
  * It can cache data that support var_export.

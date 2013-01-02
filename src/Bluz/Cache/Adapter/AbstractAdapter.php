@@ -26,6 +26,7 @@
  */
 namespace Bluz\Cache\Adapter;
 
+use Bluz\Cache\InvalidArgumentException;
 use Bluz\Cache\CacheInterface;
 
 /**
@@ -34,6 +35,19 @@ use Bluz\Cache\CacheInterface;
  */
 abstract class AbstractAdapter implements CacheInterface
 {
+    /**
+     * @var array
+     */
+    protected $settings;
+
+    /**
+     * Setup adapter settings
+     */
+    public function __construct($settings = array())
+    {
+        $this->settings = $settings;
+    }
+
     /**
      * {@inheritdoc}
      */

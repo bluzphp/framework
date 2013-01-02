@@ -38,52 +38,97 @@ class Memcached extends AbstractAdapter
      */
     protected $memcached = null;
 
-    protected $servers = array();
-
-
-    public function __construct()
+    /**
+     * Check and setup memcached servers
+     * @param array $settings
+     * @throws \Bluz\Cache\CacheException
+     */
+    public function __construct($settings = array())
     {
-        throw new CacheException("implement me please");
-
+        // check extension
         if (!extension_loaded('memcached')) {
-            $msg = "Memcached extension not installed/enabled.
-                    Install and/or enable memcached extension. See phpinfo() for more information";
-            throw new CacheException($msg);
+            throw new CacheException(
+                "Memcached extension not installed/enabled.
+                Install and/or enable memcached extension. See phpinfo() for more information"
+            );
         }
+
+        // check settings
+        if (!is_array($settings) or empty($settings) or !isset($settings['servers'])) {
+            throw new CacheException(
+                "Memcached configuration is missed.
+                Please check 'cache' configuration section"
+            );
+        }
+
+        $this->settings = $settings;
     }
 
+    /**
+     * getHandler
+     *
+     * @return \Memcached
+     */
+    protected function getHandler()
+    {
+        if (!$this->memcached) {
+            $this->memcached = new \Memcached();
+            $this->memcached->addServers($this->settings['servers']);
+            if (isset($this->settings['options'])) {
+                foreach ($this->settings['options'] as $key => $value) {
+                    $this->memcached->setOption($key, $value);
+                }
+            }
+        }
+        return $this->memcached;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function doGet($id)
     {
-
+        return $this->getHandler()->get($id);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function doAdd($id, $data, $ttl = 0)
     {
-
+        return $this->getHandler()->add($id, $data, $ttl);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function doSet($id, $data, $ttl = 0)
     {
-
+        return $this->getHandler()->set($id, $data, $ttl);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function doContains($id)
     {
-
+        $this->getHandler()->get($id);
+        return $this->getHandler()->getResultCode() !== \Memcached::RES_NOTFOUND;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function doDelete($id)
     {
-
+        return $this->getHandler()->delete($id);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function doFlush()
     {
-
-    }
-
-    public function getMemcached()
-    {
-        return $this->memcached;
+        return $this->getHandler()->flush();
     }
 }

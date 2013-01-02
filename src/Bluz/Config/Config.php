@@ -53,22 +53,21 @@ class Config
      */
     public function load($environment = null)
     {
-       $configFile = PATH_APPLICATION .'/configs/application.php';
+        $configFile = PATH_APPLICATION .'/configs/application.php';
 
-       if (!is_file($configFile) or !is_readable($configFile)) {
+        if (!is_file($configFile) or !is_readable($configFile)) {
            throw new ConfigException('Configuration file is not readable');
-       }
+        }
 
-       // TODO: or need without "once" for multi application
-       $this->config = require $configFile;
-
-       if (null !== $environment) {
+        // TODO: or need without "once" for multi application
+        $this->config = require $configFile;
+        if (null !== $environment) {
            $customConfig = PATH_APPLICATION .'/configs/app.'.$environment.'.php';
            if (is_file($customConfig) && is_readable($customConfig)) {
                $customConfig = require $customConfig;
                $this->config = array_replace_recursive($this->config, $customConfig);
            }
-       }
+        }
     }
 
     /**

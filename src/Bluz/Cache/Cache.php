@@ -37,23 +37,49 @@ namespace Bluz\Cache;
  *
  * @author murzik
  */
+use Bluz\Cache\Adapter;
+
 class Cache implements CacheInterface, TagableInterface
 {
     use \Bluz\Package;
 
     /**
-     * @var AbstractAdapter
+     * @var Adapter\AbstractAdapter
      */
     protected $cacheAdapter = null;
 
     /**
-     * @var AbstractAdapter
+     * @var Adapter\AbstractAdapter
      */
     protected $tagAdapter = null;
 
     protected $tagPrefix = '__tag__';
 
     protected $enabled = true;
+
+    /**
+     * check Cache configuration
+     *
+     * @param array $options
+     * @throws InvalidArgumentException
+     * @return self
+     */
+    public function init($options = null)
+    {
+        // don't check for disabled
+        if (!$this->enabled) {
+            return $this;
+        }
+
+        // check cache Adapter instance and settings for initialize it
+        if (!isset($options['cacheAdapter']) && !isset($options['settings']['cacheAdapter'])) {
+            throw new InvalidArgumentException("Missing 'cacheAdapter' configuration option");
+        }
+
+        // store options by default
+        $this->options = $options;
+        return $this;
+    }
 
     /**
      * Enable/Disable cache.
@@ -65,17 +91,6 @@ class Cache implements CacheInterface, TagableInterface
     public function setEnabled($flag = true)
     {
         $this->enabled = (bool)$flag;
-    }
-
-    /**
-     * setSettings
-     *
-     * @param array $settings
-     * @return self
-     */
-    public function setSettings($settings = array())
-    {
-        return $this;
     }
 
     /**
@@ -112,7 +127,7 @@ class Cache implements CacheInterface, TagableInterface
             return false;
         }
 
-        return $this->cacheAdapter->get($id);
+        return $this->getAdapter()->get($id);
     }
 
     /**
@@ -124,7 +139,7 @@ class Cache implements CacheInterface, TagableInterface
             return false;
         }
 
-        return $this->cacheAdapter->add($id, $data, $ttl);
+        return $this->getAdapter()->add($id, $data, $ttl);
     }
 
     /**
@@ -136,7 +151,7 @@ class Cache implements CacheInterface, TagableInterface
             return false;
         }
 
-        return $this->cacheAdapter->set($id, $data, $ttl);
+        return $this->getAdapter()->set($id, $data, $ttl);
     }
 
     /**
@@ -148,7 +163,7 @@ class Cache implements CacheInterface, TagableInterface
             return false;
         }
 
-        return $this->cacheAdapter->contains($id);
+        return $this->getAdapter()->contains($id);
     }
 
     /**
@@ -160,7 +175,7 @@ class Cache implements CacheInterface, TagableInterface
             return false;
         }
 
-        return $this->cacheAdapter->delete($id);
+        return $this->getAdapter()->delete($id);
     }
 
     /**
@@ -172,16 +187,66 @@ class Cache implements CacheInterface, TagableInterface
             return false;
         }
 
-        return $this->cacheAdapter->flush();
+        return $this->getAdapter()->flush();
     }
 
     /**
      * Get underlying cache Adapter
-     * @return AdapterBase
+     * @return Adapter\AbstractAdapter
      */
     public function getAdapter()
     {
+        if (!$this->cacheAdapter) {
+            $this->cacheAdapter = $this->initAdapter($this->options['settings']['cacheAdapter']);
+        }
+
         return $this->cacheAdapter;
+    }
+
+    /**
+     * Get underlying cache TagAdapter
+     * @throws CacheException
+     * @return Adapter\AbstractAdapter
+     */
+    public function getTagAdapter()
+    {
+        if (!$this->tagAdapter) {
+            // create instance of new adapter
+            if (isset($this->options['settings']['tagAdapter'])) {
+                $this->tagAdapter = $this->initAdapter($this->options['settings']['tagAdapter']);
+            } elseif ($adapter = $this->getAdapter()) {
+                $this->tagAdapter = $adapter;
+            } else {
+                throw new CacheException("Tag Adapter can't initialize. Configuration is missed");
+            }
+        }
+        return $this->tagAdapter;
+    }
+
+    /**
+     * initAdapter
+     *
+     * @param mixed $settings
+     * @throws CacheException
+     * @return Adapter\AbstractAdapter
+     */
+    protected function initAdapter($settings)
+    {
+        if (is_string($settings)) {
+            $adapterName = $settings;
+            $adapterSettings = [];
+        } elseif (is_array($settings) && isset($settings['name']) && isset($settings['settings'])) {
+            $adapterName = $settings['name'];
+            $adapterSettings = $settings['settings'];
+        } else {
+            throw new CacheException("");
+        }
+
+        $adapterName = ucfirst(strtolower($adapterName));
+        $adapterClass = '\\Bluz\\Cache\\Adapter\\'.$adapterName;
+
+        $adapter = new $adapterClass($adapterSettings);
+        return $adapter;
     }
 
     /**
@@ -196,14 +261,14 @@ class Cache implements CacheInterface, TagableInterface
         $identifiers = array();
         $tag = $this->tagPrefix . $tag;
 
-        if ($this->tagAdapter->contains($tag)) {
-            $identifiers = $this->tagAdapter->get($tag);
+        if ($this->getTagAdapter()->contains($tag)) {
+            $identifiers = $this->getTagAdapter()->get($tag);
         }
 
         // array may contain not unique values, but I can't see problem here
         $identifiers[] = $id;
 
-        return $this->tagAdapter->set($tag, $identifiers);
+        return $this->getTagAdapter()->set($tag, $identifiers);
     }
 
     /**
@@ -217,14 +282,14 @@ class Cache implements CacheInterface, TagableInterface
 
         // maybe it makes sense to add check for prefix existence in tag name
         $tag = $this->tagPrefix . $tag;
-        $identifiers = $this->tagAdapter->get($tag);
+        $identifiers = $this->getTagAdapter()->get($tag);
 
         if (!$identifiers) {
             return false;
         }
 
         foreach ($identifiers as $identifier) {
-            $this->cacheAdapter->delete($identifier);
+            $this->getAdapter()->delete($identifier);
         }
 
         // TODO: m-m-m-m..... not sure about line below. Do we need this?

@@ -34,7 +34,10 @@ use Bluz\Cache\CacheException;
  */
 class Apc extends AbstractAdapter
 {
-    public function __construct()
+    /**
+     * Check extension
+     */
+    public function __construct($settings = array())
     {
         if (!extension_loaded('apc')) {
             $msg = "APC extension not installed/enabled.
@@ -43,31 +46,49 @@ class Apc extends AbstractAdapter
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function doGet($id)
     {
         return apc_fetch($id);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function doAdd($id, $data, $ttl = 0)
     {
         return apc_add($id, $data, $ttl);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function doSet($id, $data, $ttl = 0)
     {
         return apc_store($id, $data, $ttl);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function doContains($id)
     {
         return apc_exists($id);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function doDelete($id)
     {
         return apc_delete($id);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function doFlush()
     {
         return apc_clear_cache("user");

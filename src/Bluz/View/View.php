@@ -99,11 +99,11 @@ class View
     protected $template;
 
     /**
-     * Cache handler
+     * Cache settings
      *
-     * @var Cache
+     * @var array
      */
-    protected $cache;
+    protected $cacheSettings;
 
     /**
      * init
@@ -238,14 +238,23 @@ class View
     }
 
     /**
-     * setCache
+     * setup cache settings
      *
-     * @param Cache $cache
+     * @param string $key
+     * @param integer $ttl
+     * @param array $tags
      * @return View
      */
-    public function setCache(Cache $cache)
+    public function setCacheSettings($key, $ttl, $tags)
     {
-        $this->cache = $cache;
+        if (!is_array($tags)) {
+            $tags = array($tags);
+        }
+        $this->cacheSettings = [
+            'key' => $key,
+            'ttl' => $ttl,
+            'tags' => $tags
+        ];
         return $this;
     }
 
@@ -377,8 +386,11 @@ class View
         $content = ob_get_clean();
 
         // save cache by handler
-        if ($this->cache) {
-            $this->cache->save($content);
+        if ($this->cacheSettings) {
+            $this->getApplication()->getCache()->set($this->cacheSettings['key'], $content, $this->cacheSettings['ttl']);
+            foreach ($this->cacheSettings['tags'] as $tag) {
+                $this->getApplication()->getCache()->addTag($this->cacheSettings['key'], $tag);
+            }
         }
         return (string) $content;
     }

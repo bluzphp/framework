@@ -548,27 +548,33 @@ class Application
             $this->denied();
         }
 
-        // cache initialization
-        // TODO: refactoring with new Bluz\Cache
-        if (isset($reflectionData['cache'])) {
-            $cache = new CacheView($this->getConfigData('cache'));
-            if ($cache -> load($module .'/'. $controller, $reflectionData['params'], $reflectionData['cache'])) {
-                return $cache;
-            }
-        } else {
-            $cache = false;
-        }
-
         // $request for use in closure
         $request = $this->getRequest();
         $request -> setParams($params);
+
+        $params = $this->params($reflectionData);
+
+        // cache initialization
+        // TODO: refactoring with new Bluz\Cache
+        if ($this->getCache()->isEnabled() && isset($reflectionData['cache'])) {
+            $cacheKey = $module .'/'. $controller .'/'. http_build_query($params);
+            if ($cachedView = $this->getCache()->get($cacheKey)) {
+                return function() use ($cachedView) {
+                    return $cachedView;
+                };
+            }
+        }
 
         // $view for use in closure
         $view = new View($this->getConfigData('view'));
         $view -> setPath(PATH_APPLICATION .'/modules/'. $module .'/views');
         $view -> setTemplate($controller .'.phtml');
-        if ($cache) {
-            $view -> setCache($cache);
+        if (isset($reflectionData['cache'])) {
+            $view -> setCacheSettings($cacheKey, intval($reflectionData['cache'])*60, [
+                'view',
+                'view:'.$module,
+                'view:'.$module.'/'.$controller
+            ]);
         }
 
         $bootstrapPath = PATH_APPLICATION .'/modules/' . $module .'/bootstrap.php';
@@ -593,7 +599,7 @@ class Application
             throw new Exception("Controller is not callable '$module/$controller'");
         }
 
-        $result = call_user_func_array($controllerClosure, $this->params($reflectionData));
+        $result = call_user_func_array($controllerClosure, $params);
 
         // return false is equal to disable view and layout
         if ($result === false) {

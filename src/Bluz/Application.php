@@ -176,7 +176,7 @@ class Application
      * @throws Exception
      * @return Application
      */
-    public function init($environment = ENVIRONMENT_PRODUCTION)
+    public function init($environment = 'production')
     {
         $this->environment = $environment;
 

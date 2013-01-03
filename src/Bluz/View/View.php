@@ -65,9 +65,9 @@ class View
     /**
      * Constants for define positions
      */
-    const POS_PREPEND = 1;
-    const POS_REPLACE = 2;
-    const POS_APPEND  = 3;
+    const POS_PREPEND = 'prepend';
+    const POS_REPLACE = 'replace';
+    const POS_APPEND  = 'append';
 
     /**
      * @var string
@@ -106,15 +106,32 @@ class View
     protected $cacheSettings;
 
     /**
-     * init
+     * __construct
      *
-     * @param null|array    $options
-     * @return void
+     * @return self
      */
-    public function init($options = null)
+    public function __construct()
     {
         // initial default helper path
         $this->addHelperPath(dirname(__FILE__) . '/Helper/');
+    }
+
+    /**
+     *
+     * @todo Remove this method
+     * @param string $module
+     * @param string $controller
+     * @return \Bluz\View\View
+     */
+    public function init($module, $controller)
+    {
+        $this->system('module', $module);
+        $this->system('controller', $controller);
+
+        // setup default path
+        $this->setPath(PATH_APPLICATION .'/modules/'. $module .'/views');
+        // setup default template
+        $this->setTemplate($controller .'.phtml');
     }
 
     /**
@@ -238,28 +255,6 @@ class View
     }
 
     /**
-     * setup cache settings
-     *
-     * @param string $key
-     * @param integer $ttl
-     * @param array $tags
-     * @return View
-     */
-    public function setCacheSettings($key, $ttl, $tags)
-    {
-        if (!is_array($tags)) {
-            $tags = array($tags);
-        }
-        $this->cacheSettings = [
-            'key' => $key,
-            'ttl' => $ttl,
-            'tags' => $tags
-        ];
-        return $this;
-    }
-
-
-    /**
      * setup path
      *
      * @param string $path
@@ -305,7 +300,7 @@ class View
     }
 
     /**
-     * Simple gettext/formatter wrapper
+     * Simple translate/formatter wrapper
      *
      * <code>
      * // simple
@@ -385,13 +380,18 @@ class View
         }
         $content = ob_get_clean();
 
-        // save cache by handler
-        if ($this->cacheSettings) {
-            $this->getApplication()->getCache()->set($this->cacheSettings['key'], $content, $this->cacheSettings['ttl']);
-            foreach ($this->cacheSettings['tags'] as $tag) {
-                $this->getApplication()->getCache()->addTag($this->cacheSettings['key'], $tag);
-            }
+        // trigger with generated content
+        // for organize cache and some "magic" filters
+
+        // trigger name based on current class
+        if (get_class($this) == 'Bluz\View\Layout') {
+            $triggerName = 'layout:render:'.$this->template;
+        } else {
+            $triggerName = 'view:render:'.$this->system('module') .':'. $this->system('controller');
         }
+        $content = $this->getApplication()->getEventManager()->trigger($triggerName, $content);
+
+
         return (string) $content;
     }
 }

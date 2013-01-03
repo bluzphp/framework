@@ -63,12 +63,9 @@ class Router
     protected $baseUrl;
 
     /**
-     * init
-     *
-     * @param array $options
-     * @return void
+     * @return self
      */
-    public function init($options = null)
+    public function __construct()
     {
         $routers = $this->getApplication()->getCache()->get('router:routers');
         $reverse = $this->getApplication()->getCache()->get('router:reverse');

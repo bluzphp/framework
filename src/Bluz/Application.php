@@ -31,6 +31,7 @@ use Bluz\Auth\Auth;
 use Bluz\Cache\Cache;
 use Bluz\Config\Config;
 use Bluz\Db\Db;
+use Bluz\EventManager\Event;
 use Bluz\EventManager\EventManager;
 use Bluz\Ldap\Ldap;
 use Bluz\Mailer\Mailer;
@@ -258,7 +259,8 @@ class Application
     public function getAuth()
     {
         if (!$this->auth && $conf = $this->getConfigData('auth')) {
-            $this->auth = new Auth($conf);
+            $this->auth = new Auth();
+            $this->auth->setOptions($conf);
         }
         return $this->auth;
     }
@@ -271,7 +273,9 @@ class Application
     public function getCache()
     {
         if (!$this->cache) {
-            $this->cache = new Cache($this->getConfigData('cache'));
+            $conf = $this->getConfigData('cache');
+            $this->cache = new Cache();
+            $this->cache->setOptions($conf);
         }
         return $this->cache;
     }
@@ -284,7 +288,8 @@ class Application
     public function getDb()
     {
         if (!$this->db && $conf = $this->getConfigData('db')) {
-            $this->db = new Db($conf);
+            $this->db = new Db();
+            $this->db->setOptions($conf);
         }
         return $this->db;
     }
@@ -310,7 +315,8 @@ class Application
     public function getLayout()
     {
         if (!$this->layout && $conf = $this->getConfigData('layout')) {
-            $this->layout = new Layout($conf);
+            $this->layout = new Layout();
+            $this->layout->setOptions($conf);
         }
         return $this->layout;
     }
@@ -323,7 +329,8 @@ class Application
     public function getLdap()
     {
         if (!$this->ldap && $conf = $this->getConfigData('ldap')) {
-            $this->ldap = new Ldap($conf);
+            $this->ldap = new Ldap();
+            $this->ldap->setOptions($conf);
         }
         return $this->ldap;
     }
@@ -335,8 +342,9 @@ class Application
      */
     public function getMailer()
     {
-        if (!$this->mailer) {
+        if (!$this->mailer && $conf = $this->getConfigData('mailer')) {
             $this->mailer = new Mailer();
+            $this->mailer->setOptions($conf);
         }
         return $this->mailer;
     }
@@ -371,8 +379,11 @@ class Application
      */
     public function getRegistry()
     {
-        if (!$this->registry && $conf = $this->getConfigData('registry')) {
-            $this->registry = new Registry($conf);
+        if (!$this->registry) {
+            $this->registry = new Registry();
+            if ($conf = $this->getConfigData('registry')) {
+                $this->registry->setData($conf);
+            }
         }
         return $this->registry;
     }
@@ -385,7 +396,8 @@ class Application
     public function getRequest()
     {
         if (!$this->request) {
-            $this->request = new Request\HttpRequest($this->getConfigData('request'));
+            $this->request = new Request\HttpRequest();
+            $this->request->setOptions($this->getConfigData('request'));
 
             if ($this->request->isXmlHttpRequest()) {
                 $this->useLayout(false);
@@ -402,7 +414,7 @@ class Application
     public function getRouter()
     {
         if (!$this->router) {
-            $this->router = new Router($this->getConfigData('router'));
+            $this->router = new Router();
         }
         return $this->router;
     }
@@ -415,7 +427,8 @@ class Application
     public function getSession()
     {
         if (!$this->session) {
-            $this->session = new Session($this->getConfigData('session'));
+            $this->session = new Session();
+            $this->session->setOptions($this->getConfigData('session'));
             $this->session->start();
             $this->getMessages();
         }
@@ -555,7 +568,6 @@ class Application
         $params = $this->params($reflectionData);
 
         // cache initialization
-        // TODO: refactoring with new Bluz\Cache
         if ($this->getCache()->isEnabled() && isset($reflectionData['cache'])) {
             $cacheKey = $module .'/'. $controller .'/'. http_build_query($params);
             if ($cachedView = $this->getCache()->get($cacheKey)) {
@@ -563,19 +575,23 @@ class Application
                     return $cachedView;
                 };
             }
+
+            $this->getEventManager()->attach(
+                'view:render:'. $module .':'.$controller,
+                function($event) use ($cacheKey, $module, $controller, $reflectionData) {
+                    /** @var Event $event */
+                    /** @var Application $this */
+                    $this->getCache()->set($cacheKey, $event->getTarget(), intval($reflectionData['cache'])*60);
+                    $this->getCache()->addTag($cacheKey, 'view');
+                    $this->getCache()->addTag($cacheKey, 'view:'.$module);
+                    $this->getCache()->addTag($cacheKey, 'view:'.$module.':'.$controller);
+                }
+            );
         }
 
         // $view for use in closure
-        $view = new View($this->getConfigData('view'));
-        $view -> setPath(PATH_APPLICATION .'/modules/'. $module .'/views');
-        $view -> setTemplate($controller .'.phtml');
-        if (isset($reflectionData['cache'])) {
-            $view -> setCacheSettings($cacheKey, intval($reflectionData['cache'])*60, [
-                'view',
-                'view:'.$module,
-                'view:'.$module.'/'.$controller
-            ]);
-        }
+        $view = new View();
+        $view -> init($module, $controller);
 
         $bootstrapPath = PATH_APPLICATION .'/modules/' . $module .'/bootstrap.php';
 

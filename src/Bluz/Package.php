@@ -68,44 +68,24 @@ trait Package
     protected $options;
 
     /**
-     * Constructor
-     *
-     * @param array $options
-     * @access  public
-     */
-    public function __construct($options = null)
-    {
-        if ($options && is_array($options)) {
-            $this->setOptions($options);
-        }
-        $this->init($options);
-    }
-
-    /**
-     * init
-     *
-     * @param array $options
-     * @return self
-     */
-    public function init($options = null)
-    {
-        // store options by default
-        $this->options = $options;
-        return $this;
-    }
-
-    /**
      * @param array $options
      * @return void
      */
     public function setOptions(array $options)
     {
+        // store options by default
+        $this->options = $options;
+
+        // apply options
         foreach ($options as $key => $value) {
             $method = 'set' . $this->normalizeKey($key);
             if (method_exists($this, $method)) {
                 $this->$method($value);
             }
         }
+
+        // check options
+        $this->checkOptions();
     }
 
     /**
@@ -114,6 +94,17 @@ trait Package
     public function getOptions()
     {
         return $this->options;
+    }
+
+    /**
+     * checkOptions
+     *
+     * @throw \Bluz\Config\ConfigException
+     * @return boolean
+     */
+    protected function checkOptions()
+    {
+        return true;
     }
 
     /**

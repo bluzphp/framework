@@ -38,6 +38,7 @@ namespace Bluz\Cache;
  * @author murzik
  */
 use Bluz\Cache\Adapter;
+use Bluz\Config\ConfigException;
 
 class Cache implements CacheInterface, TagableInterface
 {
@@ -60,25 +61,24 @@ class Cache implements CacheInterface, TagableInterface
     /**
      * check Cache configuration
      *
-     * @param array $options
-     * @throws InvalidArgumentException
-     * @return self
+     * @throws \Bluz\Config\ConfigException
+     * @return boolean
      */
-    public function init($options = null)
+    protected function checkOptions()
     {
         // don't check for disabled
         if (!$this->enabled) {
-            return $this;
+            return true;
         }
 
         // check cache Adapter instance and settings for initialize it
-        if (!isset($options['cacheAdapter']) && !isset($options['settings']['cacheAdapter'])) {
-            throw new InvalidArgumentException("Missing 'cacheAdapter' configuration option");
+        if (!isset($this->options['cacheAdapter']) && !isset($this->options['settings']['cacheAdapter'])) {
+            throw new ConfigException(
+                "Missed `cacheAdapter` option in `cache` configuration. <br/>\n".
+                "Read more: <a href='https://github.com/bluzphp/framework/wiki/Cache'>https://github.com/bluzphp/framework/wiki/Cache</a>"
+            );
         }
-
-        // store options by default
-        $this->options = $options;
-        return $this;
+        return true;
     }
 
     /**
@@ -239,10 +239,10 @@ class Cache implements CacheInterface, TagableInterface
             $adapterName = $settings['name'];
             $adapterSettings = $settings['settings'];
         } else {
-            throw new CacheException("");
+            throw new CacheException("Cache Adapter can't initialize. Configuration is missed");
         }
 
-        $adapterName = ucfirst(strtolower($adapterName));
+        $adapterName = ucfirst($adapterName);
         $adapterClass = '\\Bluz\\Cache\\Adapter\\'.$adapterName;
 
         $adapter = new $adapterClass($adapterSettings);

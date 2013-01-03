@@ -35,53 +35,44 @@ namespace Bluz\Mailer;
  * @author   Pavel Machekhin
  * @created  27.12.12 16:25
  */
+use Bluz\Config\ConfigException;
+
 class Mailer
 {
     use \Bluz\Package;
 
     /**
-     * @var array
-     */
-    protected $config;
-
-    /**
-     * getInstance
+     * checkOptions
      *
-     * @return static
+     * @throws \Bluz\Config\ConfigException
+     * @return boolean
      */
-    static public function getInstance()
+    protected function checkOptions()
     {
-        static $instance;
-
-        if (null === $instance) {
-            $instance = new static();
+        if (!isset($this->options['from']['email'])) {
+            throw new ConfigException(
+                "Missed `from.email` option in `mailer` configuration. <br/>\n".
+                "Read more: <a href='https://github.com/bluzphp/framework/wiki/Mailer'>https://github.com/bluzphp/framework/wiki/Mailer</a>"
+            );
         }
-
-        return $instance;
     }
 
     /**
      * Creates new instance of PHPMailer and set default options from config
      *
+     * @throws MailerException
      * @return \PHPMailer
-     * @throws Exception
      */
     public function create()
     {
-        $this->config = $this->getApplication()->getConfigData('mail');
-
         $mail = new \PHPMailer();
 
-        if (!isset($this->config['from']['email'])) {
-            throw new MailerException('Missed `from.email` option in `mail` config');
-        }
-
-        $fromEmail = $this->config['from']['email'];
-        $fromName = isset($this->config['from']['name']) ? $this->config['from']['name'] : '';
+        $fromEmail = $this->options['from']['email'];
+        $fromName = isset($this->options['from']['name']) ? $this->options['from']['name'] : '';
 
         $mail->SetFrom($fromEmail, $fromName, false);
 
-        $this->_useSmtp($mail);
+        $this->setupSmtp($mail);
 
         return $mail;
     }
@@ -89,11 +80,12 @@ class Mailer
     /**
      * Enable smtp with parameters from config if they were set
      *
+     * @param \PHPMailer $mail
      * @return bool
      */
-    private function _useSmtp(\PHPMailer $mail)
+    private function setupSmtp(\PHPMailer $mail)
     {
-        if (!isset($this->config['smtp'])) {
+        if (!isset($this->options['smtp'])) {
             return false;
         }
 
@@ -103,18 +95,18 @@ class Mailer
         // 1 = errors and messages
         // 2 = messages only
 
-        $mail->Host = $this->config['smtp']['host']; // sets the SMTP server
-        $mail->Port = $this->config['smtp']['port']; // set the SMTP port for the GMAIL server
+        $mail->Host = $this->options['smtp']['host']; // set the SMTP server
+        $mail->Port = $this->options['smtp']['port']; // set the SMTP port
 
-        if (!isset($this->config['smtp']['username'])
-            || !isset($this->config['smtp']['password'])
+        if (!isset($this->options['smtp']['username'])
+            || !isset($this->options['smtp']['password'])
         ) {
             return true;
         }
 
         $mail->SMTPAuth = true; // enable SMTP authentication
-        $mail->Username = $this->config['smtp']['username']; // SMTP account username
-        $mail->Password = $this->config['smtp']['password']; // SMTP account password
+        $mail->Username = $this->options['smtp']['username']; // SMTP account username
+        $mail->Password = $this->options['smtp']['password']; // SMTP account password
 
         return true;
     }
@@ -130,8 +122,8 @@ class Mailer
      */
     public function send(\PHPMailer $mail)
     {
-        if (isset($this->config['subjectPrefix'])) {
-            $mail->Subject = $this->config['subjectPrefix'] . $mail->Subject;
+        if (isset($this->options['subjectPrefix'])) {
+            $mail->Subject = $this->options['subjectPrefix'] . $mail->Subject;
         }
 
         // TODO: add to queue

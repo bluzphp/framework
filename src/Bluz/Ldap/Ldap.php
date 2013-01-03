@@ -79,11 +79,11 @@ class Ldap
     /**
      * init connectors by first call Application->getLdap()
      *
-     * @param $options
+     * @param array $options
      * @throws LdapException
      * @return \Bluz\Ldap\Ldap
      */
-    protected function init($options = null)
+    public function setOptions(array $options)
     {
         if (!$options or !sizeof($options)) {
             throw new LdapException();

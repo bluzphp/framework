@@ -46,7 +46,6 @@ class CliRequest extends AbstractRequest
      */
     public function __construct()
     {
-        parent::__construct();
         $this->method = self::METHOD_CLI;
 
         $args = $_SERVER["argv"];

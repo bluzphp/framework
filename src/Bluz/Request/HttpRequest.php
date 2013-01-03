@@ -45,7 +45,6 @@ class HttpRequest extends AbstractRequest
      */
     public function __construct()
     {
-        parent::__construct();
         $this->method = $this->getServer('REQUEST_METHOD');
 
         // switch statement for $this->method

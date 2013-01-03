@@ -47,11 +47,6 @@ trait Helper
     /**
      * @var array
      */
-    protected static $staticHelpers = array();
-
-    /**
-     * @var array
-     */
     protected static $helpersPath = array();
 
 
@@ -65,20 +60,6 @@ trait Helper
     {
         foreach ($helpers as $name => $function) {
             $this->helpers[$name] = $function;
-        }
-        return $this;
-    }
-
-    /**
-     * Set application helpers
-     *
-     * @param array $helpers
-     * @return Application
-     */
-    public function setStaticHelpers($helpers)
-    {
-        foreach ($helpers as $name => $function) {
-            self::$staticHelpers[$name] = $function;
         }
         return $this;
     }
@@ -142,37 +123,6 @@ trait Helper
                         throw new Exception("Helper '$method' not found in file '$helperPath'");
                     }
                     return $this->__call($method, $args);
-                }
-            }
-            throw new Exception("Helper '$method' not found for '". __CLASS__ ."'");
-        }
-    }
-
-    /**
-     * Call static
-     *
-     * @param string $method
-     * @param array  $args
-     * @throws Exception
-     * @return mixed
-     */
-    public static function __callStatic($method, $args)
-    {
-        if (isset(self::$staticHelpers[$method])
-            && self::$staticHelpers[$method] instanceof \Closure) {
-            return call_user_func_array(self::$staticHelpers[$method], $args);
-        }
-        if (self::$helpersPath) {
-            foreach(self::$helpersPath as $helperPath) {
-                $helperPath = realpath($helperPath . '/' . ucfirst($method) . '.php');
-                if ($helperPath) {
-                    $helperInclude = include $helperPath;
-                    if ($helperInclude instanceof \Closure) {
-                        self::$staticHelpers[$method] = $helperInclude;
-                    } else {
-                        throw new Exception("Helper '$method' not found in file '$helperPath'");
-                    }
-                    return self::__callStatic($method, $args);
                 }
             }
             throw new Exception("Helper '$method' not found for '". __CLASS__ ."'");

@@ -287,7 +287,7 @@ class Db
         if ($result) {
             return $this->handler()->lastInsertId();
         } else {
-            return false;
+            throw new DbException('Unable to insert');
         }
     }
 
@@ -322,8 +322,11 @@ class Db
         $result = $stmt->execute($execParams);
 
         $this->log($sql, $execParams);
-
-        return $result;
+        if ($result) {
+            return $result;
+        } else {
+            throw new DbException('Unable to update');
+        }
     }
 
     /**

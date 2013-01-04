@@ -42,7 +42,7 @@ class CliRequest extends AbstractRequest
     /**
      * Constructor
      *
-     * @example $> php index.php controller module --param value
+     * @example $> php index.php --uri "/index/index/?foo=bar"
      */
     public function __construct()
     {

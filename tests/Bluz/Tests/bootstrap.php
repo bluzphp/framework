@@ -1,6 +1,5 @@
 <?php
 // Environment
-define('APPLICATION_ENV', 'testing');
 define('DEBUG', true);
 
 // Paths

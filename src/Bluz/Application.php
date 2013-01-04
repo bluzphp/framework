@@ -898,6 +898,7 @@ class Application
                 $data['privilege'] = $matches[1];
             }
             $this->getCache()->set('reflection:'.$file, $data);
+            $this->getCache()->addTag('reflection:'.$file, 'reflection');
         }
         return $data;
     }

@@ -43,6 +43,7 @@ use Bluz\Session\Session;
 use Bluz\View\Layout;
 use Bluz\View\Cache as CacheView;
 use Bluz\View\View;
+use Bluz\Logger;
 
 /**
  * Application
@@ -135,6 +136,11 @@ class Application
     protected $session;
 
     /**
+     * @var Logger
+     */
+    protected $logger;
+
+    /**
      * @var string
      */
     protected $environment;
@@ -224,6 +230,19 @@ class Application
             $this->config->load($environment);
         }
         return $this->config;
+    }
+
+    /**
+     * load logger
+     *
+     * @return Logger
+     */
+    public function getLogger()
+    {
+        if (!$this->logger) {
+            $this->logger = new Logger();
+        }
+        return $this->logger;
     }
 
     /**

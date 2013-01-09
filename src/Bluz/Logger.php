@@ -30,10 +30,10 @@ use Bluz;
 use Psr\Log\LoggerInterface;
 
 /**
- * Application
+ * Logger
  *
  * @category Bluz
- * @package  Application
+ * @package  Logger
  *
  * @author   Taras Omelianenko <mail@taras.pro>
  */

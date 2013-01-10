@@ -571,27 +571,16 @@ class Application
         if ($this->getCache()->isEnabled() && isset($reflectionData['cache'])) {
             $cacheKey = $module .'/'. $controller .'/'. http_build_query($params);
             if ($cachedView = $this->getCache()->get($cacheKey)) {
-                return function() use ($cachedView) {
-                    return $cachedView;
-                };
+                return $cachedView;
             }
-
-            $this->getEventManager()->attach(
-                'view:render:'. $module .':'.$controller,
-                function($event) use ($cacheKey, $module, $controller, $reflectionData) {
-                    /** @var Event $event */
-                    /** @var Application $this */
-                    $this->getCache()->set($cacheKey, $event->getTarget(), intval($reflectionData['cache'])*60);
-                    $this->getCache()->addTag($cacheKey, 'view');
-                    $this->getCache()->addTag($cacheKey, 'view:'.$module);
-                    $this->getCache()->addTag($cacheKey, 'view:'.$module.':'.$controller);
-                }
-            );
         }
 
         // $view for use in closure
         $view = new View();
-        $view -> init($module, $controller);
+        // setup default path
+        $view->setPath(PATH_APPLICATION .'/modules/'. $module .'/views');
+        // setup default template
+        $view->setTemplate($controller .'.phtml');
 
         $bootstrapPath = PATH_APPLICATION .'/modules/' . $module .'/bootstrap.php';
 
@@ -636,6 +625,13 @@ class Application
         // return array is equal to setup view
         if (is_array($result)) {
             $view->setData($result);
+        }
+
+        if ($this->getCache()->isEnabled() && isset($reflectionData['cache'])) {
+            $this->getCache()->set($cacheKey, $view, intval($reflectionData['cache'])*60);
+            $this->getCache()->addTag($cacheKey, 'view');
+            $this->getCache()->addTag($cacheKey, 'view:'.$module);
+            $this->getCache()->addTag($cacheKey, 'view:'.$module.':'.$controller);
         }
 
         return $view;

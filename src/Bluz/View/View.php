@@ -99,13 +99,6 @@ class View
     protected $template;
 
     /**
-     * Cache settings
-     *
-     * @var array
-     */
-    protected $cacheSettings;
-
-    /**
      * __construct
      *
      * @return self
@@ -117,21 +110,13 @@ class View
     }
 
     /**
+     * __sleep
      *
-     * @todo Remove this method
-     * @param string $module
-     * @param string $controller
-     * @return \Bluz\View\View
+     * @return array
      */
-    public function init($module, $controller)
+    public function __sleep()
     {
-        $this->system('module', $module);
-        $this->system('controller', $controller);
-
-        // setup default path
-        $this->setPath(PATH_APPLICATION .'/modules/'. $module .'/views');
-        // setup default template
-        $this->setTemplate($controller .'.phtml');
+        return ['baseUrl', 'data', 'system', 'path', 'template'];
     }
 
     /**
@@ -379,19 +364,6 @@ class View
             return '';
         }
         $content = ob_get_clean();
-
-        // trigger with generated content
-        // for organize cache and some "magic" filters
-
-        // trigger name based on current class
-        if (get_class($this) == 'Bluz\View\Layout') {
-            $triggerName = 'layout:render:'.$this->template;
-        } else {
-            $triggerName = 'view:render:'.$this->system('module') .':'. $this->system('controller');
-        }
-        $content = $this->getApplication()->getEventManager()->trigger($triggerName, $content);
-
-
         return (string) $content;
     }
 }

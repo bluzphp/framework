@@ -35,7 +35,6 @@ namespace Bluz\EventManager;
 class EventManager
 {
     /**
-     *
      * @var array
      */
     protected $listeners = array();

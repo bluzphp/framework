@@ -286,6 +286,20 @@ class AbstractRequest
         return $this->method;
     }
 
+
+    /**
+     * setMethod
+     *
+     * Overwrite method
+     *
+     * @param $method
+     * @return AbstractRequest
+     */
+    public function setMethod($method)
+    {
+        return $this->method = $method;
+    }
+
     /**
      * Is this a POST method request?
      *

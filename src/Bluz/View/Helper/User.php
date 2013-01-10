@@ -36,5 +36,7 @@ return
 */
 function () {
     /** @var View $this */
-    return $this->getApplication()->getAuth()->getIdentity();
+    return $this->getApplication()->getAuth() ?
+        $this->getApplication()->getAuth()->getIdentity() :
+        null;
 };

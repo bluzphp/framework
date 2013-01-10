@@ -322,6 +322,15 @@ class Application
     }
 
     /**
+     * resetLayout
+     *
+     */
+    public function resetLayout()
+    {
+        $this->layout = null;
+    }
+
+    /**
      * getLdap
      *
      * @return Ldap
@@ -404,6 +413,17 @@ class Application
             }
         }
         return $this->request;
+    }
+
+    /**
+     * setRequest
+     *
+     * @return Request\AbstractRequest
+     */
+
+    public function setRequest($request)
+    {
+        $this->request = $request;
     }
 
     /**
@@ -516,6 +536,10 @@ class Application
             );
         }
         $this->dispatchResult = $dispatchResult;
+
+        if ($this->layoutFlag) {
+            $this->getLayout()->setContent($dispatchResult);
+        }
         return $this;
     }
 

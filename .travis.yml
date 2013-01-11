@@ -7,20 +7,19 @@ script:
   - phpunit --configuration tests/Bluz/Tests/phpunit.xml --coverage-text
   # PEAR packages
   - pear channel-discover pear.phpunit.de
-  #- pear channel-discover pear.phpmd.org
   #- pear channel-discover pear.pdepend.org
   #- pear install pdepend/PHP_Depend-beta
-  #- pear install phpunit/phpcpd
+  - pear install phpunit/phpcpd
   - pear install phpunit/phploc
   - phpenv rehash
   - mkdir .reports
-  #- mkdir .standards
-  #- git clone https://github.com/klaussilveira/phpcs-psr .standards/PSR
+  - mkdir .standards
+  - git clone https://github.com/klaussilveira/phpcs-psr .standards/PSR
+  # Lines of code
+  - phploc --log-csv .reports/phploc.csv src/Bluz
   # PHP Depend
   - pdepend --jdepend-xml=.reports/jdepend.xml --jdepend-chart=.reports/dependencies.svg --overview-pyramid=.reports/pyramid.svg src/Bluz
   # Duplicate code
-  #- phpcpd --log-pmd .reports/pmd-cpd.xml src/Bluz
-  # Lines of code
-  - phploc --log-csv .reports/phploc.csv src/Bluz
+  - phpcpd --log-pmd .reports/pmd-cpd.xml src/Bluz
   # Code sniffer
-  #- phpcs --standard=.standards/PSR --extensions=php --report-checkstyle --report-file=.reports/checkstyle.xml Classes
+  - phpcs --standard=.standards/PSR --extensions=php --report-checkstyle --report-file=.reports/checkstyle.xml Classes

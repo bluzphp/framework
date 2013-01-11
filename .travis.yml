@@ -9,6 +9,7 @@ script:
   - pear channel-discover pear.phpunit.de
   - pear install phpunit/phpcpd
   - pear install phpunit/phploc
+  - phpenv rehash
   - mkdir .reports
   # Duplicate code
   - phpcpd --log-pmd .reports/pmd-cpd.xml src/Bluz/

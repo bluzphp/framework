@@ -501,7 +501,7 @@ class Application
     /**
      * process
      *
-     * @return Application
+     * @return mixed
      */
     public function process()
     {
@@ -540,7 +540,7 @@ class Application
         if ($this->layoutFlag) {
             $this->getLayout()->setContent($dispatchResult);
         }
-        return $this;
+        return $this->dispatchResult;
     }
 
     /**

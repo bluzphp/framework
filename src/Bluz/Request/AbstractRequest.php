@@ -297,7 +297,8 @@ class AbstractRequest
      */
     public function setMethod($method)
     {
-        return $this->method = $method;
+        $this->method = $method;
+        return $this;
     }
 
     /**

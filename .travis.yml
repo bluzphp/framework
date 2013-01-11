@@ -17,7 +17,7 @@ script:
   #- mkdir .standards
   #- git clone https://github.com/klaussilveira/phpcs-psr .standards/PSR
   # PHP Depend
-  #- pdepend --jdepend-xml=.reports/jdepend.xml --jdepend-chart=.reports/dependencies.svg --overview-pyramid=.reports/pyramid.svg src/Bluz
+  - pdepend --jdepend-xml=.reports/jdepend.xml --jdepend-chart=.reports/dependencies.svg --overview-pyramid=.reports/pyramid.svg src/Bluz
   # Duplicate code
   #- phpcpd --log-pmd .reports/pmd-cpd.xml src/Bluz
   # Lines of code

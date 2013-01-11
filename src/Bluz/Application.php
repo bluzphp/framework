@@ -400,7 +400,7 @@ class Application
     /**
      * getRequest
      *
-     * @return Request\HttpRequest|Request\CliRequest
+     * @return Request\AbstractRequest
      */
     public function getRequest()
     {
@@ -418,12 +418,13 @@ class Application
     /**
      * setRequest
      *
-     * @return Request\AbstractRequest
+     * @param Request\AbstractRequest $request
+     * @return Application
      */
-
     public function setRequest($request)
     {
         $this->request = $request;
+        return $this;
     }
 
     /**
@@ -674,7 +675,7 @@ class Application
 
         // browser render
         if ($this->jsonFlag) {
-            //override response code so javascript can process it
+            // override response code so javascript can process it
             header('Content-type: application/json', true, 200);
 
             // get data from layout

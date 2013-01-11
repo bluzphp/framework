@@ -6,6 +6,7 @@ before_script:
 script:
   - phpunit --configuration tests/Bluz/Tests/phpunit.xml --coverage-text
   # PEAR packages
+  - pear channel-discover pear.phpunit.de
   - pear install phpunit/phpcpd
   - pear install phpunit/phploc
   - mkdir .reports

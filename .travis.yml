@@ -25,3 +25,5 @@ script:
   #- php vendor/bin/phpcs --standard=.standards/PSR --extensions=php --report-checkstyle --report-file=.reports/checkstyle.xml Classes
   # Mess detection
   #- php vendor/bin/phpmd src/Bluz text codesize,unusedcode,naming
+notifications:
+  email: false

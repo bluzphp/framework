@@ -41,7 +41,6 @@ use Bluz\Request;
 use Bluz\Router\Router;
 use Bluz\Session\Session;
 use Bluz\View\Layout;
-use Bluz\View\Cache as CacheView;
 use Bluz\View\View;
 
 /**
@@ -517,30 +516,19 @@ class Application
             $this->useJson(true);
         }
 
-        /* @var View $ControllerView */
         try {
-            $dispatchResult = $this->dispatch(
+            $this->dispatchResult = $this->dispatch(
                 $this->request->getModule(),
                 $this->request->getController(),
-                $this->request->getParams()
+                $this->request->getAllParams()
             );
         } catch (\Exception $e) {
-            $dispatchResult = $this->dispatch(Router::ERROR_MODULE, Router::ERROR_CONTROLLER, array(
+            $this->dispatchResult = $this->dispatch(Router::ERROR_MODULE, Router::ERROR_CONTROLLER, array(
                 'code' => $e->getCode(),
                 'message' => $e->getMessage()
             ));
         }
-        // move vars from layout to view instance
-        if ($dispatchResult instanceof View) {
-            $dispatchResult -> setData(
-                $this->getLayout()->toArray()
-            );
-        }
-        $this->dispatchResult = $dispatchResult;
 
-        if ($this->layoutFlag) {
-            $this->getLayout()->setContent($dispatchResult);
-        }
         return $this->dispatchResult;
     }
 
@@ -586,12 +574,6 @@ class Application
             $this->denied();
         }
 
-        // $request for use in closure
-        $request = $this->getRequest();
-        $request -> setParams($params);
-
-        $params = $this->params($reflectionData);
-
         // cache initialization
         if ($this->getCache()->isEnabled() && isset($reflectionData['cache'])) {
             $cacheKey = $module .'/'. $controller .'/'. http_build_query($params);
@@ -599,6 +581,10 @@ class Application
                 return $cachedView;
             }
         }
+
+        // process params
+        $params = $this->params($reflectionData, $params);
+
 
         // $view for use in closure
         $view = new View();
@@ -877,7 +863,7 @@ class Application
         if (!$data = $this->getCache()->get('reflection:'.$file)) {
 
             // TODO: workaround for get reflection of closure function
-            $bootstrap = $request = $identity = $view = $module = $controller = null;
+            $bootstrap = $view = $module = $controller = null;
             $closure = include $file;
 
             if (!is_callable($closure)) {
@@ -928,36 +914,40 @@ class Application
      * process params
      *
      * @param array $reflectionData
+     * @param array $rawData
      * @return array
      */
-    private function params($reflectionData)
+    private function params($reflectionData, $rawData)
     {
-        $request = $this->getRequest();
+        // need use new array for order params as described in controller
         $params = array();
         foreach ($reflectionData['params'] as $param) {
-            if (isset($reflectionData['types'][$param])
+            if (isset($rawData[$param])
+                && isset($reflectionData['types'][$param])
                 && $type = $reflectionData['types'][$param]) {
-                switch ($type) {
-                    case 'bool':
-                    case 'boolean':
-                        $params[] = (bool) $request->{$param};
-                        break;
-                    case 'int':
-                    case 'integer':
-                        $params[] = (int) $request->{$param};
-                        break;
-                    case 'float':
-                        $params[] = (float) $request->{$param};
-                        break;
-                    case 'string':
-                        $params[] = (string) $request->{$param};
-                        break;
-                    case 'array':
-                        $params[] = (array) $request->{$param};
-                        break;
-                }
+                    switch ($type) {
+                        case 'bool':
+                        case 'boolean':
+                            $params[] = (bool) $rawData[$param];
+                            break;
+                        case 'int':
+                        case 'integer':
+                            $params[] = (int) $rawData[$param];
+                            break;
+                        case 'float':
+                            $params[] = (float) $rawData[$param];
+                            break;
+                        case 'string':
+                            $params[] = (string) $rawData[$param];
+                            break;
+                        case 'array':
+                            $params[] = (array) $rawData[$param];
+                            break;
+                    }
+            } elseif (isset($rawData[$param])) {
+                $params[] = $rawData[$param];
             } else {
-                $params[] = $request->{$param};
+                $params[] = null;
             }
         }
         return $params;

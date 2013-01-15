@@ -259,6 +259,16 @@ class AbstractRequest
     }
 
     /**
+     * Get all request parameters
+     *
+     * @return array
+     */
+    public function getAllParams()
+    {
+        return $this->params;
+    }
+
+    /**
      * Retrieve a member of the $_ENV superglobal
      *
      * If no $key is passed, returns the entire $_ENV array.
@@ -285,7 +295,6 @@ class AbstractRequest
     {
         return $this->method;
     }
-
 
     /**
      * setMethod

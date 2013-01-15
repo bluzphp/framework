@@ -56,8 +56,6 @@ class Cache implements CacheInterface, TagableInterface
 
     protected $tagPrefix = '__tag__';
 
-    protected $enabled = true;
-
     /**
      * check Cache configuration
      *
@@ -66,11 +64,6 @@ class Cache implements CacheInterface, TagableInterface
      */
     protected function checkOptions()
     {
-        // don't check for disabled
-        if (!$this->enabled) {
-            return true;
-        }
-
         // check cache Adapter instance and settings for initialize it
         if (!isset($this->options['cacheAdapter']) && !isset($this->options['settings']['cacheAdapter'])) {
             throw new ConfigException(
@@ -79,18 +72,6 @@ class Cache implements CacheInterface, TagableInterface
             );
         }
         return true;
-    }
-
-    /**
-     * Enable/Disable cache.
-     * If cache is disabled, any calls to Bluz\Cache\CacheInterface methods will do nothing.
-     * Note that you can't enable Bluz\Cache if cacheAdapter not set
-     * @param bool $flag [OPTIONAL] default to true
-     * @throws CacheException during attempt to enable misconfigured \Bluz\Cache\Cache instance
-     */
-    public function setEnabled($flag = true)
-    {
-        $this->enabled = (bool)$flag;
     }
 
     /**
@@ -110,23 +91,10 @@ class Cache implements CacheInterface, TagableInterface
     }
 
     /**
-     * Check whether cache enabled or not
-     * @return bool $isEnabled
-     */
-    public function isEnabled()
-    {
-        return $this->enabled;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function get($id)
     {
-        if (!$this->enabled) {
-            return false;
-        }
-
         return $this->getAdapter()->get($id);
     }
 
@@ -135,10 +103,6 @@ class Cache implements CacheInterface, TagableInterface
      */
     public function add($id, $data, $ttl = 0)
     {
-        if (!$this->enabled) {
-            return false;
-        }
-
         return $this->getAdapter()->add($id, $data, $ttl);
     }
 
@@ -147,10 +111,6 @@ class Cache implements CacheInterface, TagableInterface
      */
     public function set($id, $data, $ttl = 0)
     {
-        if (!$this->enabled) {
-            return false;
-        }
-
         return $this->getAdapter()->set($id, $data, $ttl);
     }
 
@@ -159,10 +119,6 @@ class Cache implements CacheInterface, TagableInterface
      */
     public function contains($id)
     {
-        if (!$this->enabled) {
-            return false;
-        }
-
         return $this->getAdapter()->contains($id);
     }
 
@@ -171,10 +127,6 @@ class Cache implements CacheInterface, TagableInterface
      */
     public function delete($id)
     {
-        if (!$this->enabled) {
-            return false;
-        }
-
         return $this->getAdapter()->delete($id);
     }
 
@@ -183,10 +135,6 @@ class Cache implements CacheInterface, TagableInterface
      */
     public function flush()
     {
-        if (!$this->enabled) {
-            return false;
-        }
-
         return $this->getAdapter()->flush();
     }
 
@@ -254,10 +202,6 @@ class Cache implements CacheInterface, TagableInterface
      */
     public function addTag($id, $tag)
     {
-        if (!$this->enabled) {
-            return false;
-        }
-
         $identifiers = array();
         $tag = $this->tagPrefix . $tag;
 
@@ -276,10 +220,6 @@ class Cache implements CacheInterface, TagableInterface
      */
     public function deleteByTag($tag)
     {
-        if (!$this->enabled) {
-            return false;
-        }
-
         // maybe it makes sense to add check for prefix existence in tag name
         $tag = $this->tagPrefix . $tag;
         $identifiers = $this->getTagAdapter()->get($tag);

@@ -265,16 +265,20 @@ class Application
     }
 
     /**
-     * getCache
+     * if enabled return configured Cache or Nil otherwise
      *
-     * @return Cache
+     * @return Cache|Nil
      */
     public function getCache()
     {
         if (!$this->cache) {
             $conf = $this->getConfigData('cache');
-            $this->cache = new Cache();
-            $this->cache->setOptions($conf);
+            if (!isset($conf['enabled']) or !$conf['enabled']) {
+                $this->cache = new Nil();
+            } else {
+                $this->cache = new Cache();
+                $this->cache->setOptions($conf);
+            }
         }
         return $this->cache;
     }
@@ -573,9 +577,8 @@ class Application
         if (!$this->isAllowedController($module, $controller, $params)) {
             $this->denied();
         }
-
         // cache initialization
-        if ($this->getCache()->isEnabled() && isset($reflectionData['cache'])) {
+        if (isset($reflectionData['cache'])) {
             $cacheKey = $module .'/'. $controller .'/'. http_build_query($params);
             if ($cachedView = $this->getCache()->get($cacheKey)) {
                 return $cachedView;
@@ -638,7 +641,7 @@ class Application
             $view->setData($result);
         }
 
-        if ($this->getCache()->isEnabled() && isset($reflectionData['cache'])) {
+        if (isset($reflectionData['cache'])) {
             $this->getCache()->set($cacheKey, $view, intval($reflectionData['cache'])*60);
             $this->getCache()->addTag($cacheKey, 'view');
             $this->getCache()->addTag($cacheKey, 'view:'.$module);

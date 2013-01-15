@@ -40,9 +40,11 @@ class Nil
     /**
      * __call
      *
+     * @param $method
+     * @param $args
      * @return null
      */
-    public function __call()
+    public function __call($method, $args)
     {
         return null;
     }
@@ -50,9 +52,11 @@ class Nil
     /**
      * __set
      *
+     * @param $key
+     * @param $value
      * @return null
      */
-    public function __set()
+    public function __set($key, $value)
     {
         return null;
     }

@@ -44,15 +44,5 @@ function ($limit = 25) {
         $rewrite['page'] = 1;
     }
 
-    // prepare params
-    $params = $this->getParams($rewrite);
-
-    // retrieve URL
-    $url = $this->getApplication()->getRouter()->url(
-        $this->getModule(),
-        $this->getController(),
-        $params
-    );
-
-    return $url;
+    return $this->getUrl($rewrite);
 };

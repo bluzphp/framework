@@ -41,15 +41,5 @@ function () {
     $rewrite = [];
     $rewrite['page'] = $this->pages();
 
-    // prepare params
-    $params = $this->getParams($rewrite);
-
-    // retrieve URL
-    $url = $this->getApplication()->getRouter()->url(
-        $this->getModule(),
-        $this->getController(),
-        $params
-    );
-
-    return $url;
+    return $this->getUrl($rewrite);
 };

@@ -446,6 +446,25 @@ abstract class Grid
     }
 
     /**
+     * getUrl
+     *
+     * @param array $params
+     * @return string
+     */
+    public function getUrl($params)
+    {
+        // prepare params
+        $params = $this->getParams($params);
+
+        // retrieve URL
+        return $this->getApplication()->getRouter()->url(
+            $this->getModule(),
+            $this->getController(),
+            $params
+        );
+    }
+
+    /**
      * setAllowOrders
      *
      * @param array $orders

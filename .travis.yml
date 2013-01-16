@@ -7,9 +7,9 @@ script:
   - phpunit --configuration tests/Bluz/Tests/phpunit.xml --coverage-text
   # PEAR packages
   - pear channel-discover pear.phpunit.de
-  #- pear channel-discover pear.pdepend.org
-  #- pear install pdepend/PHP_Depend-beta
-  - pear install phpunit/phpcpd
+  - pear channel-discover pear.pdepend.org
+  - pear install pdepend/PHP_Depend-beta
+  #- pear install phpunit/phpcpd
   - pear install phpunit/phploc
   - phpenv rehash
   - mkdir .reports
@@ -18,9 +18,9 @@ script:
   # Lines of code
   - phploc src/Bluz # --log-csv .reports/phploc.csv
   # Duplicate code
-  - phpcpd src/Bluz # --log-pmd .reports/pmd-cpd.xml
+  #- phpcpd src/Bluz # --log-pmd .reports/pmd-cpd.xml
   # PHP Depend  @composer
-  #- php vendor/bin/pdepend --jdepend-xml=.reports/jdepend.xml --jdepend-chart=.reports/dependencies.svg --overview-pyramid=.reports/pyramid.svg src/Bluz
+  - php vendor/bin/pdepend --jdepend-xml=.reports/jdepend.xml --jdepend-chart=.reports/dependencies.svg --overview-pyramid=.reports/pyramid.svg src/Bluz
   # Code sniffer @composer
   #- php vendor/bin/phpcs --standard=.standards/PSR --extensions=php --report-checkstyle --report-file=.reports/checkstyle.xml Classes
   # Mess detection

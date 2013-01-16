@@ -273,6 +273,7 @@ class Db
      * @param array $params <p>
      *  array (':name' => 'John', ':id' => '123')
      * </p>
+     * @throws DbException
      * @return string
      */
     public function insert($table, $params = array())
@@ -301,6 +302,7 @@ class Db
      *  // or
      *  ["id" => 123]
      * </p>
+     * @throws DbException
      * @return string
      */
     public function update($table, $params = array(), $where = array())

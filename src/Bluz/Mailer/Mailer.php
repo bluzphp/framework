@@ -122,8 +122,8 @@ class Mailer
      */
     public function send(\PHPMailer $mail)
     {
-        if (isset($this->options['subjectPrefix'])) {
-            $mail->Subject = $this->options['subjectPrefix'] . $mail->Subject;
+        if (isset($this->options['subjectTemplate'])) {
+            $mail->Subject = sprintf($this->options['subjectTemplate'], $mail->Subject);
         }
 
         // TODO: add to queue

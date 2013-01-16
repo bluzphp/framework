@@ -41,18 +41,6 @@ function ($page = 1) {
     if ($page < 1 or $page > $this->pages()) {
         return null;
     }
-    $rewrite = [];
-    $rewrite['page'] = $page;
 
-    // prepare params
-    $params = $this->getParams($rewrite);
-
-    // retrieve URL
-    $url = $this->getApplication()->getRouter()->url(
-        $this->getModule(),
-        $this->getController(),
-        $params
-    );
-
-    return $url;
+    return $this->getUrl(['page' => $page]);
 };

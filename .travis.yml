@@ -3,4 +3,27 @@ php:
   - 5.4
 before_script:
   - COMPOSER_ROOT_VERSION=dev-master composer --prefer-source --dev install
-script: phpunit --configuration tests/Bluz/Tests/phpunit.xml --coverage-text
+script:
+  - phpunit --configuration tests/Bluz/Tests/phpunit.xml --coverage-text
+  # PEAR packages
+  - pear channel-discover pear.phpunit.de
+  - pear channel-discover pear.pdepend.org
+  - pear install pdepend/PHP_Depend-beta
+  #- pear install phpunit/phpcpd
+  - pear install phpunit/phploc
+  - phpenv rehash
+  - mkdir .reports
+  - mkdir .standards
+  - git clone https://github.com/klaussilveira/phpcs-psr .standards/PSR
+  # Lines of code
+  - phploc src/Bluz # --log-csv .reports/phploc.csv
+  # Duplicate code
+  #- phpcpd src/Bluz # --log-pmd .reports/pmd-cpd.xml
+  # PHP Depend  @composer
+  - php vendor/bin/pdepend src/Bluz # --jdepend-xml=.reports/jdepend.xml --jdepend-chart=.reports/dependencies.svg --overview-pyramid=.reports/pyramid.svg
+  # Code sniffer @composer
+  - php vendor/bin/phpcs src/Bluz --standard=.standards/PSR --extensions=php --report-checkstyle --report-file=.reports/checkstyle.xml
+  # Mess detection
+  - php vendor/bin/phpmd src/Bluz text codesize,unusedcode,naming
+notifications:
+  email: false

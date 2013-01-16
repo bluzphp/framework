@@ -50,7 +50,7 @@ function ($url) {
         // save notification to session
         // if they exists
         header('Location: '.$url);
-        exit;
+        return;
     } else {
         throw new Exception("Headers already sent by $file:$line", 503);
     }

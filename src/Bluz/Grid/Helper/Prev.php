@@ -41,8 +41,6 @@ function () {
     if ($this->getPage() <= 1) {
         return null;
     }
-    $rewrite = [];
-    $rewrite['page'] = $this->getPage() - 1;
 
-    return $this->getUrl($rewrite);
+    return $this->getUrl(['page' => $this->getPage() - 1]);
 };

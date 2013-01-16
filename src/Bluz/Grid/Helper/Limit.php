@@ -32,7 +32,7 @@ use Bluz\Grid;
 return
 
 /**
- * @return string $url
+ * @return string
  */
 function ($limit = 25) {
     /**

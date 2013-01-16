@@ -38,8 +38,5 @@ function () {
     /**
      * @var Grid\Grid $this
      */
-    $rewrite = [];
-    $rewrite['page'] = 1;
-
-    return $this->getUrl($rewrite);
+    return $this->getUrl(['page' => 1]);
 };

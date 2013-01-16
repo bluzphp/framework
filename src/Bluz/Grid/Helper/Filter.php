@@ -32,7 +32,6 @@ use Bluz\Grid;
 return
 
 /**
- *
  * @return string|null $url
  */
 function ($column, $filter, $value, $reset = true) {

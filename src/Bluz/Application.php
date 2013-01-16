@@ -577,6 +577,7 @@ class Application
         if (!$this->isAllowedController($module, $controller, $params)) {
             $this->denied();
         }
+
         // cache initialization
         if (isset($reflectionData['cache'])) {
             $cacheKey = $module .'/'. $controller .'/'. http_build_query($params);
@@ -587,7 +588,6 @@ class Application
 
         // process params
         $params = $this->params($reflectionData, $params);
-
 
         // $view for use in closure
         $view = new View();

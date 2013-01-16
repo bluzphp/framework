@@ -16,11 +16,11 @@ script:
   - mkdir .standards
   - git clone https://github.com/klaussilveira/phpcs-psr .standards/PSR
   # Lines of code
-  - phploc src/Bluz # --log-csv .reports/phploc.csv
+  - phploc src/Bluz --log-csv .reports/phploc.csv
   # Duplicate code
   #- phpcpd src/Bluz # --log-pmd .reports/pmd-cpd.xml
   # PHP Depend  @composer
-  - php vendor/bin/pdepend src/Bluz # --jdepend-xml=.reports/jdepend.xml --jdepend-chart=.reports/dependencies.svg --overview-pyramid=.reports/pyramid.svg
+  - php vendor/bin/pdepend src/Bluz --jdepend-xml=.reports/jdepend.xml --jdepend-chart=.reports/dependencies.svg --overview-pyramid=.reports/pyramid.svg
   # Code sniffer @composer
   - php vendor/bin/phpcs src/Bluz --standard=.standards/PSR --extensions=php --report-checkstyle --report-file=.reports/checkstyle.xml
   # Mess detection

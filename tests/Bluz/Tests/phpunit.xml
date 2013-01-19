@@ -6,6 +6,7 @@
     <testsuites>
         <testsuite name="Framework Test Suite">
             <directory>./Db/</directory>
+            <directory>./Logger/</directory>
         </testsuite>
     </testsuites>
     <listeners>

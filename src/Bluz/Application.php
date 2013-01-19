@@ -41,7 +41,6 @@ use Bluz\Request;
 use Bluz\Router\Router;
 use Bluz\Session\Session;
 use Bluz\View\Layout;
-use Bluz\View\Cache as CacheView;
 use Bluz\View\View;
 use Bluz\Logger;
 
@@ -285,16 +284,20 @@ class Application
     }
 
     /**
-     * getCache
+     * if enabled return configured Cache or Nil otherwise
      *
-     * @return Cache
+     * @return Cache|Nil
      */
     public function getCache()
     {
         if (!$this->cache) {
             $conf = $this->getConfigData('cache');
-            $this->cache = new Cache();
-            $this->cache->setOptions($conf);
+            if (!isset($conf['enabled']) or !$conf['enabled']) {
+                $this->cache = new Nil();
+            } else {
+                $this->cache = new Cache();
+                $this->cache->setOptions($conf);
+            }
         }
         return $this->cache;
     }
@@ -338,6 +341,15 @@ class Application
             $this->layout->setOptions($conf);
         }
         return $this->layout;
+    }
+
+    /**
+     * resetLayout
+     *
+     */
+    public function resetLayout()
+    {
+        $this->layout = null;
     }
 
     /**
@@ -410,7 +422,7 @@ class Application
     /**
      * getRequest
      *
-     * @return Request\HttpRequest|Request\CliRequest
+     * @return Request\AbstractRequest
      */
     public function getRequest()
     {
@@ -423,6 +435,18 @@ class Application
             }
         }
         return $this->request;
+    }
+
+    /**
+     * setRequest
+     *
+     * @param Request\AbstractRequest $request
+     * @return Application
+     */
+    public function setRequest($request)
+    {
+        $this->request = $request;
+        return $this;
     }
 
     /**
@@ -500,7 +524,7 @@ class Application
     /**
      * process
      *
-     * @return Application
+     * @return mixed
      */
     public function process()
     {
@@ -515,27 +539,20 @@ class Application
             $this->useJson(true);
         }
 
-        /* @var View $ControllerView */
         try {
-            $dispatchResult = $this->dispatch(
+            $this->dispatchResult = $this->dispatch(
                 $this->request->getModule(),
                 $this->request->getController(),
-                $this->request->getParams()
+                $this->request->getAllParams()
             );
         } catch (\Exception $e) {
-            $dispatchResult = $this->dispatch(Router::ERROR_MODULE, Router::ERROR_CONTROLLER, array(
+            $this->dispatchResult = $this->dispatch(Router::ERROR_MODULE, Router::ERROR_CONTROLLER, array(
                 'code' => $e->getCode(),
                 'message' => $e->getMessage()
             ));
         }
-        // move vars from layout to view instance
-        if ($dispatchResult instanceof View) {
-            $dispatchResult -> setData(
-                $this->getLayout()->toArray()
-            );
-        }
-        $this->dispatchResult = $dispatchResult;
-        return $this;
+
+        return $this->dispatchResult;
     }
 
     /**
@@ -580,37 +597,23 @@ class Application
             $this->denied();
         }
 
-        // $request for use in closure
-        $request = $this->getRequest();
-        $request -> setParams($params);
-
-        $params = $this->params($reflectionData);
-
         // cache initialization
-        if ($this->getCache()->isEnabled() && isset($reflectionData['cache'])) {
+        if (isset($reflectionData['cache'])) {
             $cacheKey = $module .'/'. $controller .'/'. http_build_query($params);
             if ($cachedView = $this->getCache()->get($cacheKey)) {
-                return function() use ($cachedView) {
-                    return $cachedView;
-                };
+                return $cachedView;
             }
-
-            $this->getEventManager()->attach(
-                'view:render:'. $module .':'.$controller,
-                function($event) use ($cacheKey, $module, $controller, $reflectionData) {
-                    /** @var Event $event */
-                    /** @var Application $this */
-                    $this->getCache()->set($cacheKey, $event->getTarget(), intval($reflectionData['cache'])*60);
-                    $this->getCache()->addTag($cacheKey, 'view');
-                    $this->getCache()->addTag($cacheKey, 'view:'.$module);
-                    $this->getCache()->addTag($cacheKey, 'view:'.$module.':'.$controller);
-                }
-            );
         }
+
+        // process params
+        $params = $this->params($reflectionData, $params);
 
         // $view for use in closure
         $view = new View();
-        $view -> init($module, $controller);
+        // setup default path
+        $view->setPath(PATH_APPLICATION .'/modules/'. $module .'/views');
+        // setup default template
+        $view->setTemplate($controller .'.phtml');
 
         $bootstrapPath = PATH_APPLICATION .'/modules/' . $module .'/bootstrap.php';
 
@@ -657,6 +660,13 @@ class Application
             $view->setData($result);
         }
 
+        if (isset($reflectionData['cache'])) {
+            $this->getCache()->set($cacheKey, $view, intval($reflectionData['cache'])*60);
+            $this->getCache()->addTag($cacheKey, 'view');
+            $this->getCache()->addTag($cacheKey, 'view:'.$module);
+            $this->getCache()->addTag($cacheKey, 'view:'.$module.':'.$controller);
+        }
+
         return $view;
     }
 
@@ -673,7 +683,7 @@ class Application
 
         // browser render
         if ($this->jsonFlag) {
-            //override response code so javascript can process it
+            // override response code so javascript can process it
             header('Content-type: application/json', true, 200);
 
             // get data from layout
@@ -875,7 +885,7 @@ class Application
         if (!$data = $this->getCache()->get('reflection:'.$file)) {
 
             // TODO: workaround for get reflection of closure function
-            $bootstrap = $request = $identity = $view = $module = $controller = null;
+            $bootstrap = $view = $module = $controller = null;
             $closure = include $file;
 
             if (!is_callable($closure)) {
@@ -926,36 +936,40 @@ class Application
      * process params
      *
      * @param array $reflectionData
+     * @param array $rawData
      * @return array
      */
-    private function params($reflectionData)
+    private function params($reflectionData, $rawData)
     {
-        $request = $this->getRequest();
+        // need use new array for order params as described in controller
         $params = array();
         foreach ($reflectionData['params'] as $param) {
-            if (isset($reflectionData['types'][$param])
+            if (isset($rawData[$param])
+                && isset($reflectionData['types'][$param])
                 && $type = $reflectionData['types'][$param]) {
-                switch ($type) {
-                    case 'bool':
-                    case 'boolean':
-                        $params[] = (bool) $request->{$param};
-                        break;
-                    case 'int':
-                    case 'integer':
-                        $params[] = (int) $request->{$param};
-                        break;
-                    case 'float':
-                        $params[] = (float) $request->{$param};
-                        break;
-                    case 'string':
-                        $params[] = (string) $request->{$param};
-                        break;
-                    case 'array':
-                        $params[] = (array) $request->{$param};
-                        break;
-                }
+                    switch ($type) {
+                        case 'bool':
+                        case 'boolean':
+                            $params[] = (bool) $rawData[$param];
+                            break;
+                        case 'int':
+                        case 'integer':
+                            $params[] = (int) $rawData[$param];
+                            break;
+                        case 'float':
+                            $params[] = (float) $rawData[$param];
+                            break;
+                        case 'string':
+                            $params[] = (string) $rawData[$param];
+                            break;
+                        case 'array':
+                            $params[] = (array) $rawData[$param];
+                            break;
+                    }
+            } elseif (isset($rawData[$param])) {
+                $params[] = $rawData[$param];
             } else {
-                $params[] = $request->{$param};
+                $params[] = null;
             }
         }
         return $params;

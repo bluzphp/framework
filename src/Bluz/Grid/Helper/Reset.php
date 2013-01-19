@@ -35,12 +35,8 @@ return
  * @return string|null $url
  */
 function () {
-    // retrieve URL
-    $url = $this->getApplication()->getRouter()->url(
-        $this->getModule(),
-        $this->getController(),
-        []
-    );
-
-    return $url;
+    /**
+     * @var Grid\Grid $this
+     */
+    return $this->getUrl([]);
 };

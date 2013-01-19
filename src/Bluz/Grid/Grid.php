@@ -34,6 +34,18 @@ use Bluz\Application;
  * @category Bluz
  * @package  Grid
  *
+ * @method string filter($column, $filter, $value, $reset = true)
+ * @method string first()
+ * @method string last()
+ * @method string limit($limit = 25)
+ * @method string next()
+ * @method string order($column, $order = null, $defaultOrder = Grid::ORDER_ASC, $reset = true)
+ * @method string page($page = 1)
+ * @method string pages()
+ * @method string prev()
+ * @method string reset()
+ * @method string total()
+ *
  * @author   Anton Shevchuk
  * @created  15.08.12 11:52
  */
@@ -443,6 +455,25 @@ abstract class Grid
         }
 
         return $params;
+    }
+
+    /**
+     * getUrl
+     *
+     * @param array $params
+     * @return string
+     */
+    public function getUrl($params)
+    {
+        // prepare params
+        $params = $this->getParams($params);
+
+        // retrieve URL
+        return $this->getApplication()->getRouter()->url(
+            $this->getModule(),
+            $this->getController(),
+            $params
+        );
     }
 
     /**

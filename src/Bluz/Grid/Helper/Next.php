@@ -32,7 +32,7 @@ use Bluz\Grid;
 return
 
 /**
- * @return string|null $url
+ * @return string|null
  */
 function () {
     /**
@@ -41,18 +41,6 @@ function () {
     if ($this->getPage() >= $this->pages()) {
         return null;
     }
-    $rewrite = [];
-    $rewrite['page'] = $this->getPage() + 1;
 
-    // prepare params
-    $params = $this->getParams($rewrite);
-
-    // retrieve URL
-    $url = $this->getApplication()->getRouter()->url(
-        $this->getModule(),
-        $this->getController(),
-        $params
-    );
-
-    return $url;
+    return $this->getUrl(['page' => $this->getPage() + 1]);
 };

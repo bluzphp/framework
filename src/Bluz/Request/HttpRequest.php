@@ -144,7 +144,7 @@ class HttpRequest extends AbstractRequest
      */
     public function getAllParams()
     {
-        return array_merge($_ENV, $_SERVER, $_COOKIE, $_POST, $_GET, $this->params);
+        return array_merge($_POST, $_GET, $this->params);
     }
 
     /**
@@ -392,7 +392,6 @@ class HttpRequest extends AbstractRequest
      */
     public function detectBaseUrl()
     {
-        $baseUrl        = '';
         $filename       = $this->getServer('SCRIPT_FILENAME', '');
         $scriptName     = $this->getServer('SCRIPT_NAME');
         $phpSelf        = $this->getServer('PHP_SELF');

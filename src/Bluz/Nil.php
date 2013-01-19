@@ -24,36 +24,40 @@
 /**
  * @namespace
  */
-namespace Bluz\Grid\Helper;
-
-use Bluz\Application;
-use Bluz\Grid;
-
-return
+namespace Bluz;
 
 /**
- * @return string|null $url
+ * It's just null class
+ *
+ * @category Bluz
+ * @package  Nil
+ *
+ * @author   Anton Shevchuk
+ * @created  15.01.13 09:50
  */
-function ($column, $filter, $value, $reset = true) {
+class Nil
+{
     /**
-     * @var Grid\Grid $this
+     * __call
+     *
+     * @param $method
+     * @param $args
+     * @return null
      */
-    if (!in_array($column, $this->getAllowFilters()) &&
-        !array_key_exists($column, $this->getAllowFilters())) {
-        return null;
-    }
-    if (!$this->checkFilter($filter)) {
+    public function __call($method, $args)
+    {
         return null;
     }
 
-    // reset filters
-    if ($reset) {
-        $rewrite = ['filters' => []];
-    } else {
-        $rewrite = ['filters' => $this->getFilters()];
+    /**
+     * __set
+     *
+     * @param $key
+     * @param $value
+     * @return null
+     */
+    public function __set($key, $value)
+    {
+        return null;
     }
-
-    $rewrite['filters'][$column][$filter] = $value;
-
-    return $this->getUrl($rewrite);
-};
+}

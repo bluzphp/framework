@@ -42,6 +42,7 @@ use Bluz\Router\Router;
 use Bluz\Session\Session;
 use Bluz\View\Layout;
 use Bluz\View\View;
+use Bluz\Logger\Logger;
 
 /**
  * Application
@@ -62,6 +63,7 @@ class Application
 {
     use Singleton;
     use Helper;
+    use \Psr\Log\LoggerAwareTrait;
 
     /**
      * @var Acl
@@ -207,7 +209,13 @@ class Application
      */
     public function log($message)
     {
-        $this->getEventManager()->trigger('log', $message);
+        //$this->getEventManager()->trigger('log', $message);
+
+        if (!$this->logger) {
+            $this->logger = new Logger();
+        }
+
+        return $this->logger;
     }
 
     /**
@@ -223,6 +231,19 @@ class Application
             $this->config->load($environment);
         }
         return $this->config;
+    }
+
+    /**
+     * load logger
+     *
+     * @return Logger
+     */
+    public function getLogger()
+    {
+        if (!$this->logger) {
+            $this->logger = new Logger();
+        }
+        return $this->logger;
     }
 
     /**

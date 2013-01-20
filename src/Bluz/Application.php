@@ -34,6 +34,7 @@ use Bluz\Db\Db;
 use Bluz\EventManager\Event;
 use Bluz\EventManager\EventManager;
 use Bluz\Ldap\Ldap;
+use Bluz\Logger\Logger;
 use Bluz\Mailer\Mailer;
 use Bluz\Messages\Messages;
 use Bluz\Registry\Registry;
@@ -42,7 +43,6 @@ use Bluz\Router\Router;
 use Bluz\Session\Session;
 use Bluz\View\Layout;
 use Bluz\View\View;
-use Bluz\Logger\Logger;
 
 /**
  * Application
@@ -63,7 +63,6 @@ class Application
 {
     use Singleton;
     use Helper;
-    use \Psr\Log\LoggerAwareTrait;
 
     /**
      * @var Acl
@@ -104,6 +103,11 @@ class Application
      * @var Ldap
      */
     protected $ldap;
+
+    /**
+     * @var Logger
+     */
+    protected $logger;
 
     /**
      * @var Mailer
@@ -202,20 +206,15 @@ class Application
     }
 
     /**
-     * log message, working with profiler
+     * log message, working with logger
      *
-     * @param  string $message
+     * @param string $message
+     * @param array  $context
      * @return void
      */
-    public function log($message)
+    public function log($message, array $context = [])
     {
-        //$this->getEventManager()->trigger('log', $message);
-
-        if (!$this->logger) {
-            $this->logger = new Logger();
-        }
-
-        return $this->logger;
+        $this->getLogger()->info($message, $context);
     }
 
     /**
@@ -231,19 +230,6 @@ class Application
             $this->config->load($environment);
         }
         return $this->config;
-    }
-
-    /**
-     * load logger
-     *
-     * @return Logger
-     */
-    public function getLogger()
-    {
-        if (!$this->logger) {
-            $this->logger = new Logger();
-        }
-        return $this->logger;
     }
 
     /**
@@ -366,6 +352,24 @@ class Application
             $this->ldap->setOptions($conf);
         }
         return $this->ldap;
+    }
+
+    /**
+     * load logger
+     *
+     * @return Logger
+     */
+    public function getLogger()
+    {
+        if (!$this->logger) {
+            $conf = $this->getConfigData('logger');
+            if (!isset($conf['enabled']) or !$conf['enabled']) {
+                $this->logger = new Nil();
+            } else {
+                $this->logger = new Logger();
+            }
+        }
+        return $this->logger;
     }
 
     /**

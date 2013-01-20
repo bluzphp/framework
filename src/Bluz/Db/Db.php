@@ -592,12 +592,18 @@ class Db
      * log
      *
      * @param string $sql
-     * @param array  $params
+     * @param array  $context
      * @return void
      */
-    protected function log($sql, $params = array())
+    protected function log($sql, array $context = [])
     {
-        if (defined('DEBUG') && DEBUG) {
+        $sql = str_replace('%', '%%', $sql);
+        $sql = str_replace('?', '"%s"', $sql);
+
+
+
+        $this->getApplication()->log($sql);
+        return;
             if (isset($this->queries[$sql])) {
                 $this->queries[$sql]['timer'][] = microtime(true);
                 $timers = sizeof($this->queries[$sql]['timer']);
@@ -622,6 +628,6 @@ class Db
                     'point' => array()
                 );
             }
-        }
+
     }
 }

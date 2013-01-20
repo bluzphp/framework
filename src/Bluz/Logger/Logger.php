@@ -39,9 +39,64 @@ use Psr\Log\AbstractLogger;
  */
 class Logger extends AbstractLogger
 {
-
     use \Bluz\Package;
     use \Psr\Log\LoggerTrait;
+
+    /**
+     * @var null
+     */
+    protected $start = null;
+    protected $timer = null;
+    protected $info = array();
+
+    /**
+     * Interpolates context values into the message placeholders
+     *
+     * @param string $message
+     * @param array  $context
+     * @return string
+     */
+    protected function interpolate($message, array $context = [])
+    {
+        // build a replacement array with braces around the context keys
+        $replace = array();
+        foreach ($context as $key => $val) {
+            $replace['{' . $key . '}'] = $val;
+        }
+
+        // interpolate replacement values into the message and return
+        return strtr($message, $replace);
+    }
+
+    /**
+     * log
+     *
+     * @param string $message
+     * @param array $context
+     * @return void
+     */
+    public function info($message, array $context = [])
+    {
+        $message = $this->interpolate($message, $context);
+
+        if (!$this->start) {
+            $this->start = $this->timer = isset($_SERVER['REQUEST_TIME_FLOAT'])
+                ? $_SERVER['REQUEST_TIME_FLOAT']
+                : microtime(true);
+        }
+
+        $curTimer = microtime(true);
+        $curMemory = ceil((memory_get_usage()/1024));
+
+        $this->info[] = sprintf(
+            "%f :: %f :: %s kb // {$message}",
+            ($curTimer - self::$start),
+            ($curTimer - self::$timer),
+            $curMemory
+        );
+
+        $this->timer = $curTimer;
+    }
 
     /**
      * Logs with an arbitrary level.
@@ -49,10 +104,10 @@ class Logger extends AbstractLogger
      * @param mixed $level
      * @param string $message
      * @param array $context
-     * @return null
+     * @return void
      */
-    public function log($level, $message, array $context = array())
+    public function log($level, $message, array $context = [])
     {
-        \Bluz\Profiler::log("[{$level}] " + $message);
+        $this->{$level}[] = $this->interpolate($message, $context);
     }
 }

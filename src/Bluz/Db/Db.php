@@ -26,8 +26,6 @@
  */
 namespace Bluz\Db;
 
-use Bluz\Profiler;
-
 /**
  * PDO wrapper
  *
@@ -213,7 +211,7 @@ class Db
      */
     protected function prepare($sql)
     {
-        $this->log($sql);
+        $this->log("Prepare query");
         return $this->handler()->prepare($sql);
     }
 
@@ -600,34 +598,8 @@ class Db
         $sql = str_replace('%', '%%', $sql);
         $sql = str_replace('?', '"%s"', $sql);
 
+        // TODO: replace mask by data
 
-
-        $this->getApplication()->log($sql);
-        return;
-            if (isset($this->queries[$sql])) {
-                $this->queries[$sql]['timer'][] = microtime(true);
-                $timers = sizeof($this->queries[$sql]['timer']);
-                if ($timers%2==0) {
-                    // set query time
-                    $timeSpent = $this->queries[$sql]['timer'][$timers-1] - $this->queries[$sql]['timer'][$timers-2];
-
-                    $sql = str_replace('%', '%%', $sql);
-                    $sql = str_replace('?', '"%s"', $sql);
-
-                    array_unshift(
-                        $params,
-                        " >> %f >> Query: {$sql}",
-                        $timeSpent
-                    );
-
-                    call_user_func_array('\Bluz\Profiler::log', $params);
-                }
-            } else {
-                $this->queries[$sql] = array(
-                    'timer' => array(microtime(true)),
-                    'point' => array()
-                );
-            }
-
+        $this->getApplication()->log("DB >> ". $sql);
     }
 }

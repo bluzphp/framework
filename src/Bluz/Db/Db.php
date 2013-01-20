@@ -182,7 +182,7 @@ class Db
                     $this->connect['user'],
                     $this->connect['pass']
                 );
-                $this->log("Connect to ".$this->connect['host']);
+                $this->log("Connected");
             } catch (\Exception $e) {
                 throw new DbException('Attempt connection to database is failed');
             }
@@ -598,7 +598,8 @@ class Db
         $sql = str_replace('%', '%%', $sql);
         $sql = str_replace('?', '"%s"', $sql);
 
-        // TODO: replace mask by data
+        // replace mask by data
+        $sql = vsprintf($sql, $context);
 
         $this->getApplication()->log("DB >> ". $sql);
     }

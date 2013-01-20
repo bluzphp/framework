@@ -47,7 +47,18 @@ class Logger extends AbstractLogger
      */
     protected $start = null;
     protected $timer = null;
+
+    /**
+     * @var array
+     */
+    protected $alert = array();
+    protected $critical = array();
+    protected $debug = array();
+    protected $emergency = array();
+    protected $error = array();
     protected $info = array();
+    protected $notice = array();
+    protected $warning = array();
 
     /**
      * Interpolates context values into the message placeholders
@@ -90,8 +101,8 @@ class Logger extends AbstractLogger
 
         $this->info[] = sprintf(
             "%f :: %f :: %s kb // {$message}",
-            ($curTimer - self::$start),
-            ($curTimer - self::$timer),
+            ($curTimer - $this->start),
+            ($curTimer - $this->timer),
             $curMemory
         );
 
@@ -109,5 +120,16 @@ class Logger extends AbstractLogger
     public function log($level, $message, array $context = [])
     {
         $this->{$level}[] = $this->interpolate($message, $context);
+    }
+
+    /**
+     * get
+     *
+     * @param $level
+     * @return array
+     */
+    public function get($level)
+    {
+        return $this->{$level};
     }
 }

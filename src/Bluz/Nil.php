@@ -38,13 +38,25 @@ namespace Bluz;
 class Nil
 {
     /**
-     * __call
+     * Magic call
      *
      * @param $method
      * @param $args
      * @return null
      */
     public function __call($method, $args)
+    {
+        return null;
+    }
+
+    /**
+     * Magic call for static
+     *
+     * @param $method
+     * @param $args
+     * @return null
+     */
+    public function __callStatic($method, $args)
     {
         return null;
     }
@@ -59,5 +71,15 @@ class Nil
     public function __set($key, $value)
     {
         return null;
+    }
+
+    /**
+     * __toString
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return '';
     }
 }

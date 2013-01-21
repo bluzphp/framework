@@ -56,7 +56,7 @@ class Nil
      * @param $args
      * @return null
      */
-    public function __callStatic($method, $args)
+    public static function __callStatic($method, $args)
     {
         return null;
     }

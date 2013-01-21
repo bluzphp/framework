@@ -290,7 +290,7 @@ class Row
          * Compare the data to the modified fields array to discover
          * which columns have been changed.
          */
-        $diffData = array_diff($this->toArray(), $this->clean);
+        $diffData = array_diff_assoc($this->toArray(), $this->clean);
 
         /**
          * Execute the UPDATE (this may throw an exception)

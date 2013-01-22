@@ -337,21 +337,8 @@ abstract class Table
     protected function fetch($sql, $params = array())
     {
         $data = $this->getAdapter()->fetchObjects($sql, $params, $this->getRowClass());
-        return new Rowset(array('table' => $this, 'data' => $data));
+        return new Rowset($data);
     }
-
-    /**
-     * Be or not to be?
-     *
-     * Support method for fetching rows.
-     *
-     * @return array An array containing the row results in FETCH_ASSOC mode.
-     */
-//    public function fetchAll()
-//    {
-//        $data = $this->getAdapter()->fetchObjects($this->select, [], $this->getRowClass());
-//        return new Rowset(array('table' => $this, 'data' => $data));
-//    }
 
     /**
      * create

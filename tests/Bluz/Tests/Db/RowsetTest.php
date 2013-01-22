@@ -38,7 +38,7 @@ class RowsetTest extends Bluz\Tests\TestCase
 {
 
     /**
-     * @var Rowset
+     * @var \Bluz\Db\Rowset
      */
     protected $object;
 
@@ -49,7 +49,7 @@ class RowsetTest extends Bluz\Tests\TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->object = new Bluz\Db\Rowset;
+        $this->object = new Bluz\Db\Rowset([0,1,null]);
     }
 
     /**
@@ -101,7 +101,11 @@ class RowsetTest extends Bluz\Tests\TestCase
      */
     public function testNext()
     {
+//        var_dump($this->object);
+//        var_dump($this->object->key());
         $this->object->next();
+//        var_dump($this->object->key());
+//        exit();
         $this->assertEquals(1, $this->object->key());
     }
 
@@ -109,6 +113,7 @@ class RowsetTest extends Bluz\Tests\TestCase
      * @covers Bluz\Db\Rowset::valid
      */
     public function testValidEmptyRowset() {
+        $this->object = new Bluz\Db\Rowset();
         $this->assertEquals(false, $this->object->valid());
     }
 
@@ -118,10 +123,8 @@ class RowsetTest extends Bluz\Tests\TestCase
     public function testValidNotEmpty() {
         $this->object = new Bluz\Db\Rowset(
             array(
-                'data' => array(
-                    new Bluz\Tests\Db\Fixtures\ConcreteRow(),
-                    new Bluz\Tests\Db\Fixtures\ConcreteRowWithInvalidTable()
-                )
+                new Bluz\Tests\Db\Fixtures\ConcreteRow(),
+                new Bluz\Tests\Db\Fixtures\ConcreteRowWithInvalidTable()
             )
         );
         $this->assertEquals(true, $this->object->valid());
@@ -132,6 +135,7 @@ class RowsetTest extends Bluz\Tests\TestCase
      */
     public function testCountEmptyRowset()
     {
+        $this->object = new Bluz\Db\Rowset();
         $this->assertEquals(0, $this->object->count());
     }
 
@@ -142,10 +146,8 @@ class RowsetTest extends Bluz\Tests\TestCase
     {
         $this->object = new Bluz\Db\Rowset(
             array(
-                'data' => array(
-                    new Bluz\Tests\Db\Fixtures\ConcreteRow(),
-                    new Bluz\Tests\Db\Fixtures\ConcreteRowWithInvalidTable()
-                )
+                new Bluz\Tests\Db\Fixtures\ConcreteRow(),
+                new Bluz\Tests\Db\Fixtures\ConcreteRowWithInvalidTable()
             )
         );
         $this->assertEquals(2, $this->object->count());
@@ -167,10 +169,8 @@ class RowsetTest extends Bluz\Tests\TestCase
     {
         $this->object = new Bluz\Db\Rowset(
             array(
-                'data' => array(
-                    new Bluz\Tests\Db\Fixtures\ConcreteRow(),
-                    new Bluz\Tests\Db\Fixtures\ConcreteRowWithInvalidTable()
-                )
+                new Bluz\Tests\Db\Fixtures\ConcreteRow(),
+                new Bluz\Tests\Db\Fixtures\ConcreteRowWithInvalidTable()
             )
         );
         $this->object->seek(1);
@@ -184,10 +184,8 @@ class RowsetTest extends Bluz\Tests\TestCase
     {
         $this->object = new Bluz\Db\Rowset(
             array(
-                'data' => array(
-                    new Bluz\Tests\Db\Fixtures\ConcreteRow(),
-                    new Bluz\Tests\Db\Fixtures\ConcreteRowWithInvalidTable()
-                )
+                new Bluz\Tests\Db\Fixtures\ConcreteRow(),
+                new Bluz\Tests\Db\Fixtures\ConcreteRowWithInvalidTable()
             )
         );
         $this->object->seek(1);
@@ -199,6 +197,7 @@ class RowsetTest extends Bluz\Tests\TestCase
      */
     public function testOffsetExistsException()
     {
+        $this->object = new Bluz\Db\Rowset();
         $this->assertFalse($this->object->offsetExists(1));
     }
 
@@ -209,24 +208,13 @@ class RowsetTest extends Bluz\Tests\TestCase
     {
         $this->object = new Bluz\Db\Rowset(
             array(
-                'data' => array(
-                    new Bluz\Tests\Db\Fixtures\ConcreteRow(),
-                    new Bluz\Tests\Db\Fixtures\ConcreteRowWithInvalidTable()
-                )
+                new Bluz\Tests\Db\Fixtures\ConcreteRow(),
+                new Bluz\Tests\Db\Fixtures\ConcreteRowWithInvalidTable()
             )
         );
         $this->assertInstanceOf(
             'Bluz\Tests\Db\Fixtures\ConcreteRowWithInvalidTable',
             $this->object->offsetGet(1)
         );
-    }
-
-    /**
-     * @covers Bluz\Db\Rowset::offsetGet
-     * @expectedException \OutOfBoundsException
-     */
-    public function testOffsetGetException()
-    {
-        $this->object->offsetGet(1);
     }
 }

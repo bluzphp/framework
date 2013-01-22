@@ -132,6 +132,9 @@ class SqlSource extends AbstractSource
         // run queries
         $data = Db\Db::getDefaultAdapter()->fetchAll($dataSql);
         $total = Db\Db::getDefaultAdapter()->fetchOne($countSql);
-        return new Grid\Data($data, $total);
+        $gridData = new Grid\Data($data);
+        $gridData -> setTotal($total);
+        return $gridData;
+
     }
 }

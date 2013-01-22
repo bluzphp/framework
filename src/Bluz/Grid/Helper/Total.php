@@ -38,5 +38,5 @@ function () {
     /**
      * @var Grid\Grid $this
      */
-    return $this->getData()->total();
+    return $this->getData()->getTotal();
 };

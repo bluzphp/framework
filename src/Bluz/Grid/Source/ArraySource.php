@@ -70,7 +70,7 @@ class ArraySource extends AbstractSource
 
         // process filters
         if (!empty($settings['filters'])) {
-            $data = array_filter($data, function($row) use ($settings){
+            $data = array_filter($data, function($row) use ($settings) {
                 foreach ($settings['filters'] as $column => $filters) {
                     foreach ($filters as $filter => $value) {
                         // switch statement for $filter
@@ -132,6 +132,8 @@ class ArraySource extends AbstractSource
         // process pages
         $data = array_slice($data, ($settings['limit']*($settings['page']-1)), $settings['limit']);
 
-        return new Grid\Data($data, $total);
+        $gridData = new Grid\Data($data);
+        $gridData -> setTotal($total);
+        return $gridData;
     }
 }

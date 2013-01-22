@@ -35,22 +35,8 @@ namespace Bluz\Grid;
  * @author   AntonShevchuk
  * @created  16.08.12 9:55
  */
-class Data implements \Iterator, \Countable, \ArrayAccess
+class Data extends \ArrayIterator
 {
-    /**
-     * Iterator pointer.
-     *
-     * @var integer
-     */
-    protected $pointer = 0;
-
-    /**
-     * How many data rows there are.
-     *
-     * @var integer
-     */
-    protected $count = 0;
-
     /**
      * How many data rows w/out limits
      *
@@ -59,181 +45,24 @@ class Data implements \Iterator, \Countable, \ArrayAccess
     protected $total;
 
     /**
-     * Collection of data rows
+     * set total rows
      *
-     * @var array
+     * @param $total
+     * @return self
      */
-    protected $data = array();
-
-    /**
-     * Constructor
-     *
-     * @param array $data
-     * @param int   $total
-     * @return Data
-     */
-    public function __construct(array $data = [], $total = 0)
+    public function setTotal($total)
     {
-        $this->total = $total;
-        $this->data = $data;
-        $this->count = sizeof($this->data);
+        $this->total = (int)$total;
+        return $this;
     }
 
     /**
-     * total
-     * 
+     * total rows
+     *
      * @return integer
      */
-    public function total()
+    public function getTotal()
     {
         return $this->total;
-    }
-    
-    /**
-     * Rewind the Iterator to the first element.
-     * Similar to the reset() function for arrays in PHP.
-     * Required by interface Iterator.
-     *
-     * @return Data|void Fluent interface.
-     */
-    public function rewind()
-    {
-        $this->pointer = 0;
-        return $this;
-    }
-
-    /**
-     * Return the current element.
-     * Similar to the current() function for arrays in PHP
-     * Required by interface Iterator.
-     *
-     * @return mixed current element from the collection
-     */
-    public function current()
-    {
-        if ($this->valid() === false) {
-            return null;
-        }
-        // return the row object
-        return $this->data[$this->pointer];
-    }
-
-    /**
-     * Return the identifying key of the current element.
-     * Similar to the key() function for arrays in PHP.
-     * Required by interface Iterator.
-     *
-     * @return int|\scalar
-     */
-    public function key()
-    {
-        return $this->pointer;
-    }
-
-    /**
-     * Move forward to next element.
-     * Similar to the next() function for arrays in PHP.
-     * Required by interface Iterator.
-     *
-     * @return void
-     */
-    public function next()
-    {
-        ++$this->pointer;
-    }
-
-    /**
-     * Check if there is a current element after calls to rewind() or next().
-     * Used to check if we've iterated to the end of the collection.
-     * Required by interface Iterator.
-     *
-     * @return bool False if there's nothing more to iterate over
-     */
-    public function valid()
-    {
-        return $this->pointer >= 0 && $this->pointer < $this->count;
-    }
-
-    /**
-     * Returns the number of elements in the collection.
-     *
-     * Implements Countable::count()
-     *
-     * @return int
-     */
-    public function count()
-    {
-        return $this->count;
-    }
-
-    /**
-     * Take the Iterator to position $position
-     * Required by interface SeekableIterator.
-     *
-     * @param int $position the position to seek to
-     * @return Data
-     * @throws \OutOfBoundsException
-     */
-    public function seek($position)
-    {
-        $position = (int) $position;
-        if ($position < 0 || $position >= $this->count) {
-            throw new \OutOfBoundsException("Illegal index $position");
-        }
-        $this->pointer = $position;
-        return $this;
-    }
-
-
-    /**
-     * Check if an offset exists
-     * Required by the ArrayAccess implementation
-     *
-     * @param string $offset
-     * @return boolean
-     */
-    public function offsetExists($offset)
-    {
-        return isset($this->data[(int) $offset]);
-    }
-
-    /**
-     * Get the row for the given offset
-     * Required by the ArrayAccess implementation
-     *
-     * @param string $offset
-     * @throws \OutOfBoundsException
-     * @return mixed
-     */
-    public function offsetGet($offset)
-    {
-        $offset = (int) $offset;
-        if ($offset < 0 || $offset >= $this->count) {
-            throw new \OutOfBoundsException("Illegal index $offset");
-        }
-        $this->pointer = $offset;
-
-        return $this->current();
-    }
-
-    /**
-     * Does nothing
-     * Required by the ArrayAccess implementation
-     *
-     * @param string $offset
-     * @param mixed $value
-     */
-    public function offsetSet($offset, $value)
-    {
-    }
-
-    /**
-     * Does nothing
-     * Required by the ArrayAccess implementation
-     *
-     * @param string $offset
-     */
-    public function offsetUnset($offset)
-    {
     }
 }

@@ -39,19 +39,5 @@ return
  */
 function ($url) {
     /** @var Application $this */
-    // for AJAX requests
-    if ($this->getRequest()->isXmlHttpRequest()) {
-        $this->getLayout()->_redirect = $url;
-        return;
-    }
-
-    // for other controllers
-    if (!headers_sent($file, $line)) {
-        // save notification to session
-        // if they exists
-        header('Location: '.$url);
-        return;
-    } else {
-        throw new Exception("Headers already sent by $file:$line", 503);
-    }
+    throw new Application\RedirectException($url);
 };

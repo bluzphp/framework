@@ -27,6 +27,7 @@
 namespace Bluz;
 
 use Bluz\Acl\Acl;
+use Bluz\Application\RedirectException;
 use Bluz\Auth\Auth;
 use Bluz\Cache\Cache;
 use Bluz\Config\Config;
@@ -551,6 +552,8 @@ class Application
                 $this->request->getController(),
                 $this->request->getAllParams()
             );
+        } catch (RedirectException $e) {
+            $this->dispatchResult = $e;
         } catch (\Exception $e) {
             $this->dispatchResult = $this->dispatch(Router::ERROR_MODULE, Router::ERROR_CONTROLLER, array(
                 'code' => $e->getCode(),
@@ -679,7 +682,7 @@ class Application
     /**
      * render
      *
-     * @return Application
+     * @return void
      */
     public function render()
     {
@@ -687,7 +690,6 @@ class Application
 
         $result = $this->dispatchResult;
 
-        // browser render
         if ($this->jsonFlag) {
             // override response code so javascript can process it
             header('Content-type: application/json', true, 200);
@@ -698,6 +700,11 @@ class Application
             // merge it with view data
             if ($result instanceof View) {
                 $data = array_merge($data, $result->toArray());
+            }
+
+            // check redirect
+            if ($result instanceof RedirectException) {
+                $data['_redirect'] = $result->getMessage();
             }
 
             // enable Bluz AJAX handler
@@ -712,19 +719,21 @@ class Application
 
             // output
             echo json_encode($data);
+        } elseif ($result instanceof RedirectException) {
+            header('Location: '.$result->getMessage(), true, $result->getCode());
+            exit();
         } elseif (!$this->layoutFlag) {
             echo ($result instanceof \Closure) ? $result() : $result;
         } else {
             $this->getLayout()->setContent($result);
             echo $this->getLayout();
         }
-        return $this;
     }
 
     /**
      * render for CLI
      *
-     * @return Application
+     * @return void
      */
     public function output()
     {
@@ -761,8 +770,6 @@ class Application
             var_dump($value);
             echo "\n";
         }
-
-        return $this;
     }
 
     /**

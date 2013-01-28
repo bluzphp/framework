@@ -479,7 +479,7 @@ class Application
         if (!$this->session) {
             $this->session = new Session();
             $this->session->setOptions($this->getConfigData('session'));
-            $this->session->start();
+
             $this->getMessages();
         }
         return $this->session;

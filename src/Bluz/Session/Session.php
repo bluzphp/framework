@@ -83,11 +83,12 @@ class Session
     }
 
     /**
-     * buildStore
+     * getStore
      *
-     * @return Session
+     * @throws SessionException
+     * @return Store\AbstractStore
      */
-    public function start()
+    public function getStore()
     {
         if (!$this->store) {
             // switch statement for $store
@@ -100,20 +101,6 @@ class Session
                     $this->store = new Store\SessionStore($this->storeOptions);
                     break;
             }
-        }
-        return $this->store->start();
-    }
-
-    /**
-     * getStore
-     *
-     * @throws SessionException
-     * @return Store\AbstractStore
-     */
-    public function getStore()
-    {
-        if (!$this->store) {
-            throw new SessionException("Session store is not configured");
         }
 
         return $this->store;

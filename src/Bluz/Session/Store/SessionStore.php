@@ -109,7 +109,13 @@ class SessionStore extends AbstractStore
      */
     public function get($key)
     {
+        // to avoid implicit starting session on read
+        if (!$this->started && !$this->hasSessionId()) {
+            return null;
+        }
+        
         $this->start();
+        
         if (!isset($_SESSION[$this->namespace][$key])) {
             return null;
         }
@@ -125,5 +131,15 @@ class SessionStore extends AbstractStore
     public function destroy()
     {
         return session_destroy();
+    }
+    
+    /**
+     * Returns true if session ID is set.
+     * 
+     * @return boolean
+     */
+    protected function hasSessionId()
+    {
+        return isset($_COOKIE[session_name()]);
     }
 }

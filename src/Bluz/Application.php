@@ -542,7 +542,11 @@ class Application
         $this->getRouter()
              ->process();
 
-        if ($this->getRequest()->getParam('_json')) {
+        // check header "accept" for catch AJAX JSON requests, and switch to JSON response
+        $accept = $this->getRequest()->getHeader('accept');
+        $accept = substr($accept, 0, strpos($accept, ','));
+        if ($this->getRequest()->isXmlHttpRequest()
+            && $accept == "application/json") {
             $this->useJson(true);
         }
 

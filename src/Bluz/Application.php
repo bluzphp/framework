@@ -696,7 +696,7 @@ class Application
 
         if ($this->jsonFlag) {
             // override response code so javascript can process it
-            header('Content-type: application/json', true, 200);
+            header('Content-type: application/json');
 
             // get data from layout
             $data = $this->getLayout()->toArray();

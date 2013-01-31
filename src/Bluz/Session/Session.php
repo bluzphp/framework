@@ -55,10 +55,10 @@ class Session
     protected $storeName = 'session';
 
     /**
-     * Session store options
+     * Session store parameters
      * @var string
      */
-    protected $storeOptions = array();
+    protected $storeParameters = array();
 
     /**
      * setStore
@@ -73,13 +73,15 @@ class Session
     }
 
     /**
-     * setStore
+     * setParameters
      *
-     * @param array $options
+     * @param array $parameters
+     * @return Session
      */
-    public function setOptions(array $options)
+    public function setParameters(array $parameters)
     {
-        $this->storeOptions = $options;
+        $this->storeParameters = $parameters;
+        return $this;
     }
 
     /**
@@ -94,15 +96,17 @@ class Session
             // switch statement for $store
             switch ($this->storeName) {
                 case 'array':
-                    $this->store = new Store\ArrayStore($this->storeOptions);
+                    $this->store = new Store\ArrayStore();
                     break;
                 case 'session':
                 default:
-                    $this->store = new Store\SessionStore($this->storeOptions);
+                    $this->store = new Store\SessionStore();
                     break;
             }
         }
 
+        $this->store->setOptions($this->storeParameters);
+        
         return $this->store;
     }
 

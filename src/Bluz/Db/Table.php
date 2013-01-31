@@ -293,6 +293,7 @@ abstract class Table
      * // WHERE (alias = 'foo' AND userId = 2) OR ('alias' = 'bar' AND userId = 4)
      * $table->findWhere(['alias'=>'foo', 'userId'=> 2], ['alias'=>'foo', 'userId'=>4]);
      * </code>
+     * @throws \InvalidArgumentException
      * @return Rowset Row(s) matching the criteria.
      */
     public function findWhere()
@@ -307,6 +308,12 @@ abstract class Table
                 $whereAndTerms = array();
                 foreach ($keyValueSets as $keyName => $keyValue) {
                     $whereAndTerms[] = $this->table . '.' . $keyName . ' = ?';
+                    if (!is_scalar($keyValue)) {
+                        throw new \InvalidArgumentException(
+                            "Wrong arguments of method 'findWhere'.\n".
+                            "Please use syntax described at https://github.com/bluzphp/framework/wiki/Db-Table"
+                        );
+                    }
                     $whereParams[] = $keyValue;
                 }
                 $whereOrTerms[] = '(' . implode(' AND ', $whereAndTerms) . ')';

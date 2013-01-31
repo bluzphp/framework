@@ -59,7 +59,10 @@ class Messages
     public function count()
     {
         $size = 0;
-        foreach ($this->getMessagesStore() as $messages) {
+        if (!$store = $this->getMessagesStore()) {
+            return $size;
+        }
+        foreach ($store as $messages) {
             $size += sizeof($messages);
         }
         return $size;

@@ -40,27 +40,10 @@ class AbstractRequest
     use \Bluz\Package;
 
     /**
-     * @const string SCHEME constant names
-     */
-    const SCHEME_HTTP  = 'http';
-    const SCHEME_HTTPS = 'https';
-
-    /**
-     * @const string METHOD constant names
-     */
-    const METHOD_OPTIONS = 'OPTIONS';
-    const METHOD_GET     = 'GET';
-    const METHOD_HEAD    = 'HEAD';
-    const METHOD_POST    = 'POST';
-    const METHOD_PUT     = 'PUT';
-    const METHOD_DELETE  = 'DELETE';
-    const METHOD_TRACE   = 'TRACE';
-    const METHOD_CONNECT = 'CONNECT';
-
-    /**
      * Command line interface only
      */
     const METHOD_CLI = 'CLI';
+    const METHOD_HTTP = 'HTTP';
 
     /**
      * REQUEST_URI
@@ -308,72 +291,6 @@ class AbstractRequest
     {
         $this->method = $method;
         return $this;
-    }
-
-    /**
-     * Is this a POST method request?
-     *
-     * @return bool
-     */
-    public function isPost()
-    {
-        return ($this->getMethod() === self::METHOD_POST);
-    }
-
-    /**
-     * Is the request a Javascript XMLHttpRequest?
-     *
-     * Should work with Prototype/Script.aculo.us, possibly others.
-     *
-     * @return boolean
-     */
-    public function isXmlHttpRequest()
-    {
-        return ($this->getHeader('X_REQUESTED_WITH') == 'XMLHttpRequest');
-    }
-
-    /**
-     * Is this a Flash request?
-     *
-     * @return boolean
-     */
-    public function isFlashRequest()
-    {
-        $header = strtolower($this->getHeader('USER_AGENT'));
-        return (strstr($header, ' flash')) ? true : false;
-    }
-
-    /**
-     * Return the value of the given HTTP header. Pass the header name as the
-     * plain, HTTP-specified header name. Ex.: Ask for 'Accept' to get the
-     * Accept header, 'Accept-Encoding' to get the Accept-Encoding header.
-     *
-     * @param string $header HTTP header name
-     * @return string|boolean HTTP header value, or false if not found
-     */
-    public function getHeader($header)
-    {
-        // Try to get it from the $_SERVER array first
-        $temp = 'HTTP_' . strtoupper(str_replace('-', '_', $header));
-        if (isset($_SERVER[$temp])) {
-            return $_SERVER[$temp];
-        }
-        // This seems to be the only way to get the Authorization header on
-        // Apache
-        if (function_exists('apache_request_headers')) {
-            $headers = apache_request_headers();
-            if (isset($headers[$header])) {
-                return $headers[$header];
-            }
-            $header = strtolower($header);
-            foreach ($headers as $key => $value) {
-                if (strtolower($key) == $header) {
-                    return $value;
-                }
-            }
-        }
-
-        return false;
     }
 
     /**

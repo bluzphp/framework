@@ -40,10 +40,21 @@ class AbstractRequest
     use \Bluz\Package;
 
     /**
+     * @const string HTTP METHOD constant names
+     */
+    const METHOD_OPTIONS = 'OPTIONS';
+    const METHOD_GET     = 'GET';
+    const METHOD_HEAD    = 'HEAD';
+    const METHOD_POST    = 'POST';
+    const METHOD_PUT     = 'PUT';
+    const METHOD_DELETE  = 'DELETE';
+    const METHOD_TRACE   = 'TRACE';
+    const METHOD_CONNECT = 'CONNECT';
+
+    /**
      * Command line interface only
      */
     const METHOD_CLI = 'CLI';
-    const METHOD_HTTP = 'HTTP';
 
     /**
      * REQUEST_URI

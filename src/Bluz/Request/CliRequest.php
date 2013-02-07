@@ -39,6 +39,7 @@ use Bluz\Request;
  */
 class CliRequest extends AbstractRequest
 {
+
     /**
      * Constructor
      *

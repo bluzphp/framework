@@ -81,22 +81,33 @@ class Crud
      */
     public function processController()
     {
-        $this->getApplication()->useJson(true);
+//        $this->getApplication()->useJson(true);
         try {
             $result = $this->processRequest()
                 ->getResult();
         } catch (CrudException $e) {
-            // all "not found" errors
+            // all "not found" errors and other similar
             $this->getApplication()->getMessages()->addError($e->getMessage());
             return false;
         } catch (ValidationException $e) {
             // validate errors
             $this->getApplication()->getMessages()->addError("Please fix all errors");
-            return [
+
+            $return = [
                 'errors' => $this->getErrors(),
                 'formId' => $this->formId,
-                'callback' => 'bluz.validate.notices' // FIXME: hardcoded function name
+                'callback' => 'bluz.validate.notices', // FIXME: hardcoded function name
+                'method' => $this->getMethod()
             ];
+
+            switch ($this->getMethod()) {
+                case AbstractRequest::METHOD_POST:
+                case AbstractRequest::METHOD_PUT:
+                    $return['row'] = $this->getTable()->create($this->data);
+                    break;
+            }
+
+            return $return;
         }
 
         // check result
@@ -133,13 +144,13 @@ class Crud
                     // edit form
                     return [
                         'row' => $result,
-                        'method' => 'put'
+                        'method' => AbstractRequest::METHOD_PUT
                     ];
                 } else {
                     // create form
                     return [
                         'row' => $this->getTable()->create(),
-                        'method' => 'post'
+                        'method' => AbstractRequest::METHOD_POST
                     ];
                 }
                 break;
@@ -166,7 +177,7 @@ class Crud
         $this->formId = $request->_formId;
 
         // rewrite REST with "method" param
-        $this->method = $request->getParam('_method', $request->getMethod());
+        $this->method = strtoupper($request->getParam('_method', $request->getMethod()));
 
         // switch by method
         switch ($this->method) {
@@ -366,7 +377,6 @@ class Crud
      */
     public function update()
     {
-
         $primary = $this->getPrimaryKey();
 
         $row = $this->getTable()->findRow($primary);

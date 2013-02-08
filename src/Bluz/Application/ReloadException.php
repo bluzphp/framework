@@ -24,19 +24,21 @@
 /**
  * @namespace
  */
-namespace Bluz\Application\Helper;
+namespace Bluz\Application;
 
-use Bluz\Application;
-use Bluz\Exception;
-
-return
 /**
- * reload current page
- * please, be careful to avoid loop of reload
- * @throws Exception
- * @return void
+ * Exception
+ *
+ * @category Application
+ * @package  Exception
+ *
+ * @author   Anton Shevchuk
+ * @created  23.01.13 17:40
  */
-function () {
-    /** @var Application $this */
-    throw new Application\ReloadException();
-};
+class ReloadException extends ApplicationException
+{
+    /**
+     * @var string
+     */
+    protected $message = "Application Reload";
+}

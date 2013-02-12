@@ -99,7 +99,7 @@ class Router
                             case 'string':
                             case 'module':
                             case 'controller':
-                                $pattern = str_replace("{\$".$param."}", "(?P<$param>\w+)", $pattern);
+                                $pattern = str_replace("{\$".$param."}", "(?P<$param>[a-zA-Z0-9-_.]+)", $pattern);
                                 break;
                         }
                     }

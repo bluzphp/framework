@@ -292,6 +292,8 @@ abstract class Table
      * $table->findWhere(['alias'=>'foo'], ['alias'=>'bar']);
      * // WHERE (alias = 'foo' AND userId = 2) OR ('alias' = 'bar' AND userId = 4)
      * $table->findWhere(['alias'=>'foo', 'userId'=> 2], ['alias'=>'foo', 'userId'=>4]);
+     * // WHERE title LIKE ('Hello%')
+     * $table->findWhere('title LIKE (?)', ['Hello%']);
      * </code>
      * @throws \InvalidArgumentException
      * @return Rowset Row(s) matching the criteria.
@@ -302,7 +304,11 @@ abstract class Table
 
         $whereClause = null;
         $whereParams = array();
-        if (count($whereList)) {
+
+        if (count($whereList) == 2 && is_string($whereList[0])) {
+            $whereClause = $whereList[0];
+            $whereParams = $whereList[1];
+        } elseif (count($whereList)) {
             $whereOrTerms = array();
             foreach ($whereList as $keyValueSets) {
                 $whereAndTerms = array();

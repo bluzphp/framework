@@ -81,7 +81,6 @@ class Crud
      */
     public function processController()
     {
-//        $this->getApplication()->useJson(true);
         try {
             $result = $this->processRequest()
                 ->getResult();
@@ -158,8 +157,10 @@ class Crud
                 throw new CrudException("Unsopported method");
                 break;
         }
-
-        $this->getApplication()->reload();
+        // reload page for AJAX request for refresh current view
+        if ($this->getApplication()->getRequest()->isXmlHttpRequest()) {
+            $this->getApplication()->reload();
+        }
         return false;
     }
 

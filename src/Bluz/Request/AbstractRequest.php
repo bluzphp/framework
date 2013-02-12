@@ -327,4 +327,14 @@ class AbstractRequest
         $this->requestUri = $requestUri;
         return $this;
     }
+
+    /**
+     * Get the request URI.
+     *
+     * @return string
+     */
+    public function getRequestUri()
+    {
+        return $this->requestUri;
+    }
 }

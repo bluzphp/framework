@@ -44,6 +44,11 @@ class HttpRequest extends AbstractRequest
     const SCHEME_HTTPS = 'https';
 
     /**
+     * @var HttpFileUpload
+     */
+    protected $fileUpload;
+
+    /**
      * Constructor
      *
      */
@@ -264,6 +269,19 @@ class HttpRequest extends AbstractRequest
         }
 
         return (isset($_POST[$key])) ? $_POST[$key] : $default;
+    }
+
+    /**
+     * getFileUpload
+     *
+     * @return HttpFileUpload
+     */
+    public function getFileUpload()
+    {
+        if (!$this->fileUpload) {
+            $this->fileUpload = new HttpFileUpload();
+        }
+        return $this->fileUpload;
     }
 
     /**

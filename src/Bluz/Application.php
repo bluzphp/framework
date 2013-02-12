@@ -395,7 +395,11 @@ class Application
      */
     public function hasMessages()
     {
-        return ($this->messages != null);
+        if ($this->messages != null) {
+            return $this->messages->count();
+        } else {
+            false;
+        }
     }
 
     /**
@@ -714,21 +718,21 @@ class Application
 
             // check redirect
             if ($result instanceof RedirectException) {
-                $data['_redirect'] = $result->getMessage();
+                header('Bluz-Redirect: '. $result->getMessage());
             }
 
             // check reload
             if ($result instanceof ReloadException) {
-                $data['_reload'] = true;
+                header('Bluz-Reload: true');
             }
 
             // enable Bluz AJAX handler
-            if (!isset($data['_handler'])) {
-                $data['_handler'] = true;
+            if (false) {
+                header('Bluz-Handler: false');
             }
 
             // inject messages if exists
-            if (!isset($data['_messages']) && $this->hasMessages()) {
+            if ($this->hasMessages()) {
                 $data['_messages'] = $this->getMessages()->popAll();
             }
 

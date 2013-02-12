@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 by Bluz PHP Team
+ * Copyright (c) 2013 by Bluz PHP Team
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,8 +26,6 @@
  */
 namespace Bluz\Request;
 
-use Bluz\Request;
-
 /**
  * CLI Request
  *
@@ -39,6 +37,7 @@ use Bluz\Request;
  */
 class CliRequest extends AbstractRequest
 {
+
     /**
      * Constructor
      *

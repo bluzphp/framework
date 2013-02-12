@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 by Bluz PHP Team
+ * Copyright (c) 2013 by Bluz PHP Team
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -99,7 +99,7 @@ class Router
                             case 'string':
                             case 'module':
                             case 'controller':
-                                $pattern = str_replace("{\$".$param."}", "(?P<$param>\w+)", $pattern);
+                                $pattern = str_replace("{\$".$param."}", "(?P<$param>[a-zA-Z0-9-_.]+)", $pattern);
                                 break;
                         }
                     }

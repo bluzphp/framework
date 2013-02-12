@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 by Bluz PHP Team
+ * Copyright (c) 2013 by Bluz PHP Team
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,19 +33,17 @@ return
  * Setup redactorjs
  *
  * @param string $selector
- * @param array|string|null $settings
+ * @param array $settings
  * @return string
  */
-function ($selector, $settings = null) {
+function ($selector, array $settings = []) {
     /** @var View $this */
-    if ($settings === null) {
-        $settings = "{}";
-    } elseif (is_array($settings)) {
-        $settings = json_encode($settings);
-    } elseif (!is_string($settings)) {
-        $settings = "{}";
-    }
+    $defaultSettings = [
+        'imageUpload' => $this->url('media', 'upload') // default media upload controller
+    ];
 
+    $settings = array_replace_recursive($defaultSettings, $settings);
+    $settings = json_encode($settings);
 
     $html  = "";
     $html .= $this->headScript('redactor/redactor.js');

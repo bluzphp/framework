@@ -24,23 +24,21 @@
 /**
  * @namespace
  */
-namespace Bluz\Grid\Helper;
-
-use Bluz\Application;
-use Bluz\Grid;
-
-return
+namespace Bluz\Application;
 
 /**
- * @return string|null $url
+ * Exception
+ *
+ * @category Application
+ * @package  Exception
+ *
+ * @author   Anton Shevchuk
+ * @created  23.01.13 17:40
  */
-function () {
+class ReloadException extends ApplicationException
+{
     /**
-     * @var Grid\Grid $this
+     * @var string
      */
-    if ($this->getPage() <= 1) {
-        return null;
-    }
-
-    return $this->getUrl(['page' => $this->getPage() - 1]);
-};
+    protected $message = "Application Reload";
+}

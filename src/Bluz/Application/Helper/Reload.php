@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 by Bluz PHP Team
+ * Copyright (c) 2013 by Bluz PHP Team
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,19 +38,5 @@ return
  */
 function () {
     /** @var Application $this */
-    // for AJAX controllers
-    if ($this->jsonFlag) {
-        $this->getLayout()->_reload = true;
-        return;
-    }
-
-    // for other controllers
-    if (!headers_sent($file, $line)) {
-        // save notification to session
-        // if they exists
-        header('Refresh: 15; url=' . $_SERVER['PHP_SELF']);
-        exit;
-    } else {
-        throw new Exception("Headers already sent by $file:$line", 503);
-    }
+    throw new Application\ReloadException();
 };

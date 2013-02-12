@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 by Bluz PHP Team
+ * Copyright (c) 2013 by Bluz PHP Team
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +28,7 @@ namespace Bluz;
 
 use Bluz\Acl\Acl;
 use Bluz\Application\RedirectException;
+use Bluz\Application\ReloadException;
 use Bluz\Auth\Auth;
 use Bluz\Cache\Cache;
 use Bluz\Config\Config;
@@ -394,7 +395,11 @@ class Application
      */
     public function hasMessages()
     {
-        return ($this->messages != null);
+        if ($this->messages != null) {
+            return $this->messages->count();
+        } else {
+            false;
+        }
     }
 
     /**
@@ -429,7 +434,7 @@ class Application
     /**
      * getRequest
      *
-     * @return Request\AbstractRequest
+     * @return Request\HttpRequest
      */
     public function getRequest()
     {
@@ -543,11 +548,14 @@ class Application
              ->process();
 
         // check header "accept" for catch AJAX JSON requests, and switch to JSON response
-        $accept = $this->getRequest()->getHeader('accept');
-        $accept = substr($accept, 0, strpos($accept, ','));
-        if ($this->getRequest()->isXmlHttpRequest()
-            && $accept == "application/json") {
-            $this->useJson(true);
+        // for HTTP only
+        if ($this->getRequest()->getMethod() !== Request\AbstractRequest::METHOD_CLI) {
+            $accept = $this->getRequest()->getHeader('accept');
+            $accept = substr($accept, 0, strpos($accept, ','));
+            if ($this->getRequest()->isXmlHttpRequest()
+                && $accept == "application/json") {
+                $this->useJson(true);
+            }
         }
 
         try {
@@ -557,6 +565,8 @@ class Application
                 $this->request->getAllParams()
             );
         } catch (RedirectException $e) {
+            $this->dispatchResult = $e;
+        } catch (ReloadException $e) {
             $this->dispatchResult = $e;
         } catch (\Exception $e) {
             $this->dispatchResult = $this->dispatch(Router::ERROR_MODULE, Router::ERROR_CONTROLLER, array(
@@ -708,16 +718,21 @@ class Application
 
             // check redirect
             if ($result instanceof RedirectException) {
-                $data['_redirect'] = $result->getMessage();
+                header('Bluz-Redirect: '. $result->getMessage());
+            }
+
+            // check reload
+            if ($result instanceof ReloadException) {
+                header('Bluz-Reload: true');
             }
 
             // enable Bluz AJAX handler
-            if (!isset($data['_handler'])) {
-                $data['_handler'] = true;
+            if (false) {
+                header('Bluz-Handler: false');
             }
 
             // inject messages if exists
-            if (!isset($data['_messages']) && $this->hasMessages()) {
+            if ($this->hasMessages()) {
                 $data['_messages'] = $this->getMessages()->popAll();
             }
 
@@ -725,6 +740,9 @@ class Application
             echo json_encode($data);
         } elseif ($result instanceof RedirectException) {
             header('Location: '.$result->getMessage(), true, $result->getCode());
+            exit();
+        } elseif ($result instanceof ReloadException) {
+            header('Refresh: 15; url='.$this->getRequest()->getRequestUri());
             exit();
         } elseif (!$this->layoutFlag) {
             echo ($result instanceof \Closure) ? $result() : $result;

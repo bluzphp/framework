@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 by Bluz PHP Team
+ * Copyright (c) 2013 by Bluz PHP Team
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,8 +26,6 @@
  */
 namespace Bluz\Request;
 
-use Bluz\Request;
-
 /**
  * HTTP Request
  *
@@ -39,6 +37,17 @@ use Bluz\Request;
  */
 class HttpRequest extends AbstractRequest
 {
+    /**
+     * @const string HTTP SCHEME constant names
+     */
+    const SCHEME_HTTP  = 'http';
+    const SCHEME_HTTPS = 'https';
+
+    /**
+     * @var HttpFileUpload
+     */
+    protected $fileUpload;
+
     /**
      * Constructor
      *
@@ -157,6 +166,63 @@ class HttpRequest extends AbstractRequest
         return ($this->getServer('HTTPS') == 'on') ? self::SCHEME_HTTPS : self::SCHEME_HTTP;
     }
 
+
+    /**
+     * Is the request a Javascript XMLHttpRequest?
+     *
+     * Should work with Prototype/Script.aculo.us, possibly others.
+     *
+     * @return boolean
+     */
+    public function isXmlHttpRequest()
+    {
+        return ($this->getHeader('X_REQUESTED_WITH') == 'XMLHttpRequest');
+    }
+
+    /**
+     * Is this a Flash request?
+     *
+     * @return boolean
+     */
+    public function isFlashRequest()
+    {
+        $header = strtolower($this->getHeader('USER_AGENT'));
+        return (strstr($header, ' flash')) ? true : false;
+    }
+
+    /**
+     * Return the value of the given HTTP header. Pass the header name as the
+     * plain, HTTP-specified header name. Ex.: Ask for 'Accept' to get the
+     * Accept header, 'Accept-Encoding' to get the Accept-Encoding header.
+     *
+     * @param string $header HTTP header name
+     * @return string|boolean HTTP header value, or false if not found
+     */
+    public function getHeader($header)
+    {
+        // Try to get it from the $_SERVER array first
+        $temp = 'HTTP_' . strtoupper(str_replace('-', '_', $header));
+        if (isset($_SERVER[$temp])) {
+            return $_SERVER[$temp];
+        }
+        // This seems to be the only way to get the Authorization header on
+        // Apache
+        if (function_exists('apache_request_headers')) {
+            $headers = apache_request_headers();
+            if (isset($headers[$header])) {
+                return $headers[$header];
+            }
+            $header = strtolower($header);
+            foreach ($headers as $key => $value) {
+                if (strtolower($key) == $header) {
+                    return $value;
+                }
+            }
+        }
+
+        return false;
+    }
+
     /**
      * Retrieve a member of the $_GET superglobal
      *
@@ -177,6 +243,16 @@ class HttpRequest extends AbstractRequest
     }
 
     /**
+     * Is this a POST method request?
+     *
+     * @return bool
+     */
+    public function isPost()
+    {
+        return ($this->getMethod() === self::METHOD_POST);
+    }
+
+    /**
      * Retrieve a member of the $_POST superglobal
      *
      * If no $key is passed, returns the entire $_POST array.
@@ -193,6 +269,19 @@ class HttpRequest extends AbstractRequest
         }
 
         return (isset($_POST[$key])) ? $_POST[$key] : $default;
+    }
+
+    /**
+     * getFileUpload
+     *
+     * @return HttpFileUpload
+     */
+    public function getFileUpload()
+    {
+        if (!$this->fileUpload) {
+            $this->fileUpload = new HttpFileUpload();
+        }
+        return $this->fileUpload;
     }
 
     /**

@@ -434,7 +434,7 @@ class Application
     /**
      * getRequest
      *
-     * @return Request\AbstractRequest
+     * @return Request\HttpRequest
      */
     public function getRequest()
     {

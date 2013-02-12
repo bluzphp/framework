@@ -24,23 +24,19 @@
 /**
  * @namespace
  */
-namespace Bluz\Grid\Helper;
+namespace Bluz\Request;
 
-use Bluz\Application;
-use Bluz\Grid;
-
-return
+use Bluz\Exception;
 
 /**
- * @return string|null $url
+ * RequestException
+ *
+ * @category Bluz
+ * @package  Request
+ *
+ * @author   Anton Shevchuk
+ * @created  11.02.13 11:26
  */
-function () {
-    /**
-     * @var Grid\Grid $this
-     */
-    if ($this->getPage() <= 1) {
-        return null;
-    }
-
-    return $this->getUrl(['page' => $this->getPage() - 1]);
-};
+class RequestException extends Exception
+{
+}

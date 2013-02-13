@@ -52,7 +52,7 @@ function ($module, $controller, $params = array()) {
         // nothing for Acl exception
         return null;
     } catch (\Exception $e) {
-        if (DEBUG) {
+        if (defined('DEBUG') && DEBUG) {
             // exception message for developers
             return
                 '<div class="alert alert-error">'.

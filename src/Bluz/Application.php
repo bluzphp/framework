@@ -669,7 +669,9 @@ class Application
         }
 
         // return closure is replace logic of controller
-        if (is_callable($result)) {
+        // or return any class
+        if (is_callable($result) or
+            is_object($result)) {
             return $result;
         }
 

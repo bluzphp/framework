@@ -101,7 +101,6 @@ abstract class AbstractAdapter implements CacheInterface
         return $this->doFlush();
     }
 
-
     /**
      * Cast given $inputValue to string.
      * @param mixed $inputValue

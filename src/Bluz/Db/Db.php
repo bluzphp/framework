@@ -286,7 +286,7 @@ class Db
         if ($result) {
             return $this->handler()->lastInsertId();
         } else {
-            throw new DbException('Unable to insert');
+            throw new DbException('Unable to insert: '.join(' | ', $stmt->errorInfo()));
         }
     }
 
@@ -325,7 +325,7 @@ class Db
         if ($result) {
             return $result;
         } else {
-            throw new DbException('Unable to update');
+            throw new DbException('Unable to update: '.join(' | ', $stmt->errorInfo()));
         }
     }
 

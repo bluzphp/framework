@@ -396,9 +396,9 @@ class Application
     public function hasMessages()
     {
         if ($this->messages != null) {
-            return $this->messages->count();
+            return ($this->messages->count() > 0);
         } else {
-            false;
+            return false;
         }
     }
 
@@ -488,6 +488,16 @@ class Application
             $this->getMessages();
         }
         return $this->session;
+    }
+
+    /**
+     * return new instance of view
+     *
+     * @return View
+     */
+    public function getView()
+    {
+        return new View();
     }
 
     /**
@@ -632,7 +642,7 @@ class Application
         $params = $this->params($reflectionData, $params);
 
         // $view for use in closure
-        $view = new View();
+        $view = $this->getView();
         // setup default path
         $view->setPath(PATH_APPLICATION .'/modules/'. $module .'/views');
         // setup default template
@@ -710,12 +720,12 @@ class Application
             // override response code so javascript can process it
             header('Content-type: application/json');
 
-            // get data from layout
-            $data = $this->getLayout()->toArray();
+            // get data from layout ???
+            $data = $this->getLayout()->getData();
 
             // merge it with view data
             if ($result instanceof View) {
-                $data = array_merge($data, $result->toArray());
+                $data = array_merge($data, $result->getData());
             }
 
             // check redirect
@@ -766,11 +776,11 @@ class Application
         $result = $this->dispatchResult;
 
         // get data from layout
-        $data = $this->getLayout()->toArray();
+        $data = $this->getLayout()->getData();
 
         // merge it with view data
         if ($result instanceof View) {
-            $data = array_merge($data, $result->toArray());
+            $data = array_merge($data, $result->getData());
         }
 
         // inject messages if exists

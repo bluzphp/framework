@@ -57,7 +57,7 @@ use Bluz\Application;
  * @author   Anton Shevchuk, ErgallM
  * @created  08.07.11 11:49
  */
-class View
+class View implements ViewInterface
 {
     use \Bluz\Package;
     use \Bluz\Helper;
@@ -169,15 +169,20 @@ class View
     }
 
     /**
-     * set data from array
-     *
-     * @param array $data
-     * @return View
+     * {@inheritdoc}
      */
     public function setData($data = array())
     {
         $this->data = array_merge($this->data, $data);
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getData()
+    {
+        return $this->data;
     }
 
     /**
@@ -188,25 +193,8 @@ class View
      */
     public function mergeData($data = array())
     {
-        $this->data = $this->mergeArrays($this->data, $data);
+        $this->data = array_replace_recursive($this->data, $data);
         return $this;
-    }
-
-    /**
-     * @param $array1
-     * @param $array2
-     * @return array
-     */
-    protected function mergeArrays($array1, $array2)
-    {
-        foreach ($array2 as $key => $value) {
-            if (array_key_exists($key, $array1) && is_array($value)) {
-                $array1[$key] = $this->mergeArrays($array1[$key], $array2[$key]);
-            } else {
-                $array1[$key] = $value;
-            }
-        }
-        return $array1;
     }
 
     /**
@@ -230,20 +218,7 @@ class View
     }
 
     /**
-     * toArray
-     *
-     * @return array
-     */
-    public function toArray()
-    {
-        return $this->data;
-    }
-
-    /**
-     * setup path
-     *
-     * @param string $path
-     * @return View
+     * {@inheritdoc}
      */
     public function setPath($path)
     {
@@ -252,10 +227,7 @@ class View
     }
 
     /**
-     * setup template
-     *
-     * @param string $file
-     * @return View
+     * {@inheritdoc}
      */
     public function setTemplate($file)
     {
@@ -308,8 +280,8 @@ class View
      * @param string $message
      * @return string
      */
-    public function __($message) {
-
+    public function __($message)
+    {
         if (func_num_args() == 1) {
             if (function_exists('gettext')) {
                 $message = gettext($message);
@@ -329,7 +301,8 @@ class View
                 $message = ngettext($message, $args[1], $args[2]);
             }
             return sprintf($message, $args[2]);
-        } elseif (func_num_args() > 3) {
+        } else {
+            // arguments more than 3
             // plural form with additional params
             if (function_exists('ngettext')) {
                 $message = call_user_func_array('ngettext', func_get_args());

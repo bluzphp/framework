@@ -111,11 +111,11 @@ class SqlSource extends AbstractSource
         // prepare query
         $connect = Application::getInstance()->getConfigData('db', 'connect');
         if (strtolower($connect['type']) == 'mysql') { // MySQL
-            $dataSql = preg_replace('/SELECT (.*?) FROM/is', 'SELECT SQL_CALC_FOUND_ROWS $1 FROM', $this->source);
+            $dataSql = preg_replace('/SELECT (.*?) FROM/is', 'SELECT SQL_CALC_FOUND_ROWS $1 FROM', $this->source, 1);
             $countSql = 'SELECT FOUND_ROWS()';
         } else { // other
             $dataSql = $this->source;
-            $countSql = preg_replace('/SELECT (.*?) FROM/is', 'SELECT COUNT(*) FROM', $this->source);
+            $countSql = preg_replace('/SELECT (.*?) FROM/is', 'SELECT COUNT(*) FROM', $this->source, 1);
             if (sizeof($where)) {
                 $countSql .= ' WHERE '. (join(' AND ', $where));
             }

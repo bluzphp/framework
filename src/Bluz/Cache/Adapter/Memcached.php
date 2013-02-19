@@ -69,7 +69,7 @@ class Memcached extends AbstractAdapter
      *
      * @return \Memcached
      */
-    protected function getHandler()
+    public function getHandler()
     {
         if (!$this->memcached) {
             $this->memcached = new \Memcached();

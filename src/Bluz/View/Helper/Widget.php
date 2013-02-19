@@ -56,7 +56,7 @@ function ($module, $widget, $params = array())
         // nothing for Acl exception
         return null;
     } catch (\Exception $e) {
-        if (DEBUG) {
+        if (defined('DEBUG') && DEBUG) {
             // exception message for developers
             echo
                 '<div class="alert alert-error">'.

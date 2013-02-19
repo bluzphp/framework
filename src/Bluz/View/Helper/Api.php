@@ -54,7 +54,7 @@ function ($module, $method, $params = array()) {
         $apiClosure = $application->api($module, $method);
         return call_user_func_array($apiClosure, $params);
     } catch (\Exception $e) {
-        if (DEBUG) {
+        if (defined('DEBUG') && DEBUG) {
             // exception message for developers
             echo
                 '<div class="alert alert-error">'.

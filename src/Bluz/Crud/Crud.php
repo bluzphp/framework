@@ -26,6 +26,7 @@
  */
 namespace Bluz\Crud;
 
+use Bluz\Application\ReloadException;
 use Bluz\Db;
 use Bluz\Request\AbstractRequest;
 
@@ -68,10 +69,45 @@ class Crud
     protected $errors = array();
 
     /**
-     * Result of last CRUD operation (on of get/put/post/delete)
+     * Result of last CRUD operation (one of get/put/post/delete)
      * @var mixed
      */
     protected $result;
+
+    /**
+     * @return mixed
+     */
+    public function processRequest()
+    {
+        $request = $this->getApplication()->getRequest();
+
+        // get data from request
+        $this->data = $request->data?:[];
+
+        // get form id
+        $this->formId = $request->_formId;
+
+        // rewrite REST with "method" param
+        $this->method = strtoupper($request->getParam('_method', $request->getMethod()));
+
+        // switch by method
+        switch ($this->method) {
+            case AbstractRequest::METHOD_POST:
+                $this->result = $this->create();
+                break;
+            case AbstractRequest::METHOD_PUT:
+                $this->result = $this->update();
+                break;
+            case AbstractRequest::METHOD_DELETE:
+                $this->result = $this->delete();
+                break;
+            case AbstractRequest::METHOD_GET:
+            default:
+                $this->result = $this->get();
+                break;
+        }
+        return $this->result;
+    }
 
     /**
      * process CRUD from controller
@@ -82,8 +118,7 @@ class Crud
     public function processController()
     {
         try {
-            $result = $this->processRequest()
-                ->getResult();
+            $result = $this->getResult();
         } catch (CrudException $e) {
             // all "not found" errors and other similar
             $this->getApplication()->getMessages()->addError($e->getMessage());
@@ -110,9 +145,10 @@ class Crud
         }
 
         // check result
-        if ($result === false) {
-            return true;
-        }
+        // what is?
+//        if ($result === false) {
+//            return true;
+//        }
 
         // switch statement for $this->getMethod()
         // FIXME: hardcoded messages and reload process
@@ -159,46 +195,12 @@ class Crud
         }
         // reload page for AJAX request for refresh current view
         if ($this->getApplication()->getRequest()->isXmlHttpRequest()) {
-            $this->getApplication()->reload();
+            return new ReloadException();
         }
+        // disable view
         return false;
     }
 
-    /**
-     * @return Crud
-     */
-    public function processRequest()
-    {
-        $request = $this->getApplication()->getRequest();
-
-        // get data from request
-        $this->data = $request->data?:[];
-
-        // get form id
-        $this->formId = $request->_formId;
-
-        // rewrite REST with "method" param
-        $this->method = strtoupper($request->getParam('_method', $request->getMethod()));
-
-        // switch by method
-        switch ($this->method) {
-            case AbstractRequest::METHOD_POST:
-                $this->result = $this->create();
-                break;
-            case AbstractRequest::METHOD_PUT:
-                $this->result = $this->update();
-                break;
-            case AbstractRequest::METHOD_DELETE:
-                $this->result = $this->delete();
-                break;
-            case AbstractRequest::METHOD_GET:
-            default:
-                $this->result = $this->get();
-                break;
-        }
-
-        return $this;
-    }
 
     /**
      * setTable
@@ -270,6 +272,9 @@ class Crud
      */
     public function getResult()
     {
+        if (!$this->result) {
+            $this->result = $this->processRequest();
+        }
         return $this->result;
     }
 

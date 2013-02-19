@@ -24,50 +24,57 @@
 /**
  * @namespace
  */
-namespace Bluz\View\Helper;
+namespace Bluz\View;
 
 use Bluz\Application;
-use Bluz\View\View;
-
-return
 
 /**
- * dispatch
+ * ViewInterface
  *
- * <code>
- * $this->dispatch($module, $controller, array $params);
- * </code>
+ * @category Bluz
+ * @package  View
  *
- * @param string $module
- * @param string $controller
- * @param array $params
- * @return View|null
+ * @author   Anton Shevchuk
+ * @created  19.02.13 15:25
  */
-function ($module, $controller, $params = array()) {
-    /** @var View $this */
-    $application = $this->getApplication();
-    try {
-        $view = $application->dispatch($module, $controller, $params);
-    } catch (\Bluz\Acl\AclException $e) {
-        // nothing for Acl exception
-        return null;
-    } catch (\Exception $e) {
-        if (defined('DEBUG') && DEBUG) {
-            // exception message for developers
-            return
-                '<div class="alert alert-error">'.
-                '<strong>Dispatch of "'.$module.'/'.$controller.'"</strong>: '.
-                $e->getMessage().
-                '</div>';
-        } else {
-            // nothing for production
-            return null;
-        }
-    }
+interface ViewInterface
+{
+    /**
+     * setup path to templates
+     *
+     * <code>
+     * $view->setPath('/modules/users/views');
+     * </code>
+     *
+     * @param string $path
+     * @return ViewInterface
+     */
+    public function setPath($path);
 
-    // run closure
-    if ($view instanceof \Closure) {
-        return $view();
-    }
-    return $view;
-};
+    /**
+     * setup template
+     *
+     * <code>
+     * $view->setTemplate('index.phtml');
+     * </code>
+     *
+     * @param string $file
+     * @return ViewInterface
+     */
+    public function setTemplate($file);
+
+    /**
+     * merge data from array
+     *
+     * @param array $data
+     * @return ViewInterface
+     */
+    public function setData($data = array());
+
+    /**
+     * get data as array
+     *
+     * @return array
+     */
+    public function getData();
+}

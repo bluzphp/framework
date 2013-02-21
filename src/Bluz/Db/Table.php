@@ -238,8 +238,10 @@ abstract class Table
      *
      * <code>
      * // row by primary key
+     * // return rowset
      * $table->find(123);
      * // row by compound primary key
+     * // return rowset
      * $table->find([123, 'abc']);
      *
      * // multiple rows by primary key
@@ -293,7 +295,7 @@ abstract class Table
      * // WHERE (alias = 'foo' AND userId = 2) OR ('alias' = 'bar' AND userId = 4)
      * $table->findWhere(['alias'=>'foo', 'userId'=> 2], ['alias'=>'foo', 'userId'=>4]);
      * // WHERE title LIKE ('Hello%')
-     * $table->findWhere('title LIKE (?)', ['Hello%']);
+     * $table->findWhere(['title LIKE' => 'Hello%']);
      * </code>
      * @throws \InvalidArgumentException
      * @return Rowset Row(s) matching the criteria.
@@ -313,7 +315,11 @@ abstract class Table
             foreach ($whereList as $keyValueSets) {
                 $whereAndTerms = array();
                 foreach ($keyValueSets as $keyName => $keyValue) {
-                    $whereAndTerms[] = $this->table . '.' . $keyName . ' = ?';
+                    if (stripos($keyName, ' like')) {
+                        $whereAndTerms[] = $this->table . '.' . $keyName . ' (?)';
+                    } else {
+                        $whereAndTerms[] = $this->table . '.' . $keyName . ' = ?';
+                    }
                     if (!is_scalar($keyValue)) {
                         throw new \InvalidArgumentException(
                             "Wrong arguments of method 'findWhere'.\n".

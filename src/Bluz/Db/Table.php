@@ -37,13 +37,11 @@ namespace Bluz\Db;
  * namespace Application\Users;
  * class Table extends \Bluz\Db\Table
  * {
- *    static $instance;
  *    protected $table = 'users';
  *    protected $primary = array('id');
  * }
  *
- * $usersTable = new \Application\Users\Table();
- * $userRows = $usersTable -> find(array(1,2,3,4,5));
+ * $userRows = \Application\Users\Table::find(1,2,3,4,5);
  * foreach ($userRows as $userRow) {
  *    $userRow -> description = 'In first 5';
  *    $userRow -> save();
@@ -132,7 +130,6 @@ abstract class Table
     static public function getInstance()
     {
         static $instance;
-
         if (null === $instance) {
             $instance = new static();
         }
@@ -223,6 +220,19 @@ abstract class Table
     }
 
     /**
+     * Support method for fetching rows.
+     *
+     * @param  string $sql  query options.
+     * @param  array  $params
+     * @return array An array containing the row results in FETCH_ASSOC mode.
+     */
+    protected function fetch($sql, $params = array())
+    {
+        $data = $this->getAdapter()->fetchObjects($sql, $params, $this->getRowClass());
+        return new Rowset($data);
+    }
+
+    /**
      * Fetches rows by primary key.  The argument specifies one or more primary
      * key value(s).  To find multiple rows by primary key, the argument must
      * be an array.
@@ -239,40 +249,50 @@ abstract class Table
      * <code>
      * // row by primary key
      * // return rowset
-     * $table->find(123);
+     * Table::find(123);
      * // row by compound primary key
      * // return rowset
-     * $table->find([123, 'abc']);
+     * Table::find([123, 'abc']);
      *
      * // multiple rows by primary key
-     * $table->find(123, 234, 345);
+     * Table::find(123, 234, 345);
      * // multiple rows by compound primary key
-     * $table->find([123, 'abc'], [234, 'def'], [345, 'ghi'])
+     * Table::find([123, 'abc'], [234, 'def'], [345, 'ghi'])
      * </code>
      *
      * @internal param mixed $key The value(s) of the primary keys.
      * @throws InvalidPrimaryKeyException if wrong count of values passed
      * @return Rowset Row(s) matching the criteria.
      */
-    public function find()
+    static public function find()
     {
+        $self = static::getInstance();
+
         $args = func_get_args();
-        $keyNames = array_values((array) $this->primary);
+        $keyNames = array_values((array) $self->primary);
 
         $whereList = array();
         foreach ($args as $keyValues) {
             $keyValues = (array) $keyValues;
             if (count($keyValues) < count($keyNames)) {
-                throw new InvalidPrimaryKeyException("Too few columns for the primary key");
+                throw new InvalidPrimaryKeyException(
+                    "Too few columns for the primary key.\n".
+                    "Please check ".get_class($self)." initialization or usage.\n".
+                    "Settings described at https://github.com/bluzphp/framework/wiki/Db-Table"
+                );
             }
 
             if (count($keyValues) > count($keyNames)) {
-                throw new InvalidPrimaryKeyException("Too many columns for the primary key");
+                throw new InvalidPrimaryKeyException(
+                    "Too many columns for the primary key.\n".
+                    "Please check ".get_class($self)." initialization or usage.\n".
+                    "Settings described at https://github.com/bluzphp/framework/wiki/Db-Table"
+                );
             }
             $whereList[] = array_combine($keyNames, $keyValues);
         }
 
-        return call_user_func_array(array($this, 'findWhere'), $whereList);
+        return call_user_func_array(array($self, 'findWhere'), $whereList);
     }
 
     /**
@@ -281,27 +301,29 @@ abstract class Table
      * @param $primaryKey
      * @return Row
      */
-    public function findRow($primaryKey)
+    static public function findRow($primaryKey)
     {
-        return call_user_func(array($this, 'find'), $primaryKey)->current();
+        $self = static::getInstance();
+        return call_user_func(array($self, 'find'), $primaryKey)->current();
     }
 
     /**
      * <code>
      * // WHERE alias = 'foo'
-     * $table->findWhere(['alias'=>'foo']);
+     * Table::findWhere(['alias'=>'foo']);
      * // WHERE alias = 'foo' OR 'alias' = 'bar'
-     * $table->findWhere(['alias'=>'foo'], ['alias'=>'bar']);
+     * Table::findWhere(['alias'=>'foo'], ['alias'=>'bar']);
      * // WHERE (alias = 'foo' AND userId = 2) OR ('alias' = 'bar' AND userId = 4)
-     * $table->findWhere(['alias'=>'foo', 'userId'=> 2], ['alias'=>'foo', 'userId'=>4]);
+     * Table::findWhere(['alias'=>'foo', 'userId'=> 2], ['alias'=>'foo', 'userId'=>4]);
      * // WHERE title LIKE ('Hello%')
-     * $table->findWhere(['title LIKE' => 'Hello%']);
+     * Table::findWhere(['title LIKE' => 'Hello%']);
      * </code>
      * @throws \InvalidArgumentException
      * @return Rowset Row(s) matching the criteria.
      */
-    public function findWhere()
+    static public function findWhere()
     {
+        $self = static::getInstance();
         $whereList = func_get_args();
 
         $whereClause = null;
@@ -316,9 +338,9 @@ abstract class Table
                 $whereAndTerms = array();
                 foreach ($keyValueSets as $keyName => $keyValue) {
                     if (stripos($keyName, ' like')) {
-                        $whereAndTerms[] = $this->table . '.' . $keyName . ' (?)';
+                        $whereAndTerms[] = $self->table . '.' . $keyName . ' (?)';
                     } else {
-                        $whereAndTerms[] = $this->table . '.' . $keyName . ' = ?';
+                        $whereAndTerms[] = $self->table . '.' . $keyName . ' = ?';
                     }
                     if (!is_scalar($keyValue)) {
                         throw new \InvalidArgumentException(
@@ -332,7 +354,7 @@ abstract class Table
             }
             $whereClause = '(' . implode(' OR ', $whereOrTerms) . ')';
         }
-        return $this->fetch($this->select .' WHERE '. $whereClause, $whereParams);
+        return $self->fetch($self->select .' WHERE '. $whereClause, $whereParams);
     }
 
     /**
@@ -341,23 +363,12 @@ abstract class Table
      * @param array $whereList
      * @return Row
      */
-    public function findRowWhere($whereList)
+    static public function findRowWhere($whereList)
     {
-        return call_user_func(array($this, 'findWhere'), $whereList)->current();
+        $self = static::getInstance();
+        return call_user_func(array($self, 'findWhere'), $whereList)->current();
     }
 
-    /**
-     * Support method for fetching rows.
-     *
-     * @param  string $sql  query options.
-     * @param  array  $params
-     * @return array An array containing the row results in FETCH_ASSOC mode.
-     */
-    protected function fetch($sql, $params = array())
-    {
-        $data = $this->getAdapter()->fetchObjects($sql, $params, $this->getRowClass());
-        return new Rowset($data);
-    }
 
     /**
      * create
@@ -365,9 +376,9 @@ abstract class Table
      * @param array $data
      * @return Row
      */
-    public function create(array $data = [])
+    static public function create(array $data = [])
     {
-        $rowClass = $this->getRowClass();
+        $rowClass = static::getInstance()->getRowClass();
         $row = new $rowClass($data);
         return $row;
     }
@@ -382,10 +393,11 @@ abstract class Table
      * @param  array        $data  Column-value pairs.
      * @return int          The number of rows updated.
      */
-    public function insert(array $data)
+    static public function insert(array $data)
     {
-        $table = ($this->schema ? $this->schema . '.' : '') . $this->table;
-        return $this->getAdapter()->insert($table, $data);
+        $self = static::getInstance();
+        $table = ($self->schema ? $self->schema . '.' : '') . $self->table;
+        return $self->getAdapter()->insert($table, $data);
     }
 
     /**
@@ -395,10 +407,11 @@ abstract class Table
      * @param  array|string $where An SQL WHERE clause, or an array of SQL WHERE clauses.
      * @return int          The number of rows updated.
      */
-    public function update(array $data, $where)
+    static public function update(array $data, $where)
     {
-        $table = ($this->schema ? $this->schema . '.' : '') . $this->table;
-        return $this->getAdapter()->update($table, $data, $where);
+        $self = static::getInstance();
+        $table = ($self->schema ? $self->schema . '.' : '') . $self->table;
+        return $self->getAdapter()->update($table, $data, $where);
     }
 
 
@@ -408,9 +421,10 @@ abstract class Table
      * @param  array|string $where SQL WHERE clause(s).
      * @return int          The number of rows deleted.
      */
-    public function delete($where)
+    static public function delete($where)
     {
-        $table = ($this->schema ? $this->schema . '.' : '') . $this->table;
-        return $this->getAdapter()->delete($table, $where);
+        $self = static::getInstance();
+        $table = ($self->schema ? $self->schema . '.' : '') . $self->table;
+        return $self->getAdapter()->delete($table, $where);
     }
 }

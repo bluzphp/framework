@@ -134,22 +134,6 @@ class Row
     }
 
     /**
-     * Retrieve row field value
-     *
-     * @param  string $columnName The user-specified column name.
-     * @return string             The corresponding column value.
-     * @throws DbException if the $columnName is not a column in the row.
-     */
-    public function __get($columnName)
-    {
-        $value = null;
-        if (isset($this->data[$columnName])) {
-            $value = $this->data[$columnName];
-        }
-        return $value;
-    }
-
-    /**
      * Sleep
      * @return array
      */
@@ -169,16 +153,19 @@ class Row
     public function __set($columnName, $value)
     {
         if (strpos($columnName, '__') === 0) {
-            list($tableName, $columnName) = preg_split('/_/', substr($columnName, 2), 2);
-            $tableName = ucfirst(strtolower($tableName));
-
-            if (!empty($tableName) && !empty($columnName)) {
-                if (!isset($this->relationsData[$tableName])) {
-                    $this->relationsData[$tableName] = array();
+            // it's just relation data
+            list($modelName, $columnName) = preg_split('/_/', substr($columnName, 2), 2);
+            if (!empty($modelName) && !empty($columnName)) {
+                if (!isset($this->relationsData[$modelName])) {
+                    $this->relationsData[$modelName] = array();
                 }
-                $this->relationsData[$tableName][$columnName] = $value;
+                $this->relationsData[$modelName][$columnName] = $value;
             }
+        } elseif (method_exists($this, 'set'.$this->normalizeColumnName($columnName))) {
+            // custom setter exists
+            call_user_func([$this, 'set'.$this->normalizeColumnName($columnName)], $value);
         } else {
+            // automatic serialization
             if (is_array($value) || is_object($value)) {
                 $value = serialize($value);
             }
@@ -187,6 +174,25 @@ class Row
                 $this->data[$columnName] = $value;
             }
         }
+    }
+
+    /**
+     * Retrieve row field value
+     *
+     * @param  string $columnName The user-specified column name.
+     * @return string             The corresponding column value.
+     * @throws DbException if the $columnName is not a column in the row.
+     */
+    public function __get($columnName)
+    {
+        $value = null;
+        if (method_exists($this, 'get'.$this->normalizeColumnName($columnName))) {
+            // custom setter exists
+            $value = call_user_func([$this, 'get'.$this->normalizeColumnName($columnName)]);
+        } elseif (isset($this->data[$columnName])) {
+            $value = $this->data[$columnName];
+        }
+        return $value;
     }
 
     /**
@@ -381,6 +387,18 @@ class Row
         return $array;
     }
 
+    /**
+     * normalizeColumnName
+     *
+     * @param $column
+     * @return string
+     */
+    protected function normalizeColumnName($column)
+    {
+        $words = explode('_', $column);
+        $words = array_map('ucfirst', (array)$words);
+        return join('', $words);
+    }
 
     /**
      * Refreshes properties from the database.
@@ -492,28 +510,27 @@ class Row
     /**
      * getRelation
      *
-     * @param string $tableName
+     * @param string $modelName
      * @throws RelationNotFoundException
      * @return \Bluz\Db\Row
      */
-    public function getRelation($tableName)
+    public function getRelation($modelName)
     {
-        $tableName = ucfirst(strtolower($tableName));
-        if (isset($this->relations[$tableName])) {
-            return $this->relations[$tableName];
-        } elseif (!isset($this->relationsData[$tableName])) {
+        if (isset($this->relations[$modelName])) {
+            return $this->relations[$modelName];
+        } elseif (!isset($this->relationsData[$modelName])) {
             throw new RelationNotFoundException(
-                'Can\'t found relation for "'.$tableName.'"'
+                'Can\'t found relation data for model "'.$modelName.'"'
             );
         }
         $currentClass = get_class($this);
         $classRow = substr($currentClass, 0, strrpos($currentClass, '\\'));
-        $classRow = substr($currentClass, 0, strrpos($classRow, '\\'));
-        $classRow = $classRow .'\\'.$tableName.'\\Row';
+        $nameSpace = substr($currentClass, 0, strrpos($classRow, '\\'));
+        $classRow = $nameSpace .'\\'.$modelName.'\\Row';
 
-        $this->relations[$tableName] = new $classRow($this->relationsData[$tableName]);
+        $this->relations[$modelName] = new $classRow($this->relationsData[$modelName]);
 
-        return $this->relations[$tableName];
+        return $this->relations[$modelName];
     }
 
     /**

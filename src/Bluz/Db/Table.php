@@ -226,9 +226,10 @@ abstract class Table
      * @param  array  $params
      * @return array An array containing the row results in FETCH_ASSOC mode.
      */
-    protected function fetch($sql, $params = array())
+    static protected function fetch($sql, $params = array())
     {
-        $data = $this->getAdapter()->fetchObjects($sql, $params, $this->getRowClass());
+        $self = static::getInstance();
+        $data = $self->getAdapter()->fetchObjects($sql, $params, $self->getRowClass());
         return new Rowset($data);
     }
 

@@ -206,21 +206,24 @@ class Row
      */
     public function save()
     {
+        $this->beforeSave();
         /**
          * If the primary key is empty, this is an INSERT of a new row.
          * Otherwise check primary key updated or not, if it changed - INSERT
          * otherwise UPDATE
          */
         if (!sizeof(array_filter($this->getPrimaryKey()))) {
-            return $this->doInsert();
+            $result = $this->doInsert();
         } elseif (sizeof(array_intersect_key(
                     array_diff_assoc($this->clean, $this->toArray()),
                     $this->getPrimaryKey()
                 ))) {
-            return $this->doInsert();
+            $result =  $this->doInsert();
         } else {
-            return $this->doUpdate();
+            $result =  $this->doUpdate();
         }
+        $this->afterSave();
+        return $result;
     }
 
     /**
@@ -409,6 +412,23 @@ class Row
     {
         $this->setFromArray($this->clean);
         $this->modified = array();
+    }
+
+    /**
+     * Before Insert/Update
+     * @return void
+     */
+    protected function beforeSave()
+    {
+    }
+
+    /**
+     * After Insert/Update
+     *
+     * @return void
+     */
+    protected function afterSave()
+    {
     }
 
     /**

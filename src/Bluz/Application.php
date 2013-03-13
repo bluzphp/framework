@@ -568,6 +568,7 @@ class Application
             }
         }
 
+        // try to dispatch controller
         try {
             $this->dispatchResult = $this->dispatch(
                 $this->request->getModule(),

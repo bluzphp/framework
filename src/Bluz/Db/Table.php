@@ -224,7 +224,7 @@ abstract class Table
      *
      * @param  string $sql  query options.
      * @param  array  $params
-     * @return array An array containing the row results in FETCH_ASSOC mode.
+     * @return Rowset An array containing the row results in FETCH_ASSOC mode.
      */
     static protected function fetch($sql, $params = array())
     {

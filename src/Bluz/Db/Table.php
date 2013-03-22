@@ -70,6 +70,13 @@ abstract class Table
     protected $table = null;
 
     /**
+     * Table columns
+     *
+     * @var array
+     */
+    protected $columns = [];
+
+    /**
      * Default SQL query for select
      *
      * @var string
@@ -203,6 +210,38 @@ abstract class Table
             throw new InvalidPrimaryKeyException("The primary key must be set as an array");
         }
         return $this->primary;
+    }
+
+    /**
+     * getTable
+     *
+     * @return string
+     */
+    public function getTable()
+    {
+        return ($this->schema ? $this->schema . '.' : '') . $this->table;
+    }
+
+    /**
+     * getColumns
+     *
+     * return information about tables columns
+     *
+     * @return array
+     */
+    public function getColumns()
+    {
+        if (empty($this->columns)) {
+            $connect = $this->getAdapter()->getOption('connect');
+            $dbName = $connect['name'];
+
+            $this->columns = $this->getAdapter()->fetchColumn('
+                SELECT `column_name`
+                FROM INFORMATION_SCHEMA.COLUMNS
+                WHERE `table_schema` = ?
+                  AND `table_name` = ?', [$dbName, $this->getTable()]);
+        }
+        return $this->columns;
     }
 
     /**

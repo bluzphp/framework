@@ -584,10 +584,12 @@ class Row
      */
     public function setFromArray(array $data)
     {
-        $data = array_intersect_key($data, $this->toArray());
+        $columns = $this->getTable()->getColumns();
 
         foreach ($data as $columnName => $value) {
-            $this->$columnName = $value;
+            if (in_array($columnName, $columns)) {
+                $this->$columnName = $value;
+            }
         }
         return $this;
     }

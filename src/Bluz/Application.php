@@ -383,15 +383,16 @@ class Application
      */
     public function getMailer()
     {
-        $conf = $this->getConfigData('mailer');
-        if (!$this->mailer && $conf) {
-            $this->mailer = new Mailer();
-            $this->mailer->setOptions($conf);
-        } elseif (!$conf) {
-            throw new ConfigException(
-                "Missed `mailer` options in configuration file. <br/>\n".
-                "Read more: <a href='https://github.com/bluzphp/framework/wiki/Mailer'>https://github.com/bluzphp/framework/wiki/Mailer</a>"
-            );
+        if (!$this->mailer) {
+            if ($conf = $this->getConfigData('mailer')) {
+                $this->mailer = new Mailer();
+                $this->mailer->setOptions($conf);
+            } else {
+                throw new ConfigException(
+                    "Missed `mailer` options in configuration file. <br/>\n".
+                        "Read more: <a href='https://github.com/bluzphp/framework/wiki/Mailer'>https://github.com/bluzphp/framework/wiki/Mailer</a>"
+                );
+            }
         }
         return $this->mailer;
     }

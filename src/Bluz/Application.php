@@ -32,6 +32,7 @@ use Bluz\Application\ReloadException;
 use Bluz\Auth\Auth;
 use Bluz\Cache\Cache;
 use Bluz\Config\Config;
+use Bluz\Config\ConfigException;
 use Bluz\Db\Db;
 use Bluz\EventManager\Event;
 use Bluz\EventManager\EventManager;
@@ -377,13 +378,20 @@ class Application
     /**
      * getMailer
      *
+     * @throws ConfigException
      * @return Mailer
      */
     public function getMailer()
     {
-        if (!$this->mailer && $conf = $this->getConfigData('mailer')) {
+        $conf = $this->getConfigData('mailer');
+        if (!$this->mailer && $conf) {
             $this->mailer = new Mailer();
             $this->mailer->setOptions($conf);
+        } elseif (!$conf) {
+            throw new ConfigException(
+                "Missed `mailer` options in configuration file. <br/>\n".
+                "Read more: <a href='https://github.com/bluzphp/framework/wiki/Mailer'>https://github.com/bluzphp/framework/wiki/Mailer</a>"
+            );
         }
         return $this->mailer;
     }

@@ -88,12 +88,20 @@ class Mailer
         if (!isset($this->options['smtp'])) {
             return false;
         }
+        // telling the class to use SMTP
+        $mail->IsSMTP();
 
-        $mail->IsSMTP(); // telling the class to use SMTP
-        $mail->SMTPSecure = "ssl";                 // sets the prefix to the server
-        $mail->SMTPDebug = 2; // enables SMTP debug information (for testing)
-        // 1 = errors and messages
-        // 2 = messages only
+        // sets the prefix to the server
+        if (isset($this->options['smtp']['secure'])) {
+            $mail->SMTPSecure = $this->options['smtp']['secure'];
+        }
+
+        // enables SMTP debug information (for testing)
+        if (isset($this->options['smtp']['debug'])) {
+            $mail->SMTPDebug = $this->options['smtp']['debug'];
+            // 1 = errors and messages
+            // 2 = messages only
+        }
 
         $mail->Host = $this->options['smtp']['host']; // set the SMTP server
         $mail->Port = $this->options['smtp']['port']; // set the SMTP port

@@ -185,7 +185,6 @@ abstract class Grid
         $this->init();
 
         $this->processRequest();
-        $this->processSource();
         // initial default helper path
         $this->addHelperPath(dirname(__FILE__) . '/Helper/');
     }
@@ -381,6 +380,9 @@ abstract class Grid
      */
     public function getData()
     {
+        if (!$this->data) {
+            $this->processSource();
+        }
         return $this->data;
     }
     

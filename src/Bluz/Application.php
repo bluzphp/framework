@@ -975,6 +975,16 @@ class Application
             if (preg_match('/\s*\*\s*\@cache\s+([0-9\.]+).*/i', $docComment, $matches)) {
                 $data['cache'] = (int) $matches[1];
             }
+            // check methods
+            if (preg_match('/\s*\*\s*\@methods\s+(.*)\s*/i', $docComment, $matches)) {
+                $methods = explode(',', $matches[1]);
+                array_walk($methods, function(&$value){
+                    $value = strtoupper(trim($value));
+                });
+                $data['methods'] = $methods;
+            } else {
+                $data['methods'] = ['GET'];
+            }
             // check routers
             if (preg_match('/\s*\*\s*\@route\s+(.*)\s*/i', $docComment, $matches)) {
                 $data['route'] = $matches[1];

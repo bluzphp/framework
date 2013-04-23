@@ -85,11 +85,9 @@ abstract class Table
 
     /**
      * The primary key column or columns.
-     * A compound key should be declared as an array.
-     * You may declare a single-column primary key
-     * as a string.
+     * Should be declared as an array.
      *
-     * @var mixed
+     * @var array
      */
     protected $primary = null;
 

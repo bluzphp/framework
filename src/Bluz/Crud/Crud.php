@@ -103,7 +103,7 @@ class Crud
                 break;
             case AbstractRequest::METHOD_GET:
             default:
-                $this->result = $this->get();
+                $this->result = $this->read();
                 break;
         }
         return $this->result;
@@ -342,11 +342,25 @@ class Crud
         $this->validate();
     }
 
+
+    /**
+     * @return boolean
+     */
+    public function create()
+    {
+        $this->validateCreate();
+
+        $row = $this->getTable()->create();
+
+        $row->setFromArray($this->data);
+        return $row->save();
+    }
+
     /**
      * @throws CrudException
      * @return \Bluz\Db\Row|null
      */
-    public function get()
+    public function read()
     {
         $primary = $this->getPrimaryKey();
 
@@ -362,19 +376,6 @@ class Crud
         }
 
         return $row;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function create()
-    {
-        $this->validateCreate();
-
-        $row = $this->getTable()->create();
-
-        $row->setFromArray($this->data);
-        return $row->save();
     }
 
     /**

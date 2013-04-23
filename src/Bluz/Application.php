@@ -640,6 +640,12 @@ class Application
             $this->denied();
         }
 
+        // check method(s)
+        if (isset($reflectionData['methods'])
+            && !in_array($this->getRequest()->getMethod(), $reflectionData['methods'])) {
+            throw new Exception("Controller is not support method '{$this->getRequest()->getMethod()}'");
+        }
+
         // cache initialization
         if (isset($reflectionData['cache'])) {
             $cacheKey = $module .'/'. $controller .'/'. http_build_query($params);
@@ -983,6 +989,11 @@ class Application
             if (preg_match('/\s*\*\s*\@privilege\s+(\w+).*/i', $docComment, $matches)) {
                 $data['privilege'] = $matches[1];
             }
+            // check request method(s)
+            if (preg_match('/\s*\*\s*\@method\s+(\w+).*/i', $docComment, $matches)) {
+                $data['methods'] = explode(',', strtoupper($matches[1]));
+            }
+
             $this->getCache()->set('reflection:'.$file, $data);
             $this->getCache()->addTag('reflection:'.$file, 'reflection');
         }

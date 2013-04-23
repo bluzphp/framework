@@ -368,7 +368,7 @@ class Row
 
 
     /**
-     * Retrieves an associative array of primary keys.
+     * Retrieves an associative array of primary keys, if it exists
      *
      * @throws InvalidPrimaryKeyException
      * @return array
@@ -379,12 +379,6 @@ class Row
 
         $array = array_intersect_key($this->toArray(), $primary);
 
-        if (count($primary) != count($array)) {
-            throw new InvalidPrimaryKeyException(
-                "The specified Table '" . get_class($this->table)
-                . "' does not have the same primary key as the Row"
-            );
-        }
         return $array;
     }
 

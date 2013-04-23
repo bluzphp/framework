@@ -77,6 +77,7 @@ class Router
                 $module = pathinfo(dirname(dirname($file->getPathname())), PATHINFO_FILENAME);
                 $controller = pathinfo($file->getPathname(), PATHINFO_FILENAME);
                 $data = $this->getApplication()->reflection($file->getPathname());
+                $methods = $data['methods'];
                 if (isset($data['route'])) {
                     if (!isset($reverse[$module])) {
                         $reverse[$module] = array();
@@ -104,7 +105,7 @@ class Router
                         }
                     }
                     $pattern = '/^'.$pattern.'/i';
-                    $routers[trim($data['route'])] = ['pattern' => $pattern, 'module' => $module, 'controller' => $controller, 'params' => $data['types']];
+                    $routers[trim($data['route'])] = ['pattern' => $pattern, 'module' => $module, 'controller' => $controller, 'methods' => $methods, 'params' => $data['types']];
                 }
             }
             $this->getApplication()->getCache()->set('router:routers', $routers);
@@ -263,7 +264,20 @@ class Router
     protected function processDefault()
     {
         $uri = $this->getApplication()->getRequest()->getCleanUri();
-        return empty($uri);
+
+        if (empty($uri)) {
+            $request = $this->getApplication()->getRequest();
+
+            $path = PATH_APPLICATION . "/modules/" . self::DEFAULT_MODULE . "/controllers/"
+                . self::DEFAULT_CONTROLLER . ".php";
+            if (!$this->checkForMethods($request->getMethod(), $path)) {
+                throw new \Application\Exception("The controller $path can not be accessed using " . $request->getMethod() . " method");
+            } else {
+                return true;
+            }
+        } else {
+            false;
+        }
     }
 
 
@@ -278,7 +292,9 @@ class Router
         $uri = '/'. $request->getCleanUri();
 
         foreach ($this->routers as $router) {
-            if (preg_match($router['pattern'], $uri, $matches)) {
+            if (preg_match($router['pattern'], $uri, $matches)
+                && $this->checkForMethods($request->getMethod(), $router['methods'])
+            ) {
                 $request->setModule($router['module']);
                 $request->setController($router['controller']);
 
@@ -322,7 +338,29 @@ class Router
             }
         }
 
+        $path = PATH_APPLICATION . "/modules/" . $request->getModule() . "/controllers/"
+            . $request->getController() . ".php";
+        if (!$this->checkForMethods($request->getMethod(), $path)) {
+            throw new \Application\Exception("The controller $path can not be accessed using " . $request->getMethod() . " method");
+        }
+
         return true;
+    }
+
+    protected function checkForMethods($requestMethod, $data)
+    {
+        if (is_string($data)) {
+            $data = $this->getApplication()->reflection($data);
+            $data = $data['methods'];
+        }
+
+        if (is_array($data)) {
+            if (array_search($requestMethod, $data) !== false) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

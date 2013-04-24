@@ -257,62 +257,6 @@ class View implements ViewInterface
     }
 
     /**
-     * Simple translate/formatter wrapper
-     *
-     * <code>
-     * // simple
-     * // equal to gettext('Message')
-     * __('Message');
-     *
-     * // simple replace of one argument
-     * // equal to sprintf(gettext('Message to %s'), 'Username')
-     * __('Message to %s', 'Username');
-     *
-     * // plural form + sprintf
-     * // equal to sprintf(ngettext('%d comment', '%d comments', 4), 4)
-     * __('%d comment', '%d comments', 4)
-     *
-     * // plural form + sprintf
-     * // equal to sprintf(ngettext('%d comment', '%d comments', 4), 4, 'Topic')
-     * __('%d comment to %s', '%d comments to %s', 4, 'Topic')
-     * </code>
-     *
-     * @param string $message
-     * @return string
-     */
-    public function __($message)
-    {
-        if (func_num_args() == 1) {
-            if (function_exists('gettext')) {
-                $message = gettext($message);
-            }
-            return $message;
-        } elseif (func_num_args() == 2) {
-            // simple replace
-            $args = func_get_args();
-            if (function_exists('gettext')) {
-                $message = gettext($message);
-            }
-            return sprintf($message, $args[1]);
-        } elseif (func_num_args() == 3) {
-            // plural form
-            $args = func_get_args();
-            if (function_exists('ngettext')) {
-                $message = ngettext($message, $args[1], $args[2]);
-            }
-            return sprintf($message, $args[2]);
-        } else {
-            // arguments more than 3
-            // plural form with additional params
-            if (function_exists('ngettext')) {
-                $message = call_user_func_array('ngettext', func_get_args());
-            }
-            $args = array_slice(func_get_args(), 2);
-            return vsprintf($message, $args);
-        }
-    }
-
-    /**
      * Render
      *
      * @throws ViewException

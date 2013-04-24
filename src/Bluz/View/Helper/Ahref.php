@@ -61,5 +61,5 @@ function ($text, $href, array $attributes = []) {
         $attrs[] = $attr . '="' . $value . '"';
     }
 
-    return '<a href="' . $href . '" ' . join(' ', $attrs) . '>' . $this->__($text) . '</a>';
+    return '<a href="' . $href . '" ' . join(' ', $attrs) . '>' . __($text) . '</a>';
 };

@@ -94,7 +94,7 @@ class SessionStore extends AbstractStore
      * @param mixed $value
      * @return mixed
      */
-    public function set($key, $value)
+    public function __set($key, $value)
     {
         $this->start();
         $_SESSION[$this->namespace][$key] = $value;
@@ -107,26 +107,51 @@ class SessionStore extends AbstractStore
      * @param string $key
      * @return mixed|null
      */
-    public function get($key)
+    public function __get($key)
     {
-        // to avoid implicit starting session on read
-        if (!$this->started && !$this->hasSessionId()) {
+        if (!$this->__isset($key)) {
             return null;
         }
-        
-        $this->start();
-        
+
         if (!isset($_SESSION[$this->namespace][$key])) {
             return null;
         }
         return $_SESSION[$this->namespace][$key];
     }
 
+    /**
+     * __isset
+     *
+     * @param string $key
+     * @return boolean
+     */
+    public function __isset($key)
+    {
+        // to avoid implicit starting session on read empty session
+        if (!$this->started && !$this->hasSessionId()) {
+            return false;
+        }
+        $this->start();
+
+        return isset($_SESSION[$this->namespace][$key]);
+    }
+
+    /**
+     * __unset
+     *
+     * @param string $key
+     * @return void
+     */
+    public function __unset($key)
+    {
+        unset($_SESSION[$this->namespace][$key]);
+    }
+
 
     /**
      * destroy
      *
-     * @return bool
+     * @return boolean
      */
     public function destroy()
     {

@@ -44,6 +44,7 @@ use Bluz\Registry\Registry;
 use Bluz\Request;
 use Bluz\Router\Router;
 use Bluz\Session\Session;
+use Bluz\Translator\Translator;
 use Bluz\View\Layout;
 use Bluz\View\View;
 
@@ -57,6 +58,7 @@ use Bluz\View\View;
  * @method void reload()
  * @method void redirect(\string $url)
  * @method void redirectTo(\string $module, \string $controller, array $params=array())
+ * @method void rollback()
  * @method \Bluz\Auth\AbstractEntity user()
  *
  * @author   Anton Shevchuk
@@ -143,6 +145,11 @@ class Application
     protected $session;
 
     /**
+     * @var Translator
+     */
+    protected $translator;
+
+    /**
      * @var string
      */
     protected $environment;
@@ -199,6 +206,9 @@ class Application
 
             // session start inside
             $this->getSession();
+
+            // initial Translator
+            $this->getTranslator();
 
             // initial DB configuration
             $this->getDb();
@@ -497,6 +507,20 @@ class Application
             $this->getMessages();
         }
         return $this->session;
+    }
+
+    /**
+     * getTranslator
+     *
+     * @return Translator
+     */
+    public function getTranslator()
+    {
+        if (!$this->translator) {
+            $this->translator = new Translator();
+            $this->translator->setOptions($this->getConfigData('translator'));
+        }
+        return $this->translator;
     }
 
     /**

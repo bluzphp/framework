@@ -24,42 +24,23 @@
 /**
  * @namespace
  */
-namespace Bluz\View\Helper;
+namespace Bluz\Application\Helper;
 
-use Bluz\View\View;
+use Bluz\Application;
+use Bluz\Exception;
 
 return
-
 /**
- * @author ErgallM
- *
- * @param string $text
- * @param string|array $href
- * @param array $attributes HTML attributes
- * @return \Closure
+ * redirect to previously called page
+ * @return void
  */
-function ($text, $href, array $attributes = []) {
-    /** @var View $this */
-    // if href is settings for url helper
-    if (is_array($href)) {
-        $href = call_user_func_array(array($this, 'url'), $href);
+function () {
+    /** @var Application $this */
+    if ($rollback = $this->getSession()->rollback) {
+        unset($this->getSession()->rollback);
+        $this->redirect($rollback);
+    } else {
+        // setup rollback
+        $this->getSession()->rollback = $this->getRequest()->getRequestUri();
     }
-
-    // href can be null, if access is denied
-    if (null === $href) return '';
-
-    if ($href == $this->getApplication()->getRequest()->getRequestUri()) {
-        if (isset($attributes['class'])) {
-            $attributes['class'] .= ' on';
-        } else {
-            $attributes['class'] = 'on';
-        }
-    }
-    $attrs = [];
-
-    foreach ($attributes as $attr => $value) {
-        $attrs[] = $attr . '="' . $value . '"';
-    }
-
-    return '<a href="' . $href . '" ' . join(' ', $attrs) . '>' . __($text) . '</a>';
 };

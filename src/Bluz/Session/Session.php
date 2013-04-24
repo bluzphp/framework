@@ -58,7 +58,7 @@ class Session
      * Session store parameters
      * @var string
      */
-    protected $storeParameters = array();
+    protected $storeSettings = array();
 
     /**
      * setStore
@@ -73,14 +73,14 @@ class Session
     }
 
     /**
-     * setParameters
+     * setSettings
      *
-     * @param array $parameters
+     * @param array $settings
      * @return Session
      */
-    public function setParameters(array $parameters)
+    public function setSettings(array $settings)
     {
-        $this->storeParameters = $parameters;
+        $this->storeSettings = $settings;
         return $this;
     }
 
@@ -105,7 +105,7 @@ class Session
             }
         }
 
-        $this->store->setOptions($this->storeParameters);
+        $this->store->setOptions($this->storeSettings);
         
         return $this->store;
     }
@@ -119,7 +119,7 @@ class Session
      */
     public function __set($key, $value)
     {
-        $this->getStore()->set($key, $value);
+        $this->getStore()->__set($key, $value);
     }
 
     /**
@@ -130,6 +130,28 @@ class Session
      */
     public function __get($key)
     {
-        return $this->getStore()->get($key);
+        return $this->getStore()->__get($key);
+    }
+
+    /**
+     * Isset Offset
+     *
+     * @param  mixed   $key
+     * @return boolean
+     */
+    public function __isset($key)
+    {
+        return $this->getStore()->__isset($key);
+    }
+
+    /**
+     * Unset Offset
+     *
+     * @param  mixed $key
+     * @return void
+     */
+    public function __unset($key)
+    {
+        $this->getStore()->__unset($key);
     }
 }

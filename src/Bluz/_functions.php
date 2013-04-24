@@ -58,4 +58,47 @@ if (!function_exists('debug')) {
             echo '</pre></div>';
         }
     }
+
+    /**
+     * translate
+     *
+     * <code>
+     * // simple
+     * // equal to gettext('Message')
+     * __('Message');
+     *
+     * // simple replace of one or more argument(s)
+     * // equal to sprintf(gettext('Message to %s'), 'Username')
+     * __('Message to %s', 'Username');
+     * </code>
+     *
+     * @param $message
+     * @return mixed
+     */
+    function __($message) {
+        return call_user_func_array(['\Bluz\Translator\Translator','translate'], func_get_args());
+    }
+
+    /**
+     * translate plural form
+     *
+     * <code>
+     *
+     * // plural form + sprintf
+     * // equal to sprintf(ngettext('%d comment', '%d comments', 4), 4)
+     * _n('%d comment', '%d comments', 4, 4)
+     *
+     * // plural form + sprintf
+     * // equal to sprintf(ngettext('%d comment', '%d comments', 4), 4, 'Topic')
+     * _n('%d comment to %s', '%d comments to %s', 4, 'Topic')
+     * </code>
+     *
+     * @param $singular
+     * @param $plural
+     * @param $number
+     * @return mixed
+     */
+    function _n($singular, $plural, $number) {
+        return call_user_func_array(['\Bluz\Translator\Translator','translatePlural'], func_get_args());
+    }
 }

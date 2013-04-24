@@ -56,6 +56,7 @@ require_once 'Request/AbstractRequest.php';
 require_once 'Router/Router.php';
 require_once 'Session/Session.php';
 require_once 'Session/Store/AbstractStore.php';
+require_once 'Translator/Translator.php';
 require_once 'View/ViewInterface.php';
 require_once 'View/View.php';
 require_once 'View/Layout.php';

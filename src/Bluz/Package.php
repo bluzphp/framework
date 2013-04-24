@@ -86,9 +86,13 @@ trait Package
 
         // check options
         $this->checkOptions();
+        // initialization
+        $this->initOptions();
     }
 
     /**
+     * Get all options
+     *
      * @return array
      */
     public function getOptions()
@@ -97,9 +101,9 @@ trait Package
     }
 
     /**
-     * checkOptions
+     * Validation
      *
-     * @throw \Bluz\Config\ConfigException
+     * @throws \Bluz\Config\ConfigException
      * @return boolean
      */
     protected function checkOptions()
@@ -108,7 +112,18 @@ trait Package
     }
 
     /**
-     * getOption
+     * Initialization
+     *
+     * @throws \Bluz\Config\ConfigException
+     * @return boolean
+     */
+    protected function initOptions()
+    {
+        return true;
+    }
+
+    /**
+     * get option by key
      *
      * @param string $key
      * @return mixed

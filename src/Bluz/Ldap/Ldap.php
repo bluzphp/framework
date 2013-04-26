@@ -109,7 +109,7 @@ class Ldap
      * @param $baseDn
      * @return \Bluz\Ldap\Ldap
      */
-    protected function initConnector($host, $domain, $baseDn)
+    public function initConnector($host, $domain, $baseDn)
     {
         $connector = new \Bluz\Ldap\Connector();
         $connector->setHost($host)

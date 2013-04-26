@@ -91,7 +91,7 @@ class Messages
     {
         $this->init();
 
-        $this->getMessagesStore()[self::TYPE_NOTICE][] = $text;
+        $this->getMessagesStore()[self::TYPE_NOTICE][] = __($text);
         return $this;
     }
 
@@ -105,7 +105,7 @@ class Messages
     {
         $this->init();
 
-        $this->getMessagesStore()[self::TYPE_SUCCESS][] = $text;
+        $this->getMessagesStore()[self::TYPE_SUCCESS][] = __($text);
         return $this;
     }
 
@@ -119,7 +119,7 @@ class Messages
     {
         $this->init();
 
-        $this->getMessagesStore()[self::TYPE_ERROR][] = $text;
+        $this->getMessagesStore()[self::TYPE_ERROR][] = __($text);
         return $this;
     }
 

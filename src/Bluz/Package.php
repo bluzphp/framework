@@ -115,11 +115,11 @@ trait Package
      * Initialization
      *
      * @throws \Bluz\Config\ConfigException
-     * @return boolean
+     * @return void
      */
     protected function initOptions()
     {
-        return true;
+        return;
     }
 
     /**

@@ -75,41 +75,6 @@ class Crud
     protected $result;
 
     /**
-     * @return mixed
-     */
-    public function processRequest()
-    {
-        $request = $this->getApplication()->getRequest();
-
-        // get data from request
-        $this->data = $request->data?:[];
-
-        // get form id
-        $this->formId = $request->_formId;
-
-        // rewrite REST with "method" param
-        $this->method = strtoupper($request->getParam('_method', $request->getMethod()));
-
-        // switch by method
-        switch ($this->method) {
-            case AbstractRequest::METHOD_POST:
-                $this->result = $this->create();
-                break;
-            case AbstractRequest::METHOD_PUT:
-                $this->result = $this->update();
-                break;
-            case AbstractRequest::METHOD_DELETE:
-                $this->result = $this->delete();
-                break;
-            case AbstractRequest::METHOD_GET:
-            default:
-                $this->result = $this->read();
-                break;
-        }
-        return $this->result;
-    }
-
-    /**
      * process CRUD from controller
      *
      * @throws CrudException
@@ -119,6 +84,24 @@ class Crud
     {
         try {
             $result = $this->getResult();
+
+            // switch statement for $this->getMethod()
+            if ($this->getMethod() == AbstractRequest::METHOD_GET) {
+                // EDIT or CREATE form
+                if ($result instanceof Db\Row) {
+                    // edit form
+                    return [
+                        'row' => $result,
+                        'method' => AbstractRequest::METHOD_PUT
+                    ];
+                } else {
+                    // create form
+                    return [
+                        'row' => $this->getTable()->create(),
+                        'method' => AbstractRequest::METHOD_POST
+                    ];
+                }
+            }
         } catch (CrudException $e) {
             // all "not found" errors and other similar
             $this->getApplication()->getMessages()->addError($e->getMessage());
@@ -144,28 +127,51 @@ class Crud
             return $return;
         }
 
-        // check result
-        // what is?
-//        if ($result === false) {
-//            return true;
-//        }
+        // reload page for AJAX request for refresh current view
+        // FIXME: hardcoded reload process
+        if ($this->getApplication()->getRequest()->isXmlHttpRequest()) {
+            return new ReloadException();
+        }
+        // disable view
+        return false;
+    }
 
-        // switch statement for $this->getMethod()
-        // FIXME: hardcoded messages and reload process
-        switch ($this->getMethod()) {
+    /**
+     * @throws CrudException
+     * @throws ValidationException
+     * @return mixed
+     */
+    public function processRequest()
+    {
+        $request = $this->getApplication()->getRequest();
+
+        // get data from request
+        $this->data = $request->data?:[];
+
+        // get form id
+        $this->formId = $request->_formId;
+
+        // rewrite REST with "method" param
+        $this->method = strtoupper($request->getParam('_method', $request->getMethod()));
+
+        // switch by method
+        // FIXME: hardcoded messages
+        switch ($this->method) {
             case AbstractRequest::METHOD_POST:
-                // CREATE record
+                $this->result = $this->create();
                 $this->getApplication()->getMessages()->addSuccess("Row was created");
                 break;
             case AbstractRequest::METHOD_PUT:
-                // UPDATE record
+                $this->result = $this->update();
                 $this->getApplication()->getMessages()->addSuccess("Row was updated");
                 break;
             case AbstractRequest::METHOD_DELETE:
-                // DELETE record
+                $this->result = $this->delete();
                 $this->getApplication()->getMessages()->addSuccess("Row was deleted");
                 break;
             case AbstractRequest::METHOD_GET:
+                $this->result = $this->read();
+
                 // always HTML
                 $this->getApplication()->useJson(false);
 
@@ -173,32 +179,12 @@ class Crud
                 if (!$this->getApplication()->getRequest()->isXmlHttpRequest()) {
                     $this->getApplication()->useLayout(true);
                 }
-
-                // EDIT or CREATE form
-                if ($result instanceof Db\Row) {
-                    // edit form
-                    return [
-                        'row' => $result,
-                        'method' => AbstractRequest::METHOD_PUT
-                    ];
-                } else {
-                    // create form
-                    return [
-                        'row' => $this->getTable()->create(),
-                        'method' => AbstractRequest::METHOD_POST
-                    ];
-                }
                 break;
             default:
                 throw new CrudException("Unsopported method");
                 break;
         }
-        // reload page for AJAX request for refresh current view
-        if ($this->getApplication()->getRequest()->isXmlHttpRequest()) {
-            return new ReloadException();
-        }
-        // disable view
-        return false;
+        return $this->result;
     }
 
 
@@ -342,6 +328,10 @@ class Crud
         $this->validate();
     }
 
+
+    /**
+     * CRUD methods here
+     */
 
     /**
      * @return boolean

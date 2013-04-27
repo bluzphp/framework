@@ -59,6 +59,18 @@ class Translator
     protected $path;
 
     /**
+     * set domain
+     *
+     * @param string $domain
+     * @return self
+     */
+    public function setDomain($domain)
+    {
+        $this->domain = $domain;
+        return $this;
+    }
+
+    /**
      * set locale
      *
      * @param string $locale
@@ -116,8 +128,6 @@ class Translator
         textdomain($this->domain);
 
         bind_textdomain_codeset($this->domain, 'UTF-8');
-
-        return true;
     }
     
     /**

@@ -121,6 +121,11 @@ class Translator
         putenv('LANG='.$this->locale);
         putenv('LANGUAGE='.$this->locale);
 
+        // Windows workaround
+        if (!defined('LC_MESSAGES')) {
+            define('LC_MESSAGES', 6);
+        }
+
         setlocale(LC_MESSAGES, $this->locale);
 
         bindtextdomain($this->domain, $this->path);

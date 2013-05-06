@@ -24,47 +24,62 @@
 /**
  * @namespace
  */
-namespace Bluz\Auth\Provider;
+namespace Bluz\Auth\Adapter;
 
+use Bluz\Auth\AuthException;
+use Bluz\Auth\AbstractEntity;
 
 /**
- * Equals Provider
+ * Adapter
  *
  * @category Bluz
  * @package  Auth
  *
  * @author   Anton Shevchuk
- * @created  27.09.11 13:28
+ * @created  12.07.11 15:33
  */
-class Equals
+abstract class AbstractAdapter
 {
+    use \Bluz\Package;
+
     /**
-     * @var \closure
+     * @var \Bluz\Auth\Auth
      */
-    protected $encryptFunction;
+    protected $auth;
 
     /**
      * authenticate
      *
      * @param string $login
      * @param string $password
+     * @param AbstractEntity $entity
      * @return bool
      */
-    public function authenticate($login, $password)
+    abstract function authenticate($login, $password, AbstractEntity $entity = null);
+
+    /**
+     * setAuth
+     *
+     * @param $auth
+     * @return self
+     */
+    public function setAuth($auth)
     {
-        $password = call_user_func($this->encryptFunction, $password);
-        return false;
+        $this->auth = $auth;
+        return $this;
     }
 
     /**
-     * setEncryptFunction
+     * getAuth
      *
-     * @param \closure $function
-     * @return Equals
+     * @throws AuthException
+     * @return \Bluz\Auth\Auth
      */
-    public function setEncryptFunction($function)
+    public function getAuth()
     {
-        $this->encryptFunction = $function;
-        return $this;
+        if (!$this->auth) {
+            throw new AuthException('Auth instance not found in Auth Adapter');
+        }
+        return $this->auth;
     }
 }

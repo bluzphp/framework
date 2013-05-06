@@ -26,8 +26,6 @@
  */
 namespace Bluz\Auth\Adapter;
 
-use Bluz\Auth\AbstractAdapter;
-
 /**
  * Equals
  *

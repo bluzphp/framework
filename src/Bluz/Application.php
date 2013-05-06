@@ -55,10 +55,9 @@ use Bluz\View\View;
  * @package  Application
  *
  * @method void denied()
- * @method void reload()
  * @method void redirect(\string $url)
  * @method void redirectTo(\string $module, \string $controller, array $params=array())
- * @method void rollback()
+ * @method void reload()
  * @method \Bluz\Auth\AbstractEntity user()
  *
  * @author   Anton Shevchuk

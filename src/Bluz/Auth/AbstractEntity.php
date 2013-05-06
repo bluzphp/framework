@@ -49,15 +49,6 @@ abstract class AbstractEntity extends \Bluz\Db\Row
     abstract function tryLogin();
 
     /**
-     * Has user a resource
-     *
-     * @param string  $type
-     * @param integer $id
-     * @return boolean
-     */
-//    abstract function hasResource($type, $id);
-
-    /**
      * Has role a privilege
      *
      * @param string $module
@@ -76,18 +67,6 @@ abstract class AbstractEntity extends \Bluz\Db\Row
         }
 
         return false;
-    }
-
-    /**
-     * Is field equal to value
-     *
-     * @param string $field
-     * @param mixed $value
-     * @return boolean
-     */
-    public function isEqual($field, $value)
-    {
-        return $value == $this->{$field};
     }
 
     /**

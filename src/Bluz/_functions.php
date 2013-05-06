@@ -58,7 +58,21 @@ if (!function_exists('debug')) {
             echo '</pre></div>';
         }
     }
+}
 
+if (!function_exists('app')) {
+    /**
+     * Alias for call instance of Application
+     *
+     * @return \Bluz\Application
+     */
+    function app()
+    {
+        return \Bluz\Application::getInstance();
+    }
+}
+
+if (!function_exists('__')) {
     /**
      * translate
      *
@@ -78,7 +92,9 @@ if (!function_exists('debug')) {
     function __($message) {
         return call_user_func_array(['\Bluz\Translator\Translator','translate'], func_get_args());
     }
+}
 
+if (!function_exists('_n')) {
     /**
      * translate plural form
      *

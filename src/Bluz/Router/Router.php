@@ -78,33 +78,44 @@ class Router
                 $controller = pathinfo($file->getPathname(), PATHINFO_FILENAME);
                 $data = $this->getApplication()->reflection($file->getPathname());
                 if (isset($data['route'])) {
-                    if (!isset($reverse[$module])) {
-                        $reverse[$module] = array();
-                    }
+                    foreach ((array)$data['route'] as $route) {
+                        $route = trim($route);
 
-                    $reverse[$module][$controller] = ['route' => $data['route'], 'params' => $data['types']];
+                        if (!isset($reverse[$module])) {
+                            $reverse[$module] = array();
+                        }
 
-                    $pattern = trim($data['route']);
-                    $pattern = str_replace('/', '\/', $pattern);
+                        $reverse[$module][$controller] = ['route' => $route, 'params' => $data['types']];
 
-                    foreach ($data['types'] as $param => $type) {
-                        switch ($type) {
-                            case 'int':
-                            case 'integer':
-                                $pattern = str_replace("{\$".$param."}", "(?P<$param>[0-9]+)", $pattern);
-                                break;
-                            case 'float':
-                                $pattern = str_replace("{\$".$param."}", "(?P<$param>[0-9.,]+)", $pattern);
-                                break;
-                            case 'string':
-                            case 'module':
-                            case 'controller':
-                                $pattern = str_replace("{\$".$param."}", "(?P<$param>[a-zA-Z0-9-_.]+)", $pattern);
-                                break;
+                        $pattern = str_replace('/', '\/', $route);
+
+                        foreach ($data['types'] as $param => $type) {
+                            switch ($type) {
+                                case 'int':
+                                case 'integer':
+                                    $pattern = str_replace("{\$".$param."}", "(?P<$param>[0-9]+)", $pattern);
+                                    break;
+                                case 'float':
+                                    $pattern = str_replace("{\$".$param."}", "(?P<$param>[0-9.,]+)", $pattern);
+                                    break;
+                                case 'string':
+                                case 'module':
+                                case 'controller':
+                                    $pattern = str_replace("{\$".$param."}", "(?P<$param>[a-zA-Z0-9-_.]+)", $pattern);
+                                    break;
+                            }
+                        }
+                        $pattern = '/^'.$pattern.'/i';
+
+                        $rule = [$route => ['pattern' => $pattern, 'module' => $module, 'controller' => $controller, 'params' => $data['types']]];
+
+                        // static routers should be first
+                        if (strpos($route, '$')) {
+                            $routers = array_merge($routers, $rule);
+                        } else {
+                            $routers = array_merge($rule, $routers);
                         }
                     }
-                    $pattern = '/^'.$pattern.'/i';
-                    $routers[trim($data['route'])] = ['pattern' => $pattern, 'module' => $module, 'controller' => $controller, 'params' => $data['types']];
                 }
             }
             $this->getApplication()->getCache()->set('router:routers', $routers);
@@ -189,6 +200,11 @@ class Router
             }
             $url = str_replace('{$'.$key.'}', $value, $url);
         }
+        // clean optional params
+        $url = preg_replace('/\{\$[a-z0-9-_]+\}/i', '', $url);
+        // replace "//" with "/"
+        $url = str_replace('//', '/', $url);
+
         if (!empty($getParams)) {
             $url .= '?'. http_build_query($getParams);
         }
@@ -276,7 +292,6 @@ class Router
     {
         $request = $this->getApplication()->getRequest();
         $uri = '/'. $request->getCleanUri();
-
         foreach ($this->routers as $router) {
             if (preg_match($router['pattern'], $uri, $matches)) {
                 $request->setModule($router['module']);

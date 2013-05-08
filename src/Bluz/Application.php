@@ -355,6 +355,7 @@ class Application
     /**
      * getLdap
      *
+     * @todo remove Ldap to optional package
      * @return Ldap
      */
     public function getLdap()
@@ -399,7 +400,7 @@ class Application
             } else {
                 throw new ConfigException(
                     "Missed `mailer` options in configuration file. <br/>\n".
-                        "Read more: <a href='https://github.com/bluzphp/framework/wiki/Mailer'>https://github.com/bluzphp/framework/wiki/Mailer</a>"
+                    "Read more: <a href='https://github.com/bluzphp/framework/wiki/Mailer'>https://github.com/bluzphp/framework/wiki/Mailer</a>"
                 );
             }
         }
@@ -995,17 +996,22 @@ class Application
 
             // get params and convert it to simple array
             $params = $reflection->getParameters();
+            $values = array();
             foreach ($params as $key => $param) {
                 $params[$key] = $param->getName();
+                if ($param->isOptional()) {
+                    $values[$key] = $param->getDefaultValue();
+                }
             }
             $data['params'] = $params;
+            $data['values'] = $values;
 
             // check cache settings
             if (preg_match('/\s*\*\s*\@cache\s+([0-9\.]+).*/i', $docComment, $matches)) {
                 $data['cache'] = (int) $matches[1];
             }
             // check routers
-            if (preg_match('/\s*\*\s*\@route\s+(.*)\s*/i', $docComment, $matches)) {
+            if (preg_match_all('/\s*\*\s*\@route\s+(.*)\s*/i', $docComment, $matches)) {
                 $data['route'] = $matches[1];
             }
             // check acl settings
@@ -1034,7 +1040,7 @@ class Application
     {
         // need use new array for order params as described in controller
         $params = array();
-        foreach ($reflectionData['params'] as $param) {
+        foreach ($reflectionData['params'] as $key => $param) {
             if (isset($rawData[$param])
                 && isset($reflectionData['types'][$param])
                 && $type = $reflectionData['types'][$param]) {
@@ -1059,6 +1065,8 @@ class Application
                     }
             } elseif (isset($rawData[$param])) {
                 $params[] = $rawData[$param];
+            } elseif (isset($reflectionData['values'][$key])) {
+                $params[] = $reflectionData['values'][$key];
             } else {
                 $params[] = null;
             }

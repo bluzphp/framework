@@ -41,22 +41,16 @@ return
  */
 function ($name, $value = null, $checked = false, array $attributes = []) {
     /** @var View $this */
-    $attributes['type'] = 'radio';
-    $attributes['name'] = $name;
+    if (true === $checked) {
+        $attributes['checked'] = 'checked';
+    }
 
     if (null !== $value) {
         $attributes['value'] = $value;
     }
 
-    if (true === $checked) {
-        $attributes['checked'] = 'checked';
-    }
+    $attributes['name'] = $name;
+    $attributes['type'] = 'radio';
 
-    $attrs = [];
-
-    foreach ($attributes as $attr => $value) {
-        $attrs[] = $attr . '="' . $value . '"';
-    }
-
-    return '<input ' . join(' ', $attrs) . '>';
+    return '<input ' . join(' ', $this->attributes($attributes)) . '/>';
 };

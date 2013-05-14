@@ -33,24 +33,19 @@ return
 /**
  * @author The-Who
  *
- * @param string $name
- * @param string|null $value
- * @param bool $checked
  * @param array $attributes
  * @return \Closure
  */
-function ($name, $value = null, $checked = false, array $attributes = []) {
+function (array $attributes = []) {
     /** @var View $this */
-    if (true === $checked) {
-        $attributes['checked'] = 'checked';
+    if (empty($attributes)) {
+        return '';
+    }
+    $attrs = [];
+
+    foreach ($attributes as $attr => $value) {
+        $attrs[] = $attr . '="' . $value . '"';
     }
 
-    if (null !== $value) {
-        $attributes['value'] = $value;
-    }
-
-    $attributes['name'] = $name;
-    $attributes['type'] = 'checkbox';
-
-    return '<input ' . join(' ', $this->attributes($attributes)) . '/>';
+    return array_reverse($attrs);
 };

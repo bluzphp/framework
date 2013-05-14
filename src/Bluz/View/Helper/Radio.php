@@ -43,6 +43,8 @@ function ($name, $value = null, $checked = false, array $attributes = []) {
     /** @var View $this */
     if (true === $checked) {
         $attributes['checked'] = 'checked';
+    } elseif (false !== $checked && ($checked == $value)) {
+        $attributes['checked'] = 'checked';
     }
 
     if (null !== $value) {
@@ -52,5 +54,5 @@ function ($name, $value = null, $checked = false, array $attributes = []) {
     $attributes['name'] = $name;
     $attributes['type'] = 'radio';
 
-    return '<input ' . join(' ', $this->attributes($attributes)) . '/>';
+    return '<input ' . $this->attributes($attributes) . '/>';
 };

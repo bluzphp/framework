@@ -36,8 +36,10 @@ use Bluz\Application;
  *
  * @method string ahref(\string $text, \string $href, array $attributes = [])
  * @method string api(\string $module, \string $method, $params = array())
+ * @method string attributes(array $attributes = [])
  * @method string baseUrl(\string $file = null)
  * @method array|null breadCrumbs(array $data = [])
+ * @method string checkbox($name, $value = null, $checked = false, array $attributes = [])
  * @method string|boolean controller(\string $controller = null)
  * @method string|View dispatch($module, $controller, $params = array())
  * @method string|null headScript(\string $script = null)
@@ -47,6 +49,7 @@ use Bluz\Application;
  * @method string|View link(string $src = null, string $rel = 'stylesheet')
  * @method void partial($__template, $__params = array())
  * @method void partialLoop($template, $data = [], $params = [])
+ * @method string radio($name, $value = null, $checked = false, array $attributes = [])
  * @method string script(\string $script)
  * @method string style(\string $style, $media = 'all')
  * @method string|View title(\string $title = null, $position = 'replace', $separator = ' :: ')

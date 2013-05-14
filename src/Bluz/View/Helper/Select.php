@@ -41,8 +41,6 @@ return
  */
 function ($name, array $options = [], $selected = null, array $attributes = []) {
     /** @var View $this */
-    $attributes['name'] = $name;
-
     if (is_array($selected) && count($selected) > 1) {
         $attributes['multiple'] = 'multiple';
     }
@@ -50,6 +48,8 @@ function ($name, array $options = [], $selected = null, array $attributes = []) 
     if (!is_array($selected) && null !== $selected) {
         $selected = array($selected);
     }
+
+    $attributes['name'] = $name;
 
     if (null === $selected) {
         $selected = array();
@@ -60,12 +60,6 @@ function ($name, array $options = [], $selected = null, array $attributes = []) 
         $opts[] = '<option value="' . $value . '" ' .
                 ((in_array($value, $selected)) ? 'selected' : '') . '>' . $text . '</option>';
     }
-    $attrs = [];
 
-    foreach ($attributes as $attr => $value) {
-        $attrs[] = $attr . '="' . $value . '"';
-    }
-
-    return '<select '. join(' ', $attrs) .'>' . join($opts) . '</select>';
-
+    return '<select '. join(' ', $this->attributes($attributes)) .'>' . join($opts) . '</select>';
 };

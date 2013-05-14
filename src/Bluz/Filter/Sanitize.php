@@ -31,6 +31,8 @@ use Bluz\Exception;
 /**
  * Sanitize
  *
+ * TODO: UNDER CONSTRUCTION!!!
+ *
  * <code>
  * $bar = new Bar();
  * $bar -> text = '<strong>Hello!</strong>';

@@ -41,11 +41,20 @@ function (array $attributes = []) {
     if (empty($attributes)) {
         return '';
     }
-    $attrs = [];
-
-    foreach ($attributes as $attr => $value) {
-        $attrs[] = $attr . '="' . $value . '"';
+    $result = [];
+    foreach ($attributes as $key => $value) {
+        if (null === $value) {
+            // skip null values
+            // ['value'=>null] => ''
+            continue;
+        }
+        if (is_int($key)) {
+            // allow non-associative keys
+            // ['checked'] => 'checked="checked"'
+            $key = $value;
+        }
+        $result[] = $key . '="' . htmlspecialchars((string) $value, ENT_QUOTES) . '"';
     }
 
-    return array_reverse($attrs);
+    return join(' ', $result);
 };

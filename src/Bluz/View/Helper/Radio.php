@@ -52,5 +52,5 @@ function ($name, $value = null, $checked = false, array $attributes = []) {
     $attributes['name'] = $name;
     $attributes['type'] = 'radio';
 
-    return '<input ' . join(' ', $this->attributes($attributes)) . '/>';
+    return '<input ' . $this->attributes($attributes) . '/>';
 };

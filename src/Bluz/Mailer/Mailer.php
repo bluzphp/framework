@@ -70,7 +70,22 @@ class Mailer
         $fromEmail = $this->options['from']['email'];
         $fromName = isset($this->options['from']['name']) ? $this->options['from']['name'] : '';
 
+        // setup options from config
         $mail->SetFrom($fromEmail, $fromName, false);
+
+        // setup options
+        if (isset($this->options['settings'])) {
+            foreach ($this->options['settings'] as $name => $value) {
+                $mail->set($name, $value);
+            }
+        }
+
+        // setup custom headers
+        if (isset($this->options['headers'])) {
+            foreach ($this->options['headers'] as $header => $value) {
+                $mail->AddCustomHeader($header, $value);
+            }
+        }
 
         $this->setupSmtp($mail);
 

@@ -341,6 +341,9 @@ abstract class Table
      */
     static public function findRow($primaryKey)
     {
+        if (!$primaryKey) {
+            return null;
+        }
         $self = static::getInstance();
         return call_user_func(array($self, 'find'), $primaryKey)->current();
     }

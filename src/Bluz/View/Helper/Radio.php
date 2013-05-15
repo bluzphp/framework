@@ -43,8 +43,6 @@ function ($name, $value = null, $checked = false, array $attributes = []) {
     /** @var View $this */
     if (true === $checked) {
         $attributes['checked'] = 'checked';
-    } elseif (false !== $checked && ($checked == $value)) {
-        $attributes['checked'] = 'checked';
     }
 
     if (null !== $value) {

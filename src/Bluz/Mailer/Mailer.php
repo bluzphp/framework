@@ -87,51 +87,7 @@ class Mailer
             }
         }
 
-        $this->setupSmtp($mail);
-
         return $mail;
-    }
-
-    /**
-     * Enable smtp with parameters from config if they were set
-     *
-     * @param \PHPMailer $mail
-     * @return bool
-     */
-    private function setupSmtp(\PHPMailer $mail)
-    {
-        if (!isset($this->options['smtp'])) {
-            return false;
-        }
-        // telling the class to use SMTP
-        $mail->IsSMTP();
-
-        // sets the prefix to the server
-        if (isset($this->options['smtp']['secure'])) {
-            $mail->SMTPSecure = $this->options['smtp']['secure'];
-        }
-
-        // enables SMTP debug information (for testing)
-        if (isset($this->options['smtp']['debug'])) {
-            $mail->SMTPDebug = $this->options['smtp']['debug'];
-            // 1 = errors and messages
-            // 2 = messages only
-        }
-
-        $mail->Host = $this->options['smtp']['host']; // set the SMTP server
-        $mail->Port = $this->options['smtp']['port']; // set the SMTP port
-
-        if (!isset($this->options['smtp']['username'])
-            || !isset($this->options['smtp']['password'])
-        ) {
-            return true;
-        }
-
-        $mail->SMTPAuth = true; // enable SMTP authentication
-        $mail->Username = $this->options['smtp']['username']; // SMTP account username
-        $mail->Password = $this->options['smtp']['password']; // SMTP account password
-
-        return true;
     }
 
     /**

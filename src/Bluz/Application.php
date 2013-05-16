@@ -1015,11 +1015,11 @@ class Application
                 $data['route'] = $matches[1];
             }
             // check acl settings
-            if (preg_match('/\s*\*\s*\@privilege\s+(\w+).*/i', $docComment, $matches)) {
+            if (preg_match('/\s*\*\s*\@privilege\s+([a-z0-9-_ ]+).*/i', $docComment, $matches)) {
                 $data['privilege'] = $matches[1];
             }
             // check request method(s)
-            if (preg_match('/\s*\*\s*\@method\s+(\w+).*/i', $docComment, $matches)) {
+            if (preg_match('/\s*\*\s*\@methods?\s+([a-z,]+).*/i', $docComment, $matches)) {
                 $data['methods'] = explode(',', strtoupper($matches[1]));
             }
 

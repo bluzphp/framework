@@ -26,51 +26,38 @@
  */
 namespace Bluz\Auth;
 
+use Bluz\Application;
+
 /**
- * Auth support
- *  - DB adapter
- *  - LDAP adapter
  *
- * @category Bluz
- * @package  Auth
- *
- * @author   Anton Shevchuk
- * @created  11.07.11 19:10
  */
-class Auth
+interface EntityInterface
 {
-    use \Bluz\Package;
+    /**
+     * Login
+     *
+     * @throw AuthException
+     */
+    public function login();
 
     /**
-     * setup identity
-     *
-     * @param EntityInterface $identity
-     * @return Auth
+     * Logout
      */
-    public function setIdentity(EntityInterface $identity)
-    {
-        $this->getApplication()->getSession()->identity = $identity;
-        return $this;
-    }
+    public function logout();
 
     /**
-     * return identity
+     * Get user privileges
      *
-     * @return EntityInterface|null
+     * @return array
      */
-    public function getIdentity()
-    {
-        return $this->getApplication()->getSession()->identity;
-    }
+    public function getPrivileges();
 
     /**
-     * clear identity
+     * Has role a privilege
      *
-     * @return Auth
+     * @param string $module
+     * @param string $privilege
+     * @return boolean
      */
-    public function clearIdentity()
-    {
-        $this->getApplication()->getSession()->identity = null;
-        return $this;
-    }
+    public function hasPrivilege($module, $privilege);
 }

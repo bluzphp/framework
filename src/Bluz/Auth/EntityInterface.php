@@ -24,19 +24,40 @@
 /**
  * @namespace
  */
-namespace Bluz\EventManager;
+namespace Bluz\Auth;
 
-use Bluz\Exception;
+use Bluz\Application;
 
 /**
- * Exception
  *
- * @category Bluz
- * @package  EventManager
- *
- * @author   Anton Shevchuk
- * @created  16.03.12 13:05
  */
-class EventException extends Exception
+interface EntityInterface
 {
+    /**
+     * Login
+     *
+     * @throw AuthException
+     */
+    public function login();
+
+    /**
+     * Logout
+     */
+    public function logout();
+
+    /**
+     * Get user privileges
+     *
+     * @return array
+     */
+    public function getPrivileges();
+
+    /**
+     * Has role a privilege
+     *
+     * @param string $module
+     * @param string $privilege
+     * @return boolean
+     */
+    public function hasPrivilege($module, $privilege);
 }

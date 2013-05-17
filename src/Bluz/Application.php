@@ -1018,7 +1018,7 @@ class Application
             } elseif (preg_match('/\s*\*\s*\@methods?\s+([a-z,]+).*/i', $docComment, $matches)) {
                 // check request method(s)
                 $data['methods'] = explode(',', strtoupper($matches[1]));
-            } elseif (preg_match_all('/\s*\*\s*\@([a-z]+)\s+([a-z,]+).*/i', $docComment, $matches)) {
+            } elseif (preg_match_all('/\s*\*\s*\@([a-z0-9-_]+)\s+(.*).*/i', $docComment, $matches)) {
 
                 foreach ($matches[1] as $i => $key) {
                     if (in_array($key, ['param', 'params', 'types', 'values'])) {

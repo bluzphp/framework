@@ -27,11 +27,12 @@
 namespace Bluz\Auth;
 
 use Bluz\Application;
+use Bluz\Db\Row;
 
 /**
  *
  */
-abstract class AbstractEntity extends \Bluz\Db\Row
+abstract class AbstractRowEntity extends Row implements EntityInterface
 {
     /**
      * Get roles

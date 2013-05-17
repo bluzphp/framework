@@ -1006,21 +1006,26 @@ class Application
             $data['params'] = $params;
             $data['values'] = $values;
 
-            // check cache settings
             if (preg_match('/\s*\*\s*\@cache\s+([0-9\.]+).*/i', $docComment, $matches)) {
+                // check cache settings
                 $data['cache'] = (int) $matches[1];
-            }
-            // check routers
-            if (preg_match_all('/\s*\*\s*\@route\s+(.*)\s*/i', $docComment, $matches)) {
+            } elseif (preg_match_all('/\s*\*\s*\@route\s+(.*)\s*/i', $docComment, $matches)) {
+                // check routers
                 $data['route'] = $matches[1];
-            }
-            // check acl settings
-            if (preg_match('/\s*\*\s*\@privilege\s+([a-z0-9-_ ]+).*/i', $docComment, $matches)) {
+            } elseif (preg_match('/\s*\*\s*\@privilege\s+([a-z0-9-_ ]+).*/i', $docComment, $matches)) {
+                // check acl settings
                 $data['privilege'] = $matches[1];
-            }
-            // check request method(s)
-            if (preg_match('/\s*\*\s*\@methods?\s+([a-z,]+).*/i', $docComment, $matches)) {
+            } elseif (preg_match('/\s*\*\s*\@methods?\s+([a-z,]+).*/i', $docComment, $matches)) {
+                // check request method(s)
                 $data['methods'] = explode(',', strtoupper($matches[1]));
+            } elseif (preg_match_all('/\s*\*\s*\@([a-z]+)\s+([a-z,]+).*/i', $docComment, $matches)) {
+
+                foreach ($matches[1] as $i => $key) {
+                    if (in_array($key, ['param', 'params', 'types', 'values'])) {
+                        continue;
+                    }
+                    $data[$key] = trim($matches[2][$i]);
+                }
             }
 
             $this->getCache()->set('reflection:'.$file, $data);

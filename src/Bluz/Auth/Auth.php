@@ -42,21 +42,21 @@ class Auth
     use \Bluz\Package;
 
     /**
-     * setIdentity
+     * setup identity
      *
-     * @param \Bluz\Auth\AbstractEntity $identity
+     * @param EntityInterface $identity
      * @return Auth
      */
-    public function setIdentity(AbstractEntity $identity)
+    public function setIdentity(EntityInterface $identity)
     {
         $this->getApplication()->getSession()->identity = $identity;
         return $this;
     }
 
     /**
-     * getIdentity
+     * return identity
      *
-     * @return \Bluz\Auth\AbstractEntity|null
+     * @return EntityInterface|null
      */
     public function getIdentity()
     {
@@ -64,7 +64,7 @@ class Auth
     }
 
     /**
-     * clearIdentity
+     * clear identity
      *
      * @return Auth
      */

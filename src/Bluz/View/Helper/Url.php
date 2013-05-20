@@ -44,8 +44,12 @@ function ($module, $controller, array $params = [], $checkAccess = false) {
     $app = $this->getApplication();
 
     try {
-        if ($checkAccess && !$app->isAllowedController($module, $controller, $params)) {
-            return null;
+        if ($checkAccess) {
+            $controllerFile = $app->getControllerFile($module, $controller);
+            $reflectionData = $app->reflection($controllerFile);
+            if (!$app->isAllowed($module, $reflectionData)) {
+                return null;
+            }
         }
     } catch (\Exception $e) {
         throw new \Bluz\View\ViewException('Url View Helper: '.$e->getMessage());

@@ -34,18 +34,6 @@ use Bluz\Application;
 interface EntityInterface
 {
     /**
-     * Login
-     *
-     * @throw AuthException
-     */
-    public function login();
-
-    /**
-     * Logout
-     */
-    public function logout();
-
-    /**
      * Get user privileges
      *
      * @return array

@@ -109,10 +109,24 @@ abstract class Table
      */
     private function __construct()
     {
-        if (!$this->table) {
-            throw new DbException("Table information for {".__CLASS__."} is not initialized");
+        $tableClass = get_called_class();
+
+        // autodetect row class
+        if (!$this->rowClass) {
+            $rowClass = substr($tableClass, 0, strrpos($tableClass, '\\', 1)+1);
+            $this->rowClass = $rowClass . 'Row';
         }
 
+        // autodetect table name - camelCase to uppercase
+        if (!$this->table) {
+            $tableClass = substr($tableClass, strpos($tableClass, '\\')+1);
+            $tableClass = substr($tableClass, 0, strpos($tableClass, '\\', 2));
+
+            $table = preg_replace('/(?<=\\w)(?=[A-Z])/', "_$1", $tableClass);
+            $this->table = strtolower($table);
+        }
+
+        // setup default select query
         if (empty($this->select)) {
             $this->select = "SELECT * FROM {$this->table}";
         }
@@ -243,20 +257,6 @@ abstract class Table
     }
 
     /**
-     * getRowClass
-     *
-     * @return string
-     */
-    public function getRowClass()
-    {
-        if (!$this->rowClass) {
-            $tableClass = get_called_class();
-            $this->rowClass = substr($tableClass, 0, strrpos($tableClass, '\\', 1)+1) . 'Row';
-        }
-        return $this->rowClass;
-    }
-
-    /**
      * Support method for fetching rows.
      *
      * @param  string $sql  query options.
@@ -266,7 +266,7 @@ abstract class Table
     static protected function fetch($sql, $params = array())
     {
         $self = static::getInstance();
-        $data = $self->getAdapter()->fetchObjects($sql, $params, $self->getRowClass());
+        $data = $self->getAdapter()->fetchObjects($sql, $params, $self->rowClass);
         return new Rowset($data);
     }
 
@@ -419,7 +419,7 @@ abstract class Table
      */
     static public function create(array $data = [])
     {
-        $rowClass = static::getInstance()->getRowClass();
+        $rowClass = static::getInstance()->rowClass;
         $row = new $rowClass($data);
         return $row;
     }

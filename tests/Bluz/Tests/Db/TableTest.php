@@ -119,24 +119,6 @@ class TableTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @covers Bluz\Db\Table::getRowClass
-     */
-    public function testGetRowClass()
-    {
-        $table = Bluz\Tests\Db\Fixtures\ConcreteTable::getInstance();
-        $this->assertEquals('ConcreteRow', $table->getRowClass());
-    }
-
-    /**
-     * @covers Bluz\Db\Table::getRowClass
-     */
-    public function testGetRowClassFromTableWithoutRowClass()
-    {
-        $table = Bluz\Tests\Db\Fixtures\ConcreteTableWithoutRowClass::getInstance();
-        $this->assertEquals('Bluz\Tests\Db\Fixtures\Row', $table->getRowClass());
-    }
-
-    /**
      * @dataProvider getFindWrongData
      * @expectedException Bluz\Db\InvalidPrimaryKeyException
      * @param $keyValues

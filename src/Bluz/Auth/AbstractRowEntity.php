@@ -39,7 +39,7 @@ abstract class AbstractRowEntity extends Row implements EntityInterface
      *
      * @return array
      */
-    abstract function getPrivileges();
+    abstract public function getPrivileges();
 
     /**
      * Can entity login
@@ -47,7 +47,7 @@ abstract class AbstractRowEntity extends Row implements EntityInterface
      * @throws AuthException
      * @return boolean
      */
-    abstract function tryLogin();
+    abstract public function tryLogin();
 
     /**
      * Has role a privilege
@@ -79,17 +79,4 @@ abstract class AbstractRowEntity extends Row implements EntityInterface
         $this->tryLogin();
         Application::getInstance()->getAuth()->setIdentity($this);
     }
-
-    /**
-     * Logout
-     */
-    public function logout()
-    {
-        $auth = Application::getInstance()->getAuth();
-
-        if ($auth->getIdentity() === $this) {
-            $auth->clearIdentity();
-        }
-    }
-
 }

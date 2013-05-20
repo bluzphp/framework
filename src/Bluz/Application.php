@@ -27,6 +27,7 @@
 namespace Bluz;
 
 use Bluz\Acl\Acl;
+use Bluz\Acl\AclException;
 use Bluz\Application\RedirectException;
 use Bluz\Application\ReloadException;
 use Bluz\Auth\Auth;
@@ -660,7 +661,7 @@ class Application
         ));
 
         // check acl
-        if (!$this->isAllowedController($module, $controller, $params)) {
+        if (!$this->isAllowed($module, $reflectionData)) {
             $this->denied();
         }
 
@@ -882,6 +883,11 @@ class Application
             'reflection' => $reflectionData
         ));
 
+        // check acl
+        if (!$this->isAllowed($module, $reflectionData)) {
+            throw new AclException("Not enough permissions for call widget '$module/$widget'");
+        }
+
         /**
          * Cachable widgets
          * @var \Closure $widgetClosure
@@ -1079,49 +1085,19 @@ class Application
         return $params;
     }
 
-    /**
-     * Is allowed controller
-     *
-     * @param string $module
-     * @param string $controller
-     * @param array  $params
-     * @return boolean
-     */
-    public function isAllowedController($module, $controller, array $params = array())
-    {
-        $controllerFile = $this->getControllerFile($module, $controller);
-
-        $data = $this->reflection($controllerFile);
-
-        if (isset($data['privilege']) &&
-            !$this->getAcl()->isAllowed($module, $data['privilege'])) {
-            // privilege is described and deny
-            return false;
-        }
-
-        return true;
-    }
 
     /**
-     * Is allowed widget
+     * Is allowed controller/widget/etc
      *
      * @param string $module
-     * @param string $widget
-     * @param array  $params
+     * @param array $reflection
      * @return boolean
      */
-    public function isAllowedWidget($module, $widget, array $params = array())
+    public function isAllowed($module, $reflection)
     {
-        $widgetFile = $this->getWidgetFile($module, $widget);
-
-        $data = $this->reflection($widgetFile);
-
-        if (isset($data['privilege']) &&
-            !$this->getAcl()->isAllowed($module, $data['privilege'])) {
-            // privilege is described and deny
-            return false;
+        if (isset($reflection['privilege'])) {
+            return $this->getAcl()->isAllowed($module, $reflection['privilege']);
         }
-
         return true;
     }
 
@@ -1133,7 +1109,7 @@ class Application
      * @return \Closure
      * @throws Exception
      */
-    protected function getControllerFile($module, $controller)
+    public function getControllerFile($module, $controller)
     {
         $controllerPath = PATH_APPLICATION . '/modules/' . $module
                         .'/controllers/' . $controller .'.php';

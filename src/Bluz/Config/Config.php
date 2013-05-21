@@ -45,6 +45,27 @@ class Config
     protected $config;
 
     /**
+     * Path to configuration files
+     * @var string
+     */
+    protected $path;
+
+    /**
+     * setup path to configuration files
+     *
+     * @param $path
+     * @throws ConfigException
+     * @return self
+     */
+    public function setPath($path)
+    {
+        if (!is_dir($path)) {
+            throw new ConfigException('Configuration directory is not exists');
+        }
+        $this->path = rtrim($path, '/');
+    }
+
+    /**
      * load
      *
      * @param string $environment
@@ -53,21 +74,64 @@ class Config
      */
     public function load($environment = null)
     {
-        $configFile = PATH_APPLICATION .'/configs/application.php';
+        if (!$this->path) {
+            throw new ConfigException('Configuration directory is not setup');
+        }
+
+        $configFile = $this->path .'/application.php';
 
         if (!is_file($configFile) or !is_readable($configFile)) {
-           throw new ConfigException('Configuration file is not readable');
+           throw new ConfigException('Configuration file is not found');
         }
 
         // TODO: or need without "once" for multi application
         $this->config = require $configFile;
         if (null !== $environment) {
-           $customConfig = PATH_APPLICATION .'/configs/app.'.$environment.'.php';
+           $customConfig = $this->path .'/app.'.$environment.'.php';
            if (is_file($customConfig) && is_readable($customConfig)) {
                $customConfig = require $customConfig;
                $this->config = array_replace_recursive($this->config, $customConfig);
            }
         }
+    }
+
+    /**
+     * __get
+     *
+     * @param $key
+     * @return mixed
+     */
+    public function __get($key)
+    {
+        if (isset($this->config[$key])) {
+            return $this->config[$key];
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * __set
+     *
+     * @param $key
+     * @param $value
+     * @throws ConfigException
+     * @return void
+     */
+    public function __set($key, $value)
+    {
+        throw new ConfigException('Configuration is read only');
+    }
+
+    /**
+     * __isset
+     *
+     * @param $key
+     * @return boolean
+     */
+    public function __isset($key)
+    {
+        return isset($this->config[$key]);
     }
 
     /**
@@ -78,10 +142,10 @@ class Config
      * @throws ConfigException
      * @return array
      */
-    public function get($section = null, $subsection = null)
+    public function getData($section = null, $subsection = null)
     {
         if (!$this->config) {
-            throw new ConfigException("System configuration is missing");
+            throw new ConfigException('System configuration is missing');
         }
 
         if (null !== $section && isset($this->config[$section])) {

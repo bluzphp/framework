@@ -73,7 +73,7 @@ class Router
         if (!$routers or !$reverse) {
             $routers = array();
             $reverse = array();
-            foreach (new \GlobIterator(PATH_APPLICATION . '/modules/*/controllers/*.php') as $file) {
+            foreach (new \GlobIterator($this->getApplication()->getPath() . '/modules/*/controllers/*.php') as $file) {
                 $module = pathinfo(dirname(dirname($file->getPathname())), PATHINFO_FILENAME);
                 $controller = pathinfo($file->getPathname(), PATHINFO_FILENAME);
                 $data = $this->getApplication()->reflection($file->getPathname());
@@ -85,11 +85,11 @@ class Router
                             $reverse[$module] = array();
                         }
 
-                        $reverse[$module][$controller] = ['route' => $route, 'params' => $data['types']];
+                        $reverse[$module][$controller] = ['route' => $route, 'params' => $data['params']];
 
                         $pattern = str_replace('/', '\/', $route);
 
-                        foreach ($data['types'] as $param => $type) {
+                        foreach ($data['params'] as $param => $type) {
                             switch ($type) {
                                 case 'int':
                                 case 'integer':
@@ -107,7 +107,7 @@ class Router
                         }
                         $pattern = '/^'.$pattern.'/i';
 
-                        $rule = [$route => ['pattern' => $pattern, 'module' => $module, 'controller' => $controller, 'params' => $data['types']]];
+                        $rule = [$route => ['pattern' => $pattern, 'module' => $module, 'controller' => $controller, 'params' => $data['params']]];
 
                         // static routers should be first
                         if (strpos($route, '$')) {

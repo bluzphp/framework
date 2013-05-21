@@ -1012,20 +1012,31 @@ class Application
             $data['params'] = $params;
             $data['values'] = $values;
 
+            // cache ttl options
             if (preg_match('/\s*\*\s*\@cache\s+([0-9\.]+).*/i', $docComment, $matches)) {
                 // check cache settings
                 $data['cache'] = (int) $matches[1];
-            } elseif (preg_match_all('/\s*\*\s*\@route\s+(.*)\s*/i', $docComment, $matches)) {
+            }
+
+            // route rule
+            if (preg_match_all('/\s*\*\s*\@route\s+(.*)\s*/i', $docComment, $matches)) {
                 // check routers
                 $data['route'] = $matches[1];
-            } elseif (preg_match('/\s*\*\s*\@privilege\s+([a-z0-9-_ ]+).*/i', $docComment, $matches)) {
+            }
+
+            // acl privilege
+            if (preg_match('/\s*\*\s*\@privilege\s+([a-z0-9-_ ]+).*/i', $docComment, $matches)) {
                 // check acl settings
                 $data['privilege'] = $matches[1];
-            } elseif (preg_match('/\s*\*\s*\@methods?\s+([a-z,]+).*/i', $docComment, $matches)) {
+            }
+
+            // HTTP methods
+            if (preg_match('/\s*\*\s*\@methods?\s+([a-z,]+).*/i', $docComment, $matches)) {
                 // check request method(s)
                 $data['methods'] = explode(',', strtoupper($matches[1]));
             }
 
+            // other custom options
             if (preg_match_all('/\s*\*\s*\@([a-z0-9-_]+)\s+(.*).*/i', $docComment, $matches)) {
                 foreach ($matches[1] as $i => $key) {
                     if (in_array($key, ['param', 'params', 'types', 'values'])) {

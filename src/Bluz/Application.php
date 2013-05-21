@@ -125,6 +125,13 @@ class Application
     protected $messages;
 
     /**
+     * Application path
+     *
+     * @var string
+     */
+    protected $path;
+
+    /**
      * @var Registry
      */
     protected $registry;
@@ -240,6 +247,7 @@ class Application
     {
         if (!$this->config) {
             $this->config = new Config();
+            $this->config->setPath($this->getPath() .'/configs');
             $this->config->load($environment);
         }
         return $this->config;
@@ -254,7 +262,7 @@ class Application
      */
     public function getConfigData($section = null, $subsection = null)
     {
-        return $this->getConfig()->get($section, $subsection);
+        return $this->getConfig()->getData($section, $subsection);
     }
 
     /**
@@ -433,6 +441,24 @@ class Application
             $this->messages = new Messages();
         }
         return $this->messages;
+    }
+
+    /**
+     * getPath
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        if (!$this->path) {
+            if (defined('PATH_APPLICATION')) {
+                $this->path = PATH_APPLICATION;
+            } else {
+                $reflection = new \ReflectionClass($this);
+                $this->path = dirname($reflection->getFileName());
+            }
+        }
+        return $this->path;
     }
 
     /**
@@ -685,11 +711,11 @@ class Application
         // $view for use in closure
         $view = $this->getView();
         // setup default path
-        $view->setPath(PATH_APPLICATION .'/modules/'. $module .'/views');
+        $view->setPath($this->getPath() .'/modules/'. $module .'/views');
         // setup default template
         $view->setTemplate($controller .'.phtml');
 
-        $bootstrapPath = PATH_APPLICATION .'/modules/' . $module .'/bootstrap.php';
+        $bootstrapPath = $this->getPath() .'/modules/' . $module .'/bootstrap.php';
 
         /**
          * optional $bootstrap for use in closure
@@ -989,62 +1015,74 @@ class Application
 
             // check and normalize params by doc comment
             $docComment = $reflection->getDocComment();
-            preg_match_all('/\s*\*\s*\@param\s+(bool|boolean|int|integer|float|string|array)\s+\$([a-z0-9_]+)/i', $docComment, $matches);
 
             // init data
             $data = array();
 
-            // rebuild array
-            $data['types'] = array();
-            foreach ($matches[1] as $i => $type) {
-                $data['types'][$matches[2][$i]] = $type;
+            // get all options by one regular expression
+            if (preg_match_all('/\s*\*\s*\@([a-z0-9-_]+)\s+(.*).*/i', $docComment, $matches)) {
+                foreach ($matches[1] as $i => $key) {
+                    $data[$key][] = trim($matches[2][$i]);
+                }
             }
 
             // get params and convert it to simple array
-            $params = $reflection->getParameters();
+            $reflectionParams = $reflection->getParameters();
+
+            // prepare params data
+            // setup param types
+            $types = array();
+            if (isset($data['param'])) {
+                foreach ($data['param'] as $param) {
+                    list($type, $key) = preg_split('/\$/', $param);
+                    $type = trim($type);
+                    if (!empty($type)) {
+                        $types[$key] = $type;
+                    }
+                }
+            }
+
+            // setup params and optional params
+            $params = array();
             $values = array();
-            foreach ($params as $key => $param) {
-                $params[$key] = $param->getName();
+            foreach ($reflectionParams as $key => $param) {
+                $name = $param->getName();
+                $params[$name] = isset($types[$name])?$types[$name]:'string';
                 if ($param->isOptional()) {
-                    $values[$key] = $param->getDefaultValue();
+                    $values[$name] = $param->getDefaultValue();
                 }
             }
             $data['params'] = $params;
             $data['values'] = $values;
 
-            // cache ttl options
-            if (preg_match('/\s*\*\s*\@cache\s+([0-9\.]+).*/i', $docComment, $matches)) {
-                // check cache settings
-                $data['cache'] = (int) $matches[1];
-            }
-
-            // route rule
-            if (preg_match_all('/\s*\*\s*\@route\s+(.*)\s*/i', $docComment, $matches)) {
-                // check routers
-                $data['route'] = $matches[1];
-            }
-
-            // acl privilege
-            if (preg_match('/\s*\*\s*\@privilege\s+([a-z0-9-_ ]+).*/i', $docComment, $matches)) {
-                // check acl settings
-                $data['privilege'] = $matches[1];
-            }
-
-            // HTTP methods
-            if (preg_match('/\s*\*\s*\@methods?\s+([a-z,]+).*/i', $docComment, $matches)) {
-                // check request method(s)
-                $data['methods'] = explode(',', strtoupper($matches[1]));
-            }
-
-            // other custom options
-            if (preg_match_all('/\s*\*\s*\@([a-z0-9-_]+)\s+(.*).*/i', $docComment, $matches)) {
-                foreach ($matches[1] as $i => $key) {
-                    if (in_array($key, ['param', 'params', 'types', 'values'])) {
-                        continue;
-                    }
-                    $data[$key] = trim($matches[2][$i]);
+            // prepare cache ttl settings
+            if (isset($data['cache'])) {
+                $cache = current($data['cache']);
+                $num = (int) $cache;
+                $time = substr($cache, strpos($cache, ' '));
+                switch ($time) {
+                    case 'day':
+                    case 'days':
+                        $data['cache'] = (int) $num * 60 * 24;
+                        break;
+                    case 'hour':
+                    case 'hours':
+                        $data['cache'] = (int) $num * 60;
+                        break;
+                    case 'min':
+                    default:
+                        $data['cache'] = (int) $num;
                 }
             }
+
+            // prepare acl settings
+            // only one privilege
+            if (isset($data['privilege'])) {
+                $data['privilege'] = current($data['privilege']);
+            }
+
+            // clean unused data
+            unset($data['return'], $data['param']);
 
             $this->getCache()->set('reflection:'.$file, $data);
             $this->getCache()->addTag('reflection:'.$file, 'reflection');
@@ -1053,7 +1091,9 @@ class Application
     }
 
     /**
-     * process params
+     * process params:
+     *  - type conversion
+     *  - default values
      *
      * @param array $reflectionData
      * @param array $rawData
@@ -1063,33 +1103,29 @@ class Application
     {
         // need use new array for order params as described in controller
         $params = array();
-        foreach ($reflectionData['params'] as $key => $param) {
-            if (isset($rawData[$param])
-                && isset($reflectionData['types'][$param])
-                && $type = $reflectionData['types'][$param]) {
-                    switch ($type) {
-                        case 'bool':
-                        case 'boolean':
-                            $params[] = (bool) $rawData[$param];
-                            break;
-                        case 'int':
-                        case 'integer':
-                            $params[] = (int) $rawData[$param];
-                            break;
-                        case 'float':
-                            $params[] = (float) $rawData[$param];
-                            break;
-                        case 'string':
-                            $params[] = (string) $rawData[$param];
-                            break;
-                        case 'array':
-                            $params[] = (array) $rawData[$param];
-                            break;
-                    }
-            } elseif (isset($rawData[$param])) {
-                $params[] = $rawData[$param];
-            } elseif (isset($reflectionData['values'][$key])) {
-                $params[] = $reflectionData['values'][$key];
+        foreach ($reflectionData['params'] as $param => $type) {
+            if (isset($rawData[$param])) {
+                switch ($type) {
+                    case 'bool':
+                    case 'boolean':
+                        $params[] = (bool) $rawData[$param];
+                        break;
+                    case 'int':
+                    case 'integer':
+                        $params[] = (int) $rawData[$param];
+                        break;
+                    case 'float':
+                        $params[] = (float) $rawData[$param];
+                        break;
+                    case 'string':
+                        $params[] = (string) $rawData[$param];
+                        break;
+                    case 'array':
+                        $params[] = (array) $rawData[$param];
+                        break;
+                }
+            } elseif (isset($reflectionData['values'][$param])) {
+                $params[] = $reflectionData['values'][$param];
             } else {
                 $params[] = null;
             }
@@ -1123,7 +1159,7 @@ class Application
      */
     public function getControllerFile($module, $controller)
     {
-        $controllerPath = PATH_APPLICATION . '/modules/' . $module
+        $controllerPath = $this->getPath() . '/modules/' . $module
                         .'/controllers/' . $controller .'.php';
 
         if (!file_exists($controllerPath)) {
@@ -1143,7 +1179,7 @@ class Application
      */
     protected function getWidgetFile($module, $widget)
     {
-        $widgetPath = PATH_APPLICATION . '/modules/' . $module
+        $widgetPath = $this->getPath() . '/modules/' . $module
                         .'/widgets/' . $widget .'.php';
 
         if (!file_exists($widgetPath)) {
@@ -1163,7 +1199,7 @@ class Application
      */
     protected function getApiFile($module, $method)
     {
-        $apiPath = PATH_APPLICATION . '/modules/' . $module
+        $apiPath = $this->getPath() . '/modules/' . $module
                         .'/api/' . $method .'.php';
 
         if (!file_exists($apiPath)) {

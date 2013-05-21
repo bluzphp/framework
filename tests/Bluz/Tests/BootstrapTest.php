@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 by Bluz PHP Team
+ * Copyright (c) 2013 by Bluz PHP Team
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,7 @@
 namespace Bluz\Tests;
 
 use Bluz\Application;
+use Bluz\Config\Config;
 use Bluz\Exception;
 
 /**
@@ -40,5 +41,14 @@ use Bluz\Exception;
  */
 class BootstrapTest extends Application
 {
-
+    /**
+     * load config file
+     *
+     * @param string|null $environment
+     * @return Config
+     */
+    public function getConfig($environment = null)
+    {
+        return new Config();
+    }
 }

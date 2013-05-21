@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2012 by Bluz PHP Team
+ * Copyright (c) 2013 by Bluz PHP Team
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -101,11 +101,7 @@ class RowsetTest extends Bluz\Tests\TestCase
      */
     public function testNext()
     {
-//        var_dump($this->object);
-//        var_dump($this->object->key());
         $this->object->next();
-//        var_dump($this->object->key());
-//        exit();
         $this->assertEquals(1, $this->object->key());
     }
 

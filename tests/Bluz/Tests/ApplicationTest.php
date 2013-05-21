@@ -29,29 +29,26 @@ namespace Bluz\Tests;
 use Bluz;
 
 /**
- * ControllerTestCase
- *
- * @category Bluz
- * @package  Tests
+ * ApplicationTest
  *
  * @author   Anton Shevchuk
- * @created  04.08.11 20:01
+ * @created  21.05.13 10:24
  */
-class TestCase extends \PHPUnit_Framework_TestCase
+class ApplicationTest extends Bluz\Tests\TestCase
 {
     /**
-     * Application entity
-     *
-     * @var Bluz\Application
+     * @covers Bluz\Application::reflection
+     * @return void
      */
-    protected $app;
-
-    /**
-     * Setup TestCase
-     */
-    protected function setUp()
+    public function testReflection()
     {
-//        $this->app = BootstrapTest::getInstance();
-//        $this->app->init('testing');
+        $controllerFile = dirname(__FILE__) .'/Fixtures/ConcreteControllerWithData.php';
+        $app = Bluz\Application::getInstance();
+        $reflectionData = $app->reflection($controllerFile);
+
+        /** @var \closure $controllerClosure */
+        $controllerClosure = require $controllerFile;
+
+        $this->assertEquals($reflectionData, $controllerClosure('a', 'b', 'c'));
     }
 }

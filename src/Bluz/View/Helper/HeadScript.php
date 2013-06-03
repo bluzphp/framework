@@ -29,31 +29,31 @@ namespace Bluz\View\Helper;
 use Bluz\View\View;
 
 return
-/**
- * @param string $script
- * @return string|void
- */
-function ($script = null) {
-    /** @var View $this */
-    if ($this->getApplication()->hasLayout()) {
-        // it's stack for <head>
-        $view = $this->getApplication()->getLayout();
+    /**
+     * @param string $script
+     * @return string|void
+     */
+    function ($script = null) {
+        /** @var View $this */
+        if ($this->getApplication()->hasLayout()) {
+            // it's stack for <head>
+            $view = $this->getApplication()->getLayout();
 
-        $headScripts = $view->system('headScripts') ?: [];
+            $headScripts = $view->system('headScripts') ? : [];
 
-        if (null === $script) {
-            $headScripts = array_unique($headScripts);
-            // clear system vars
-            $view->system('headScripts', []);
+            if (null === $script) {
+                $headScripts = array_unique($headScripts);
+                // clear system vars
+                $view->system('headScripts', []);
 
-            $headScripts = array_map([$this, 'script'], $headScripts);
-            return join("\n", $headScripts);
+                $headScripts = array_map([$this, 'script'], $headScripts);
+                return join("\n", $headScripts);
+            } else {
+                $headScripts[] = $script;
+                $view->system('headScripts', $headScripts);
+            }
         } else {
-            $headScripts[] = $script;
-            $view->system('headScripts', $headScripts);
+            // it's just alias to script() call
+            return $this->script($script);
         }
-    } else {
-        // it's just alias to script() call
-        return $this->script($script);
-    }
-};
+    };

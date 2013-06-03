@@ -57,9 +57,9 @@ use Bluz\View\View;
  *
  * @method void denied()
  * @method void redirect(\string $url)
- * @method void redirectTo(\string $module, \string $controller, array $params=array())
+ * @method void redirectTo(\string $module, \string $controller, array $params = array())
  * @method void reload()
- * @method \Bluz\Auth\AbstractEntity user()
+ * @method \Bluz\Auth\AbstractRowEntity user()
  *
  * @author   Anton Shevchuk
  * @created  06.07.11 16:25
@@ -220,7 +220,7 @@ class Application
             // initial DB configuration
             $this->getDb();
         } catch (Exception $e) {
-            throw new Exception("Application can't be loaded: ". $e->getMessage());
+            throw new Exception("Application can't be loaded: " . $e->getMessage());
         }
         return $this;
     }
@@ -229,7 +229,7 @@ class Application
      * log message, working with logger
      *
      * @param string $message
-     * @param array  $context
+     * @param array $context
      * @return void
      */
     public function log($message, array $context = [])
@@ -247,7 +247,7 @@ class Application
     {
         if (!$this->config) {
             $this->config = new Config();
-            $this->config->setPath($this->getPath() .'/configs');
+            $this->config->setPath($this->getPath() . '/configs');
             $this->config->load($environment);
         }
         return $this->config;
@@ -408,7 +408,7 @@ class Application
                 $this->mailer->setOptions($conf);
             } else {
                 throw new ConfigException(
-                    "Missed `mailer` options in configuration file. <br/>\n".
+                    "Missed `mailer` options in configuration file. <br/>\n" .
                     "Read more: <a href='https://github.com/bluzphp/framework/wiki/Mailer'>https://github.com/bluzphp/framework/wiki/Mailer</a>"
                 );
             }
@@ -615,7 +615,7 @@ class Application
         $this->getRequest();
 
         $this->getRouter()
-             ->process();
+            ->process();
 
         // check header "accept" for catch AJAX JSON requests, and switch to JSON response
         // for HTTP only
@@ -623,7 +623,8 @@ class Application
             $accept = $this->getRequest()->getHeader('accept');
             $accept = substr($accept, 0, strpos($accept, ','));
             if ($this->getRequest()->isXmlHttpRequest()
-                && $accept == "application/json") {
+                && $accept == "application/json"
+            ) {
                 $this->useJson(true);
             }
         }
@@ -640,10 +641,14 @@ class Application
         } catch (ReloadException $e) {
             $this->dispatchResult = $e;
         } catch (\Exception $e) {
-            $this->dispatchResult = $this->dispatch(Router::ERROR_MODULE, Router::ERROR_CONTROLLER, array(
-                'code' => $e->getCode(),
-                'message' => $e->getMessage()
-            ));
+            $this->dispatchResult = $this->dispatch(
+                Router::ERROR_MODULE,
+                Router::ERROR_CONTROLLER,
+                array(
+                    'code' => $e->getCode(),
+                    'message' => $e->getMessage()
+                )
+            );
         }
 
         return $this->dispatchResult;
@@ -668,23 +673,27 @@ class Application
      *
      * @param string $module
      * @param string $controller
-     * @param array  $params
+     * @param array $params
      * @throws Exception
      * @return View
      */
     public function dispatch($module, $controller, $params = array())
     {
-        $this->log(__METHOD__.": ".$module.'/'.$controller);
+        $this->log(__METHOD__ . ": " . $module . '/' . $controller);
         $controllerFile = $this->getControllerFile($module, $controller);
         $reflectionData = $this->reflection($controllerFile);
 
         // system trigger "dispatch"
-        $this->getEventManager()->trigger('dispatch', $this, array(
-            'module' => $module,
-            'controller' => $controller,
-            'params' => $params,
-            'reflection' => $reflectionData
-        ));
+        $this->getEventManager()->trigger(
+            'dispatch',
+            $this,
+            array(
+                'module' => $module,
+                'controller' => $controller,
+                'params' => $params,
+                'reflection' => $reflectionData
+            )
+        );
 
         // check acl
         if (!$this->isAllowed($module, $reflectionData)) {
@@ -693,13 +702,14 @@ class Application
 
         // check method(s)
         if (isset($reflectionData['methods'])
-            && !in_array($this->getRequest()->getMethod(), $reflectionData['methods'])) {
+            && !in_array($this->getRequest()->getMethod(), $reflectionData['methods'])
+        ) {
             throw new Exception("Controller is not support method '{$this->getRequest()->getMethod()}'");
         }
 
         // cache initialization
         if (isset($reflectionData['cache'])) {
-            $cacheKey = $module .'/'. $controller .'/'. http_build_query($params);
+            $cacheKey = $module . '/' . $controller . '/' . http_build_query($params);
             if ($cachedView = $this->getCache()->get($cacheKey)) {
                 return $cachedView;
             }
@@ -711,11 +721,11 @@ class Application
         // $view for use in closure
         $view = $this->getView();
         // setup default path
-        $view->setPath($this->getPath() .'/modules/'. $module .'/views');
+        $view->setPath($this->getPath() . '/modules/' . $module . '/views');
         // setup default template
-        $view->setTemplate($controller .'.phtml');
+        $view->setTemplate($controller . '.phtml');
 
-        $bootstrapPath = $this->getPath() .'/modules/' . $module .'/bootstrap.php';
+        $bootstrapPath = $this->getPath() . '/modules/' . $module . '/bootstrap.php';
 
         /**
          * optional $bootstrap for use in closure
@@ -748,7 +758,8 @@ class Application
         // return closure is replace logic of controller
         // or return any class
         if (is_callable($result) or
-            is_object($result)) {
+            is_object($result)
+        ) {
             return $result;
         }
 
@@ -763,10 +774,10 @@ class Application
         }
 
         if (isset($reflectionData['cache'])) {
-            $this->getCache()->set($cacheKey, $view, intval($reflectionData['cache'])*60);
+            $this->getCache()->set($cacheKey, $view, intval($reflectionData['cache']) * 60);
             $this->getCache()->addTag($cacheKey, 'view');
-            $this->getCache()->addTag($cacheKey, 'view:'.$module);
-            $this->getCache()->addTag($cacheKey, 'view:'.$module.':'.$controller);
+            $this->getCache()->addTag($cacheKey, 'view:' . $module);
+            $this->getCache()->addTag($cacheKey, 'view:' . $module . ':' . $controller);
         }
 
         return $view;
@@ -797,7 +808,7 @@ class Application
 
             // check redirect
             if ($result instanceof RedirectException) {
-                header('Bluz-Redirect: '. $result->getMessage());
+                header('Bluz-Redirect: ' . $result->getMessage());
             }
 
             // check reload
@@ -818,10 +829,10 @@ class Application
             // output
             echo json_encode($data);
         } elseif ($result instanceof RedirectException) {
-            header('Location: '.$result->getMessage(), true, $result->getCode());
+            header('Location: ' . $result->getMessage(), true, $result->getCode());
             exit();
         } elseif ($result instanceof ReloadException) {
-            header('Refresh: 15; url='.$this->getRequest()->getRequestUri());
+            header('Refresh: 15; url=' . $this->getRequest()->getRequestUri());
             exit();
         } elseif (!$this->layoutFlag) {
             echo ($result instanceof \Closure) ? $result() : $result;
@@ -854,15 +865,15 @@ class Application
         if ($this->hasMessages()) {
             while ($msg = $this->getMessages()->pop(Messages::TYPE_ERROR)) {
                 echo "\033[41m\033[1;37mError    \033[m\033m: ";
-                echo $msg->text ."\n";
+                echo $msg->text . "\n";
             }
             while ($msg = $this->getMessages()->pop(Messages::TYPE_NOTICE)) {
                 echo "\033[44m\033[1;37mInfo     \033[m\033m: ";
-                echo $msg->text ."\n";
+                echo $msg->text . "\n";
             }
             while ($msg = $this->getMessages()->pop(Messages::TYPE_SUCCESS)) {
                 echo "\033[42m\033[1;37mSuccess  \033[m\033m: ";
-                echo $msg->text ."\n";
+                echo $msg->text . "\n";
             }
             echo "\n";
         }
@@ -892,22 +903,26 @@ class Application
      *
      * @param string $module
      * @param string $widget
-     * @param array  $params
+     * @param array $params
      * @throws Exception
      * @return \Closure
      */
     public function widget($module, $widget, $params = array())
     {
-        $this->log(__METHOD__.": ".$module.'/'.$widget);
+        $this->log(__METHOD__ . ": " . $module . '/' . $widget);
         $widgetFile = $this->getWidgetFile($module, $widget);
         $reflectionData = $this->reflection($widgetFile);
 
-        $this->getEventManager()->trigger('widget', $this, array(
-            'module' => $module,
-            'widget' => $widget,
-            'params' => $params,
-            'reflection' => $reflectionData
-        ));
+        $this->getEventManager()->trigger(
+            'widget',
+            $this,
+            array(
+                'module' => $module,
+                'widget' => $widget,
+                'params' => $params,
+                'reflection' => $reflectionData
+            )
+        );
 
         // check acl
         if (!$this->isAllowed($module, $reflectionData)) {
@@ -919,7 +934,8 @@ class Application
          * @var \Closure $widgetClosure
          */
         if (isset($this->widgets[$module])
-            && isset($this->widgets[$module][$widget])) {
+            && isset($this->widgets[$module][$widget])
+        ) {
             $widgetClosure = $this->widgets[$module][$widget];
         } else {
             $widgetClosure = require $this->getWidgetFile($module, $widget);
@@ -961,19 +977,24 @@ class Application
      */
     public function api($module, $method)
     {
-        $this->log(__METHOD__.": ".$module.'/'.$method);
+        $this->log(__METHOD__ . ": " . $module . '/' . $method);
 
-        $this->getEventManager()->trigger('api', $this, array(
-            'module' => $module,
-            'method' => $method
-        ));
+        $this->getEventManager()->trigger(
+            'api',
+            $this,
+            array(
+                'module' => $module,
+                'method' => $method
+            )
+        );
 
         /**
          * Cachable APIs
          * @var \Closure $widgetClosure
          */
         if (isset($this->api[$module])
-            && isset($this->api[$module][$method])) {
+            && isset($this->api[$module][$method])
+        ) {
             $apiClosure = $this->api[$module][$method];
         } else {
             $apiClosure = require $this->getApiFile($module, $method);
@@ -994,14 +1015,14 @@ class Application
     /**
      * reflection for anonymous function
      *
-     * @param string  $file
+     * @param string $file
      * @throws Exception
      * @return array
      */
     public function reflection($file)
     {
         // cache for reflection data
-        if (!$data = $this->getCache()->get('reflection:'.$file)) {
+        if (!$data = $this->getCache()->get('reflection:' . $file)) {
 
             // TODO: workaround for get reflection of closure function
             $bootstrap = $view = $module = $controller = null;
@@ -1047,7 +1068,7 @@ class Application
             $values = array();
             foreach ($reflectionParams as $key => $param) {
                 $name = $param->getName();
-                $params[$name] = isset($types[$name])?$types[$name]:'string';
+                $params[$name] = isset($types[$name]) ? $types[$name] : 'string';
                 if ($param->isOptional()) {
                     $values[$name] = $param->getDefaultValue();
                 }
@@ -1058,20 +1079,20 @@ class Application
             // prepare cache ttl settings
             if (isset($data['cache'])) {
                 $cache = current($data['cache']);
-                $num = (int) $cache;
+                $num = (int)$cache;
                 $time = substr($cache, strpos($cache, ' '));
                 switch ($time) {
                     case 'day':
                     case 'days':
-                        $data['cache'] = (int) $num * 60 * 24;
+                        $data['cache'] = (int)$num * 60 * 24;
                         break;
                     case 'hour':
                     case 'hours':
-                        $data['cache'] = (int) $num * 60;
+                        $data['cache'] = (int)$num * 60;
                         break;
                     case 'min':
                     default:
-                        $data['cache'] = (int) $num;
+                        $data['cache'] = (int)$num;
                 }
             }
 
@@ -1084,8 +1105,8 @@ class Application
             // clean unused data
             unset($data['return'], $data['param']);
 
-            $this->getCache()->set('reflection:'.$file, $data);
-            $this->getCache()->addTag('reflection:'.$file, 'reflection');
+            $this->getCache()->set('reflection:' . $file, $data);
+            $this->getCache()->addTag('reflection:' . $file, 'reflection');
         }
         return $data;
     }
@@ -1108,20 +1129,20 @@ class Application
                 switch ($type) {
                     case 'bool':
                     case 'boolean':
-                        $params[] = (bool) $rawData[$param];
+                        $params[] = (bool)$rawData[$param];
                         break;
                     case 'int':
                     case 'integer':
-                        $params[] = (int) $rawData[$param];
+                        $params[] = (int)$rawData[$param];
                         break;
                     case 'float':
-                        $params[] = (float) $rawData[$param];
+                        $params[] = (float)$rawData[$param];
                         break;
                     case 'string':
-                        $params[] = (string) $rawData[$param];
+                        $params[] = (string)$rawData[$param];
                         break;
                     case 'array':
-                        $params[] = (array) $rawData[$param];
+                        $params[] = (array)$rawData[$param];
                         break;
                 }
             } elseif (isset($reflectionData['values'][$param])) {
@@ -1160,7 +1181,7 @@ class Application
     public function getControllerFile($module, $controller)
     {
         $controllerPath = $this->getPath() . '/modules/' . $module
-                        .'/controllers/' . $controller .'.php';
+            . '/controllers/' . $controller . '.php';
 
         if (!file_exists($controllerPath)) {
             throw new Exception("Controller not found '$module/$controller'", 404);
@@ -1180,7 +1201,7 @@ class Application
     protected function getWidgetFile($module, $widget)
     {
         $widgetPath = $this->getPath() . '/modules/' . $module
-                        .'/widgets/' . $widget .'.php';
+            . '/widgets/' . $widget . '.php';
 
         if (!file_exists($widgetPath)) {
             throw new Exception("Widget not found '$module/$widget'");
@@ -1200,7 +1221,7 @@ class Application
     protected function getApiFile($module, $method)
     {
         $apiPath = $this->getPath() . '/modules/' . $module
-                        .'/api/' . $method .'.php';
+            . '/api/' . $method . '.php';
 
         if (!file_exists($apiPath)) {
             throw new Exception("API not found '$module/$method'");

@@ -34,7 +34,8 @@ if (!function_exists('debug')) {
      *
      * @return void
      */
-    function debug() {
+    function debug()
+    {
         // check definition
         if (!defined('DEBUG') or !DEBUG) {
             return;
@@ -89,8 +90,9 @@ if (!function_exists('__')) {
      * @param $message
      * @return mixed
      */
-    function __($message) {
-        return call_user_func_array(['\Bluz\Translator\Translator','translate'], func_get_args());
+    function __($message)
+    {
+        return call_user_func_array(['\Bluz\Translator\Translator', 'translate'], func_get_args());
     }
 }
 
@@ -114,7 +116,8 @@ if (!function_exists('_n')) {
      * @param $number
      * @return mixed
      */
-    function _n($singular, $plural, $number) {
-        return call_user_func_array(['\Bluz\Translator\Translator','translatePlural'], func_get_args());
+    function _n($singular, $plural, $number)
+    {
+        return call_user_func_array(['\Bluz\Translator\Translator', 'translatePlural'], func_get_args());
     }
 }

@@ -39,7 +39,7 @@ return function ($name = null, $content = null) {
         // it's stack for <head>
         $layout = $this->getApplication()->getLayout();
 
-        $meta = $layout->system('meta') ?: [];
+        $meta = $layout->system('meta') ? : [];
 
         if ($name && $content) {
             $meta[] = ['name' => $name, 'content' => $content];
@@ -50,14 +50,17 @@ return function ($name = null, $content = null) {
         } elseif (!$name && !$content) {
             if (sizeof($meta)) {
                 // prepare to output
-                $meta = array_map(function($arr){
-                    $str = '<meta ';
-                    foreach ($arr as $key => $value) {
-                        $str .= $key .'="'. addcslashes($value, '"') .'" ';
-                    }
-                    $str .= '/>';
-                    return $str;
-                }, $meta);
+                $meta = array_map(
+                    function ($arr) {
+                        $str = '<meta ';
+                        foreach ($arr as $key => $value) {
+                            $str .= $key . '="' . addcslashes($value, '"') . '" ';
+                        }
+                        $str .= '/>';
+                        return $str;
+                    },
+                    $meta
+                );
                 // clear system vars
                 $layout->system('meta', []);
                 return join("\n", $meta);

@@ -29,29 +29,31 @@ namespace Bluz\View\Helper;
 use Bluz\View\View;
 
 return
-/**
- * Setup redactorjs
- *
- * @param string $selector
- * @param array $settings
- * @return string
- */
-function ($selector, array $settings = []) {
-    /** @var View $this */
-    $defaultSettings = [
-        'imageUpload' => $this->url('media', 'upload') // default media upload controller
-    ];
+    /**
+     * Setup redactorjs
+     *
+     * @param string $selector
+     * @param array $settings
+     * @return string
+     */
+    function ($selector, array $settings = []) {
+        /** @var View $this */
+        $defaultSettings = [
+            'imageUpload' => $this->url('media', 'upload') // default media upload controller
+        ];
 
-    $settings = array_replace_recursive($defaultSettings, $settings);
-    $settings = json_encode($settings);
+        $settings = array_replace_recursive($defaultSettings, $settings);
+        $settings = json_encode($settings);
 
-    $html  = "";
-    $html .= $this->headScript('redactor/redactor.js');
-    $html .= $this->headStyle('redactor/redactor.css');
-    $html .= $this->headScript('require(["jquery", "bluz"], function($, bluz) {
-        bluz.ready(function(){
-            $("'.$selector.'").redactor('.$settings.');
+        $html = "";
+        $html .= $this->headScript('redactor/redactor.js');
+        $html .= $this->headStyle('redactor/redactor.css');
+        $html .= $this->headScript(
+            'require(["jquery", "bluz"], function($, bluz) {
+                    bluz.ready(function(){
+                        $("' . $selector . '").redactor(' . $settings . ');
         });
-    });');
-    return $html;
-};
+    });'
+        );
+        return $html;
+    };

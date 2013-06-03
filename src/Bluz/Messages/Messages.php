@@ -38,9 +38,9 @@ class Messages
 {
     use \Bluz\Package;
 
-    const TYPE_ERROR   = 'error';
+    const TYPE_ERROR = 'error';
     const TYPE_SUCCESS = 'success';
-    const TYPE_NOTICE  = 'notice';
+    const TYPE_NOTICE = 'notice';
 
     /**
      * @var array
@@ -176,28 +176,28 @@ class Messages
     {
         $this->getApplication()->getSession()->MessagesStore = $this->createEmptyMessagesStore();
     }
-    
+
     /**
      * Returns current messages store.
-     * 
+     *
      * @return \ArrayObject|null Returns null if store not exists yet
      */
     protected function getMessagesStore()
     {
         return $this->getApplication()->getSession()->MessagesStore;
     }
-    
+
     /**
      * Creates a new empty store for messages.
-     * 
+     *
      * @return \ArrayObject
      */
     protected function createEmptyMessagesStore()
     {
         return new \ArrayObject(array(
-            self::TYPE_ERROR   => array(),
+            self::TYPE_ERROR => array(),
             self::TYPE_SUCCESS => array(),
-            self::TYPE_NOTICE  => array()
+            self::TYPE_NOTICE => array()
         ));
     }
 }

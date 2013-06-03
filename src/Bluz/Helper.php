@@ -74,10 +74,10 @@ trait Helper
     {
         if (is_array($helpersPath)) {
             foreach ($helpersPath as $path) {
-                $this->addHelperPath((string) $path);
+                $this->addHelperPath((string)$path);
             }
         } else {
-            $this->addHelperPath((string) $helpersPath);
+            $this->addHelperPath((string)$helpersPath);
         }
         return $this;
     }
@@ -102,18 +102,19 @@ trait Helper
      * Call
      *
      * @param string $method
-     * @param array  $args
+     * @param array $args
      * @throws Exception
      * @return mixed
      */
     public function __call($method, $args)
     {
         if (isset($this->helpers[$method])
-            && $this->helpers[$method] instanceof \Closure) {
+            && $this->helpers[$method] instanceof \Closure
+        ) {
             return call_user_func_array($this->helpers[$method], $args);
         }
         if (self::$helpersPath) {
-            foreach(self::$helpersPath as $helperPath) {
+            foreach (self::$helpersPath as $helperPath) {
                 $helperPath = realpath($helperPath . '/' . ucfirst($method) . '.php');
                 if ($helperPath) {
                     $helperInclude = include $helperPath;
@@ -125,7 +126,7 @@ trait Helper
                     return $this->__call($method, $args);
                 }
             }
-            throw new Exception("Helper '$method' not found for '". __CLASS__ ."'");
+            throw new Exception("Helper '$method' not found for '" . __CLASS__ . "'");
         }
     }
 }

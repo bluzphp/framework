@@ -63,7 +63,7 @@ trait Singleton
         if ($instance instanceof static) {
             static::$instance = $instance;
         } else {
-            throw new Exception('First parameter for method `'.__METHOD__.'` should be instance of `'.__CLASS__.'`');
+            throw new Exception('First parameter for method `' . __METHOD__ . '` should be instance of `' . __CLASS__ . '`');
         }
         return static::$instance;
     }
@@ -84,14 +84,16 @@ trait Singleton
     /**
      * Disabled by access level
      */
-    protected function __wakeup() {
+    protected function __wakeup()
+    {
 
     }
 
     /**
      * Disabled by access level
      */
-    protected function __clone() {
+    protected function __clone()
+    {
 
     }
 }

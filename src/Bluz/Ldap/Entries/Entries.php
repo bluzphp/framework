@@ -72,7 +72,7 @@ class Entries implements ArrayAccess, IteratorAggregate
     public function offsetExists($offset)
     {
         if (isset($this->entries[$offset])) {
-            return TRUE;
+            return true;
         }
         return false;
     }

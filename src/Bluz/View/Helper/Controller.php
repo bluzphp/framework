@@ -29,19 +29,19 @@ namespace Bluz\View\Helper;
 use Bluz\View\View;
 
 return
-/**
- * Return controller name
- * or check to current controller
- *
- * @param string $controller
- * @return string|boolean
- */
-function ($controller = null) {
-    /** @var View $this */
-    $request = $this->getApplication()->getRequest();
-    if (null == $controller) {
-        return $request->getController();
-    } else {
-        return $request->getController() == $controller;
-    }
-};
+    /**
+     * Return controller name
+     * or check to current controller
+     *
+     * @param string $controller
+     * @return string|boolean
+     */
+    function ($controller = null) {
+        /** @var View $this */
+        $request = $this->getApplication()->getRequest();
+        if (null == $controller) {
+            return $request->getController();
+        } else {
+            return $request->getController() == $controller;
+        }
+    };

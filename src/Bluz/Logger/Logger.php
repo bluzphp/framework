@@ -64,7 +64,7 @@ class Logger extends AbstractLogger
      * Interpolates context values into the message placeholders
      *
      * @param string $message
-     * @param array  $context
+     * @param array $context
      * @return string
      */
     protected function interpolate($message, array $context = [])
@@ -97,7 +97,7 @@ class Logger extends AbstractLogger
         }
 
         $curTimer = microtime(true);
-        $curMemory = ceil((memory_get_usage()/1024));
+        $curMemory = ceil((memory_get_usage() / 1024));
 
         // for avoid error "Too few arguments in 'sprintf' call"
         $message = str_replace('%', '%%', $message);

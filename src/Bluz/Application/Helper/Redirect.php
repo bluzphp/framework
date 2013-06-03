@@ -30,14 +30,14 @@ use Bluz\Application;
 use Bluz\Exception;
 
 return
-/**
- * redirect to url
- *
- * @param string $url
- * @throws Exception
- * @return void
- */
-function ($url) {
-    /** @var Application $this */
-    throw new Application\RedirectException($url);
-};
+    /**
+     * redirect to url
+     *
+     * @param string $url
+     * @throws Exception
+     * @return void
+     */
+    function ($url) {
+        /** @var Application $this */
+        throw new Application\RedirectException($url);
+    };

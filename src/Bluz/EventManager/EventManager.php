@@ -98,7 +98,7 @@ class EventManager
     protected function fire($listeners, $event)
     {
         ksort($listeners);
-        foreach($listeners as $list) {
+        foreach ($listeners as $list) {
             foreach ($list as $listener) {
                 $result = call_user_func($listener, $event);
                 if (null === $result) {

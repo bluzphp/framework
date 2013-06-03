@@ -51,7 +51,7 @@ class Mailer
     {
         if (!isset($this->options['from']['email'])) {
             throw new ConfigException(
-                "Missed `from.email` option in `mailer` configuration. <br/>\n".
+                "Missed `from.email` option in `mailer` configuration. <br/>\n" .
                 "Read more: <a href='https://github.com/bluzphp/framework/wiki/Mailer'>https://github.com/bluzphp/framework/wiki/Mailer</a>"
             );
         }

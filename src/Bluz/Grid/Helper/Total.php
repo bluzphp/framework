@@ -31,12 +31,12 @@ use Bluz\Grid;
 
 return
 
-/**
- * @return integer
- */
-function () {
     /**
-     * @var Grid\Grid $this
+     * @return integer
      */
-    return $this->getData()->getTotal();
-};
+    function () {
+        /**
+         * @var Grid\Grid $this
+         */
+        return $this->getData()->getTotal();
+    };

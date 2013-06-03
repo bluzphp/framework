@@ -29,32 +29,35 @@ namespace Bluz\View\Helper;
 use Bluz\View\View;
 
 return
-/**
- * @param string $script
- * @return string|void
- */
-function ($style = null, $media = 'all') {
-    /** @var View $this */
-    if ($this->getApplication()->hasLayout()) {
-        // it's stack for <head>
-        $view = $this->getApplication()->getLayout();
+    /**
+     * @param string $script
+     * @return string|void
+     */
+    function ($style = null, $media = 'all') {
+        /** @var View $this */
+        if ($this->getApplication()->hasLayout()) {
+            // it's stack for <head>
+            $view = $this->getApplication()->getLayout();
 
-        $headStyle = $view->system('headStyle') ?: [];
+            $headStyle = $view->system('headStyle') ? : [];
 
-        if (null === $style) {
-            // clear system vars
-            $view->system('headStyle', []);
+            if (null === $style) {
+                // clear system vars
+                $view->system('headStyle', []);
 
-            array_walk($headStyle, function(&$item, $key){
-                $item = $this->style($key, $item);
-            });
-            return join("\n", $headStyle);
+                array_walk(
+                    $headStyle,
+                    function (&$item, $key) {
+                        $item = $this->style($key, $item);
+                    }
+                );
+                return join("\n", $headStyle);
+            } else {
+                $headStyle[$style] = $media;
+                $view->system('headStyle', $headStyle);
+            }
         } else {
-            $headStyle[$style] =  $media;
-            $view->system('headStyle', $headStyle);
+            // it's just alias to script() call
+            return $this->style($style);
         }
-    } else {
-        // it's just alias to script() call
-        return $this->style($style);
-    }
-};
+    };

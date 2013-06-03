@@ -113,13 +113,13 @@ abstract class Table
 
         // autodetect row class
         if (!$this->rowClass) {
-            $rowClass = substr($tableClass, 0, strrpos($tableClass, '\\', 1)+1);
+            $rowClass = substr($tableClass, 0, strrpos($tableClass, '\\', 1) + 1);
             $this->rowClass = $rowClass . 'Row';
         }
 
         // autodetect table name - camelCase to uppercase
         if (!$this->table) {
-            $tableClass = substr($tableClass, strpos($tableClass, '\\')+1);
+            $tableClass = substr($tableClass, strpos($tableClass, '\\') + 1);
             $tableClass = substr($tableClass, 0, strpos($tableClass, '\\', 2));
 
             $table = preg_replace('/(?<=\\w)(?=[A-Z])/', "_$1", $tableClass);
@@ -247,11 +247,14 @@ abstract class Table
             $connect = $this->getAdapter()->getOption('connect');
             $dbName = $connect['name'];
 
-            $this->columns = $this->getAdapter()->fetchColumn('
-                SELECT `column_name`
-                FROM INFORMATION_SCHEMA.COLUMNS
-                WHERE `table_schema` = ?
-                  AND `table_name` = ?', [$dbName, $this->getTable()]);
+            $this->columns = $this->getAdapter()->fetchColumn(
+                '
+                                SELECT `column_name`
+                                FROM INFORMATION_SCHEMA.COLUMNS
+                                WHERE `table_schema` = ?
+                                  AND `table_name` = ?',
+                [$dbName, $this->getTable()]
+            );
         }
         return $this->columns;
     }
@@ -260,7 +263,7 @@ abstract class Table
      * Support method for fetching rows.
      *
      * @param  string $sql  query options.
-     * @param  array  $params
+     * @param  array $params
      * @return Rowset An array containing the row results in FETCH_ASSOC mode.
      */
     static protected function fetch($sql, $params = array())
@@ -307,23 +310,23 @@ abstract class Table
         $self = static::getInstance();
 
         $args = func_get_args();
-        $keyNames = array_values((array) $self->primary);
+        $keyNames = array_values((array)$self->primary);
 
         $whereList = array();
         foreach ($args as $keyValues) {
-            $keyValues = (array) $keyValues;
+            $keyValues = (array)$keyValues;
             if (count($keyValues) < count($keyNames)) {
                 throw new InvalidPrimaryKeyException(
-                    "Too few columns for the primary key.\n".
-                    "Please check ".get_class($self)." initialization or usage.\n".
+                    "Too few columns for the primary key.\n" .
+                    "Please check " . get_class($self) . " initialization or usage.\n" .
                     "Settings described at https://github.com/bluzphp/framework/wiki/Db-Table"
                 );
             }
 
             if (count($keyValues) > count($keyNames)) {
                 throw new InvalidPrimaryKeyException(
-                    "Too many columns for the primary key.\n".
-                    "Please check ".get_class($self)." initialization or usage.\n".
+                    "Too many columns for the primary key.\n" .
+                    "Please check " . get_class($self) . " initialization or usage.\n" .
                     "Settings described at https://github.com/bluzphp/framework/wiki/Db-Table"
                 );
             }
@@ -385,7 +388,7 @@ abstract class Table
                     }
                     if (!is_scalar($keyValue)) {
                         throw new \InvalidArgumentException(
-                            "Wrong arguments of method 'findWhere'.\n".
+                            "Wrong arguments of method 'findWhere'.\n" .
                             "Please use syntax described at https://github.com/bluzphp/framework/wiki/Db-Table"
                         );
                     }
@@ -395,7 +398,7 @@ abstract class Table
             }
             $whereClause = '(' . implode(' OR ', $whereOrTerms) . ')';
         }
-        return $self->fetch($self->select .' WHERE '. $whereClause, $whereParams);
+        return $self->fetch($self->select . ' WHERE ' . $whereClause, $whereParams);
     }
 
     /**
@@ -431,7 +434,7 @@ abstract class Table
     /**
      * Insert new rows.
      *
-     * @param  array        $data  Column-value pairs.
+     * @param  array $data  Column-value pairs.
      * @return int          The number of rows updated.
      */
     static public function insert(array $data)
@@ -444,7 +447,7 @@ abstract class Table
     /**
      * Updates existing rows.
      *
-     * @param  array        $data  Column-value pairs.
+     * @param  array $data  Column-value pairs.
      * @param  array|string $where An SQL WHERE clause, or an array of SQL WHERE clauses.
      * @return int          The number of rows updated.
      */

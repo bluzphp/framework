@@ -46,7 +46,7 @@ class HttpFileUpload
      */
     public function __construct($array = null)
     {
-        $rawFiles = $array?:$_FILES;
+        $rawFiles = $array ? : $_FILES;
         foreach ($rawFiles as $key => $file) {
             $this->processFileArray($key, $file);
         }
@@ -115,7 +115,7 @@ class HttpFileUpload
                                     'type' => $fileInfo['type'][$subKey][$subSubKey][$subSubSubKey],
                                     'size' => $fileInfo['size'][$subKey][$subSubKey][$subSubSubKey],
                                 ]);
-                                $this->files[$key.'['.$subKey.']['.$subSubKey.']'][] = $httpFile;
+                                $this->files[$key . '[' . $subKey . '][' . $subSubKey . ']'][] = $httpFile;
                             }
                         } else {
                             $httpFile = new HttpFile([
@@ -125,7 +125,7 @@ class HttpFileUpload
                                 'type' => $fileInfo['type'][$subKey][$subSubKey],
                                 'size' => $fileInfo['size'][$subKey][$subSubKey],
                             ]);
-                            $this->files[$key.'['.$subKey.']'][] = $httpFile;
+                            $this->files[$key . '[' . $subKey . ']'][] = $httpFile;
                         }
                     }
                 } else {
@@ -136,7 +136,7 @@ class HttpFileUpload
                         'type' => $fileInfo['type'][$subKey],
                         'size' => $fileInfo['size'][$subKey],
                     ]);
-                    $this->files[$key.'['.$subKey.']'][] = $httpFile;
+                    $this->files[$key . '[' . $subKey . ']'][] = $httpFile;
                 }
             }
         } else {

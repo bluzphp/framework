@@ -67,7 +67,7 @@ class Cache implements CacheInterface, TagableInterface
         // check cache Adapter instance and settings for initialize it
         if (!isset($this->options['cacheAdapter']) && !isset($this->options['settings']['cacheAdapter'])) {
             throw new ConfigException(
-                "Missed `cacheAdapter` option in `cache` configuration. <br/>\n".
+                "Missed `cacheAdapter` option in `cache` configuration. <br/>\n" .
                 "Read more: <a href='https://github.com/bluzphp/framework/wiki/Cache'>https://github.com/bluzphp/framework/wiki/Cache</a>"
             );
         }
@@ -191,7 +191,7 @@ class Cache implements CacheInterface, TagableInterface
         }
 
         $adapterName = ucfirst($adapterName);
-        $adapterClass = '\\Bluz\\Cache\\Adapter\\'.$adapterName;
+        $adapterClass = '\\Bluz\\Cache\\Adapter\\' . $adapterName;
 
         $adapter = new $adapterClass($adapterSettings);
         return $adapter;

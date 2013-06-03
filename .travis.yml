@@ -1,6 +1,7 @@
 language: php
 php:
   - 5.4
+  - 5.5
 before_script:
   - COMPOSER_ROOT_VERSION=dev-master composer --prefer-source --dev install
 script:
@@ -11,10 +12,11 @@ script:
   #- pear install pdepend/PHP_Depend-beta
   - pear install phpunit/phpcpd
   - pear install phpunit/phploc
+  - pear install PHP_CodeSniffer
   - phpenv rehash
   - mkdir .reports
-  #- mkdir .standards
-  #- git clone https://github.com/klaussilveira/phpcs-psr .standards/PSR
+  - mkdir .standards
+  - git clone https://github.com/klaussilveira/phpcs-psr .standards/PSR
   # Lines of code
   - phploc --log-csv .reports/phploc.csv src/Bluz
   # Duplicate code
@@ -22,7 +24,8 @@ script:
   # PHP Depend  @composer
   #- php vendor/bin/pdepend --jdepend-xml=.reports/jdepend.xml --jdepend-chart=.reports/dependencies.svg --overview-pyramid=.reports/pyramid.svg src/Bluz
   # Code sniffer @composer
-  #- php vendor/bin/phpcs --standard=.standards/PSR --extensions=php --report-checkstyle --report-file=.reports/checkstyle.xml src/Bluz
+  - phpcs --standard=PSR1 ./src/Bluz
+  - phpcs --standard=PSR2 ./src/Bluz
   # Mess detection
   #- php vendor/bin/phpmd src/Bluz text codesize,unusedcode,naming
 notifications:

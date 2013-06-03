@@ -31,12 +31,12 @@ use Bluz\Grid;
 
 return
 
-/**
- * @return string
- */
-function () {
     /**
-     * @var Grid\Grid $this
+     * @return string
      */
-    return $this->getUrl(['page' => $this->pages()]);
-};
+    function () {
+        /**
+         * @var Grid\Grid $this
+         */
+        return $this->getUrl(['page' => $this->pages()]);
+    };

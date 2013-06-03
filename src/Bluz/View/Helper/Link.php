@@ -38,19 +38,22 @@ return function (array $link = null) {
         // it's stack for <head>
         $layout = $this->getApplication()->getLayout();
 
-        $links = $layout->system('link') ?: [];
+        $links = $layout->system('link') ? : [];
 
         if (null === $link) {
             $links = array_unique($links);
             // prepare to output
-            $links = array_map(function($arr){
-                $str = '<link ';
-                foreach ($arr as $key => $value) {
-                    $str .= $key .'="'. addcslashes($value, '"') .'" ';
-                }
-                $str .= '/>';
-                return $str;
-            }, $links);
+            $links = array_map(
+                function ($arr) {
+                    $str = '<link ';
+                    foreach ($arr as $key => $value) {
+                        $str .= $key . '="' . addcslashes($value, '"') . '" ';
+                    }
+                    $str .= '/>';
+                    return $str;
+                },
+                $links
+            );
             // clear system vars
             $layout->system('link', []);
             return join("\n", $links);

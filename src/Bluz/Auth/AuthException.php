@@ -39,5 +39,5 @@ use Bluz\Exception;
  */
 class AuthException extends Exception
 {
-    
+
 }

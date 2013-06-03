@@ -49,16 +49,16 @@ use Bluz\Exception;
  */
 class Sanitize
 {
-    const FILTER_HTML = 1;    // 1 << 0 ==   0001
-    const FILTER_QUOTES = 2;  // 1 << 1 ==   0010
+    const FILTER_HTML = 1; // 1 << 0 ==   0001
+    const FILTER_QUOTES = 2; // 1 << 1 ==   0010
     const FILTER_HTML_QUOTES = 3;
-                              // 1 << 2 ==   0100
+    // 1 << 2 ==   0100
     const FILTER_METHODS = 8; // 1 << 3 ==   1000
-                              // 1 << 4 == 1 0000
+    // 1 << 4 == 1 0000
     /**
      * FILTER_HTML | FILTER_QUOTES | FILTER_METHODS
      */
-    const FILTER_ALL = 31;    // 0001 1111
+    const FILTER_ALL = 31; // 0001 1111
 
     protected $rawSource;
     protected $flags;
@@ -72,7 +72,7 @@ class Sanitize
     {
         if (!is_array($source) && !is_object($source)) {
             throw new Exception(
-                "Sanitize calls works only with objects and arrays. <br/>\n".
+                "Sanitize calls works only with objects and arrays. <br/>\n" .
                 "Read more: <a href='https://github.com/bluzphp/framework/wiki/Filter'>https://github.com/bluzphp/framework/wiki/Filter</a>"
             );
         }

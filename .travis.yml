@@ -5,6 +5,7 @@ php:
 before_script:
   - COMPOSER_ROOT_VERSION=dev-master composer --prefer-source --dev install
   - composer self-update
+  - composer update --prefer-source
 script:
   - phpunit --configuration tests/Bluz/Tests/phpunit.xml --coverage-text
   # PEAR packages

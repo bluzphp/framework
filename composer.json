@@ -10,7 +10,6 @@
         "phpunit/phpunit": "3.7.9",
         "pdepend/pdepend": "1.*",
         "sebastian/phpcpd": "dev-master",
-        "phploc/phploc": "dev-master",
         "phpmd/phpmd": "1.*"
     },
     "autoload": {

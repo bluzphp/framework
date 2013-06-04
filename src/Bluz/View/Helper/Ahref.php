@@ -29,16 +29,15 @@ namespace Bluz\View\Helper;
 use Bluz\View\View;
 
 return
-
-/**
- * @author ErgallM
- *
- * @param string $text
- * @param string|array $href
- * @param array $attributes HTML attributes
- * @return \Closure
- */
-function ($text, $href, array $attributes = []) {
+    /**
+     * @author ErgallM
+     *
+     * @param string $text
+     * @param string|array $href
+     * @param array $attributes HTML attributes
+     * @return \Closure
+     */
+    function ($text, $href, array $attributes = []) {
     /** @var View $this */
     // if href is settings for url helper
     if (is_array($href)) {
@@ -46,7 +45,9 @@ function ($text, $href, array $attributes = []) {
     }
 
     // href can be null, if access is denied
-    if (null === $href) return '';
+    if (null === $href) {
+        return '';
+    }
 
     if ($href == $this->getApplication()->getRequest()->getRequestUri()) {
         if (isset($attributes['class'])) {
@@ -62,4 +63,4 @@ function ($text, $href, array $attributes = []) {
     }
 
     return '<a href="' . $href . '" ' . join(' ', $attrs) . '>' . __($text) . '</a>';
-};
+    };

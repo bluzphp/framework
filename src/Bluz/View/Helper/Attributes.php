@@ -29,14 +29,13 @@ namespace Bluz\View\Helper;
 use Bluz\View\View;
 
 return
-
-/**
- * @author The-Who
- *
- * @param array $attributes
- * @return \Closure
- */
-function (array $attributes = []) {
+    /**
+     * @author The-Who
+     *
+     * @param array $attributes
+     * @return \Closure
+     */
+    function (array $attributes = []) {
     /** @var View $this */
     if (empty($attributes)) {
         return '';
@@ -53,8 +52,8 @@ function (array $attributes = []) {
             // ['checked'] => 'checked="checked"'
             $key = $value;
         }
-        $result[] = $key . '="' . htmlspecialchars((string) $value, ENT_QUOTES) . '"';
+        $result[] = $key . '="' . htmlspecialchars((string)$value, ENT_QUOTES) . '"';
     }
 
     return join(' ', $result);
-};
+    };

@@ -153,7 +153,7 @@ class Db
             empty($this->connect['host']) or
             empty($this->connect['name']) or
             empty($this->connect['user'])
-            ) {
+        ) {
             throw new DbException('Db connection can\'t be initialized: required type, host, db name and user');
         }
         return $this;
@@ -172,13 +172,13 @@ class Db
                 empty($this->connect['host']) or
                 empty($this->connect['name']) or
                 empty($this->connect['user'])
-                ) {
+            ) {
                 throw new DbException('Db connection can\'t be initialized: required type, host, db name and user');
             }
             try {
-                $this->log("Connect to ".$this->connect['host']);
+                $this->log("Connect to " . $this->connect['host']);
                 $this->dbh = new \PDO(
-                    $this->connect['type'] .":host=". $this->connect['host'] .";dbname=". $this->connect['name'],
+                    $this->connect['type'] . ":host=" . $this->connect['host'] . ";dbname=" . $this->connect['name'],
                     $this->connect['user'],
                     $this->connect['pass']
                 );
@@ -224,7 +224,7 @@ class Db
     protected function prepareWhere($params)
     {
         if (is_string($params) && !empty($params)) {
-            return ' WHERE '. $params;
+            return ' WHERE ' . $params;
         }
 
         if (!sizeof($params)) {
@@ -244,10 +244,10 @@ class Db
      * @param string $value
      * @return string
      */
-     public function quote($value)
-     {
-         return $this->handler()->quote($value);
-     }
+    public function quote($value)
+    {
+        return $this->handler()->quote($value);
+    }
 
     /**
      * @param string $sql <p>
@@ -276,7 +276,7 @@ class Db
      */
     public function insert($table, $params = array())
     {
-        $sql = "INSERT INTO `$table` SET `". join('` = ?,`', array_keys($params)) ."` = ?";
+        $sql = "INSERT INTO `$table` SET `" . join('` = ?,`', array_keys($params)) . "` = ?";
 
         $stmt = $this->prepare($sql);
 
@@ -286,13 +286,13 @@ class Db
         if ($result) {
             return $this->handler()->lastInsertId();
         } else {
-            throw new DbException('Unable to insert: '.join(' | ', $stmt->errorInfo()));
+            throw new DbException('Unable to insert: ' . join(' | ', $stmt->errorInfo()));
         }
     }
 
     /**
-     * @param string       $table
-     * @param array        $params <p>
+     * @param string $table
+     * @param array $params <p>
      *                             array (':name' => 'John', ':id' => '123')
      * </p>
      * @param array|string $where  <p>
@@ -307,7 +307,7 @@ class Db
     {
         $sqlWhere = $this->prepareWhere($where);
 
-        $sql = "UPDATE `$table` SET `". join('` = ?,`', array_keys($params)) ."` = ? " . $sqlWhere ;
+        $sql = "UPDATE `$table` SET `" . join('` = ?,`', array_keys($params)) . "` = ? " . $sqlWhere;
 
         $stmt = $this->prepare($sql);
 
@@ -325,12 +325,12 @@ class Db
         if ($result) {
             return $result;
         } else {
-            throw new DbException('Unable to update: '.join(' | ', $stmt->errorInfo()));
+            throw new DbException('Unable to update: ' . join(' | ', $stmt->errorInfo()));
         }
     }
 
     /**
-     * @param string       $table
+     * @param string $table
      * @param array|string $where <p>
      *  "id = 123"
      *  // or
@@ -446,7 +446,7 @@ class Db
     {
         $stmt = $this->prepare($sql);
         $stmt->execute($params);
-        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC|\PDO::FETCH_GROUP);
+        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC | \PDO::FETCH_GROUP);
 
         $this->log($sql, $params);
         return $result;
@@ -463,7 +463,7 @@ class Db
     {
         $stmt = $this->prepare($sql);
         $stmt->execute($params);
-        $result = $stmt->fetchAll(\PDO::FETCH_COLUMN|\PDO::FETCH_GROUP);
+        $result = $stmt->fetchAll(\PDO::FETCH_COLUMN | \PDO::FETCH_GROUP);
 
         $this->log($sql, $params);
         return $result;
@@ -590,7 +590,7 @@ class Db
      * log
      *
      * @param string $sql
-     * @param array  $context
+     * @param array $context
      * @return void
      */
     protected function log($sql, array $context = [])
@@ -601,6 +601,6 @@ class Db
         // replace mask by data
         $sql = vsprintf($sql, $context);
 
-        $this->getApplication()->log("DB >> ". $sql);
+        $this->getApplication()->log("DB >> " . $sql);
     }
 }

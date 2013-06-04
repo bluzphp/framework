@@ -29,14 +29,14 @@ namespace Bluz\View\Helper;
 use Bluz\View\View;
 
 return
-/**
-* get current user
-*
-* @return \Bluz\Auth\AbstractEntity|null
-*/
-function () {
+    /**
+     * get current user
+     *
+     * @return \Bluz\Auth\AbstractRowEntity|null
+     */
+    function () {
     /** @var View $this */
     return $this->getApplication()->getAuth() ?
         $this->getApplication()->getAuth()->getIdentity() :
         null;
-};
+    };

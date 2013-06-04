@@ -164,10 +164,10 @@ class Connector implements LdapIterator
     {
         $this->binded = false;
         if ($username && $password) {
-            $username = $username . ( ($this->domain) ? ("@" . $this->domain) : ("") );
+            $username = $username . (($this->domain) ? ("@" . $this->domain) : (""));
             $this->binded = @ldap_bind($this->connection, $username, $password);
             $errorMsg = "Can't connect with " . $username . "/"
-                    . str_repeat("*", strlen($password)) . " on " . $this->host;
+                . str_repeat("*", strlen($password)) . " on " . $this->host;
         } else {
             $this->binded = @ldap_bind($this->connection);
             $errorMsg = "Can't connect anonymously on " . $this->host;
@@ -196,11 +196,16 @@ class Connector implements LdapIterator
         // TODO: WTF? check condition
         if (!is_null($attributes)) {
             $this->resource = @ldap_search(
-                $this->connection, $this->baseDn, $filter, $attributes
+                $this->connection,
+                $this->baseDn,
+                $filter,
+                $attributes
             );
         } else {
             $this->resource = @ldap_search(
-                $this->connection, $this->baseDn, $filter
+                $this->connection,
+                $this->baseDn,
+                $filter
             );
         }
 

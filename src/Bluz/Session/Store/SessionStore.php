@@ -56,7 +56,8 @@ class SessionStore extends AbstractStore
     public function setSavepath($savePath)
     {
         if (!is_dir($savePath)
-            or !is_writable($savePath)) {
+            or !is_writable($savePath)
+        ) {
             throw new SessionException('Session path is not writable');
         }
         session_save_path($savePath);
@@ -73,16 +74,20 @@ class SessionStore extends AbstractStore
     {
         if (!$this->started) {
             if (headers_sent($filename, $linenum)) {
-                throw new SessionException("Session must be started before any output has been sent to the browser;"
-                    . " output started in {$filename}/{$linenum}");
-            } else if (session_id() !== '') {
-                throw new SessionException("Session has been started already");
+                throw new SessionException(
+                    "Session must be started before any output has been sent to the browser;" .
+                    " output started in {$filename}/{$linenum}"
+                );
             } else {
-                $this->started = session_start();
-                if (!isset($_SESSION[$this->namespace])) {
-                    $_SESSION[$this->namespace] = array();
+                if (session_id() !== '') {
+                    throw new SessionException("Session has been started already");
+                } else {
+                    $this->started = session_start();
+                    if (!isset($_SESSION[$this->namespace])) {
+                        $_SESSION[$this->namespace] = array();
+                    }
+                    return $this->started;
                 }
-                return $this->started;
             }
         } else {
             return true;
@@ -159,10 +164,10 @@ class SessionStore extends AbstractStore
     {
         return session_destroy();
     }
-    
+
     /**
      * Returns true if session ID is set.
-     * 
+     *
      * @return boolean
      */
     protected function hasSessionId()

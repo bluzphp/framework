@@ -78,20 +78,20 @@ class Config
             throw new ConfigException('Configuration directory is not setup');
         }
 
-        $configFile = $this->path .'/application.php';
+        $configFile = $this->path . '/application.php';
 
         if (!is_file($configFile) or !is_readable($configFile)) {
-           throw new ConfigException('Configuration file is not found');
+            throw new ConfigException('Configuration file is not found');
         }
 
         // TODO: or need without "once" for multi application
         $this->config = require $configFile;
         if (null !== $environment) {
-           $customConfig = $this->path .'/app.'.$environment.'.php';
-           if (is_file($customConfig) && is_readable($customConfig)) {
-               $customConfig = require $customConfig;
-               $this->config = array_replace_recursive($this->config, $customConfig);
-           }
+            $customConfig = $this->path . '/app.' . $environment . '.php';
+            if (is_file($customConfig) && is_readable($customConfig)) {
+                $customConfig = require $customConfig;
+                $this->config = array_replace_recursive($this->config, $customConfig);
+            }
         }
     }
 
@@ -150,7 +150,8 @@ class Config
 
         if (null !== $section && isset($this->config[$section])) {
             if ($subsection
-                && isset($this->config[$section][$subsection])) {
+                && isset($this->config[$section][$subsection])
+            ) {
                 return $this->config[$section][$subsection];
             } else {
                 return $this->config[$section];

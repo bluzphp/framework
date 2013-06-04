@@ -74,22 +74,22 @@ class SqlSource extends AbstractSource
                     // switch statement for $filter
                     switch ($filter) {
                         case Grid\Grid::FILTER_EQ:
-                            $where[] = $column .' = '. Db\Db::getDefaultAdapter()->quote($value);
+                            $where[] = $column . ' = ' . Db\Db::getDefaultAdapter()->quote($value);
                             break;
                         case Grid\Grid::FILTER_NE:
-                            $where[] = $column .' != '. Db\Db::getDefaultAdapter()->quote($value);
+                            $where[] = $column . ' != ' . Db\Db::getDefaultAdapter()->quote($value);
                             break;
                         case Grid\Grid::FILTER_GT:
-                            $where[] = $column .' > '. Db\Db::getDefaultAdapter()->quote($value);
+                            $where[] = $column . ' > ' . Db\Db::getDefaultAdapter()->quote($value);
                             break;
                         case Grid\Grid::FILTER_GE:
-                            $where[] = $column .' >= '. Db\Db::getDefaultAdapter()->quote($value);
+                            $where[] = $column . ' >= ' . Db\Db::getDefaultAdapter()->quote($value);
                             break;
                         case Grid\Grid::FILTER_LT:
-                            $where[] = $column .' < '. Db\Db::getDefaultAdapter()->quote($value);
+                            $where[] = $column . ' < ' . Db\Db::getDefaultAdapter()->quote($value);
                             break;
                         case Grid\Grid::FILTER_LE:
-                            $where[] = $column .' <= '. Db\Db::getDefaultAdapter()->quote($value);
+                            $where[] = $column . ' <= ' . Db\Db::getDefaultAdapter()->quote($value);
                             break;
                     }
                 }
@@ -101,12 +101,12 @@ class SqlSource extends AbstractSource
         if (!empty($settings['orders'])) {
             // Obtain a list of columns
             foreach ($settings['orders'] as $column => $order) {
-                $orders[] = $column .' '. $order;
+                $orders[] = $column . ' ' . $order;
             }
         }
 
         // process pages
-        $limit = ' LIMIT '. ($settings['page']-1)*$settings['limit'] .', '. $settings['limit'];
+        $limit = ' LIMIT ' . ($settings['page'] - 1) * $settings['limit'] . ', ' . $settings['limit'];
 
         // prepare query
         $connect = Application::getInstance()->getConfigData('db', 'connect');
@@ -117,15 +117,15 @@ class SqlSource extends AbstractSource
             $dataSql = $this->source;
             $countSql = preg_replace('/SELECT (.*?) FROM/is', 'SELECT COUNT(*) FROM', $this->source, 1);
             if (sizeof($where)) {
-                $countSql .= ' WHERE '. (join(' AND ', $where));
+                $countSql .= ' WHERE ' . (join(' AND ', $where));
             }
         }
 
         if (sizeof($where)) {
-            $dataSql .= ' WHERE '. (join(' AND ', $where));
+            $dataSql .= ' WHERE ' . (join(' AND ', $where));
         }
         if (sizeof($orders)) {
-            $dataSql .= ' ORDER BY '. (join(', ', $orders));
+            $dataSql .= ' ORDER BY ' . (join(', ', $orders));
         }
         $dataSql .= $limit;
 
@@ -133,7 +133,7 @@ class SqlSource extends AbstractSource
         $data = Db\Db::getDefaultAdapter()->fetchAll($dataSql);
         $total = Db\Db::getDefaultAdapter()->fetchOne($countSql);
         $gridData = new Grid\Data($data);
-        $gridData -> setTotal($total);
+        $gridData->setTotal($total);
         return $gridData;
 
     }

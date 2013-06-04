@@ -73,7 +73,7 @@ class ArrayStore extends AbstractStore
      */
     public function __get($key)
     {
-        return isset($this->store[$this->namespace][$key])?$this->store[$this->namespace][$key]:null;
+        return isset($this->store[$this->namespace][$key]) ? $this->store[$this->namespace][$key] : null;
     }
 
 

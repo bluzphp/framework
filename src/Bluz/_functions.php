@@ -24,7 +24,6 @@
 /**
  * Simple functions of framework
  * be careful with this way
- *
  * @author   Anton Shevchuk
  * @created  07.09.12 11:29
  */
@@ -34,7 +33,8 @@ if (!function_exists('debug')) {
      *
      * @return void
      */
-    function debug() {
+    function debug()
+    {
         // check definition
         if (!defined('DEBUG') or !DEBUG) {
             return;
@@ -72,6 +72,7 @@ if (!function_exists('app')) {
     }
 }
 
+// @codingStandardsIgnoreStart
 if (!function_exists('__')) {
     /**
      * translate
@@ -89,8 +90,9 @@ if (!function_exists('__')) {
      * @param $message
      * @return mixed
      */
-    function __($message) {
-        return call_user_func_array(['\Bluz\Translator\Translator','translate'], func_get_args());
+    function __($message)
+    {
+        return call_user_func_array(['\Bluz\Translator\Translator', 'translate'], func_get_args());
     }
 }
 
@@ -114,7 +116,9 @@ if (!function_exists('_n')) {
      * @param $number
      * @return mixed
      */
-    function _n($singular, $plural, $number) {
-        return call_user_func_array(['\Bluz\Translator\Translator','translatePlural'], func_get_args());
+    function _n($singular, $plural, $number)
+    {
+        return call_user_func_array(['\Bluz\Translator\Translator', 'translatePlural'], func_get_args());
     }
 }
+// @codingStandardsIgnoreEnd

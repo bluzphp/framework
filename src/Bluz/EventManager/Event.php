@@ -54,9 +54,9 @@ class Event
      *
      * Accept a target and its parameters.
      *
-     * @param  string        $name Event name
+     * @param  string $name Event name
      * @param  string|object $target
-     * @param  array|object  $params
+     * @param  array|object $params
      * @return \Bluz\EventManager\Event
      */
     public function __construct($name, $target = null, $params = null)
@@ -74,7 +74,7 @@ class Event
 
     /**
      * Get event name
-     * 
+     *
      * @return string
      */
     public function getName()
@@ -86,7 +86,7 @@ class Event
      * Get the event target
      *
      * This may be either an object, or the name of a static method.
-     * 
+     *
      * @return string|object
      */
     public function getTarget()
@@ -104,10 +104,12 @@ class Event
     public function setParams($params)
     {
         if (!is_array($params) && !is_object($params)) {
-            throw new EventException(sprintf(
-                'Event parameters must be an array or object; received "%s"',
-                gettype($params)
-            ));
+            throw new EventException(
+                sprintf(
+                    'Event parameters must be an array or object; received "%s"',
+                    gettype($params)
+                )
+            );
         }
 
         $this->params = $params;
@@ -116,7 +118,7 @@ class Event
 
     /**
      * Get all parameters
-     * 
+     *
      * @return array|object
      */
     public function getParams()
@@ -128,9 +130,9 @@ class Event
      * Get an individual parameter
      *
      * If the parameter does not exist, the $default value will be returned.
-     * 
-     * @param  string|int $name 
-     * @param  mixed $default 
+     *
+     * @param  string|int $name
+     * @param  mixed $default
      * @return mixed
      */
     public function getParam($name, $default = null)
@@ -152,20 +154,20 @@ class Event
 
     /**
      * Set the event name
-     * 
-     * @param  string $name 
+     *
+     * @param  string $name
      * @return Event
      */
     public function setName($name)
     {
-        $this->name = (string) $name;
+        $this->name = (string)$name;
         return $this;
     }
 
     /**
      * Set the event target/context
-     * 
-     * @param  null|string|object $target 
+     *
+     * @param  null|string|object $target
      * @return Event
      */
     public function setTarget($target)
@@ -176,9 +178,9 @@ class Event
 
     /**
      * Set an individual parameter to a value
-     * 
-     * @param  string|int $name 
-     * @param  mixed $value 
+     *
+     * @param  string|int $name
+     * @param  mixed $value
      * @return Event
      */
     public function setParam($name, $value)

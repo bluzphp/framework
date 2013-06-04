@@ -117,9 +117,9 @@ class Translator
      */
     protected function initOptions()
     {
-        putenv('LC_ALL='.$this->locale);
-        putenv('LANG='.$this->locale);
-        putenv('LANGUAGE='.$this->locale);
+        putenv('LC_ALL=' . $this->locale);
+        putenv('LANG=' . $this->locale);
+        putenv('LANGUAGE=' . $this->locale);
 
         // Windows workaround
         if (!defined('LC_MESSAGES')) {
@@ -134,7 +134,7 @@ class Translator
 
         bind_textdomain_codeset($this->domain, 'UTF-8');
     }
-    
+
     /**
      * translate
      *

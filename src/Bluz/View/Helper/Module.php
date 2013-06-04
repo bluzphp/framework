@@ -29,14 +29,14 @@ namespace Bluz\View\Helper;
 use Bluz\View\View;
 
 return
-/**
- * Return module name
- * or check to current module
- *
- * @param string $module
- * @return string|boolean
- */
-function ($module = null) {
+    /**
+     * Return module name
+     * or check to current module
+     *
+     * @param string $module
+     * @return string|boolean
+     */
+    function ($module = null) {
     /** @var View $this */
     $request = $this->getApplication()->getRequest();
     if (null == $module) {
@@ -44,4 +44,4 @@ function ($module = null) {
     } else {
         return $request->getModule() == $module;
     }
-};
+    };

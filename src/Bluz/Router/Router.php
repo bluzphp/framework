@@ -93,21 +93,32 @@ class Router
                             switch ($type) {
                                 case 'int':
                                 case 'integer':
-                                    $pattern = str_replace("{\$".$param."}", "(?P<$param>[0-9]+)", $pattern);
+                                    $pattern = str_replace("{\$" . $param . "}", "(?P<$param>[0-9]+)", $pattern);
                                     break;
                                 case 'float':
-                                    $pattern = str_replace("{\$".$param."}", "(?P<$param>[0-9.,]+)", $pattern);
+                                    $pattern = str_replace("{\$" . $param . "}", "(?P<$param>[0-9.,]+)", $pattern);
                                     break;
                                 case 'string':
                                 case 'module':
                                 case 'controller':
-                                    $pattern = str_replace("{\$".$param."}", "(?P<$param>[a-zA-Z0-9-_.]+)", $pattern);
+                                    $pattern = str_replace(
+                                        "{\$" . $param . "}",
+                                        "(?P<$param>[a-zA-Z0-9-_.]+)",
+                                        $pattern
+                                    );
                                     break;
                             }
                         }
-                        $pattern = '/^'.$pattern.'/i';
+                        $pattern = '/^' . $pattern . '/i';
 
-                        $rule = [$route => ['pattern' => $pattern, 'module' => $module, 'controller' => $controller, 'params' => $data['params']]];
+                        $rule = [
+                            $route => [
+                                'pattern' => $pattern,
+                                'module' => $module,
+                                'controller' => $controller,
+                                'params' => $data['params']
+                            ]
+                        ];
 
                         // static routers should be first
                         if (strpos($route, '$')) {
@@ -136,8 +147,7 @@ class Router
         if (!$this->baseUrl) {
             $this->baseUrl = $this->getApplication()
                 ->getRequest()
-                ->getBaseUrl()
-            ;
+                ->getBaseUrl();
         }
         return $this->baseUrl;
     }
@@ -150,8 +160,11 @@ class Router
      * @param array $params
      * @return string
      */
-    public function getFullUrl($module = self::DEFAULT_MODULE, $controller = self::DEFAULT_CONTROLLER, $params = array())
-    {
+    public function getFullUrl(
+        $module = self::DEFAULT_MODULE,
+        $controller = self::DEFAULT_CONTROLLER,
+        $params = array()
+    ) {
         $scheme = $this->getApplication()->getRequest()->getScheme() . '://';
         $host = $this->getApplication()->getRequest()->getHttpHost();
         $url = $this->url($module, $controller, $params);
@@ -198,7 +211,7 @@ class Router
                 $getParams[$key] = $value;
                 continue;
             }
-            $url = str_replace('{$'.$key.'}', $value, $url);
+            $url = str_replace('{$' . $key . '}', $value, $url);
         }
         // clean optional params
         $url = preg_replace('/\{\$[a-z0-9-_]+\}/i', '', $url);
@@ -206,7 +219,7 @@ class Router
         $url = str_replace('//', '/', $url);
 
         if (!empty($getParams)) {
-            $url .= '?'. http_build_query($getParams);
+            $url .= '?' . http_build_query($getParams);
         }
         return $this->getBaseUrl() . ltrim($url, '/');
     }
@@ -233,7 +246,7 @@ class Router
             }
         }
 
-        $url .= $module.'/'.$controller;
+        $url .= $module . '/' . $controller;
         $getParams = array();
         foreach ($params as $key => $value) {
             // sub-array as GET params
@@ -241,10 +254,10 @@ class Router
                 $getParams[$key] = $value;
                 continue;
             }
-            $url .= '/'.urlencode($key).'/'.urlencode($value);
+            $url .= '/' . urlencode($key) . '/' . urlencode($value);
         }
         if (!empty($getParams)) {
-            $url .= '?'. http_build_query($getParams);
+            $url .= '?' . http_build_query($getParams);
         }
         return $url;
     }
@@ -291,13 +304,13 @@ class Router
     protected function processCustom()
     {
         $request = $this->getApplication()->getRequest();
-        $uri = '/'. $request->getCleanUri();
+        $uri = '/' . $request->getCleanUri();
         foreach ($this->routers as $router) {
             if (preg_match($router['pattern'], $uri, $matches)) {
                 $request->setModule($router['module']);
                 $request->setController($router['controller']);
 
-                foreach($router['params'] as $param => $type) {
+                foreach ($router['params'] as $param => $type) {
                     if (isset($matches[$param])) {
                         $request->{$param} = $matches[$param];
                     }
@@ -327,17 +340,16 @@ class Router
             $request->setController(array_shift($params));
         }
         if ($size = sizeof($params)) {
-            if ($size%2==1) {
+            if ($size % 2 == 1) {
                 array_pop($params);
                 $size = sizeof($params);
             }
             // or use array_chunk and run another loop?
-            for ($i = 0; $i < $size; $i=$i+2) {
-                $request->{$params[$i]} = $params[$i+1];
+            for ($i = 0; $i < $size; $i = $i + 2) {
+                $request->{$params[$i]} = $params[$i + 1];
             }
         }
 
         return true;
     }
-
 }

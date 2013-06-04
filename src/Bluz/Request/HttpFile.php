@@ -68,7 +68,8 @@ class HttpFile
         if (!isset($data['name']) ||
             !isset($data['type']) ||
             !isset($data['tmp_name']) ||
-            !isset($data['error'])) {
+            !isset($data['error'])
+        ) {
             throw new Exception("Invalid HTTP File Upload data");
         }
 
@@ -79,7 +80,7 @@ class HttpFile
 
         $finfo = new \finfo(FILEINFO_MIME_TYPE);
         $this->name = substr($data['name'], 0, strrpos($data['name'], '.'));
-        $this->ext = substr($data['name'], strrpos($data['name'], '.')+1);
+        $this->ext = substr($data['name'], strrpos($data['name'], '.') + 1);
 
         if ($this->ext) {
             $this->ext = strtolower($this->ext);
@@ -124,7 +125,7 @@ class HttpFile
      */
     public function getFullName()
     {
-        return $this->name . ($this->ext?'.'. $this->ext:'');
+        return $this->name . ($this->ext ? '.' . $this->ext : '');
     }
 
     /**
@@ -183,17 +184,17 @@ class HttpFile
             case 'tb':
             case 'terabyte':
             case 'terabytes':
-                return round($this->size / (1024*1024*1024*1024));
+                return round($this->size / (1024 * 1024 * 1024 * 1024));
                 break;
             case 'gb':
             case 'gigabyte':
             case 'gigabytes':
-                return round($this->size / (1024*1024*1024));
+                return round($this->size / (1024 * 1024 * 1024));
                 break;
             case 'mb':
             case 'megabyte':
             case 'megabytes':
-                return round($this->size / (1024*1024));
+                return round($this->size / (1024 * 1024));
                 break;
             case 'kb':
             case 'kilobyte':
@@ -218,7 +219,8 @@ class HttpFile
     public function moveTo($path)
     {
         if (!$this->tmp or
-            !file_exists($this->tmp)) {
+            !file_exists($this->tmp)
+        ) {
             throw new RequestException("Temporary file is not exists, maybe you already moved it");
         }
 
@@ -236,7 +238,7 @@ class HttpFile
         }
 
         $path = rtrim($path, '/');
-        $path = $path .'/'. $this->getFullName();
+        $path = $path . '/' . $this->getFullName();
 
         move_uploaded_file($this->tmp, $path);
 

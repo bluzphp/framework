@@ -29,17 +29,16 @@ namespace Bluz\View\Helper;
 use Bluz\View\View;
 
 return
-
-/**
- * @author The-Who
- *
- * @param string $name
- * @param string|null $value
- * @param bool $checked
- * @param array $attributes
- * @return \Closure
- */
-function ($name, $value = null, $checked = false, array $attributes = []) {
+    /**
+     * @author The-Who
+     *
+     * @param string $name
+     * @param string|null $value
+     * @param bool $checked
+     * @param array $attributes
+     * @return \Closure
+     */
+    function ($name, $value = null, $checked = false, array $attributes = []) {
     /** @var View $this */
     if (true === $checked) {
         $attributes['checked'] = 'checked';
@@ -55,4 +54,4 @@ function ($name, $value = null, $checked = false, array $attributes = []) {
     $attributes['type'] = 'checkbox';
 
     return '<input ' . $this->attributes($attributes) . '/>';
-};
+    };

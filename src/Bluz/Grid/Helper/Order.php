@@ -30,11 +30,10 @@ use Bluz\Application;
 use Bluz\Grid;
 
 return
-
-/**
- * @return string|null $url
- */
-function ($column, $order = null, $defaultOrder = Grid\Grid::ORDER_ASC, $reset = true) {
+    /**
+     * @return string|null $url
+     */
+    function ($column, $order = null, $defaultOrder = Grid\Grid::ORDER_ASC, $reset = true) {
     /**
      * @var Grid\Grid $this
      */
@@ -47,8 +46,8 @@ function ($column, $order = null, $defaultOrder = Grid\Grid::ORDER_ASC, $reset =
     // change order
     if (null === $order) {
         if (isset($orders[$column])) {
-            $order = ($orders[$column]==Grid\Grid::ORDER_ASC)?
-                    Grid\Grid::ORDER_DESC:Grid\Grid::ORDER_ASC;
+            $order = ($orders[$column] == Grid\Grid::ORDER_ASC) ?
+                Grid\Grid::ORDER_DESC : Grid\Grid::ORDER_ASC;
         } else {
             $order = $defaultOrder;
         }
@@ -64,4 +63,4 @@ function ($column, $order = null, $defaultOrder = Grid\Grid::ORDER_ASC, $reset =
     $rewrite['orders'][$column] = $order;
 
     return $this->getUrl($rewrite);
-};
+    };

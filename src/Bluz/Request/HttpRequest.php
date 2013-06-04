@@ -40,7 +40,7 @@ class HttpRequest extends AbstractRequest
     /**
      * @const string HTTP SCHEME constant names
      */
-    const SCHEME_HTTP  = 'http';
+    const SCHEME_HTTP = 'http';
     const SCHEME_HTTPS = 'https';
 
     /**
@@ -338,13 +338,12 @@ class HttpRequest extends AbstractRequest
         }
 
         $scheme = $this->getScheme();
-        $name   = $this->getServer('SERVER_NAME');
-        $port   = $this->getServer('SERVER_PORT');
+        $name = $this->getServer('SERVER_NAME');
+        $port = $this->getServer('SERVER_PORT');
 
-        if(null === $name) {
+        if (null === $name) {
             return '';
-        }
-        elseif (($scheme == self::SCHEME_HTTP && $port == 80) || ($scheme == self::SCHEME_HTTPS && $port == 443)) {
+        } elseif (($scheme == self::SCHEME_HTTP && $port == 80) || ($scheme == self::SCHEME_HTTPS && $port == 443)) {
             return $name;
         } else {
             return $name . ':' . $port;
@@ -407,10 +406,12 @@ class HttpRequest extends AbstractRequest
     {
         if ($checkProxy && $this->getServer('HTTP_CLIENT_IP') != null) {
             $ip = $this->getServer('HTTP_CLIENT_IP');
-        } else if ($checkProxy && $this->getServer('HTTP_X_FORWARDED_FOR') != null) {
-            $ip = $this->getServer('HTTP_X_FORWARDED_FOR');
         } else {
-            $ip = $this->getServer('REMOTE_ADDR');
+            if ($checkProxy && $this->getServer('HTTP_X_FORWARDED_FOR') != null) {
+                $ip = $this->getServer('HTTP_X_FORWARDED_FOR');
+            } else {
+                $ip = $this->getServer('REMOTE_ADDR');
+            }
         }
 
         return $ip;
@@ -437,7 +438,7 @@ class HttpRequest extends AbstractRequest
         // IIS7 with URL Rewrite: make sure we get the unencoded url
         // (double slash problem).
         $iisUrlRewritten = $this->getServer('IIS_WasUrlRewritten');
-        $unencodedUrl    = $this->getServer('UNENCODED_URL', '');
+        $unencodedUrl = $this->getServer('UNENCODED_URL', '');
         if ('1' == $iisUrlRewritten && '' !== $unencodedUrl) {
             return $unencodedUrl;
         }
@@ -448,7 +449,7 @@ class HttpRequest extends AbstractRequest
             $requestUri = $this->getServer('REQUEST_URI');
         }
         if ($requestUri !== null) {
-            $schemeAndHttpHost = $this->getScheme() . '://'. $this->getServer('HTTP_HOST');
+            $schemeAndHttpHost = $this->getScheme() . '://' . $this->getServer('HTTP_HOST');
 
             if (strpos($requestUri, $schemeAndHttpHost) === 0) {
                 $requestUri = substr($requestUri, strlen($schemeAndHttpHost));
@@ -481,9 +482,9 @@ class HttpRequest extends AbstractRequest
      */
     public function detectBaseUrl()
     {
-        $filename       = $this->getServer('SCRIPT_FILENAME', '');
-        $scriptName     = $this->getServer('SCRIPT_NAME');
-        $phpSelf        = $this->getServer('PHP_SELF');
+        $filename = $this->getServer('SCRIPT_FILENAME', '');
+        $scriptName = $this->getServer('SCRIPT_NAME');
+        $phpSelf = $this->getServer('PHP_SELF');
         $origScriptName = $this->getServer('ORIG_SCRIPT_NAME');
 
         if ($scriptName !== null && basename($scriptName) === $filename) {
@@ -496,14 +497,14 @@ class HttpRequest extends AbstractRequest
         } else {
             // Backtrack up the SCRIPT_FILENAME to find the portion
             // matching PHP_SELF.
-            $path     = $phpSelf ?: '';
+            $path = $phpSelf ? : '';
             $segments = array_reverse(explode('/', trim($filename, '/')));
-            $index    = 0;
-            $last     = count($segments);
-            $baseUrl  = '';
+            $index = 0;
+            $last = count($segments);
+            $baseUrl = '';
 
             do {
-                $segment  = $segments[$index];
+                $segment = $segments[$index];
                 $baseUrl = '/' . $segment . $baseUrl;
                 $index++;
             } while ($last > $index && false !== ($pos = strpos($path, $baseUrl)) && 0 !== $pos);

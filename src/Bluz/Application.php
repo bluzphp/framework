@@ -796,8 +796,6 @@ class Application
         $result = $this->dispatchResult;
 
         if ($this->jsonFlag) {
-            // override response code so javascript can process it
-            header('Content-type: application/json');
 
             // get data from layout ???
             $data = $this->getLayout()->getData();
@@ -806,6 +804,20 @@ class Application
             if ($result instanceof View) {
                 $data = array_merge($data, $result->getData());
             }
+
+            // inject messages if exists
+            if ($this->hasMessages()) {
+                $data['_messages'] = $this->getMessages()->popAll();
+            }
+
+            // output
+            $json = json_encode($data);
+
+            // override response code so javascript can process it
+            header('Content-Type: application/json');
+
+            // send content length
+            header('Content-Length: '.strlen($json));
 
             // check redirect
             if ($result instanceof RedirectException) {
@@ -821,14 +833,10 @@ class Application
             if (false) {
                 header('Bluz-Handler: false');
             }
+            ob_clean();
+            flush();
+            echo $json;
 
-            // inject messages if exists
-            if ($this->hasMessages()) {
-                $data['_messages'] = $this->getMessages()->popAll();
-            }
-
-            // output
-            echo json_encode($data);
         } elseif ($result instanceof RedirectException) {
             header('Location: ' . $result->getMessage(), true, $result->getCode());
             exit();

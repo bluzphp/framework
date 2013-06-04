@@ -30,23 +30,23 @@ use Bluz\View\View;
 
 return
 
-/**
- * baseUrl
- *
- * @param string $file
- * @return string
- */
-function ($file = null) {
+    /**
+     * baseUrl
+     *
+     * @param string $file
+     * @return string
+     */
+    function ($file = null) {
     /** @var View $this */
     // setup baseUrl
     if (!$this->baseUrl) {
         $this->baseUrl = $this->getApplication()
             ->getRequest()
-            ->getBaseUrl()
-        ;
+            ->getBaseUrl();
         // clean script name
         if (isset($_SERVER['SCRIPT_NAME'])
-            && ($pos = strripos($this->baseUrl, basename($_SERVER['SCRIPT_NAME']))) !== false) {
+            && ($pos = strripos($this->baseUrl, basename($_SERVER['SCRIPT_NAME']))) !== false
+        ) {
             $this->baseUrl = substr($this->baseUrl, 0, $pos);
         }
     }
@@ -56,5 +56,5 @@ function ($file = null) {
         $file = ltrim($file, '/\\');
     }
 
-    return rtrim($this->baseUrl, '/') .'/'. $file;
-};
+    return rtrim($this->baseUrl, '/') . '/' . $file;
+    };

@@ -40,7 +40,7 @@ class Registry
 
     /**
      * Stored data
-     * 
+     *
      * @var array
      */
     protected $data = array();
@@ -60,10 +60,10 @@ class Registry
      * @param string $key
      * @return mixed
      */
-     public function __isset($key)
-     {
-         return array_key_exists($key, $this->data);
-     }
+    public function __isset($key)
+    {
+        return array_key_exists($key, $this->data);
+    }
 
     /**
      * setter for key
@@ -72,10 +72,10 @@ class Registry
      * @param mixed $value
      * @return mixed
      */
-     public function __set($key, $value)
-     {
-         $this->data[$key] = $value;
-     }
+    public function __set($key, $value)
+    {
+        $this->data[$key] = $value;
+    }
 
     /**
      * getter for key

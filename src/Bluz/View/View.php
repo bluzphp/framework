@@ -70,7 +70,7 @@ class View implements ViewInterface
      */
     const POS_PREPEND = 'prepend';
     const POS_REPLACE = 'replace';
-    const POS_APPEND  = 'append';
+    const POS_APPEND = 'append';
 
     /**
      * @var string
@@ -160,7 +160,7 @@ class View implements ViewInterface
      */
     public function __set($key, $value)
     {
-        $key = (string) $key;
+        $key = (string)$key;
 
         if ((null === $value) && isset($this->data[$key])) {
             unset($this->data[$key]);
@@ -269,11 +269,11 @@ class View implements ViewInterface
     {
         ob_start();
         try {
-            if (!file_exists($this->path .'/'. $this->template)) {
+            if (!file_exists($this->path . '/' . $this->template)) {
                 throw new ViewException("Template '{$this->template}' not found");
             }
             extract($this->data);
-            require $this->path .'/'.  $this->template;
+            require $this->path . '/' . $this->template;
         } catch (\Exception $e) {
             ob_get_clean();
             if (DEBUG) {
@@ -284,6 +284,6 @@ class View implements ViewInterface
             return '';
         }
         $content = ob_get_clean();
-        return (string) $content;
+        return (string)$content;
     }
 }

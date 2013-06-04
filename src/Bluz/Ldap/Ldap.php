@@ -131,7 +131,7 @@ class Ldap
     public function checkAuth($username, $password)
     {
         // bind
-        foreach($this->connectors as $connector) {
+        foreach ($this->connectors as $connector) {
             /* @var \Bluz\Ldap\Connector $connector */
             if ($connector->bind($username, $password)) {
                 return true;
@@ -146,7 +146,7 @@ class Ldap
      * @param string $login
      * @param string $pass
      * @param string $filter
-     * @param array  $attribs
+     * @param array $attribs
      * @return array|bool
      * @access public
      */

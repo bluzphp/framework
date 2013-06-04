@@ -29,11 +29,11 @@ namespace Bluz\Application\Helper;
 use Bluz\Application;
 
 return
-/**
-* get current user
-*
-* @return boolean
-*/
-function () {
-    throw new \Bluz\Application\ApplicationException('You don\'t have permissions', 403);
-};
+    /**
+     * get current user
+     *
+     * @return boolean
+     */
+    function () {
+        throw new \Bluz\Application\ApplicationException('You don\'t have permissions', 403);
+    };

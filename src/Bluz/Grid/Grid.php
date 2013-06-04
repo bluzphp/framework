@@ -58,7 +58,7 @@ abstract class Grid
     const ORDER_DESC = 'desc';
 
     const FILTER_ENUM = 'enum'; // one from .., .., ..
-    const FILTER_NUM = 'num';   // ==, !=, >, >=, <, <=
+    const FILTER_NUM = 'num'; // ==, !=, >, >=, <, <=
 
     const FILTER_EQ = 'eq'; // equal to ..
     const FILTER_NE = 'ne'; // not equal to ..
@@ -177,7 +177,7 @@ abstract class Grid
         }
 
         if ($this->uid) {
-            $this->prefix = $this->getUid() .'-';
+            $this->prefix = $this->getUid() . '-';
         } else {
             $this->prefix = '';
         }
@@ -224,7 +224,7 @@ abstract class Grid
 
     /**
      * getUid
-     * 
+     *
      * @return string
      */
     public function getUid()
@@ -314,21 +314,21 @@ abstract class Grid
         $this->module = $request->getModule();
         $this->controller = $request->getController();
 
-        $page = $request->getParam($this->prefix.'page', 1);
+        $page = $request->getParam($this->prefix . 'page', 1);
         $this->setPage($page);
 
-        $limit = $request->getParam($this->prefix.'limit', $this->limit);
+        $limit = $request->getParam($this->prefix . 'limit', $this->limit);
         $this->setLimit($limit);
 
         foreach ($this->allowOrders as $column) {
-            $order = $request->getParam($this->prefix.'order-'.$column);
+            $order = $request->getParam($this->prefix . 'order-' . $column);
             if ($order) {
                 $this->addOrder($column, $order);
             }
         }
 
         foreach ($this->allowFilters as $column) {
-            $filter = $request->getParam($this->prefix.'filter-'.$column);
+            $filter = $request->getParam($this->prefix . 'filter-' . $column);
             if ($filter) {
                 if (strpos($filter, '-')) {
                     $filter = trim($filter, ' -');
@@ -336,11 +336,11 @@ abstract class Grid
                     while ($pos = strpos($filter, '-')) {
 
                         $filterType = substr($filter, 0, $pos);
-                        $filter = substr($filter, $pos+1);
+                        $filter = substr($filter, $pos + 1);
 
                         if ($pos = strpos($filter, '-')) {
                             $filterValue = substr($filter, 0, strpos($filter, '-'));
-                            $filter = substr($filter, strpos($filter, '-')+1);
+                            $filter = substr($filter, strpos($filter, '-') + 1);
                         } else {
                             $filterValue = $filter;
                         }
@@ -369,13 +369,13 @@ abstract class Grid
         }
 
         $this->data = $this->getAdapter()->process($this->getSettings());
-        
+
         return $this;
     }
-    
+
     /**
      * getData
-     * 
+     *
      * @return Data
      */
     public function getData()
@@ -385,10 +385,10 @@ abstract class Grid
         }
         return $this->data;
     }
-    
+
     /**
      * getSettings
-     * 
+     *
      * @return array
      */
     public function getSettings()
@@ -413,17 +413,18 @@ abstract class Grid
 
         // change page
         if (isset($rewrite['page']) && $rewrite['page'] > 1) {
-            $params[$this->prefix.'page'] = $rewrite['page'];
+            $params[$this->prefix . 'page'] = $rewrite['page'];
         }
 
         // change limit
         if (isset($rewrite['limit'])) {
             if ($rewrite['limit'] != $this->defaultLimit) {
-                $params[$this->prefix.'limit'] = ($rewrite['limit']!=$this->limit)?$rewrite['limit']:$this->limit;
+                $params[$this->prefix . 'limit'] = ($rewrite['limit'] != $this->limit)
+                    ? $rewrite['limit'] : $this->limit;
             }
         } else {
             if ($this->limit != $this->defaultLimit) {
-                $params[$this->prefix.'limit'] = $this->limit;
+                $params[$this->prefix . 'limit'] = $this->limit;
             }
         }
 
@@ -434,8 +435,8 @@ abstract class Grid
             $orders = $this->getOrders();
         }
 
-        foreach($orders as $column => $order) {
-            $params[$this->prefix.'order-'.$column] = $order;
+        foreach ($orders as $column => $order) {
+            $params[$this->prefix . 'order-' . $column] = $order;
         }
 
         // change filters
@@ -450,10 +451,10 @@ abstract class Grid
                 if ($filterName == self::FILTER_EQ) {
                     $columnFilter[] = $filterValue;
                 } else {
-                    $columnFilter[] = $filterName .'-'. $filterValue;
+                    $columnFilter[] = $filterName . '-' . $filterValue;
                 }
             }
-            $params[$this->prefix.'filter-'.$column] = join('-', $columnFilter);
+            $params[$this->prefix . 'filter-' . $column] = join('-', $columnFilter);
         }
 
         return $params;
@@ -489,10 +490,10 @@ abstract class Grid
         $this->allowOrders = $orders;
         return $this;
     }
-    
+
     /**
      * getAllowOrders
-     * 
+     *
      * @return array
      */
     public function getAllowOrders()
@@ -513,8 +514,9 @@ abstract class Grid
         }
 
         if (strtolower($order) != Grid::ORDER_ASC
-            && strtolower($order) != Grid::ORDER_DESC) {
-            throw new GridException('Order for column "'.$column.'" is incorrect');
+            && strtolower($order) != Grid::ORDER_DESC
+        ) {
+            throw new GridException('Order for column "' . $column . '" is incorrect');
         }
 
         $this->orders[$column] = $order;
@@ -561,7 +563,7 @@ abstract class Grid
 
     /**
      * getOrders
-     * 
+     *
      * @return array
      */
     public function getOrders()
@@ -591,10 +593,10 @@ abstract class Grid
         $this->allowFilters = $filters;
         return $this;
     }
-    
+
     /**
      * getAllowedFilters
-     * 
+     *
      * @return array
      */
     public function getAllowFilters()
@@ -634,7 +636,8 @@ abstract class Grid
     public function addFilter($column, $filter, $value)
     {
         if (!in_array($column, $this->allowFilters) &&
-            !array_key_exists($column, $this->allowFilters)) {
+            !array_key_exists($column, $this->allowFilters)
+        ) {
             throw new GridException('Wrong column name for filter');
         }
 
@@ -654,7 +657,7 @@ abstract class Grid
 
     /**
      * getFilters
-     * 
+     *
      * @return array
      */
     public function getFilters()
@@ -674,13 +677,13 @@ abstract class Grid
         if ($page < 1) {
             throw new GridException('Wrong page number, should be greater than zero');
         }
-        $this->page = (int) $page;
+        $this->page = (int)$page;
         return $this;
     }
 
     /**
      * getPage
-     * 
+     *
      * @return integer
      */
     public function getPage()
@@ -700,13 +703,13 @@ abstract class Grid
         if ($limit < 1) {
             throw new GridException('Wrong limit value, should be greater than zero');
         }
-        $this->limit = (int) $limit;
+        $this->limit = (int)$limit;
         return $this;
     }
 
     /**
      * getLimit
-     * 
+     *
      * @return integer
      */
     public function getLimit()
@@ -728,7 +731,7 @@ abstract class Grid
         }
         $this->setLimit($limit);
 
-        $this->defaultLimit = (int) $limit;
+        $this->defaultLimit = (int)$limit;
         return $this;
     }
 
@@ -770,6 +773,4 @@ abstract class Grid
     {
         return $this->defaultOrder;
     }
-
-
 }

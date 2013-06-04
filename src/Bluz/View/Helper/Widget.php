@@ -30,23 +30,21 @@ use Bluz\Application;
 use Bluz\View\View;
 
 return
-
-/**
- * widget
- *
- * <pre>
- * <code>
- * $this->widget($module, $controller, array $params);
- * </code>
- * </pre>
- *
- * @param string $module
- * @param string $widget
- * @param array $params
- * @return View
- */
-function ($module, $widget, $params = array())
-{
+    /**
+     * widget
+     *
+     * <pre>
+     * <code>
+     * $this->widget($module, $controller, array $params);
+     * </code>
+     * </pre>
+     *
+     * @param string $module
+     * @param string $widget
+     * @param array $params
+     * @return View
+     */
+    function ($module, $widget, $params = array()) {
     /** @var View $this */
     $application = $this->getApplication();
     try {
@@ -59,10 +57,10 @@ function ($module, $widget, $params = array())
         if (defined('DEBUG') && DEBUG) {
             // exception message for developers
             echo
-                '<div class="alert alert-error">'.
-                '<strong>Widget "'.$module.'/'.$widget.'"</strong>: '.
-                $e->getMessage().
+                '<div class="alert alert-error">' .
+                '<strong>Widget "' . $module . '/' . $widget . '"</strong>: ' .
+                $e->getMessage() .
                 '</div>';
         }
     }
-};
+    };

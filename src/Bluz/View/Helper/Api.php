@@ -30,24 +30,23 @@ use Bluz\Application;
 use Bluz\View\View;
 
 return
-
-/**
- * API call from View
- * Be carefully, use it for calculate/update/save some data
- * For render information use Widgets!
- *
- * <pre>
- * <code>
- * $this->api($module, $method, array $params);
- * </code>
- * </pre>
- *
- * @param string $module
- * @param string $method
- * @param array $params
- * @return View
- */
-function ($module, $method, $params = array()) {
+    /**
+     * API call from View
+     * Be carefully, use it for calculate/update/save some data
+     * For render information use Widgets!
+     *
+     * <pre>
+     * <code>
+     * $this->api($module, $method, array $params);
+     * </code>
+     * </pre>
+     *
+     * @param string $module
+     * @param string $method
+     * @param array $params
+     * @return View
+     */
+    function ($module, $method, $params = array()) {
     /** @var View $this */
     $application = $this->getApplication();
     try {
@@ -57,10 +56,10 @@ function ($module, $method, $params = array()) {
         if (defined('DEBUG') && DEBUG) {
             // exception message for developers
             echo
-                '<div class="alert alert-error">'.
-                '<strong>API "'.$module.'/'.$method.'"</strong>: '.
-                $e->getMessage().
+                '<div class="alert alert-error">' .
+                '<strong>API "' . $module . '/' . $method . '"</strong>: ' .
+                $e->getMessage() .
                 '</div>';
         }
     }
-};
+    };

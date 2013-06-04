@@ -16,7 +16,7 @@ script:
   # Duplicate code
   - php vendor/bin/phpcpd --log-pmd .reports/pmd-cpd.xml src/Bluz
   # Lines of code
-  - php vendor/bin/phploc --log-csv .reports/phploc.csv src/Bluz
+  #- php vendor/bin/phploc --log-csv .reports/phploc.csv src/Bluz
   # works incorrect with latest PHP versions
   # PHP Depend
   #- php vendor/bin/pdepend --jdepend-xml=.reports/jdepend.xml --jdepend-chart=.reports/dependencies.svg --overview-pyramid=.reports/pyramid.svg  ./src/Bluz

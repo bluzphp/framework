@@ -7,11 +7,12 @@
         "psr/log": "1.*"
     },
     "require-dev": {
-        "squizlabs/php_codesniffer": "1.*",
         "phpunit/phpunit": "3.7.9",
-        "pdepend/pdepend": "1.*",
+        "squizlabs/php_codesniffer": "1.*",
         "sebastian/phpcpd": "dev-master",
-        "phpmd/phpmd": "1.*"
+        "phploc/phploc": "dev-master",
+        "pdepend/pdepend": "dev-master",
+        "phpmd/phpmd": "dev-master"
     },
     "autoload": {
         "psr-0": {

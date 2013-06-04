@@ -12,7 +12,7 @@ script:
   - pear channel-discover pear.phpunit.de
   - pear install phpunit/phpcpd
   - pear install phpunit/phploc
-  - pear install PHP_CodeSniffer
+  #- pear install PHP_CodeSniffer
   - phpenv rehash
   - mkdir .reports
   - mkdir .standards
@@ -21,11 +21,12 @@ script:
   # Duplicate code
   - phpcpd --log-pmd .reports/pmd-cpd.xml src/Bluz
   # PHP Depend
-  #- php vendor/bin/pdepend --jdepend-xml=.reports/jdepend.xml --jdepend-chart=.reports/dependencies.svg --overview-pyramid=.reports/pyramid.svg src/Bluz
-  - php vendor/bin/pdepend ./src/Bluz
+  - php vendor/bin/pdepend ./src/Bluz --jdepend-xml=.reports/jdepend.xml --jdepend-chart=.reports/dependencies.svg --overview-pyramid=.reports/pyramid.svg
   # Code sniffer
-  - phpcs ./src/Bluz --standard=PSR1 --report=summary
-  - phpcs ./src/Bluz --standard=PSR2 --report=summary
+  #- phpcs ./src/Bluz --standard=PSR1 --report=summary
+  #- phpcs ./src/Bluz --standard=PSR2 --report=summary
+  - php scripts/phpcs ./src/Bluz --standard=PSR1 --report=summary
+  - php scripts/phpcs ./src/Bluz --standard=PSR2 --report=summary
   # Mess detection
   #- php vendor/bin/phpmd src/Bluz text codesize,unusedcode,naming
 notifications:

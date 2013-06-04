@@ -7,6 +7,7 @@
         "psr/log": "1.*"
     },
     "require-dev": {
+        "squizlabs/php_codesniffer": "1.*",
         "phpunit/phpunit": "3.7.9",
         "pdepend/pdepend": "1.*",
         "sebastian/phpcpd": "dev-master",

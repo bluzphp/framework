@@ -31,15 +31,14 @@ use Bluz\View\View;
 use Bluz\View\ViewException;
 
 return
-
-/**
- * @param string $module
- * @param string $controller
- * @param array  $params
- * @param bool   $checkAccess
- * @return string|null
- */
-function ($module, $controller, array $params = [], $checkAccess = false) {
+    /**
+     * @param string $module
+     * @param string $controller
+     * @param array $params
+     * @param bool $checkAccess
+     * @return string|null
+     */
+    function ($module, $controller, array $params = [], $checkAccess = false) {
     /** @var View $this */
     $app = $this->getApplication();
 
@@ -52,7 +51,7 @@ function ($module, $controller, array $params = [], $checkAccess = false) {
             }
         }
     } catch (\Exception $e) {
-        throw new \Bluz\View\ViewException('Url View Helper: '.$e->getMessage());
+        throw new \Bluz\View\ViewException('Url View Helper: ' . $e->getMessage());
     }
 
     if (null === $module) {
@@ -65,6 +64,6 @@ function ($module, $controller, array $params = [], $checkAccess = false) {
         $params = $app->getRequest()->getParams();
     }
 
-    return $app ->getRouter()
-                ->url($module, $controller, $params);
-};
+    return $app->getRouter()
+        ->url($module, $controller, $params);
+    };

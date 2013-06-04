@@ -106,7 +106,7 @@ class Session
         }
 
         $this->store->setOptions($this->storeSettings);
-        
+
         return $this->store;
     }
 
@@ -136,7 +136,7 @@ class Session
     /**
      * Isset Offset
      *
-     * @param  mixed   $key
+     * @param  mixed $key
      * @return boolean
      */
     public function __isset($key)

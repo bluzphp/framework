@@ -45,4 +45,8 @@ interface TagableInterface
      * @return boolean
      */
     public function deleteByTag($tag);
-} //TODO: public function getByTag?
+
+    /**
+     * @todo public function getByTag?
+     */
+}

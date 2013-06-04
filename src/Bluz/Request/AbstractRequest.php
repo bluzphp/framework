@@ -43,12 +43,12 @@ class AbstractRequest
      * @const string HTTP METHOD constant names
      */
     const METHOD_OPTIONS = 'OPTIONS';
-    const METHOD_GET     = 'GET';
-    const METHOD_HEAD    = 'HEAD';
-    const METHOD_POST    = 'POST';
-    const METHOD_PUT     = 'PUT';
-    const METHOD_DELETE  = 'DELETE';
-    const METHOD_TRACE   = 'TRACE';
+    const METHOD_GET = 'GET';
+    const METHOD_HEAD = 'HEAD';
+    const METHOD_POST = 'POST';
+    const METHOD_PUT = 'PUT';
+    const METHOD_DELETE = 'DELETE';
+    const METHOD_TRACE = 'TRACE';
     const METHOD_CONNECT = 'CONNECT';
 
     /**
@@ -173,7 +173,7 @@ class AbstractRequest
      */
     public function __set($key, $value)
     {
-        $key = (string) $key;
+        $key = (string)$key;
 
         if ((null === $value) && isset($this->params[$key])) {
             unset($this->params[$key]);
@@ -227,7 +227,7 @@ class AbstractRequest
      */
     public function getParam($key, $default = null)
     {
-        return $this->__get($key)?:$default;
+        return $this->__get($key) ? : $default;
     }
 
     /**

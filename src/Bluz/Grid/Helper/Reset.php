@@ -30,13 +30,12 @@ use Bluz\Application;
 use Bluz\Grid;
 
 return
-
-/**
- * @return string|null $url
- */
-function () {
+    /**
+     * @return string|null $url
+     */
+    function () {
     /**
      * @var Grid\Grid $this
      */
     return $this->getUrl([]);
-};
+    };

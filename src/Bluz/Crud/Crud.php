@@ -146,7 +146,7 @@ class Crud
         $request = $this->getApplication()->getRequest();
 
         // get data from request
-        $this->data = $request->data?:[];
+        $this->data = $request->data ? : [];
 
         // get form id
         $this->formId = $request->_formId;
@@ -209,7 +209,7 @@ class Crud
     {
         if (!$this->table) {
             $crudClass = get_called_class();
-            $tableClass = substr($crudClass, 0, strrpos($crudClass, '\\', 1)+1) . 'Table';
+            $tableClass = substr($crudClass, 0, strrpos($crudClass, '\\', 1) + 1) . 'Table';
 
             /**
              * @var Db\Table $tableClass
@@ -223,7 +223,7 @@ class Crud
 
     /**
      * getPrimaryKey
-     * 
+     *
      * @return array
      */
     protected function getPrimaryKey()
@@ -402,5 +402,4 @@ class Crud
         }
         return $row->delete();
     }
-
 }

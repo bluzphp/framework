@@ -30,13 +30,13 @@ use Bluz\Application;
 use Bluz\Exception;
 
 return
-/**
- * reload current page
- * please, be careful to avoid loop of reload
- * @throws Exception
- * @return void
- */
-function () {
-    /** @var Application $this */
-    throw new Application\ReloadException();
-};
+    /**
+     * reload current page
+     * please, be careful to avoid loop of reload
+     * @throws Exception
+     * @return void
+     */
+    function () {
+        /** @var Application $this */
+        throw new Application\ReloadException();
+    };

@@ -70,34 +70,49 @@ class ArraySource extends AbstractSource
 
         // process filters
         if (!empty($settings['filters'])) {
-            $data = array_filter($data, function($row) use ($settings) {
-                foreach ($settings['filters'] as $column => $filters) {
-                    foreach ($filters as $filter => $value) {
-                        // switch statement for $filter
-                        switch ($filter) {
-                            case Grid\Grid::FILTER_EQ:
-                                if ($row[$column] != $value) return false;
-                                break;
-                            case Grid\Grid::FILTER_NE:
-                                if ($row[$column] == $value) return false;
-                                break;
-                            case Grid\Grid::FILTER_GT:
-                                if ($row[$column] <= $value) return false;
-                                break;
-                            case Grid\Grid::FILTER_GE:
-                                if ($row[$column] < $value) return false;
-                                break;
-                            case Grid\Grid::FILTER_LT:
-                                if ($row[$column] >= $value) return false;
-                                break;
-                            case Grid\Grid::FILTER_LE:
-                                if ($row[$column] > $value) return false;
-                                break;
+            $data = array_filter(
+                $data,
+                function ($row) use ($settings) {
+                    foreach ($settings['filters'] as $column => $filters) {
+                        foreach ($filters as $filter => $value) {
+                            // switch statement for $filter
+                            switch ($filter) {
+                                case Grid\Grid::FILTER_EQ:
+                                    if ($row[$column] != $value) {
+                                        return false;
+                                    }
+                                    break;
+                                case Grid\Grid::FILTER_NE:
+                                    if ($row[$column] == $value) {
+                                        return false;
+                                    }
+                                    break;
+                                case Grid\Grid::FILTER_GT:
+                                    if ($row[$column] <= $value) {
+                                        return false;
+                                    }
+                                    break;
+                                case Grid\Grid::FILTER_GE:
+                                    if ($row[$column] < $value) {
+                                        return false;
+                                    }
+                                    break;
+                                case Grid\Grid::FILTER_LT:
+                                    if ($row[$column] >= $value) {
+                                        return false;
+                                    }
+                                    break;
+                                case Grid\Grid::FILTER_LE:
+                                    if ($row[$column] > $value) {
+                                        return false;
+                                    }
+                                    break;
+                            }
                         }
+                        return true;
                     }
-                    return true;
                 }
-            });
+            );
         }
 
         // process orders
@@ -118,9 +133,9 @@ class ArraySource extends AbstractSource
             $funcArgs = [];
             foreach ($settings['orders'] as $column => $order) {
                 $funcArgs[] = $orders[$column];
-                $funcArgs[] = ($order==Grid\Grid::ORDER_ASC) ? SORT_ASC : SORT_DESC;
+                $funcArgs[] = ($order == Grid\Grid::ORDER_ASC) ? SORT_ASC : SORT_DESC;
             }
-            $funcArgs[] = &$data;
+            $funcArgs[] = & $data;
 
             // Sort the data with volume descending, edition ascending
             // Add $data as the last parameter, to sort by the common key
@@ -130,10 +145,10 @@ class ArraySource extends AbstractSource
         $total = sizeof($data);
 
         // process pages
-        $data = array_slice($data, ($settings['limit']*($settings['page']-1)), $settings['limit']);
+        $data = array_slice($data, ($settings['limit'] * ($settings['page'] - 1)), $settings['limit']);
 
         $gridData = new Grid\Data($data);
-        $gridData -> setTotal($total);
+        $gridData->setTotal($total);
         return $gridData;
     }
 }

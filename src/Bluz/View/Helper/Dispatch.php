@@ -30,20 +30,19 @@ use Bluz\Application;
 use Bluz\View\View;
 
 return
-
-/**
- * dispatch
- *
- * <code>
- * $this->dispatch($module, $controller, array $params);
- * </code>
- *
- * @param string $module
- * @param string $controller
- * @param array $params
- * @return View|null
- */
-function ($module, $controller, $params = array()) {
+    /**
+     * dispatch
+     *
+     * <code>
+     * $this->dispatch($module, $controller, array $params);
+     * </code>
+     *
+     * @param string $module
+     * @param string $controller
+     * @param array $params
+     * @return View|null
+     */
+    function ($module, $controller, $params = array()) {
     /** @var View $this */
     $application = $this->getApplication();
     try {
@@ -55,9 +54,9 @@ function ($module, $controller, $params = array()) {
         if (defined('DEBUG') && DEBUG) {
             // exception message for developers
             return
-                '<div class="alert alert-error">'.
-                '<strong>Dispatch of "'.$module.'/'.$controller.'"</strong>: '.
-                $e->getMessage().
+                '<div class="alert alert-error">' .
+                '<strong>Dispatch of "' . $module . '/' . $controller . '"</strong>: ' .
+                $e->getMessage() .
                 '</div>';
         } else {
             // nothing for production
@@ -70,4 +69,4 @@ function ($module, $controller, $params = array()) {
         return $view();
     }
     return $view;
-};
+    };

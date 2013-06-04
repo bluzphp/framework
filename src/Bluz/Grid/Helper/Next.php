@@ -30,11 +30,10 @@ use Bluz\Application;
 use Bluz\Grid;
 
 return
-
-/**
- * @return string|null
- */
-function () {
+    /**
+     * @return string|null
+     */
+    function () {
     /**
      * @var Grid\Grid $this
      */
@@ -43,4 +42,4 @@ function () {
     }
 
     return $this->getUrl(['page' => $this->getPage() + 1]);
-};
+    };

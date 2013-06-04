@@ -113,13 +113,13 @@ abstract class Table
 
         // autodetect row class
         if (!$this->rowClass) {
-            $rowClass = substr($tableClass, 0, strrpos($tableClass, '\\', 1)+1);
+            $rowClass = substr($tableClass, 0, strrpos($tableClass, '\\', 1) + 1);
             $this->rowClass = $rowClass . 'Row';
         }
 
         // autodetect table name - camelCase to uppercase
         if (!$this->table) {
-            $tableClass = substr($tableClass, strpos($tableClass, '\\')+1);
+            $tableClass = substr($tableClass, strpos($tableClass, '\\') + 1);
             $tableClass = substr($tableClass, 0, strpos($tableClass, '\\', 2));
 
             $table = preg_replace('/(?<=\\w)(?=[A-Z])/', "_$1", $tableClass);
@@ -146,7 +146,7 @@ abstract class Table
      *
      * @return static
      */
-    static public function getInstance()
+    public static function getInstance()
     {
         static $instance;
         if (null === $instance) {
@@ -247,11 +247,14 @@ abstract class Table
             $connect = $this->getAdapter()->getOption('connect');
             $dbName = $connect['name'];
 
-            $this->columns = $this->getAdapter()->fetchColumn('
-                SELECT `column_name`
-                FROM INFORMATION_SCHEMA.COLUMNS
-                WHERE `table_schema` = ?
-                  AND `table_name` = ?', [$dbName, $this->getTable()]);
+            $this->columns = $this->getAdapter()->fetchColumn(
+                '
+                                SELECT `column_name`
+                                FROM INFORMATION_SCHEMA.COLUMNS
+                                WHERE `table_schema` = ?
+                                  AND `table_name` = ?',
+                [$dbName, $this->getTable()]
+            );
         }
         return $this->columns;
     }
@@ -260,10 +263,10 @@ abstract class Table
      * Support method for fetching rows.
      *
      * @param  string $sql  query options.
-     * @param  array  $params
+     * @param  array $params
      * @return Rowset An array containing the row results in FETCH_ASSOC mode.
      */
-    static protected function fetch($sql, $params = array())
+    protected static function fetch($sql, $params = array())
     {
         $self = static::getInstance();
         $data = $self->getAdapter()->fetchObjects($sql, $params, $self->rowClass);
@@ -302,28 +305,28 @@ abstract class Table
      * @throws InvalidPrimaryKeyException if wrong count of values passed
      * @return Rowset Row(s) matching the criteria.
      */
-    static public function find()
+    public static function find()
     {
         $self = static::getInstance();
 
         $args = func_get_args();
-        $keyNames = array_values((array) $self->primary);
+        $keyNames = array_values((array)$self->primary);
 
         $whereList = array();
         foreach ($args as $keyValues) {
-            $keyValues = (array) $keyValues;
+            $keyValues = (array)$keyValues;
             if (count($keyValues) < count($keyNames)) {
                 throw new InvalidPrimaryKeyException(
-                    "Too few columns for the primary key.\n".
-                    "Please check ".get_class($self)." initialization or usage.\n".
+                    "Too few columns for the primary key.\n" .
+                    "Please check " . get_class($self) . " initialization or usage.\n" .
                     "Settings described at https://github.com/bluzphp/framework/wiki/Db-Table"
                 );
             }
 
             if (count($keyValues) > count($keyNames)) {
                 throw new InvalidPrimaryKeyException(
-                    "Too many columns for the primary key.\n".
-                    "Please check ".get_class($self)." initialization or usage.\n".
+                    "Too many columns for the primary key.\n" .
+                    "Please check " . get_class($self) . " initialization or usage.\n" .
                     "Settings described at https://github.com/bluzphp/framework/wiki/Db-Table"
                 );
             }
@@ -339,7 +342,7 @@ abstract class Table
      * @param $primaryKey
      * @return Row
      */
-    static public function findRow($primaryKey)
+    public static function findRow($primaryKey)
     {
         if (!$primaryKey) {
             return null;
@@ -362,7 +365,7 @@ abstract class Table
      * @throws \InvalidArgumentException
      * @return Rowset Row(s) matching the criteria.
      */
-    static public function findWhere()
+    public static function findWhere()
     {
         $self = static::getInstance();
         $whereList = func_get_args();
@@ -385,7 +388,7 @@ abstract class Table
                     }
                     if (!is_scalar($keyValue)) {
                         throw new \InvalidArgumentException(
-                            "Wrong arguments of method 'findWhere'.\n".
+                            "Wrong arguments of method 'findWhere'.\n" .
                             "Please use syntax described at https://github.com/bluzphp/framework/wiki/Db-Table"
                         );
                     }
@@ -395,7 +398,7 @@ abstract class Table
             }
             $whereClause = '(' . implode(' OR ', $whereOrTerms) . ')';
         }
-        return $self->fetch($self->select .' WHERE '. $whereClause, $whereParams);
+        return $self->fetch($self->select . ' WHERE ' . $whereClause, $whereParams);
     }
 
     /**
@@ -404,7 +407,7 @@ abstract class Table
      * @param array $whereList
      * @return Row
      */
-    static public function findRowWhere($whereList)
+    public static function findRowWhere($whereList)
     {
         $self = static::getInstance();
         return call_user_func(array($self, 'findWhere'), $whereList)->current();
@@ -417,7 +420,7 @@ abstract class Table
      * @param array $data
      * @return Row
      */
-    static public function create(array $data = [])
+    public static function create(array $data = [])
     {
         $rowClass = static::getInstance()->rowClass;
         $row = new $rowClass($data);
@@ -431,10 +434,10 @@ abstract class Table
     /**
      * Insert new rows.
      *
-     * @param  array        $data  Column-value pairs.
+     * @param  array $data  Column-value pairs.
      * @return int          The number of rows updated.
      */
-    static public function insert(array $data)
+    public static function insert(array $data)
     {
         $self = static::getInstance();
         $table = ($self->schema ? $self->schema . '.' : '') . $self->table;
@@ -444,11 +447,11 @@ abstract class Table
     /**
      * Updates existing rows.
      *
-     * @param  array        $data  Column-value pairs.
+     * @param  array $data  Column-value pairs.
      * @param  array|string $where An SQL WHERE clause, or an array of SQL WHERE clauses.
      * @return int          The number of rows updated.
      */
-    static public function update(array $data, $where)
+    public static function update(array $data, $where)
     {
         $self = static::getInstance();
         $table = ($self->schema ? $self->schema . '.' : '') . $self->table;
@@ -462,7 +465,7 @@ abstract class Table
      * @param  array|string $where SQL WHERE clause(s).
      * @return int          The number of rows deleted.
      */
-    static public function delete($where)
+    public static function delete($where)
     {
         $self = static::getInstance();
         $table = ($self->schema ? $self->schema . '.' : '') . $self->table;

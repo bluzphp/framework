@@ -31,19 +31,19 @@ use Bluz\View\View;
 use Bluz\View\ViewException;
 
 return
-/**
- * partial
- *
- * be careful, method rewrites the View variables with params
- *
- * @param string $__template
- * @param array $__params
- * @throws ViewException
- * @return string
- */
-function ($__template, $__params = array()) {
+    /**
+     * partial
+     *
+     * be careful, method rewrites the View variables with params
+     *
+     * @param string $__template
+     * @param array $__params
+     * @throws ViewException
+     * @return string
+     */
+    function ($__template, $__params = array()) {
     /** @var View $this */
-    if (!file_exists($this->path .'/'. $__template)) {
+    if (!file_exists($this->path . '/' . $__template)) {
         throw new ViewException("Template '{$__template}' not found");
     }
 
@@ -54,5 +54,5 @@ function ($__template, $__params = array()) {
     }
     unset($__params);
 
-    require $this->path .'/'. $__template;
-};
+    require $this->path . '/' . $__template;
+    };

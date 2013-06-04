@@ -8,9 +8,10 @@
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.9",
-        "pdepend/pdepend": "1.*",
+        "squizlabs/php_codesniffer": "1.*",
         "sebastian/phpcpd": "dev-master",
-        "phpmd/phpmd": "1.*"
+        "pdepend/pdepend": "dev-master",
+        "phpmd/phpmd": "dev-master"
     },
     "autoload": {
         "psr-0": {

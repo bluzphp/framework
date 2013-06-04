@@ -28,12 +28,13 @@ namespace Bluz\View\Helper;
 
 use Bluz\View\View;
 
-/**
- * @param string|array|null $name
- * @param string|null $content
- * @return string
- */
-return function ($name = null, $content = null) {
+return
+    /**
+     * @param string|array|null $name
+     * @param string|null $content
+     * @return string
+     */
+    function ($name = null, $content = null) {
     /** @var View $this */
     if ($this->getApplication()->hasLayout()) {
         // it's stack for <head>
@@ -70,4 +71,4 @@ return function ($name = null, $content = null) {
         }
     }
     return '';
-};
+    };

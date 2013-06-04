@@ -34,14 +34,14 @@ return
      * @return array|null
      */
     function (array $data = []) {
-        /** @var View $this */
-        if ($this->getApplication()->hasLayout()) {
-            $layout = $this->getApplication()->getLayout();
-            if (sizeof($data)) {
-                $layout->system('breadcrumbs', $data);
-            } else {
-                return $layout->system('breadcrumbs');
-            }
+    /** @var View $this */
+    if ($this->getApplication()->hasLayout()) {
+        $layout = $this->getApplication()->getLayout();
+        if (sizeof($data)) {
+            $layout->system('breadcrumbs', $data);
+        } else {
+            return $layout->system('breadcrumbs');
         }
-        return null;
+    }
+    return null;
     };

@@ -24,7 +24,6 @@
 /**
  * Simple functions of framework
  * be careful with this way
- *
  * @author   Anton Shevchuk
  * @created  07.09.12 11:29
  */
@@ -73,6 +72,7 @@ if (!function_exists('app')) {
     }
 }
 
+// @codingStandardsIgnoreStart
 if (!function_exists('__')) {
     /**
      * translate
@@ -121,3 +121,4 @@ if (!function_exists('_n')) {
         return call_user_func_array(['\Bluz\Translator\Translator', 'translatePlural'], func_get_args());
     }
 }
+// @codingStandardsIgnoreEnd

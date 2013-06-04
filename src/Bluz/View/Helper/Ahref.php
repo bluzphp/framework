@@ -29,7 +29,6 @@ namespace Bluz\View\Helper;
 use Bluz\View\View;
 
 return
-
     /**
      * @author ErgallM
      *
@@ -39,29 +38,29 @@ return
      * @return \Closure
      */
     function ($text, $href, array $attributes = []) {
-        /** @var View $this */
-        // if href is settings for url helper
-        if (is_array($href)) {
-            $href = call_user_func_array(array($this, 'url'), $href);
-        }
+    /** @var View $this */
+    // if href is settings for url helper
+    if (is_array($href)) {
+        $href = call_user_func_array(array($this, 'url'), $href);
+    }
 
-        // href can be null, if access is denied
-        if (null === $href) {
-            return '';
-        }
+    // href can be null, if access is denied
+    if (null === $href) {
+        return '';
+    }
 
-        if ($href == $this->getApplication()->getRequest()->getRequestUri()) {
-            if (isset($attributes['class'])) {
-                $attributes['class'] .= ' on';
-            } else {
-                $attributes['class'] = 'on';
-            }
+    if ($href == $this->getApplication()->getRequest()->getRequestUri()) {
+        if (isset($attributes['class'])) {
+            $attributes['class'] .= ' on';
+        } else {
+            $attributes['class'] = 'on';
         }
-        $attrs = [];
+    }
+    $attrs = [];
 
-        foreach ($attributes as $attr => $value) {
-            $attrs[] = $attr . '="' . $value . '"';
-        }
+    foreach ($attributes as $attr => $value) {
+        $attrs[] = $attr . '="' . $value . '"';
+    }
 
-        return '<a href="' . $href . '" ' . join(' ', $attrs) . '>' . __($text) . '</a>';
+    return '<a href="' . $href . '" ' . join(' ', $attrs) . '>' . __($text) . '</a>';
     };

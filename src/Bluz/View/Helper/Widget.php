@@ -30,7 +30,6 @@ use Bluz\Application;
 use Bluz\View\View;
 
 return
-
     /**
      * widget
      *
@@ -46,22 +45,22 @@ return
      * @return View
      */
     function ($module, $widget, $params = array()) {
-        /** @var View $this */
-        $application = $this->getApplication();
-        try {
-            $widgetClosure = $application->widget($module, $widget);
-            call_user_func_array($widgetClosure, $params);
-        } catch (\Bluz\Acl\AclException $e) {
-            // nothing for Acl exception
-            return null;
-        } catch (\Exception $e) {
-            if (defined('DEBUG') && DEBUG) {
-                // exception message for developers
-                echo
-                    '<div class="alert alert-error">' .
-                    '<strong>Widget "' . $module . '/' . $widget . '"</strong>: ' .
-                    $e->getMessage() .
-                    '</div>';
-            }
+    /** @var View $this */
+    $application = $this->getApplication();
+    try {
+        $widgetClosure = $application->widget($module, $widget);
+        call_user_func_array($widgetClosure, $params);
+    } catch (\Bluz\Acl\AclException $e) {
+        // nothing for Acl exception
+        return null;
+    } catch (\Exception $e) {
+        if (defined('DEBUG') && DEBUG) {
+            // exception message for developers
+            echo
+                '<div class="alert alert-error">' .
+                '<strong>Widget "' . $module . '/' . $widget . '"</strong>: ' .
+                $e->getMessage() .
+                '</div>';
         }
+    }
     };

@@ -29,7 +29,6 @@ namespace Bluz\View\Helper;
 use Bluz\View\View;
 
 return
-
     /**
      * @author The-Who
      *
@@ -67,60 +66,60 @@ return
      * @return \Closure
      */
     function ($name, array $options = [], $selected = null, array $attributes = []) {
-        /** @var View $this */
-        $attributes['name'] = $name;
+    /** @var View $this */
+    $attributes['name'] = $name;
 
-        if (!is_array($selected)) {
-            if ($selected === null) {
-                // empty array
-                $selected = array();
-            } else {
-                // convert one option to an array
-                $selected = array((string)$selected);
-            }
-        } elseif (is_array($selected) && count($selected) > 1) {
-            $attributes['multiple'] = 'multiple';
+    if (!is_array($selected)) {
+        if ($selected === null) {
+            // empty array
+            $selected = array();
+        } else {
+            // convert one option to an array
+            $selected = array((string)$selected);
         }
+    } elseif (is_array($selected) && count($selected) > 1) {
+        $attributes['multiple'] = 'multiple';
+    }
 
-        /**
-         * @param $value
-         * @param $text
-         * @return string
-         */
-        $buildOption = function ($value, $text) use ($selected) {
-            $value = (string)$value;
-            $option = array('value' => $value);
-            if (in_array($value, $selected)) {
-                $option['selected'] = 'selected';
-            }
-            return '<option ' . $this->attributes($option) . '>' . htmlspecialchars(
-                (string)$text,
-                ENT_QUOTES,
-                "UTF-8",
-                false
-            ) . '</option>';
-        };
-
-
-        $result = [];
-        foreach ($options as $value => $text) {
-            if (is_array($text)) {
-                // optgroup support
-                // create a list of sub-options
-                $subOptions = array();
-                foreach ($text as $subValue => $subText) {
-                    $subOptions[] = $buildOption($subValue, $subText);
-                }
-                // build string from array
-                $subOptions = "\n" . join("\n", $subOptions) . "\n";
-
-                $result[] = '<optgroup ' . $this->attributes(['label' => $value]) . '>' . $subOptions . '</optgroup>';
-
-            } else {
-                $result[] = $buildOption($value, $text);
-            }
+    /**
+     * @param $value
+     * @param $text
+     * @return string
+     */
+    $buildOption = function ($value, $text) use ($selected) {
+        $value = (string)$value;
+        $option = array('value' => $value);
+        if (in_array($value, $selected)) {
+            $option['selected'] = 'selected';
         }
-        $result = "\n" . join("\n", $result) . "\n";
-        return '<select ' . $this->attributes($attributes) . '>' . $result . '</select>';
+        return '<option ' . $this->attributes($option) . '>' . htmlspecialchars(
+            (string)$text,
+            ENT_QUOTES,
+            "UTF-8",
+            false
+        ) . '</option>';
+    };
+
+
+    $result = [];
+    foreach ($options as $value => $text) {
+        if (is_array($text)) {
+            // optgroup support
+            // create a list of sub-options
+            $subOptions = array();
+            foreach ($text as $subValue => $subText) {
+                $subOptions[] = $buildOption($subValue, $subText);
+            }
+            // build string from array
+            $subOptions = "\n" . join("\n", $subOptions) . "\n";
+
+            $result[] = '<optgroup ' . $this->attributes(['label' => $value]) . '>' . $subOptions . '</optgroup>';
+
+        } else {
+            $result[] = $buildOption($value, $text);
+        }
+    }
+    $result = "\n" . join("\n", $result) . "\n";
+    return '<select ' . $this->attributes($attributes) . '>' . $result . '</select>';
 
     };

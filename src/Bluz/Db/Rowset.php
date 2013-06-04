@@ -37,5 +37,4 @@ namespace Bluz\Db;
  */
 class Rowset extends \ArrayIterator
 {
-
 }

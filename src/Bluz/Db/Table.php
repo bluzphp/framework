@@ -146,7 +146,7 @@ abstract class Table
      *
      * @return static
      */
-    static public function getInstance()
+    public static function getInstance()
     {
         static $instance;
         if (null === $instance) {
@@ -266,7 +266,7 @@ abstract class Table
      * @param  array $params
      * @return Rowset An array containing the row results in FETCH_ASSOC mode.
      */
-    static protected function fetch($sql, $params = array())
+    protected static function fetch($sql, $params = array())
     {
         $self = static::getInstance();
         $data = $self->getAdapter()->fetchObjects($sql, $params, $self->rowClass);
@@ -305,7 +305,7 @@ abstract class Table
      * @throws InvalidPrimaryKeyException if wrong count of values passed
      * @return Rowset Row(s) matching the criteria.
      */
-    static public function find()
+    public static function find()
     {
         $self = static::getInstance();
 
@@ -342,7 +342,7 @@ abstract class Table
      * @param $primaryKey
      * @return Row
      */
-    static public function findRow($primaryKey)
+    public static function findRow($primaryKey)
     {
         if (!$primaryKey) {
             return null;
@@ -365,7 +365,7 @@ abstract class Table
      * @throws \InvalidArgumentException
      * @return Rowset Row(s) matching the criteria.
      */
-    static public function findWhere()
+    public static function findWhere()
     {
         $self = static::getInstance();
         $whereList = func_get_args();
@@ -407,7 +407,7 @@ abstract class Table
      * @param array $whereList
      * @return Row
      */
-    static public function findRowWhere($whereList)
+    public static function findRowWhere($whereList)
     {
         $self = static::getInstance();
         return call_user_func(array($self, 'findWhere'), $whereList)->current();
@@ -420,7 +420,7 @@ abstract class Table
      * @param array $data
      * @return Row
      */
-    static public function create(array $data = [])
+    public static function create(array $data = [])
     {
         $rowClass = static::getInstance()->rowClass;
         $row = new $rowClass($data);
@@ -437,7 +437,7 @@ abstract class Table
      * @param  array $data  Column-value pairs.
      * @return int          The number of rows updated.
      */
-    static public function insert(array $data)
+    public static function insert(array $data)
     {
         $self = static::getInstance();
         $table = ($self->schema ? $self->schema . '.' : '') . $self->table;
@@ -451,7 +451,7 @@ abstract class Table
      * @param  array|string $where An SQL WHERE clause, or an array of SQL WHERE clauses.
      * @return int          The number of rows updated.
      */
-    static public function update(array $data, $where)
+    public static function update(array $data, $where)
     {
         $self = static::getInstance();
         $table = ($self->schema ? $self->schema . '.' : '') . $self->table;
@@ -465,7 +465,7 @@ abstract class Table
      * @param  array|string $where SQL WHERE clause(s).
      * @return int          The number of rows deleted.
      */
-    static public function delete($where)
+    public static function delete($where)
     {
         $self = static::getInstance();
         $table = ($self->schema ? $self->schema . '.' : '') . $self->table;

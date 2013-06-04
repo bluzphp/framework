@@ -37,11 +37,11 @@ return
      * @return string|boolean
      */
     function ($module = null) {
-        /** @var View $this */
-        $request = $this->getApplication()->getRequest();
-        if (null == $module) {
-            return $request->getModule();
-        } else {
-            return $request->getModule() == $module;
-        }
+    /** @var View $this */
+    $request = $this->getApplication()->getRequest();
+    if (null == $module) {
+        return $request->getModule();
+    } else {
+        return $request->getModule() == $module;
+    }
     };

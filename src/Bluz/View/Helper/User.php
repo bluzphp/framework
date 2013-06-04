@@ -32,11 +32,11 @@ return
     /**
      * get current user
      *
-     * @return \Bluz\Auth\AbstractEntity|null
+     * @return \Bluz\Auth\AbstractRowEntity|null
      */
     function () {
-        /** @var View $this */
-        return $this->getApplication()->getAuth() ?
-            $this->getApplication()->getAuth()->getIdentity() :
-            null;
+    /** @var View $this */
+    return $this->getApplication()->getAuth() ?
+        $this->getApplication()->getAuth()->getIdentity() :
+        null;
     };

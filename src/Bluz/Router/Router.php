@@ -352,5 +352,4 @@ class Router
 
         return true;
     }
-
 }

@@ -30,7 +30,6 @@ use Bluz\Application;
 use Bluz\View\View;
 
 return
-
     /**
      * API call from View
      * Be carefully, use it for calculate/update/save some data
@@ -48,19 +47,19 @@ return
      * @return View
      */
     function ($module, $method, $params = array()) {
-        /** @var View $this */
-        $application = $this->getApplication();
-        try {
-            $apiClosure = $application->api($module, $method);
-            return call_user_func_array($apiClosure, $params);
-        } catch (\Exception $e) {
-            if (defined('DEBUG') && DEBUG) {
-                // exception message for developers
-                echo
-                    '<div class="alert alert-error">' .
-                    '<strong>API "' . $module . '/' . $method . '"</strong>: ' .
-                    $e->getMessage() .
-                    '</div>';
-            }
+    /** @var View $this */
+    $application = $this->getApplication();
+    try {
+        $apiClosure = $application->api($module, $method);
+        return call_user_func_array($apiClosure, $params);
+    } catch (\Exception $e) {
+        if (defined('DEBUG') && DEBUG) {
+            // exception message for developers
+            echo
+                '<div class="alert alert-error">' .
+                '<strong>API "' . $module . '/' . $method . '"</strong>: ' .
+                $e->getMessage() .
+                '</div>';
         }
+    }
     };

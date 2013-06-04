@@ -34,30 +34,30 @@ return
      * @return string|void
      */
     function ($style = null, $media = 'all') {
-        /** @var View $this */
-        if ($this->getApplication()->hasLayout()) {
-            // it's stack for <head>
-            $view = $this->getApplication()->getLayout();
+    /** @var View $this */
+    if ($this->getApplication()->hasLayout()) {
+        // it's stack for <head>
+        $view = $this->getApplication()->getLayout();
 
-            $headStyle = $view->system('headStyle') ? : [];
+        $headStyle = $view->system('headStyle') ? : [];
 
-            if (null === $style) {
-                // clear system vars
-                $view->system('headStyle', []);
+        if (null === $style) {
+            // clear system vars
+            $view->system('headStyle', []);
 
-                array_walk(
-                    $headStyle,
-                    function (&$item, $key) {
-                        $item = $this->style($key, $item);
-                    }
-                );
-                return join("\n", $headStyle);
-            } else {
-                $headStyle[$style] = $media;
-                $view->system('headStyle', $headStyle);
-            }
+            array_walk(
+                $headStyle,
+                function (&$item, $key) {
+                    $item = $this->style($key, $item);
+                }
+            );
+            return join("\n", $headStyle);
         } else {
-            // it's just alias to script() call
-            return $this->style($style);
+            $headStyle[$style] = $media;
+            $view->system('headStyle', $headStyle);
         }
+    } else {
+        // it's just alias to script() call
+        return $this->style($style);
+    }
     };

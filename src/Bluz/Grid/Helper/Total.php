@@ -30,13 +30,12 @@ use Bluz\Application;
 use Bluz\Grid;
 
 return
-
     /**
      * @return integer
      */
     function () {
-        /**
-         * @var Grid\Grid $this
-         */
-        return $this->getData()->getTotal();
+    /**
+     * @var Grid\Grid $this
+     */
+    return $this->getData()->getTotal();
     };

@@ -215,9 +215,7 @@ class Row
          */
         if (!sizeof(array_filter($this->getPrimaryKey()))) {
             $result = $this->doInsert();
-        } elseif (
-        sizeof(array_diff_assoc($this->getPrimaryKey(), $this->clean))
-        ) {
+        } elseif (sizeof(array_diff_assoc($this->getPrimaryKey(), $this->clean))) {
             $result = $this->doInsert();
         } else {
             $result = $this->doUpdate();

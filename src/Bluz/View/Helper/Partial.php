@@ -42,17 +42,17 @@ return
      * @return string
      */
     function ($__template, $__params = array()) {
-        /** @var View $this */
-        if (!file_exists($this->path . '/' . $__template)) {
-            throw new ViewException("Template '{$__template}' not found");
-        }
+    /** @var View $this */
+    if (!file_exists($this->path . '/' . $__template)) {
+        throw new ViewException("Template '{$__template}' not found");
+    }
 
-        extract($this->data);
+    extract($this->data);
 
-        if (sizeof($__params)) {
-            extract($__params);
-        }
-        unset($__params);
+    if (sizeof($__params)) {
+        extract($__params);
+    }
+    unset($__params);
 
-        require $this->path . '/' . $__template;
+    require $this->path . '/' . $__template;
     };

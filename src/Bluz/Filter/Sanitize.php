@@ -73,7 +73,8 @@ class Sanitize
         if (!is_array($source) && !is_object($source)) {
             throw new Exception(
                 "Sanitize calls works only with objects and arrays. <br/>\n" .
-                "Read more: <a href='https://github.com/bluzphp/framework/wiki/Filter'>https://github.com/bluzphp/framework/wiki/Filter</a>"
+                "Read more: <a href='https://github.com/bluzphp/framework/wiki/Filter'>".
+                "https://github.com/bluzphp/framework/wiki/Filter"."</a>"
             );
         }
 

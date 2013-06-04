@@ -144,5 +144,4 @@ class Entries implements ArrayAccess, IteratorAggregate
             $this->entries[] = new Entry($ldapData[$i]);
         }
     }
-
 }

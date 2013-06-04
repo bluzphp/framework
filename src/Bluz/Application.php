@@ -409,7 +409,8 @@ class Application
             } else {
                 throw new ConfigException(
                     "Missed `mailer` options in configuration file. <br/>\n" .
-                    "Read more: <a href='https://github.com/bluzphp/framework/wiki/Mailer'>https://github.com/bluzphp/framework/wiki/Mailer</a>"
+                    "Read more: <a href='https://github.com/bluzphp/framework/wiki/Mailer'>".
+                    "https://github.com/bluzphp/framework/wiki/Mailer"."</a>"
                 );
             }
         }

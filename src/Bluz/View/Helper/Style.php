@@ -35,17 +35,17 @@ return
      * @return string|View
      */
     function ($style, $media = 'all') {
-        /** @var View $this */
-        if ('.css' == substr($style, -4)) {
-            if (strpos($style, 'http://') !== 0
-                && strpos($style, 'https://') !== 0
-            ) {
-                $style = $this->baseUrl($style);
-            }
-            return "\t<link href=\"" . $style . "\" rel=\"stylesheet\" media=\"" . $media . "\"/>\n";
-        } else {
-            return "\t<style type=\"text/css\" media=\"" . $media . "\">\n"
-            . $style . "\n"
-            . "\t</style>";
+    /** @var View $this */
+    if ('.css' == substr($style, -4)) {
+        if (strpos($style, 'http://') !== 0
+            && strpos($style, 'https://') !== 0
+        ) {
+            $style = $this->baseUrl($style);
         }
+        return "\t<link href=\"" . $style . "\" rel=\"stylesheet\" media=\"" . $media . "\"/>\n";
+    } else {
+        return "\t<style type=\"text/css\" media=\"" . $media . "\">\n"
+        . $style . "\n"
+        . "\t</style>";
+    }
     };

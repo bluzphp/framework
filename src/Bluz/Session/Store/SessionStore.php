@@ -74,8 +74,10 @@ class SessionStore extends AbstractStore
     {
         if (!$this->started) {
             if (headers_sent($filename, $linenum)) {
-                throw new SessionException("Session must be started before any output has been sent to the browser;"
-                . " output started in {$filename}/{$linenum}");
+                throw new SessionException(
+                    "Session must be started before any output has been sent to the browser;" .
+                    " output started in {$filename}/{$linenum}"
+                );
             } else {
                 if (session_id() !== '') {
                     throw new SessionException("Session has been started already");

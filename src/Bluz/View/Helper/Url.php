@@ -31,7 +31,6 @@ use Bluz\View\View;
 use Bluz\View\ViewException;
 
 return
-
     /**
      * @param string $module
      * @param string $controller
@@ -40,31 +39,31 @@ return
      * @return string|null
      */
     function ($module, $controller, array $params = [], $checkAccess = false) {
-        /** @var View $this */
-        $app = $this->getApplication();
+    /** @var View $this */
+    $app = $this->getApplication();
 
-        try {
-            if ($checkAccess) {
-                $controllerFile = $app->getControllerFile($module, $controller);
-                $reflectionData = $app->reflection($controllerFile);
-                if (!$app->isAllowed($module, $reflectionData)) {
-                    return null;
-                }
+    try {
+        if ($checkAccess) {
+            $controllerFile = $app->getControllerFile($module, $controller);
+            $reflectionData = $app->reflection($controllerFile);
+            if (!$app->isAllowed($module, $reflectionData)) {
+                return null;
             }
-        } catch (\Exception $e) {
-            throw new \Bluz\View\ViewException('Url View Helper: ' . $e->getMessage());
         }
+    } catch (\Exception $e) {
+        throw new \Bluz\View\ViewException('Url View Helper: ' . $e->getMessage());
+    }
 
-        if (null === $module) {
-            $module = $app->getRequest()->getModule();
-        }
-        if (null === $controller) {
-            $controller = $app->getRequest()->getController();
-        }
-        if (null === $params) {
-            $params = $app->getRequest()->getParams();
-        }
+    if (null === $module) {
+        $module = $app->getRequest()->getModule();
+    }
+    if (null === $controller) {
+        $controller = $app->getRequest()->getController();
+    }
+    if (null === $params) {
+        $params = $app->getRequest()->getParams();
+    }
 
-        return $app->getRouter()
-            ->url($module, $controller, $params);
+    return $app->getRouter()
+        ->url($module, $controller, $params);
     };

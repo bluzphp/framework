@@ -60,28 +60,28 @@ return
      * @return string
      */
     function ($template, $data = array(), $params = array()) {
-        /** @var View $this */
-        if (!file_exists($this->path . '/' . $template)) {
-            throw new ViewException("Template '{$template}' not found");
-        }
+    /** @var View $this */
+    if (!file_exists($this->path . '/' . $template)) {
+        throw new ViewException("Template '{$template}' not found");
+    }
 
-        if (!is_array($data)
-            && (!$data instanceof \Traversable)
-            && (is_object($data) && !method_exists($data, 'toArray'))
-        ) {
-            throw new \InvalidArgumentException('PartialLoop helper requires iterable data');
-        }
+    if (!is_array($data)
+        && (!$data instanceof \Traversable)
+        && (is_object($data) && !method_exists($data, 'toArray'))
+    ) {
+        throw new \InvalidArgumentException('PartialLoop helper requires iterable data');
+    }
 
-        if (is_object($data)
-            && (!$data instanceof \Traversable)
-            && method_exists($data, 'toArray')
-        ) {
-            $data = $data->toArray();
-        }
+    if (is_object($data)
+        && (!$data instanceof \Traversable)
+        && method_exists($data, 'toArray')
+    ) {
+        $data = $data->toArray();
+    }
 
-        foreach ($data as $key => $value) {
-            $params['partialKey'] = $key;
-            $params['partialValue'] = $value;
-            $this->partial($template, $params);
-        }
+    foreach ($data as $key => $value) {
+        $params['partialKey'] = $key;
+        $params['partialValue'] = $value;
+        $this->partial($template, $params);
+    }
     };

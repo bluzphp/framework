@@ -402,5 +402,4 @@ class Crud
         }
         return $row->delete();
     }
-
 }

@@ -31,7 +31,8 @@ namespace Bluz\Cache;
  *
  *  - 'enabled' => Boolean,optional, true by default
  *  - 'settings' =>
- *     - 'cacheAdapter' => Settings for setup Instance of Bluz\Cache\CacheInterface. Required if option 'enabled' set to true
+ *     - 'cacheAdapter' => Settings for setup Instance of Bluz\Cache\CacheInterface.
+ *                    Required if option 'enabled' set to true
  *     - 'tagAdapter' => Settings fir setup Instance of Bluz\Cache\CacheInterface. Optional.
  *                    If it is not set, 'cacheAdapter' instance will be used as a tag adapter
  *
@@ -68,7 +69,8 @@ class Cache implements CacheInterface, TagableInterface
         if (!isset($this->options['cacheAdapter']) && !isset($this->options['settings']['cacheAdapter'])) {
             throw new ConfigException(
                 "Missed `cacheAdapter` option in `cache` configuration. <br/>\n" .
-                "Read more: <a href='https://github.com/bluzphp/framework/wiki/Cache'>https://github.com/bluzphp/framework/wiki/Cache</a>"
+                "Read more: <a href='https://github.com/bluzphp/framework/wiki/Cache'>".
+                "https://github.com/bluzphp/framework/wiki/Cache</a>"
             );
         }
         return true;
@@ -233,9 +235,8 @@ class Cache implements CacheInterface, TagableInterface
         }
 
         // TODO: m-m-m-m..... not sure about line below. Do we need this?
-//        $this->tagAdapter->delete($tag);
+        // $this->tagAdapter->delete($tag);
 
         return true;
     }
-
 }

@@ -419,7 +419,8 @@ abstract class Grid
         // change limit
         if (isset($rewrite['limit'])) {
             if ($rewrite['limit'] != $this->defaultLimit) {
-                $params[$this->prefix . 'limit'] = ($rewrite['limit'] != $this->limit) ? $rewrite['limit'] : $this->limit;
+                $params[$this->prefix . 'limit'] = ($rewrite['limit'] != $this->limit)
+                    ? $rewrite['limit'] : $this->limit;
             }
         } else {
             if ($this->limit != $this->defaultLimit) {
@@ -772,6 +773,4 @@ abstract class Grid
     {
         return $this->defaultOrder;
     }
-
-
 }

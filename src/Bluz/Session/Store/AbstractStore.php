@@ -63,37 +63,37 @@ abstract class AbstractStore
      *
      * @return bool
      */
-    public abstract function start();
+    abstract public function start();
 
     /**
      * @param string $key
      * @param mixed $value
      * @return void
      */
-    public abstract function __set($key, $value);
+    abstract public function __set($key, $value);
 
     /**
      * @param string $key
      * @return mixed|null
      */
-    public abstract function __get($key);
+    abstract public function __get($key);
 
     /**
      * @param string $key
      * @return boolean
      */
-    public abstract function __isset($key);
+    abstract public function __isset($key);
 
     /**
      * @param string $key
      * @return void
      */
-    public abstract function __unset($key);
+    abstract public function __unset($key);
 
     /**
      * destroy
      *
      * @return bool
      */
-    public abstract function destroy();
+    abstract public function destroy();
 }

@@ -194,10 +194,12 @@ class Messages
      */
     protected function createEmptyMessagesStore()
     {
-        return new \ArrayObject(array(
-            self::TYPE_ERROR => array(),
-            self::TYPE_SUCCESS => array(),
-            self::TYPE_NOTICE => array()
-        ));
+        return new \ArrayObject(
+            array(
+                self::TYPE_ERROR => array(),
+                self::TYPE_SUCCESS => array(),
+                self::TYPE_NOTICE => array()
+            )
+        );
     }
 }

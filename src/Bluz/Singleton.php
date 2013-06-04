@@ -58,12 +58,15 @@ trait Singleton
      * @throws Exception
      * @return self
      */
-    final static public function setInstance($instance)
+    final public static function setInstance($instance)
     {
         if ($instance instanceof static) {
             static::$instance = $instance;
         } else {
-            throw new Exception('First parameter for method `' . __METHOD__ . '` should be instance of `' . __CLASS__ . '`');
+            throw new Exception(
+                'First parameter for method `' . __METHOD__ . '`'.
+                ' should be instance of `' . __CLASS__ . '`'
+            );
         }
         return static::$instance;
     }
@@ -74,7 +77,7 @@ trait Singleton
      * @throws Exception
      * @return static
      */
-    final static public function getInstance()
+    final public static function getInstance()
     {
         return isset(static::$instance)
             ? static::$instance

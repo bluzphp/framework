@@ -58,5 +58,4 @@ abstract class AbstractSource
      * @return AbstractSource
      */
     abstract public function process(array $settings = []);
-
 }

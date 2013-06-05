@@ -35,9 +35,7 @@ use Bluz\Cache\Cache;
 use Bluz\Config\Config;
 use Bluz\Config\ConfigException;
 use Bluz\Db\Db;
-use Bluz\EventManager\Event;
 use Bluz\EventManager\EventManager;
-use Bluz\Ldap\Ldap;
 use Bluz\Logger\Logger;
 use Bluz\Mailer\Mailer;
 use Bluz\Messages\Messages;
@@ -103,11 +101,6 @@ class Application
      * @var Layout
      */
     protected $layout;
-
-    /**
-     * @var Ldap
-     */
-    protected $ldap;
 
     /**
      * @var Logger
@@ -359,21 +352,6 @@ class Application
     public function resetLayout()
     {
         $this->layout = null;
-    }
-
-    /**
-     * getLdap
-     *
-     * @todo remove Ldap to optional package
-     * @return Ldap
-     */
-    public function getLdap()
-    {
-        if (!$this->ldap && $conf = $this->getConfigData('ldap')) {
-            $this->ldap = new Ldap();
-            $this->ldap->setOptions($conf);
-        }
-        return $this->ldap;
     }
 
     /**

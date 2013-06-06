@@ -233,7 +233,19 @@ class Db
 
         $whereSql = array();
         foreach ($params as $key => $value) {
-            $whereSql[] = "{$key} = ?";
+            if (is_array($value)) {
+                $values = array_map([$this, 'quote'], $value);
+                $values = join(',', $values);
+                $whereSql[] = "{$key} IN ({$values})";
+            } elseif (is_null($value)) {
+                $whereSql[] = "{$key} IS NULL";
+            } elseif (stripos($key, ' like')) {
+                $value = $this->quote($value);
+                $whereSql[] = "{$key} LIKE ({$value})";
+            } else {
+                $value = $this->quote($value);
+                $whereSql[] = "{$key} = {$value}";
+            }
         }
         return ' WHERE ' . join(' AND ', $whereSql);
     }
@@ -311,13 +323,8 @@ class Db
 
         $stmt = $this->prepare($sql);
 
-        if (is_array($where)) {
-            // added data from $where to end of execute params
-            $execParams = array_merge(array_values($params), array_values($where));
-        } else {
-            // only data from $params
-            $execParams = array_values($params);
-        }
+        // only data from $params
+        $execParams = array_values($params);
 
         $result = $stmt->execute($execParams);
 
@@ -346,15 +353,9 @@ class Db
 
         $stmt = $this->prepare($sql);
 
-        if (is_array($where)) {
-            $params = array_values($where);
-        } else {
-            $params = array();
-        }
+        $result = $stmt->execute();
 
-        $result = $stmt->execute($params);
-
-        $this->log($sql, $params);
+        $this->log($sql, array_values($where));
 
         return $result;
     }

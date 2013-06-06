@@ -249,10 +249,10 @@ abstract class Table
 
             $this->columns = $this->getAdapter()->fetchColumn(
                 '
-                                SELECT `column_name`
-                                FROM INFORMATION_SCHEMA.COLUMNS
-                                WHERE `table_schema` = ?
-                                  AND `table_name` = ?',
+                SELECT `column_name`
+                FROM INFORMATION_SCHEMA.COLUMNS
+                WHERE `table_schema` = ?
+                  AND `table_name` = ?',
                 [$dbName, $this->getTable()]
             );
         }
@@ -381,18 +381,30 @@ abstract class Table
             foreach ($whereList as $keyValueSets) {
                 $whereAndTerms = array();
                 foreach ($keyValueSets as $keyName => $keyValue) {
-                    if (stripos($keyName, ' like')) {
+                    if (is_array($keyValue)) {
+                        $keyValue = array_map(
+                            function ($value) use ($self) {
+                                return $self->getAdapter()->quote($value);
+                            },
+                            $keyValue
+                        );
+                        $keyValue = join(',', $keyValue);
+                        $whereAndTerms[] = $self->table . '.' . $keyName . ' IN ('.$keyValue.')';
+                    } elseif (is_null($keyValue)) {
+                        $whereAndTerms[] = $self->table . '.' . $keyName . ' IS NULL';
+                    } elseif (stripos($keyName, ' like')) {
                         $whereAndTerms[] = $self->table . '.' . $keyName . ' (?)';
+                        $whereParams[] = $keyValue;
                     } else {
                         $whereAndTerms[] = $self->table . '.' . $keyName . ' = ?';
+                        $whereParams[] = $keyValue;
                     }
-                    if (!is_scalar($keyValue)) {
+                    if (!is_scalar($keyValue) && !is_null($keyValue)) {
                         throw new \InvalidArgumentException(
                             "Wrong arguments of method 'findWhere'.\n" .
                             "Please use syntax described at https://github.com/bluzphp/framework/wiki/Db-Table"
                         );
                     }
-                    $whereParams[] = $keyValue;
                 }
                 $whereOrTerms[] = '(' . implode(' AND ', $whereAndTerms) . ')';
             }

@@ -297,14 +297,15 @@ abstract class AbstractBuilder
         }
 
         if ($append) {
-            if ($sqlPartName == "orderBy" || $sqlPartName == "groupBy" || $sqlPartName == "select" || $sqlPartName == "set") {
+            if ($sqlPartName == "orderBy" || $sqlPartName == "groupBy"
+                || $sqlPartName == "select" || $sqlPartName == "set") {
                 foreach ($sqlPart as $part) {
                     $this->sqlParts[$sqlPartName][] = $part;
                 }
-            } else if ($isArray && is_array($sqlPart[key($sqlPart)])) {
+            } elseif ($isArray && is_array($sqlPart[key($sqlPart)])) {
                 $key = key($sqlPart);
                 $this->sqlParts[$sqlPartName][$key][] = $sqlPart[$key];
-            } else if ($isMultiple) {
+            } elseif ($isMultiple) {
                 $this->sqlParts[$sqlPartName][] = $sqlPart;
             } else {
                 $this->sqlParts[$sqlPartName] = $sqlPart;
@@ -337,10 +338,14 @@ abstract class AbstractBuilder
     {
         $this->aliases[] = $alias;
 
-        return $this->add('from', array(
+        return $this->add(
+            'from',
+            array(
                 'table' => $from,
                 'alias' => $alias
-            ), true);
+            ),
+            true
+        );
     }
 
     /**
@@ -386,14 +391,18 @@ abstract class AbstractBuilder
     {
         $this->aliases[] = $alias;
 
-        return $this->add('join', array(
+        return $this->add(
+            'join',
+            array(
                 $fromAlias => array(
                     'joinType'      => 'inner',
                     'joinTable'     => $join,
                     'joinAlias'     => $alias,
                     'joinCondition' => $condition
                 )
-            ), true);
+            ),
+            true
+        );
     }
 
     /**
@@ -417,14 +426,18 @@ abstract class AbstractBuilder
     {
         $this->aliases[] = $alias;
 
-        return $this->add('join', array(
+        return $this->add(
+            'join',
+            array(
                 $fromAlias => array(
                     'joinType'      => 'left',
                     'joinTable'     => $join,
                     'joinAlias'     => $alias,
                     'joinCondition' => $condition
                 )
-            ), true);
+            ),
+            true
+        );
     }
 
     /**
@@ -448,14 +461,18 @@ abstract class AbstractBuilder
     {
         $this->aliases[] = $alias;
 
-        return $this->add('join', array(
+        return $this->add(
+            'join',
+            array(
                 $fromAlias => array(
                     'joinType'      => 'right',
                     'joinTable'     => $join,
                     'joinAlias'     => $alias,
                     'joinCondition' => $condition
                 )
-            ), true);
+            ),
+            true
+        );
     }
 
     /**
@@ -631,5 +648,4 @@ abstract class AbstractBuilder
     {
         return $this->execute();
     }
-
 }

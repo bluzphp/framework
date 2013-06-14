@@ -65,7 +65,7 @@ class CompositeBuilder implements \Countable
     public function add($parts)
     {
         foreach ((array) $parts as $part) {
-            if ( ! empty($part) || ($part instanceof self && $part->count() > 0)) {
+            if (!empty($part) || ($part instanceof self && $part->count() > 0)) {
                 $this->parts[] = $part;
             }
         }

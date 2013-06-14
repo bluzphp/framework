@@ -46,7 +46,8 @@ class InsertBuilder extends AbstractBuilder
      */
     public function getSql()
     {
-        $table = $this->sqlParts['from']['table'] . ($this->sqlParts['from']['alias'] ? ' ' . $this->sqlParts['from']['alias'] : '');
+        $table = $this->sqlParts['from']['table'] .
+            ($this->sqlParts['from']['alias'] ? ' ' . $this->sqlParts['from']['alias'] : '');
         $query = 'INSERT INTO ' . $table
             . ' SET ' . implode(", ", $this->sqlParts['set']);
 
@@ -69,9 +70,7 @@ class InsertBuilder extends AbstractBuilder
      */
     public function insert($insert)
     {
-        return $this->add('from', array(
-                'table' => $insert
-            ));
+        return $this->add('from', array('table' => $insert));
     }
 
     /**

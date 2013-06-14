@@ -94,6 +94,13 @@ class Db
     );
 
     /**
+     * Error mode for PDO adapter
+     * @link http://php.net/manual/en/pdo.setattribute.php
+     * @var int
+     */
+    protected $errorMode = \PDO::ERRMODE_EXCEPTION;
+
+    /**
      * @var \PDO
      */
     protected $dbh;
@@ -120,6 +127,7 @@ class Db
         if ($flag) {
             self::$adapter = $this;
         }
+        return $this;
     }
 
     /**
@@ -136,6 +144,18 @@ class Db
         } else {
             throw new DbException("Default database adapter is not configured");
         }
+    }
+
+    /**
+     * set error mode
+     *
+     * @param $mode
+     * @return Db
+     */
+    public function setErrorMode($mode)
+    {
+        $this->errorMode = (int) $mode;
+        return $this;
     }
 
     /**
@@ -182,6 +202,8 @@ class Db
                     $this->connect['user'],
                     $this->connect['pass']
                 );
+
+                $this->dbh->setAttribute(\PDO::ATTR_ERRMODE, $this->errorMode);
                 $this->log("Connected");
             } catch (\Exception $e) {
                 throw new DbException('Attempt connection to database is failed');
@@ -207,12 +229,23 @@ class Db
      * prepare SQL query
      *
      * @param string $sql
+     * @param array $params
+     * @param array $types
      * @return \PDOStatement
      */
-    protected function prepare($sql)
+    protected function prepare($sql, $params = array(), $types = array())
     {
         $this->log("Prepare query");
-        return $this->handler()->prepare($sql);
+        $stmt = $this->handler()->prepare($sql);
+
+        foreach ($params as $key => $param) {
+            $stmt->bindParam(
+                is_int($key)?$key+1:$key,
+                $param,
+                isset($types[$key])?$types[$key]:\PDO::PARAM_STR
+            );
+        }
+        return $stmt;
     }
 
     /**
@@ -268,14 +301,16 @@ class Db
      * @param array $params <p>
      *  array (':name' => 'John', ':id' => '123')
      * </p>
+     * @param array $types <p>
+     *  array (':name' => \PDO::PARAM_STR, ':id' => \PDO::PARAM_INT)
+     * </p>
      * @return string
      */
-    public function query($sql, $params = array())
+    public function query($sql, $params = array(), $types = array())
     {
-        $stmt = $this->prepare($sql);
-        $result = $stmt->execute($params);
+        $stmt = $this->prepare($sql, $params, $types);
         $this->log($sql, $params);
-        return $result;
+        return $stmt->execute();
     }
 
     /**
@@ -292,9 +327,12 @@ class Db
 
         $stmt = $this->prepare($sql);
 
-        $result = $stmt->execute(array_values($params));
+        // only data from $params
+        $execParams = array_values($params);
 
-        $this->log($sql, array_values($params));
+        $result = $stmt->execute($execParams);
+
+        $this->log($sql, $execParams);
         if ($result) {
             return $this->handler()->lastInsertId();
         } else {
@@ -501,30 +539,21 @@ class Db
      * @internal param int $cache ttl of cache in minutes
      * @return array
      */
-    public function fetchObject($sql, $params = array(), $object = null)
+    public function fetchObject($sql, $params = array(), $object = "stdClass")
     {
         $stmt = $this->prepare($sql);
         $result = null;
-        if (!$object) {
-            // StdClass
-            $stmt->setFetchMode(\PDO::FETCH_OBJ);
-            $stmt->execute($params);
-            $result = $stmt->fetch(\PDO::FETCH_OBJ);
-            $stmt->closeCursor();
-        } elseif (is_object($object)) {
+        $stmt->execute($params);
+        if (is_object($object)) {
             // some instance
             $stmt->setFetchMode(\PDO::FETCH_INTO, $object);
-            $stmt->execute($params);
             $result = $stmt->fetch(\PDO::FETCH_INTO);
-            $stmt->closeCursor();
-        } elseif (is_string($object)) {
+        } else {
             // some class name
-            $stmt->setFetchMode(\PDO::FETCH_CLASS, $object);
-            $stmt->execute($params);
-            $result = $stmt->fetch(\PDO::FETCH_CLASS);
-            $stmt->closeCursor();
+            $result = $stmt->fetchObject($object);
         }
 
+        $stmt->closeCursor();
         $this->log($sql, $params);
         return $result;
     }
@@ -543,23 +572,18 @@ class Db
     {
         $stmt = $this->prepare($sql);
         $result = null;
+        $stmt->execute($params);
         if (!$object) {
             // StdClass
-            $stmt->execute($params);
             $result = $stmt->fetchAll(\PDO::FETCH_OBJ);
-            $stmt->closeCursor();
         } elseif (is_object($object)) {
             // some instance
-            $stmt->execute($params);
             $result = $stmt->fetchAll(\PDO::FETCH_INTO, $object);
-            $stmt->closeCursor();
         } elseif (is_string($object)) {
             // some class name
-            $stmt->execute($params);
             $result = $stmt->fetchAll(\PDO::FETCH_CLASS, $object);
-            $stmt->closeCursor();
         }
-
+        $stmt->closeCursor();
         $this->log($sql, $params);
         return $result;
     }

@@ -65,7 +65,7 @@ class SelectBuilder extends AbstractBuilder
      */
     public function getSql()
     {
-        $query = "SELECT " . implode(', ', $this->sqlParts['select']) . "\n FROM ";
+        $query = "SELECT " . implode(', ', $this->sqlParts['select']) . " FROM ";
 
         $fromClauses = array();
         $knownAliases = array();
@@ -80,11 +80,11 @@ class SelectBuilder extends AbstractBuilder
         }
 
         $query .= join(', ', $fromClauses)
-            . ($this->sqlParts['where'] !== null ? "\n WHERE " . ((string) $this->sqlParts['where']) : "")
-            . ($this->sqlParts['groupBy'] ? "\n GROUP BY " . join(", ", $this->sqlParts['groupBy']) : "")
-            . ($this->sqlParts['having'] !== null ? "\n HAVING " . ((string) $this->sqlParts['having']) : "")
-            . ($this->sqlParts['orderBy'] ? "\n ORDER BY " . join(", ", $this->sqlParts['orderBy']) : "")
-            . ($this->limit ? "\n LIMIT ". $this->limit ." OFFSET ". $this->offset : "")
+            . ($this->sqlParts['where'] !== null ? " WHERE " . ((string) $this->sqlParts['where']) : "")
+            . ($this->sqlParts['groupBy'] ? " GROUP BY " . join(", ", $this->sqlParts['groupBy']) : "")
+            . ($this->sqlParts['having'] !== null ? " HAVING " . ((string) $this->sqlParts['having']) : "")
+            . ($this->sqlParts['orderBy'] ? " ORDER BY " . join(", ", $this->sqlParts['orderBy']) : "")
+            . ($this->limit ? " LIMIT ". $this->limit ." OFFSET ". $this->offset : "")
         ;
 
         return $query;
@@ -436,7 +436,7 @@ class SelectBuilder extends AbstractBuilder
         if (isset($this->sqlParts['join'][$fromAlias])) {
             foreach ($this->sqlParts['join'][$fromAlias] as $join) {
                 $sql .= ' ' . strtoupper($join['joinType'])
-                    . "\n JOIN " . $join['joinTable'] . ' ' . $join['joinAlias']
+                    . " JOIN " . $join['joinTable'] . ' ' . $join['joinAlias']
                     . " ON " . ((string) $join['joinCondition']);
                 $sql .= $this->getSQLForJoins($join['joinAlias']);
             }

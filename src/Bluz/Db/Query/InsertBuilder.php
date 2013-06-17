@@ -41,7 +41,7 @@ class InsertBuilder extends AbstractBuilder
     public function getSql()
     {
         $query = "INSERT INTO " . $this->sqlParts['from']['table']
-            . "\n SET " . join(", ", $this->sqlParts['set']);
+            . " SET " . join(", ", $this->sqlParts['set']);
 
         return $query;
     }

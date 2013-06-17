@@ -400,7 +400,7 @@ class Db
     {
         $sqlWhere = $this->prepareWhere($where);
 
-        $sql = "DELETE FROM `{$table}` {$sqlWhere}";
+        $sql = "DELETE FROM ". $table ." ". $sqlWhere;
 
         $stmt = $this->prepare($sql);
 
@@ -649,5 +649,18 @@ class Db
         $sql = vsprintf($sql, $context);
 
         $this->getApplication()->log("DB >> " . $sql);
+    }
+
+    /**
+     * Disconnect PDO and clean default adapter
+     *
+     * @return void
+     */
+    public function disconnect()
+    {
+        if ($this->dbh) {
+            $this->dbh = null;
+        }
+        self::$adapter = null;
     }
 }

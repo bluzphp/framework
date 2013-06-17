@@ -11,9 +11,8 @@ define('PATH_BLUZ', PATH_ROOT . '/vendor/bluzphp/framework/src/Bluz');
 define('PATH_PUBLIC', PATH_ROOT . '/public');
 define('PATH_THEME', PATH_ROOT . '/themes');
 
-var_dump(PATH_APPLICATION);
-
 // init autoloader
+require_once realpath(dirname(__FILE__). '/../../../') . '/src/Bluz/_loader.php';
 require_once realpath(dirname(__FILE__). '/../../../') . '/vendor/autoload.php';
 require_once 'BootstrapTest.php';
 require_once 'TestCase.php';

@@ -87,6 +87,7 @@ class TableTest extends Bluz\Tests\TestCase
      */
     public function testSetAdapterWithoutConfig()
     {
+//        var_dump(Db\Db::getDefaultAdapter());
         $this->table->setAdapter();
     }
 

@@ -43,8 +43,8 @@ class DeleteBuilder extends AbstractBuilder
     public function getSql()
     {
         $query = "DELETE FROM " . $this->sqlParts['from']['table']
-            . ($this->sqlParts['where'] !== null ? "\n WHERE " . ((string) $this->sqlParts['where']) : "")
-            . ($this->limit ? "\n LIMIT ". $this->limit : "")
+            . ($this->sqlParts['where'] !== null ? " WHERE " . ((string) $this->sqlParts['where']) : "")
+            . ($this->limit ? " LIMIT ". $this->limit : "")
         ;
 
         return $query;

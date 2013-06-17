@@ -31,38 +31,42 @@ use Bluz\Db\Db;
 /**
  * Builder of SELECT queries
  */
-class InsertBuilder extends AbstractBuilder
+class UpdateBuilder extends AbstractBuilder
 {
     use Traits\Set;
+    use Traits\Where;
+    use Traits\Limit;
 
     /**
      * {@inheritdoc}
      */
     public function getSql()
     {
-        $query = "INSERT INTO " . $this->sqlParts['from']['table']
-            . "\n SET " . join(", ", $this->sqlParts['set']);
+        $query = "UPDATE " . $this->sqlParts['from']['table']
+            . "\n SET " . join(", ", $this->sqlParts['set'])
+            . ($this->sqlParts['where'] !== null ? "\n WHERE " . ((string) $this->sqlParts['where']) : "")
+            . ($this->limit ? "\n LIMIT ". $this->limit : "")
+        ;
 
         return $query;
     }
 
     /**
-     * Turns the query being built into an insert query that inserts into
+     * Turns the query being built into a bulk update query that ranges over
      * a certain table
      *
      * <code>
-     *
-     *     $ib = new InsertBuilder();
-     *     $ib
-     *         ->insert('users')
-     *         ->set('name', 'username')
-     *         ->set('password', md5('password'));
+     *     $ub = new UpdateBuilder();
+     *     $ub
+     *         ->update('users')
+     *         ->set('password', md5('password'))
+     *         ->where('id = ?');
      * </code>
      *
-     * @param string $table The table into which the rows should be inserted
-     * @return self instance
+     * @param string $table The table whose rows are subject to the update
+     * @return self instance.
      */
-    public function insert($table)
+    public function update($table)
     {
         $table = $this->db->quoteIdentifier($table);
         return $this->addQueryPart('from', array('table' => $table));

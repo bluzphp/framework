@@ -34,6 +34,11 @@ use Bluz\Db\DbException;
  */
 class SelectBuilder extends AbstractBuilder
 {
+    use Traits\From;
+    use Traits\Where;
+    use Traits\Order;
+    use Traits\Limit;
+
     /**
      * @var integer The index of the first result to retrieve.
      */
@@ -42,9 +47,17 @@ class SelectBuilder extends AbstractBuilder
     /**
      * {@inheritdoc}
      */
-    public function execute()
+    public function execute($fetchType = \PDO::FETCH_ASSOC)
     {
-        return $this->db->fetchAll($this->getSQL(), $this->params, $this->paramTypes);
+        switch ($fetchType) {
+            case (!is_int($fetchType)):
+                return $this->db->fetchObjects($this->getSQL(), $this->params, $fetchType);
+            case \PDO::FETCH_CLASS:
+                return $this->db->fetchObjects($this->getSQL(), $this->params);
+            case \PDO::FETCH_ASSOC:
+            default:
+                return $this->db->fetchAll($this->getSQL(), $this->params);
+        }
     }
 
     /**
@@ -66,12 +79,12 @@ class SelectBuilder extends AbstractBuilder
             $fromClauses[$from['alias']] = $fromClause;
         }
 
-        $query .= implode(', ', $fromClauses)
-            . ($this->sqlParts['where'] !== null ? "\n WHERE " . ((string) $this->sqlParts['where']) : '')
-            . ($this->sqlParts['groupBy'] ? "\n GROUP BY " . implode(', ', $this->sqlParts['groupBy']) : '')
-            . ($this->sqlParts['having'] !== null ? "\n HAVING " . ((string) $this->sqlParts['having']) : '')
-            . ($this->sqlParts['orderBy'] ? "\n ORDER BY " . implode(', ', $this->sqlParts['orderBy']) : '')
-            . ($this->limit ? "\n LIMIT {$this->limit} OFFSET {$this->offset}" : "")
+        $query .= join(', ', $fromClauses)
+            . ($this->sqlParts['where'] !== null ? "\n WHERE " . ((string) $this->sqlParts['where']) : "")
+            . ($this->sqlParts['groupBy'] ? "\n GROUP BY " . join(", ", $this->sqlParts['groupBy']) : "")
+            . ($this->sqlParts['having'] !== null ? "\n HAVING " . ((string) $this->sqlParts['having']) : "")
+            . ($this->sqlParts['orderBy'] ? "\n ORDER BY " . join(", ", $this->sqlParts['orderBy']) : "")
+            . ($this->limit ? "\n LIMIT ". $this->limit ." OFFSET ". $this->offset : "")
         ;
 
         return $query;
@@ -96,7 +109,7 @@ class SelectBuilder extends AbstractBuilder
     {
         $selects = is_array($select) ? $select : func_get_args();
 
-        return $this->add('select', $selects, false);
+        return $this->addQueryPart('select', $selects, false);
     }
 
     /**
@@ -118,7 +131,134 @@ class SelectBuilder extends AbstractBuilder
     {
         $selects = is_array($select) ? $select : func_get_args();
 
-        return $this->add('select', $selects, true);
+        return $this->addQueryPart('select', $selects, true);
+    }
+
+    /**
+     * Creates and adds a join to the query
+     *
+     * <code>
+     *     $sb = new SelectBuilder();
+     *     $sb
+     *         ->select('u.name')
+     *         ->from('users', 'u')
+     *         ->join('u', 'phonenumbers', 'p', 'p.is_primary = 1');
+     * </code>
+     *
+     * @param string $fromAlias The alias that points to a from clause
+     * @param string $join The table name to join
+     * @param string $alias The alias of the join table
+     * @param string $condition The condition for the join
+     * @return self instance
+     */
+    public function join($fromAlias, $join, $alias, $condition = null)
+    {
+        return $this->innerJoin($fromAlias, $join, $alias, $condition);
+    }
+
+    /**
+     * Creates and adds a join to the query
+     *
+     * <code>
+     *     $sb = new SelectBuilder();
+     *     $sb
+     *         ->select('u.name')
+     *         ->from('users', 'u')
+     *         ->innerJoin('u', 'phonenumbers', 'p', 'p.is_primary = 1');
+     * </code>
+     *
+     * @param string $fromAlias The alias that points to a from clause
+     * @param string $join The table name to join
+     * @param string $alias The alias of the join table
+     * @param string $condition The condition for the join
+     * @return self instance
+     */
+    public function innerJoin($fromAlias, $join, $alias, $condition = null)
+    {
+        $this->aliases[] = $alias;
+
+        return $this->addQueryPart(
+            'join',
+            array(
+                $fromAlias => array(
+                    'joinType'      => 'inner',
+                    'joinTable'     => $join,
+                    'joinAlias'     => $alias,
+                    'joinCondition' => $condition
+                )
+            ),
+            true
+        );
+    }
+
+    /**
+     * Creates and adds a left join to the query.
+     *
+     * <code>
+     *     $sb = new SelectBuilder();
+     *     $sb
+     *         ->select('u.name')
+     *         ->from('users', 'u')
+     *         ->leftJoin('u', 'phonenumbers', 'p', 'p.is_primary = 1');
+     * </code>
+     *
+     * @param string $fromAlias The alias that points to a from clause
+     * @param string $join The table name to join
+     * @param string $alias The alias of the join table
+     * @param string $condition The condition for the join
+     * @return self instance
+     */
+    public function leftJoin($fromAlias, $join, $alias, $condition = null)
+    {
+        $this->aliases[] = $alias;
+
+        return $this->addQueryPart(
+            'join',
+            array(
+                $fromAlias => array(
+                    'joinType'      => 'left',
+                    'joinTable'     => $join,
+                    'joinAlias'     => $alias,
+                    'joinCondition' => $condition
+                )
+            ),
+            true
+        );
+    }
+
+    /**
+     * Creates and adds a right join to the query.
+     *
+     * <code>
+     *     $sb = new SelectBuilder();
+     *     $sb
+     *         ->select('u.name')
+     *         ->from('users', 'u')
+     *         ->rightJoin('u', 'phonenumbers', 'p', 'p.is_primary = 1');
+     * </code>
+     *
+     * @param string $fromAlias The alias that points to a from clause
+     * @param string $join The table name to join
+     * @param string $alias The alias of the join table
+     * @param string $condition The condition for the join
+     * @return self instance
+     */
+    public function rightJoin($fromAlias, $join, $alias, $condition = null)
+    {
+        $this->aliases[] = $alias;
+
+        return $this->addQueryPart(
+            'join',
+            array(
+                $fromAlias => array(
+                    'joinType'      => 'right',
+                    'joinTable'     => $join,
+                    'joinAlias'     => $alias,
+                    'joinCondition' => $condition
+                )
+            ),
+            true
+        );
     }
 
     /**
@@ -144,7 +284,7 @@ class SelectBuilder extends AbstractBuilder
 
         $groupBy = is_array($groupBy) ? $groupBy : func_get_args();
 
-        return $this->add('groupBy', $groupBy);
+        return $this->addQueryPart('groupBy', $groupBy);
     }
 
     /**
@@ -170,7 +310,7 @@ class SelectBuilder extends AbstractBuilder
 
         $groupBy = is_array($groupBy) ? $groupBy : func_get_args();
 
-        return $this->add('groupBy', $groupBy, true);
+        return $this->addQueryPart('groupBy', $groupBy, true);
     }
 
 
@@ -186,7 +326,7 @@ class SelectBuilder extends AbstractBuilder
     {
         $order = strtoupper($order);
         $order = ('ASC' == $order ? 'ASC' : 'DESC');
-        return $this->add('orderBy', $sort . ' ' . $order);
+        return $this->addQueryPart('orderBy', $sort . ' ' . $order);
     }
 
     /**
@@ -200,7 +340,7 @@ class SelectBuilder extends AbstractBuilder
     {
         $order = strtoupper($order);
         $order = ('ASC' == $order ? 'ASC' : 'DESC');
-        return $this->add('orderBy', $sort . ' ' . $order, true);
+        return $this->addQueryPart('orderBy', $sort . ' ' . $order, true);
     }
     /**
      * Specifies a restriction over the groups of the query.
@@ -212,7 +352,7 @@ class SelectBuilder extends AbstractBuilder
     public function having($condition)
     {
         $condition = $this->prepareCondition(func_get_args());
-        return $this->add('having', $condition);
+        return $this->addQueryPart('having', $condition);
     }
 
     /**
@@ -233,7 +373,7 @@ class SelectBuilder extends AbstractBuilder
             $having = new CompositeBuilder([$having, $condition]);
         }
 
-        return $this->add('having', $having);
+        return $this->addQueryPart('having', $having);
     }
 
     /**
@@ -254,7 +394,7 @@ class SelectBuilder extends AbstractBuilder
             $having = new CompositeBuilder([$having, $condition], 'OR');
         }
 
-        return $this->add('having', $having);
+        return $this->addQueryPart('having', $having);
     }
 
     /**
@@ -283,5 +423,25 @@ class SelectBuilder extends AbstractBuilder
         }
         $this->offset = $this->limit * ($page - 1);
         return $this;
+    }
+
+    /**
+     * @param $fromAlias
+     * @return string
+     */
+    protected function getSQLForJoins($fromAlias)
+    {
+        $sql = '';
+
+        if (isset($this->sqlParts['join'][$fromAlias])) {
+            foreach ($this->sqlParts['join'][$fromAlias] as $join) {
+                $sql .= ' ' . strtoupper($join['joinType'])
+                    . "\n JOIN " . $join['joinTable'] . ' ' . $join['joinAlias']
+                    . " ON " . ((string) $join['joinCondition']);
+                $sql .= $this->getSQLForJoins($join['joinAlias']);
+            }
+        }
+
+        return $sql;
     }
 }

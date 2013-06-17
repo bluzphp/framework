@@ -284,7 +284,7 @@ class Db
     }
 
     /**
-     * quote SQL query
+     * Quotes a string for use in a query
      *
      * @param string $value
      * @return string
@@ -292,6 +292,19 @@ class Db
     public function quote($value)
     {
         return $this->handler()->quote($value);
+    }
+
+    /**
+     * Quote a string so it can be safely used as a table or column name
+     *
+     * @param string $value
+     * @return string
+     */
+    public function quoteIdentifier($value)
+    {
+        // remove backticks from table/column name
+        $value = str_replace("`", "", $value);
+        return "`".$value."`";
     }
 
     /**
@@ -399,6 +412,8 @@ class Db
     }
 
     /**
+     * Fetches the one element from a result set
+     *
      * @param string $sql <p>
      *  "SELECT id FROM users WHERE name = :name AND pass = :pass"
      *  </p>
@@ -418,6 +433,8 @@ class Db
     }
 
     /**
+     * Fetches the row from a result set
+     *
      * @param string $sql <p>
      *  "SELECT * FROM users WHERE name = :name AND pass = :pass"
      *  </p>
@@ -437,6 +454,8 @@ class Db
     }
 
     /**
+     * Returns an array containing all of the result set rows
+     *
      * @param string $sql <p>
      *  "SELECT * FROM users WHERE ip = :ip"
      *  </p>
@@ -456,6 +475,8 @@ class Db
     }
 
     /**
+     * Returns an array containing one column from the result set rows
+     *
      * @param string $sql <p>
      *  "SELECT id FROM users WHERE ip = :ip"
      *  </p>
@@ -475,6 +496,9 @@ class Db
     }
 
     /**
+     * Returns an array containing all of the result set rows
+     * Group by first column
+     *
      * @param string $sql <p>
      *  "SELECT ip, id FROM users"
      *  </p>
@@ -535,8 +559,6 @@ class Db
      *  array (':name' => 'John', ':pass' => '123456')
      * </p>
      * @param mixed $object
-     *
-     * @internal param int $cache ttl of cache in minutes
      * @return array
      */
     public function fetchObject($sql, $params = array(), $object = "stdClass")
@@ -589,9 +611,9 @@ class Db
     }
 
     /**
-     * transaction wrapper
+     * Transaction wrapper
      *
-     * @param \closure $process
+     * @param \Closure $process
      * @throws DbException
      * @return boolean
      */
@@ -612,7 +634,7 @@ class Db
     }
 
     /**
-     * log
+     * Log queries by Application
      *
      * @param string $sql
      * @param array $context

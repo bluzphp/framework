@@ -24,47 +24,47 @@
 /**
  * @namespace
  */
-namespace Bluz\Db\Query;
-
-use Bluz\Db\Db;
+namespace Bluz\Db\Query\Traits;
 
 /**
- * Builder of SELECT queries
+ * Limit Trait, required for:
+ *  - SelectBuilder
+ *  - UpdateBuilder
+ *  - DeleteBuilder
+ *
+ * @category Bluz
+ * @package  Db
+ * @subpackage Query
+ *
+ * @author   Anton Shevchuk
+ * @created  17.06.13 10:46
  */
-class InsertBuilder extends AbstractBuilder
-{
-    use Traits\Set;
+trait Limit {
 
     /**
-     * {@inheritdoc}
+     * @var integer The maximum number of results to retrieve/update/delete
      */
-    public function getSql()
-    {
-        $query = "INSERT INTO " . $this->sqlParts['from']['table']
-            . "\n SET " . join(", ", $this->sqlParts['set']);
+    protected $limit = null;
 
-        return $query;
+    /**
+     * Sets the maximum number of results to retrieve/update/delete
+     *
+     * @param integer $limit The maximum number of results to retrieve
+     * @return self instance
+     */
+    public function limit($limit)
+    {
+        $this->limit = $limit;
+        return $this;
     }
 
     /**
-     * Turns the query being built into an insert query that inserts into
-     * a certain table
+     * Gets the maximum number of results the query object was set to retrieve
      *
-     * <code>
-     *
-     *     $ib = new InsertBuilder();
-     *     $ib
-     *         ->insert('users')
-     *         ->set('name', 'username')
-     *         ->set('password', md5('password'));
-     * </code>
-     *
-     * @param string $table The table into which the rows should be inserted
-     * @return self instance
+     * @return integer Maximum number of results
      */
-    public function insert($table)
+    public function getLimit()
     {
-        $table = $this->db->quoteIdentifier($table);
-        return $this->addQueryPart('from', array('table' => $table));
+        return $this->limit;
     }
 }

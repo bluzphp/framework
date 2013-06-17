@@ -24,47 +24,47 @@
 /**
  * @namespace
  */
-namespace Bluz\Db\Query;
-
-use Bluz\Db\Db;
+namespace Bluz\Db\Query\Traits;
 
 /**
- * Builder of SELECT queries
+ * From Trait, required for:
+ *  - SelectBuilder
+ *  - DeleteBuilder
+ *
+ * @category Bluz
+ * @package  Db
+ * @subpackage Query
+ *
+ * @author   Anton Shevchuk
+ * @created  17.06.13 10:46
  */
-class InsertBuilder extends AbstractBuilder
-{
-    use Traits\Set;
-
+trait From {
     /**
-     * {@inheritdoc}
-     */
-    public function getSql()
-    {
-        $query = "INSERT INTO " . $this->sqlParts['from']['table']
-            . "\n SET " . join(", ", $this->sqlParts['set']);
-
-        return $query;
-    }
-
-    /**
-     * Turns the query being built into an insert query that inserts into
-     * a certain table
+     * Create and add a query root corresponding to the table identified by the
+     * given alias, forming a cartesian product with any existing query roots
      *
      * <code>
-     *
-     *     $ib = new InsertBuilder();
-     *     $ib
-     *         ->insert('users')
-     *         ->set('name', 'username')
-     *         ->set('password', md5('password'));
+     *     $sb = new SelectBuilder();
+     *     $sb
+     *         ->select('u.id')
+     *         ->from('users', 'u')
      * </code>
      *
-     * @param string $table The table into which the rows should be inserted
+     * @param string $from   The table
+     * @param string $alias  The alias of the table
      * @return self instance
      */
-    public function insert($table)
+    public function from($from, $alias)
     {
-        $table = $this->db->quoteIdentifier($table);
-        return $this->addQueryPart('from', array('table' => $table));
+        $this->aliases[] = $alias;
+
+        return $this->addQueryPart(
+            'from',
+            array(
+                'table' => $from,
+                'alias' => $alias
+            ),
+            true
+        );
     }
 }

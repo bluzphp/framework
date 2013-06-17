@@ -24,47 +24,44 @@
 /**
  * @namespace
  */
-namespace Bluz\Db\Query;
-
-use Bluz\Db\Db;
+namespace Bluz\Db\Query\Traits;
 
 /**
- * Builder of SELECT queries
+ * Order Trait, required for:
+ *  - SelectBuilder
+ *  - UpdateBuilder
+ *  - DeleteBuilder
+ *
+ * @category Bluz
+ * @package  Db
+ * @subpackage Query
+ *
+ * @author   Anton Shevchuk
+ * @created  17.06.13 10:00
  */
-class InsertBuilder extends AbstractBuilder
-{
-    use Traits\Set;
-
+trait Order {
     /**
-     * {@inheritdoc}
+     * Specifies an ordering for the query results
+     * Replaces any previously specified orderings, if any
+     *
+     * @param string $sort expression
+     * @param string $order direction
+     * @return self instance
      */
-    public function getSql()
+    public function orderBy($sort, $order = 'ASC')
     {
-        $query = "INSERT INTO " . $this->sqlParts['from']['table']
-            . "\n SET " . join(", ", $this->sqlParts['set']);
-
-        return $query;
+        return $this->addQueryPart('orderBy', $sort . ' ' . (! $order ? 'ASC' : $order), false);
     }
 
     /**
-     * Turns the query being built into an insert query that inserts into
-     * a certain table
+     * Adds an ordering to the query results
      *
-     * <code>
-     *
-     *     $ib = new InsertBuilder();
-     *     $ib
-     *         ->insert('users')
-     *         ->set('name', 'username')
-     *         ->set('password', md5('password'));
-     * </code>
-     *
-     * @param string $table The table into which the rows should be inserted
+     * @param string $sort expression
+     * @param string $order direction
      * @return self instance
      */
-    public function insert($table)
+    public function addOrderBy($sort, $order = 'ASC')
     {
-        $table = $this->db->quoteIdentifier($table);
-        return $this->addQueryPart('from', array('table' => $table));
+        return $this->addQueryPart('orderBy', $sort . ' ' . (! $order ? 'ASC' : $order), true);
     }
 }

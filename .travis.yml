@@ -8,6 +8,7 @@ before_script:
   - composer update --prefer-source
   # Database
   - mysql -e 'CREATE DATABASE bluz;'
+  - mysql -uroot bluz < tests/dump.sql
 script:
   # PHPUnit tests
   - php vendor/bin/phpunit --configuration tests/Bluz/Tests/phpunit.xml --coverage-text

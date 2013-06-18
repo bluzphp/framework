@@ -68,7 +68,7 @@ class UpdateBuilder extends AbstractBuilder
      */
     public function update($table)
     {
-        $table = $this->db->quoteIdentifier($table);
+        $table = $this->db()->quoteIdentifier($table);
         return $this->addQueryPart('from', array('table' => $table));
     }
 }

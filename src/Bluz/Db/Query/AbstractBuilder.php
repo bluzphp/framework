@@ -39,11 +39,6 @@ use Bluz\Db\Query\CompositeBuilder;
 abstract class AbstractBuilder
 {
     /**
-     * @var Db handler
-     */
-    protected $db = null;
-
-    /**
      * @var array The array of SQL parts collected
      */
     protected $sqlParts = array(
@@ -84,7 +79,7 @@ abstract class AbstractBuilder
      */
     public function __construct()
     {
-        $this->db = app()->getDb();
+
     }
 
     /**
@@ -94,7 +89,17 @@ abstract class AbstractBuilder
      */
     public function execute()
     {
-        return $this->db->query($this->getSQL(), $this->params, $this->paramTypes);
+        return $this->db()->query($this->getSQL(), $this->params, $this->paramTypes);
+    }
+
+    /**
+     * db
+     *
+     * @return Db
+     */
+    protected function db()
+    {
+        return app()->getDb();
     }
 
     /**
@@ -295,18 +300,25 @@ abstract class AbstractBuilder
      */
     protected function prepareCondition($args = array())
     {
+        /**
+         * <code>
+         *   prepareCondition("WHERE id IN (?)", [..,..]);
+         * </code>
+         */
         $condition = array_shift($args);
         foreach ($args as &$value) {
             if (is_array($value)) {
-                foreach ($value as &$element) {
-                    $element = $this->db->quote($element);
+                $replace = join(',', array_fill(0, sizeof($value), ':REPLACE:'));
+                $condition = preg_replace('/\?/', $replace, $condition, 1);
+                foreach ($value as $part) {
+                    $this->setParameter(null, $part);
                 }
-                $value = join(',', $value);
             } else {
-                $value = $this->db->quote($value);
+                $this->setParameter(null, $value);
             }
-            $condition = preg_replace('/\?/', $value, $condition, 1);
         }
+
+        $condition = preg_replace('/(\:REPLACE\:)/', '?', $condition);
 
         return $condition;
     }

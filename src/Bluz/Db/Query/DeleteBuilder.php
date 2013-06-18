@@ -66,7 +66,7 @@ class DeleteBuilder extends AbstractBuilder
      */
     public function delete($table)
     {
-        $table = $this->db->quoteIdentifier($table);
+        $table = $this->db()->quoteIdentifier($table);
         return $this->addQueryPart('from', array('table' => $table));
     }
 }

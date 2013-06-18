@@ -78,18 +78,19 @@ class BuilderTest extends Bluz\Tests\TestCase
         $builder = $builder
             ->select('u.*', 'ua.*')
             ->from('users', 'u')
-            ->join('u', 'users_actions', 'ua', 'ua.userId = u.id')
+            ->leftJoin('u', 'users_actions', 'ua', 'ua.userId = u.id')
             ->where('u.id = ? OR u.id = ?', 4, 5)
             ->orWhere('u.id IN (?)', [4, 5])
             ->andWhere('u.status = ? OR u.status = ?', 'active', 'pending')
             ->orWhere('u.login LIKE (?)', 'A%')
             ->limit(5)
         ;
-        $check = "SELECT u.*, ua.*"
-            . " FROM users u LEFT JOIN users_actions ua ON ua.userId = u.id"
-            . " WHERE (((u.id = '4' OR u.id = '5') OR (u.id IN ('4','5')))"
-            . " AND (u.status = 'active' OR u.status = 'pending')) OR (u.login LIKE ('A%'))"
-            . " LIMIT 5 OFFSET 0";
+
+        $check = 'SELECT u.*, ua.*'
+            . ' FROM users u LEFT JOIN users_actions ua ON ua.userId = u.id'
+            . ' WHERE (((u.id = "4" OR u.id = "5") OR (u.id IN ("4","5")))'
+            . ' AND (u.status = "active" OR u.status = "pending")) OR (u.login LIKE ("A%"))'
+            . ' LIMIT 5 OFFSET 0';
 
         $this->assertEquals($builder->getQuery(), $check);
     }
@@ -101,11 +102,11 @@ class BuilderTest extends Bluz\Tests\TestCase
     {
         $builder = new InsertBuilder();
         $builder = $builder
-            ->insert('users`')
-            ->set('login', 'example')
+            ->insert('test`')
+            ->set('name', 'example')
             ->set('email', 'example@domain.com')
         ;
-        $check = 'INSERT INTO `users` SET `login` = "example", `email` = "example@domain.com"';
+        $check = 'INSERT INTO `test` SET `name` = "example", `email` = "example@domain.com"';
 
         $this->assertEquals($builder->getQuery(), $check);
     }
@@ -117,16 +118,15 @@ class BuilderTest extends Bluz\Tests\TestCase
     {
         $builder = new UpdateBuilder();
         $builder = $builder
-            ->update('users')
+            ->update('test')
             ->setArray(
                 [
-                    'status' => 'active',
-                    'updated' => '2013-06-17 17:18:30'
+                    'status' => 'disable'
                 ]
             )
-            ->where('id = ?', 30)
+            ->where('id = ?', 5)
         ;
-        $check = 'UPDATE `users` SET `status` = "active", `updated` = "2013-06-17 17:18:30" WHERE id = \'30\'';
+        $check = 'UPDATE `test` SET `status` = "disable" WHERE id = "5"';
 
         $this->assertEquals($builder->getQuery(), $check);
     }
@@ -138,11 +138,11 @@ class BuilderTest extends Bluz\Tests\TestCase
     {
         $builder = new DeleteBuilder();
         $builder = $builder
-            ->delete('users')
+            ->delete('test')
             ->where('id = ?', 5)
             ->limit(1)
         ;
-        $check = "DELETE FROM `users` WHERE id = '5' LIMIT 1";
+        $check = 'DELETE FROM `test` WHERE id = "5" LIMIT 1';
 
         $this->assertEquals($builder->getQuery(), $check);
     }

@@ -58,7 +58,7 @@ trait Set {
     public function set($key, $value)
     {
         $this->setParameter(null, $value);
-        $key = $this->db->quoteIdentifier($key);
+        $key = $this->db()->quoteIdentifier($key);
         return $this->addQueryPart('set', $key .' = ?', true);
     }
 

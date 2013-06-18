@@ -47,24 +47,45 @@ trait Limit {
     protected $limit = null;
 
     /**
+     * @var integer The index of the first result to retrieve.
+     */
+    protected $offset = 0;
+
+    /**
      * Sets the maximum number of results to retrieve/update/delete
      *
      * @param integer $limit The maximum number of results to retrieve
+     * @param integer $offset
      * @return self instance
      */
-    public function limit($limit)
+    public function limit($limit, $offset = 0)
     {
-        $this->limit = $limit;
+        $this->setLimit($limit);
+        $this->setOffset($offset);
         return $this;
     }
 
     /**
-     * Gets the maximum number of results the query object was set to retrieve
+     * Setup limit for the query
      *
-     * @return integer Maximum number of results
+     * @param integer $limit
+     * @return self instance
      */
-    public function getLimit()
+    public function setLimit($limit)
     {
-        return $this->limit;
+        $this->limit = (int) $limit;
+        return $this;
+    }
+
+    /**
+     * Setup offset for the query
+     *
+     * @param integer $offset
+     * @return self instance
+     */
+    public function setOffset($offset)
+    {
+        $this->offset = (int) $offset;
+        return $this;
     }
 }

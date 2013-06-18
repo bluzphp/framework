@@ -64,7 +64,7 @@ class InsertBuilder extends AbstractBuilder
      */
     public function insert($table)
     {
-        $table = $this->db->quoteIdentifier($table);
+        $table = $this->db()->quoteIdentifier($table);
         return $this->addQueryPart('from', array('table' => $table));
     }
 }

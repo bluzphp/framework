@@ -39,10 +39,6 @@ class SelectBuilder extends AbstractBuilder
     use Traits\Order;
     use Traits\Limit;
 
-    /**
-     * @var integer The index of the first result to retrieve.
-     */
-    protected $offset = 0;
 
     /**
      * {@inheritdoc}
@@ -51,12 +47,12 @@ class SelectBuilder extends AbstractBuilder
     {
         switch ($fetchType) {
             case (!is_int($fetchType)):
-                return $this->db->fetchObjects($this->getSQL(), $this->params, $fetchType);
+                return $this->db()->fetchObjects($this->getSQL(), $this->params, $fetchType);
             case \PDO::FETCH_CLASS:
-                return $this->db->fetchObjects($this->getSQL(), $this->params);
+                return $this->db()->fetchObjects($this->getSQL(), $this->params);
             case \PDO::FETCH_ASSOC:
             default:
-                return $this->db->fetchAll($this->getSQL(), $this->params);
+                return $this->db()->fetchAll($this->getSQL(), $this->params);
         }
     }
 
@@ -395,18 +391,6 @@ class SelectBuilder extends AbstractBuilder
         }
 
         return $this->addQueryPart('having', $having);
-    }
-
-    /**
-     * Setup offset for the query
-     *
-     * @param $offset
-     * @return SelectBuilder
-     */
-    public function setOffset($offset)
-    {
-        $this->offset = (int) $offset;
-        return $this;
     }
 
     /**

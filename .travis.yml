@@ -3,6 +3,7 @@ php:
   - 5.4
   - 5.5
 before_script:
+  # Composer
   - COMPOSER_ROOT_VERSION=dev-master composer --prefer-source --dev install
   - composer self-update
   - composer update --prefer-source

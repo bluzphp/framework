@@ -41,14 +41,5 @@ use Bluz\Exception;
  */
 class BootstrapTest extends Application
 {
-    /**
-     * load config file
-     *
-     * @param string|null $environment
-     * @return Config
-     */
-    public function getConfig($environment = null)
-    {
-        return new Config();
-    }
+
 }

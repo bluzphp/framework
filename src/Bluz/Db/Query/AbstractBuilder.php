@@ -67,20 +67,11 @@ abstract class AbstractBuilder
      */
     protected $paramTypes = array();
 
-
     /**
      * Known table aliases
      * @var array
      */
     protected $aliases = array();
-
-    /**
-     * Initializes a new <tt>AbstractBuilder</tt>
-     */
-    public function __construct()
-    {
-
-    }
 
     /**
      * Execute this query using the bound parameters and their types
@@ -272,7 +263,7 @@ abstract class AbstractBuilder
      * @param string $queryPartName
      * @return mixed $queryPart
      */
-    protected function getQueryPart($queryPartName)
+    public function getQueryPart($queryPartName)
     {
         return $this->sqlParts[$queryPartName];
     }

@@ -43,33 +43,6 @@ use Bluz\Tests;
 class BuilderTest extends Bluz\Tests\TestCase
 {
     /**
-     * Setup connection to Db
-     */
-    protected function setUp()
-    {
-        parent::setUp();
-        app()->getDb()->setConnect(
-            array(
-                "type" => $GLOBALS['DB_TYPE'],
-                "host" => $GLOBALS['DB_HOST'],
-                "name" => $GLOBALS['DB_NAME'],
-                "user" => $GLOBALS['DB_USER'],
-                "pass" => $GLOBALS['DB_PASS'],
-            )
-        );
-    }
-
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-        $db = app()->getDb();
-        $db->disconnect();
-    }
-
-    /**
      * Complex test of select builder
      */
     public function testSelect()

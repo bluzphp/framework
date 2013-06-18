@@ -24,22 +24,44 @@
 /**
  * @namespace
  */
-namespace Bluz\Tests;
-
-use Bluz\Application;
-use Bluz\Config\Config;
-use Bluz\Exception;
+namespace Bluz\Db\Query\Traits;
 
 /**
- * Bootstrap
+ * Order Trait, required for:
+ *  - SelectBuilder
+ *  - UpdateBuilder
+ *  - DeleteBuilder
  *
  * @category Bluz
- * @package  Tests
+ * @package  Db
+ * @subpackage Query
  *
  * @author   Anton Shevchuk
- * @created  20.07.11 17:38
+ * @created  17.06.13 10:00
  */
-class BootstrapTest extends Application
-{
+trait Order {
+    /**
+     * Specifies an ordering for the query results
+     * Replaces any previously specified orderings, if any
+     *
+     * @param string $sort expression
+     * @param string $order direction
+     * @return self instance
+     */
+    public function orderBy($sort, $order = 'ASC')
+    {
+        return $this->addQueryPart('orderBy', $sort . ' ' . (! $order ? 'ASC' : $order), false);
+    }
 
+    /**
+     * Adds an ordering to the query results
+     *
+     * @param string $sort expression
+     * @param string $order direction
+     * @return self instance
+     */
+    public function addOrderBy($sort, $order = 'ASC')
+    {
+        return $this->addQueryPart('orderBy', $sort . ' ' . (! $order ? 'ASC' : $order), true);
+    }
 }

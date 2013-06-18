@@ -24,22 +24,47 @@
 /**
  * @namespace
  */
-namespace Bluz\Tests;
+namespace Bluz\Db\Query;
 
-use Bluz\Application;
-use Bluz\Config\Config;
-use Bluz\Exception;
+use Bluz\Db\Db;
 
 /**
- * Bootstrap
- *
- * @category Bluz
- * @package  Tests
- *
- * @author   Anton Shevchuk
- * @created  20.07.11 17:38
+ * Builder of SELECT queries
  */
-class BootstrapTest extends Application
+class InsertBuilder extends AbstractBuilder
 {
+    use Traits\Set;
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getSql()
+    {
+        $query = "INSERT INTO " . $this->sqlParts['from']['table']
+            . " SET " . join(", ", $this->sqlParts['set']);
+
+        return $query;
+    }
+
+    /**
+     * Turns the query being built into an insert query that inserts into
+     * a certain table
+     *
+     * <code>
+     *
+     *     $ib = new InsertBuilder();
+     *     $ib
+     *         ->insert('users')
+     *         ->set('name', 'username')
+     *         ->set('password', md5('password'));
+     * </code>
+     *
+     * @param string $table The table into which the rows should be inserted
+     * @return self instance
+     */
+    public function insert($table)
+    {
+        $table = $this->db()->quoteIdentifier($table);
+        return $this->addQueryPart('from', array('table' => $table));
+    }
 }

@@ -24,22 +24,49 @@
 /**
  * @namespace
  */
-namespace Bluz\Tests;
+namespace Bluz\Db\Query;
 
-use Bluz\Application;
-use Bluz\Config\Config;
-use Bluz\Exception;
+use Bluz\Db\Db;
 
 /**
- * Bootstrap
- *
- * @category Bluz
- * @package  Tests
- *
- * @author   Anton Shevchuk
- * @created  20.07.11 17:38
+ * Builder of SELECT queries
  */
-class BootstrapTest extends Application
+class DeleteBuilder extends AbstractBuilder
 {
+    use Traits\From;
+    use Traits\Where;
+    use Traits\Limit;
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getSql()
+    {
+        $query = "DELETE FROM " . $this->sqlParts['from']['table']
+            . ($this->sqlParts['where'] !== null ? " WHERE " . ((string) $this->sqlParts['where']) : "")
+            . ($this->limit ? " LIMIT ". $this->limit : "")
+        ;
+
+        return $query;
+    }
+
+    /**
+     * Turns the query being built into a bulk delete query that ranges over
+     * a certain table
+     *
+     * <code>
+     *     $db = new DeleteBuilder();
+     *     $db
+     *         ->delete('users')
+     *         ->where('id = ?');
+     * </code>
+     *
+     * @param string $table The table whose rows are subject to the update
+     * @return self instance.
+     */
+    public function delete($table)
+    {
+        $table = $this->db()->quoteIdentifier($table);
+        return $this->addQueryPart('from', array('table' => $table));
+    }
 }

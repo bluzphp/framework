@@ -24,22 +24,47 @@
 /**
  * @namespace
  */
-namespace Bluz\Tests;
-
-use Bluz\Application;
-use Bluz\Config\Config;
-use Bluz\Exception;
+namespace Bluz\Db\Query\Traits;
 
 /**
- * Bootstrap
+ * From Trait, required for:
+ *  - SelectBuilder
+ *  - DeleteBuilder
  *
  * @category Bluz
- * @package  Tests
+ * @package  Db
+ * @subpackage Query
  *
  * @author   Anton Shevchuk
- * @created  20.07.11 17:38
+ * @created  17.06.13 10:46
  */
-class BootstrapTest extends Application
-{
+trait From {
+    /**
+     * Create and add a query root corresponding to the table identified by the
+     * given alias, forming a cartesian product with any existing query roots
+     *
+     * <code>
+     *     $sb = new SelectBuilder();
+     *     $sb
+     *         ->select('u.id')
+     *         ->from('users', 'u')
+     * </code>
+     *
+     * @param string $from   The table
+     * @param string $alias  The alias of the table
+     * @return self instance
+     */
+    public function from($from, $alias)
+    {
+        $this->aliases[] = $alias;
 
+        return $this->addQueryPart(
+            'from',
+            array(
+                'table' => $from,
+                'alias' => $alias
+            ),
+            true
+        );
+    }
 }

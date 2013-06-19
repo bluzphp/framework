@@ -240,20 +240,27 @@ class Row
          */
         $data = $this->toArray();
 
-        $primaryKey = $this->getTable()->insert($data);
+        $table = $this->getTable()->getTableName();
+        $sql = "INSERT INTO `$table` SET `" . join('` = ?,`', array_keys($data)) . "` = ?";
+
+        $this->getTable()->getAdapter()->query($sql, array_values($data));
 
         /**
-         * Normalize the result to an array indexed by primary key column(s).
-         * The table insert() method may return a scalar.
-         * TODO: check scalar!!!
+         * If a sequence name was not specified for the name parameter, PDO::lastInsertId()
+         * returns a string representing the row ID of the last row that was inserted into the database.
+         *
+         * If a sequence name was specified for the name parameter, PDO::lastInsertId()
+         * returns a string representing the last value retrieved from the specified sequence object.
+         *
+         * If the PDO driver does not support this capability, PDO::lastInsertId() triggers an IM001 SQLSTATE.
          */
-        if (is_array($primaryKey)) {
-            $newPrimaryKey = $primaryKey;
-        } else {
-            //ZF-6167 Use tempPrimaryKey temporary to avoid that zend encoding fails.
-            $tempPrimaryKey = $this->getTable()->getPrimaryKey();
-            $newPrimaryKey = array(current($tempPrimaryKey) => $primaryKey);
-        }
+        $primaryKey = $this->getTable()->getAdapter()->handler()->lastInsertId();
+
+        /**
+         * Normalize the result to an array indexed by primary key column(s)
+         */
+        $tempPrimaryKey = $this->getTable()->getPrimaryKey();
+        $newPrimaryKey = array(current($tempPrimaryKey) => $primaryKey);
 
         /**
          * Save the new primary key value in object. The primary key may have
@@ -274,7 +281,7 @@ class Row
         $this->clean = $this->toArray();
         $this->modified = array();
 
-        return $primaryKey;
+        return $newPrimaryKey;
     }
 
     /**
@@ -287,6 +294,8 @@ class Row
          * Run pre-UPDATE logic
          */
         $this->beforeUpdate();
+
+        $primaryKey = $this->getPrimaryKey();
 
         /**
          * Compare the data to the modified fields array to discover
@@ -301,7 +310,13 @@ class Row
          * includes SET terms only for data values that changed.
          */
         if (count($diffData) > 0) {
-            $this->getTable()->update($diffData, $this->getPrimaryKey());
+            $table = $this->getTable()->getTableName();
+
+            $sql = "UPDATE `$table`"
+                . " SET `" . join('` = ?,`', array_keys($diffData)) . "` = ?"
+                . " WHERE `" . join('` = ? AND `', array_keys($primaryKey)) . "` = ?";
+
+            $this->getTable()->getAdapter()->query($sql, array_values($diffData + $primaryKey));
         }
 
 
@@ -324,7 +339,6 @@ class Row
          * if the key is compound or a scalar if the key
          * is a scalar.
          */
-        $primaryKey = $this->getPrimaryKey();
         if (count($primaryKey) == 1) {
             return current($primaryKey);
         }
@@ -344,10 +358,17 @@ class Row
          */
         $this->beforeDelete();
 
+        $primaryKey = $this->getPrimaryKey();
+
         /**
          * Execute the DELETE (this may throw an exception)
          */
-        $result = $this->getTable()->delete($this->getPrimaryKey());
+        $table = $this->getTable()->getTableName();
+
+        $sql = "DELETE FROM `$table`"
+            . " WHERE `" . join('` = ? AND `', array_keys($primaryKey)) . "` = ?";
+
+        $result = $this->getTable()->getAdapter()->query($sql, array_values($primaryKey));
 
         /**
          * Execute post-DELETE logic
@@ -357,12 +378,9 @@ class Row
         /**
          * Reset all fields to null to indicate that the row is not there
          */
-        $emptyData = array_combine(
-            array_keys($this->toArray()),
-            array_fill(0, count($this->toArray()), null)
-        );
-
-        $this->setFromArray($emptyData);
+        foreach ($this->data as $key => &$value) {
+            $value = null;
+        }
         return $result;
     }
 

@@ -26,6 +26,8 @@
  */
 namespace Bluz\Db;
 
+use Bluz\Db\Query;
+
 /**
  * PDO wrapper
  *
@@ -226,61 +228,14 @@ class Db
     }
 
     /**
-     * prepare SQL query
+     * Prepare SQL query and return PDO Statement
      *
      * @param string $sql
-     * @param array $params
-     * @param array $types
      * @return \PDOStatement
      */
-    protected function prepare($sql, $params = array(), $types = array())
+    protected function prepare($sql)
     {
-        $this->log("Prepare query");
-        $stmt = $this->handler()->prepare($sql);
-
-        foreach ($params as $key => $param) {
-            $stmt->bindParam(
-                is_int($key)?$key+1:$key,
-                $param,
-                isset($types[$key])?$types[$key]:\PDO::PARAM_STR
-            );
-        }
-        return $stmt;
-    }
-
-    /**
-     * prepare array of params for SQL query
-     *
-     * @param array $params
-     * @return string
-     */
-    protected function prepareWhere($params)
-    {
-        if (is_string($params) && !empty($params)) {
-            return ' WHERE ' . $params;
-        }
-
-        if (!sizeof($params)) {
-            return '';
-        }
-
-        $whereSql = array();
-        foreach ($params as $key => $value) {
-            if (is_array($value)) {
-                $values = array_map([$this, 'quote'], $value);
-                $values = join(',', $values);
-                $whereSql[] = "{$key} IN ({$values})";
-            } elseif (is_null($value)) {
-                $whereSql[] = "{$key} IS NULL";
-            } elseif (stripos($key, ' like')) {
-                $value = $this->quote($value);
-                $whereSql[] = "{$key} LIKE ({$value})";
-            } else {
-                $value = $this->quote($value);
-                $whereSql[] = "{$key} = {$value}";
-            }
-        }
-        return ' WHERE ' . join(' AND ', $whereSql);
+        return $this->handler()->prepare($sql);
     }
 
     /**
@@ -302,12 +257,14 @@ class Db
      */
     public function quoteIdentifier($value)
     {
-        // remove backticks from table/column name
+        // remove "back ticks" from table/column name
         $value = str_replace("`", "", $value);
         return "`".$value."`";
     }
 
     /**
+     * Execute SQL query
+     *
      * @param string $sql <p>
      *  "UPDATE users SET name = :name WHERE id = :id"
      *  </p>
@@ -321,98 +278,72 @@ class Db
      */
     public function query($sql, $params = array(), $types = array())
     {
-        $stmt = $this->prepare($sql, $params, $types);
+        $stmt = $this->prepare($sql);
+        foreach ($params as $key => &$param) {
+            $stmt->bindParam(
+                (is_int($key)?$key+1:":".$key),
+                $param,
+                isset($types[$key])?$types[$key]:\PDO::PARAM_STR
+            );
+        }
         $this->log($sql, $params);
-        return $stmt->execute();
+        return $stmt->execute($params);
     }
 
     /**
-     * @param string $table
-     * @param array $params <p>
-     *  array (':name' => 'John', ':id' => '123')
-     * </p>
-     * @throws DbException
-     * @return string
+     * Create new query select builder
+     *
+     * @param string $select The selection expressions
+     * @return Query\Select
      */
-    public function insert($table, $params = array())
+    public function select($select)
     {
-        $sql = "INSERT INTO `$table` SET `" . join('` = ?,`', array_keys($params)) . "` = ?";
-
-        $stmt = $this->prepare($sql);
-
-        // only data from $params
-        $execParams = array_values($params);
-
-        $result = $stmt->execute($execParams);
-
-        $this->log($sql, $execParams);
-        if ($result) {
-            return $this->handler()->lastInsertId();
-        } else {
-            throw new DbException('Unable to insert: ' . join(' | ', $stmt->errorInfo()));
-        }
+        $query = new Query\Select();
+        $query->select(func_get_args());
+        return $query;
     }
 
     /**
+     * Create new query insert builder
+     *
      * @param string $table
-     * @param array $params <p>
-     *                             array (':name' => 'John', ':id' => '123')
-     * </p>
-     * @param array|string $where  <p>
-     *  "id = 123"
-     *  // or
-     *  ["id" => 123]
-     * </p>
-     * @throws DbException
-     * @return string
+     * @return Query\Insert
      */
-    public function update($table, $params = array(), $where = array())
+    public function insert($table)
     {
-        $sqlWhere = $this->prepareWhere($where);
-
-        $sql = "UPDATE `$table` SET `" . join('` = ?,`', array_keys($params)) . "` = ? " . $sqlWhere;
-
-        $stmt = $this->prepare($sql);
-
-        // only data from $params
-        $execParams = array_values($params);
-
-        $result = $stmt->execute($execParams);
-
-        $this->log($sql, $execParams);
-        if ($result) {
-            return $result;
-        } else {
-            throw new DbException('Unable to update: ' . join(' | ', $stmt->errorInfo()));
-        }
+        $query = new Query\Insert();
+        $query->insert($table);
+        return $query;
     }
 
     /**
+     * Create new query update builder
+     *
      * @param string $table
-     * @param array|string $where <p>
-     *  "id = 123"
-     *  // or
-     *  ["id" => 123]
-     * </p>
-     * @return string
+     * @return Query\Update
      */
-    public function delete($table, $where = array())
+    public function update($table)
     {
-        $sqlWhere = $this->prepareWhere($where);
-
-        $sql = "DELETE FROM ". $table ." ". $sqlWhere;
-
-        $stmt = $this->prepare($sql);
-
-        $result = $stmt->execute();
-
-        $this->log($sql, array_values($where));
-
-        return $result;
+        $query = new Query\Update();
+        $query->update($table);
+        return $query;
     }
 
     /**
-     * Fetches the one element from a result set
+     * Create new query update builder
+     *
+     * @param string $table
+     * @return Query\Delete
+     */
+    public function delete($table)
+    {
+        $query = new Query\Delete();
+        $query->delete($table);
+        return $query;
+    }
+
+    /**
+     * Return first field from first element from the result set
      *
      * @param string $sql <p>
      *  "SELECT id FROM users WHERE name = :name AND pass = :pass"
@@ -433,7 +364,7 @@ class Db
     }
 
     /**
-     * Fetches the row from a result set
+     * Returns an array containing first row from the result set
      *
      * @param string $sql <p>
      *  "SELECT * FROM users WHERE name = :name AND pass = :pass"
@@ -516,6 +447,9 @@ class Db
     }
 
     /**
+     * Returns an array containing all of the result set rows
+     * Group by first column
+     *
      * @param string $sql <p>
      *  "SELECT ip, id FROM users"
      *  </p>
@@ -533,6 +467,8 @@ class Db
     }
 
     /**
+     * Returns a key-value array
+     *
      * @param string $sql <p>
      *  "SELECT id, username FROM users WHERE ip = :ip"
      *  </p>
@@ -552,6 +488,8 @@ class Db
     }
 
     /**
+     * Returns an object containing first row from the result set
+     *
      * @param string $sql <p>
      *  "SELECT * FROM users WHERE name = :name AND pass = :pass"
      *  </p>
@@ -581,6 +519,8 @@ class Db
     }
 
     /**
+     * Returns an array of objects containing the result set
+     *
      * @param string $sql <p>
      *  "SELECT * FROM users WHERE name = :name AND pass = :pass"
      *  </p>

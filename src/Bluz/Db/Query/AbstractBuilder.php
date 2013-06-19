@@ -39,6 +39,22 @@ use Bluz\Db\Query\CompositeBuilder;
 abstract class AbstractBuilder
 {
     /**
+     * @var Db
+     */
+    protected $adapter = null;
+
+    /**
+     * Known table aliases
+     * @var array
+     */
+    protected $aliases = array();
+
+    /**
+     * @var string The complete SQL string for this query
+     */
+    protected $sql;
+
+    /**
      * @var array The array of SQL parts collected
      */
     protected $sqlParts = array(
@@ -53,11 +69,6 @@ abstract class AbstractBuilder
     );
 
     /**
-     * @var string The complete SQL string for this query
-     */
-    protected $sql;
-
-    /**
      * @var array The query parameters
      */
     protected $params = array();
@@ -68,29 +79,43 @@ abstract class AbstractBuilder
     protected $paramTypes = array();
 
     /**
-     * Known table aliases
-     * @var array
-     */
-    protected $aliases = array();
-
-    /**
      * Execute this query using the bound parameters and their types
      *
      * @return mixed
      */
     public function execute()
     {
-        return $this->db()->query($this->getSQL(), $this->params, $this->paramTypes);
+        return $this->getAdapter()->query($this->getSQL(), $this->params, $this->paramTypes);
+    }
+
+
+    /**
+     * Sets a DB adapter.
+     *
+     * @param Db $adapter DB adapter for table to use
+     * @return self instance
+     * @throws DbException if default DB adapter not initiated
+     *                     on \Bluz\Db::$adapter.
+     */
+    public function setAdapter($adapter = null)
+    {
+        if (null == $adapter) {
+            $this->adapter = Db::getDefaultAdapter();
+        }
+        return $this;
     }
 
     /**
-     * db
+     * Gets a DB adapter.
      *
      * @return Db
      */
-    protected function db()
+    public function getAdapter()
     {
-        return app()->getDb();
+        if (!$this->adapter) {
+            $this->setAdapter();
+        }
+        return $this->adapter;
     }
 
     /**

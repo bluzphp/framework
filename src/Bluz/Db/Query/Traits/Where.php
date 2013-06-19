@@ -57,7 +57,7 @@ trait Where {
      * </code>
      *
      * @param mixed $condition The query restriction predicates
-     * @return self instance
+     * @return $this
      */
     public function where($condition)
     {
@@ -80,7 +80,7 @@ trait Where {
      * </code>
      *
      * @param mixed $condition The query restriction predicates
-     * @return self instance
+     * @return $this
      */
     public function andWhere($condition)
     {
@@ -110,7 +110,7 @@ trait Where {
      * </code>
      *
      * @param mixed $condition The query restriction predicates
-     * @return self instance
+     * @return $this
      */
     public function orWhere($condition)
     {

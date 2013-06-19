@@ -31,7 +31,7 @@ use Bluz\Db\Db;
 /**
  * Builder of SELECT queries
  */
-class UpdateBuilder extends AbstractBuilder
+class Update extends AbstractBuilder
 {
     use Traits\Set;
     use Traits\Where;
@@ -68,7 +68,7 @@ class UpdateBuilder extends AbstractBuilder
      */
     public function update($table)
     {
-        $table = $this->db()->quoteIdentifier($table);
+        $table = $this->getAdapter()->quoteIdentifier($table);
         return $this->addQueryPart('from', array('table' => $table));
     }
 }

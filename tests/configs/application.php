@@ -18,7 +18,7 @@ return array(
         "enabled" => false
     ),
     "db" => array(
-        "defaultAdapter" => false
+        "defaultAdapter" => true
     ),
     "layout" => array(
         "path" => PATH_APPLICATION .'/layouts',

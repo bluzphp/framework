@@ -56,13 +56,6 @@ namespace Bluz\Db;
 abstract class Table
 {
     /**
-     * The schema name (default null means current schema)
-     *
-     * @var array
-     */
-    protected $schema = null;
-
-    /**
      * The table name.
      *
      * @var string
@@ -128,7 +121,7 @@ abstract class Table
 
         // setup default select query
         if (empty($this->select)) {
-            $this->select = "SELECT * FROM {$this->table}";
+            $this->select = "SELECT * FROM ". $this->table;
         }
 
         $this->init();
@@ -160,9 +153,7 @@ abstract class Table
      * Sets a DB adapter.
      *
      * @param Db $adapter DB adapter for table to use
-     *
      * @return Table
-     *
      * @throws DbException if default DB adapter not initiated
      *                     on \Bluz\Db::$adapter.
      */
@@ -229,16 +220,15 @@ abstract class Table
      *
      * @return string
      */
-    public function getTable()
+    public function getTableName()
     {
-        return ($this->schema ? $this->schema . '.' : '') . $this->table;
+        return $this->table;
     }
 
     /**
-     * getColumns
+     * Return information about tables columns
      *
-     * return information about tables columns
-     *
+     * @todo Cache it please
      * @return array
      */
     public function getColumns()
@@ -253,7 +243,7 @@ abstract class Table
                 FROM INFORMATION_SCHEMA.COLUMNS
                 WHERE `table_schema` = ?
                   AND `table_name` = ?',
-                [$dbName, $this->getTable()]
+                [$dbName, $this->getTableName()]
             );
         }
         return $this->columns;
@@ -359,8 +349,8 @@ abstract class Table
      * Table::findWhere(['alias'=>'foo'], ['alias'=>'bar']);
      * // WHERE (alias = 'foo' AND userId = 2) OR ('alias' = 'bar' AND userId = 4)
      * Table::findWhere(['alias'=>'foo', 'userId'=> 2], ['alias'=>'foo', 'userId'=>4]);
-     * // WHERE title LIKE ('Hello%')
-     * Table::findWhere(['title LIKE' => 'Hello%']);
+     * // WHERE alias IN ('foo', 'bar')
+     * Table::findWhere(['alias'=> ['foo', 'bar']]);
      * </code>
      * @throws \InvalidArgumentException
      * @return Rowset Row(s) matching the criteria.
@@ -392,9 +382,6 @@ abstract class Table
                         $whereAndTerms[] = $self->table . '.' . $keyName . ' IN ('.$keyValue.')';
                     } elseif (is_null($keyValue)) {
                         $whereAndTerms[] = $self->table . '.' . $keyName . ' IS NULL';
-                    } elseif (stripos($keyName, ' like')) {
-                        $whereAndTerms[] = $self->table . '.' . $keyName . ' (?)';
-                        $whereParams[] = $keyValue;
                     } else {
                         $whereAndTerms[] = $self->table . '.' . $keyName . ' = ?';
                         $whereParams[] = $keyValue;
@@ -425,7 +412,6 @@ abstract class Table
         return call_user_func(array($self, 'findWhere'), $whereList)->current();
     }
 
-
     /**
      * create
      *
@@ -437,50 +423,5 @@ abstract class Table
         $rowClass = static::getInstance()->rowClass;
         $row = new $rowClass($data);
         return $row;
-    }
-
-    /**
-     * @TODO: insert/update/delete should use Row Object?!
-     */
-
-    /**
-     * Insert new rows.
-     *
-     * @param  array $data  Column-value pairs.
-     * @return int          The number of rows updated.
-     */
-    public static function insert(array $data)
-    {
-        $self = static::getInstance();
-        $table = ($self->schema ? $self->schema . '.' : '') . $self->table;
-        return $self->getAdapter()->insert($table, $data);
-    }
-
-    /**
-     * Updates existing rows.
-     *
-     * @param  array $data  Column-value pairs.
-     * @param  array|string $where An SQL WHERE clause, or an array of SQL WHERE clauses.
-     * @return int          The number of rows updated.
-     */
-    public static function update(array $data, $where)
-    {
-        $self = static::getInstance();
-        $table = ($self->schema ? $self->schema . '.' : '') . $self->table;
-        return $self->getAdapter()->update($table, $data, $where);
-    }
-
-
-    /**
-     * Deletes existing rows.
-     *
-     * @param  array|string $where SQL WHERE clause(s).
-     * @return int          The number of rows deleted.
-     */
-    public static function delete($where)
-    {
-        $self = static::getInstance();
-        $table = ($self->schema ? $self->schema . '.' : '') . $self->table;
-        return $self->getAdapter()->delete($table, $where);
     }
 }

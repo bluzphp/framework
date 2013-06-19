@@ -31,7 +31,7 @@ use Bluz\Db\Db;
 /**
  * Builder of SELECT queries
  */
-class InsertBuilder extends AbstractBuilder
+class Insert extends AbstractBuilder
 {
     use Traits\Set;
 
@@ -64,7 +64,7 @@ class InsertBuilder extends AbstractBuilder
      */
     public function insert($table)
     {
-        $table = $this->db()->quoteIdentifier($table);
+        $table = $this->getAdapter()->quoteIdentifier($table);
         return $this->addQueryPart('from', array('table' => $table));
     }
 }

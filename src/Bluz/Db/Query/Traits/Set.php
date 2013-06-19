@@ -53,12 +53,12 @@ trait Set {
      *
      * @param string $key The column to set
      * @param string $value The value, expression, placeholder, etc
-     * @return self instance
+     * @return $this
      */
     public function set($key, $value)
     {
         $this->setParameter(null, $value);
-        $key = $this->db()->quoteIdentifier($key);
+        $key = $this->getAdapter()->quoteIdentifier($key);
         return $this->addQueryPart('set', $key .' = ?', true);
     }
 
@@ -77,7 +77,7 @@ trait Set {
      * </code>
      *
      * @param array $data
-     * @return self instance
+     * @return $this
      */
     public function setArray(array $data)
     {

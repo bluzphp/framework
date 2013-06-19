@@ -82,24 +82,6 @@ class TableTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @covers Bluz\Db\Table::setAdapter
-     * @expectedException Bluz\Db\DbException
-     */
-    public function testSetAdapterWithoutConfig()
-    {
-        $this->table->setAdapter();
-    }
-
-    /**
-     * @covers Bluz\Db\Table::setAdapter
-     * @expectedException Bluz\Db\DbException
-     */
-    public function testGetAdapterWithoutConfig()
-    {
-        $this->table->getAdapter();
-    }
-    
-    /**
      * @covers Bluz\Db\Table::getAdapter
      * @expectedException Bluz\Db\InvalidPrimaryKeyException
      */

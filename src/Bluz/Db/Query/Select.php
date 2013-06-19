@@ -32,7 +32,7 @@ use Bluz\Db\DbException;
 /**
  * Builder of SELECT queries
  */
-class SelectBuilder extends AbstractBuilder
+class Select extends AbstractBuilder
 {
     use Traits\From;
     use Traits\Where;
@@ -47,12 +47,12 @@ class SelectBuilder extends AbstractBuilder
     {
         switch ($fetchType) {
             case (!is_int($fetchType)):
-                return $this->db()->fetchObjects($this->getSQL(), $this->params, $fetchType);
+                return $this->getAdapter()->fetchObjects($this->getSQL(), $this->params, $fetchType);
             case \PDO::FETCH_CLASS:
-                return $this->db()->fetchObjects($this->getSQL(), $this->params);
+                return $this->getAdapter()->fetchObjects($this->getSQL(), $this->params);
             case \PDO::FETCH_ASSOC:
             default:
-                return $this->db()->fetchAll($this->getSQL(), $this->params);
+                return $this->getAdapter()->fetchAll($this->getSQL(), $this->params);
         }
     }
 
@@ -91,7 +91,7 @@ class SelectBuilder extends AbstractBuilder
      * Replaces any previously specified selections, if any
      *
      * <code>
-     *     $sb = new SelectBuilder();
+     *     $sb = new Select();
      *     $sb
      *         ->select('u.id', 'p.id')
      *         ->from('users', 'u')
@@ -99,7 +99,7 @@ class SelectBuilder extends AbstractBuilder
      * </code>
      *
      * @param mixed $select The selection expressions.
-     * @return SelectBuilder This QueryBuilder instance.
+     * @return Select This QueryBuilder instance.
      */
     public function select($select)
     {
@@ -112,7 +112,7 @@ class SelectBuilder extends AbstractBuilder
      * Adds an item that is to be returned in the query result.
      *
      * <code>
-     *     $sb = new SelectBuilder();
+     *     $sb = new Select();
      *     $sb
      *         ->select('u.id')
      *         ->addSelect('p.id')
@@ -121,7 +121,7 @@ class SelectBuilder extends AbstractBuilder
      * </code>
      *
      * @param mixed $select The selection expression.
-     * @return SelectBuilder This QueryBuilder instance.
+     * @return Select This QueryBuilder instance.
      */
     public function addSelect($select)
     {
@@ -134,7 +134,7 @@ class SelectBuilder extends AbstractBuilder
      * Creates and adds a join to the query
      *
      * <code>
-     *     $sb = new SelectBuilder();
+     *     $sb = new Select();
      *     $sb
      *         ->select('u.name')
      *         ->from('users', 'u')
@@ -156,7 +156,7 @@ class SelectBuilder extends AbstractBuilder
      * Creates and adds a join to the query
      *
      * <code>
-     *     $sb = new SelectBuilder();
+     *     $sb = new Select();
      *     $sb
      *         ->select('u.name')
      *         ->from('users', 'u')
@@ -191,7 +191,7 @@ class SelectBuilder extends AbstractBuilder
      * Creates and adds a left join to the query.
      *
      * <code>
-     *     $sb = new SelectBuilder();
+     *     $sb = new Select();
      *     $sb
      *         ->select('u.name')
      *         ->from('users', 'u')
@@ -226,7 +226,7 @@ class SelectBuilder extends AbstractBuilder
      * Creates and adds a right join to the query.
      *
      * <code>
-     *     $sb = new SelectBuilder();
+     *     $sb = new Select();
      *     $sb
      *         ->select('u.name')
      *         ->from('users', 'u')
@@ -262,7 +262,7 @@ class SelectBuilder extends AbstractBuilder
      * Replaces any previously specified groupings, if any.
      *
      * <code>
-     *     $sb = new SelectBuilder();
+     *     $sb = new Select();
      *     $sb
      *         ->select('u.name')
      *         ->from('users', 'u')
@@ -270,7 +270,7 @@ class SelectBuilder extends AbstractBuilder
      * </code>
      *
      * @param mixed $groupBy The grouping expression.
-     * @return SelectBuilder This QueryBuilder instance.
+     * @return Select This QueryBuilder instance.
      */
     public function groupBy($groupBy)
     {
@@ -287,7 +287,7 @@ class SelectBuilder extends AbstractBuilder
      * Adds a grouping expression to the query.
      *
      * <code>
-     *     $sb = new SelectBuilder();
+     *     $sb = new Select();
      *     $sb
      *         ->select('u.name')
      *         ->from('users', 'u')
@@ -296,7 +296,7 @@ class SelectBuilder extends AbstractBuilder
      * </code>
      *
      * @param mixed $groupBy The grouping expression.
-     * @return SelectBuilder This QueryBuilder instance.
+     * @return Select This QueryBuilder instance.
      */
     public function addGroupBy($groupBy)
     {
@@ -316,7 +316,7 @@ class SelectBuilder extends AbstractBuilder
      *
      * @param string $sort The ordering expression.
      * @param string $order The ordering direction.
-     * @return SelectBuilder This QueryBuilder instance.
+     * @return Select This QueryBuilder instance.
      */
     public function orderBy($sort, $order = 'ASC')
     {
@@ -330,7 +330,7 @@ class SelectBuilder extends AbstractBuilder
      *
      * @param string $sort The ordering expression.
      * @param string $order The ordering direction.
-     * @return SelectBuilder This QueryBuilder instance.
+     * @return Select This QueryBuilder instance.
      */
     public function addOrderBy($sort, $order = 'ASC')
     {
@@ -343,7 +343,7 @@ class SelectBuilder extends AbstractBuilder
      * Replaces any previous having restrictions, if any.
      *
      * @param mixed $condition The query restriction predicates
-     * @return SelectBuilder
+     * @return Select
      */
     public function having($condition)
     {
@@ -356,7 +356,7 @@ class SelectBuilder extends AbstractBuilder
      * conjunction with any existing having restrictions
      *
      * @param mixed $condition The restriction to append
-     * @return SelectBuilder
+     * @return Select
      */
     public function andHaving($condition)
     {
@@ -377,7 +377,7 @@ class SelectBuilder extends AbstractBuilder
      * disjunction with any existing having restrictions.
      *
      * @param mixed $condition The restriction to add
-     * @return SelectBuilder
+     * @return Select
      */
     public function orHaving($condition)
     {
@@ -398,7 +398,7 @@ class SelectBuilder extends AbstractBuilder
      *
      * @param int $page
      * @throws DbException
-     * @return SelectBuilder
+     * @return Select
      */
     public function setPage($page = 1)
     {

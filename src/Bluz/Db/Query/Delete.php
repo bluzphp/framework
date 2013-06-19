@@ -31,7 +31,7 @@ use Bluz\Db\Db;
 /**
  * Builder of SELECT queries
  */
-class DeleteBuilder extends AbstractBuilder
+class Delete extends AbstractBuilder
 {
     use Traits\From;
     use Traits\Where;
@@ -66,7 +66,7 @@ class DeleteBuilder extends AbstractBuilder
      */
     public function delete($table)
     {
-        $table = $this->db()->quoteIdentifier($table);
+        $table = $this->getAdapter()->quoteIdentifier($table);
         return $this->addQueryPart('from', array('table' => $table));
     }
 }

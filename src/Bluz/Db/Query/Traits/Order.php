@@ -46,7 +46,7 @@ trait Order {
      *
      * @param string $sort expression
      * @param string $order direction
-     * @return self instance
+     * @return $this
      */
     public function orderBy($sort, $order = 'ASC')
     {
@@ -58,7 +58,7 @@ trait Order {
      *
      * @param string $sort expression
      * @param string $order direction
-     * @return self instance
+     * @return $this
      */
     public function addOrderBy($sort, $order = 'ASC')
     {

@@ -1,5 +1,6 @@
 <phpunit backupGlobals="false"
          backupStaticAttributes="false"
+         stopOnFailure="false"
          colors="true"
          verbose="true"
          bootstrap="./bootstrap.php">
@@ -10,7 +11,7 @@
         </testsuite>
     </testsuites>
     <listeners>
-        <listener class="\Bluz\Tests\TestListener" file="./TestListener.php"/>
+        <listener class="\Bluz\Tests\TestListener" />
     </listeners>
     <php>
         <var name="DB_TYPE" value="mysql" />

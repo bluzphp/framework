@@ -1216,4 +1216,15 @@ class Application
 
         return $apiPath;
     }
+    
+    /**
+     * Finally method
+     * 
+     * @return Application
+     */
+    public function finish()
+    {
+        $this->log(__METHOD__);
+        return $this;
+    }
 }

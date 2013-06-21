@@ -329,7 +329,8 @@ abstract class Table
     /**
      * Find row
      *
-     * @param $primaryKey
+     * @todo add LIMIT 1 for retrieve only one row
+     * @param mixed $primaryKey
      * @return Row
      */
     public static function findRow($primaryKey)

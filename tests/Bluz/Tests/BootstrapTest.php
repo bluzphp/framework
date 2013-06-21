@@ -27,8 +27,6 @@
 namespace Bluz\Tests;
 
 use Bluz\Application;
-use Bluz\Config\Config;
-use Bluz\Exception;
 
 /**
  * Bootstrap

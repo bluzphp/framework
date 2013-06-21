@@ -12,7 +12,7 @@ before_script:
   - mysql -uroot bluz < tests/dump.sql
 script:
   # PHPUnit tests
-  - php vendor/bin/phpunit --configuration tests/phpunit.xml --coverage-text
+  - php vendor/bin/phpunit --configuration tests/phpunit.xml.dist --coverage-text
   - mkdir .reports
   # Code style
   - php vendor/bin/phpcs ./src/Bluz --standard=PSR1 --report=summary

@@ -3,6 +3,8 @@ Bluz, a lightweight PHP Framework
 Easy to setup, easy to use.
 
 [![Build Status](https://secure.travis-ci.org/bluzphp/framework.png?branch=master)](https://travis-ci.org/bluzphp/framework)
+[![Latest Stable Version](https://poser.pugx.org/bluzphp/framework/v/stable.png)](https://packagist.org/packages/bluzphp/framework)
+[![Total Downloads](https://poser.pugx.org/bluzphp/framework/downloads.png)](https://packagist.org/packages/bluzphp/framework)
 
 ## Installation
 

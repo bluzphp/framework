@@ -404,6 +404,7 @@ abstract class Table
     /**
      * Find row by where condition
      *
+     * @todo add LIMIT 1 for retrieve only one row
      * @param array $whereList
      * @return Row
      */
@@ -424,5 +425,46 @@ abstract class Table
         $rowClass = static::getInstance()->rowClass;
         $row = new $rowClass($data);
         return $row;
+    }
+
+    /**
+     * Insert new rows
+     *
+     * @param  array $data  Column-value pairs
+     * @return integer The number of rows inserted
+     */
+    protected function insert(array $data)
+    {
+        $sql = "INSERT INTO `{$this->table}` SET `" . join('` = ?,`', array_keys($data)) . "` = ?";
+        return $this->getAdapter()->query($sql, $data);
+    }
+
+    /**
+     * Updates existing rows
+     *
+     * @param  array $data  Column-value pairs.
+     * @param  array $where An array of SQL WHERE clause(s)
+     * @return integer The number of rows updated
+     */
+    protected function update(array $data, $where)
+    {
+        $sql = "UPDATE `{$this->table}`"
+            . " SET `" . join('` = ?,`', array_keys($data)) . "` = ?"
+            . " WHERE `" . join('` = ? AND `', array_keys($where)) . "` = ?";
+
+        return $this->getAdapter()->query($sql, array_values($data + $where));
+    }
+
+    /**
+     * Deletes existing rows
+     *
+     * @param  array $where An array of SQL WHERE clause(s)
+     * @return integer The number of rows deleted
+     */
+    protected function delete($where)
+    {
+        $sql = "DELETE FROM `{$this->table}`"
+            . " WHERE `" . join('` = ? AND `', array_keys($where)) . "` = ?";
+        return $this->getAdapter()->query($sql, array_values($where));
     }
 }

@@ -72,6 +72,20 @@ if (!function_exists('app')) {
     }
 }
 
+if (!function_exists('esc')) {
+    /**
+     * Escape variable for use in View
+     *
+     * @param string $variable
+     * @param int $flags
+     * @return string
+     */
+    function esc($variable, $flags = ENT_HTML5)
+    {
+        return htmlentities($variable, $flags, "UTF-8");
+    }
+}
+
 // @codingStandardsIgnoreStart
 if (!function_exists('__')) {
     /**

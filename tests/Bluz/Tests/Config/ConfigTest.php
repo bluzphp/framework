@@ -38,12 +38,12 @@ class ConfigTest extends Bluz\Tests\TestCase{
     protected $config;
 
     /**
-     * @var Path to config dir
+     * @var string Path to config dir
      */
     protected $configPath;
 
     /**
-     * @var Path to empty config dir
+     * @var string Path to empty config dir
      */
     protected $emptyConfigsDir;
 

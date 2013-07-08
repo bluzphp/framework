@@ -79,7 +79,8 @@ if (!function_exists('esc')) {
      * @param string $variable
      * @return string
      */
-    function esc($variable) {
+    function esc($variable)
+    {
         return htmlentities($variable, ENT_HTML5, "UTF-8");
     }
 }

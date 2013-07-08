@@ -72,6 +72,18 @@ if (!function_exists('app')) {
     }
 }
 
+if (!function_exists('esc')) {
+    /**
+     * Escape variable for use in View
+     *
+     * @param string $variable
+     * @return string
+     */
+    function esc($variable) {
+        return htmlentities($variable, ENT_HTML5, "UTF-8");
+    }
+}
+
 // @codingStandardsIgnoreStart
 if (!function_exists('__')) {
     /**

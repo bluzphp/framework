@@ -77,11 +77,12 @@ if (!function_exists('esc')) {
      * Escape variable for use in View
      *
      * @param string $variable
+     * @param int $flags
      * @return string
      */
-    function esc($variable)
+    function esc($variable, $flags = ENT_HTML5)
     {
-        return htmlentities($variable, ENT_HTML5, "UTF-8");
+        return htmlentities($variable, $flags, "UTF-8");
     }
 }
 

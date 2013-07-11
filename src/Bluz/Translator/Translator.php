@@ -169,7 +169,6 @@ class Translator
      * translate plural form
      *
      * <code>
-     *
      * // plural form + sprintf
      * // equal to sprintf(ngettext('%d comment', '%d comments', 4), 4)
      * Translator::translatePlural('%d comment', '%d comments', 4, 4)

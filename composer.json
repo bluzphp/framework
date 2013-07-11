@@ -4,6 +4,8 @@
     "type": "library",
     "require": {
         "php": ">=5.4",
+        "ext-PDO": "*",
+        "ext-pdo_mysql": "*",
         "psr/log": "1.*"
     },
     "require-dev": {

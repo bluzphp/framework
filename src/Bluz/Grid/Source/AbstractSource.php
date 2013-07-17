@@ -26,6 +26,8 @@
  */
 namespace Bluz\Grid\Source;
 
+use Bluz\Grid\Grid;
+
 /**
  * Adapter
  *
@@ -37,11 +39,29 @@ namespace Bluz\Grid\Source;
  */
 abstract class AbstractSource
 {
-
     /**
      * @var mixed
      */
     protected $source;
+
+
+    const FILTER_EQ = 'eq'; // equal to ..
+    const FILTER_NE = 'ne'; // not equal to ..
+    const FILTER_GT = 'gt'; // greater than ..
+    const FILTER_GE = 'ge'; // greater than .. or equal
+    const FILTER_LT = 'lt'; // less than ..
+    const FILTER_LE = 'le'; // less than .. or equal
+    /**
+     * @var array
+     */
+    protected $filters = [
+        Grid::FILTER_EQ => '=',
+        Grid::FILTER_NE => '!=',
+        Grid::FILTER_GT => '>',
+        Grid::FILTER_GE => '>=',
+        Grid::FILTER_LT => '<',
+        Grid::FILTER_LE => '<=',
+    ];
 
     /**
      * Setup adapter source

@@ -39,8 +39,13 @@ use Bluz\Grid;
  * @author   Anton Shevchuk
  * @created  27.08.12 10:10
  */
-class SqlSource extends AbstractSource
+class SelectSource extends AbstractSource
 {
+    /**
+     * @var Db\Query\Select
+     */
+    protected $source;
+
     /**
      * setSource
      *
@@ -50,8 +55,8 @@ class SqlSource extends AbstractSource
      */
     public function setSource($source)
     {
-        if (!is_string($source)) {
-            throw new Grid\GridException("Source of SqlSource should be string with SQL query");
+        if (!$source instanceof Db\Query\Select) {
+            throw new Grid\GridException("Source of SelectSource should be Db\\Query\\Select object");
         }
         $this->source = $source;
 
@@ -67,53 +72,44 @@ class SqlSource extends AbstractSource
     public function process(array $settings = [])
     {
         // process filters
-        $where = [];
         if (!empty($settings['filters'])) {
             foreach ($settings['filters'] as $column => $filters) {
                 foreach ($filters as $filter => $value) {
-                    $where[] = $column .' '.
-                        $this->filters[$filter].' '.
-                        Db\Db::getDefaultAdapter()->quote($value);
+                    $this->source->andWhere($column .' '. $this->filters[$filter] .' ?', $value);
                 }
             }
         }
 
         // process orders
-        $orders = [];
         if (!empty($settings['orders'])) {
             // Obtain a list of columns
             foreach ($settings['orders'] as $column => $order) {
-                $orders[] = $column . ' ' . $order;
+                $this->source->addOrderBy($column, $order);
             }
         }
 
         // process pages
-        $limit = ' LIMIT ' . ($settings['page'] - 1) * $settings['limit'] . ', ' . $settings['limit'];
+        $this->source->setLimit($settings['limit']);
+        $this->source->setPage($settings['page']);
 
         // prepare query
         $connect = Application::getInstance()->getConfigData('db', 'connect');
         if (strtolower($connect['type']) == 'mysql') { // MySQL
-            $dataSql = preg_replace('/SELECT\s(.*?)\sFROM/is', 'SELECT SQL_CALC_FOUND_ROWS $1 FROM', $this->source, 1);
-            $countSql = 'SELECT FOUND_ROWS()';
+            $select = $this->source->getQueryPart('select');
+            $select[0] = 'SQL_CALC_FOUND_ROWS ' . current($select);
+            $this->source->select($select);
+
+            // run queries
+            $data = $this->source->execute();
+            $total = Db\Db::getDefaultAdapter()->fetchOne('SELECT FOUND_ROWS()');
         } else { // other
-            $dataSql = $this->source;
-            $countSql = preg_replace('/SELECT\s(.*?)\sFROM/is', 'SELECT COUNT(*) FROM', $this->source, 1);
-            if (sizeof($where)) {
-                $countSql .= ' WHERE ' . (join(' AND ', $where));
-            }
-        }
+            $totalSource = clone $this->source;
+            $totalSource->select('COUNT(*)');
 
-        if (sizeof($where)) {
-            $dataSql .= ' WHERE ' . (join(' AND ', $where));
+            // run queries
+            $data = $this->source->execute();
+            $total = $totalSource->execute();
         }
-        if (sizeof($orders)) {
-            $dataSql .= ' ORDER BY ' . (join(', ', $orders));
-        }
-        $dataSql .= $limit;
-
-        // run queries
-        $data = Db\Db::getDefaultAdapter()->fetchAll($dataSql);
-        $total = Db\Db::getDefaultAdapter()->fetchOne($countSql);
         $gridData = new Grid\Data($data);
         $gridData->setTotal($total);
         return $gridData;

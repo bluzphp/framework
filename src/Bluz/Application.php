@@ -1042,6 +1042,9 @@ class Application
             $types = array();
             if (isset($data['param'])) {
                 foreach ($data['param'] as $param) {
+                    if (strpos($param, '$') === false) {
+                        continue;
+                    }
                     list($type, $key) = preg_split('/\$/', $param);
                     $type = trim($type);
                     if (!empty($type)) {

@@ -287,7 +287,8 @@ class Db
             );
         }
         $this->log($sql, $params);
-        return $stmt->execute($params);
+        $stmt->execute($params);
+        return $stmt->rowCount();
     }
 
     /**

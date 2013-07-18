@@ -452,7 +452,7 @@ abstract class Table
             . " SET `" . join('` = ?,`', array_keys($data)) . "` = ?"
             . " WHERE `" . join('` = ? AND `', array_keys($where)) . "` = ?";
 
-        return $this->getAdapter()->query($sql, array_values($data + $where));
+        return $this->getAdapter()->query($sql, array_merge(array_values($data), array_values($where)));
     }
 
     /**

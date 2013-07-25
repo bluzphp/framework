@@ -600,9 +600,9 @@ class Application
         // for HTTP only
         if ($this->getRequest()->getMethod() !== Request\AbstractRequest::METHOD_CLI) {
             $accept = $this->getRequest()->getHeader('accept');
-            $accept = substr($accept, 0, strpos($accept, ','));
+            $accept = explode(',', $accept);
             if ($this->getRequest()->isXmlHttpRequest()
-                && $accept == "application/json"
+                && in_array("application/json", $accept)
             ) {
                 $this->useJson(true);
             }

@@ -19,7 +19,11 @@
         "psr-0": {
             "Bluz": "src/",
             "Bluz\\Tests": "tests/"
-        }
+        },
+        "files": [
+            "src/Bluz/_functions.php",
+            "src/Bluz/_loader.php"
+        ]
     },
     "authors": [
         {

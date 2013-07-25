@@ -32,9 +32,6 @@
 // add current directory to include path
 set_include_path(dirname(__FILE__) . PATH_SEPARATOR . get_include_path());
 
-// functions
-require_once '_functions.php';
-
 // exceptions
 require_once 'Exception.php';
 

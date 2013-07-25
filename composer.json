@@ -6,6 +6,7 @@
         "php": ">=5.4",
         "ext-PDO": "*",
         "ext-pdo_mysql": "*",
+        "ext-json": "*",
         "psr/log": "1.*"
     },
     "require-dev": {

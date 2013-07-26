@@ -680,10 +680,10 @@ class Application
         }
 
         // check method(s)
-        if (isset($reflectionData['methods'])
-            && !in_array($this->getRequest()->getMethod(), $reflectionData['methods'])
+        if (isset($reflectionData['method'])
+            && !in_array($this->getRequest()->getMethod(), $reflectionData['method'])
         ) {
-            throw new Exception("Controller is not support method '{$this->getRequest()->getMethod()}'");
+            throw new Exception(join(',', $reflectionData['method']), 405);
         }
 
         // cache initialization
@@ -1165,7 +1165,7 @@ class Application
      *
      * @param  string $module
      * @param  string $controller
-     * @return \Closure
+     * @return string
      * @throws Exception
      */
     public function getControllerFile($module, $controller)
@@ -1185,7 +1185,7 @@ class Application
      *
      * @param  string $module
      * @param  string $widget
-     * @return \Closure
+     * @return string
      * @throws Exception
      */
     protected function getWidgetFile($module, $widget)

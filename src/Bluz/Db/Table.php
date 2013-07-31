@@ -436,7 +436,11 @@ abstract class Table
     protected function insert(array $data)
     {
         $sql = "INSERT INTO `{$this->table}` SET `" . join('` = ?,`', array_keys($data)) . "` = ?";
-        return $this->getAdapter()->query($sql, array_values($data));
+        $result = $this->getAdapter()->query($sql, array_values($data));
+        if ($result) {
+            return $this->getAdapter()->handler()->lastInsertId();
+        }
+        return $result;
     }
 
     /**

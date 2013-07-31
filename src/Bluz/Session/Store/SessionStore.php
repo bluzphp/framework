@@ -80,14 +80,14 @@ class SessionStore extends AbstractStore
                 );
             } else {
                 if (session_id() !== '') {
-                    throw new SessionException("Session has been started already");
+                    $this->started = true;
                 } else {
                     $this->started = session_start();
-                    if (!isset($_SESSION[$this->namespace])) {
-                        $_SESSION[$this->namespace] = array();
-                    }
-                    return $this->started;
                 }
+                if (!isset($_SESSION[$this->namespace])) {
+                    $_SESSION[$this->namespace] = array();
+                }
+                return $this->started;
             }
         } else {
             return true;

@@ -103,9 +103,8 @@ class Session
                     $this->store = new Store\SessionStore();
                     break;
             }
+            $this->store->setOptions($this->storeSettings);
         }
-
-        $this->store->setOptions($this->storeSettings);
 
         return $this->store;
     }

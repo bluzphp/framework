@@ -26,6 +26,8 @@
  */
 namespace Bluz\Request;
 
+use Bluz\Request\RequestException;
+
 /**
  * HttpFileUpload
  *
@@ -43,9 +45,22 @@ class HttpFileUpload
      * __construct
      *
      * @param array $array The array of $_FILES
+     * @throws RequestException
      */
     public function __construct($array = null)
     {
+        // check max file size error
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($_POST) &&
+            empty($_FILES) && $_SERVER['CONTENT_LENGTH'] > 0 ) {
+            $displayMaxSize = ini_get('post_max_size');
+
+            $error = 'Posted file is too large. '. $_SERVER["CONTENT_LENGTH"].
+                ' bytes exceeds the maximum size of '. $displayMaxSize;
+            // mute error message by user notice
+            @trigger_error($error, E_USER_NOTICE);
+            throw new RequestException($error);
+        }
+
         $rawFiles = $array ? : $_FILES;
         foreach ($rawFiles as $key => $file) {
             $this->processFileArray($key, $file);

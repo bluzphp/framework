@@ -703,6 +703,8 @@ class Application
         $view->setPath($this->getPath() . '/modules/' . $module . '/views');
         // setup default template
         $view->setTemplate($controller . '.phtml');
+        // setup default partial path
+        $view->addPartialPath($this->getPath() . '/layouts/partial');
 
         $bootstrapPath = $this->getPath() . '/modules/' . $module . '/bootstrap.php';
 

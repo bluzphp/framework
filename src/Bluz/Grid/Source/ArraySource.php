@@ -107,6 +107,11 @@ class ArraySource extends AbstractSource
                                         return false;
                                     }
                                     break;
+                                case Grid\Grid::FILTER_LIKE:
+                                    if (preg_match('/'.$value.'/', $row[$column])) {
+                                        return false;
+                                    }
+                                    break;
                             }
                         }
                         return true;

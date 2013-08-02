@@ -703,6 +703,8 @@ class Application
         $view->setPath($this->getPath() . '/modules/' . $module . '/views');
         // setup default template
         $view->setTemplate($controller . '.phtml');
+        // setup default partial path
+        $view->addPartialPath($this->getPath() . '/layouts/partial');
 
         $bootstrapPath = $this->getPath() . '/modules/' . $module . '/bootstrap.php';
 
@@ -783,19 +785,25 @@ class Application
                 $data = array_merge($data, $result->getData());
             }
 
-            // inject messages if exists
-            if ($this->hasMessages()) {
-                $data['_messages'] = $this->getMessages()->popAll();
-            }
-
             // output
             $json = json_encode($data);
+
+            // Setup headers
+            // HTTP does not define any limit
+            // However most web servers do limit size of headers they accept.
+            // For example in Apache default limit is 8KB, in IIS it's 16K.
+            // Server will return 413 Entity Too Large error if headers size exceeds that limit
 
             // override response code so javascript can process it
             header('Content-Type: application/json');
 
             // send content length
             header('Content-Length: '.strlen($json));
+
+            // setup messages
+            if ($this->hasMessages()) {
+                header('Bluz-Notify: '.json_encode($this->getMessages()->popAll()));
+            }
 
             // check redirect
             if ($result instanceof RedirectException) {

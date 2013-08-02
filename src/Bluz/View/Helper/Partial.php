@@ -43,16 +43,25 @@ return
      */
     function ($__template, $__params = array()) {
     /** @var View $this */
-    if (!file_exists($this->path . '/' . $__template)) {
+    $__file = null;
+    if (file_exists($this->path . '/' . $__template)) {
+        $__file = $this->path . '/' . $__template;
+    } else {
+        foreach ($this->partialPath as $__path) {
+            if (file_exists($__path . '/' . $__template)) {
+                $__file = $__path . '/' . $__template;
+                break;
+            }
+        }
+    }
+    if (!$__file) {
         throw new ViewException("Template '{$__template}' not found");
     }
-
-    extract($this->data);
 
     if (sizeof($__params)) {
         extract($__params);
     }
-    unset($__params);
+    unset($__template, $__params);
 
-    require $this->path . '/' . $__template;
+    require $__file;
     };

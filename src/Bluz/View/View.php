@@ -97,6 +97,11 @@ class View implements ViewInterface
     protected $path;
 
     /**
+     * @var array paths to partial
+     */
+    protected $partialPath = [];
+
+    /**
      * @var string
      */
     protected $template;
@@ -235,6 +240,18 @@ class View implements ViewInterface
     public function setTemplate($file)
     {
         $this->template = $file;
+        return $this;
+    }
+
+    /**
+     * Add partial path for use inside partial and partialLoop helpers
+     *
+     * @param $path
+     * @return View
+     */
+    public function addPartialPath($path)
+    {
+        $this->partialPath[] = $path;
         return $this;
     }
 

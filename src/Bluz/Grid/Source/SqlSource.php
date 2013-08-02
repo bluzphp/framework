@@ -71,6 +71,9 @@ class SqlSource extends AbstractSource
         if (!empty($settings['filters'])) {
             foreach ($settings['filters'] as $column => $filters) {
                 foreach ($filters as $filter => $value) {
+                    if ($filter == Grid\Grid::FILTER_LIKE) {
+                        $value = '%'.$value.'%';
+                    }
                     $where[] = $column .' '.
                         $this->filters[$filter].' '.
                         Db\Db::getDefaultAdapter()->quote($value);

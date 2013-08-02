@@ -57,6 +57,7 @@ abstract class Grid
     const ORDER_ASC = 'asc';
     const ORDER_DESC = 'desc';
 
+    const FILTER_LIKE = 'like'; // like
     const FILTER_ENUM = 'enum'; // one from .., .., ..
     const FILTER_NUM = 'num'; // ==, !=, >, >=, <, <=
 
@@ -617,7 +618,10 @@ abstract class Grid
             $filter == self::FILTER_GT or
             $filter == self::FILTER_GE or
             $filter == self::FILTER_LT or
-            $filter == self::FILTER_LE
+            $filter == self::FILTER_LE or
+            $filter == self::FILTER_ENUM or
+            $filter == self::FILTER_NUM or
+            $filter == self::FILTER_LIKE
         ) {
             return true;
         }

@@ -44,13 +44,6 @@ abstract class AbstractSource
      */
     protected $source;
 
-
-    const FILTER_EQ = 'eq'; // equal to ..
-    const FILTER_NE = 'ne'; // not equal to ..
-    const FILTER_GT = 'gt'; // greater than ..
-    const FILTER_GE = 'ge'; // greater than .. or equal
-    const FILTER_LT = 'lt'; // less than ..
-    const FILTER_LE = 'le'; // less than .. or equal
     /**
      * @var array
      */
@@ -61,6 +54,7 @@ abstract class AbstractSource
         Grid::FILTER_GE => '>=',
         Grid::FILTER_LT => '<',
         Grid::FILTER_LE => '<=',
+        Grid::FILTER_LIKE => 'like',
     ];
 
     /**

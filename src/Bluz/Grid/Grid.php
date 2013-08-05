@@ -122,6 +122,16 @@ abstract class Grid
     protected $defaultLimit = 25;
 
     /**
+     * @var int
+     */
+    protected $countRow = 4;
+
+    /**
+     * @var int
+     */
+    protected $defaultCountRow = 4;
+
+    /**
      * @var string
      */
     protected $defaultOrder;
@@ -321,6 +331,9 @@ abstract class Grid
         $limit = $request->getParam($this->prefix . 'limit', $this->limit);
         $this->setLimit($limit);
 
+        $countRow = $request->getParam($this->prefix . 'countRow', $this->defaultCountRow);
+        $this->setCountRow($countRow);
+
         foreach ($this->allowOrders as $column) {
             $order = $request->getParam($this->prefix . 'order-' . $column);
             if ($order) {
@@ -411,6 +424,11 @@ abstract class Grid
     public function getParams(array $rewrite = [])
     {
         $params = array();
+
+        // change countRow
+        if (isset($rewrite['countRow']) && $rewrite['countRow'] > 0) {
+            $params[$this->prefix . 'countRow'] = $rewrite['countRow'];
+        }
 
         // change page
         if (isset($rewrite['page']) && $rewrite['page'] > 1) {
@@ -748,6 +766,66 @@ abstract class Grid
     {
         return $this->defaultLimit;
     }
+
+    /**
+     * setCountRow
+     *
+     * @param int $countRow
+     * @throws GridException
+     * @return Grid
+     */
+    public function setCountRow($countRow)
+    {
+        if ($countRow <= 0) {
+            throw new GridException('Wrong countRow value, should be greater than zero');
+        }
+        $this->countRow = (int)$countRow;
+        return $this;
+    }
+
+    /**
+     * getCountRow
+     *
+     * @return integer
+     */
+    public function getCountRow()
+    {
+        return $this->countRow;
+    }
+
+    /**
+     * setDefaultCountRow(
+     *
+     * @param int $countRow
+     * @throws GridException
+     * @return Grid
+     */
+    public function setDefaultCountRow($countRow)
+    {
+        if ($countRow <= 0) {
+            throw new GridException('Wrong default limit value, should be greater than zero');
+        }
+        $this->setCountRow($countRow);
+
+        $this->defaultCountRow = (int)$countRow;
+        return $this;
+    }
+
+    /**
+     * getDefaultLimit
+     *
+     * @return integer
+     */
+    public function getDefaultCountRow()
+    {
+        return $this->defaultCountRow;
+    }
+
+    public function getRow(){
+        return (integer)(12/$this->getCountRow());
+    }
+
+
 
     /**
      * setDefaultOrder

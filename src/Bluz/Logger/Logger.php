@@ -40,7 +40,6 @@ use Psr\Log\AbstractLogger;
 class Logger extends AbstractLogger
 {
     use \Bluz\Package;
-    use \Psr\Log\LoggerTrait;
 
     /**
      * @var null

@@ -3,9 +3,10 @@ CHANGELOG
 
 0.1.6 (13.08.2013)
 ------------------
+* Added CHANGELOG.md file
+* Removed getApplication() method from Package Trait
 * Refactoring folders structure
 * Refactoring exceptions structure
-* Added CHANGELOG.md file
 
 0.1.5 (02.08.2013)
 ------------------

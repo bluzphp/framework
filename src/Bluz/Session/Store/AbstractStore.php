@@ -27,6 +27,7 @@
 namespace Bluz\Session\Store;
 
 use Bluz\Common\Package;
+
 /**
  * Abstract Session
  *

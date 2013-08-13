@@ -37,9 +37,9 @@ return
      */
     function ($title = null, $position = View::POS_REPLACE, $separator = ' :: ') {
     /** @var View $this */
-    if ($this->getApplication()->hasLayout()) {
+    if (app()->hasLayout()) {
         // it's stack for <head>
-        $layout = $this->getApplication()->getLayout();
+        $layout = app()->getLayout();
         if ($title === null) {
             return $layout->system('title');
         } else {

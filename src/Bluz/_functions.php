@@ -64,11 +64,11 @@ if (!function_exists('app')) {
     /**
      * Alias for call instance of Application
      *
-     * @return \Bluz\Application
+     * @return \Bluz\Application\Application
      */
     function app()
     {
-        return \Bluz\Application::getInstance();
+        return \Bluz\Application\Application::getInstance();
     }
 }
 

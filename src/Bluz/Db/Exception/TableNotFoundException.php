@@ -24,19 +24,18 @@
 /**
  * @namespace
  */
-namespace Bluz\Auth;
-
-use Bluz\Common\Exception;
+namespace Bluz\Db\Exception;
 
 /**
- * Exception
+ * TableNotFoundException class.
  *
  * @category Bluz
- * @package  Auth
+ * @package  Db
  *
- * @author   Anton Shevchuk
- * @created  12.07.11 16:46
+ * @author   Eugene Zabolotniy <realbaziak@gmail.com>
+ * @since    1.0
  */
-class AuthException extends Exception
+class TableNotFoundException extends DbException
 {
+    public $message = 'Relation not found';
 }

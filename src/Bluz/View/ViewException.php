@@ -26,7 +26,7 @@
  */
 namespace Bluz\View;
 
-use Bluz\Exception;
+use Bluz\Common\Exception;
 
 /**
  * Exception

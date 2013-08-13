@@ -26,7 +26,9 @@
  */
 namespace Bluz\View;
 
-use Bluz\Application;
+use Bluz\Application\Application;
+use Bluz\Common\Helper;
+use Bluz\Common\Package;
 
 /**
  * View
@@ -62,8 +64,8 @@ use Bluz\Application;
  */
 class View implements ViewInterface
 {
-    use \Bluz\Package;
-    use \Bluz\Helper;
+    use Package;
+    use Helper;
 
     /**
      * Constants for define positions

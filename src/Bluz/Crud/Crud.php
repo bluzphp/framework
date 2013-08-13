@@ -26,7 +26,8 @@
  */
 namespace Bluz\Crud;
 
-use Bluz\Application\ReloadException;
+use Bluz\Application\Exception\ReloadException;
+use Bluz\Common\Package;
 use Bluz\Db;
 use Bluz\Request\AbstractRequest;
 
@@ -41,7 +42,7 @@ use Bluz\Request\AbstractRequest;
  */
 class Crud
 {
-    use \Bluz\Package;
+    use Package;
 
     /**
      * @var string
@@ -99,11 +100,11 @@ class Crud
             }
         } catch (CrudException $e) {
             // all "not found" errors and other similar
-            $this->getApplication()->getMessages()->addError($e->getMessage());
+            app()->getMessages()->addError($e->getMessage());
             return false;
         } catch (ValidationException $e) {
             // validate errors
-            $this->getApplication()->getMessages()->addError("Please fix all errors");
+            app()->getMessages()->addError("Please fix all errors");
 
             $return = [
                 'errors' => $this->getErrors(),
@@ -122,7 +123,7 @@ class Crud
 
         // reload page for AJAX request for refresh current view
         // FIXME: hardcoded reload process
-        if ($this->getApplication()->getRequest()->isXmlHttpRequest()) {
+        if (app()->getRequest()->isXmlHttpRequest()) {
             return new ReloadException();
         }
         // disable view
@@ -136,7 +137,7 @@ class Crud
      */
     public function processRequest()
     {
-        $request = $this->getApplication()->getRequest();
+        $request = app()->getRequest();
 
         // get data from request
         $this->data = $request->data ? : [];
@@ -149,25 +150,25 @@ class Crud
         switch ($this->method) {
             case AbstractRequest::METHOD_POST:
                 $this->result = $this->create();
-                $this->getApplication()->getMessages()->addSuccess("Row was created");
+                app()->getMessages()->addSuccess("Row was created");
                 break;
             case AbstractRequest::METHOD_PUT:
                 $this->result = $this->update();
-                $this->getApplication()->getMessages()->addSuccess("Row was updated");
+                app()->getMessages()->addSuccess("Row was updated");
                 break;
             case AbstractRequest::METHOD_DELETE:
                 $this->result = $this->delete();
-                $this->getApplication()->getMessages()->addSuccess("Row was deleted");
+                app()->getMessages()->addSuccess("Row was deleted");
                 break;
             case AbstractRequest::METHOD_GET:
                 $this->result = $this->read();
 
                 // always HTML
-                $this->getApplication()->useJson(false);
+                app()->useJson(false);
 
                 // enable Layout for not AJAX request
-                if (!$this->getApplication()->getRequest()->isXmlHttpRequest()) {
-                    $this->getApplication()->useLayout(true);
+                if (!app()->getRequest()->isXmlHttpRequest()) {
+                    app()->useLayout(true);
                 }
                 break;
             default:

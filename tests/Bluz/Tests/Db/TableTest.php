@@ -83,7 +83,7 @@ class TableTest extends Bluz\Tests\TestCase
 
     /**
      * @covers Bluz\Db\Table::getAdapter
-     * @expectedException Bluz\Db\InvalidPrimaryKeyException
+     * @expectedException Bluz\Db\Exception\InvalidPrimaryKeyException
      */
     public function testGetPrimaryKeyException()
     {
@@ -102,7 +102,7 @@ class TableTest extends Bluz\Tests\TestCase
 
     /**
      * @dataProvider getFindWrongData
-     * @expectedException Bluz\Db\InvalidPrimaryKeyException
+     * @expectedException Bluz\Db\Exception\InvalidPrimaryKeyException
      * @param $keyValues
      */
     public function testFindException($keyValues)

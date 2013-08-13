@@ -24,7 +24,7 @@
 /**
  * @namespace
  */
-namespace Bluz;
+namespace Bluz\Common;
 
 /**
  * Package
@@ -146,16 +146,5 @@ trait Package
         $option = str_replace('_', ' ', strtolower($key));
         $option = str_replace(' ', '', ucwords($option));
         return $option;
-    }
-
-    /**
-     * getApplication
-     *
-     * @throws Exception
-     * @return Application
-     */
-    public function getApplication()
-    {
-        return Application::getInstance();
     }
 }

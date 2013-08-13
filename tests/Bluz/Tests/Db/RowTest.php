@@ -133,7 +133,7 @@ class RowTest extends Bluz\Tests\TestCase
 
     /**
      * @covers Bluz\Db\Row::getTable
-     * @expectedException Bluz\Db\TableNotFoundException
+     * @expectedException Bluz\Db\Exception\TableNotFoundException
      */
     public function testGetTableException()
     {
@@ -153,7 +153,7 @@ class RowTest extends Bluz\Tests\TestCase
     }
     
     /**
-     * @expectedException Bluz\Db\RelationNotFoundException
+     * @expectedException Bluz\Db\Exception\RelationNotFoundException
      */
     public function testGetRelationException()
     {

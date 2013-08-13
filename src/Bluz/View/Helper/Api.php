@@ -26,7 +26,7 @@
  */
 namespace Bluz\View\Helper;
 
-use Bluz\Application;
+use Bluz\Application\Application;
 use Bluz\View\View;
 
 return
@@ -48,7 +48,7 @@ return
      */
     function ($module, $method, $params = array()) {
     /** @var View $this */
-    $application = $this->getApplication();
+    $application = app();
     try {
         $apiClosure = $application->api($module, $method);
         return call_user_func_array($apiClosure, $params);

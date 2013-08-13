@@ -26,7 +26,7 @@
  */
 namespace Bluz\View;
 
-use Bluz\Application;
+use Bluz\Application\Application;
 
 /**
  * ViewInterface

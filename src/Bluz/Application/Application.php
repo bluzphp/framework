@@ -24,14 +24,19 @@
 /**
  * @namespace
  */
-namespace Bluz;
+namespace Bluz\Application;
 
 use Bluz\Acl\Acl;
 use Bluz\Acl\AclException;
-use Bluz\Application\RedirectException;
-use Bluz\Application\ReloadException;
+use Bluz\Application\Exception\ApplicationException;
+use Bluz\Application\Exception\RedirectException;
+use Bluz\Application\Exception\ReloadException;
 use Bluz\Auth\Auth;
 use Bluz\Cache\Cache;
+use Bluz\Common\Exception;
+use Bluz\Common\Helper;
+use Bluz\Common\Nil;
+use Bluz\Common\Singleton;
 use Bluz\Config\Config;
 use Bluz\Config\ConfigException;
 use Bluz\Db\Db;
@@ -213,7 +218,7 @@ class Application
             // initial DB configuration
             $this->getDb();
         } catch (Exception $e) {
-            throw new Exception("Application can't be loaded: " . $e->getMessage());
+            throw new ApplicationException("Application can't be loaded: " . $e->getMessage());
         }
         return $this;
     }
@@ -683,7 +688,7 @@ class Application
         if (isset($reflectionData['method'])
             && !in_array($this->getRequest()->getMethod(), $reflectionData['method'])
         ) {
-            throw new Exception(join(',', $reflectionData['method']), 405);
+            throw new ApplicationException(join(',', $reflectionData['method']), 405);
         }
 
         // cache initialization
@@ -725,7 +730,7 @@ class Application
         $controllerClosure = include $controllerFile;
 
         if (!is_callable($controllerClosure)) {
-            throw new Exception("Controller is not callable '$module/$controller'");
+            throw new ApplicationException("Controller is not callable '$module/$controller'");
         }
 
         $result = call_user_func_array($controllerClosure, $params);
@@ -942,7 +947,7 @@ class Application
         }
 
         if (!is_callable($widgetClosure)) {
-            throw new Exception("Widget is not callable '$module/$widget'");
+            throw new ApplicationException("Widget is not callable '$module/$widget'");
         }
 
         return $widgetClosure;
@@ -1001,7 +1006,7 @@ class Application
         }
 
         if (!is_callable($apiClosure)) {
-            throw new Exception("API is not callable '$module/$method'");
+            throw new ApplicationException("API is not callable '$module/$method'");
         }
 
         return $apiClosure;
@@ -1027,13 +1032,24 @@ class Application
                 throw new Exception("There is no closure in file $file");
             }
 
-            $reflection = new \ReflectionFunction($closure);
+            // init data
+            $data = array(
+                'params' => [],
+                'values' => [],
+            );
+
+            switch (get_class($closure)) {
+                case 'Closure':
+                    $reflection = new \ReflectionFunction($closure);
+                    break;
+                default:
+                    $reflection = new \ReflectionObject($closure);
+                    break;
+            }
 
             // check and normalize params by doc comment
             $docComment = $reflection->getDocComment();
 
-            // init data
-            $data = array();
 
             // get all options by one regular expression
             if (preg_match_all('/\s*\*\s*\@([a-z0-9-_]+)\s+(.*).*/i', $docComment, $matches)) {
@@ -1042,37 +1058,39 @@ class Application
                 }
             }
 
-            // get params and convert it to simple array
-            $reflectionParams = $reflection->getParameters();
+            if (method_exists($reflection, 'getParameters')) {
+                // get params and convert it to simple array
+                $reflectionParams = $reflection->getParameters();
 
-            // prepare params data
-            // setup param types
-            $types = array();
-            if (isset($data['param'])) {
-                foreach ($data['param'] as $param) {
-                    if (strpos($param, '$') === false) {
-                        continue;
-                    }
-                    list($type, $key) = preg_split('/\$/', $param);
-                    $type = trim($type);
-                    if (!empty($type)) {
-                        $types[$key] = $type;
+                // prepare params data
+                // setup param types
+                $types = array();
+                if (isset($data['param'])) {
+                    foreach ($data['param'] as $param) {
+                        if (strpos($param, '$') === false) {
+                            continue;
+                        }
+                        list($type, $key) = preg_split('/\$/', $param);
+                        $type = trim($type);
+                        if (!empty($type)) {
+                            $types[$key] = $type;
+                        }
                     }
                 }
-            }
 
-            // setup params and optional params
-            $params = array();
-            $values = array();
-            foreach ($reflectionParams as $key => $param) {
-                $name = $param->getName();
-                $params[$name] = isset($types[$name]) ? $types[$name] : 'string';
-                if ($param->isOptional()) {
-                    $values[$name] = $param->getDefaultValue();
+                // setup params and optional params
+                $params = array();
+                $values = array();
+                foreach ($reflectionParams as $key => $param) {
+                    $name = $param->getName();
+                    $params[$name] = isset($types[$name]) ? $types[$name] : 'string';
+                    if ($param->isOptional()) {
+                        $values[$name] = $param->getDefaultValue();
+                    }
                 }
+                $data['params'] = $params;
+                $data['values'] = $values;
             }
-            $data['params'] = $params;
-            $data['values'] = $values;
 
             // prepare cache ttl settings
             if (isset($data['cache'])) {
@@ -1182,7 +1200,7 @@ class Application
             . '/controllers/' . $controller . '.php';
 
         if (!file_exists($controllerPath)) {
-            throw new Exception("Controller not found '$module/$controller'", 404);
+            throw new ApplicationException("Controller not found '$module/$controller'", 404);
         }
 
         return $controllerPath;
@@ -1202,7 +1220,7 @@ class Application
             . '/widgets/' . $widget . '.php';
 
         if (!file_exists($widgetPath)) {
-            throw new Exception("Widget not found '$module/$widget'");
+            throw new ApplicationException("Widget not found '$module/$widget'");
         }
 
         return $widgetPath;
@@ -1222,7 +1240,7 @@ class Application
             . '/api/' . $method . '.php';
 
         if (!file_exists($apiPath)) {
-            throw new Exception("API not found '$module/$method'");
+            throw new ApplicationException("API not found '$module/$method'");
         }
 
         return $apiPath;

@@ -24,18 +24,17 @@
 /**
  * @namespace
  */
-namespace Bluz\Db;
+namespace Bluz\Common;
 
 /**
- * RelationNotFoundException class.
+ * Exception
  *
  * @category Bluz
- * @package  Db
+ * @package  Exception
  *
- * @author Eugene Zabolotniy <realbaziak@gmail.com>
- * @since  1.0
+ * @author   Anton Shevchuk
+ * @created  06.07.11 16:46
  */
-class RelationNotFoundException extends DbException
+class Exception extends \Exception
 {
-    public $message = 'Relation not found';
 }

@@ -38,7 +38,7 @@ return
      */
     function ($controller = null) {
     /** @var View $this */
-    $request = $this->getApplication()->getRequest();
+    $request = app()->getRequest();
     if (null == $controller) {
         return $request->getController();
     } else {

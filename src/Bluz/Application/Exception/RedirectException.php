@@ -24,7 +24,7 @@
 /**
  * @namespace
  */
-namespace Bluz\Application;
+namespace Bluz\Application\Exception;
 
 /**
  * Exception
@@ -33,14 +33,14 @@ namespace Bluz\Application;
  * @package  Exception
  *
  * @author   Anton Shevchuk
- * @created  23.01.13 17:46
+ * @created  23.01.13 17:40
  */
-class NotFoundException extends ApplicationException
+class RedirectException extends ApplicationException
 {
     /**
      * @var string
      */
-    protected $message = "Page Not Found";
+    protected $message = "Application Redirect";
 
     /**
      * Redirect HTTP code
@@ -48,5 +48,5 @@ class NotFoundException extends ApplicationException
      * 302 Found
      * @var int
      */
-    protected $code = 404;
+    protected $code = 302;
 }

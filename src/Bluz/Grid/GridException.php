@@ -26,7 +26,7 @@
  */
 namespace Bluz\Grid;
 
-use Bluz\Exception;
+use Bluz\Common\Exception;
 
 /**
  * Exception

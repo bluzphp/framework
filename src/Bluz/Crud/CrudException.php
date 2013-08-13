@@ -26,7 +26,7 @@
  */
 namespace Bluz\Crud;
 
-use Bluz\Exception;
+use Bluz\Common\Exception;
 
 /**
  * Exception

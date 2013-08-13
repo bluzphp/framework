@@ -26,7 +26,7 @@
  */
 namespace Bluz\View\Helper;
 
-use Bluz\Application;
+use Bluz\Application\Application;
 use Bluz\View\View;
 use Bluz\View\ViewException;
 
@@ -40,7 +40,7 @@ return
      */
     function ($module, $controller, array $params = [], $checkAccess = false) {
     /** @var View $this */
-    $app = $this->getApplication();
+    $app = app();
 
     try {
         if ($checkAccess) {

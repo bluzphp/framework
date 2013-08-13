@@ -35,8 +35,8 @@ return
      */
     function (array $data = []) {
     /** @var View $this */
-    if ($this->getApplication()->hasLayout()) {
-        $layout = $this->getApplication()->getLayout();
+    if (app()->hasLayout()) {
+        $layout = app()->getLayout();
         if (sizeof($data)) {
             $layout->system('breadcrumbs', $data);
         } else {

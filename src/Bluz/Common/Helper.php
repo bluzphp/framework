@@ -24,9 +24,9 @@
 /**
  * @namespace
  */
-namespace Bluz;
+namespace Bluz\Common;
 
-use Bluz\Exception;
+use Bluz\Common\Exception;
 
 /**
  * Application

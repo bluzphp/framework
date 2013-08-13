@@ -26,17 +26,15 @@
  */
 namespace Bluz\Application\Helper;
 
-use Bluz\Application;
-use Bluz\Exception;
+use Bluz\Application\Exception\ReloadException;
 
 return
     /**
      * reload current page
      * please, be careful to avoid loop of reload
-     * @throws Exception
+     * @throws ReloadException
      * @return void
      */
     function () {
-        /** @var Application $this */
-        throw new Application\ReloadException();
+        throw new ReloadException();
     };

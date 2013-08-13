@@ -26,6 +26,8 @@
  */
 namespace Bluz\Registry;
 
+use Bluz\Common\Package;
+
 /**
  * Registry
  *
@@ -36,7 +38,7 @@ namespace Bluz\Registry;
  */
 class Registry
 {
-    use \Bluz\Package;
+    use Package;
 
     /**
      * Stored data

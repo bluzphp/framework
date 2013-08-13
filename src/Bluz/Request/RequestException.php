@@ -26,7 +26,7 @@
  */
 namespace Bluz\Request;
 
-use Bluz\Exception;
+use Bluz\Common\Exception;
 
 /**
  * RequestException

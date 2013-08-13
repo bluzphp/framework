@@ -26,6 +26,8 @@
  */
 namespace Bluz\Acl;
 
+use Bluz\Common\Package;
+
 /**
  * Acl
  *
@@ -37,7 +39,7 @@ namespace Bluz\Acl;
  */
 class Acl
 {
-    use \Bluz\Package;
+    use Package;
 
     /**
      * Is allowed
@@ -49,7 +51,7 @@ class Acl
     public function isAllowed($module, $privilege)
     {
         if ($privilege) {
-            $user = $this->getApplication()->getAuth()->getIdentity();
+            $user = app()->getAuth()->getIdentity();
             if (!$user || !$user->hasPrivilege($module, $privilege)) {
                 return false;
             }

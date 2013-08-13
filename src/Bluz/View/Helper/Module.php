@@ -38,7 +38,7 @@ return
      */
     function ($module = null) {
     /** @var View $this */
-    $request = $this->getApplication()->getRequest();
+    $request = app()->getRequest();
     if (null == $module) {
         return $request->getModule();
     } else {

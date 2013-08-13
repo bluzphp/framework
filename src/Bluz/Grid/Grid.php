@@ -26,7 +26,9 @@
  */
 namespace Bluz\Grid;
 
-use Bluz\Application;
+use Bluz\Application\Application;
+use Bluz\Common\Helper;
+use Bluz\Common\Package;
 
 /**
  * Grid
@@ -51,8 +53,8 @@ use Bluz\Application;
  */
 abstract class Grid
 {
-    use \Bluz\Package;
-    use \Bluz\Helper;
+    use Package;
+    use Helper;
 
     const ORDER_ASC = 'asc';
     const ORDER_DESC = 'desc';
@@ -310,7 +312,7 @@ abstract class Grid
      */
     public function processRequest()
     {
-        $request = $this->getApplication()->getRequest();
+        $request = app()->getRequest();
 
         $this->module = $request->getModule();
         $this->controller = $request->getController();
@@ -473,7 +475,7 @@ abstract class Grid
         $params = $this->getParams($params);
 
         // retrieve URL
-        return $this->getApplication()->getRouter()->url(
+        return app()->getRouter()->url(
             $this->getModule(),
             $this->getController(),
             $params

@@ -26,7 +26,7 @@
  */
 namespace Bluz\Config;
 
-use Bluz\Exception;
+use Bluz\Common\Exception;
 
 /**
  * Exception

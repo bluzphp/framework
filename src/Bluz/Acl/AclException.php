@@ -26,7 +26,7 @@
  */
 namespace Bluz\Acl;
 
-use Bluz\Exception;
+use Bluz\Common\Exception;
 
 /**
  * Exception

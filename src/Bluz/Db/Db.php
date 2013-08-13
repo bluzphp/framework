@@ -26,7 +26,9 @@
  */
 namespace Bluz\Db;
 
+use Bluz\Common\Package;
 use Bluz\Db\Query;
+use Bluz\Db\Exception\DbException;
 
 /**
  * PDO wrapper
@@ -82,7 +84,7 @@ use Bluz\Db\Query;
  */
 class Db
 {
-    use \Bluz\Package;
+    use Package;
 
     /**
      * @var array
@@ -589,7 +591,7 @@ class Db
         // replace mask by data
         $sql = vsprintf($sql, $context);
 
-        $this->getApplication()->log("DB >> " . $sql);
+        app()->log("DB >> " . $sql);
     }
 
     /**

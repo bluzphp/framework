@@ -26,7 +26,7 @@
  */
 namespace Bluz\Session;
 
-use Bluz\Exception;
+use Bluz\Common\Exception;
 
 /**
  * Exception

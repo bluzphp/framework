@@ -26,7 +26,7 @@
  */
 namespace Bluz\Tests;
 
-use Bluz\Application;
+use Bluz\Application\Application;
 
 /**
  * Bootstrap

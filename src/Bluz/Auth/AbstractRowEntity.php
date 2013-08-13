@@ -26,7 +26,6 @@
  */
 namespace Bluz\Auth;
 
-use Bluz\Application;
 use Bluz\Db\Row;
 
 /**
@@ -78,6 +77,6 @@ abstract class AbstractRowEntity extends Row implements EntityInterface
     public function login()
     {
         $this->tryLogin();
-        Application::getInstance()->getAuth()->setIdentity($this);
+        app()->getAuth()->setIdentity($this);
     }
 }

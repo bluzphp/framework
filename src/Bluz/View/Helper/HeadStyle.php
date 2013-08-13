@@ -35,9 +35,9 @@ return
      */
     function ($style = null, $media = 'all') {
     /** @var View $this */
-    if ($this->getApplication()->hasLayout()) {
+    if (app()->hasLayout()) {
         // it's stack for <head>
-        $view = $this->getApplication()->getLayout();
+        $view = app()->getLayout();
 
         $headStyle = $view->system('headStyle') ? : [];
 

@@ -24,17 +24,29 @@
 /**
  * @namespace
  */
-namespace Bluz\Db;
+namespace Bluz\Application\Exception;
 
 /**
- * WrongPrimaryKeyException
+ * Exception
  *
- * @category Bluz
- * @package  Db
+ * @category Application
+ * @package  Exception
  *
- * @author   Eugene Zabolotniy
+ * @author   Anton Shevchuk
+ * @created  23.01.13 17:46
  */
-class InvalidPrimaryKeyException extends DbException
+class NotFoundException extends ApplicationException
 {
-    public $message = "Wrong primary key";
+    /**
+     * @var string
+     */
+    protected $message = "Page Not Found";
+
+    /**
+     * Redirect HTTP code
+     * 301 Moved Permanently
+     * 302 Found
+     * @var int
+     */
+    protected $code = 404;
 }

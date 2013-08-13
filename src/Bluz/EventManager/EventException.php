@@ -26,7 +26,7 @@
  */
 namespace Bluz\EventManager;
 
-use Bluz\Exception;
+use Bluz\Common\Exception;
 
 /**
  * Exception

@@ -24,29 +24,28 @@
 /**
  * @namespace
  */
-namespace Bluz\Application;
+namespace Bluz\Application\Exception;
 
 /**
  * Exception
  *
- * @category Application
- * @package  Exception
+ * @category Bluz
+ * @package  Rest
  *
  * @author   Anton Shevchuk
- * @created  23.01.13 17:40
+ * @created  13.08.13 13:09
  */
-class RedirectException extends ApplicationException
+class NotImplementedException extends ApplicationException
 {
     /**
      * @var string
      */
-    protected $message = "Application Redirect";
+    protected $message = "Not Implemented";
+
 
     /**
-     * Redirect HTTP code
-     * 301 Moved Permanently
-     * 302 Found
+     * Not Implemented HTTP Code
      * @var int
      */
-    protected $code = 302;
+    protected $code = 501;
 }

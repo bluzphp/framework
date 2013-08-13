@@ -24,7 +24,7 @@
 /**
  * @namespace
  */
-namespace Bluz\Auth;
+namespace Bluz\Db\Exception;
 
 use Bluz\Common\Exception;
 
@@ -32,11 +32,11 @@ use Bluz\Common\Exception;
  * Exception
  *
  * @category Bluz
- * @package  Auth
+ * @package  Db
  *
  * @author   Anton Shevchuk
- * @created  12.07.11 16:46
+ * @created  07.07.11 16:46
  */
-class AuthException extends Exception
+class DbException extends Exception
 {
 }

@@ -26,6 +26,8 @@
  */
 namespace Bluz\Mailer;
 
+use Bluz\Common\Package;
+
 /**
  * Wrapper over PHPMailer
  *
@@ -39,7 +41,7 @@ use Bluz\Config\ConfigException;
 
 class Mailer
 {
-    use \Bluz\Package;
+    use Package;
 
     /**
      * checkOptions

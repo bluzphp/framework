@@ -26,6 +26,8 @@
  */
 namespace Bluz\Auth;
 
+use Bluz\Common\Package;
+
 /**
  * Auth support
  *  - DB adapter
@@ -39,7 +41,7 @@ namespace Bluz\Auth;
  */
 class Auth
 {
-    use \Bluz\Package;
+    use Package;
 
     /**
      * setup identity
@@ -49,7 +51,7 @@ class Auth
      */
     public function setIdentity(EntityInterface $identity)
     {
-        $this->getApplication()->getSession()->identity = $identity;
+        app()->getSession()->identity = $identity;
         return $this;
     }
 
@@ -60,7 +62,7 @@ class Auth
      */
     public function getIdentity()
     {
-        return $this->getApplication()->getSession()->identity;
+        return app()->getSession()->identity;
     }
 
     /**
@@ -70,7 +72,7 @@ class Auth
      */
     public function clearIdentity()
     {
-        $this->getApplication()->getSession()->identity = null;
+        app()->getSession()->identity = null;
         return $this;
     }
 }

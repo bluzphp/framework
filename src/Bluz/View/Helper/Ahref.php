@@ -49,7 +49,7 @@ return
         return '';
     }
 
-    if ($href == $this->getApplication()->getRequest()->getRequestUri()) {
+    if ($href == app()->getRequest()->getRequestUri()) {
         if (isset($attributes['class'])) {
             $attributes['class'] .= ' on';
         } else {

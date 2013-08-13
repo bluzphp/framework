@@ -24,9 +24,7 @@
 /**
  * @namespace
  */
-namespace Bluz\Application;
-
-use Bluz\Exception;
+namespace Bluz\Application\Exception;
 
 /**
  * Exception
@@ -35,8 +33,12 @@ use Bluz\Exception;
  * @package  Exception
  *
  * @author   Anton Shevchuk
- * @created  17.12.12 16:46
+ * @created  23.01.13 17:40
  */
-class ApplicationException extends Exception
+class ReloadException extends ApplicationException
 {
+    /**
+     * @var string
+     */
+    protected $message = "Application Reload";
 }

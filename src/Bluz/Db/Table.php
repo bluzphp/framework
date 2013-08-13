@@ -26,6 +26,9 @@
  */
 namespace Bluz\Db;
 
+use Bluz\Db\Exception\DbException;
+use Bluz\Db\Exception\InvalidPrimaryKeyException;
+
 /**
  * Table
  *
@@ -97,7 +100,6 @@ abstract class Table
     /**
      * __construct
      *
-     * @throws DbException
      * @return \Bluz\Db\Table
      */
     private function __construct()

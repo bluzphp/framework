@@ -24,18 +24,17 @@
 /**
  * @namespace
  */
-namespace Bluz\Db;
+namespace Bluz\Db\Exception;
 
 /**
- * TableNotFoundException class.
+ * WrongPrimaryKeyException
  *
  * @category Bluz
  * @package  Db
  *
- * @author   Eugene Zabolotniy <realbaziak@gmail.com>
- * @since    1.0
+ * @author   Eugene Zabolotniy
  */
-class TableNotFoundException extends DbException
+class InvalidPrimaryKeyException extends DbException
 {
-    public $message = 'Relation not found';
+    public $message = "Wrong primary key";
 }

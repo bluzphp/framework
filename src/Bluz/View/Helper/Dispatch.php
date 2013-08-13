@@ -44,7 +44,7 @@ return
      */
     function ($module, $controller, $params = array()) {
     /** @var View $this */
-    $application = $this->getApplication();
+    $application = app();
     try {
         $view = $application->dispatch($module, $controller, $params);
     } catch (\Bluz\Acl\AclException $e) {

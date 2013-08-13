@@ -67,16 +67,16 @@ class Router
      */
     public function __construct()
     {
-        $routers = $this->getApplication()->getCache()->get('router:routers');
-        $reverse = $this->getApplication()->getCache()->get('router:reverse');
+        $routers = app()->getCache()->get('router:routers');
+        $reverse = app()->getCache()->get('router:reverse');
 
         if (!$routers or !$reverse) {
             $routers = array();
             $reverse = array();
-            foreach (new \GlobIterator($this->getApplication()->getPath() . '/modules/*/controllers/*.php') as $file) {
+            foreach (new \GlobIterator(app()->getPath() . '/modules/*/controllers/*.php') as $file) {
                 $module = pathinfo(dirname(dirname($file->getPathname())), PATHINFO_FILENAME);
                 $controller = pathinfo($file->getPathname(), PATHINFO_FILENAME);
-                $data = $this->getApplication()->reflection($file->getPathname());
+                $data = app()->reflection($file->getPathname());
                 if (isset($data['route'])) {
                     foreach ((array)$data['route'] as $route) {
                         $route = trim($route);
@@ -129,8 +129,8 @@ class Router
                     }
                 }
             }
-            $this->getApplication()->getCache()->set('router:routers', $routers);
-            $this->getApplication()->getCache()->set('router:reverse', $reverse);
+            app()->getCache()->set('router:routers', $routers);
+            app()->getCache()->set('router:reverse', $reverse);
         }
 
         $this->routers = $routers;
@@ -145,7 +145,7 @@ class Router
     public function getBaseUrl()
     {
         if (!$this->baseUrl) {
-            $this->baseUrl = $this->getApplication()
+            $this->baseUrl = app()
                 ->getRequest()
                 ->getBaseUrl();
         }
@@ -165,8 +165,8 @@ class Router
         $controller = self::DEFAULT_CONTROLLER,
         $params = array()
     ) {
-        $scheme = $this->getApplication()->getRequest()->getScheme() . '://';
-        $host = $this->getApplication()->getRequest()->getHttpHost();
+        $scheme = app()->getRequest()->getScheme() . '://';
+        $host = app()->getRequest()->getHttpHost();
         $url = $this->url($module, $controller, $params);
         return $scheme . $host . $url;
     }
@@ -291,7 +291,7 @@ class Router
      */
     protected function processDefault()
     {
-        $uri = $this->getApplication()->getRequest()->getCleanUri();
+        $uri = app()->getRequest()->getCleanUri();
         return empty($uri);
     }
 
@@ -303,7 +303,7 @@ class Router
      */
     protected function processCustom()
     {
-        $request = $this->getApplication()->getRequest();
+        $request = app()->getRequest();
         $uri = '/' . $request->getCleanUri();
         foreach ($this->routers as $router) {
             if (preg_match($router['pattern'], $uri, $matches)) {
@@ -328,7 +328,7 @@ class Router
      */
     protected function processRoute()
     {
-        $request = $this->getApplication()->getRequest();
+        $request = app()->getRequest();
         $uri = $request->getCleanUri();
         $uri = trim($uri, '/');
         $params = explode('/', $uri);

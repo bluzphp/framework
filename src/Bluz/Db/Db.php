@@ -589,7 +589,7 @@ class Db
         // replace mask by data
         $sql = vsprintf($sql, $context);
 
-        $this->getApplication()->log("DB >> " . $sql);
+        app()->log("DB >> " . $sql);
     }
 
     /**

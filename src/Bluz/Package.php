@@ -147,15 +147,4 @@ trait Package
         $option = str_replace(' ', '', ucwords($option));
         return $option;
     }
-
-    /**
-     * getApplication
-     *
-     * @throws Exception
-     * @return Application
-     */
-    public function getApplication()
-    {
-        return Application::getInstance();
-    }
 }

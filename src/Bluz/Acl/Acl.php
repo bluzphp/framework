@@ -49,7 +49,7 @@ class Acl
     public function isAllowed($module, $privilege)
     {
         if ($privilege) {
-            $user = $this->getApplication()->getAuth()->getIdentity();
+            $user = app()->getAuth()->getIdentity();
             if (!$user || !$user->hasPrivilege($module, $privilege)) {
                 return false;
             }

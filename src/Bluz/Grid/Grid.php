@@ -310,7 +310,7 @@ abstract class Grid
      */
     public function processRequest()
     {
-        $request = $this->getApplication()->getRequest();
+        $request = app()->getRequest();
 
         $this->module = $request->getModule();
         $this->controller = $request->getController();
@@ -473,7 +473,7 @@ abstract class Grid
         $params = $this->getParams($params);
 
         // retrieve URL
-        return $this->getApplication()->getRouter()->url(
+        return app()->getRouter()->url(
             $this->getModule(),
             $this->getController(),
             $params

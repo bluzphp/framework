@@ -35,9 +35,9 @@ return
      */
     function (array $link = null) {
     /** @var View $this */
-    if ($this->getApplication()->hasLayout()) {
+    if (app()->hasLayout()) {
         // it's stack for <head>
-        $layout = $this->getApplication()->getLayout();
+        $layout = app()->getLayout();
 
         $links = $layout->system('link') ? : [];
 

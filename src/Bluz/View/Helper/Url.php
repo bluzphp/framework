@@ -40,7 +40,7 @@ return
      */
     function ($module, $controller, array $params = [], $checkAccess = false) {
     /** @var View $this */
-    $app = $this->getApplication();
+    $app = app();
 
     try {
         if ($checkAccess) {

@@ -174,7 +174,7 @@ class Messages
      */
     public function reset()
     {
-        $this->getApplication()->getSession()->MessagesStore = $this->createEmptyMessagesStore();
+        app()->getSession()->MessagesStore = $this->createEmptyMessagesStore();
     }
 
     /**
@@ -184,7 +184,7 @@ class Messages
      */
     protected function getMessagesStore()
     {
-        return $this->getApplication()->getSession()->MessagesStore;
+        return app()->getSession()->MessagesStore;
     }
 
     /**

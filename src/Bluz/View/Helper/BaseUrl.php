@@ -40,7 +40,7 @@ return
     /** @var View $this */
     // setup baseUrl
     if (!$this->baseUrl) {
-        $this->baseUrl = $this->getApplication()
+        $this->baseUrl = app()
             ->getRequest()
             ->getBaseUrl();
         // clean script name

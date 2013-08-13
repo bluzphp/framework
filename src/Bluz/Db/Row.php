@@ -26,7 +26,10 @@
  */
 namespace Bluz\Db;
 
-use Bluz\Db\DbException;
+use Bluz\Db\Exception\DbException;
+use Bluz\Db\Exception\InvalidPrimaryKeyException;
+use Bluz\Db\Exception\RelationNotFoundException;
+use Bluz\Db\Exception\TableNotFoundException;
 
 /**
  * Row

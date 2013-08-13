@@ -24,17 +24,32 @@
 /**
  * @namespace
  */
-namespace Bluz;
+namespace Bluz\Tests\Application;
+
+use Bluz\Tests\TestCase;
+use Bluz\Application\Application;
 
 /**
- * Exception
- *
- * @category Bluz
- * @package  Exception
+ * ApplicationTest
  *
  * @author   Anton Shevchuk
- * @created  06.07.11 16:46
+ * @created  21.05.13 10:24
  */
-class Exception extends \Exception
+class ApplicationTest extends TestCase
 {
+    /**
+     * @covers Bluz\Application::reflection
+     * @return void
+     */
+    public function testReflection()
+    {
+        $controllerFile = dirname(__FILE__) .'/../Fixtures/ConcreteControllerWithData.php';
+        $app = Application::getInstance();
+        $reflectionData = $app->reflection($controllerFile);
+
+        /** @var \closure $controllerClosure */
+        $controllerClosure = require $controllerFile;
+
+        $this->assertEquals($reflectionData, $controllerClosure('a', 'b', 'c'));
+    }
 }

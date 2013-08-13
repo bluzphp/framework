@@ -26,7 +26,7 @@
  */
 namespace Bluz\Router;
 
-use Bluz\Exception;
+use Bluz\Common\Exception;
 
 /**
  * Exception

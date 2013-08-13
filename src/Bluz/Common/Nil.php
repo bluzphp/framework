@@ -24,13 +24,13 @@
 /**
  * @namespace
  */
-namespace Bluz;
+namespace Bluz\Common;
 
 /**
  * It's just null class
  *
  * @category Bluz
- * @package  Nil
+ * @package  Common
  *
  * @author   Anton Shevchuk
  * @created  15.01.13 09:50

@@ -26,18 +26,16 @@
  */
 namespace Bluz\Application\Helper;
 
-use Bluz\Application;
-use Bluz\Exception;
+use Bluz\Application\Exception\RedirectException;
 
 return
     /**
      * redirect to url
      *
      * @param string $url
-     * @throws Exception
+     * @throws RedirectException
      * @return void
      */
     function ($url) {
-        /** @var Application $this */
-        throw new Application\RedirectException($url);
+        throw new RedirectException($url);
     };

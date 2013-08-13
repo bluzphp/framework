@@ -26,7 +26,7 @@
  */
 namespace Bluz\Application\Helper;
 
-use Bluz\Application;
+use Bluz\Application\Exception\ForbiddenException;
 
 return
     /**
@@ -35,5 +35,5 @@ return
      * @return boolean
      */
     function () {
-        throw new \Bluz\Application\ApplicationException('You don\'t have permissions', 403);
+        throw new ForbiddenException();
     };

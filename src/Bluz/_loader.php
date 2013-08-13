@@ -33,16 +33,16 @@
 set_include_path(dirname(__FILE__) . PATH_SEPARATOR . get_include_path());
 
 // exceptions
-require_once 'Exception.php';
+require_once 'Common/Exception.php';
 
 // traits
-require_once 'Helper.php';
-require_once 'Singleton.php';
-require_once 'Package.php';
+require_once 'Common/Helper.php';
+require_once 'Common/Singleton.php';
+require_once 'Common/Package.php';
 
 // application
-require_once 'Application.php';
-require_once 'Application/ApplicationException.php';
+require_once 'Application/Application.php';
+require_once 'Application/Exception/ApplicationException.php';
 
 // packages and support
 require_once 'Config/Config.php';

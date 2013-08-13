@@ -24,7 +24,7 @@
 /**
  * @namespace
  */
-namespace Bluz;
+namespace Bluz\Common;
 
 /**
  * Package

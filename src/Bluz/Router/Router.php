@@ -26,6 +26,8 @@
  */
 namespace Bluz\Router;
 
+use Bluz\Common\Package;
+
 /**
  * Router
  *
@@ -37,7 +39,7 @@ namespace Bluz\Router;
  */
 class Router
 {
-    use \Bluz\Package;
+    use Package;
 
     /**
      * Or should be as properties?

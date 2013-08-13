@@ -26,7 +26,7 @@
  */
 namespace Bluz\Grid\Source;
 
-use Bluz\Application;
+use Bluz\Application\Application;
 use Bluz\Db;
 use Bluz\Grid;
 

@@ -26,7 +26,7 @@
  */
 namespace Bluz\Application\Helper;
 
-use Bluz\Application;
+use Bluz\Application\Application;
 
 return
     /**

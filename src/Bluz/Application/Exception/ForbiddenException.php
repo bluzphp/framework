@@ -24,31 +24,27 @@
 /**
  * @namespace
  */
-namespace Bluz\Tests;
-
-use Bluz;
+namespace Bluz\Application\Exception;
 
 /**
- * ApplicationTest
+ * Exception
+ *
+ * @category Application
+ * @package  Exception
  *
  * @author   Anton Shevchuk
- * @created  21.05.13 10:24
+ * @created  13.08.13 14:01
  */
-class ApplicationTest extends Bluz\Tests\TestCase
+class ForbiddenException extends ApplicationException
 {
     /**
-     * @covers Bluz\Application::reflection
-     * @return void
+     * @var string
      */
-    public function testReflection()
-    {
-        $controllerFile = dirname(__FILE__) .'/Fixtures/ConcreteControllerWithData.php';
-        $app = Bluz\Application::getInstance();
-        $reflectionData = $app->reflection($controllerFile);
+    protected $message = "Forbidden";
 
-        /** @var \closure $controllerClosure */
-        $controllerClosure = require $controllerFile;
-
-        $this->assertEquals($reflectionData, $controllerClosure('a', 'b', 'c'));
-    }
+    /**
+     * Forbidden HTTP code
+     * @var int
+     */
+    protected $code = 403;
 }

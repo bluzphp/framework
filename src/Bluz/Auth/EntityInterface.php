@@ -26,8 +26,6 @@
  */
 namespace Bluz\Auth;
 
-use Bluz\Application;
-
 /**
  *
  */

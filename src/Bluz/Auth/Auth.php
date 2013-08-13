@@ -26,6 +26,8 @@
  */
 namespace Bluz\Auth;
 
+use Bluz\Common\Package;
+
 /**
  * Auth support
  *  - DB adapter
@@ -39,7 +41,7 @@ namespace Bluz\Auth;
  */
 class Auth
 {
-    use \Bluz\Package;
+    use Package;
 
     /**
      * setup identity

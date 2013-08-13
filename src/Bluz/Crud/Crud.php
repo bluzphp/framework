@@ -26,7 +26,8 @@
  */
 namespace Bluz\Crud;
 
-use Bluz\Application\ReloadException;
+use Bluz\Application\Exception\ReloadException;
+use Bluz\Common\Package;
 use Bluz\Db;
 use Bluz\Request\AbstractRequest;
 
@@ -41,7 +42,7 @@ use Bluz\Request\AbstractRequest;
  */
 class Crud
 {
-    use \Bluz\Package;
+    use Package;
 
     /**
      * @var string

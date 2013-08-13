@@ -26,6 +26,8 @@
  */
 namespace Bluz\Messages;
 
+use Bluz\Common\Package;
+
 /**
  * Realization of Flash Messages
  *
@@ -36,7 +38,7 @@ namespace Bluz\Messages;
  */
 class Messages
 {
-    use \Bluz\Package;
+    use Package;
 
     const TYPE_ERROR = 'error';
     const TYPE_SUCCESS = 'success';

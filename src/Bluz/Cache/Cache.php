@@ -39,11 +39,12 @@ namespace Bluz\Cache;
  * @author murzik
  */
 use Bluz\Cache\Adapter;
+use Bluz\Common\Package;
 use Bluz\Config\ConfigException;
 
 class Cache implements CacheInterface, TagableInterface
 {
-    use \Bluz\Package;
+    use Package;
 
     /**
      * @var Adapter\AbstractAdapter

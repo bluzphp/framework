@@ -1027,13 +1027,24 @@ class Application
                 throw new Exception("There is no closure in file $file");
             }
 
-            $reflection = new \ReflectionFunction($closure);
+            // init data
+            $data = array(
+                'params' => [],
+                'values' => [],
+            );
+
+            switch (get_class($closure)) {
+                case 'Closure':
+                    $reflection = new \ReflectionFunction($closure);
+                    break;
+                default:
+                    $reflection = new \ReflectionObject($closure);
+                    break;
+            }
 
             // check and normalize params by doc comment
             $docComment = $reflection->getDocComment();
 
-            // init data
-            $data = array();
 
             // get all options by one regular expression
             if (preg_match_all('/\s*\*\s*\@([a-z0-9-_]+)\s+(.*).*/i', $docComment, $matches)) {
@@ -1042,37 +1053,39 @@ class Application
                 }
             }
 
-            // get params and convert it to simple array
-            $reflectionParams = $reflection->getParameters();
+            if (method_exists($reflection, 'getParameters')) {
+                // get params and convert it to simple array
+                $reflectionParams = $reflection->getParameters();
 
-            // prepare params data
-            // setup param types
-            $types = array();
-            if (isset($data['param'])) {
-                foreach ($data['param'] as $param) {
-                    if (strpos($param, '$') === false) {
-                        continue;
-                    }
-                    list($type, $key) = preg_split('/\$/', $param);
-                    $type = trim($type);
-                    if (!empty($type)) {
-                        $types[$key] = $type;
+                // prepare params data
+                // setup param types
+                $types = array();
+                if (isset($data['param'])) {
+                    foreach ($data['param'] as $param) {
+                        if (strpos($param, '$') === false) {
+                            continue;
+                        }
+                        list($type, $key) = preg_split('/\$/', $param);
+                        $type = trim($type);
+                        if (!empty($type)) {
+                            $types[$key] = $type;
+                        }
                     }
                 }
-            }
 
-            // setup params and optional params
-            $params = array();
-            $values = array();
-            foreach ($reflectionParams as $key => $param) {
-                $name = $param->getName();
-                $params[$name] = isset($types[$name]) ? $types[$name] : 'string';
-                if ($param->isOptional()) {
-                    $values[$name] = $param->getDefaultValue();
+                // setup params and optional params
+                $params = array();
+                $values = array();
+                foreach ($reflectionParams as $key => $param) {
+                    $name = $param->getName();
+                    $params[$name] = isset($types[$name]) ? $types[$name] : 'string';
+                    if ($param->isOptional()) {
+                        $values[$name] = $param->getDefaultValue();
+                    }
                 }
+                $data['params'] = $params;
+                $data['values'] = $values;
             }
-            $data['params'] = $params;
-            $data['values'] = $values;
 
             // prepare cache ttl settings
             if (isset($data['cache'])) {

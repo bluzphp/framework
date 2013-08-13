@@ -38,6 +38,7 @@ return
     if ('.js' == substr($script, -3)) {
         if (strpos($script, 'http://') !== 0
             && strpos($script, 'https://') !== 0
+            && strpos($script, '//') !== 0
         ) {
             $script = $this->baseUrl($script);
         }

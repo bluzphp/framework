@@ -44,11 +44,11 @@ abstract class AbstractRest
     /**
      * list of items
      *
-     * @param $params
+     * @param array $params
      * @throws NotImplementedException
      * @return mixed
      */
-    protected function index($params)
+    protected function index(array $params = array())
     {
         throw new NotImplementedException();
     }
@@ -68,11 +68,11 @@ abstract class AbstractRest
     /**
      * create new item
      *
-     * @param $data
+     * @param array $data
      * @throws NotImplementedException
      * @return mixed
      */
-    protected function post($data)
+    protected function post(array $data)
     {
         throw new NotImplementedException();
     }
@@ -81,11 +81,11 @@ abstract class AbstractRest
      * update item
      *
      * @param $id
-     * @param $data
+     * @param array $data
      * @throws NotImplementedException
-     * @return mixed
+     * @return integer
      */
-    protected function put($id, $data)
+    protected function put($id, array $data)
     {
         throw new NotImplementedException();
     }
@@ -95,7 +95,7 @@ abstract class AbstractRest
      *
      * @param $id
      * @throws NotImplementedException
-     * @return mixed
+     * @return integer
      */
     protected function delete($id)
     {
@@ -109,6 +109,7 @@ abstract class AbstractRest
      */
     public function __invoke()
     {
+        app()->useJson(true);
         $request = app()->getRequest();
 
         $uri = $request->getRequestUri();

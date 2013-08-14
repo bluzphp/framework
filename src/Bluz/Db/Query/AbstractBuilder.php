@@ -27,7 +27,7 @@
 namespace Bluz\Db\Query;
 
 use Bluz\Db\Db;
-use Bluz\Db\DbException;
+use Bluz\Db\Exception\DbException;
 use Bluz\Db\Query\CompositeBuilder;
 
 /**
@@ -177,10 +177,6 @@ abstract class AbstractBuilder
      */
     public function setParameter($key, $value, $type = \PDO::PARAM_STR)
     {
-        if (null == $value) {
-            return $this;
-        }
-
         if (null == $key) {
             $key = sizeof($this->params);
         }

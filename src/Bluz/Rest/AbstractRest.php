@@ -112,7 +112,7 @@ abstract class AbstractRest
         app()->useJson(true);
         $request = app()->getRequest();
 
-        $uri = $request->getRequestUri();
+        $uri = $request->getCleanUri();
 
         // try to retrieve UID of item
         if (strrpos($uri, '/') !== 0) {
@@ -121,7 +121,6 @@ abstract class AbstractRest
             $id = null;
         }
 
-        $params = $request->getParams();
         $allParams = $request->getAllParams();
 
         switch ($request->getMethod()) {
@@ -133,7 +132,7 @@ abstract class AbstractRest
                     }
                     return current($result);
                 } else {
-                    return $this->index($params);
+                    return $this->index($allParams);
                 }
                 break;
             case AbstractRequest::METHOD_POST:

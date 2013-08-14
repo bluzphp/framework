@@ -586,7 +586,7 @@ class Db
     protected function log($sql, array $context = [])
     {
         $sql = str_replace('%', '%%', $sql);
-        $sql = str_replace('?', '"%s"', $sql);
+        $sql = preg_replace('/\?/', '"%s"', $sql, sizeof($context));
 
         // replace mask by data
         $sql = vsprintf($sql, $context);

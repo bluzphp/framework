@@ -112,7 +112,7 @@ abstract class AbstractRest
         app()->useJson(true);
         $request = app()->getRequest();
 
-        $uri = $request->getRequestUri();
+        $uri = $request->getCleanUri();
 
         // try to retrieve UID of item
         if (strrpos($uri, '/') !== 0) {

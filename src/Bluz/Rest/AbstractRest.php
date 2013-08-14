@@ -26,6 +26,7 @@
  */
 namespace Bluz\Rest;
 
+use Bluz\Application\Exception\NotFoundException;
 use Bluz\Request\AbstractRequest;
 use Bluz\Application\Exception\NotImplementedException;
 
@@ -41,90 +42,121 @@ use Bluz\Application\Exception\NotImplementedException;
 abstract class AbstractRest
 {
     /**
-     * index
+     * list of items
      *
+     * @param $params
      * @throws NotImplementedException
      * @return mixed
      */
-    protected function index()
+    protected function index($params)
     {
         throw new NotImplementedException();
     }
 
     /**
-     * read
+     * read item
      *
+     * @param $id
      * @throws NotImplementedException
      * @return mixed
      */
-    protected function get()
+    protected function get($id)
     {
         throw new NotImplementedException();
     }
 
     /**
-     * create
+     * create new item
      *
+     * @param $data
      * @throws NotImplementedException
      * @return mixed
      */
-    protected function post()
+    protected function post($data)
     {
         throw new NotImplementedException();
     }
 
     /**
-     * update
+     * update item
      *
+     * @param $id
+     * @param $data
      * @throws NotImplementedException
      * @return mixed
      */
-    protected function put()
+    protected function put($id, $data)
     {
         throw new NotImplementedException();
     }
 
     /**
-     * delete
+     * delete item
      *
+     * @param $id
      * @throws NotImplementedException
      * @return mixed
      */
-    protected function delete()
+    protected function delete($id)
     {
         throw new NotImplementedException();
     }
 
     /**
      * @throws NotImplementedException
+     * @throws NotFoundException
      * @return mixed
      */
     public function __invoke()
     {
         $request = app()->getRequest();
 
+        $uri = $request->getRequestUri();
+
+        // try to retrieve UID of item
+        if (strrpos($uri, '/') !== 0) {
+            $id = substr($uri, strrpos($uri, '/')+1);
+        } else {
+            $id = null;
+        }
+
         $params = $request->getParams();
         $allParams = $request->getAllParams();
 
         switch ($request->getMethod()) {
             case AbstractRequest::METHOD_GET:
-                if (sizeof($params)) {
-                    return $this->get($allParams);
+                if ($id) {
+                    $result = $this->get($id);
+                    if (!sizeof($result)) {
+                        throw new NotFoundException();
+                    }
+                    return current($result);
                 } else {
                     return $this->index($params);
                 }
                 break;
             case AbstractRequest::METHOD_POST:
-                if (sizeof($params)) {
-
+                if ($id) {
+                    throw new NotFoundException();
                 }
-                return $this->post($allParams);
+                $result = $this->post($allParams);
+                if (!$result) {
+                    throw new NotFoundException();
+                }
+                header('Location: ' . $request->getModule() .'/'. $request->getController() .'/'. $result, true, 201);
+                return false;
                 break;
             case AbstractRequest::METHOD_PUT:
-                return $this->put($allParams);
+                if (!$id) {
+                    throw new NotFoundException();
+                }
+                return $this->put($id, $allParams);
                 break;
             case AbstractRequest::METHOD_DELETE:
-                return $this->delete($allParams);
+                if (!$id) {
+                    throw new NotFoundException();
+                }
+                return $this->delete($id);
                 break;
             default:
                 throw new NotImplementedException();

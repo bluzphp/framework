@@ -27,7 +27,7 @@
 namespace Bluz\Db\Query;
 
 use Bluz\Db\Db;
-use Bluz\Db\DbException;
+use Bluz\Db\Exception\DbException;
 use Bluz\Db\Query\CompositeBuilder;
 
 /**

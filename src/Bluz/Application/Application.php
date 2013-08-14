@@ -207,7 +207,7 @@ class Application
             $this->log(__METHOD__);
 
             // initial default helper path
-            $this->addHelperPath(dirname(__FILE__) . '/Application/Helper/');
+            $this->addHelperPath(dirname(__FILE__) . '/Helper/');
 
             // session start inside
             $this->getSession();
@@ -1057,7 +1057,6 @@ class Application
                     $data[$key][] = trim($matches[2][$i]);
                 }
             }
-
             if (method_exists($reflection, 'getParameters')) {
                 // get params and convert it to simple array
                 $reflectionParams = $reflection->getParameters();

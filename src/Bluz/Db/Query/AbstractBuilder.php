@@ -88,7 +88,6 @@ abstract class AbstractBuilder
         return $this->getAdapter()->query($this->getSQL(), $this->params, $this->paramTypes);
     }
 
-
     /**
      * Sets a DB adapter.
      *

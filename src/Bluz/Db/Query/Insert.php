@@ -38,6 +38,18 @@ class Insert extends AbstractBuilder
     /**
      * {@inheritdoc}
      */
+    public function execute()
+    {
+        $result = $this->getAdapter()->query($this->getSQL(), $this->params, $this->paramTypes);
+        if ($result) {
+            return $this->getAdapter()->handler()->lastInsertId();
+        }
+        return $result;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getSql()
     {
         $query = "INSERT INTO " . $this->sqlParts['from']['table']

@@ -57,6 +57,7 @@ trait Set {
      */
     public function set($key, $value)
     {
+        /* @var \Bluz\Db\Query\AbstractBuilder $this */
         $this->setParameter(null, $value);
         $key = $this->getAdapter()->quoteIdentifier($key);
         return $this->addQueryPart('set', $key .' = ?', true);

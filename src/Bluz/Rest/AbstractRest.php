@@ -140,9 +140,6 @@ abstract class AbstractRest
                     throw new NotFoundException();
                 }
                 $result = $this->post($allParams);
-                if (!$result) {
-                    throw new NotFoundException();
-                }
                 header('Location: ' . $request->getModule() .'/'. $request->getController() .'/'. $result, true, 201);
                 return false;
                 break;
@@ -156,7 +153,10 @@ abstract class AbstractRest
                 if (!$id) {
                     throw new NotFoundException();
                 }
-                return $this->delete($id);
+                $result = $this->delete($id);
+                if (!$result) {
+                    throw new NotFoundException();
+                }
                 break;
             default:
                 throw new NotImplementedException();

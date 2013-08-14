@@ -177,10 +177,6 @@ abstract class AbstractBuilder
      */
     public function setParameter($key, $value, $type = \PDO::PARAM_STR)
     {
-        if (null == $value) {
-            return $this;
-        }
-
         if (null == $key) {
             $key = sizeof($this->params);
         }

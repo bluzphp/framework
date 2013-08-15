@@ -121,11 +121,6 @@ class Crud
             return $return;
         }
 
-        // reload page for AJAX request for refresh current view
-        // FIXME: hardcoded reload process
-        if (app()->getRequest()->isXmlHttpRequest()) {
-            return new ReloadException();
-        }
         // disable view
         return false;
     }

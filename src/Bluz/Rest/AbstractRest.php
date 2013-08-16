@@ -42,6 +42,22 @@ use Bluz\Application\Exception\NotImplementedException;
 abstract class AbstractRest
 {
     /**
+     * HTTP Method
+     * @var string
+     */
+    protected $method = AbstractRequest::METHOD_GET;
+
+    /**
+     * getMethod
+     *
+     * @return string
+     */
+    public function getMethod()
+    {
+        return $this->method;
+    }
+
+    /**
      * list of items
      *
      * @param array $params
@@ -109,21 +125,28 @@ abstract class AbstractRest
      */
     public function __invoke()
     {
-        app()->useJson(true);
+//        app()->useJson(true);
         $request = app()->getRequest();
 
-        $uri = $request->getCleanUri();
+        // rewrite REST with "method" param
+        $this->method = strtoupper($request->getParam('_method', $request->getMethod()));
 
-        // try to retrieve UID of item
-        if (strrpos($uri, '/') !== 0) {
-            $id = substr($uri, strrpos($uri, '/')+1);
-        } else {
-            $id = null;
-        }
+        // try to get uid
+        $uri = parse_url($request->getRequestUri(), PHP_URL_PATH);
+        $url = app()->getRouter()->url(null, null);
+        $id = trim(substr($uri, strlen($url)), '/');
 
+        // get all params
         $allParams = $request->getAllParams();
 
-        switch ($request->getMethod()) {
+        unset($allParams['_method']);
+
+        // GET    /module/rest/   -> collection
+        // GET    /module/rest/id -> get item
+        // POST   /module/rest/   -> create item
+        // PUT    /module/rest/id -> update item
+        // DELETE /module/rest/id -> delete item
+        switch ($this->method) {
             case AbstractRequest::METHOD_GET:
                 if ($id) {
                     $result = $this->get($id);
@@ -140,7 +163,11 @@ abstract class AbstractRest
                     throw new NotFoundException();
                 }
                 $result = $this->post($allParams);
-                header('Location: ' . $request->getModule() .'/'. $request->getController() .'/'. $result, true, 201);
+                header(
+                    'Location: '.app()->getRouter()->url($request->getModule(), $request->getController()).'/'.$result,
+                    true,
+                    201
+                );
                 return false;
                 break;
             case AbstractRequest::METHOD_PUT:
@@ -157,6 +184,7 @@ abstract class AbstractRest
                 if (!$result) {
                     throw new NotFoundException();
                 }
+                return false;
                 break;
             default:
                 throw new NotImplementedException();

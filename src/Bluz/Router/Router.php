@@ -183,6 +183,14 @@ class Router
      */
     public function url($module = self::DEFAULT_MODULE, $controller = self::DEFAULT_CONTROLLER, $params = array())
     {
+        if (null === $module) {
+            $module = app()->getRequest()->getModule();
+        }
+
+        if (null === $controller) {
+            $controller = app()->getRequest()->getController();
+        }
+
         if (empty($this->routers)) {
             return $this->urlRoute($module, $controller, $params);
         } else {

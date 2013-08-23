@@ -34,29 +34,10 @@ use Bluz\Cache\CacheException;
  */
 class Redis extends AbstractAdapter
 {
-
     /**
      * @var \Redis
      */
     protected $redis = null;
-
-    /**
-     * Host
-     * @var string
-     */
-    protected $host = "127.0.0.1";
-
-    /**
-     * Port
-     * @var int
-     */
-    protected $port = 6379;
-
-    /**
-     * Timeout
-     * @var null
-     */
-    protected $timeout = null;
 
     /**
      * Check and setup Redis server
@@ -68,31 +49,30 @@ class Redis extends AbstractAdapter
     {
         if (!extension_loaded('redis')) {
             $msg = "Redis extension not installed/enabled.
-                    Install and/or enable Redis extension [http://pecl.php.net/package/redis]. See phpinfo() for more information";
+                    Install and/or enable Redis extension [http://pecl.php.net/package/redis].
+                    See phpinfo() for more information";
             throw new CacheException($msg);
         }
 
-        // check settings
-        if (!is_array($settings) or empty($settings) or !isset($settings['server'])) {
+        // Check settings
+        if (!is_array($settings) or empty($settings)) {
             throw new CacheException(
                 "Redis configuration is missed.
                 Please check 'cache' configuration section"
             );
         }
 
-        // check server
-        if (isset($settings['server'][0])) {
-            $this->server = $settings['server'][0];
+        // Default settings
+        if (!isset($settings['host'])) {
+            $settings['host'] = "127.0.0.1";
         }
 
-        // check port
-        if (isset($settings['server'][1])) {
-            $this->port = $settings['server'][1];
+        if (!isset($settings['port'])) {
+            $settings['port'] = 6379;
         }
 
-        // check timeout
-        if (isset($settings['server'][2])) {
-            $this->timeout = $settings['server'][2];
+        if (!isset($settings['timeout'])) {
+            $settings['timeout'] = null;
         }
 
         parent::__construct($settings);
@@ -107,10 +87,7 @@ class Redis extends AbstractAdapter
     {
         if (!$this->redis) {
             $this->redis = new \Redis();
-
-            //TODO: Maybe we should replace this string to $this->redis->connect($this->$settings['server'][0], .. [1], ..[2])?
-            $this->redis->connect($this->server, $this->port, $this->timeout);
-
+            $this->redis->connect($this->settings['host'], $this->settings['port'], $this->settings['timeout']);
             if (isset($this->settings['options'])) {
                 foreach ($this->settings['options'] as $key => $value) {
                     $this->redis->setOption($key, $value);

@@ -60,7 +60,7 @@ use Bluz\Db\Exception\TableNotFoundException;
  * @author   Anton Shevchuk
  * @created  07.07.11 19:47
  */
-class Row
+class Row implements \JsonSerializable
 {
     /**
      * Table class or instance.
@@ -577,6 +577,16 @@ class Row
         $class = get_class($row);
         $this->relations[$class] = $row;
         return $this;
+    }
+
+    /**
+     * Implement JsonSerializable
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return $this->data;
     }
 
     /**

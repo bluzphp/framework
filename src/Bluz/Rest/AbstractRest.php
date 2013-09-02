@@ -42,6 +42,52 @@ use Bluz\Application\Exception\NotImplementedException;
 abstract class AbstractRest
 {
     /**
+     * HTTP Method
+     * @var string
+     */
+    protected $method = AbstractRequest::METHOD_GET;
+
+    /**
+     * Identity
+     * @var string
+     */
+    protected $id;
+
+    /**
+     * Params from request
+     * @var array
+     */
+    protected $params = array();
+
+    /**
+     * Prepare request for processing
+     */
+    public function __construct()
+    {
+        $request = app()->getRequest();
+
+        // rewrite REST with "method" param
+        $this->method = strtoupper($request->getParam('_method', $request->getMethod()));
+
+        // get all params
+        $allParams = $request->getAllParams();
+
+        unset($allParams['_method']);
+
+        $this->params = $allParams;
+    }
+
+    /**
+     * getMethod
+     *
+     * @return string
+     */
+    public function getMethod()
+    {
+        return $this->method;
+    }
+
+    /**
      * list of items
      *
      * @param array $params
@@ -109,54 +155,57 @@ abstract class AbstractRest
      */
     public function __invoke()
     {
-        app()->useJson(true);
         $request = app()->getRequest();
 
-        $uri = $request->getCleanUri();
+        // try to get uid
+        $uri = parse_url($request->getRequestUri(), PHP_URL_PATH);
+        $url = app()->getRouter()->url(null, null);
+        $this->id = trim(substr($uri, strlen($url)), '/');
 
-        // try to retrieve UID of item
-        if (strrpos($uri, '/') !== 0) {
-            $id = substr($uri, strrpos($uri, '/')+1);
-        } else {
-            $id = null;
-        }
-
-        $allParams = $request->getAllParams();
-
-        switch ($request->getMethod()) {
+        // GET    /module/rest/   -> collection
+        // GET    /module/rest/id -> get item
+        // POST   /module/rest/   -> create item
+        // PUT    /module/rest/id -> update item
+        // DELETE /module/rest/id -> delete item
+        switch ($this->method) {
             case AbstractRequest::METHOD_GET:
-                if ($id) {
-                    $result = $this->get($id);
+                if ($this->id) {
+                    $result = $this->get($this->id);
                     if (!sizeof($result)) {
                         throw new NotFoundException();
                     }
                     return current($result);
                 } else {
-                    return $this->index($allParams);
+                    return $this->index($this->params);
                 }
                 break;
             case AbstractRequest::METHOD_POST:
-                if ($id) {
+                if ($this->id) {
                     throw new NotFoundException();
                 }
-                $result = $this->post($allParams);
-                header('Location: ' . $request->getModule() .'/'. $request->getController() .'/'. $result, true, 201);
+                $result = $this->post($this->params);
+                header(
+                    'Location: '.app()->getRouter()->url($request->getModule(), $request->getController()).'/'.$result,
+                    true,
+                    201
+                );
                 return false;
                 break;
             case AbstractRequest::METHOD_PUT:
-                if (!$id) {
+                if (!$this->id) {
                     throw new NotFoundException();
                 }
-                return $this->put($id, $allParams);
+                return $this->put($this->id, $this->params);
                 break;
             case AbstractRequest::METHOD_DELETE:
-                if (!$id) {
+                if (!$this->id) {
                     throw new NotFoundException();
                 }
-                $result = $this->delete($id);
+                $result = $this->delete($this->id);
                 if (!$result) {
                     throw new NotFoundException();
                 }
+                return false;
                 break;
             default:
                 throw new NotImplementedException();

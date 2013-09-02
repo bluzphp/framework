@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+0.1.7 (--.--.2013)
+------------------
+* Added support PDO options and attributes
+* Added Redis adapter to Cache package
+
 0.1.6 (13.08.2013)
 ------------------
 * Added CHANGELOG.md file

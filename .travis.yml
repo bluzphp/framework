@@ -15,8 +15,8 @@ script:
   - php vendor/bin/phpunit --configuration tests/phpunit.xml.dist --coverage-text
   - mkdir .reports
   # Code style
-  - php vendor/bin/phpcs ./src/Bluz --standard=PSR1 --report=summary
-  - php vendor/bin/phpcs ./src/Bluz --standard=PSR2 --report=summary
+  - php vendor/bin/phpcs ./src/Bluz --standard=PSR1
+  - php vendor/bin/phpcs ./src/Bluz --standard=PSR2
   # Duplicate code
   - php vendor/bin/phpcpd --log-pmd .reports/pmd-cpd.xml src/Bluz
   # Lines of code

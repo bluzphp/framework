@@ -40,6 +40,16 @@ class Redis extends AbstractAdapter
     protected $redis = null;
 
     /**
+     * Default Redis settings
+     * @var array
+     */
+    protected $settings = array(
+        'host' => '127.0.0.1',
+        'port' => '6379',
+        'timeout' => null
+    );
+
+    /**
      * Check and setup Redis server
      *
      * @param array $settings
@@ -60,19 +70,6 @@ class Redis extends AbstractAdapter
                 "Redis configuration is missed.
                 Please check 'cache' configuration section"
             );
-        }
-
-        // Default settings
-        if (!isset($settings['host'])) {
-            $settings['host'] = "127.0.0.1";
-        }
-
-        if (!isset($settings['port'])) {
-            $settings['port'] = 6379;
-        }
-
-        if (!isset($settings['timeout'])) {
-            $settings['timeout'] = null;
         }
 
         parent::__construct($settings);

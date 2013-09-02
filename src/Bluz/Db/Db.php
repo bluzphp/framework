@@ -87,6 +87,7 @@ class Db
     use Package;
 
     /**
+     * @link http://php.net/manual/en/pdo.construct.php
      * @var array
      */
     protected $connect = array(
@@ -95,14 +96,16 @@ class Db
         "name" => "",
         "user" => "root",
         "pass" => "",
+        "options" => array()
     );
 
     /**
-     * Error mode for PDO adapter
      * @link http://php.net/manual/en/pdo.setattribute.php
-     * @var int
+     * @var array
      */
-    protected $errorMode = \PDO::ERRMODE_EXCEPTION;
+    protected $attributes = array(
+        \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
+    );
 
     /**
      * @var \PDO
@@ -151,28 +154,15 @@ class Db
     }
 
     /**
-     * set error mode
-     *
-     * @param $mode
-     * @return Db
-     */
-    public function setErrorMode($mode)
-    {
-        $this->errorMode = (int) $mode;
-        return $this;
-    }
-
-    /**
      * setConnect
      *
      * @param array $connect options
      * @throws DbException
      * @return Db
      */
-    public function setConnect($connect)
+    public function setConnect(array $connect)
     {
         $this->connect = array_merge($this->connect, $connect);
-
         if (empty($this->connect['type']) or
             empty($this->connect['host']) or
             empty($this->connect['name']) or
@@ -180,6 +170,18 @@ class Db
         ) {
             throw new DbException('Db connection can\'t be initialized: required type, host, db name and user');
         }
+        return $this;
+    }
+
+    /**
+     * Setup attributes for PDO connect
+     *
+     * @param array $attributes
+     * @return Db
+     */
+    public function setAttributes(array $attributes)
+    {
+        $this->attributes = $attributes;
         return $this;
     }
 
@@ -204,13 +206,17 @@ class Db
                 $this->dbh = new \PDO(
                     $this->connect['type'] . ":host=" . $this->connect['host'] . ";dbname=" . $this->connect['name'],
                     $this->connect['user'],
-                    $this->connect['pass']
+                    $this->connect['pass'],
+                    $this->connect['options']
                 );
 
-                $this->dbh->setAttribute(\PDO::ATTR_ERRMODE, $this->errorMode);
+                foreach ($this->attributes as $attribute => $value) {
+                    $this->dbh->setAttribute($attribute, $value);
+                }
+
                 $this->log("Connected");
             } catch (\Exception $e) {
-                throw new DbException('Attempt connection to database is failed');
+                throw new DbException('Attempt connection to database is failed: '. $e->getMessage());
             }
         }
         return $this;

@@ -541,7 +541,12 @@ class Application
      */
     public function getView()
     {
-        return new View();
+        $view = new View();
+
+        // setup default partial path
+        $view->addPartialPath($this->getPath() . '/layouts/partial');
+
+        return $view;
     }
 
     /**
@@ -708,8 +713,6 @@ class Application
         $view->setPath($this->getPath() . '/modules/' . $module . '/views');
         // setup default template
         $view->setTemplate($controller . '.phtml');
-        // setup default partial path
-        $view->addPartialPath($this->getPath() . '/layouts/partial');
 
         $bootstrapPath = $this->getPath() . '/modules/' . $module . '/bootstrap.php';
 
@@ -1050,7 +1053,6 @@ class Application
             // check and normalize params by doc comment
             $docComment = $reflection->getDocComment();
 
-
             // get all options by one regular expression
             if (preg_match_all('/\s*\*\s*\@([a-z0-9-_]+)\s+(.*).*/i', $docComment, $matches)) {
                 foreach ($matches[1] as $i => $key) {
@@ -1122,6 +1124,8 @@ class Application
 
             $this->getCache()->set('reflection:' . $file, $data);
             $this->getCache()->addTag('reflection:' . $file, 'reflection');
+
+            //var_dump($this->getCache()->getAdapter()->getHandler()->getResultMessage());
         }
         return $data;
     }

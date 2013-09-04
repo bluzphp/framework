@@ -916,6 +916,7 @@ class Application
         $widgetFile = $this->getWidgetFile($module, $widget);
         $reflectionData = $this->reflection($widgetFile);
 
+
         $this->getEventManager()->trigger(
             'widget',
             $this,
@@ -941,7 +942,7 @@ class Application
         ) {
             $widgetClosure = $this->widgets[$module][$widget];
         } else {
-            $widgetClosure = require $this->getWidgetFile($module, $widget);
+            $widgetClosure = include $widgetFile;
 
             if (!isset($this->widgets[$module])) {
                 $this->widgets[$module] = array();
@@ -1124,8 +1125,6 @@ class Application
 
             $this->getCache()->set('reflection:' . $file, $data);
             $this->getCache()->addTag('reflection:' . $file, 'reflection');
-
-            //var_dump($this->getCache()->getAdapter()->getHandler()->getResultMessage());
         }
         return $data;
     }

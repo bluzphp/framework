@@ -56,7 +56,7 @@ class Cache implements CacheInterface, TagableInterface
      */
     protected $tagAdapter = null;
 
-    protected $tagPrefix = '__tag__';
+    protected $tagPrefix = '@';
 
     /**
      * check Cache configuration

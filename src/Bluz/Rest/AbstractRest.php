@@ -69,6 +69,17 @@ abstract class AbstractRest
         // rewrite REST with "method" param
         $this->method = strtoupper($request->getParam('_method', $request->getMethod()));
 
+        // try to get uid
+        $uri = parse_url($request->getCleanUri(), PHP_URL_PATH);
+
+        $result = explode('/', trim($uri, '/'));
+
+        // Why 3?
+        // Because: %module% / %controller% / %id%
+        if (sizeof($result) == 3) {
+            $this->id = $result[2];
+        }
+
         // get all params
         $allParams = $request->getAllParams();
 
@@ -156,11 +167,6 @@ abstract class AbstractRest
     public function __invoke()
     {
         $request = app()->getRequest();
-
-        // try to get uid
-        $uri = parse_url($request->getRequestUri(), PHP_URL_PATH);
-        $url = app()->getRouter()->url(null, null);
-        $this->id = trim(substr($uri, strlen($url)), '/');
 
         // GET    /module/rest/   -> collection
         // GET    /module/rest/id -> get item

@@ -49,12 +49,11 @@ trait Helper
      */
     protected static $helpersPath = array();
 
-
     /**
      * Set application helpers
      *
      * @param array $helpers
-     * @return Application
+     * @return self
      */
     public function setHelpers($helpers)
     {
@@ -68,7 +67,7 @@ trait Helper
      * Set application helpers path
      *
      * @param string|array $helpersPath
-     * @return Application
+     * @return self
      */
     public function setHelpersPath($helpersPath)
     {
@@ -86,7 +85,7 @@ trait Helper
      * Add view helper path
      *
      * @param string $path
-     * @return Application
+     * @return self
      */
     public function addHelperPath($path)
     {
@@ -113,20 +112,25 @@ trait Helper
         ) {
             return call_user_func_array($this->helpers[$method], $args);
         }
-        if (self::$helpersPath) {
-            foreach (self::$helpersPath as $helperPath) {
-                $helperPath = realpath($helperPath . '/' . ucfirst($method) . '.php');
-                if ($helperPath) {
-                    $helperInclude = include $helperPath;
-                    if ($helperInclude instanceof \Closure) {
-                        $this->helpers[$method] = $helperInclude;
-                    } else {
-                        throw new Exception("Helper '$method' not found in file '$helperPath'");
-                    }
-                    return $this->__call($method, $args);
+
+        // try to load Helpers inside class directory
+        /* if (!self::$helpersPath) {
+            $path = app()->getLoader()->findFile(__CLASS__);
+            $this->addHelperPath(dirname($path) . '/Helper/');
+        }*/
+
+        foreach (self::$helpersPath as $helperPath) {
+            $helperPath = realpath($helperPath . '/' . ucfirst($method) . '.php');
+            if ($helperPath) {
+                $helperInclude = include $helperPath;
+                if ($helperInclude instanceof \Closure) {
+                    $this->helpers[$method] = $helperInclude;
+                } else {
+                    throw new Exception("Helper '$method' not found in file '$helperPath'");
                 }
+                return $this->__call($method, $args);
             }
-            throw new Exception("Helper '$method' not found for '" . __CLASS__ . "'");
         }
+        throw new Exception("Helper '$method' not found for '" . __CLASS__ . "'");
     }
 }

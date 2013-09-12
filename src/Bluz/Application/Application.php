@@ -608,7 +608,7 @@ class Application
 
         // check header "accept" for catch AJAX JSON requests, and switch to JSON response
         // for HTTP only
-        if ($this->getRequest()->getMethod() !== Request\AbstractRequest::METHOD_CLI) {
+        if (!$this->getRequest()->isCli()) {
             $accept = $this->getRequest()->getHeader('accept');
             $accept = explode(',', $accept);
             if ($this->getRequest()->isXmlHttpRequest()
@@ -807,6 +807,12 @@ class Application
 
             // send content length
             header('Content-Length: '.strlen($json));
+
+            /**
+             * - Why you don't use "X-" prefix?
+             * - Because it deprecated
+             *   @link http://tools.ietf.org/html/rfc6648
+             */
 
             // setup messages
             if ($this->hasMessages()) {

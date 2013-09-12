@@ -48,7 +48,7 @@ abstract class AbstractRest
     protected $method = AbstractRequest::METHOD_GET;
 
     /**
-     * Identity
+     * Identifier
      * @var string
      */
     protected $id;
@@ -66,7 +66,8 @@ abstract class AbstractRest
     {
         $request = app()->getRequest();
 
-        // rewrite REST with "method" param
+        // rewrite REST with "_method" param
+        // this is workaround
         $this->method = strtoupper($request->getParam('_method', $request->getMethod()));
 
         // try to get uid
@@ -76,7 +77,7 @@ abstract class AbstractRest
 
         // Why 3?
         // Because: %module% / %controller% / %id%
-        if (sizeof($result) == 3) {
+        if (sizeof($result) >= 3) {
             $this->id = $result[2];
         }
 
@@ -170,7 +171,7 @@ abstract class AbstractRest
 
         // GET    /module/rest/   -> collection
         // GET    /module/rest/id -> get item
-        // POST   /module/rest/   -> create item
+        // POST   /module/rest/   -> create item -> send 201 HTTP
         // PUT    /module/rest/id -> update item
         // DELETE /module/rest/id -> delete item
         switch ($this->method) {
@@ -182,36 +183,53 @@ abstract class AbstractRest
                     }
                     return current($result);
                 } else {
+                    if ($range = $request->getHeader('Range')) {
+                        list(, $offset, $last) = preg_split('/[-=]/', $range);
+                        // for better compatibility
+                        $this->params['limit'] = isset($this->params['limit'])?$this->params['limit']:($last - $offset);
+                        $this->params['offset'] = isset($this->params['offset'])?$this->params['offset']:$offset;
+                    }
+
                     return $this->index($this->params);
                 }
                 break;
             case AbstractRequest::METHOD_POST:
                 if ($this->id) {
-                    throw new NotFoundException();
+                    // POST + ID is incorrect behaviour
+                    throw new NotImplementedException();
                 }
                 $result = $this->post($this->params);
+                if (!$result) {
+                    throw new NotFoundException();
+                }
                 header(
                     'Location: '.app()->getRouter()->url($request->getModule(), $request->getController()).'/'.$result,
                     true,
                     201
                 );
-                return false;
+                return false; // disable view
                 break;
             case AbstractRequest::METHOD_PUT:
                 if (!$this->id) {
+                    // "bulk update collection" is not implemented
+                    throw new NotImplementedException();
+                }
+                $result = $this->put($this->id, $this->params);
+                if (!$result) {
                     throw new NotFoundException();
                 }
-                return $this->put($this->id, $this->params);
+                return false; // disable view
                 break;
             case AbstractRequest::METHOD_DELETE:
                 if (!$this->id) {
-                    throw new NotFoundException();
+                    // "delete collection" is not implemented
+                    throw new NotImplementedException();
                 }
                 $result = $this->delete($this->id);
                 if (!$result) {
                     throw new NotFoundException();
                 }
-                return false;
+                return false; // disable view
                 break;
             default:
                 throw new NotImplementedException();

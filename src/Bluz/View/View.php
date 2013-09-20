@@ -56,13 +56,13 @@ use Bluz\Common\Package;
  * @method string style(\string $style, $media = 'all')
  * @method string|View title(\string $title = null, $position = 'replace', $separator = ' :: ')
  * @method string|View url(\string $module, \string $controller, array $params = [], boolean $checkAccess = false)
- * @method \Bluz\Auth\AbstractEntity|null user()
+ * @method \Bluz\Auth\AbstractRowEntity|null user()
  * @method void widget($module, $widget, $params = [])
  *
  * @author   Anton Shevchuk, ErgallM
  * @created  08.07.11 11:49
  */
-class View implements ViewInterface
+class View implements ViewInterface, \JsonSerializable
 {
     use Package;
     use Helper;
@@ -225,6 +225,16 @@ class View implements ViewInterface
     public function __toString()
     {
         return $this->render();
+    }
+
+    /**
+     * Implement JsonSerializable
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return $this->data;
     }
 
     /**

@@ -132,7 +132,7 @@ class Translator
         bindtextdomain($this->domain, $this->path);
 
         textdomain($this->domain);
-
+        // @todo: hardcoded codeset
         bind_textdomain_codeset($this->domain, 'UTF-8');
     }
 

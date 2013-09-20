@@ -48,7 +48,7 @@ abstract class AbstractRest
     protected $method = AbstractRequest::METHOD_GET;
 
     /**
-     * Identity
+     * Identifier
      * @var string
      */
     protected $id;
@@ -66,7 +66,8 @@ abstract class AbstractRest
     {
         $request = app()->getRequest();
 
-        // rewrite REST with "method" param
+        // rewrite REST with "_method" param
+        // this is workaround
         $this->method = strtoupper($request->getParam('_method', $request->getMethod()));
 
         // try to get uid
@@ -76,7 +77,7 @@ abstract class AbstractRest
 
         // Why 3?
         // Because: %module% / %controller% / %id%
-        if (sizeof($result) == 3) {
+        if (sizeof($result) >= 3) {
             $this->id = $result[2];
         }
 
@@ -86,6 +87,12 @@ abstract class AbstractRest
         unset($allParams['_method']);
 
         $this->params = $allParams;
+
+        $accept = $request->getHeader('accept');
+        $accept = explode(',', $accept);
+        if (in_array("application/json", $accept)) {
+            app()->useJson(true);
+        }
     }
 
     /**
@@ -168,11 +175,29 @@ abstract class AbstractRest
     {
         $request = app()->getRequest();
 
-        // GET    /module/rest/   -> collection
-        // GET    /module/rest/id -> get item
-        // POST   /module/rest/   -> create item
-        // PUT    /module/rest/id -> update item
-        // DELETE /module/rest/id -> delete item
+        // everyone method can return:
+        // >> 401 Unauthorized - if authorization is required
+        // >> 403 Forbidden - if user don't have permissions
+        // >> 501 Not Implemented - if something not exists
+
+        // GET    /module/rest/   -> 200 // return collection or
+        //                        -> 206 // return part of collection
+        // GET    /module/rest/id -> 200 // return one item or
+        //                        -> 404 // not found
+        // POST   /module/rest/   -> 201 // item created or
+        //                        -> 400 // bad request, validation error
+        // POST   /module/rest/id -> 501 // error, not used in REST
+        // PUT    /module/rest/   -> 200 // all items was updated or
+        //                        -> 207 // multi-status ?
+        // PUT    /module/rest/id -> 200 // item was updated or
+        //                        -> 304 // item not modified or
+        //                        -> 400 // bad request, validation error or
+        //                        -> 404 // not found
+        // DELETE /module/rest/   -> 204 // all items was deleted or
+        //                        -> 207 // multi-status ?
+        // DELETE /module/rest/id -> 204 // item was deleted
+        //                        -> 404 // not found
+
         switch ($this->method) {
             case AbstractRequest::METHOD_GET:
                 if ($this->id) {
@@ -182,36 +207,53 @@ abstract class AbstractRest
                     }
                     return current($result);
                 } else {
+                    if ($range = $request->getHeader('Range')) {
+                        list(, $offset, $last) = preg_split('/[-=]/', $range);
+                        // for better compatibility
+                        $this->params['limit'] = isset($this->params['limit'])?$this->params['limit']:($last - $offset);
+                        $this->params['offset'] = isset($this->params['offset'])?$this->params['offset']:$offset;
+                    }
+
                     return $this->index($this->params);
                 }
                 break;
             case AbstractRequest::METHOD_POST:
                 if ($this->id) {
-                    throw new NotFoundException();
+                    // POST + ID is incorrect behaviour
+                    throw new NotImplementedException();
                 }
                 $result = $this->post($this->params);
+                if (!$result) {
+                    throw new NotFoundException();
+                }
+                http_response_code(201);
                 header(
-                    'Location: '.app()->getRouter()->url($request->getModule(), $request->getController()).'/'.$result,
-                    true,
-                    201
+                    'Location: '.app()->getRouter()->url($request->getModule(), $request->getController()).'/'.$result
                 );
-                return false;
+                return false; // disable view
                 break;
             case AbstractRequest::METHOD_PUT:
                 if (!$this->id) {
-                    throw new NotFoundException();
+                    // "bulk update collection" is not implemented
+                    throw new NotImplementedException();
                 }
-                return $this->put($this->id, $this->params);
+                $result = $this->put($this->id, $this->params);
+                if (!$result) {
+                    http_response_code(304);
+                }
+                return false; // disable view
                 break;
             case AbstractRequest::METHOD_DELETE:
                 if (!$this->id) {
-                    throw new NotFoundException();
+                    // "delete collection" is not implemented
+                    throw new NotImplementedException();
                 }
                 $result = $this->delete($this->id);
                 if (!$result) {
                     throw new NotFoundException();
                 }
-                return false;
+                http_response_code(204);
+                return false; // disable view
                 break;
             default:
                 throw new NotImplementedException();

@@ -204,7 +204,7 @@ class Application
             // setup configuration for current environment
             $this->getConfig($environment);
 
-            $this->log(__METHOD__);
+            $this->log('app:init');
 
             // initial default helper path
             $this->addHelperPath(dirname(__FILE__) . '/Helper/');
@@ -599,7 +599,7 @@ class Application
      */
     public function process()
     {
-        $this->log(__METHOD__);
+        $this->log('app:process');
 
         $this->getRequest();
 
@@ -608,7 +608,7 @@ class Application
 
         // check header "accept" for catch AJAX JSON requests, and switch to JSON response
         // for HTTP only
-        if ($this->getRequest()->getMethod() !== Request\AbstractRequest::METHOD_CLI) {
+        if (!$this->getRequest()->isCli()) {
             $accept = $this->getRequest()->getHeader('accept');
             $accept = explode(',', $accept);
             if ($this->getRequest()->isXmlHttpRequest()
@@ -668,7 +668,7 @@ class Application
      */
     public function dispatch($module, $controller, $params = array())
     {
-        $this->log(__METHOD__ . ": " . $module . '/' . $controller);
+        $this->log("app:dispatch: " . $module . '/' . $controller);
         $controllerFile = $this->getControllerFile($module, $controller);
         $reflectionData = $this->reflection($controllerFile);
 
@@ -779,28 +779,45 @@ class Application
      */
     public function render()
     {
-        $this->log(__METHOD__);
+        $this->log('app:render');
 
         $result = $this->dispatchResult;
 
-        if ($this->jsonFlag) {
-
-            // get data from layout ???
-            $data = $this->getLayout()->getData();
-
-            // merge it with view data
-            if ($result instanceof View) {
-                $data = array_merge($data, $result->getData());
+        /**
+         * - Why you don't use "X-" prefix?
+         * - Because it deprecated
+         * @link http://tools.ietf.org/html/rfc6648
+         */
+        if ($result instanceof RedirectException) {
+            if ($this->jsonFlag) {
+                header('Bluz-Redirect: ' . $result->getMessage(), true, 204);
+            } else {
+                header('Location: ' . $result->getMessage(), true, $result->getCode());
             }
+            exit();
+        } elseif ($result instanceof ReloadException) {
+            if ($this->jsonFlag) {
+                header('Bluz-Reload: true', true, 204);
+            } else {
+                header('Refresh: 15; url=' . $this->getRequest()->getRequestUri());
+            }
+            exit();
+        }
 
-            // output
-            $json = json_encode($data);
-
+        if ($this->jsonFlag) {
             // Setup headers
             // HTTP does not define any limit
             // However most web servers do limit size of headers they accept.
             // For example in Apache default limit is 8KB, in IIS it's 16K.
             // Server will return 413 Entity Too Large error if headers size exceeds that limit
+
+            // setup messages
+            if ($this->hasMessages()) {
+                header('Bluz-Notify: '.json_encode($this->getMessages()->popAll()));
+            }
+
+            // prepare to JSON output
+            $json = json_encode($result);
 
             // override response code so javascript can process it
             header('Content-Type: application/json');
@@ -808,35 +825,10 @@ class Application
             // send content length
             header('Content-Length: '.strlen($json));
 
-            // setup messages
-            if ($this->hasMessages()) {
-                header('Bluz-Notify: '.json_encode($this->getMessages()->popAll()));
-            }
-
-            // check redirect
-            if ($result instanceof RedirectException) {
-                header('Bluz-Redirect: ' . $result->getMessage());
-            }
-
-            // check reload
-            if ($result instanceof ReloadException) {
-                header('Bluz-Reload: true');
-            }
-
-            // enable Bluz AJAX handler
-            if (false) {
-                header('Bluz-Handler: false');
-            }
             ob_clean();
             flush();
             echo $json;
 
-        } elseif ($result instanceof RedirectException) {
-            header('Location: ' . $result->getMessage(), true, $result->getCode());
-            exit();
-        } elseif ($result instanceof ReloadException) {
-            header('Refresh: 15; url=' . $this->getRequest()->getRequestUri());
-            exit();
         } elseif (!$this->layoutFlag) {
             echo ($result instanceof \Closure) ? $result() : $result;
         } else {
@@ -852,7 +844,7 @@ class Application
      */
     public function output()
     {
-        $this->log(__METHOD__);
+        $this->log('app:output');
 
         $result = $this->dispatchResult;
 

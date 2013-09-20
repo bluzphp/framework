@@ -39,4 +39,11 @@ use Bluz\Common\Exception;
  */
 class AclException extends Exception
 {
+    /**
+     * HTTP code
+     * 401 Unauthorized
+     * 403 Forbidden
+     * @var int
+     */
+    protected $code = 401;
 }

@@ -307,6 +307,16 @@ class AbstractRequest
     }
 
     /**
+     * check CLI
+     *
+     * @return boolean
+     */
+    public function isCli()
+    {
+        return $this->method == self::METHOD_CLI;
+    }
+
+    /**
      * Set the base URL.
      *
      * @param  string $baseUrl

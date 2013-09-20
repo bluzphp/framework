@@ -187,13 +187,14 @@ abstract class AbstractRest
         // POST   /module/rest/   -> 201 // item created or
         //                        -> 400 // bad request, validation error
         // POST   /module/rest/id -> 501 // error, not used in REST
-        // PUT    /module/rest/   -> 200 // all items updated or
+        // PUT    /module/rest/   -> 200 // all items was updated or
         //                        -> 207 // multi-status ?
         // PUT    /module/rest/id -> 200 // item was updated or
         //                        -> 304 // item not modified or
         //                        -> 400 // bad request, validation error or
         //                        -> 404 // not found
-        // DELETE /module/rest/   -> 204 // collection was deleted
+        // DELETE /module/rest/   -> 204 // all items was deleted or
+        //                        -> 207 // multi-status ?
         // DELETE /module/rest/id -> 204 // item was deleted
         //                        -> 404 // not found
 

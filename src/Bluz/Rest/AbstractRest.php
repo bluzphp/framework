@@ -87,6 +87,12 @@ abstract class AbstractRest
         unset($allParams['_method']);
 
         $this->params = $allParams;
+
+        $accept = $request->getHeader('accept');
+        $accept = explode(',', $accept);
+        if (in_array("application/json", $accept)) {
+            app()->useJson(true);
+        }
     }
 
     /**
@@ -169,11 +175,28 @@ abstract class AbstractRest
     {
         $request = app()->getRequest();
 
-        // GET    /module/rest/   -> collection
-        // GET    /module/rest/id -> get item
-        // POST   /module/rest/   -> create item -> send 201 HTTP
-        // PUT    /module/rest/id -> update item
-        // DELETE /module/rest/id -> delete item
+        // everyone method can return:
+        // >> 401 Unauthorized - if authorization is required
+        // >> 403 Forbidden - if user don't have permissions
+        // >> 501 Not Implemented - if something not exists
+
+        // GET    /module/rest/   -> 200 // return collection or
+        //                        -> 206 // return part of collection
+        // GET    /module/rest/id -> 200 // return one item or
+        //                        -> 404 // not found
+        // POST   /module/rest/   -> 201 // item created or
+        //                        -> 400 // bad request, validation error
+        // POST   /module/rest/id -> 501 // error, not used in REST
+        // PUT    /module/rest/   -> 200 // all items updated or
+        //                        -> 207 // multi-status ?
+        // PUT    /module/rest/id -> 200 // item was updated or
+        //                        -> 304 // item not modified or
+        //                        -> 400 // bad request, validation error or
+        //                        -> 404 // not found
+        // DELETE /module/rest/   -> 204 // collection was deleted
+        // DELETE /module/rest/id -> 204 // item was deleted
+        //                        -> 404 // not found
+
         switch ($this->method) {
             case AbstractRequest::METHOD_GET:
                 if ($this->id) {
@@ -202,10 +225,9 @@ abstract class AbstractRest
                 if (!$result) {
                     throw new NotFoundException();
                 }
+                http_response_code(201);
                 header(
-                    'Location: '.app()->getRouter()->url($request->getModule(), $request->getController()).'/'.$result,
-                    true,
-                    201
+                    'Location: '.app()->getRouter()->url($request->getModule(), $request->getController()).'/'.$result
                 );
                 return false; // disable view
                 break;
@@ -216,7 +238,7 @@ abstract class AbstractRest
                 }
                 $result = $this->put($this->id, $this->params);
                 if (!$result) {
-                    throw new NotFoundException();
+                    http_response_code(304);
                 }
                 return false; // disable view
                 break;
@@ -229,6 +251,7 @@ abstract class AbstractRest
                 if (!$result) {
                     throw new NotFoundException();
                 }
+                http_response_code(204);
                 return false; // disable view
                 break;
             default:

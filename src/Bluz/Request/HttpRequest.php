@@ -65,6 +65,7 @@ class HttpRequest extends AbstractRequest
                     $this->setParams($data);
                 }
                 break;
+            case self::METHOD_PATCH:
             case self::METHOD_PUT:
             case self::METHOD_DELETE:
                 $request = file_get_contents('php://input');

@@ -106,25 +106,27 @@ abstract class AbstractRest
     }
 
     /**
-     * list of items
-     *
-     * @param array $params
-     * @throws NotImplementedException
-     * @return mixed
-     */
-    protected function index(array $params = array())
-    {
-        throw new NotImplementedException();
-    }
-
-    /**
-     * read item
+     * Get item
      *
      * @param $id
      * @throws NotImplementedException
      * @return mixed
      */
-    protected function get($id)
+    protected function readOne($id)
+    {
+        throw new NotImplementedException();
+    }
+
+    /**
+     * list of items
+     *
+     * @param int $offset
+     * @param int $limit
+     * @param array $params
+     * @throws \Bluz\Application\Exception\NotImplementedException
+     * @return mixed
+     */
+    protected function readSet($offset = 0, $limit = 10, array $params = array())
     {
         throw new NotImplementedException();
     }
@@ -136,7 +138,19 @@ abstract class AbstractRest
      * @throws NotImplementedException
      * @return mixed
      */
-    protected function post(array $data)
+    protected function createOne(array $data)
+    {
+        throw new NotImplementedException();
+    }
+
+    /**
+     * create items
+     *
+     * @param array $data
+     * @throws NotImplementedException
+     * @return mixed
+     */
+    protected function createSet(array $data)
     {
         throw new NotImplementedException();
     }
@@ -149,7 +163,19 @@ abstract class AbstractRest
      * @throws NotImplementedException
      * @return integer
      */
-    protected function put($id, array $data)
+    protected function updateOne($id, array $data)
+    {
+        throw new NotImplementedException();
+    }
+
+    /**
+     * update items
+     *
+     * @param array $data
+     * @throws NotImplementedException
+     * @return integer
+     */
+    protected function updateSet(array $data)
     {
         throw new NotImplementedException();
     }
@@ -161,7 +187,19 @@ abstract class AbstractRest
      * @throws NotImplementedException
      * @return integer
      */
-    protected function delete($id)
+    protected function deleteOne($id)
+    {
+        throw new NotImplementedException();
+    }
+
+    /**
+     * delete items
+     *
+     * @param array $data
+     * @throws NotImplementedException
+     * @return integer
+     */
+    protected function deleteSet(array $data)
     {
         throw new NotImplementedException();
     }
@@ -201,20 +239,23 @@ abstract class AbstractRest
         switch ($this->method) {
             case AbstractRequest::METHOD_GET:
                 if ($this->id) {
-                    $result = $this->get($this->id);
+                    $result = $this->readOne($this->id);
                     if (!sizeof($result)) {
                         throw new NotFoundException();
                     }
                     return current($result);
                 } else {
+                    // setup default offset and limit - safe way
+                    $offset = isset($this->params['offset'])?$this->params['offset']:0;
+                    $limit = isset($this->params['limit'])?$this->params['limit']:10;
+
                     if ($range = $request->getHeader('Range')) {
                         list(, $offset, $last) = preg_split('/[-=]/', $range);
                         // for better compatibility
-                        $this->params['limit'] = isset($this->params['limit'])?$this->params['limit']:($last - $offset);
-                        $this->params['offset'] = isset($this->params['offset'])?$this->params['offset']:$offset;
+                        $limit = $last - $offset;
                     }
 
-                    return $this->index($this->params);
+                    return $this->readSet($offset, $limit, $this->params);
                 }
                 break;
             case AbstractRequest::METHOD_POST:
@@ -222,7 +263,7 @@ abstract class AbstractRest
                     // POST + ID is incorrect behaviour
                     throw new NotImplementedException();
                 }
-                $result = $this->post($this->params);
+                $result = $this->createOne($this->params);
                 if (!$result) {
                     throw new NotFoundException();
                 }
@@ -232,27 +273,37 @@ abstract class AbstractRest
                 );
                 return false; // disable view
                 break;
+            case AbstractRequest::METHOD_PATCH:
             case AbstractRequest::METHOD_PUT:
-                if (!$this->id) {
-                    // "bulk update collection" is not implemented
-                    throw new NotImplementedException();
+                if ($this->id) {
+                    // update one item
+                    $result = $this->updateOne($this->id, $this->params);
+                } else {
+                    // update collection
+                    $result = $this->updateSet($this->params);
                 }
-                $result = $this->put($this->id, $this->params);
-                if (!$result) {
+                // if $result === 0 it's means a update is not apply
+                // or records not found
+                if (0 === $result) {
                     http_response_code(304);
                 }
                 return false; // disable view
                 break;
             case AbstractRequest::METHOD_DELETE:
-                if (!$this->id) {
-                    // "delete collection" is not implemented
-                    throw new NotImplementedException();
+                if ($this->id) {
+                    // delete one
+                    $result = $this->deleteOne($this->id);
+                } else {
+                    // delete collection
+                    $result = $this->deleteOne($this->params);
                 }
-                $result = $this->delete($this->id);
-                if (!$result) {
+                // if $result === 0 it's means a update is not apply
+                // or records not found
+                if (0 === $result) {
                     throw new NotFoundException();
+                } else {
+                    http_response_code(204);
                 }
-                http_response_code(204);
                 return false; // disable view
                 break;
             default:

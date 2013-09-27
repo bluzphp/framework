@@ -5,6 +5,10 @@ CHANGELOG
 ------------------
 * Added support PDO options and attributes
 * Added Redis adapter to Cache package
+* Added JsonSerializable interface to Db\Row
+* Added JsonSerializable interface to View\View
+* Added support HTTP PATCH method to HTTPRequest
+* Refactoring render() method of Application
 
 0.1.6 (13.08.2013)
 ------------------

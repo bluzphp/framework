@@ -112,6 +112,7 @@ class Crud
             ];
 
             switch ($this->getMethod()) {
+                case AbstractRequest::METHOD_PATCH:
                 case AbstractRequest::METHOD_POST:
                 case AbstractRequest::METHOD_PUT:
                     $return['row'] = $this->getTable()->create($this->data);
@@ -147,6 +148,7 @@ class Crud
                 $this->result = $this->create();
                 app()->getMessages()->addSuccess("Row was created");
                 break;
+            case AbstractRequest::METHOD_PATCH:
             case AbstractRequest::METHOD_PUT:
                 $this->result = $this->update();
                 app()->getMessages()->addSuccess("Row was updated");

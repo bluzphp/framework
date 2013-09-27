@@ -304,8 +304,9 @@ class View implements ViewInterface, \JsonSerializable
             extract($this->data);
             require $this->path . '/' . $this->template;
         } catch (\Exception $e) {
+            // clean output
             ob_get_clean();
-            if (DEBUG) {
+            if (defined('DEBUG') && DEBUG) {
                 echo $e->getMessage();
                 var_dump($e->getTraceAsString());
             }

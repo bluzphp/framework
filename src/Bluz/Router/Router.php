@@ -334,6 +334,13 @@ class Router
     /**
      * process default router
      *
+     * <code>
+     *  /
+     *  /:module/
+     *  /:module/:controller/
+     *  /:module/:controller/:key1/:value1/:key2/:value2...
+     * </code>
+     *
      * @return boolean
      */
     protected function processRoute()
@@ -350,6 +357,7 @@ class Router
             $request->setController(array_shift($params));
         }
         if ($size = sizeof($params)) {
+            // remove tail
             if ($size % 2 == 1) {
                 array_pop($params);
                 $size = sizeof($params);

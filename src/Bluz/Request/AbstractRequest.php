@@ -111,6 +111,12 @@ class AbstractRequest
     protected $params = array();
 
     /**
+     * Instance raw parameters
+     * @var array
+     */
+    protected $rawParams = array();
+
+    /**
      * Retrieve the module name
      *
      * @param string $name
@@ -256,6 +262,29 @@ class AbstractRequest
     }
 
     /**
+     * Set raw params, w/out module and controller
+     *
+     * @param array $params
+     * @return array
+     */
+    public function setRawParams(array $params)
+    {
+        $this->rawParams = $params;
+        return $this;
+    }
+
+    /**
+     * Get raw params, w/out module and controller
+     *
+     * @return array
+     */
+    public function getRawParams()
+    {
+        return $this->rawParams;
+    }
+
+
+    /**
      * Get all request parameters
      *
      * @return array
@@ -284,27 +313,13 @@ class AbstractRequest
     }
 
     /**
-     * getMethod
+     * Return HTTP method or CLI
      *
      * @return string
      */
     public function getMethod()
     {
         return $this->method;
-    }
-
-    /**
-     * setMethod
-     *
-     * Overwrite method
-     *
-     * @param $method
-     * @return AbstractRequest
-     */
-    public function setMethod($method)
-    {
-        $this->method = $method;
-        return $this;
     }
 
     /**

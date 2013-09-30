@@ -24,55 +24,21 @@
 /**
  * @namespace
  */
-namespace Bluz\View;
+namespace Bluz\Controller;
 
 /**
- * ViewInterface
+ * Controller Interface
  *
  * @category Bluz
- * @package  View
+ * @package  Controller
  *
  * @author   Anton Shevchuk
- * @created  19.02.13 15:25
+ * @created  27.09.13 13:31
  */
-interface ViewInterface
+interface ControllerInterface
 {
     /**
-     * setup path to templates
-     *
-     * <code>
-     * $view->setPath('/modules/users/views');
-     * </code>
-     *
-     * @param string $path
-     * @return ViewInterface
+     * @return mixed
      */
-    public function setPath($path);
-
-    /**
-     * setup template
-     *
-     * <code>
-     * $view->setTemplate('index.phtml');
-     * </code>
-     *
-     * @param string $file
-     * @return ViewInterface
-     */
-    public function setTemplate($file);
-
-    /**
-     * merge data from array
-     *
-     * @param array $data
-     * @return ViewInterface
-     */
-    public function setData($data = array());
-
-    /**
-     * get data as array
-     *
-     * @return array
-     */
-    public function getData();
+    public function __invoke();
 }

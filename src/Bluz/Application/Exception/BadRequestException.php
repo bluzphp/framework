@@ -24,55 +24,29 @@
 /**
  * @namespace
  */
-namespace Bluz\View;
+namespace Bluz\Application\Exception;
 
 /**
- * ViewInterface
+ * Exception
  *
- * @category Bluz
- * @package  View
+ * @category Application
+ * @package  Exception
  *
  * @author   Anton Shevchuk
- * @created  19.02.13 15:25
+ * @created  23.01.13 17:46
  */
-interface ViewInterface
+class BadRequestException extends ApplicationException
 {
     /**
-     * setup path to templates
-     *
-     * <code>
-     * $view->setPath('/modules/users/views');
-     * </code>
-     *
-     * @param string $path
-     * @return ViewInterface
+     * @var string
      */
-    public function setPath($path);
+    protected $message = "Bad Request";
 
     /**
-     * setup template
-     *
-     * <code>
-     * $view->setTemplate('index.phtml');
-     * </code>
-     *
-     * @param string $file
-     * @return ViewInterface
+     * Redirect HTTP code
+     * 301 Moved Permanently
+     * 302 Found
+     * @var int
      */
-    public function setTemplate($file);
-
-    /**
-     * merge data from array
-     *
-     * @param array $data
-     * @return ViewInterface
-     */
-    public function setData($data = array());
-
-    /**
-     * get data as array
-     *
-     * @return array
-     */
-    public function getData();
+    protected $code = 400;
 }

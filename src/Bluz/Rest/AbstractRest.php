@@ -29,7 +29,6 @@ namespace Bluz\Rest;
 use Bluz\Application\Exception\BadRequestException;
 use Bluz\Application\Exception\NotFoundException;
 use Bluz\Application\Exception\NotImplementedException;
-use Bluz\Controller\ControllerInterface;
 use Bluz\Request\AbstractRequest;
 
 /**
@@ -41,7 +40,7 @@ use Bluz\Request\AbstractRequest;
  * @author   Anton Shevchuk
  * @created  13.08.13 13:09
  */
-abstract class AbstractRest implements ControllerInterface
+abstract class AbstractRest
 {
     /**
      * HTTP Method

@@ -24,7 +24,7 @@
 /**
  * @namespace
  */
-namespace Bluz\Rest;
+namespace Bluz\Controller;
 
 use Bluz\Application\Exception\BadRequestException;
 use Bluz\Application\Exception\NotFoundException;
@@ -36,24 +36,13 @@ use Bluz\Request\AbstractRequest;
  * Controller
  *
  * @category Bluz
- * @package  Rest
+ * @package  Controller
  *
  * @author   Anton Shevchuk
  * @created  27.09.13 15:32
  */
-class Controller
+class Rest extends AbstractController
 {
-    /**
-     * @var AbstractCrud
-     */
-    protected $crud;
-
-    /**
-     * HTTP Method
-     * @var string
-     */
-    protected $method = AbstractRequest::METHOD_GET;
-
     /**
      * Identifier
      * @var string
@@ -89,11 +78,9 @@ class Controller
      */
     public function __construct()
     {
-        $request = app()->getRequest();
+        parent::__construct();
 
-        // rewrite REST with "_method" param
-        // this is workaround
-        $this->method = strtoupper($request->getParam('_method', $request->getMethod()));
+        $request = app()->getRequest();
 
         $params = $request->getRawParams();
 
@@ -107,25 +94,6 @@ class Controller
         if (sizeof($params)) {
             $this->relationId = array_shift($params);
         }
-
-        // get all params
-        $query = $request->getQuery();
-
-        unset($query['_method']);
-
-        $this->params = $query;
-
-        $this->data = $request->getParams();
-    }
-
-    /**
-     * getMethod
-     *
-     * @return string
-     */
-    public function getMethod()
-    {
-        return $this->method;
     }
 
     /**
@@ -254,38 +222,5 @@ class Controller
                 throw new NotImplementedException();
                 break;
         }
-    }
-
-    /**
-     * get crud instance
-     *
-     * @return AbstractCrud
-     */
-    public function getCrud()
-    {
-        if (!$this->crud) {
-            $restClass = get_called_class();
-            $crudClass = substr($restClass, 0, strrpos($restClass, '\\', 1) + 1) . 'Crud';
-
-            /**
-             * @var AbstractCrud
-             */
-            $crud = $crudClass::getInstance();
-
-            $this->setCrud($crud);
-        }
-        return $this->crud;
-    }
-
-    /**
-     * setCrud
-     *
-     * @param AbstractCrud $crud
-     * @return self
-     */
-    public function setCrud($crud)
-    {
-        $this->crud = $crud;
-        return $this;
     }
 }

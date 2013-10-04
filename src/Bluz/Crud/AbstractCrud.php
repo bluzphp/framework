@@ -46,6 +46,12 @@ abstract class AbstractCrud
     const DEFAULT_LIMIT = 10;
 
     /**
+     * Errors stack
+     * @var array
+     */
+    protected $errors = array();
+
+    /**
      * getInstance
      *
      * @return static
@@ -61,13 +67,13 @@ abstract class AbstractCrud
     }
 
     /**
-     * get item
+     * get item by primary key(s)
      *
-     * @param $id
+     * @param mixed $primary
      * @throws NotImplementedException
      * @return mixed
      */
-    public function readOne($id)
+    public function readOne($primary)
     {
         throw new NotImplementedException();
     }
@@ -113,7 +119,7 @@ abstract class AbstractCrud
     /**
      * update item
      *
-     * @param $id
+     * @param mixed $id
      * @param array $data
      * @throws NotImplementedException
      * @return integer
@@ -157,5 +163,42 @@ abstract class AbstractCrud
     public function deleteSet(array $data)
     {
         throw new NotImplementedException();
+    }
+
+    /**
+     * Add new errors to stack
+     *
+     * @param $field
+     * @param $message
+     * @return self
+     */
+    protected function addError($field, $message)
+    {
+        if (!isset($this->errors[$field])) {
+            $this->errors[$field] = array();
+        }
+        $this->errors[$field][] = $message;
+        return $this;
+    }
+
+    /**
+     * Get errors stack
+     *
+     * @return mixed
+     */
+    public function getErrors()
+    {
+        return $this->errors;
+    }
+
+    /**
+     * Check errors stack and throw 
+     * @throws ValidationException
+     */
+    public function checkErrors()
+    {
+        if (sizeof($this->getErrors())) {
+            throw new ValidationException('Validation error, please check errors stack');
+        }
     }
 }

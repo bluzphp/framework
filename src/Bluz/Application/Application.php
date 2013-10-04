@@ -804,6 +804,13 @@ class Application
             exit();
         }
 
+        /**
+         * Can be Closure or any object with magic method '__invoke'
+         */
+        if (is_callable($result)) {
+            $result = $result();
+        }
+
         if ($this->jsonFlag) {
             // Setup headers
             // HTTP does not define any limit
@@ -829,11 +836,11 @@ class Application
             flush();
             echo $json;
 
-        } elseif (!$this->layoutFlag) {
-            echo ($result instanceof \Closure) ? $result() : $result;
-        } else {
+        } elseif ($this->layoutFlag) {
             $this->getLayout()->setContent($result);
             echo $this->getLayout();
+        } else {
+            echo $result;
         }
     }
 

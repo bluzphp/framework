@@ -62,6 +62,17 @@ class Nil
     }
 
     /**
+     * __get
+     *
+     * @param $key
+     * @return null
+     */
+    public function __get($key)
+    {
+        return null;
+    }
+
+    /**
      * __set
      *
      * @param $key

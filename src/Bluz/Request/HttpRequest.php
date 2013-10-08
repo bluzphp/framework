@@ -63,6 +63,8 @@ class HttpRequest extends AbstractRequest
                     $request = file_get_contents('php://input');
                     $data = (array) json_decode($request);
                     $this->setParams($data);
+                } else {
+                    $this->setParams($_POST);
                 }
                 break;
             case self::METHOD_PATCH:
@@ -239,7 +241,7 @@ class HttpRequest extends AbstractRequest
     }
 
     /**
-     * Retrieve a member of the $_GET superglobal
+     * Retrieve a member of the $_GET super global
      *
      * If no $key is passed, returns the entire $_GET array.
      *

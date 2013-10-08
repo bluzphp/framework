@@ -24,194 +24,90 @@
 /**
  * @namespace
  */
-namespace Bluz\Rest;
+namespace Bluz\Controller;
 
+use Bluz\Application\Exception\ApplicationException;
+use Bluz\Application\Exception\BadRequestException;
 use Bluz\Application\Exception\NotFoundException;
-use Bluz\Request\AbstractRequest;
 use Bluz\Application\Exception\NotImplementedException;
+use Bluz\Crud\AbstractCrud;
+use Bluz\Crud\ValidationException;
+use Bluz\Request\AbstractRequest;
 
 /**
- * Rest
+ * Controller
  *
  * @category Bluz
- * @package  Rest
+ * @package  Controller
  *
  * @author   Anton Shevchuk
- * @created  13.08.13 13:09
+ * @created  27.09.13 15:32
  */
-abstract class AbstractRest
+class Rest extends AbstractController
 {
     /**
-     * HTTP Method
+     * Relation list
      * @var string
      */
-    protected $method = AbstractRequest::METHOD_GET;
+    protected $relation;
 
     /**
-     * Identifier
+     * Relation Id
      * @var string
      */
-    protected $id;
+    protected $relationId;
 
     /**
-     * Params from request
+     * Params of query
      * @var array
      */
     protected $params = array();
+
+    /**
+     * Query data
+     * @var array
+     */
+    protected $data = array();
 
     /**
      * Prepare request for processing
      */
     public function __construct()
     {
+        parent::__construct();
+
         $request = app()->getRequest();
 
-        // rewrite REST with "_method" param
-        // this is workaround
-        $this->method = strtoupper($request->getParam('_method', $request->getMethod()));
+        $params = $request->getRawParams();
 
-        // try to get uid
-        $uri = parse_url($request->getCleanUri(), PHP_URL_PATH);
-
-        $result = explode('/', trim($uri, '/'));
-
-        // Why 3?
-        // Because: %module% / %controller% / %id%
-        if (sizeof($result) >= 3) {
-            $this->id = $result[2];
+        // %module% / %controller% / %id% / %relation% / %id%
+        if (sizeof($params)) {
+            $this->id = array_shift($params);
         }
+        if (sizeof($params)) {
+            $this->relation = array_shift($params);
+        }
+        if (sizeof($params)) {
+            $this->relationId = array_shift($params);
+        }
+    }
 
-        // get all params
-        $allParams = $request->getAllParams();
-
-        unset($allParams['_method']);
-
-        $this->params = $allParams;
+    /**
+     * @throws ApplicationException
+     * @throws NotImplementedException
+     * @throws NotFoundException
+     * @throws BadRequestException
+     * @return mixed
+     */
+    public function __invoke()
+    {
+        $request = app()->getRequest();
 
         $accept = $request->getHeader('accept');
         $accept = explode(',', $accept);
         if (in_array("application/json", $accept)) {
             app()->useJson(true);
         }
-    }
-
-    /**
-     * getMethod
-     *
-     * @return string
-     */
-    public function getMethod()
-    {
-        return $this->method;
-    }
-
-    /**
-     * Get item
-     *
-     * @param $id
-     * @throws NotImplementedException
-     * @return mixed
-     */
-    protected function readOne($id)
-    {
-        throw new NotImplementedException();
-    }
-
-    /**
-     * list of items
-     *
-     * @param int $offset
-     * @param int $limit
-     * @param array $params
-     * @throws \Bluz\Application\Exception\NotImplementedException
-     * @return mixed
-     */
-    protected function readSet($offset = 0, $limit = 10, array $params = array())
-    {
-        throw new NotImplementedException();
-    }
-
-    /**
-     * create new item
-     *
-     * @param array $data
-     * @throws NotImplementedException
-     * @return mixed
-     */
-    protected function createOne(array $data)
-    {
-        throw new NotImplementedException();
-    }
-
-    /**
-     * create items
-     *
-     * @param array $data
-     * @throws NotImplementedException
-     * @return mixed
-     */
-    protected function createSet(array $data)
-    {
-        throw new NotImplementedException();
-    }
-
-    /**
-     * update item
-     *
-     * @param $id
-     * @param array $data
-     * @throws NotImplementedException
-     * @return integer
-     */
-    protected function updateOne($id, array $data)
-    {
-        throw new NotImplementedException();
-    }
-
-    /**
-     * update items
-     *
-     * @param array $data
-     * @throws NotImplementedException
-     * @return integer
-     */
-    protected function updateSet(array $data)
-    {
-        throw new NotImplementedException();
-    }
-
-    /**
-     * delete item
-     *
-     * @param $id
-     * @throws NotImplementedException
-     * @return integer
-     */
-    protected function deleteOne($id)
-    {
-        throw new NotImplementedException();
-    }
-
-    /**
-     * delete items
-     *
-     * @param array $data
-     * @throws NotImplementedException
-     * @return integer
-     */
-    protected function deleteSet(array $data)
-    {
-        throw new NotImplementedException();
-    }
-
-    /**
-     * @throws NotImplementedException
-     * @throws NotFoundException
-     * @return mixed
-     */
-    public function __invoke()
-    {
-        $request = app()->getRequest();
 
         // everyone method can return:
         // >> 401 Unauthorized - if authorization is required
@@ -225,8 +121,10 @@ abstract class AbstractRest
         // POST   /module/rest/   -> 201 // item created or
         //                        -> 400 // bad request, validation error
         // POST   /module/rest/id -> 501 // error, not used in REST
+        // PATCH  /module/rest/
         // PUT    /module/rest/   -> 200 // all items was updated or
         //                        -> 207 // multi-status ?
+        // PATCH  /module/rest/id
         // PUT    /module/rest/id -> 200 // item was updated or
         //                        -> 304 // item not modified or
         //                        -> 400 // bad request, validation error or
@@ -235,7 +133,6 @@ abstract class AbstractRest
         //                        -> 207 // multi-status ?
         // DELETE /module/rest/id -> 204 // item was deleted
         //                        -> 404 // not found
-
         switch ($this->method) {
             case AbstractRequest::METHOD_GET:
                 if ($this->id) {
@@ -263,29 +160,52 @@ abstract class AbstractRest
                     // POST + ID is incorrect behaviour
                     throw new NotImplementedException();
                 }
-                $result = $this->createOne($this->params);
-                if (!$result) {
-                    throw new NotFoundException();
+                if (!sizeof($this->data)) {
+                    // can't create empty entity
+                    throw new BadRequestException();
                 }
+
+                try {
+                    $result = $this->createOne($this->data);
+                    if (!$result) {
+                        // internal error
+                        throw new ApplicationException;
+                    }
+                    $uid = join('-', array_values($result));
+                } catch (ValidationException $e) {
+                    http_response_code(400);
+                    return ['errors' => $this->getCrud()->getErrors()];
+                }
+
                 http_response_code(201);
                 header(
-                    'Location: '.app()->getRouter()->url($request->getModule(), $request->getController()).'/'.$result
+                    'Location: '.app()->getRouter()->url($request->getModule(), $request->getController()).'/'.$uid
                 );
                 return false; // disable view
                 break;
             case AbstractRequest::METHOD_PATCH:
             case AbstractRequest::METHOD_PUT:
-                if ($this->id) {
-                    // update one item
-                    $result = $this->updateOne($this->id, $this->params);
-                } else {
-                    // update collection
-                    $result = $this->updateSet($this->params);
+                if (!sizeof($this->data)) {
+                    // data not found
+                    throw new BadRequestException();
                 }
-                // if $result === 0 it's means a update is not apply
-                // or records not found
-                if (0 === $result) {
-                    http_response_code(304);
+
+                try {
+                    if ($this->id) {
+                        // update one item
+                        $result = $this->updateOne($this->id, $this->data);
+                    } else {
+                        // update collection
+                        $result = $this->updateSet($this->data);
+                    }
+                    // if $result === 0 it's means a update is not apply
+                    // or records not found
+                    if (0 === $result) {
+                        http_response_code(304);
+                    }
+                } catch (ValidationException $e) {
+                    http_response_code(400);
+                    return ['errors' => $this->getCrud()->getErrors()];
                 }
                 return false; // disable view
                 break;
@@ -295,7 +215,11 @@ abstract class AbstractRest
                     $result = $this->deleteOne($this->id);
                 } else {
                     // delete collection
-                    $result = $this->deleteOne($this->params);
+                    if (!sizeof($this->data)) {
+                        // data not exist
+                        throw new BadRequestException();
+                    }
+                    $result = $this->deleteSet($this->data);
                 }
                 // if $result === 0 it's means a update is not apply
                 // or records not found

@@ -741,7 +741,7 @@ class Application
         // return false is equal to disable view and layout
         if ($result === false) {
             $this->useLayout(false);
-            return false;
+            return $result;
         }
 
         // return closure is replace logic of controller
@@ -794,14 +794,14 @@ class Application
             } else {
                 header('Location: ' . $result->getMessage(), true, $result->getCode());
             }
-            exit();
+            return;
         } elseif ($result instanceof ReloadException) {
             if ($this->jsonFlag) {
                 header('Bluz-Reload: true', true, 204);
             } else {
                 header('Refresh: 15; url=' . $this->getRequest()->getRequestUri());
             }
-            exit();
+            return;
         }
 
         if ($this->jsonFlag) {
@@ -814,6 +814,11 @@ class Application
             // setup messages
             if ($this->hasMessages()) {
                 header('Bluz-Notify: '.json_encode($this->getMessages()->popAll()));
+            }
+
+            // response without content
+            if (false === $result) {
+                return;
             }
 
             // prepare to JSON output
@@ -829,11 +834,17 @@ class Application
             flush();
             echo $json;
 
-        } elseif (!$this->layoutFlag) {
-            echo ($result instanceof \Closure) ? $result() : $result;
-        } else {
+        } elseif ($this->layoutFlag) {
             $this->getLayout()->setContent($result);
             echo $this->getLayout();
+        } else {
+            /**
+             * Can be Closure or any object with magic method '__invoke'
+             */
+            if (is_callable($result)) {
+                $result = $result();
+            }
+            echo $result;
         }
     }
 

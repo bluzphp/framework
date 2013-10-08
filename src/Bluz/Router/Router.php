@@ -357,6 +357,9 @@ class Router
             $request->setController(array_shift($params));
         }
         if ($size = sizeof($params)) {
+            // save raw params
+            $request->setRawParams($params);
+
             // remove tail
             if ($size % 2 == 1) {
                 array_pop($params);

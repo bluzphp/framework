@@ -30,7 +30,7 @@ use Bluz\Application\Exception\BadRequestException;
 use Bluz\Application\Exception\NotFoundException;
 use Bluz\Application\Exception\NotImplementedException;
 use Bluz\Crud\AbstractCrud;
-use Bluz\Db\Table;
+use Bluz\Crud\ValidationException;
 use Bluz\Request\AbstractRequest;
 
 /**
@@ -56,28 +56,52 @@ class Crud extends AbstractController
         // FIXME: hardcoded messages
         switch ($this->method) {
             case AbstractRequest::METHOD_GET:
-                $result = $this->getCrud()->readOne($this->primary);
+                $row = $this->readOne($this->id);
 
-                // always HTML
-//                app()->useJson(false);
-//
-//                // enable Layout for not AJAX request
-//                if (!app()->getRequest()->isXmlHttpRequest()) {
-//                    app()->useLayout(true);
-//                }
+                $result = ['row' => $row];
+                if ($this->id) {
+                    // update form
+                    $result['method'] = AbstractRequest::METHOD_PUT;
+                } else {
+                    // create form
+                    $result['method'] = AbstractRequest::METHOD_POST;
+                }
+                return $result;
                 break;
             case AbstractRequest::METHOD_POST:
-                $result = $this->getCrud()->createOne($this->data);
-                app()->getMessages()->addSuccess("Row was created");
+                try {
+                    $this->createOne($this->data);
+                    app()->getMessages()->addSuccess("Record was created");
+                } catch (ValidationException $e) {
+                    $row = $this->readOne(null);
+                    $row->setFromArray($this->data);
+                    $result = [
+                        'row'    => $row,
+                        'errors' => $this->getCrud()->getErrors(),
+                        'method' => $this->getMethod()
+                    ];
+                    return $result;
+                }
                 break;
             case AbstractRequest::METHOD_PATCH:
             case AbstractRequest::METHOD_PUT:
-                $result = $this->getCrud()->updateOne($this->primary, $this->data);
-                app()->getMessages()->addSuccess("Row was updated");
+                 try {
+                     $this->updateOne($this->id, $this->data);
+                     app()->getMessages()->addSuccess("Record was updated");
+                 } catch (ValidationException $e) {
+                     $row = $this->readOne($this->id);
+                     $row->setFromArray($this->data);
+                     $result = [
+                         'row'    => $row,
+                         'errors' => $this->getCrud()->getErrors(),
+                         'method' => $this->getMethod()
+                     ];
+                     return $result;
+                 }
                 break;
             case AbstractRequest::METHOD_DELETE:
-                $result = $this->getCrud()->deleteOne($this->primary);
-                app()->getMessages()->addSuccess("Row was deleted");
+                $this->deleteOne($this->id);
+                app()->getMessages()->addSuccess("Record was deleted");
                 break;
             default:
                 throw new NotImplementedException();

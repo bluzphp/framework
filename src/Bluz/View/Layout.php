@@ -63,16 +63,8 @@ class Layout extends View
     public function setContent($content)
     {
         try {
-            switch (true) {
-                case ($content instanceof View):
-                    /* @var View $content */
-                    $content = $content->render();
-                    break;
-                case ($content instanceof \Closure):
-                    /* @var \Closure $content */
-                case (is_callable($content)):
-                    $content = $content();
-                    break;
+            if (is_callable($content)) {
+                $content = $content();
             }
             $this->content = $content;
         } catch (\Exception $e) {

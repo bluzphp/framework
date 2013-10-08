@@ -26,6 +26,7 @@
  */
 namespace Bluz\Controller;
 
+use Bluz\Application\Exception\ApplicationException;
 use Bluz\Crud\AbstractCrud;
 use Bluz\Request\AbstractRequest;
 
@@ -51,6 +52,12 @@ abstract class AbstractController
      * @var array
      */
     protected $params = array();
+
+    /**
+     * Identifier
+     * @var string
+     */
+    protected $id;
 
     /**
      * Query data
@@ -83,6 +90,12 @@ abstract class AbstractController
 
         $this->data = $request->getParams();
 
+        $params = $request->getRawParams();
+
+        // %module% / %controller% / %id%
+        if (sizeof($params)) {
+            $this->id = array_shift($params);
+        }
     }
 
     /**
@@ -121,8 +134,9 @@ abstract class AbstractController
     }
 
     /**
-     * get crud instance
+     * Get crud instance
      *
+     * @throws \Bluz\Application\Exception\ApplicationException
      * @return AbstractCrud
      */
     public function getCrud()
@@ -131,8 +145,13 @@ abstract class AbstractController
             $restClass = get_called_class();
             $crudClass = substr($restClass, 0, strrpos($restClass, '\\', 1) + 1) . 'Crud';
 
+            // check class initialization
+            if (!is_subclass_of($crudClass, '\Bluz\Crud\AbstractCrud')) {
+                throw new ApplicationException("`Crud` class is not exists or not initialized");
+            }
+
             /**
-             * @var AbstractCrud
+             * @var AbstractCrud $crudClass
              */
             $crud = $crudClass::getInstance();
 
@@ -142,14 +161,105 @@ abstract class AbstractController
     }
 
     /**
-     * setCrud
+     * Setup Crud instance
      *
      * @param AbstractCrud $crud
      * @return self
      */
-    public function setCrud($crud)
+    public function setCrud(AbstractCrud $crud)
     {
         $this->crud = $crud;
         return $this;
+    }
+
+    /**
+     * Get item by primary key(s)
+     *
+     * @param mixed $primary
+     * @return mixed
+     */
+    public function readOne($primary)
+    {
+        return $this->getCrud()->readOne($primary);
+    }
+
+    /**
+     * List of items
+     *
+     * @param int $offset
+     * @param int $limit
+     * @param array $params
+     * @return mixed
+     */
+    public function readSet($offset = 0, $limit = AbstractCrud::DEFAULT_LIMIT, array $params = array())
+    {
+        return $this->getCrud()->readSet($offset, $limit, $params);
+    }
+
+    /**
+     * Create new item
+     *
+     * @param array $data
+     * @return mixed
+     */
+    public function createOne(array $data)
+    {
+        return $this->getCrud()->createOne($data);
+    }
+
+    /**
+     * Create items
+     *
+     * @param array $data
+     * @return mixed
+     */
+    public function createSet(array $data)
+    {
+        return $this->getCrud()->createSet($data);
+    }
+
+    /**
+     * Update item
+     *
+     * @param mixed $id
+     * @param array $data
+     * @return integer
+     */
+    public function updateOne($id, array $data)
+    {
+        return $this->getCrud()->updateOne($id, $data);
+    }
+
+    /**
+     * Update items
+     *
+     * @param array $data
+     * @return integer
+     */
+    public function updateSet(array $data)
+    {
+        return $this->getCrud()->updateSet($data);
+    }
+
+    /**
+     * Delete item
+     *
+     * @param mixed $primary
+     * @return integer
+     */
+    public function deleteOne($primary)
+    {
+        return $this->getCrud()->deleteOne($primary);
+    }
+
+    /**
+     * Delete items
+     *
+     * @param array $data
+     * @return integer
+     */
+    public function deleteSet(array $data)
+    {
+        return $this->getCrud()->deleteSet($data);
     }
 }

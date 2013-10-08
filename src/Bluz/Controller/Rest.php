@@ -26,10 +26,12 @@
  */
 namespace Bluz\Controller;
 
+use Bluz\Application\Exception\ApplicationException;
 use Bluz\Application\Exception\BadRequestException;
 use Bluz\Application\Exception\NotFoundException;
 use Bluz\Application\Exception\NotImplementedException;
 use Bluz\Crud\AbstractCrud;
+use Bluz\Crud\ValidationException;
 use Bluz\Request\AbstractRequest;
 
 /**
@@ -43,12 +45,6 @@ use Bluz\Request\AbstractRequest;
  */
 class Rest extends AbstractController
 {
-    /**
-     * Identifier
-     * @var string
-     */
-    protected $id;
-
     /**
      * Relation list
      * @var string
@@ -97,9 +93,10 @@ class Rest extends AbstractController
     }
 
     /**
-     * @throws BadRequestException
-     * @throws NotFoundException
+     * @throws ApplicationException
      * @throws NotImplementedException
+     * @throws NotFoundException
+     * @throws BadRequestException
      * @return mixed
      */
     public function __invoke()
@@ -139,7 +136,7 @@ class Rest extends AbstractController
         switch ($this->method) {
             case AbstractRequest::METHOD_GET:
                 if ($this->id) {
-                    $result = $this->getCrud()->readOne($this->id);
+                    $result = $this->readOne($this->id);
                     if (!sizeof($result)) {
                         throw new NotFoundException();
                     }
@@ -155,7 +152,7 @@ class Rest extends AbstractController
                         $limit = $last - $offset;
                     }
 
-                    return $this->getCrud()->readSet($offset, $limit, $this->params);
+                    return $this->readSet($offset, $limit, $this->params);
                 }
                 break;
             case AbstractRequest::METHOD_POST:
@@ -167,47 +164,62 @@ class Rest extends AbstractController
                     // can't create empty entity
                     throw new BadRequestException();
                 }
-                $result = $this->getCrud()->createOne($this->params);
-                if (!$result) {
-                    throw new NotFoundException();
+
+                try {
+                    $result = $this->createOne($this->data);
+                    if (!$result) {
+                        // internal error
+                        throw new ApplicationException;
+                    }
+                    $uid = join('-', array_values($result));
+                } catch (ValidationException $e) {
+                    http_response_code(400);
+                    return ['errors' => $this->getCrud()->getErrors()];
                 }
+
                 http_response_code(201);
                 header(
-                    'Location: '.app()->getRouter()->url($request->getModule(), $request->getController()).'/'.$result
+                    'Location: '.app()->getRouter()->url($request->getModule(), $request->getController()).'/'.$uid
                 );
                 return false; // disable view
                 break;
             case AbstractRequest::METHOD_PATCH:
             case AbstractRequest::METHOD_PUT:
-            if (!sizeof($this->data)) {
-                // data not found
-                throw new BadRequestException();
-            }
-                if ($this->id) {
-                    // update one item
-                    $result = $this->getCrud()->updateOne($this->id, $this->params);
-                } else {
-                    // update collection
-                    $result = $this->getCrud()->updateSet($this->params);
+                if (!sizeof($this->data)) {
+                    // data not found
+                    throw new BadRequestException();
                 }
-                // if $result === 0 it's means a update is not apply
-                // or records not found
-                if (0 === $result) {
-                    http_response_code(304);
+
+                try {
+                    if ($this->id) {
+                        // update one item
+                        $result = $this->updateOne($this->id, $this->data);
+                    } else {
+                        // update collection
+                        $result = $this->updateSet($this->data);
+                    }
+                    // if $result === 0 it's means a update is not apply
+                    // or records not found
+                    if (0 === $result) {
+                        http_response_code(304);
+                    }
+                } catch (ValidationException $e) {
+                    http_response_code(400);
+                    return ['errors' => $this->getCrud()->getErrors()];
                 }
                 return false; // disable view
                 break;
             case AbstractRequest::METHOD_DELETE:
                 if ($this->id) {
                     // delete one
-                    $result = $this->getCrud()->deleteOne($this->id);
+                    $result = $this->deleteOne($this->id);
                 } else {
                     // delete collection
                     if (!sizeof($this->data)) {
                         // data not exist
                         throw new BadRequestException();
                     }
-                    $result = $this->getCrud()->deleteOne($this->params);
+                    $result = $this->deleteSet($this->data);
                 }
                 // if $result === 0 it's means a update is not apply
                 // or records not found

@@ -26,9 +26,10 @@
  */
 namespace Bluz\Crud;
 
-use Bluz\Application\Exception\ReloadException;
+use Bluz\Application\Exception\NotFoundException;
 use Bluz\Common\Package;
 use Bluz\Db;
+use Bluz\Db\Row;
 use Bluz\Request\AbstractRequest;
 
 /**
@@ -48,7 +49,7 @@ class Table extends AbstractCrud
     protected $table;
 
     /**
-     * setTable
+     * Setup Table instance
      *
      * @param Db\Table $table
      * @return self
@@ -60,8 +61,9 @@ class Table extends AbstractCrud
     }
 
     /**
-     * getTable
+     * Return table instance for manipulation
      *
+     * @throws CrudException
      * @return Db\Table
      */
     public function getTable()
@@ -69,6 +71,11 @@ class Table extends AbstractCrud
         if (!$this->table) {
             $crudClass = get_called_class();
             $tableClass = substr($crudClass, 0, strrpos($crudClass, '\\', 1) + 1) . 'Table';
+
+            // check class initialization
+            if (!is_subclass_of($tableClass, '\Bluz\Db\Table')) {
+                throw new CrudException("`Table` class is not exists or not initialized");
+            }
 
             /**
              * @var Db\Table $tableClass
@@ -85,16 +92,83 @@ class Table extends AbstractCrud
      */
 
     /**
+     * Get record from Db or create new
+     *
      * @param mixed $primary
-     * @return \Bluz\Db\Row|null
+     * @throws NotFoundException
+     * @return Row
      */
     public function readOne($primary)
     {
-        // nothing? ok, new row please
-        if (!sizeof($primary)) {
-            return null;
+        if (!$primary) {
+            return $this->getTable()->create();
         }
 
-        return $this->getTable()->findRow($primary);
+        $row = $this->getTable()->findRow($primary);
+
+        if (!$row) {
+            throw new NotFoundException("Record not found");
+        }
+
+        return $row;
+    }
+
+    /**
+     * createOne
+     *
+     * @param array $data
+     * @return integer
+     */
+    public function createOne(array $data)
+    {
+        $this->validate($data);
+        $this->validateCreate($data);
+        $this->checkErrors();
+
+        $row = $this->getTable()->create();
+
+        $row->setFromArray($data);
+        return $row->save();
+    }
+
+    /**
+     * Update Record
+     *
+     * @param mixed $id
+     * @param array $data
+     * @throws NotFoundException
+     * @return integer
+     */
+    public function updateOne($id, array $data)
+    {
+        $row = $this->getTable()->findRow($id);
+
+        if (!$row) {
+            throw new NotFoundException("Record not found");
+        }
+
+        $this->validate($data);
+        $this->validateUpdate($id, $data);
+        $this->checkErrors();
+
+        $row->setFromArray($data);
+        return $row->save();
+    }
+
+    /**
+     * Delete Record
+     *
+     * @param $id
+     * @throws NotFoundException
+     * @return integer
+     */
+    public function deleteOne($id)
+    {
+        $row = $this->getTable()->findRow($id);
+
+        if (!$row) {
+            throw new NotFoundException("Record not found");
+        }
+        return $row->delete();
     }
 }

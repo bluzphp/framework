@@ -119,12 +119,12 @@ abstract class AbstractCrud
     /**
      * update item
      *
-     * @param mixed $id
+     * @param mixed $primary
      * @param array $data
      * @throws NotImplementedException
      * @return integer
      */
-    public function updateOne($id, array $data)
+    public function updateOne($primary, array $data)
     {
         throw new NotImplementedException();
     }
@@ -144,11 +144,11 @@ abstract class AbstractCrud
     /**
      * delete item
      *
-     * @param $id
+     * @param mixed $primary
      * @throws NotImplementedException
      * @return integer
      */
-    public function deleteOne($id)
+    public function deleteOne($primary)
     {
         throw new NotImplementedException();
     }
@@ -163,6 +163,40 @@ abstract class AbstractCrud
     public function deleteSet(array $data)
     {
         throw new NotImplementedException();
+    }
+
+    /**
+     * validate
+     *
+     * @param array $data
+     * @return boolean
+     */
+    public function validate(array $data)
+    {
+        return !$this->hasErrors();
+    }
+
+    /**
+     * createValidation
+     *
+     * @param array $data
+     * @return boolean
+     */
+    public function validateCreate(array $data)
+    {
+        return !$this->hasErrors();
+    }
+
+    /**
+     * updateValidation
+     *
+     * @param mixed $primary
+     * @param array $data
+     * @return boolean
+     */
+    public function validateUpdate($primary, array $data)
+    {
+        return !$this->hasErrors();
     }
 
     /**
@@ -192,13 +226,23 @@ abstract class AbstractCrud
     }
 
     /**
+     * Has errors
+     *
+     * @return boolean
+     */
+    public function hasErrors()
+    {
+        return sizeof($this->errors);
+    }
+
+    /**
      * Check errors stack and throw 
      * @throws ValidationException
      */
     public function checkErrors()
     {
-        if (sizeof($this->getErrors())) {
-            throw new ValidationException('Validation error, please check errors stack');
+        if ($this->hasErrors()) {
+            throw new ValidationException('Your request contains error(s) please fix them before try again');
         }
     }
 }

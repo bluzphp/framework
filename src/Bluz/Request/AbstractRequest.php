@@ -323,6 +323,20 @@ class AbstractRequest
     }
 
     /**
+     * setMethod
+     *
+     * Overwrite method
+     *
+     * @param $method
+     * @return AbstractRequest
+     */
+    public function setMethod($method)
+    {
+        $this->method = $method;
+        return $this;
+    }
+
+    /**
      * check CLI
      *
      * @return boolean

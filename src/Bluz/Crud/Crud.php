@@ -37,6 +37,8 @@ use Bluz\Request\AbstractRequest;
  * @category Bluz
  * @package  Crud
  *
+ * @deprecated since 1.7
+ *
  * @author   AntonShevchuk
  * @created  15.08.12 15:37
  */

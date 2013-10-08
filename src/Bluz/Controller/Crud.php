@@ -85,19 +85,19 @@ class Crud extends AbstractController
                 break;
             case AbstractRequest::METHOD_PATCH:
             case AbstractRequest::METHOD_PUT:
-                 try {
-                     $this->updateOne($this->id, $this->data);
-                     app()->getMessages()->addSuccess("Record was updated");
-                 } catch (ValidationException $e) {
-                     $row = $this->readOne($this->id);
-                     $row->setFromArray($this->data);
-                     $result = [
-                         'row'    => $row,
-                         'errors' => $this->getCrud()->getErrors(),
-                         'method' => $this->getMethod()
-                     ];
-                     return $result;
-                 }
+                try {
+                    $this->updateOne($this->id, $this->data);
+                    app()->getMessages()->addSuccess("Record was updated");
+                } catch (ValidationException $e) {
+                    $row = $this->readOne($this->id);
+                    $row->setFromArray($this->data);
+                    $result = [
+                        'row'    => $row,
+                        'errors' => $this->getCrud()->getErrors(),
+                        'method' => $this->getMethod()
+                    ];
+                    return $result;
+                }
                 break;
             case AbstractRequest::METHOD_DELETE:
                 $this->deleteOne($this->id);

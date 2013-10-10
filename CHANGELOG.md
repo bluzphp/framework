@@ -4,6 +4,7 @@ CHANGELOG
 
 0.1.8 (--.--.2013)
 ------------------
+* Added support "id" parameter for Crud controller
 * Fixed Mailer, RFC 2822 Compliant for Max 998 characters per line
 
 

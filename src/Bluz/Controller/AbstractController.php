@@ -191,7 +191,7 @@ abstract class AbstractController
      * @param array $params
      * @return mixed
      */
-    public function readSet($offset = 0, $limit = AbstractCrud::DEFAULT_LIMIT, array $params = array())
+    public function readSet($offset = 0, $limit = AbstractCrud::DEFAULT_LIMIT, $params = array())
     {
         return $this->getCrud()->readSet($offset, $limit, $params);
     }
@@ -202,7 +202,7 @@ abstract class AbstractController
      * @param array $data
      * @return mixed
      */
-    public function createOne(array $data)
+    public function createOne($data)
     {
         return $this->getCrud()->createOne($data);
     }
@@ -213,7 +213,7 @@ abstract class AbstractController
      * @param array $data
      * @return mixed
      */
-    public function createSet(array $data)
+    public function createSet($data)
     {
         return $this->getCrud()->createSet($data);
     }
@@ -225,7 +225,7 @@ abstract class AbstractController
      * @param array $data
      * @return integer
      */
-    public function updateOne($id, array $data)
+    public function updateOne($id, $data)
     {
         return $this->getCrud()->updateOne($id, $data);
     }
@@ -236,7 +236,7 @@ abstract class AbstractController
      * @param array $data
      * @return integer
      */
-    public function updateSet(array $data)
+    public function updateSet($data)
     {
         return $this->getCrud()->updateSet($data);
     }
@@ -258,7 +258,7 @@ abstract class AbstractController
      * @param array $data
      * @return integer
      */
-    public function deleteSet(array $data)
+    public function deleteSet($data)
     {
         return $this->getCrud()->deleteSet($data);
     }

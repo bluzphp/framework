@@ -45,6 +45,18 @@ use Bluz\Request\AbstractRequest;
 class Crud extends AbstractController
 {
     /**
+     * Prepare request for processing
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        // %module% / %controller% / %id% / %relation% / %id%
+        if (isset($this->data['id']) && !empty($this->data['id'])) {
+            $this->id = $this->data['id'];
+        }
+    }
+    /**
      * @throws NotImplementedException
      * @throws NotFoundException
      * @throws BadRequestException

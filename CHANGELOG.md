@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+
+0.1.8 (--.--.2013)
+------------------
+* Fixed Mailer, RFC 2822 Compliant for Max 998 characters per line
+
+
 0.1.7 (08.10.2013)
 ------------------
 * Added support PDO options and attributes

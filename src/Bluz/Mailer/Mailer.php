@@ -69,6 +69,7 @@ class Mailer
     public function create()
     {
         $mail = new \PHPMailer();
+        $mail->WordWrap = 920; // RFC 2822 Compliant for Max 998 characters per line
 
         $fromEmail = $this->options['from']['email'];
         $fromName = isset($this->options['from']['name']) ? $this->options['from']['name'] : '';
@@ -108,9 +109,8 @@ class Mailer
             $mail->Subject = sprintf($this->options['subjectTemplate'], $mail->Subject);
         }
 
-        // TODO: add to queue
         if (!$mail->Send()) {
-            throw new MailerException('Error mail send');
+            throw new MailerException('Error mail send: '. $mail->ErrorInfo);
         }
 
         return true;

@@ -70,7 +70,7 @@ class HttpFile
             !isset($data['tmp_name']) ||
             !isset($data['error'])
         ) {
-            throw new Exception("Invalid HTTP File Upload data");
+            throw new RequestException("Invalid HTTP File Upload data");
         }
 
         if ($data['error'] != UPLOAD_ERR_OK) {

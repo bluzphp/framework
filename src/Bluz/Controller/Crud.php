@@ -45,6 +45,18 @@ use Bluz\Request\AbstractRequest;
 class Crud extends AbstractController
 {
     /**
+     * Prepare request for processing
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        // %module% / %controller% / %id% / %relation% / %id%
+        if (isset($this->data['id']) && !empty($this->data['id'])) {
+            $this->id = $this->data['id'];
+        }
+    }
+    /**
      * @throws NotImplementedException
      * @throws NotFoundException
      * @throws BadRequestException
@@ -53,7 +65,6 @@ class Crud extends AbstractController
     public function __invoke()
     {
         // switch by method
-        // FIXME: hardcoded messages
         switch ($this->method) {
             case AbstractRequest::METHOD_GET:
                 $row = $this->readOne($this->id);
@@ -71,7 +82,6 @@ class Crud extends AbstractController
             case AbstractRequest::METHOD_POST:
                 try {
                     $this->createOne($this->data);
-                    app()->getMessages()->addSuccess("Record was created");
                 } catch (ValidationException $e) {
                     $row = $this->readOne(null);
                     $row->setFromArray($this->data);
@@ -87,7 +97,6 @@ class Crud extends AbstractController
             case AbstractRequest::METHOD_PUT:
                 try {
                     $this->updateOne($this->id, $this->data);
-                    app()->getMessages()->addSuccess("Record was updated");
                 } catch (ValidationException $e) {
                     $row = $this->readOne($this->id);
                     $row->setFromArray($this->data);
@@ -101,11 +110,46 @@ class Crud extends AbstractController
                 break;
             case AbstractRequest::METHOD_DELETE:
                 $this->deleteOne($this->id);
-                app()->getMessages()->addSuccess("Record was deleted");
                 break;
             default:
                 throw new NotImplementedException();
                 break;
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createOne($data)
+    {
+        $result = $this->getCrud()->createOne($data);
+
+        app()->getMessages()->addSuccess("Record was created");
+
+        return $result;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function updateOne($id, $data)
+    {
+        $result = $this->getCrud()->updateOne($id, $data);
+
+        app()->getMessages()->addSuccess("Record was updated");
+
+        return $result;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function deleteOne($primary)
+    {
+        $result = $this->getCrud()->deleteOne($primary);
+
+        app()->getMessages()->addSuccess("Record was deleted");
+
+        return $result;
     }
 }

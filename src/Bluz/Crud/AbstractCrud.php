@@ -87,7 +87,7 @@ abstract class AbstractCrud
      * @throws NotImplementedException
      * @return mixed
      */
-    public function readSet($offset = 0, $limit = self::DEFAULT_LIMIT, array $params = array())
+    public function readSet($offset = 0, $limit = self::DEFAULT_LIMIT, $params = array())
     {
         throw new NotImplementedException();
     }
@@ -99,7 +99,7 @@ abstract class AbstractCrud
      * @throws NotImplementedException
      * @return mixed
      */
-    public function createOne(array $data)
+    public function createOne($data)
     {
         throw new NotImplementedException();
     }
@@ -111,7 +111,7 @@ abstract class AbstractCrud
      * @throws NotImplementedException
      * @return mixed
      */
-    public function createSet(array $data)
+    public function createSet($data)
     {
         throw new NotImplementedException();
     }
@@ -124,7 +124,7 @@ abstract class AbstractCrud
      * @throws NotImplementedException
      * @return integer
      */
-    public function updateOne($primary, array $data)
+    public function updateOne($primary, $data)
     {
         throw new NotImplementedException();
     }
@@ -136,7 +136,7 @@ abstract class AbstractCrud
      * @throws NotImplementedException
      * @return integer
      */
-    public function updateSet(array $data)
+    public function updateSet($data)
     {
         throw new NotImplementedException();
     }
@@ -160,7 +160,7 @@ abstract class AbstractCrud
      * @throws NotImplementedException
      * @return integer
      */
-    public function deleteSet(array $data)
+    public function deleteSet($data)
     {
         throw new NotImplementedException();
     }
@@ -168,10 +168,11 @@ abstract class AbstractCrud
     /**
      * validate
      *
+     * @param null $primary
      * @param array $data
      * @return boolean
      */
-    public function validate(array $data)
+    public function validate($primary, $data)
     {
         return !$this->hasErrors();
     }
@@ -182,7 +183,7 @@ abstract class AbstractCrud
      * @param array $data
      * @return boolean
      */
-    public function validateCreate(array $data)
+    public function validateCreate($data)
     {
         return !$this->hasErrors();
     }
@@ -194,7 +195,7 @@ abstract class AbstractCrud
      * @param array $data
      * @return boolean
      */
-    public function validateUpdate($primary, array $data)
+    public function validateUpdate($primary, $data)
     {
         return !$this->hasErrors();
     }

@@ -1,12 +1,11 @@
 CHANGELOG
 =========
 
-
-0.1.8 (--.--.2013)
+0.1.8 (11.10.2013)
 ------------------
 * Added support "id" parameter for Crud controller
+* Removed old Crud\Crud
 * Fixed Mailer, RFC 2822 Compliant for Max 998 characters per line
-
 
 0.1.7 (08.10.2013)
 ------------------

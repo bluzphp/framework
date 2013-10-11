@@ -109,9 +109,8 @@ class Mailer
             $mail->Subject = sprintf($this->options['subjectTemplate'], $mail->Subject);
         }
 
-        // TODO: add to queue
         if (!$mail->Send()) {
-            throw new MailerException('Error mail send');
+            throw new MailerException('Error mail send: '. $mail->ErrorInfo);
         }
 
         return true;

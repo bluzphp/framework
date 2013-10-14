@@ -28,8 +28,8 @@ namespace Bluz\Db\Query\Traits;
 
 /**
  * From Trait, required for:
- *  - SelectBuilder
- *  - DeleteBuilder
+ *  - Select Builder
+ *  - Delete Builder
  *
  * @category Bluz
  * @package  Db
@@ -39,6 +39,7 @@ namespace Bluz\Db\Query\Traits;
  * @created  17.06.13 10:46
  */
 trait From {
+
     /**
      * Create and add a query root corresponding to the table identified by the
      * given alias, forming a cartesian product with any existing query roots

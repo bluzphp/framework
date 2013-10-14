@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+0.1.9 (--.--.2013)
+------------------
+* Added method `select()` to `Db\Table`
+* Removed `Db\Rowset`
+
 0.1.8 (11.10.2013)
 ------------------
 * Added support "id" parameter for Crud controller

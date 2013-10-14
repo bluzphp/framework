@@ -237,7 +237,6 @@ abstract class Table
     {
         if (empty($this->columns)) {
             $connect = $this->getAdapter()->getOption('connect');
-            $dbName = $connect['name'];
 
             $this->columns = $this->getAdapter()->fetchColumn(
                 '
@@ -245,7 +244,7 @@ abstract class Table
                 FROM INFORMATION_SCHEMA.COLUMNS
                 WHERE `table_schema` = ?
                   AND `table_name` = ?',
-                [$dbName, $this->getTableName()]
+                [$connect['name'], $this->getTableName()]
             );
         }
         return $this->columns;
@@ -256,13 +255,12 @@ abstract class Table
      *
      * @param  string $sql  query options.
      * @param  array $params
-     * @return Rowset An array containing the row results in FETCH_ASSOC mode.
+     * @return array of rows results in FETCH_CLASS mode
      */
     protected static function fetch($sql, $params = array())
     {
         $self = static::getInstance();
-        $data = $self->getAdapter()->fetchObjects($sql, $params, $self->rowClass);
-        return new Rowset($data);
+        return $self->getAdapter()->fetchObjects($sql, $params, $self->rowClass);
     }
 
     /**
@@ -276,15 +274,14 @@ abstract class Table
      * table with a multi-column primary key, each argument must be an array
      * with the same number of elements.
      *
-     * The find() method always returns a Rowset object, even if only one row
-     * was found.
+     * The find() method always returns a array
      *
      * <code>
      * // row by primary key
-     * // return rowset
+     * // return array
      * Table::find(123);
      * // row by compound primary key
-     * // return rowset
+     * // return array
      * Table::find([123, 'abc']);
      *
      * // multiple rows by primary key
@@ -295,7 +292,7 @@ abstract class Table
      *
      * @internal param mixed $key The value(s) of the primary keys.
      * @throws InvalidPrimaryKeyException if wrong count of values passed
-     * @return Rowset Row(s) matching the criteria.
+     * @return array
      */
     public static function find()
     {
@@ -341,7 +338,43 @@ abstract class Table
             return null;
         }
         $self = static::getInstance();
-        return call_user_func(array($self, 'find'), $primaryKey)->current();
+        $result = call_user_func(array($self, 'find'), $primaryKey);
+        return current($result);
+    }
+
+    /**
+     * Prepare Db\Query\Select for current table:
+     *  - predefine "select" section as "*" from current table
+     *  - predefine "from" section as current table name and first letter as alias
+     *  - predefine fetch type
+     *
+     * <code>
+     * // use default select "*"
+     * $select = Users\Table::select();
+     * $arrUsers = $select->where('u.id = ?', $id)
+     *     ->execute();
+     *
+     * // setup custom select "u.id, u.login"
+     * $select = Users\Table::select();
+     * $arrUsers = $select->select('u.id, u.login')
+     *     ->where('u.id = ?', $id)
+     *     ->execute();
+     * </code>
+     *
+     * @return Query\Select
+     */
+    public static function select()
+    {
+        $self = static::getInstance();
+
+        $alias = $self->table[0];
+
+        $select = new Query\Select();
+        $select->select($alias.'.*')
+            ->from($self->table, $alias)
+            ->setFetchType($self->rowClass);
+
+        return $select;
     }
 
     /**
@@ -356,7 +389,7 @@ abstract class Table
      * Table::findWhere(['alias'=> ['foo', 'bar']]);
      * </code>
      * @throws \InvalidArgumentException
-     * @return Rowset Row(s) matching the criteria.
+     * @return array
      */
     public static function findWhere()
     {
@@ -413,7 +446,8 @@ abstract class Table
     public static function findRowWhere($whereList)
     {
         $self = static::getInstance();
-        return call_user_func(array($self, 'findWhere'), $whereList)->current();
+        $result = call_user_func(array($self, 'findWhere'), $whereList);
+        return current($result);
     }
 
     /**

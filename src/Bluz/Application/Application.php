@@ -160,6 +160,12 @@ class Application
     protected $environment;
 
     /**
+     * Debug application
+     * @var boolean
+     */
+    protected $debugFlag = false;
+
+    /**
      * Use layout flag
      * @var boolean
      */
@@ -203,6 +209,10 @@ class Application
         try {
             // setup configuration for current environment
             $this->getConfig($environment);
+
+            if ($debug = $this->getConfigData('debug')) {
+                $this->debugFlag = $debug;
+            }
 
             $this->log('app:init');
 
@@ -547,6 +557,16 @@ class Application
         $view->addPartialPath($this->getPath() . '/layouts/partial');
 
         return $view;
+    }
+
+    /**
+     * isDebug
+     *
+     * @return boolean
+     */
+    public function isDebug()
+    {
+        return $this->debugFlag;
     }
 
     /**

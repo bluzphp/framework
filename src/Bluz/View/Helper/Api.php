@@ -26,7 +26,6 @@
  */
 namespace Bluz\View\Helper;
 
-use Bluz\Application\Application;
 use Bluz\View\View;
 
 return
@@ -53,7 +52,7 @@ return
         $apiClosure = $application->api($module, $method);
         return call_user_func_array($apiClosure, $params);
     } catch (\Exception $e) {
-        if (defined('DEBUG') && DEBUG) {
+        if (app()->isDebug()) {
             // exception message for developers
             echo
                 '<div class="alert alert-error">' .

@@ -276,6 +276,7 @@ abstract class Table
      *
      * The find() method always returns a array
      *
+     * <pre>
      * <code>
      * // row by primary key
      * // return array
@@ -289,6 +290,7 @@ abstract class Table
      * // multiple rows by compound primary key
      * Table::find([123, 'abc'], [234, 'def'], [345, 'ghi'])
      * </code>
+     * </pre>
      *
      * @internal param mixed $key The value(s) of the primary keys.
      * @throws InvalidPrimaryKeyException if wrong count of values passed
@@ -348,6 +350,7 @@ abstract class Table
      *  - predefine "from" section as current table name and first letter as alias
      *  - predefine fetch type
      *
+     * <pre>
      * <code>
      * // use default select "*"
      * $select = Users\Table::select();
@@ -360,6 +363,7 @@ abstract class Table
      *     ->where('u.id = ?', $id)
      *     ->execute();
      * </code>
+     * </pre>
      *
      * @return Query\Select
      */
@@ -378,6 +382,7 @@ abstract class Table
     }
 
     /**
+     * <pre>
      * <code>
      * // WHERE alias = 'foo'
      * Table::findWhere(['alias'=>'foo']);
@@ -388,6 +393,8 @@ abstract class Table
      * // WHERE alias IN ('foo', 'bar')
      * Table::findWhere(['alias'=> ['foo', 'bar']]);
      * </code>
+     * </pre>
+     *
      * @throws \InvalidArgumentException
      * @return array
      */
@@ -451,7 +458,7 @@ abstract class Table
     }
 
     /**
-     * create
+     * Create Row instance
      *
      * @param array $data
      * @return Row
@@ -464,7 +471,13 @@ abstract class Table
     }
 
     /**
-     * Insert new rows
+     * Insert new record to table and return last insert Id
+     *
+     * <pre>
+     * <code>
+     * $this->insert(['login' => 'Man', 'email' => 'man@example.com'])
+     * </code>
+     * </pre>
      *
      * @param  array $data  Column-value pairs
      * @return integer The number of rows inserted
@@ -482,12 +495,26 @@ abstract class Table
     /**
      * Updates existing rows
      *
+     * <pre>
+     * <code>
+     * $this->insert(['login' => 'Man', 'email' => 'man@domain.com'], ['id' => 42])
+     * </code>
+     * </pre>
+     *
      * @param  array $data  Column-value pairs.
      * @param  array $where An array of SQL WHERE clause(s)
+     * @throws Exception\DbException
      * @return integer The number of rows updated
      */
-    protected function update(array $data, $where)
+    protected function update(array $data, array $where)
     {
+        if (!sizeof($where)) {
+            throw new DbException(
+                "Method `Table::update()` can't update all records in table,\n".
+                "please use `Db::query()` instead (of cause if you know what are you doing)"
+            );
+        }
+
         $sql = "UPDATE `{$this->table}`"
             . " SET `" . join('` = ?,`', array_keys($data)) . "` = ?"
             . " WHERE `" . join('` = ? AND `', array_keys($where)) . "` = ?";
@@ -498,11 +525,25 @@ abstract class Table
     /**
      * Deletes existing rows
      *
+     * <pre>
+     * <code>
+     * $this->delete(['login' => 'Man'])
+     * </code>
+      * </pre>
+     *
      * @param  array $where An array of SQL WHERE clause(s)
+     * @throws Exception\DbException
      * @return integer The number of rows deleted
      */
-    protected function delete($where)
+    protected function delete(array $where)
     {
+        if (!sizeof($where)) {
+            throw new DbException(
+                "Method `Table::delete()` can't delete all records in table,\n".
+                "please use `Db::query()` instead (of cause if you know what are you doing)"
+            );
+        }
+
         $sql = "DELETE FROM `{$this->table}`"
             . " WHERE `" . join('` = ? AND `', array_keys($where)) . "` = ?";
         return $this->getAdapter()->query($sql, array_values($where));

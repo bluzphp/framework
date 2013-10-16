@@ -81,7 +81,15 @@ class Crud extends AbstractController
                 break;
             case AbstractRequest::METHOD_POST:
                 try {
-                    $this->createOne($this->data);
+                    $result = $this->createOne($this->data);
+                    if (!app()->getRequest()->isXmlHttpRequest()) {
+                        $row = $this->readOne($result);
+                        $result = [
+                            'row'    => $row,
+                            'method' => AbstractRequest::METHOD_PUT
+                        ];
+                        return $result;
+                    }
                 } catch (ValidationException $e) {
                     $row = $this->readOne(null);
                     $row->setFromArray($this->data);
@@ -97,6 +105,14 @@ class Crud extends AbstractController
             case AbstractRequest::METHOD_PUT:
                 try {
                     $this->updateOne($this->id, $this->data);
+                    if (!app()->getRequest()->isXmlHttpRequest()) {
+                        $row = $this->readOne($this->id);
+                        $result = [
+                            'row'    => $row,
+                            'method' => $this->getMethod()
+                        ];
+                        return $result;
+                    }
                 } catch (ValidationException $e) {
                     $row = $this->readOne($this->id);
                     $row->setFromArray($this->data);

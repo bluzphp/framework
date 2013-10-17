@@ -306,7 +306,7 @@ class View implements ViewInterface, \JsonSerializable
         } catch (\Exception $e) {
             // clean output
             ob_get_clean();
-            if (defined('DEBUG') && DEBUG) {
+            if (app()->isDebug()) {
                 echo $e->getMessage();
                 var_dump($e->getTraceAsString());
             }

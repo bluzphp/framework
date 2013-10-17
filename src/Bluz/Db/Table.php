@@ -237,7 +237,6 @@ abstract class Table
     {
         if (empty($this->columns)) {
             $connect = $this->getAdapter()->getOption('connect');
-            $dbName = $connect['name'];
 
             $this->columns = $this->getAdapter()->fetchColumn(
                 '
@@ -245,7 +244,7 @@ abstract class Table
                 FROM INFORMATION_SCHEMA.COLUMNS
                 WHERE `table_schema` = ?
                   AND `table_name` = ?',
-                [$dbName, $this->getTableName()]
+                [$connect['name'], $this->getTableName()]
             );
         }
         return $this->columns;
@@ -256,13 +255,12 @@ abstract class Table
      *
      * @param  string $sql  query options.
      * @param  array $params
-     * @return Rowset An array containing the row results in FETCH_ASSOC mode.
+     * @return array of rows results in FETCH_CLASS mode
      */
     protected static function fetch($sql, $params = array())
     {
         $self = static::getInstance();
-        $data = $self->getAdapter()->fetchObjects($sql, $params, $self->rowClass);
-        return new Rowset($data);
+        return $self->getAdapter()->fetchObjects($sql, $params, $self->rowClass);
     }
 
     /**
@@ -276,15 +274,15 @@ abstract class Table
      * table with a multi-column primary key, each argument must be an array
      * with the same number of elements.
      *
-     * The find() method always returns a Rowset object, even if only one row
-     * was found.
+     * The find() method always returns a array
      *
+     * <pre>
      * <code>
      * // row by primary key
-     * // return rowset
+     * // return array
      * Table::find(123);
      * // row by compound primary key
-     * // return rowset
+     * // return array
      * Table::find([123, 'abc']);
      *
      * // multiple rows by primary key
@@ -292,10 +290,11 @@ abstract class Table
      * // multiple rows by compound primary key
      * Table::find([123, 'abc'], [234, 'def'], [345, 'ghi'])
      * </code>
+     * </pre>
      *
      * @internal param mixed $key The value(s) of the primary keys.
      * @throws InvalidPrimaryKeyException if wrong count of values passed
-     * @return Rowset Row(s) matching the criteria.
+     * @return array
      */
     public static function find()
     {
@@ -341,10 +340,49 @@ abstract class Table
             return null;
         }
         $self = static::getInstance();
-        return call_user_func(array($self, 'find'), $primaryKey)->current();
+        $result = call_user_func(array($self, 'find'), $primaryKey);
+        return current($result);
     }
 
     /**
+     * Prepare Db\Query\Select for current table:
+     *  - predefine "select" section as "*" from current table
+     *  - predefine "from" section as current table name and first letter as alias
+     *  - predefine fetch type
+     *
+     * <pre>
+     * <code>
+     * // use default select "*"
+     * $select = Users\Table::select();
+     * $arrUsers = $select->where('u.id = ?', $id)
+     *     ->execute();
+     *
+     * // setup custom select "u.id, u.login"
+     * $select = Users\Table::select();
+     * $arrUsers = $select->select('u.id, u.login')
+     *     ->where('u.id = ?', $id)
+     *     ->execute();
+     * </code>
+     * </pre>
+     *
+     * @return Query\Select
+     */
+    public static function select()
+    {
+        $self = static::getInstance();
+
+        $alias = $self->table[0];
+
+        $select = new Query\Select();
+        $select->select($alias.'.*')
+            ->from($self->table, $alias)
+            ->setFetchType($self->rowClass);
+
+        return $select;
+    }
+
+    /**
+     * <pre>
      * <code>
      * // WHERE alias = 'foo'
      * Table::findWhere(['alias'=>'foo']);
@@ -355,8 +393,10 @@ abstract class Table
      * // WHERE alias IN ('foo', 'bar')
      * Table::findWhere(['alias'=> ['foo', 'bar']]);
      * </code>
+     * </pre>
+     *
      * @throws \InvalidArgumentException
-     * @return Rowset Row(s) matching the criteria.
+     * @return array
      */
     public static function findWhere()
     {
@@ -413,11 +453,12 @@ abstract class Table
     public static function findRowWhere($whereList)
     {
         $self = static::getInstance();
-        return call_user_func(array($self, 'findWhere'), $whereList)->current();
+        $result = call_user_func(array($self, 'findWhere'), $whereList);
+        return current($result);
     }
 
     /**
-     * create
+     * Create Row instance
      *
      * @param array $data
      * @return Row
@@ -430,7 +471,13 @@ abstract class Table
     }
 
     /**
-     * Insert new rows
+     * Insert new record to table and return last insert Id
+     *
+     * <pre>
+     * <code>
+     * $this->insert(['login' => 'Man', 'email' => 'man@example.com'])
+     * </code>
+     * </pre>
      *
      * @param  array $data  Column-value pairs
      * @return integer The number of rows inserted
@@ -448,12 +495,26 @@ abstract class Table
     /**
      * Updates existing rows
      *
+     * <pre>
+     * <code>
+     * $this->insert(['login' => 'Man', 'email' => 'man@domain.com'], ['id' => 42])
+     * </code>
+     * </pre>
+     *
      * @param  array $data  Column-value pairs.
      * @param  array $where An array of SQL WHERE clause(s)
+     * @throws Exception\DbException
      * @return integer The number of rows updated
      */
-    protected function update(array $data, $where)
+    protected function update(array $data, array $where)
     {
+        if (!sizeof($where)) {
+            throw new DbException(
+                "Method `Table::update()` can't update all records in table,\n".
+                "please use `Db::query()` instead (of cause if you know what are you doing)"
+            );
+        }
+
         $sql = "UPDATE `{$this->table}`"
             . " SET `" . join('` = ?,`', array_keys($data)) . "` = ?"
             . " WHERE `" . join('` = ? AND `', array_keys($where)) . "` = ?";
@@ -464,11 +525,25 @@ abstract class Table
     /**
      * Deletes existing rows
      *
+     * <pre>
+     * <code>
+     * $this->delete(['login' => 'Man'])
+     * </code>
+      * </pre>
+     *
      * @param  array $where An array of SQL WHERE clause(s)
+     * @throws Exception\DbException
      * @return integer The number of rows deleted
      */
-    protected function delete($where)
+    protected function delete(array $where)
     {
+        if (!sizeof($where)) {
+            throw new DbException(
+                "Method `Table::delete()` can't delete all records in table,\n".
+                "please use `Db::query()` instead (of cause if you know what are you doing)"
+            );
+        }
+
         $sql = "DELETE FROM `{$this->table}`"
             . " WHERE `" . join('` = ? AND `', array_keys($where)) . "` = ?";
         return $this->getAdapter()->query($sql, array_values($where));

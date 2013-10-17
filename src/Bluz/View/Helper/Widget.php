@@ -26,7 +26,7 @@
  */
 namespace Bluz\View\Helper;
 
-use Bluz\Application\Application;
+use Bluz\Acl\AclException;
 use Bluz\View\View;
 
 return
@@ -50,11 +50,11 @@ return
     try {
         $widgetClosure = $application->widget($module, $widget);
         call_user_func_array($widgetClosure, $params);
-    } catch (\Bluz\Acl\AclException $e) {
+    } catch (AclException $e) {
         // nothing for Acl exception
         return null;
     } catch (\Exception $e) {
-        if (defined('DEBUG') && DEBUG) {
+        if (app()->isDebug()) {
             // exception message for developers
             echo
                 '<div class="alert alert-error">' .

@@ -30,9 +30,9 @@ use Bluz\Db\Query\CompositeBuilder;
 
 /**
  * Order Trait, required for:
- *  - SelectBuilder
- *  - UpdateBuilder
- *  - DeleteBuilder
+ *  - Select Builder
+ *  - Update Builder
+ *  - Delete Builder
  *
  * @category Bluz
  * @package  Db

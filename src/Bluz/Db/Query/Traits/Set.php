@@ -28,8 +28,8 @@ namespace Bluz\Db\Query\Traits;
 
 /**
  * Set Trait, required for:
- *  - InsertBuilder
- *  - UpdateBuilder
+ *  - Insert Builder
+ *  - Update  Builder
  *
  * @category Bluz
  * @package  Db

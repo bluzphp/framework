@@ -160,6 +160,12 @@ class Application
     protected $environment;
 
     /**
+     * Debug application
+     * @var boolean
+     */
+    protected $debugFlag = false;
+
+    /**
      * Use layout flag
      * @var boolean
      */
@@ -203,6 +209,10 @@ class Application
         try {
             // setup configuration for current environment
             $this->getConfig($environment);
+
+            if ($debug = $this->getConfigData('debug')) {
+                $this->debugFlag = $debug;
+            }
 
             $this->log('app:init');
 
@@ -550,6 +560,16 @@ class Application
     }
 
     /**
+     * isDebug
+     *
+     * @return boolean
+     */
+    public function isDebug()
+    {
+        return $this->debugFlag;
+    }
+
+    /**
      * hasLayout
      *
      * @return boolean|string
@@ -885,7 +905,7 @@ class Application
         }
         foreach ($data as $key => $value) {
             echo "\033[1;33m$key\033[m:\n";
-            var_dump($value);
+            print_r($value);
             echo "\n";
         }
     }

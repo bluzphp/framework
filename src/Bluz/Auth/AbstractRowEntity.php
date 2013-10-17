@@ -59,15 +59,7 @@ abstract class AbstractRowEntity extends Row implements EntityInterface
     {
         $privileges = $this->getPrivileges();
 
-        foreach ($privileges as $rule) {
-            if ($rule->module == $module
-                && $rule->privilege == $privilege
-            ) {
-                return true;
-            }
-        }
-
-        return false;
+        return in_array($module.':'.$privilege, $privileges);
     }
 
     /**

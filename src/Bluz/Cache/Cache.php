@@ -47,6 +47,11 @@ class Cache implements CacheInterface, TagableInterface
     use Package;
 
     /**
+     * No expiry TTL
+     */
+    const TTL_NO_EXPIRY = 0;
+
+    /**
      * @var Adapter\AbstractAdapter
      */
     protected $cacheAdapter = null;
@@ -56,6 +61,9 @@ class Cache implements CacheInterface, TagableInterface
      */
     protected $tagAdapter = null;
 
+    /**
+     * @var string
+     */
     protected $tagPrefix = '@';
 
     /**

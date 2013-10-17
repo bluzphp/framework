@@ -1,14 +1,12 @@
 CHANGELOG
 =========
 
-0.1.9 (--.--.2013)
+0.1.9 (17.10.2013)
 ------------------
 * **Changed** privileges store format, please update your application and flush cache
-
 * Added method `select()` to `Db\Table` (#134)
 * Removed `Db\Rowset`
 * Removed usage of definition `DEBUG` from framework (#131)
-
 
 0.1.8 (11.10.2013)
 ------------------

@@ -28,9 +28,9 @@ namespace Bluz\Db\Query\Traits;
 
 /**
  * Order Trait, required for:
- *  - SelectBuilder
- *  - UpdateBuilder
- *  - DeleteBuilder
+ *  - Select Builder
+ *  - Update Builder
+ *  - Delete Builder
  *
  * @category Bluz
  * @package  Db
@@ -40,6 +40,7 @@ namespace Bluz\Db\Query\Traits;
  * @created  17.06.13 10:00
  */
 trait Order {
+
     /**
      * Specifies an ordering for the query results
      * Replaces any previously specified orderings, if any

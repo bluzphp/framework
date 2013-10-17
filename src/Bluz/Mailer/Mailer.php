@@ -27,6 +27,7 @@
 namespace Bluz\Mailer;
 
 use Bluz\Common\Package;
+use Bluz\Config\ConfigException;
 
 /**
  * Wrapper over PHPMailer
@@ -37,8 +38,6 @@ use Bluz\Common\Package;
  * @author   Pavel Machekhin
  * @created  27.12.12 16:25
  */
-use Bluz\Config\ConfigException;
-
 class Mailer
 {
     use Package;
@@ -46,7 +45,7 @@ class Mailer
     /**
      * checkOptions
      *
-     * @throws \Bluz\Config\ConfigException
+     * @throws ConfigException
      * @return boolean
      */
     protected function checkOptions()
@@ -110,6 +109,8 @@ class Mailer
         }
 
         if (!$mail->Send()) {
+            // Why you don't use "Exception mode" of PHPMailer
+            // Because we need our Exception in any case
             throw new MailerException('Error mail send: '. $mail->ErrorInfo);
         }
 

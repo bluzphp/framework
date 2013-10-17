@@ -49,10 +49,8 @@ return
     $html .= $this->headScript('redactor/redactor.js');
     $html .= $this->headStyle('redactor/redactor.css');
     $html .= $this->headScript(
-        'require(["jquery", "bluz"], function($, bluz) {
-            bluz.ready(function(){
-                $("' . $selector . '").redactor(' . $settings . ');
-             });
+        'require(["jquery", "redactor"], function($) {
+            $("' . $selector . '").redactor(' . $settings . ');
         });'
     );
     return $html;

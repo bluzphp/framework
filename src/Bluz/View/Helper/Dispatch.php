@@ -26,7 +26,7 @@
  */
 namespace Bluz\View\Helper;
 
-use Bluz\Application\Application;
+use Bluz\Acl\AclException;
 use Bluz\View\View;
 
 return
@@ -47,11 +47,11 @@ return
     $application = app();
     try {
         $view = $application->dispatch($module, $controller, $params);
-    } catch (\Bluz\Acl\AclException $e) {
+    } catch (AclException $e) {
         // nothing for Acl exception
         return null;
     } catch (\Exception $e) {
-        if (defined('DEBUG') && DEBUG) {
+        if (app()->isDebug()) {
             // exception message for developers
             return
                 '<div class="alert alert-error">' .

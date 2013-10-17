@@ -28,9 +28,9 @@ namespace Bluz\Db\Query\Traits;
 
 /**
  * Limit Trait, required for:
- *  - SelectBuilder
- *  - UpdateBuilder
- *  - DeleteBuilder
+ *  - Select Builder
+ *  - Update Builder
+ *  - Delete Builder
  *
  * @category Bluz
  * @package  Db

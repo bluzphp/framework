@@ -1,6 +1,15 @@
 CHANGELOG
 =========
 
+0.1.9 (--.--.2013)
+------------------
+* **Changed** privileges store format, please update your application and flush cache
+
+* Added method `select()` to `Db\Table` (#134)
+* Removed `Db\Rowset`
+* Removed usage of definition `DEBUG` from framework (#131)
+
+
 0.1.8 (11.10.2013)
 ------------------
 * Added support "id" parameter for Crud controller
@@ -27,7 +36,7 @@ CHANGELOG
 
 0.1.5 (02.08.2013)
 ------------------
-* Changed delivery methods of Messages
+* **Changed** delivery methods of Messages, please update your application too
 
 0.1.4 (18.07.2013)
 ------------------

@@ -27,7 +27,7 @@
 namespace Bluz\Db\Query;
 
 use Bluz\Db\Db;
-use Bluz\Db\DbException;
+use Bluz\Db\Exception\DbException;
 
 /**
  * Builder of SELECT queries
@@ -39,12 +39,23 @@ class Select extends AbstractBuilder
     use Traits\Order;
     use Traits\Limit;
 
+    /**
+     * PDO fetch types
+     * or object class
+     *
+     * @var mixed
+     */
+    protected $fetchType = \PDO::FETCH_ASSOC;
 
     /**
      * {@inheritdoc}
      */
-    public function execute($fetchType = \PDO::FETCH_ASSOC)
+    public function execute($fetchType = null)
     {
+        if (!$fetchType) {
+            $fetchType = $this->fetchType;
+        }
+
         switch ($fetchType) {
             case (!is_int($fetchType)):
                 return $this->getAdapter()->fetchObjects($this->getSQL(), $this->params, $fetchType);
@@ -54,6 +65,18 @@ class Select extends AbstractBuilder
             default:
                 return $this->getAdapter()->fetchAll($this->getSQL(), $this->params);
         }
+    }
+
+    /**
+     * Setup fetch type, any of PDO, or any Class
+     *
+     * @param $fetchType
+     * @return Select This QueryBuilder instance.
+     */
+    public function setFetchType($fetchType)
+    {
+        $this->fetchType = $fetchType;
+        return $this;
     }
 
     /**

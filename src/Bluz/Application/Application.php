@@ -905,7 +905,7 @@ class Application
         }
         foreach ($data as $key => $value) {
             echo "\033[1;33m$key\033[m:\n";
-            var_dump($value);
+            print_r($value);
             echo "\n";
         }
     }

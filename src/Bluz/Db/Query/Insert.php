@@ -38,11 +38,11 @@ class Insert extends AbstractBuilder
     /**
      * {@inheritdoc}
      */
-    public function execute()
+    public function execute($sequence = null)
     {
         $result = $this->getAdapter()->query($this->getSQL(), $this->params, $this->paramTypes);
         if ($result) {
-            return $this->getAdapter()->handler()->lastInsertId();
+            return $this->getAdapter()->handler()->lastInsertId($sequence);
         }
         return $result;
     }

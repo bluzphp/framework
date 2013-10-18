@@ -85,17 +85,24 @@ abstract class Table
      *
      * @var array
      */
-    protected $primary = null;
+    protected $primary;
+
+    /**
+     * The sequence name, required for PostgreSQL
+     *
+     * @var string
+     */
+    protected $sequence;
 
     /**
      * @var Db
      */
-    protected $adapter = null;
+    protected $adapter;
 
     /**
      * @var string
      */
-    protected $rowClass = null;
+    protected $rowClass;
 
     /**
      * __construct
@@ -251,16 +258,28 @@ abstract class Table
     }
 
     /**
-     * Support method for fetching rows.
+     * Fetching rows by SQL query
      *
-     * @param  string $sql  query options.
+     * @param  string $sql query options.
      * @param  array $params
      * @return array of rows results in FETCH_CLASS mode
      */
-    protected static function fetch($sql, $params = array())
+    public static function fetch($sql, $params = array())
     {
         $self = static::getInstance();
         return $self->getAdapter()->fetchObjects($sql, $params, $self->rowClass);
+    }
+
+    /**
+     * Fetch all rows from table
+     * Be carefully with this method, can be very slow
+     *
+     * @return array of rows results in FETCH_CLASS mode
+     */
+    public static function fetchAll()
+    {
+        $self = static::getInstance();
+        return $self->getAdapter()->fetchObjects($self->select, [], $self->rowClass);
     }
 
     /**
@@ -396,6 +415,7 @@ abstract class Table
      * </pre>
      *
      * @throws \InvalidArgumentException
+     * @throws Exception\DbException
      * @return array
      */
     public static function findWhere()
@@ -406,10 +426,10 @@ abstract class Table
         $whereClause = null;
         $whereParams = array();
 
-        if (count($whereList) == 2 && is_string($whereList[0])) {
+        if (sizeof($whereList) == 2 && is_string($whereList[0])) {
             $whereClause = $whereList[0];
             $whereParams = $whereList[1];
-        } elseif (count($whereList)) {
+        } elseif (sizeof($whereList)) {
             $whereOrTerms = array();
             foreach ($whereList as $keyValueSets) {
                 $whereAndTerms = array();
@@ -439,6 +459,11 @@ abstract class Table
                 $whereOrTerms[] = '(' . implode(' AND ', $whereAndTerms) . ')';
             }
             $whereClause = '(' . implode(' OR ', $whereOrTerms) . ')';
+        } elseif (!sizeof($whereList)) {
+            throw new DbException(
+                "Method `Table::findWhere()` can't return all records from table,\n".
+                "please use `Table::fetchAll()` instead"
+            );
         }
         return $self->fetch($self->select . ' WHERE ' . $whereClause, $whereParams);
     }
@@ -475,21 +500,32 @@ abstract class Table
      *
      * <pre>
      * <code>
-     * $this->insert(['login' => 'Man', 'email' => 'man@example.com'])
+     * Table::insert(['login' => 'Man', 'email' => 'man@example.com'])
      * </code>
      * </pre>
      *
      * @param  array $data  Column-value pairs
-     * @return integer The number of rows inserted
+     * @return mixed Primary key or null
      */
-    protected function insert(array $data)
+    public static function insert(array $data)
     {
-        $sql = "INSERT INTO `{$this->table}` SET `" . join('` = ?,`', array_keys($data)) . "` = ?";
-        $result = $this->getAdapter()->query($sql, array_values($data));
-        if ($result) {
-            return $this->getAdapter()->handler()->lastInsertId();
+        $self = static::getInstance();
+        $sql = "INSERT INTO `{$self->table}` SET `" . join('` = ?,`', array_keys($data)) . "` = ?";
+        $result = $self->getAdapter()->query($sql, array_values($data));
+        if (!$result) {
+            return null;
         }
-        return $result;
+
+        /**
+         * If a sequence name was not specified for the name parameter, PDO::lastInsertId()
+         * returns a string representing the row ID of the last row that was inserted into the database.
+         *
+         * If a sequence name was specified for the name parameter, PDO::lastInsertId()
+         * returns a string representing the last value retrieved from the specified sequence object.
+         *
+         * If the PDO driver does not support this capability, PDO::lastInsertId() triggers an IM001 SQLSTATE.
+         */
+        return $self->getAdapter()->handler()->lastInsertId($self->sequence);
     }
 
     /**
@@ -497,7 +533,7 @@ abstract class Table
      *
      * <pre>
      * <code>
-     * $this->insert(['login' => 'Man', 'email' => 'man@domain.com'], ['id' => 42])
+     * Table::insert(['login' => 'Man', 'email' => 'man@domain.com'], ['id' => 42])
      * </code>
      * </pre>
      *
@@ -506,7 +542,7 @@ abstract class Table
      * @throws Exception\DbException
      * @return integer The number of rows updated
      */
-    protected function update(array $data, array $where)
+    public static function update(array $data, array $where)
     {
         if (!sizeof($where)) {
             throw new DbException(
@@ -515,11 +551,12 @@ abstract class Table
             );
         }
 
-        $sql = "UPDATE `{$this->table}`"
+        $self = static::getInstance();
+        $sql = "UPDATE `{$self->table}`"
             . " SET `" . join('` = ?,`', array_keys($data)) . "` = ?"
             . " WHERE `" . join('` = ? AND `', array_keys($where)) . "` = ?";
 
-        return $this->getAdapter()->query($sql, array_merge(array_values($data), array_values($where)));
+        return $self->getAdapter()->query($sql, array_merge(array_values($data), array_values($where)));
     }
 
     /**
@@ -527,7 +564,7 @@ abstract class Table
      *
      * <pre>
      * <code>
-     * $this->delete(['login' => 'Man'])
+     * Table::delete(['login' => 'Man'])
      * </code>
       * </pre>
      *
@@ -535,7 +572,7 @@ abstract class Table
      * @throws Exception\DbException
      * @return integer The number of rows deleted
      */
-    protected function delete(array $where)
+    public static function delete(array $where)
     {
         if (!sizeof($where)) {
             throw new DbException(
@@ -544,8 +581,9 @@ abstract class Table
             );
         }
 
-        $sql = "DELETE FROM `{$this->table}`"
+        $self = static::getInstance();
+        $sql = "DELETE FROM `{$self->table}`"
             . " WHERE `" . join('` = ? AND `', array_keys($where)) . "` = ?";
-        return $this->getAdapter()->query($sql, array_values($where));
+        return $self->getAdapter()->query($sql, array_values($where));
     }
 }

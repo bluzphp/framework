@@ -282,7 +282,7 @@ class Db
      * @param array $types <p>
      *  array (':name' => \PDO::PARAM_STR, ':id' => \PDO::PARAM_INT)
      * </p>
-     * @return string
+     * @return integer the number of rows
      */
     public function query($sql, $params = array(), $types = array())
     {

@@ -1,6 +1,16 @@
 CHANGELOG
 =========
 
+0.2.0 (18.10.2013)
+------------------
+* Added methods `insert()`, `update()` and `delete()` to `Db\Table` (its back)
+* Added support for sequence for `Db\Table` and `Db\Query\Insert`
+* Refactoring `Db\Row`
+ * removed support of custom magic get/set methods
+ * removed private property `modified`
+ * removed automatic serialization
+ * removed SQL query builder inside
+
 0.1.9 (17.10.2013)
 ------------------
 * **Changed** privileges store format, please update your application and flush cache
@@ -10,8 +20,8 @@ CHANGELOG
 
 0.1.8 (11.10.2013)
 ------------------
-* Added support "id" parameter for Crud controller
-* Removed old Crud\Crud
+* Added support `id` parameter for Crud controller
+* Removed old `Crud\Crud`
 * Fixed Mailer, RFC 2822 Compliant for Max 998 characters per line
 
 0.1.7 (08.10.2013)

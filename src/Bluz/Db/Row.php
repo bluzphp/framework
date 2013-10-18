@@ -67,7 +67,7 @@ class Row implements \JsonSerializable
      *
      * @var Table
      */
-    protected $table = null;
+    protected $table;
 
     /**
      * Primary row key(s).
@@ -84,14 +84,6 @@ class Row implements \JsonSerializable
      * @var array
      */
     protected $data = array();
-
-    /**
-     * Tracks columns where data has been updated. Allows more specific insert and
-     * update operations.
-     *
-     * @var array
-     */
-    protected $modified = array();
 
     /**
      * This is set to a copy of $data when the data is fetched from
@@ -124,9 +116,6 @@ class Row implements \JsonSerializable
      */
     public function __construct($data = array())
     {
-        // clean modified flags data if setup from PDO
-        $this->modified = array();
-
         // original cleaner data
         $this->clean = $this->toArray();
 
@@ -142,7 +131,7 @@ class Row implements \JsonSerializable
      */
     public function __sleep()
     {
-        return array('primary', 'data', 'clean', 'modified');
+        return array('primary', 'data', 'clean');
     }
 
     /**
@@ -164,19 +153,8 @@ class Row implements \JsonSerializable
                 }
                 $this->relationsData[$modelName][$columnName] = $value;
             }
-        } elseif (method_exists($this, 'set' . $this->normalizeColumnName($columnName))) {
-            // custom setter exists
-            call_user_func([$this, 'set' . $this->normalizeColumnName($columnName)], $value);
         } else {
-            // automatic serialization
-            if (is_array($value) || is_object($value)) {
-                $value = serialize($value);
-            }
-            if (!isset($this->data[$columnName])
-                || $this->data[$columnName] != $value
-            ) {
-                $this->data[$columnName] = $value;
-            }
+            $this->data[$columnName] = $value;
         }
     }
 
@@ -189,14 +167,11 @@ class Row implements \JsonSerializable
      */
     public function __get($columnName)
     {
-        $value = null;
-        if (method_exists($this, 'get' . $this->normalizeColumnName($columnName))) {
-            // custom setter exists
-            $value = call_user_func([$this, 'get' . $this->normalizeColumnName($columnName)]);
-        } elseif (isset($this->data[$columnName])) {
-            $value = $this->data[$columnName];
+        if (isset($this->data[$columnName])) {
+            return $this->data[$columnName];
+        } else {
+            return null;
         }
-        return $value;
     }
 
     /**
@@ -243,21 +218,7 @@ class Row implements \JsonSerializable
          */
         $data = $this->toArray();
 
-        $table = $this->getTable()->getTableName();
-        $sql = "INSERT INTO `$table` SET `" . join('` = ?,`', array_keys($data)) . "` = ?";
-
-        $this->getTable()->getAdapter()->query($sql, array_values($data));
-
-        /**
-         * If a sequence name was not specified for the name parameter, PDO::lastInsertId()
-         * returns a string representing the row ID of the last row that was inserted into the database.
-         *
-         * If a sequence name was specified for the name parameter, PDO::lastInsertId()
-         * returns a string representing the last value retrieved from the specified sequence object.
-         *
-         * If the PDO driver does not support this capability, PDO::lastInsertId() triggers an IM001 SQLSTATE.
-         */
-        $primaryKey = $this->getTable()->getAdapter()->handler()->lastInsertId();
+        $primaryKey = $this->getTable()->insert($data);
 
         /**
          * Normalize the result to an array indexed by primary key column(s)
@@ -282,7 +243,6 @@ class Row implements \JsonSerializable
          * Update the "clean" to reflect that the data has been inserted.
          */
         $this->clean = $this->toArray();
-        $this->modified = array();
 
         return $newPrimaryKey;
     }
@@ -312,16 +272,12 @@ class Row implements \JsonSerializable
          * Use the $diffData variable, so the UPDATE statement
          * includes SET terms only for data values that changed.
          */
-        if (count($diffData) > 0) {
-            $table = $this->getTable()->getTableName();
-
-            $sql = "UPDATE `$table`"
-                . " SET `" . join('` = ?,`', array_keys($diffData)) . "` = ?"
-                . " WHERE `" . join('` = ? AND `', array_keys($primaryKey)) . "` = ?";
-
-            $this->getTable()->getAdapter()->query($sql, array_values($diffData + $primaryKey));
+        if (sizeof($diffData) > 0) {
+            $table = $this->getTable();
+            $result = $table->update($diffData, $primaryKey);
+        } else {
+            $result = 0;
         }
-
 
         /**
          * Run post-UPDATE logic.  Do this before the _refresh()
@@ -335,18 +291,8 @@ class Row implements \JsonSerializable
          * any columns.  Also this resets the "clean".
          */
         $this->clean = $this->toArray();
-        $this->modified = array();
 
-        /**
-         * Return the primary key value(s) as an array
-         * if the key is compound or a scalar if the key
-         * is a scalar.
-         */
-        if (count($primaryKey) == 1) {
-            return current($primaryKey);
-        }
-
-        return $primaryKey;
+        return $result;
     }
 
     /**
@@ -366,12 +312,8 @@ class Row implements \JsonSerializable
         /**
          * Execute the DELETE (this may throw an exception)
          */
-        $table = $this->getTable()->getTableName();
-
-        $sql = "DELETE FROM `$table`"
-            . " WHERE `" . join('` = ? AND `', array_keys($primaryKey)) . "` = ?";
-
-        $result = $this->getTable()->getAdapter()->query($sql, array_values($primaryKey));
+        $table = $this->getTable();
+        $result = $table->delete($primaryKey);
 
         /**
          * Execute post-DELETE logic
@@ -381,12 +323,11 @@ class Row implements \JsonSerializable
         /**
          * Reset all fields to null to indicate that the row is not there
          */
-        foreach ($this->data as $key => &$value) {
+        foreach ($this->data as &$value) {
             $value = null;
         }
         return $result;
     }
-
 
     /**
      * Retrieves an associative array of primary keys, if it exists
@@ -404,19 +345,6 @@ class Row implements \JsonSerializable
     }
 
     /**
-     * normalizeColumnName
-     *
-     * @param $column
-     * @return string
-     */
-    protected function normalizeColumnName($column)
-    {
-        $words = explode('_', $column);
-        $words = array_map('ucfirst', (array)$words);
-        return join('', $words);
-    }
-
-    /**
      * Refreshes properties from the database.
      *
      * @return void
@@ -424,7 +352,6 @@ class Row implements \JsonSerializable
     public function refresh()
     {
         $this->setFromArray($this->clean);
-        $this->modified = array();
     }
 
     /**
@@ -535,9 +462,8 @@ class Row implements \JsonSerializable
                 throw new DbException('"' . $classTable . '" not found');
             }
         } catch (\Exception $e) {
-            throw new TableNotFoundException('Can\'t find table class with message: ' . $e->getMessage());
+            throw new TableNotFoundException('Can\'t find table class: ' . $e->getMessage());
         }
-
     }
 
     /**

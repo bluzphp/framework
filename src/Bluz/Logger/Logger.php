@@ -98,15 +98,14 @@ class Logger extends AbstractLogger
         $curTimer = microtime(true);
         $curMemory = ceil((memory_get_usage() / 1024));
 
-        // for avoid error "Too few arguments in 'sprintf' call"
-        $message = str_replace('%', '%%', $message);
-
-        $this->info[] = sprintf(
-            "%f :: %f :: %s kb // {$message}",
+        $key = sprintf(
+            "%f :: %f :: %s kb",
             ($curTimer - $this->start),
             ($curTimer - $this->timer),
             $curMemory
         );
+
+        $this->info[$key] = $message;
 
         $this->timer = $curTimer;
     }

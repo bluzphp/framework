@@ -48,7 +48,10 @@ class Redis extends AbstractAdapter
         'host' => '127.0.0.1',
         'port' => '6379',
         'timeout' => null,
-        'persistence' => false
+        'persistence' => false,
+        'options' => array(
+            \Redis::OPT_SERIALIZER => \Redis::SERIALIZER_PHP
+        )
     );
 
     /**

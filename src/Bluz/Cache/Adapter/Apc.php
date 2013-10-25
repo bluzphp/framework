@@ -26,6 +26,7 @@
  */
 namespace Bluz\Cache\Adapter;
 
+use Bluz\Cache\Cache;
 use Bluz\Cache\CacheException;
 
 /**
@@ -57,7 +58,7 @@ class Apc extends AbstractAdapter
     /**
      * {@inheritdoc}
      */
-    protected function doAdd($id, $data, $ttl = 0)
+    protected function doAdd($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
         return apc_add($id, $data, $ttl);
     }
@@ -65,7 +66,7 @@ class Apc extends AbstractAdapter
     /**
      * {@inheritdoc}
      */
-    protected function doSet($id, $data, $ttl = 0)
+    protected function doSet($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
         return apc_store($id, $data, $ttl);
     }

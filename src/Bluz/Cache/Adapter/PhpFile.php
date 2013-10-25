@@ -26,6 +26,7 @@
  */
 namespace Bluz\Cache\Adapter;
 
+use Bluz\Cache\Cache;
 use Bluz\Cache\InvalidArgumentException;
 
 /**
@@ -54,7 +55,7 @@ class PhpFile extends FileBase
 
         $cacheEntry = include $filename;
 
-        return $cacheEntry['ttl'] === 0 || $cacheEntry['ttl'] > time();
+        return $cacheEntry['ttl'] === Cache::TTL_NO_EXPIRY || $cacheEntry['ttl'] > time();
     }
 
     /**
@@ -70,7 +71,7 @@ class PhpFile extends FileBase
 
         $cacheEntry = include $filename;
 
-        if ($cacheEntry['ttl'] !== 0 && $cacheEntry['ttl'] < time()) {
+        if ($cacheEntry['ttl'] !== Cache::TTL_NO_EXPIRY && $cacheEntry['ttl'] < time()) {
             return false;
         }
 
@@ -80,7 +81,7 @@ class PhpFile extends FileBase
     /**
      * {@inheritdoc}
      */
-    protected function doSet($id, $data, $ttl = 0)
+    protected function doSet($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
         if ($ttl > 0) {
             $ttl = time() + $ttl;
@@ -115,7 +116,7 @@ class PhpFile extends FileBase
     /**
      * {@inheritdoc}
      */
-    protected function doAdd($id, $data, $ttl = 0)
+    protected function doAdd($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
         if (!$this->doContains($id)) {
             return $this->doSet($id, $data, $ttl);

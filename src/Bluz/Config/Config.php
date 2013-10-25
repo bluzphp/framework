@@ -86,8 +86,8 @@ class Config
             throw new ConfigException('Configuration file is not found');
         }
 
-        // TODO: or need without "once" for multi application
         $this->config = require $configFile;
+
         if (null !== $environment) {
             $customConfig = $this->path . '/app.' . $environment . '.php';
             if (is_file($customConfig) && is_readable($customConfig)) {

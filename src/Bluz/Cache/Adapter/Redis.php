@@ -26,6 +26,7 @@
  */
 namespace Bluz\Cache\Adapter;
 
+use Bluz\Cache\Cache;
 use Bluz\Cache\CacheException;
 
 /**
@@ -46,7 +47,8 @@ class Redis extends AbstractAdapter
     protected $settings = array(
         'host' => '127.0.0.1',
         'port' => '6379',
-        'timeout' => null
+        'timeout' => null,
+        'persistence' => false
     );
 
     /**
@@ -84,7 +86,11 @@ class Redis extends AbstractAdapter
     {
         if (!$this->redis) {
             $this->redis = new \Redis();
-            $this->redis->connect($this->settings['host'], $this->settings['port'], $this->settings['timeout']);
+            if ($this->settings['persistence']) {
+                $this->redis->pconnect($this->settings['host'], $this->settings['port'], $this->settings['timeout']);
+            } else {
+                $this->redis->connect($this->settings['host'], $this->settings['port'], $this->settings['timeout']);
+            }
             if (isset($this->settings['options'])) {
                 foreach ($this->settings['options'] as $key => $value) {
                     $this->redis->setOption($key, $value);
@@ -105,10 +111,14 @@ class Redis extends AbstractAdapter
     /**
      * {@inheritdoc}
      */
-    protected function doAdd($id, $data, $ttl = 0)
+    protected function doAdd($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
         if (!$this->doContains($id)) {
-            return $this->getHandler()->setex($id, $ttl, $data);
+            if (Cache::TTL_NO_EXPIRY == $ttl) {
+                return $this->getHandler()->set($id, $data);
+            } else {
+                return $this->getHandler()->setex($id, $ttl, $data);
+            }
         }
         return false;
     }
@@ -116,9 +126,13 @@ class Redis extends AbstractAdapter
     /**
      * {@inheritdoc}
      */
-    protected function doSet($id, $data, $ttl = 0)
+    protected function doSet($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
-        return $this->getHandler()->setex($id, $ttl, $data);
+        if (Cache::TTL_NO_EXPIRY == $ttl) {
+            return $this->getHandler()->set($id, $data);
+        } else {
+            return $this->getHandler()->setex($id, $ttl, $data);
+        }
     }
 
     /**

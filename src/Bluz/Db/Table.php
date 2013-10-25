@@ -237,22 +237,28 @@ abstract class Table
     /**
      * Return information about tables columns
      *
-     * @todo Cache it please
      * @return array
      */
     public function getColumns()
     {
         if (empty($this->columns)) {
-            $connect = $this->getAdapter()->getOption('connect');
+            $columns = app()->getCache()->get('table:columns:'. $this->table);
+            if (!$columns) {
+                $connect = $this->getAdapter()->getOption('connect');
 
-            $this->columns = $this->getAdapter()->fetchColumn(
-                '
-                SELECT `column_name`
-                FROM INFORMATION_SCHEMA.COLUMNS
-                WHERE `table_schema` = ?
-                  AND `table_name` = ?',
-                [$connect['name'], $this->getTableName()]
-            );
+                $columns = $this->getAdapter()->fetchColumn(
+                    '
+                    SELECT `column_name`
+                    FROM INFORMATION_SCHEMA.COLUMNS
+                    WHERE `table_schema` = ?
+                      AND `table_name` = ?',
+                    [$connect['name'], $this->getTableName()]
+                );
+                app()->getCache()->set('table:columns:'. $this->table, $columns);
+                app()->getCache()->addTag('table:columns:'. $this->table, 'db');
+            }
+            $this->columns = $columns;
+
         }
         return $this->columns;
     }

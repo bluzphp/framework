@@ -47,7 +47,7 @@ interface CacheInterface
      * @param int $ttl Time To Live in seconds 0 == infinity
      * @return boolean
      */
-    public function set($id, $data, $ttl = 0);
+    public function set($id, $data, $ttl = Cache::TTL_NO_EXPIRY);
 
     /**
      * Put data into cache.
@@ -57,7 +57,7 @@ interface CacheInterface
      * @param int $ttl Time To Live in seconds 0 == infinity
      * @return boolean
      */
-    public function add($id, $data, $ttl = 0);
+    public function add($id, $data, $ttl = Cache::TTL_NO_EXPIRY);
 
     /**
      * Test for cache entry existence
@@ -69,13 +69,13 @@ interface CacheInterface
     /**
      * Delete cache entry
      * @param string $id
-     * @return boolean
+     * @return mixed
      */
     public function delete($id);
 
     /**
      * Invalidate(delete) all cache entries
-     * @return void
+     * @return mixed
      */
     public function flush();
 }

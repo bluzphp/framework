@@ -16,6 +16,9 @@
         "pdepend/pdepend": "dev-master",
         "phpmd/phpmd": "dev-master"
     },
+    "suggest": {
+        "phpmailer/phpmailer": "Package Bluz\\Mailer require PHPMailer (https://github.com/bluzphp/framework/wiki/Mailer)"
+    },
     "autoload": {
         "psr-0": {
             "Bluz": "src/",

@@ -245,7 +245,6 @@ class HttpRequest extends AbstractRequest
      *
      * If no $key is passed, returns the entire $_GET array.
      *
-     * @todo How to retrieve from nested arrays
      * @param string $key
      * @param mixed $default Default value to use if key not found
      * @return mixed Returns null if key does not exist
@@ -270,11 +269,10 @@ class HttpRequest extends AbstractRequest
     }
 
     /**
-     * Retrieve a member of the $_POST superglobal
+     * Retrieve a member of the $_POST super global
      *
      * If no $key is passed, returns the entire $_POST array.
      *
-     * @todo How to retrieve from nested arrays
      * @param string $key
      * @param mixed $default Default value to use if key not found
      * @return mixed Returns null if key does not exist

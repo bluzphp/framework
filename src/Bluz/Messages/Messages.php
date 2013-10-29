@@ -27,6 +27,7 @@
 namespace Bluz\Messages;
 
 use Bluz\Common\Package;
+use Bluz\Translator\Translator;
 
 /**
  * Realization of Flash Messages
@@ -93,7 +94,7 @@ class Messages
     {
         $this->init();
 
-        $this->getMessagesStore()[self::TYPE_NOTICE][] = __($text);
+        $this->getMessagesStore()[self::TYPE_NOTICE][] = Translator::translate($text);
         return $this;
     }
 
@@ -107,7 +108,7 @@ class Messages
     {
         $this->init();
 
-        $this->getMessagesStore()[self::TYPE_SUCCESS][] = __($text);
+        $this->getMessagesStore()[self::TYPE_SUCCESS][] = Translator::translate($text);
         return $this;
     }
 
@@ -121,7 +122,7 @@ class Messages
     {
         $this->init();
 
-        $this->getMessagesStore()[self::TYPE_ERROR][] = __($text);
+        $this->getMessagesStore()[self::TYPE_ERROR][] = Translator::translate($text);
         return $this;
     }
 

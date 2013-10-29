@@ -28,6 +28,7 @@ namespace Bluz\Crud;
 
 use Bluz\Request\AbstractRequest;
 use Bluz\Application\Exception\NotImplementedException;
+use Bluz\Translator\Translator;
 
 /**
  * Crud
@@ -212,7 +213,7 @@ abstract class AbstractCrud
         if (!isset($this->errors[$field])) {
             $this->errors[$field] = array();
         }
-        $this->errors[$field][] = $message;
+        $this->errors[$field][] = Translator::translate($message);
         return $this;
     }
 

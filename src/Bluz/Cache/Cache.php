@@ -64,7 +64,7 @@ class Cache implements CacheInterface, TagableInterface
     /**
      * @var string
      */
-    protected $tagPrefix = '@';
+    protected $tagPrefix = '@:';
 
     /**
      * check Cache configuration
@@ -112,7 +112,7 @@ class Cache implements CacheInterface, TagableInterface
     /**
      * {@inheritdoc}
      */
-    public function add($id, $data, $ttl = 0)
+    public function add($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
         return $this->getAdapter()->add($id, $data, $ttl);
     }
@@ -120,7 +120,7 @@ class Cache implements CacheInterface, TagableInterface
     /**
      * {@inheritdoc}
      */
-    public function set($id, $data, $ttl = 0)
+    public function set($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
         return $this->getAdapter()->set($id, $data, $ttl);
     }
@@ -243,8 +243,7 @@ class Cache implements CacheInterface, TagableInterface
             $this->getAdapter()->delete($identifier);
         }
 
-        // TODO: m-m-m-m..... not sure about line below. Do we need this?
-        // $this->tagAdapter->delete($tag);
+        $this->tagAdapter->delete($tag);
 
         return true;
     }

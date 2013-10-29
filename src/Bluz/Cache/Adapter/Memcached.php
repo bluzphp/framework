@@ -26,6 +26,7 @@
  */
 namespace Bluz\Cache\Adapter;
 
+use Bluz\Cache\Cache;
 use Bluz\Cache\CacheException;
 
 /**
@@ -94,7 +95,7 @@ class Memcached extends AbstractAdapter
     /**
      * {@inheritdoc}
      */
-    protected function doAdd($id, $data, $ttl = 0)
+    protected function doAdd($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
         return $this->getHandler()->add($id, $data, $ttl);
     }
@@ -102,7 +103,7 @@ class Memcached extends AbstractAdapter
     /**
      * {@inheritdoc}
      */
-    protected function doSet($id, $data, $ttl = 0)
+    protected function doSet($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
         return $this->getHandler()->set($id, $data, $ttl);
     }

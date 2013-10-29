@@ -27,6 +27,7 @@
 namespace Bluz\Cache\Adapter;
 
 use Bluz\Cache\InvalidArgumentException;
+use Bluz\Cache\Cache;
 use Bluz\Cache\CacheInterface;
 
 /**
@@ -69,7 +70,7 @@ abstract class AbstractAdapter implements CacheInterface
     /**
      * {@inheritdoc}
      */
-    public function add($id, $data, $ttl = 0)
+    public function add($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
         $id = $this->castToString($id);
         return $this->doAdd($id, $data, $ttl);
@@ -78,7 +79,7 @@ abstract class AbstractAdapter implements CacheInterface
     /**
      * {@inheritdoc}
      */
-    public function set($id, $data, $ttl = 0)
+    public function set($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
         $id = $this->castToString($id);
         return $this->doSet($id, $data, $ttl);
@@ -140,14 +141,14 @@ abstract class AbstractAdapter implements CacheInterface
      * Actual  work for \Bluz\Cache\CacheInterface::add() goes here
      * @see \Bluz\Cache\CacheInterface::add()
      */
-    abstract protected function doAdd($id, $data, $ttl = 0);
+    abstract protected function doAdd($id, $data, $ttl = Cache::TTL_NO_EXPIRY);
 
     /**
      * Must be implemented in particular cache driver implementation
      * Actual  work for \Bluz\Cache\CacheInterface::set() goes here
      * @see \Bluz\Cache\CacheInterface::set()
      */
-    abstract protected function doSet($id, $data, $ttl = 0);
+    abstract protected function doSet($id, $data, $ttl = Cache::TTL_NO_EXPIRY);
 
     /**
      * Must be implemented in particular cache driver implementation

@@ -69,7 +69,7 @@ class Router
      */
     public function __construct()
     {
-        $routers = app()->getCache()->get('router:routers');
+        /*$routers = app()->getCache()->get('router:routers');
         $reverse = app()->getCache()->get('router:reverse');
 
         if (!$routers or !$reverse) {
@@ -136,7 +136,7 @@ class Router
         }
 
         $this->routers = $routers;
-        $this->reverse = $reverse;
+        $this->reverse = $reverse;*/
     }
 
     /**

@@ -533,12 +533,8 @@ class Row implements \JsonSerializable
      */
     public function setFromArray(array $data)
     {
-        $columns = $this->getTable()->getColumns();
-
         foreach ($data as $columnName => $value) {
-            if (in_array($columnName, $columns)) {
-                $this->$columnName = $value;
-            }
+            $this->$columnName = $value;
         }
         return $this;
     }

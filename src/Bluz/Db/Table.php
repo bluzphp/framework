@@ -264,6 +264,17 @@ abstract class Table
     }
 
     /**
+     * Filter columns for insert/update queries by table columns definition
+     *
+     * @param $data
+     * @return array
+     */
+    protected function filterColumns($data)
+    {
+        return array_intersect_key($data, array_flip($this->getColumns()));
+    }
+
+    /**
      * Fetching rows by SQL query
      *
      * @param  string $sql query options.
@@ -510,12 +521,22 @@ abstract class Table
      * </code>
      * </pre>
      *
-     * @param  array $data  Column-value pairs
+     * @param  array $data Column-value pairs
+     * @throws Exception\DbException
      * @return mixed Primary key or null
      */
     public static function insert(array $data)
     {
         $self = static::getInstance();
+
+        $data = $self->filterColumns($data);
+
+        if (!sizeof($data)) {
+            throw new DbException(
+                "Invalid field names of table `{$self->table}`. Please check use of `insert()` method"
+            );
+        }
+
         $sql = "INSERT INTO `{$self->table}` SET `" . join('` = ?,`', array_keys($data)) . "` = ?";
         $result = $self->getAdapter()->query($sql, array_values($data));
         if (!$result) {
@@ -543,7 +564,7 @@ abstract class Table
      * </code>
      * </pre>
      *
-     * @param  array $data  Column-value pairs.
+     * @param  array $data Column-value pairs.
      * @param  array $where An array of SQL WHERE clause(s)
      * @throws Exception\DbException
      * @return integer The number of rows updated
@@ -558,6 +579,17 @@ abstract class Table
         }
 
         $self = static::getInstance();
+
+        $data = $self->filterColumns($data);
+
+        $where = $self->filterColumns($where);
+
+        if (!sizeof($data) or !sizeof($where)) {
+            throw new DbException(
+                "Invalid field names of table `{$self->table}`. Please check use of `update()` method"
+            );
+        }
+
         $sql = "UPDATE `{$self->table}`"
             . " SET `" . join('` = ?,`', array_keys($data)) . "` = ?"
             . " WHERE `" . join('` = ? AND `', array_keys($where)) . "` = ?";
@@ -588,6 +620,15 @@ abstract class Table
         }
 
         $self = static::getInstance();
+
+        $where = $self->filterColumns($where);
+
+        if (!sizeof($where)) {
+            throw new DbException(
+                "Invalid field names of table `{$self->table}`. Please check use of `delete()` method"
+            );
+        }
+
         $sql = "DELETE FROM `{$self->table}`"
             . " WHERE `" . join('` = ? AND `', array_keys($where)) . "` = ?";
         return $self->getAdapter()->query($sql, array_values($where));

@@ -69,74 +69,78 @@ class Router
      */
     public function __construct()
     {
-        /*$routers = app()->getCache()->get('router:routers');
-        $reverse = app()->getCache()->get('router:reverse');
-
-        if (!$routers or !$reverse) {
-            $routers = array();
-            $reverse = array();
-            foreach (new \GlobIterator(app()->getPath() . '/modules/*/controllers/*.php') as $file) {
-                $module = pathinfo(dirname(dirname($file->getPathname())), PATHINFO_FILENAME);
-                $controller = pathinfo($file->getPathname(), PATHINFO_FILENAME);
-                $data = app()->reflection($file->getPathname());
-                if (isset($data['route'])) {
-                    foreach ((array)$data['route'] as $route) {
-                        $route = trim($route);
-
-                        if (!isset($reverse[$module])) {
-                            $reverse[$module] = array();
-                        }
-
-                        $reverse[$module][$controller] = ['route' => $route, 'params' => $data['params']];
-
-                        $pattern = str_replace('/', '\/', $route);
-
-                        foreach ($data['params'] as $param => $type) {
-                            switch ($type) {
-                                case 'int':
-                                case 'integer':
-                                    $pattern = str_replace("{\$" . $param . "}", "(?P<$param>[0-9]+)", $pattern);
-                                    break;
-                                case 'float':
-                                    $pattern = str_replace("{\$" . $param . "}", "(?P<$param>[0-9.,]+)", $pattern);
-                                    break;
-                                case 'string':
-                                case 'module':
-                                case 'controller':
-                                    $pattern = str_replace(
-                                        "{\$" . $param . "}",
-                                        "(?P<$param>[a-zA-Z0-9-_.]+)",
-                                        $pattern
-                                    );
-                                    break;
-                            }
-                        }
-                        $pattern = '/^' . $pattern . '/i';
-
-                        $rule = [
-                            $route => [
-                                'pattern' => $pattern,
-                                'module' => $module,
-                                'controller' => $controller,
-                                'params' => $data['params']
-                            ]
-                        ];
-
-                        // static routers should be first
-                        if (strpos($route, '$')) {
-                            $routers = array_merge($routers, $rule);
-                        } else {
-                            $routers = array_merge($rule, $routers);
-                        }
-                    }
-                }
-            }
-            app()->getCache()->set('router:routers', $routers);
-            app()->getCache()->set('router:reverse', $reverse);
-        }
-
-        $this->routers = $routers;
-        $this->reverse = $reverse;*/
+        // TODO: Fix me
+        $routers = array();
+        $reverse = array();
+        
+//        $routers = app()->getCache()->get('router:routers');
+//        $reverse = app()->getCache()->get('router:reverse');
+//
+//        if (!$routers or !$reverse) {
+//            $routers = array();
+//            $reverse = array();
+//            foreach (new \GlobIterator(app()->getPath() . '/modules/*/controllers/*.php') as $file) {
+//                $module = pathinfo(dirname(dirname($file->getPathname())), PATHINFO_FILENAME);
+//                $controller = pathinfo($file->getPathname(), PATHINFO_FILENAME);
+//                $data = app()->reflection($file->getPathname());
+//                if (isset($data['route'])) {
+//                    foreach ((array)$data['route'] as $route) {
+//                        $route = trim($route);
+//
+//                        if (!isset($reverse[$module])) {
+//                            $reverse[$module] = array();
+//                        }
+//
+//                        $reverse[$module][$controller] = ['route' => $route, 'params' => $data['params']];
+//
+//                        $pattern = str_replace('/', '\/', $route);
+//
+//                        foreach ($data['params'] as $param => $type) {
+//                            switch ($type) {
+//                                case 'int':
+//                                case 'integer':
+//                                    $pattern = str_replace("{\$" . $param . "}", "(?P<$param>[0-9]+)", $pattern);
+//                                    break;
+//                                case 'float':
+//                                    $pattern = str_replace("{\$" . $param . "}", "(?P<$param>[0-9.,]+)", $pattern);
+//                                    break;
+//                                case 'string':
+//                                case 'module':
+//                                case 'controller':
+//                                    $pattern = str_replace(
+//                                        "{\$" . $param . "}",
+//                                        "(?P<$param>[a-zA-Z0-9-_.]+)",
+//                                        $pattern
+//                                    );
+//                                    break;
+//                            }
+//                        }
+//                        $pattern = '/^' . $pattern . '/i';
+//
+//                        $rule = [
+//                            $route => [
+//                                'pattern' => $pattern,
+//                                'module' => $module,
+//                                'controller' => $controller,
+//                                'params' => $data['params']
+//                            ]
+//                        ];
+//
+//                        // static routers should be first
+//                        if (strpos($route, '$')) {
+//                            $routers = array_merge($routers, $rule);
+//                        } else {
+//                            $routers = array_merge($rule, $routers);
+//                        }
+//                    }
+//                }
+//            }
+//            app()->getCache()->set('router:routers', $routers);
+//            app()->getCache()->set('router:reverse', $reverse);
+//        }
+//
+//        $this->routers = $routers;
+//        $this->reverse = $reverse;
     }
 
     /**

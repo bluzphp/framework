@@ -72,7 +72,7 @@ abstract class AbstractCrud
      *
      * @return array
      */
-    public abstract function getPrimaryKey();
+    abstract public function getPrimaryKey();
 
     /**
      * get item by primary key(s)

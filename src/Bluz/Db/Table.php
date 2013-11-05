@@ -338,7 +338,6 @@ abstract class Table
 
         $args = func_get_args();
         $keyNames = array_values((array)$self->primary);
-
         $whereList = array();
         foreach ($args as $keyValues) {
             $keyValues = (array)$keyValues;
@@ -357,9 +356,15 @@ abstract class Table
                     "Settings described at https://github.com/bluzphp/framework/wiki/Db-Table"
                 );
             }
-            $whereList[] = array_combine($keyNames, $keyValues);
-        }
 
+            if (array_keys($keyValues)[0] === 0) {
+                // for numerical array
+                $whereList[] = array_combine($keyNames, $keyValues);
+            } else {
+                // for assoc array
+                $whereList[] = $keyValues;
+            }
+        }
         return call_user_func_array(array($self, 'findWhere'), $whereList);
     }
 

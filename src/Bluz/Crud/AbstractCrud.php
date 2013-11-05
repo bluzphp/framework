@@ -68,6 +68,13 @@ abstract class AbstractCrud
     }
 
     /**
+     * Return primary key signature
+     *
+     * @return array
+     */
+    abstract function getPrimaryKey();
+
+    /**
      * get item by primary key(s)
      *
      * @param mixed $primary
@@ -204,11 +211,11 @@ abstract class AbstractCrud
     /**
      * Add new errors to stack
      *
-     * @param $field
      * @param $message
+     * @param $field
      * @return self
      */
-    protected function addError($field, $message)
+    protected function addError($message, $field)
     {
         if (!isset($this->errors[$field])) {
             $this->errors[$field] = array();

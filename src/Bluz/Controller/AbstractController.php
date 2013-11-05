@@ -57,7 +57,7 @@ abstract class AbstractController
      * Identifier
      * @var string
      */
-    protected $id;
+    protected $primary;
 
     /**
      * Query data
@@ -89,13 +89,6 @@ abstract class AbstractController
         $this->params = $query;
 
         $this->data = $request->getParams();
-
-        $params = $request->getRawParams();
-
-        // %module% / %controller% / %id%
-        if (sizeof($params)) {
-            $this->id = array_shift($params);
-        }
     }
 
     /**

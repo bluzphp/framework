@@ -88,6 +88,16 @@ class Table extends AbstractCrud
     }
 
     /**
+     * getPrimaryKey
+     *
+     * @return array
+     */
+    public function getPrimaryKey()
+    {
+        return $this->getTable()->getPrimaryKey();
+    }
+
+    /**
      * CRUD methods here
      */
 
@@ -103,7 +113,6 @@ class Table extends AbstractCrud
         if (!$primary) {
             return $this->getTable()->create();
         }
-
         $row = $this->getTable()->findRow($primary);
 
         if (!$row) {
@@ -134,21 +143,21 @@ class Table extends AbstractCrud
     /**
      * Update Record
      *
-     * @param mixed $id
+     * @param mixed $primary
      * @param array $data
      * @throws NotFoundException
      * @return integer
      */
-    public function updateOne($id, $data)
+    public function updateOne($primary, $data)
     {
-        $row = $this->getTable()->findRow($id);
+        $row = $this->getTable()->findRow($primary);
 
         if (!$row) {
             throw new NotFoundException("Record not found");
         }
 
-        $this->validate($id, $data);
-        $this->validateUpdate($id, $data);
+        $this->validate($primary, $data);
+        $this->validateUpdate($primary, $data);
         $this->checkErrors();
 
         $row->setFromArray($data);
@@ -158,13 +167,13 @@ class Table extends AbstractCrud
     /**
      * Delete Record
      *
-     * @param $id
+     * @param mixed $primary
      * @throws NotFoundException
      * @return integer
      */
-    public function deleteOne($id)
+    public function deleteOne($primary)
     {
-        $row = $this->getTable()->findRow($id);
+        $row = $this->getTable()->findRow($primary);
 
         if (!$row) {
             throw new NotFoundException("Record not found");

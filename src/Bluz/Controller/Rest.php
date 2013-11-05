@@ -82,7 +82,7 @@ class Rest extends AbstractController
 
         // %module% / %controller% / %id% / %relation% / %id%
         if (sizeof($params)) {
-            $this->id = array_shift($params);
+            $this->primary = array_shift($params);
         }
         if (sizeof($params)) {
             $this->relation = array_shift($params);
@@ -135,8 +135,8 @@ class Rest extends AbstractController
         //                        -> 404 // not found
         switch ($this->method) {
             case AbstractRequest::METHOD_GET:
-                if ($this->id) {
-                    $result = $this->readOne($this->id);
+                if ($this->primary) {
+                    $result = $this->readOne($this->primary);
                     if (!sizeof($result)) {
                         throw new NotFoundException();
                     }
@@ -156,7 +156,7 @@ class Rest extends AbstractController
                 }
                 break;
             case AbstractRequest::METHOD_POST:
-                if ($this->id) {
+                if ($this->primary) {
                     // POST + ID is incorrect behaviour
                     throw new NotImplementedException();
                 }
@@ -191,9 +191,9 @@ class Rest extends AbstractController
                 }
 
                 try {
-                    if ($this->id) {
+                    if ($this->primary) {
                         // update one item
-                        $result = $this->updateOne($this->id, $this->data);
+                        $result = $this->updateOne($this->primary, $this->data);
                     } else {
                         // update collection
                         $result = $this->updateSet($this->data);
@@ -210,9 +210,9 @@ class Rest extends AbstractController
                 return false; // disable view
                 break;
             case AbstractRequest::METHOD_DELETE:
-                if ($this->id) {
+                if ($this->primary) {
                     // delete one
-                    $result = $this->deleteOne($this->id);
+                    $result = $this->deleteOne($this->primary);
                 } else {
                     // delete collection
                     if (!sizeof($this->data)) {

@@ -45,18 +45,6 @@ use Bluz\Request\AbstractRequest;
 class Crud extends AbstractController
 {
     /**
-     * Prepare request for processing
-     */
-    public function __construct()
-    {
-        parent::__construct();
-
-        // %module% / %controller% / %id% / %relation% / %id%
-        if (isset($this->data['id']) && !empty($this->data['id'])) {
-            $this->id = $this->data['id'];
-        }
-    }
-    /**
      * @throws NotImplementedException
      * @throws NotFoundException
      * @throws BadRequestException
@@ -64,13 +52,15 @@ class Crud extends AbstractController
      */
     public function __invoke()
     {
+        $primary = $this->getPrimaryKey();
+
         // switch by method
         switch ($this->method) {
             case AbstractRequest::METHOD_GET:
-                $row = $this->readOne($this->id);
+                $row = $this->readOne($primary);
 
                 $result = ['row' => $row];
-                if ($this->id) {
+                if ($primary) {
                     // update form
                     $result['method'] = AbstractRequest::METHOD_PUT;
                 } else {
@@ -104,9 +94,9 @@ class Crud extends AbstractController
             case AbstractRequest::METHOD_PATCH:
             case AbstractRequest::METHOD_PUT:
                 try {
-                    $this->updateOne($this->id, $this->data);
+                    $this->updateOne($primary, $this->data);
                     if (!app()->getRequest()->isXmlHttpRequest()) {
-                        $row = $this->readOne($this->id);
+                        $row = $this->readOne($primary);
                         $result = [
                             'row'    => $row,
                             'method' => $this->getMethod()
@@ -114,7 +104,7 @@ class Crud extends AbstractController
                         return $result;
                     }
                 } catch (ValidationException $e) {
-                    $row = $this->readOne($this->id);
+                    $row = $this->readOne($primary);
                     $row->setFromArray($this->data);
                     $result = [
                         'row'    => $row,
@@ -125,12 +115,26 @@ class Crud extends AbstractController
                 }
                 break;
             case AbstractRequest::METHOD_DELETE:
-                $this->deleteOne($this->id);
+                $this->deleteOne($primary);
                 break;
             default:
                 throw new NotImplementedException();
                 break;
         }
+    }
+
+    /**
+     * Return primary key
+     *
+     * @return array
+     */
+    public function getPrimaryKey()
+    {
+        if (!$this->primary) {
+            $primary = $this->getCrud()->getPrimaryKey();
+            $this->primary = array_intersect_key($this->data, array_flip($primary));
+        }
+        return $this->primary;
     }
 
     /**

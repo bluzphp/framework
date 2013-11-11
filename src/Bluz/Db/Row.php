@@ -123,6 +123,7 @@ class Row implements \JsonSerializable
         if (sizeof($data)) {
             $this->setFromArray($data);
         }
+        $this->afterRead();
     }
 
     /**
@@ -345,13 +346,21 @@ class Row implements \JsonSerializable
     }
 
     /**
-     * Refreshes properties from the database.
-     *
+     * Refreshes properties from the database
      * @return void
      */
     public function refresh()
     {
         $this->setFromArray($this->clean);
+        $this->afterRead();
+    }
+
+    /**
+     * After read data from Db
+     * @return void
+     */
+    protected function afterRead()
+    {
     }
 
     /**
@@ -364,7 +373,6 @@ class Row implements \JsonSerializable
 
     /**
      * After Insert/Update
-     *
      * @return void
      */
     protected function afterSave()
@@ -533,12 +541,8 @@ class Row implements \JsonSerializable
      */
     public function setFromArray(array $data)
     {
-        $columns = $this->getTable()->getColumns();
-
         foreach ($data as $columnName => $value) {
-            if (in_array($columnName, $columns)) {
-                $this->$columnName = $value;
-            }
+            $this->$columnName = $value;
         }
         return $this;
     }

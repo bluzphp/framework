@@ -97,7 +97,7 @@ abstract class Table
     /**
      * @var Db
      */
-    protected $adapter;
+    protected $adapter = null;
 
     /**
      * @var string
@@ -170,6 +170,9 @@ abstract class Table
     {
         if (null == $adapter) {
             $this->adapter = Db::getDefaultAdapter();
+        }
+        else {
+            $this->adapter = $adapter;
         }
         return $this;
     }

@@ -29,7 +29,7 @@ namespace Bluz\Db;
 use Bluz\Db\Exception\DbException;
 
 /**
- * Relations map
+ * Relations map of Db tables
  *
  * @category Bluz
  * @package  Db
@@ -40,6 +40,20 @@ use Bluz\Db\Exception\DbException;
 class Relations
 {
     /**
+     * <pre>
+     * <code>
+     * array(
+     *     'table1:table2' => ['table1'=>'foreignKey', 'table2'=>'primaryKey'],
+     *     'pages:users' => ['pages'=>'userId', 'users'=>'id'],
+     *     'users:pages' => ['pages'=>'userId', 'users'=>'id'], // mirror
+     *     'pages_tags:pages' => ['pages_tags'=>'pageId', 'pages'=>'id'],
+     *     'pages_tags:tags' => ['pages_tags'=>'tagId', 'tags'=>'id'],
+     *     'pages:tags' => ['pages_tags'],
+     *     'tags:pages' => ['pages_tags'], // mirror
+     * )
+     * </code>
+     * </pre>
+     *
      * @var array
      */
     protected static $relations;
@@ -108,28 +122,57 @@ class Relations
      * Find Relations between two tables
      *
      * @param string $tableOne
-     * @param string $tableTwo
-     * @param array $keys
+     * @param string $tableTwo target table
+     * @param array $keys from first table
      * @throws Exception\DbException
      * @return array
      */
     public static function findRelations($tableOne, $tableTwo, $keys)
     {
+        $keys = (array) $keys;
         if (!$relations = self::getRelations($tableOne, $tableTwo)) {
             throw new DbException("Relations between table `$tableOne` and `$tableTwo` is not defined");
         }
 
+        /* @var Table $tableTwoClass name */
+        $tableTwoClass = self::$classMap[$tableTwo];
+        /* @var Query\Select $tableTwoSelect */
+        $tableTwoSelect = $tableTwoClass::getInstance()->select();
+
         // check many to many relation
         if (is_int(array_keys($relations)[0])) {
-            // TODO: need implementation
-            return array();
+            // many to many relation over third table
+            $tableThree = $relations[0];
+
+            // relations between target table and third table
+            $relations = self::getRelations($tableTwo, $tableThree);
+
+            // join it to query
+            $tableTwoSelect->join(
+                $tableTwo,
+                $tableThree,
+                $tableThree,
+                $tableTwo.'.'.$relations[$tableTwo].'='.$tableThree.'.'.$relations[$tableThree]
+            );
+
+            // relations between source table and third table
+            $relations = self::getRelations($tableOne, $tableThree);
+
+            // join it to query
+            $tableTwoSelect->join(
+                $tableThree,
+                $tableOne,
+                $tableOne,
+                $tableThree.'.'.$relations[$tableThree].'='.$tableOne.'.'.$relations[$tableOne]
+            );
+
+            // set source keys
+            $tableTwoSelect->where($tableOne.'.'. $relations[$tableOne] .' IN (?)', $keys);
         } else {
-            $tableTwoClass = self::$classMap[$tableTwo];
-            /* @var Query\Select $tableTwoSelect */
-            $tableTwoSelect = $tableTwoClass::getInstance()->select();
+            // set source keys
             $tableTwoSelect->where($relations[$tableTwo] .' IN (?)', $keys);
-            return $tableTwoSelect->execute();
         }
+        return $tableTwoSelect->execute();
     }
 
     /**

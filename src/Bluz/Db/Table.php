@@ -412,11 +412,9 @@ abstract class Table
     {
         $self = static::getInstance();
 
-        $alias = $self->table[0];
-
         $select = new Query\Select();
-        $select->select($alias.'.*')
-            ->from($self->table, $alias)
+        $select->select($self->table.'.*')
+            ->from($self->table, $self->table)
             ->setFetchType($self->rowClass);
 
         return $select;

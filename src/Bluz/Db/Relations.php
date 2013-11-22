@@ -45,11 +45,9 @@ class Relations
      * array(
      *     'table1:table2' => ['table1'=>'foreignKey', 'table2'=>'primaryKey'],
      *     'pages:users' => ['pages'=>'userId', 'users'=>'id'],
-     *     'users:pages' => ['pages'=>'userId', 'users'=>'id'], // mirror
      *     'pages_tags:pages' => ['pages_tags'=>'pageId', 'pages'=>'id'],
      *     'pages_tags:tags' => ['pages_tags'=>'tagId', 'tags'=>'id'],
      *     'pages:tags' => ['pages_tags'],
-     *     'tags:pages' => ['pages_tags'], // mirror
      * )
      * </code>
      * </pre>
@@ -97,9 +95,11 @@ class Relations
      */
     public static function setRelations($tableOne, $tableTwo, $relations)
     {
+        $name = [$tableOne, $tableTwo];
+        sort($name);
+        $name = join(':', $name);
         // create record in static variable
-        // record with mirror
-        self::$relations[$tableOne .':'. $tableTwo] = static::$relations[$tableTwo .':'. $tableOne] = $relations;
+        self::$relations[$name] = $relations;
     }
 
     /**
@@ -111,8 +111,12 @@ class Relations
      */
     public static function getRelations($tableOne, $tableTwo)
     {
-        if (isset(self::$relations[$tableOne .':'. $tableTwo])) {
-            return self::$relations[$tableOne .':'. $tableTwo];
+        $name = [$tableOne, $tableTwo];
+        sort($name);
+        $name = join(':', $name);
+
+        if (isset(self::$relations[$name])) {
+            return self::$relations[$name];
         } else {
             return false;
         }

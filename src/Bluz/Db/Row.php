@@ -60,7 +60,7 @@ use Bluz\Db\Exception\TableNotFoundException;
  * @author   Anton Shevchuk
  * @created  07.07.11 19:47
  */
-class Row implements \JsonSerializable
+class Row implements \JsonSerializable, \ArrayAccess
 {
     /**
      * Table class or instance.
@@ -545,5 +545,42 @@ class Row implements \JsonSerializable
             $this->$columnName = $value;
         }
         return $this;
+    }
+
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     * @throws \InvalidArgumentException
+     */
+    public function offsetSet($offset, $value)
+    {
+        if (is_null($offset)) {
+            throw new \InvalidArgumentException('Class `Db\Row` not fully support `ArrayAccess`');
+        } else {
+            $this->__set($offset, $value);
+        }
+    }
+
+    /**
+     * @param mixed $offset
+     * @return bool
+     */
+    public function offsetExists($offset) {
+        return isset($this->data[$offset]);
+    }
+
+    /**
+     * @param mixed $offset
+     */
+    public function offsetUnset($offset) {
+        unset($this->data[$offset]);
+    }
+
+    /**
+     * @param mixed $offset
+     * @return mixed|string
+     */
+    public function offsetGet($offset) {
+        return $this->__get($offset);
     }
 }

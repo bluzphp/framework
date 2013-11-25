@@ -565,14 +565,16 @@ class Row implements \JsonSerializable, \ArrayAccess
      * @param mixed $offset
      * @return bool
      */
-    public function offsetExists($offset) {
+    public function offsetExists($offset)
+    {
         return isset($this->data[$offset]);
     }
 
     /**
      * @param mixed $offset
      */
-    public function offsetUnset($offset) {
+    public function offsetUnset($offset)
+    {
         unset($this->data[$offset]);
     }
 
@@ -580,7 +582,8 @@ class Row implements \JsonSerializable, \ArrayAccess
      * @param mixed $offset
      * @return mixed|string
      */
-    public function offsetGet($offset) {
+    public function offsetGet($offset)
+    {
         return $this->__get($offset);
     }
 }

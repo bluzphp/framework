@@ -191,4 +191,3 @@ class Relations
         self::$classMap[$tableName] = $className;
     }
 }
- 

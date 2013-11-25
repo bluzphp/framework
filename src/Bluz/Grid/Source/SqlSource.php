@@ -86,6 +86,7 @@ class SqlSource extends AbstractSource
         if (!empty($settings['orders'])) {
             // Obtain a list of columns
             foreach ($settings['orders'] as $column => $order) {
+                $column = Db\Db::getDefaultAdapter()->quoteIdentifier($column);
                 $orders[] = $column . ' ' . $order;
             }
         }

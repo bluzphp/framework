@@ -193,5 +193,45 @@ class RowTest extends Bluz\Tests\TestCase
         );
     }
 
+    /**
+     * Test ArrayAccess interface
+     *  - offsetSet
+     */
+    public function testOffsetSet()
+    {
+        $this->row['someValue'] = 'foo';
+        $this->assertEquals('foo', $this->row->someValue);
+    }
+
+    /**
+     * Test ArrayAccess interface
+     *  - offsetExists
+     */
+    public function testOffsetExists()
+    {
+        $this->row->someValue = 'foo';
+        $this->assertTrue(isset($this->row['someValue']));
+    }
+
+    /**
+     * Test ArrayAccess interface
+     *  - offsetUnset
+     */
+    public function testOffsetUnset()
+    {
+        $this->row->someValue = 'foo';
+        unset($this->row['someValue']);
+        $this->assertFalse(isset($this->row['someValue']));
+    }
+
+    /**
+     * Test ArrayAccess interface
+     *  - offsetGet
+     */
+    public function testOffsetGet()
+    {
+        $this->row->someValue = 'foo';
+        $this->assertEquals('foo', $this->row['someValue']);
+    }
 }
 

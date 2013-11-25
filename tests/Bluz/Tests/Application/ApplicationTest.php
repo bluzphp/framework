@@ -38,7 +38,7 @@ use Bluz\Application\Application;
 class ApplicationTest extends TestCase
 {
     /**
-     * @covers Bluz\Application::reflection
+     * @covers \Bluz\Application\Application::reflection
      * @return void
      */
     public function testReflection()

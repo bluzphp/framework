@@ -129,11 +129,13 @@ class Translator
 
         setlocale(LC_MESSAGES, $this->locale);
 
-        bindtextdomain($this->domain, $this->path);
+        if (function_exists('gettext')) {
+            bindtextdomain($this->domain, $this->path);
 
-        textdomain($this->domain);
-        // @todo: hardcoded codeset
-        bind_textdomain_codeset($this->domain, 'UTF-8');
+            textdomain($this->domain);
+            // @todo: hardcoded codeset
+            bind_textdomain_codeset($this->domain, 'UTF-8');
+        }
     }
 
     /**

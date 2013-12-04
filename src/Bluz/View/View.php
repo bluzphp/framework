@@ -163,19 +163,29 @@ class View implements ViewInterface, \JsonSerializable
      *
      * @param string $key
      * @param mixed $value
+     * @throws ViewException
      * @return View
      */
     public function __set($key, $value)
     {
-        $key = (string)$key;
-
-        if ((null === $value) && isset($this->data[$key])) {
-            unset($this->data[$key]);
-        } elseif (null !== $value) {
-            $this->data[$key] = $value;
+        if (!is_string($key)) {
+            throw new ViewException("You can't use `". gettype($key) . "` as identity of Views key");
         }
 
+        $this->data[$key] = $value;
+
         return $this;
+    }
+
+    /**
+     * Unset variable
+     *
+     * @param $key
+     * @return void
+     */
+    public function __unset($key)
+    {
+        unset($this->data[$key]);
     }
 
     /**

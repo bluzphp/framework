@@ -107,6 +107,12 @@ abstract class Grid
     protected $controller;
 
     /**
+     * Custom array params
+     * @var array
+     */
+    protected $params = array();
+
+    /**
      * Start from 1!
      *
      * @var int
@@ -405,6 +411,18 @@ abstract class Grid
     }
 
     /**
+     * setup params
+     *
+     * @param $params
+     * @return Grid
+     */
+    public function setParams($params)
+    {
+        $this->params = $params;
+        return $this;
+    }
+
+    /**
      * return params prepared for url builder
      *
      * @param array $rewrite
@@ -412,7 +430,7 @@ abstract class Grid
      */
     public function getParams(array $rewrite = [])
     {
-        $params = array();
+        $params = $this->params;
 
         // change page
         if (isset($rewrite['page']) && $rewrite['page'] > 1) {

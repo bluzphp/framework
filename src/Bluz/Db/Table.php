@@ -229,7 +229,7 @@ abstract class Table
      *
      * @return string
      */
-    public function getTableName()
+    public function getName()
     {
         return $this->table;
     }
@@ -252,7 +252,7 @@ abstract class Table
                     FROM INFORMATION_SCHEMA.COLUMNS
                     WHERE `table_schema` = ?
                       AND `table_name` = ?',
-                    [$connect['name'], $this->getTableName()]
+                    [$connect['name'], $this->getName()]
                 );
                 app()->getCache()->set('table:columns:'. $this->table, $columns);
                 app()->getCache()->addTag('table:columns:'. $this->table, 'db');
@@ -269,9 +269,10 @@ abstract class Table
      * @param $data
      * @return array
      */
-    protected function filterColumns($data)
+    public static function filterColumns($data)
     {
-        return array_intersect_key($data, array_flip($this->getColumns()));
+        $self = static::getInstance();
+        return array_intersect_key($data, array_flip($self->getColumns()));
     }
 
     /**

@@ -259,6 +259,16 @@ class HttpRequest extends AbstractRequest
     }
 
     /**
+     * Is this a GET method request?
+     *
+     * @return bool
+     */
+    public function isGeet()
+    {
+        return ($this->getMethod() === self::METHOD_GET);
+    }
+
+    /**
      * Is this a POST method request?
      *
      * @return bool
@@ -266,6 +276,26 @@ class HttpRequest extends AbstractRequest
     public function isPost()
     {
         return ($this->getMethod() === self::METHOD_POST);
+    }
+
+    /**
+     * Is this a PUT method request?
+     *
+     * @return bool
+     */
+    public function isPut()
+    {
+        return ($this->getMethod() === self::METHOD_PUT);
+    }
+
+    /**
+     * Is this a DELETE method request?
+     *
+     * @return bool
+     */
+    public function isDelete()
+    {
+        return ($this->getMethod() === self::METHOD_DELETE);
     }
 
     /**

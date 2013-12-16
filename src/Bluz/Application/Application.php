@@ -1106,9 +1106,9 @@ class Application
                 // setup params and optional params
                 $params = array();
                 $values = array();
-                foreach ($reflectionParams as $key => $param) {
+                foreach ($reflectionParams as $param) {
                     $name = $param->getName();
-                    $params[$name] = isset($types[$name]) ? $types[$name] : 'string';
+                    $params[$name] = isset($types[$name]) ? $types[$name] : null;
                     if ($param->isOptional()) {
                         $values[$name] = $param->getDefaultValue();
                     }
@@ -1185,6 +1185,9 @@ class Application
                     case 'array':
                         $params[] = (array)$rawData[$param];
                         break;
+                    default:
+                        $params[] = $rawData[$param];
+                        break;
                 }
             } elseif (isset($reflectionData['values'][$param])) {
                 $params[] = $reflectionData['values'][$param];
@@ -1194,7 +1197,6 @@ class Application
         }
         return $params;
     }
-
 
     /**
      * Is allowed controller/widget/etc

@@ -263,7 +263,7 @@ class HttpRequest extends AbstractRequest
      *
      * @return bool
      */
-    public function isGeet()
+    public function isGet()
     {
         return ($this->getMethod() === self::METHOD_GET);
     }

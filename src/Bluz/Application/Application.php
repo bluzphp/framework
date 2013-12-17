@@ -220,13 +220,16 @@ class Application
             $this->addHelperPath(dirname(__FILE__) . '/Helper/');
 
             // session start inside
-            $this->getSession();
+            // TODO: Remove line
+            // $this->getSession();
 
             // initial Translator
-            $this->getTranslator();
+            // TODO: Remove line
+            // $this->getTranslator();
 
             // initial DB configuration
-            $this->getDb();
+            // TODO: Remove line
+            // $this->getDb();
         } catch (Exception $e) {
             throw new ApplicationException("Application can't be loaded: " . $e->getMessage());
         }

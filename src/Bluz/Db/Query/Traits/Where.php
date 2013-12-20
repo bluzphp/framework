@@ -75,7 +75,7 @@ trait Where {
      *     $sb
      *         ->select('u')
      *         ->from('users', 'u')
-     *         ->where('u.username LIKE ?')
+     *         ->where('u.username LIKE ?', '%Smith%')
      *         ->andWhere('u.is_active = ?', 1);
      * </code>
      *

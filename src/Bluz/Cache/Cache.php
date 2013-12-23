@@ -213,17 +213,17 @@ class Cache implements CacheInterface, TagableInterface
      */
     public function addTag($id, $tag)
     {
-//        $identifiers = array();
-//        $tag = $this->tagPrefix . $tag;
-//
-//        if ($this->getTagAdapter()->contains($tag)) {
-//            $identifiers = $this->getTagAdapter()->get($tag);
-//        }
-//
-//        // array may contain not unique values, but I can't see problem here
-//        $identifiers[] = $id;
-//
-//        return $this->getTagAdapter()->set($tag, $identifiers);
+        $identifiers = array();
+        $tag = $this->tagPrefix . $tag;
+
+        if ($this->getTagAdapter()->contains($tag)) {
+            $identifiers = $this->getTagAdapter()->get($tag);
+        }
+
+        // array may contain not unique values, but I can't see problem here
+        $identifiers[] = $id;
+
+        return $this->getTagAdapter()->set($tag, $identifiers);
     }
 
     /**

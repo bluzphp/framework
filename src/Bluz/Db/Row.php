@@ -60,7 +60,7 @@ use Bluz\Db\Exception\TableNotFoundException;
  * @author   Anton Shevchuk
  * @created  07.07.11 19:47
  */
-class Row implements \JsonSerializable
+class Row implements \JsonSerializable, \ArrayAccess
 {
     /**
      * Table class or instance.
@@ -204,6 +204,7 @@ class Row implements \JsonSerializable
     }
 
     /**
+     * @throws Exception\DbException
      * @return mixed The primary key value(s), as an associative array if the
      *     key is compound, or a scalar if the key is single-column.
      */
@@ -219,12 +220,19 @@ class Row implements \JsonSerializable
          */
         $data = $this->toArray();
 
-        $primaryKey = $this->getTable()->insert($data);
+        $table = $this->getTable();
+        $data = $table->filterColumns($data);
+
+        if (!sizeof($data)) {
+            throw new DbException("Columns data for table `{$table->getName()}` is missed");
+        }
+
+        $primaryKey = $table->insert($data);
 
         /**
          * Normalize the result to an array indexed by primary key column(s)
          */
-        $tempPrimaryKey = $this->getTable()->getPrimaryKey();
+        $tempPrimaryKey = $table->getPrimaryKey();
         $newPrimaryKey = array(current($tempPrimaryKey) => $primaryKey);
 
         /**
@@ -267,6 +275,9 @@ class Row implements \JsonSerializable
          */
         $diffData = array_diff_assoc($this->toArray(), $this->clean);
 
+        $table = $this->getTable();
+        $diffData = $table->filterColumns($diffData);
+
         /**
          * Execute the UPDATE (this may throw an exception)
          * Do this only if data values were changed.
@@ -274,7 +285,6 @@ class Row implements \JsonSerializable
          * includes SET terms only for data values that changed.
          */
         if (sizeof($diffData) > 0) {
-            $table = $this->getTable();
             $result = $table->update($diffData, $primaryKey);
         } else {
             $result = 0;
@@ -534,7 +544,7 @@ class Row implements \JsonSerializable
     }
 
     /**
-     * Sets all data in the row from an array.
+     * Sets all data in the row from an array
      *
      * @param  array $data
      * @return Row Provides a fluent interface
@@ -545,5 +555,45 @@ class Row implements \JsonSerializable
             $this->$columnName = $value;
         }
         return $this;
+    }
+
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     * @throws \InvalidArgumentException
+     */
+    public function offsetSet($offset, $value)
+    {
+        if (is_null($offset)) {
+            throw new \InvalidArgumentException('Class `Db\Row` not fully support `ArrayAccess`');
+        } else {
+            $this->__set($offset, $value);
+        }
+    }
+
+    /**
+     * @param mixed $offset
+     * @return bool
+     */
+    public function offsetExists($offset)
+    {
+        return isset($this->data[$offset]);
+    }
+
+    /**
+     * @param mixed $offset
+     */
+    public function offsetUnset($offset)
+    {
+        unset($this->data[$offset]);
+    }
+
+    /**
+     * @param mixed $offset
+     * @return mixed|string
+     */
+    public function offsetGet($offset)
+    {
+        return $this->__get($offset);
     }
 }

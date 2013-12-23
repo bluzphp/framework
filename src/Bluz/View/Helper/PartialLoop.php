@@ -75,9 +75,11 @@ return
         $data = $data->toArray();
     }
 
+    $result = array();
     foreach ($data as $key => $value) {
         $params['partialKey'] = $key;
         $params['partialValue'] = $value;
-        $this->partial($template, $params);
+        $result[] = $this->partial($template, $params);
     }
+    return join('', $result);
     };

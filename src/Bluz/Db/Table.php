@@ -170,8 +170,7 @@ abstract class Table
     {
         if (null == $adapter) {
             $this->adapter = Db::getDefaultAdapter();
-        }
-        else {
+        } else {
             $this->adapter = $adapter;
         }
         return $this;

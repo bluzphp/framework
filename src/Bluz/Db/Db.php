@@ -26,7 +26,7 @@
  */
 namespace Bluz\Db;
 
-use Bluz\Common\Package;
+use Bluz\Common\Options;
 use Bluz\Db\Query;
 use Bluz\Db\Exception\DbException;
 
@@ -84,7 +84,7 @@ use Bluz\Db\Exception\DbException;
  */
 class Db
 {
-    use Package;
+    use Options;
 
     /**
      * @link http://php.net/manual/en/pdo.construct.php

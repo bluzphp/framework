@@ -26,7 +26,7 @@
  */
 namespace Bluz\Acl;
 
-use Bluz\Common\Package;
+use Bluz\Common\Options;
 
 /**
  * Acl
@@ -39,7 +39,7 @@ use Bluz\Common\Package;
  */
 class Acl
 {
-    use Package;
+    use Options;
 
     /**
      * Is allowed

@@ -26,7 +26,7 @@
  */
 namespace Bluz\Session;
 
-use Bluz\Common\Package;
+use Bluz\Common\Options;
 
 /**
  * Session
@@ -42,7 +42,7 @@ use Bluz\Common\Package;
  */
 class Session
 {
-    use Package;
+    use Options;
 
     /**
      * Session store instance

@@ -26,7 +26,7 @@
  */
 namespace Bluz\Config;
 
-use Bluz\Common\Package;
+use Bluz\Common\Options;
 
 /**
  * Config
@@ -39,7 +39,7 @@ use Bluz\Common\Package;
  */
 class Config
 {
-    use Package;
+    use Options;
 
     /**
      * @var array

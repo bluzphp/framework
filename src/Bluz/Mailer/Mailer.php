@@ -26,7 +26,7 @@
  */
 namespace Bluz\Mailer;
 
-use Bluz\Common\Package;
+use Bluz\Common\Options;
 use Bluz\Config\ConfigException;
 
 /**
@@ -40,7 +40,7 @@ use Bluz\Config\ConfigException;
  */
 class Mailer
 {
-    use Package;
+    use Options;
 
     /**
      * checkOptions

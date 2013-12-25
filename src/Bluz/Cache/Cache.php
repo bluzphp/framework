@@ -39,12 +39,12 @@ namespace Bluz\Cache;
  * @author murzik
  */
 use Bluz\Cache\Adapter;
-use Bluz\Common\Package;
+use Bluz\Common\Options;
 use Bluz\Config\ConfigException;
 
 class Cache implements CacheInterface, TagableInterface
 {
-    use Package;
+    use Options;
 
     /**
      * No expiry TTL

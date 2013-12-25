@@ -38,7 +38,7 @@ require_once 'Common/Exception.php';
 // traits
 require_once 'Common/Helper.php';
 require_once 'Common/Singleton.php';
-require_once 'Common/Package.php';
+require_once 'Common/Options.php';
 
 // application
 require_once 'Application/Application.php';

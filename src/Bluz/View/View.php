@@ -28,7 +28,7 @@ namespace Bluz\View;
 
 use Bluz\Application\Application;
 use Bluz\Common\Helper;
-use Bluz\Common\Package;
+use Bluz\Common\Options;
 
 /**
  * View
@@ -64,7 +64,7 @@ use Bluz\Common\Package;
  */
 class View implements ViewInterface, \JsonSerializable
 {
-    use Package;
+    use Options;
     use Helper;
 
     /**

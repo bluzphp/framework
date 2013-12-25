@@ -26,7 +26,7 @@
  */
 namespace Bluz\Logger;
 
-use Bluz\Common\Package;
+use Bluz\Common\Options;
 use Psr\Log\AbstractLogger;
 
 /**
@@ -39,7 +39,7 @@ use Psr\Log\AbstractLogger;
  */
 class Logger extends AbstractLogger
 {
-    use Package;
+    use Options;
 
     /**
      * @var null

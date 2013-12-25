@@ -26,7 +26,7 @@
  */
 namespace Bluz\Session\Store;
 
-use Bluz\Common\Package;
+use Bluz\Common\Options;
 
 /**
  * Abstract Session
@@ -39,7 +39,7 @@ use Bluz\Common\Package;
  */
 abstract class AbstractStore
 {
-    use Package;
+    use Options;
 
     /**
      * Session namespace

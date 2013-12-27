@@ -28,7 +28,7 @@ namespace Bluz\View;
 
 use Bluz\Application\Application;
 use Bluz\Common\Helper;
-use Bluz\Common\Package;
+use Bluz\Common\Options;
 
 /**
  * View
@@ -49,10 +49,11 @@ use Bluz\Common\Package;
  * @method string|View meta(\string $name = null, string $content = null)
  * @method string|boolean module(\string $module = null)
  * @method string|View link(string $src = null, string $rel = 'stylesheet')
- * @method void partial($__template, $__params = array())
- * @method void partialLoop($template, $data = [], $params = [])
+ * @method string partial($__template, $__params = array())
+ * @method string partialLoop($template, $data = [], $params = [])
  * @method string radio($name, $value = null, $checked = false, array $attributes = [])
  * @method string script(\string $script)
+ * @method string select($name, array $options = [], $selected = null, array $attributes = [])
  * @method string style(\string $style, $media = 'all')
  * @method string|View title(\string $title = null, $position = 'replace', $separator = ' :: ')
  * @method string|View url(\string $module, \string $controller, array $params = [], boolean $checkAccess = false)
@@ -64,7 +65,7 @@ use Bluz\Common\Package;
  */
 class View implements ViewInterface, \JsonSerializable
 {
-    use Package;
+    use Options;
     use Helper;
 
     /**

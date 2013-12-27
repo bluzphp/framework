@@ -28,7 +28,7 @@ namespace Bluz\Grid;
 
 use Bluz\Application\Application;
 use Bluz\Common\Helper;
-use Bluz\Common\Package;
+use Bluz\Common\Options;
 
 /**
  * Grid
@@ -53,7 +53,7 @@ use Bluz\Common\Package;
  */
 abstract class Grid
 {
-    use Package;
+    use Options;
     use Helper;
 
     const ORDER_ASC = 'asc';

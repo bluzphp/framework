@@ -50,37 +50,20 @@ class HttpRequest extends AbstractRequest
 
     /**
      * Constructor
-     *
      */
     public function __construct()
     {
         $this->method = $this->getServer('REQUEST_METHOD');
+        $request = file_get_contents('php://input');
 
-        // switch statement for $this->method
-        switch ($this->method) {
-            case self::METHOD_POST:
-                if ($this->getHeader('Content-Type') == 'application/json') {
-                    $request = file_get_contents('php://input');
-                    $data = (array) json_decode($request);
-                    $this->setParams($data);
-                } else {
-                    $this->setParams($_POST);
-                }
-                break;
-            case self::METHOD_PATCH:
-            case self::METHOD_PUT:
-            case self::METHOD_DELETE:
-                $request = file_get_contents('php://input');
-
-                if ($this->getHeader('Content-Type') == 'application/json') {
-                    $data = (array) json_decode($request);
-                } else {
-                    parse_str($request, $data);
-                }
-
-                $this->setParams($data);
-                break;
+        // support header like "application/json" and "application/json; charset=utf-8"
+        if (stristr($this->getHeader('Content-Type'), 'application/json')) {
+            $data = (array) json_decode($request);
+        } else {
+            parse_str($request, $data);
         }
+
+        $this->setParams($data);
     }
 
     /**

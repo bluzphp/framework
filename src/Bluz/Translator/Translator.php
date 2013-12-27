@@ -26,7 +26,7 @@
  */
 namespace Bluz\Translator;
 
-use Bluz\Common\Package;
+use Bluz\Common\Options;
 use Bluz\Config\ConfigException;
 
 /**
@@ -41,7 +41,7 @@ use Bluz\Config\ConfigException;
  */
 class Translator
 {
-    use Package;
+    use Options;
 
     /**
      * @see http://www.loc.gov/standards/iso639-2/php/code_list.php

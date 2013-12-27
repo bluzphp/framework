@@ -27,16 +27,16 @@
 namespace Bluz\Common;
 
 /**
- * Package
+ * Options
  *
  * @category Bluz
- * @package  Package
+ * @package  Common
  *
  * <pre>
  * <code>
  * class Foo
  * {
- *   use \Bluz\Package;
+ *   use \Bluz\Common\Options;
  *
  *   protected $bar = '';
  *   protected $baz = '';
@@ -59,9 +59,8 @@ namespace Bluz\Common;
  * @author   Anton Shevchuk
  * @created  12.07.11 16:15
  */
-trait Package
+trait Options
 {
-
     /**
      * @var array
      */

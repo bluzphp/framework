@@ -26,7 +26,7 @@
  */
 namespace Bluz\Request;
 
-use Bluz\Common\Package;
+use Bluz\Common\Options;
 
 /**
  * Request
@@ -39,7 +39,7 @@ use Bluz\Common\Package;
  */
 class AbstractRequest
 {
-    use Package;
+    use Options;
 
     /**
      * @const string HTTP METHOD constant names

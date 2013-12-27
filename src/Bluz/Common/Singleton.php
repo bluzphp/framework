@@ -30,7 +30,7 @@ namespace Bluz\Common;
  * Singleton
  *
  * @category Bluz
- * @package  Trait
+ * @package  Common
  *
  * @author   Anton Shevchuk
  * @created  16.05.12 14:26

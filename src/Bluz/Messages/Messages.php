@@ -26,7 +26,7 @@
  */
 namespace Bluz\Messages;
 
-use Bluz\Common\Package;
+use Bluz\Common\Options;
 use Bluz\Translator\Translator;
 
 /**
@@ -39,7 +39,7 @@ use Bluz\Translator\Translator;
  */
 class Messages
 {
-    use Package;
+    use Options;
 
     const TYPE_ERROR = 'error';
     const TYPE_SUCCESS = 'success';

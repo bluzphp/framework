@@ -26,7 +26,7 @@
  */
 namespace Bluz\Auth;
 
-use Bluz\Common\Package;
+use Bluz\Common\Options;
 
 /**
  * Auth support
@@ -41,7 +41,7 @@ use Bluz\Common\Package;
  */
 class Auth
 {
-    use Package;
+    use Options;
 
     /**
      * setup identity

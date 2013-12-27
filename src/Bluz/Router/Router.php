@@ -26,7 +26,7 @@
  */
 namespace Bluz\Router;
 
-use Bluz\Common\Package;
+use Bluz\Common\Options;
 
 /**
  * Router
@@ -39,7 +39,7 @@ use Bluz\Common\Package;
  */
 class Router
 {
-    use Package;
+    use Options;
 
     /**
      * Or should be as properties?
@@ -76,6 +76,7 @@ class Router
             $routers = array();
             $reverse = array();
             foreach (new \GlobIterator(app()->getPath() . '/modules/*/controllers/*.php') as $file) {
+                /* @var \SplFileInfo $file */
                 $module = pathinfo(dirname(dirname($file->getPathname())), PATHINFO_FILENAME);
                 $controller = pathinfo($file->getPathname(), PATHINFO_FILENAME);
                 $data = app()->reflection($file->getPathname());

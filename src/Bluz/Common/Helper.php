@@ -32,7 +32,7 @@ use Bluz\Common\Exception;
  * Application
  *
  * @category Bluz
- * @package  Application
+ * @package  Common
  *
  * @author   Anton Shevchuk
  * @created  18.07.12 14:46

@@ -222,7 +222,11 @@ class Router
                 $getParams[$key] = $value;
                 continue;
             }
-            $url = str_replace('{$' . $key . '}', $value, $url);
+            $url = str_replace('{$' . $key . '}', $value, $url, $replaced);
+            // if not replaced, setup param as GET
+            if (!$replaced) {
+                $getParams[$key] = $value;
+            }
         }
         // clean optional params
         $url = preg_replace('/\{\$[a-z0-9-_]+\}/i', '', $url);

@@ -61,11 +61,14 @@ return
     if (sizeof($__params)) {
         extract($__params);
     }
-    unset($__template, $__params);
+    unset($__params);
 
     ob_start();
-    require $__file;
-    $result = ob_get_contents();
-    ob_end_clean();
-    return $result;
+    try {
+        require $__file;
+    } catch (\Exception $e) {
+        ob_end_clean();
+        throw new ViewException("Template '{$__template}' throw exception: ".$e->getMessage());
+    }
+    return ob_get_clean();
     };

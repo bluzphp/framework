@@ -316,15 +316,13 @@ class View implements ViewInterface, \JsonSerializable
             require $this->path . '/' . $this->template;
         } catch (\Exception $e) {
             // clean output
-            ob_get_clean();
+            ob_end_clean();
             if (app()->isDebug()) {
-                echo $e->getMessage();
-                var_dump($e->getTraceAsString());
+                return $e->getMessage() ."\n<br/>". $e->getTraceAsString();
             }
             // nothing for production
             return '';
         }
-        $content = ob_get_clean();
-        return (string)$content;
+        return ob_get_clean();
     }
 }

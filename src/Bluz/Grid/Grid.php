@@ -374,10 +374,14 @@ abstract class Grid
     public function processSource()
     {
         if (null === $this->adapter) {
-            throw new GridException("Grid Adapter is not initiated, please change method init() and try again");
+            throw new GridException("Grid Adapter is not initiated, please update method init() and try again");
         }
 
-        $this->data = $this->getAdapter()->process($this->getSettings());
+        try {
+            $this->data = $this->getAdapter()->process($this->getSettings());
+        } catch (\Exception $e) {
+            throw new GridException("Grid Adapter can't process request: ". $e->getMessage());
+        }
 
         return $this;
     }

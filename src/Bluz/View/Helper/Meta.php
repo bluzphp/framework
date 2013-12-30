@@ -52,13 +52,8 @@ return
             if (sizeof($meta)) {
                 // prepare to output
                 $meta = array_map(
-                    function ($arr) {
-                        $str = '<meta ';
-                        foreach ($arr as $key => $value) {
-                            $str .= $key . '="' . addcslashes($value, '"') . '" ';
-                        }
-                        $str .= '/>';
-                        return $str;
+                    function ($attr) {
+                        return '<meta '. $this->attributes($attr) .'/>';
                     },
                     $meta
                 );

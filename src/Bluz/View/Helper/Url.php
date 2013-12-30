@@ -51,7 +51,7 @@ return
             }
         }
     } catch (\Exception $e) {
-        throw new \Bluz\View\ViewException('Url View Helper: ' . $e->getMessage());
+        throw new ViewException('Url View Helper: ' . $e->getMessage());
     }
 
     if (null === $module) {

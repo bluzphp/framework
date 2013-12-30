@@ -56,11 +56,8 @@ return
             $attributes['class'] = 'on';
         }
     }
-    $attrs = [];
 
-    foreach ($attributes as $attr => $value) {
-        $attrs[] = $attr . '="' . $value . '"';
-    }
+    $attributes = $this->attributes($attributes);
 
-    return '<a href="' . $href . '" ' . join(' ', $attrs) . '>' . __($text) . '</a>';
+    return '<a href="' . $href . '" ' . $attributes . '>' . __($text) . '</a>';
     };

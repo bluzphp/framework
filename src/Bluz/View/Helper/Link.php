@@ -45,13 +45,8 @@ return
             $links = array_unique($links);
             // prepare to output
             $links = array_map(
-                function ($arr) {
-                    $str = '<link ';
-                    foreach ($arr as $key => $value) {
-                        $str .= $key . '="' . addcslashes($value, '"') . '" ';
-                    }
-                    $str .= '/>';
-                    return $str;
+                function ($attr) {
+                    return '<link '. $this->attributes($attr) .'/>';
                 },
                 $links
             );

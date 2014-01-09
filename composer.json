@@ -20,13 +20,13 @@
         "phpmailer/phpmailer": "Package Bluz\\Mailer require PHPMailer (https://github.com/bluzphp/framework/wiki/Mailer)"
     },
     "autoload": {
-        "psr-0": {
-            "Bluz": "src/",
-            "Bluz\\Tests": "tests/"
+        "psr-4": {
+            "Bluz\\": "src/",
+            "Bluz\\Tests\\": "tests/src"
         },
         "files": [
-            "src/Bluz/_functions.php",
-            "src/Bluz/_loader.php"
+            "src/_functions.php",
+            "src/_loader.php"
         ]
     },
     "authors": [

@@ -18,8 +18,8 @@ In our [wiki][2] you can found description of every package
 
 ## License
 
-Read [LICENSE][3] file
+Read [MIT LICENSE][3] file
 
 [1]: https://github.com/bluzphp/skeleton
 [2]: https://github.com/bluzphp/framework/wiki
-[3]: https://raw.github.com/bluzphp/framework/master/LICENSE
+[3]: https://raw.github.com/bluzphp/framework/master/LICENSE.md

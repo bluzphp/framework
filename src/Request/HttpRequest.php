@@ -43,7 +43,14 @@ class HttpRequest extends AbstractRequest
         if (stristr($this->getHeader('Content-Type'), 'application/json')) {
             $data = (array) json_decode($request);
         } else {
-            parse_str($request, $data);
+            switch ($this->method) {
+                case self::METHOD_POST:
+                    $data = $_POST;
+                    break;
+                default:
+                    parse_str($request, $data);
+                    break;
+            }
         }
 
         $this->setParams($data);

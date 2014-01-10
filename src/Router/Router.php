@@ -178,7 +178,7 @@ class Router
         if (empty($this->routers)) {
             return $this->urlRoute($module, $controller, $params);
         } else {
-            if (isset($this->reverse[$module]) && isset($this->reverse[$module][$controller])) {
+            if (isset($this->reverse[$module], $this->reverse[$module][$controller])) {
                 return $this->urlCustom($module, $controller, $params);
             }
             return $this->urlRoute($module, $controller, $params);

@@ -177,7 +177,7 @@ class Cache implements CacheInterface, TagableInterface
         if (is_string($settings)) {
             $adapterName = $settings;
             $adapterSettings = [];
-        } elseif (is_array($settings) && isset($settings['name']) && isset($settings['settings'])) {
+        } elseif (isset($settings['name'], $settings['settings'])) {
             $adapterName = $settings['name'];
             $adapterSettings = $settings['settings'];
         } else {

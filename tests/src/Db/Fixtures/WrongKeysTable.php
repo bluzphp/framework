@@ -20,6 +20,7 @@ use Bluz\Db;
  * 
  * @author Eugene Zabolotniy <realbaziak@gmail.com>
  */
-class WrongKeysTable extends Bluz\Db\Table {
+class WrongKeysTable extends Bluz\Db\Table
+{
     protected $table = 'foo';
 }

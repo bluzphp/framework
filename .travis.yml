@@ -17,8 +17,6 @@ script:
   # Code style
   - php vendor/bin/phpcs ./src --standard=PSR1
   - php vendor/bin/phpcs ./src --standard=PSR2
-  # Code style for tests
-  - php vendor/bin/phpcs ./tests --standard=PSR2
   # Duplicate code
   - php vendor/bin/phpcpd --log-pmd .reports/pmd-cpd.xml src
   # Lines of code

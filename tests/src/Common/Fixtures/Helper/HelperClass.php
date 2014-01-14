@@ -5,6 +5,11 @@
  */
 
 /**
+ * @namespace
+ */
+namespace Bluz\Tests\Common\Helper\Fixtures;
+
+/**
  * Example of Class helper
  * 
  * @author   Anton Shevchuk

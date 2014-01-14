@@ -10,6 +10,6 @@
  * @author   Anton Shevchuk
  * @created  14.01.14 11:39
  */
-return function($argument) {
+return function ($argument) {
     return $argument;
 };

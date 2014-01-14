@@ -9,7 +9,7 @@
 return array(
     "auth" => array(
         "equals" => array(
-            "encryptFunction" => function($password, $salt) {
+            "encryptFunction" => function ($password, $salt) {
                 return md5(md5($password) . $salt);
             }
         )

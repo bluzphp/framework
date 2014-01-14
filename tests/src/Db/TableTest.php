@@ -113,9 +113,7 @@ class TableTest extends Bluz\Tests\TestCase
             self::markTestSkipped('This test requires SQLite support in your environment');
         }
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->markTestIncomplete('This test has not been implemented yet.');
     }
 
     /**
@@ -124,9 +122,7 @@ class TableTest extends Bluz\Tests\TestCase
     public function testInsert()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->markTestIncomplete('This test has not been implemented yet.');
     }
 
     /**
@@ -135,9 +131,7 @@ class TableTest extends Bluz\Tests\TestCase
     public function testUpdate()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->markTestIncomplete('This test has not been implemented yet.');
     }
 
     /**
@@ -146,9 +140,6 @@ class TableTest extends Bluz\Tests\TestCase
     public function testDelete()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->markTestIncomplete('This test has not been implemented yet.');
     }
-
 }

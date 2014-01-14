@@ -20,5 +20,6 @@ use Bluz\Db;
  * 
  * @author Eugene Zabolotniy <realbaziak@gmail.com>
  */
-class WrongTable extends Bluz\Db\Table {
+class WrongTable extends Bluz\Db\Table
+{
 }

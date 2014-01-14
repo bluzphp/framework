@@ -1,11 +1,11 @@
 <?php
 /**
- * 
- *
- * @category Application
- *
- * @author   dark
- * @created  21.05.13 10:46
+ * @copyright Bluz PHP Team
+ * @link https://github.com/bluzphp/framework
+ */
+
+/**
+ * @namespace
  */
 namespace Application;
 

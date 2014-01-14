@@ -48,7 +48,7 @@ class RowTest extends Bluz\Tests\TestCase
     /**
      * @covers Bluz\Db\Row::__get
      */
-    public function test__get()
+    public function testGet()
     {
         $this->assertNull($this->row->someValue);
     }
@@ -56,20 +56,19 @@ class RowTest extends Bluz\Tests\TestCase
     /**
      * @covers Bluz\Db\Row::__set
      */
-    public function test__set()
+    public function testSet()
     {
         $this->row->someValue = 'foo';
         $this->assertEquals('foo', $this->row->someValue);
     }
 
     /**
-     * @todo Implement test__isset().
+     * @todo Implement testIsset().
      */
-    public function test__isset() {
+    public function testIsset()
+    {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->markTestIncomplete('This test has not been implemented yet.');
     }
 
     /**
@@ -78,9 +77,7 @@ class RowTest extends Bluz\Tests\TestCase
     public function testSave()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->markTestIncomplete('This test has not been implemented yet.');
     }
 
     /**
@@ -89,9 +86,7 @@ class RowTest extends Bluz\Tests\TestCase
     public function testDelete()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->markTestIncomplete('This test has not been implemented yet.');
     }
 
     /**
@@ -100,9 +95,7 @@ class RowTest extends Bluz\Tests\TestCase
     public function testRefresh()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->markTestIncomplete('This test has not been implemented yet.');
     }
 
     /**
@@ -130,9 +123,7 @@ class RowTest extends Bluz\Tests\TestCase
     public function testGetRelation()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->markTestIncomplete('This test has not been implemented yet.');
     }
     
     /**
@@ -149,9 +140,7 @@ class RowTest extends Bluz\Tests\TestCase
     public function testSetRelation()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->markTestIncomplete('This test has not been implemented yet.');
     }
 
     /**
@@ -160,9 +149,7 @@ class RowTest extends Bluz\Tests\TestCase
     public function testToArray()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->markTestIncomplete('This test has not been implemented yet.');
     }
 
     /**
@@ -171,9 +158,7 @@ class RowTest extends Bluz\Tests\TestCase
     public function testSetFromArray()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->markTestIncomplete('This test has not been implemented yet.');
     }
 
     /**
@@ -217,4 +202,3 @@ class RowTest extends Bluz\Tests\TestCase
         $this->assertEquals('foo', $this->row['someValue']);
     }
 }
-

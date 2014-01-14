@@ -1,11 +1,11 @@
 <?php
 /**
- * 
- *
- * @category Application
- *
- * @author   dark
- * @created  21.05.13 10:46
+ * @copyright Bluz PHP Team
+ * @link https://github.com/bluzphp/framework
+ */
+
+/**
+ * @namespace
  */
 namespace Application;
 
@@ -22,9 +22,9 @@ return
  * @param string $c
  * @return \closure
  */
-function($a, $b, $c = null){
+function ($a, $b, $c = null) {
     /**
-     * @var \Bluz\Application $this
+     * @var \Bluz\Application\Application $this
      */
     return array(
         'params' => array("a" => "int", "b" => "float", "c" => "string"),

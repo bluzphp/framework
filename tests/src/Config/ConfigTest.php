@@ -13,8 +13,8 @@ use Bluz;
 use Bluz\Config;
 use Bluz\Tests;
 
-class ConfigTest extends Bluz\Tests\TestCase{
-
+class ConfigTest extends Bluz\Tests\TestCase
+{
     /**
      * @var Config\Config
      */
@@ -212,5 +212,4 @@ class ConfigTest extends Bluz\Tests\TestCase{
         $this->config->load('testing');
         $this->assertEquals('4_1', $this->config->getData('section2', 'subsection1'));
     }
-
 }

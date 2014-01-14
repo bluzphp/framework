@@ -9,8 +9,6 @@
  */
 namespace Bluz\Common;
 
-use Bluz\Common\Exception;
-
 /**
  * Application
  *
@@ -33,39 +31,7 @@ trait Helper
     protected static $helpersPath = array();
 
     /**
-     * Set application helpers
-     *
-     * @param array $helpers
-     * @return self
-     */
-    public function setHelpers($helpers)
-    {
-        foreach ($helpers as $name => $function) {
-            $this->helpers[$name] = $function;
-        }
-        return $this;
-    }
-
-    /**
-     * Set application helpers path
-     *
-     * @param string|array $helpersPath
-     * @return self
-     */
-    public function setHelpersPath($helpersPath)
-    {
-        if (is_array($helpersPath)) {
-            foreach ($helpersPath as $path) {
-                $this->addHelperPath((string)$path);
-            }
-        } else {
-            $this->addHelperPath((string)$helpersPath);
-        }
-        return $this;
-    }
-
-    /**
-     * Add view helper path
+     * Add helper path
      *
      * @param string $path
      * @return self
@@ -81,6 +47,26 @@ trait Helper
     }
 
     /**
+     * Set helpers path
+     *
+     * @param string|array $helpersPath
+     * @return self
+     */
+    public function setHelpersPath($helpersPath)
+    {
+        self::$helpersPath = array();
+
+        if (is_array($helpersPath)) {
+            foreach ($helpersPath as $path) {
+                $this->addHelperPath((string)$path);
+            }
+        } else {
+            $this->addHelperPath((string)$helpersPath);
+        }
+        return $this;
+    }
+
+    /**
      * Call
      *
      * @param string $method
@@ -90,23 +76,17 @@ trait Helper
      */
     public function __call($method, $args)
     {
-        if (isset($this->helpers[$method])
-            && $this->helpers[$method] instanceof \Closure
-        ) {
+        // Call helper function (or class)
+        if (isset($this->helpers[$method]) && is_callable($this->helpers[$method])) {
             return call_user_func_array($this->helpers[$method], $args);
         }
 
-        // try to load Helpers inside class directory
-        /* if (!self::$helpersPath) {
-            $path = app()->getLoader()->findFile(__CLASS__);
-            $this->addHelperPath(dirname($path) . '/Helper/');
-        }*/
-
+        // Try to find helper file
         foreach (self::$helpersPath as $helperPath) {
             $helperPath = realpath($helperPath . '/' . ucfirst($method) . '.php');
             if ($helperPath) {
                 $helperInclude = include $helperPath;
-                if ($helperInclude instanceof \Closure) {
+                if (is_callable($helperInclude)) {
                     $this->helpers[$method] = $helperInclude;
                 } else {
                     throw new Exception("Helper '$method' not found in file '$helperPath'");

@@ -54,8 +54,6 @@ trait Helper
      */
     public function setHelpersPath($helpersPath)
     {
-        self::$helpersPath = array();
-
         if (is_array($helpersPath)) {
             foreach ($helpersPath as $path) {
                 $this->addHelperPath((string)$path);

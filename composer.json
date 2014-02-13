@@ -17,7 +17,8 @@
         "phpmd/phpmd": "dev-master"
     },
     "suggest": {
-        "phpmailer/phpmailer": "Package Bluz\\Mailer require PHPMailer (https://github.com/bluzphp/framework/wiki/Mailer)"
+        "ext-gettext": "required by Bluz\\Translator (https://github.com/bluzphp/framework/wiki/Translator)",
+        "phpmailer/phpmailer": "required by Bluz\\Mailer (https://github.com/bluzphp/framework/wiki/Mailer)"
     },
     "autoload": {
         "psr-4": {

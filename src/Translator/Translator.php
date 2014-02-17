@@ -79,21 +79,6 @@ class Translator
     }
 
     /**
-     * checkOptions
-     *
-     * @throws \Bluz\Config\ConfigException
-     * @return boolean
-     */
-    protected function checkOptions()
-    {
-        // check path
-        if (!is_dir($this->path)) {
-            throw new ConfigException("Translator configuration path not found");
-        }
-        return true;
-    }
-
-    /**
      * Initialization
      *
      * @throw \Bluz\Config\ConfigException
@@ -101,6 +86,7 @@ class Translator
      */
     protected function initOptions()
     {
+        // Setup locale
         putenv('LC_ALL=' . $this->locale);
         putenv('LANG=' . $this->locale);
         putenv('LANGUAGE=' . $this->locale);
@@ -112,13 +98,37 @@ class Translator
 
         setlocale(LC_MESSAGES, $this->locale);
 
+        // For gettext only
         if (function_exists('gettext')) {
-            bindtextdomain($this->domain, $this->path);
+            // Setup domain path
+            $this->addTextDomain($this->domain, $this->path);
 
+            // Setup default domain
             textdomain($this->domain);
-            // @todo: hardcoded codeset
-            bind_textdomain_codeset($this->domain, 'UTF-8');
         }
+    }
+
+    /**
+     * add text domain for gettext
+     *
+     * @param string $domain of text for gettext setup
+     * @param string $path on filesystem
+     * @throws ConfigException
+     * @return self
+     */
+    public function addTextDomain($domain, $path)
+    {
+        // check path
+        if (!is_dir($path)) {
+            throw new ConfigException("Translator configuration path `$path` not found");
+        }
+
+        bindtextdomain($domain, $path);
+
+        // @todo: hardcoded codeset
+        bind_textdomain_codeset($domain, 'UTF-8');
+
+        return $this;
     }
 
     /**

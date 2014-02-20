@@ -24,11 +24,13 @@ use Bluz\Config\Config;
 use Bluz\Config\ConfigException;
 use Bluz\Db\Db;
 use Bluz\EventManager\EventManager;
+use Bluz\Http;
 use Bluz\Logger\Logger;
 use Bluz\Mailer\Mailer;
 use Bluz\Messages\Messages;
 use Bluz\Registry\Registry;
 use Bluz\Request;
+use Bluz\Response;
 use Bluz\Router\Router;
 use Bluz\Session\Session;
 use Bluz\Translator\Translator;
@@ -50,7 +52,7 @@ use Bluz\View\View;
  * @author   Anton Shevchuk
  * @created  06.07.11 16:25
  */
-class Application
+abstract class Application
 {
     use Singleton;
     use Helper;
@@ -123,6 +125,11 @@ class Application
     protected $request;
 
     /**
+     * @var Response\AbstractResponse
+     */
+    protected $response;
+
+    /**
      * @var Router
      */
     protected $router;
@@ -190,6 +197,9 @@ class Application
         $this->environment = $environment;
 
         try {
+            // initial default helper path
+            $this->addHelperPath(dirname(__FILE__) . '/Helper/');
+
             // setup configuration for current environment
             $this->getConfig($environment);
 
@@ -197,12 +207,10 @@ class Application
                 $this->debugFlag = $debug;
             }
 
+            // first log message
             $this->log('app:init');
 
-            // initial default helper path
-            $this->addHelperPath(dirname(__FILE__) . '/Helper/');
-
-            // session start inside
+            // initial session, start inside class
             $this->getSession();
 
             // initial Translator
@@ -457,16 +465,28 @@ class Application
     /**
      * getRequest
      *
-     * @return Request\HttpRequest
+     * @return Http\Request
      */
     public function getRequest()
     {
         if (!$this->request) {
-            $this->request = new Request\HttpRequest();
-            $this->request->setOptions($this->getConfigData('request'));
+            $this->request = new Http\Request();
+            if ($config = $this->getConfigData('request')) {
+                $this->request->setOptions($config);
+            }
 
             if ($this->request->isXmlHttpRequest()) {
                 $this->useLayout(false);
+
+                // check header "accept" for catch AJAX JSON requests, and switch to JSON response
+                $accept = $this->getRequest()->getHeader('accept');
+
+                // MIME type can be "application/json", "application/json; charset=utf-8" etc.
+                $accept = str_replace(';', ',', $accept);
+                $accept = explode(',', $accept);
+                if (in_array("application/json", $accept)) {
+                    $this->useJson(true);
+                }
             }
         }
         return $this->request;
@@ -482,6 +502,22 @@ class Application
     {
         $this->request = $request;
         return $this;
+    }
+
+    /**
+     * getResponse
+     *
+     * @return Response\AbstractResponse
+     */
+    public function getResponse()
+    {
+        if (!$this->response) {
+            $this->response = new Http\Response();
+            if ($config = $this->getConfigData('response')) {
+                $this->response->setOptions($config);
+            }
+        }
+        return $this->response;
     }
 
     /**
@@ -553,6 +589,16 @@ class Application
     }
 
     /**
+     * isJson
+     *
+     * @return boolean
+     */
+    public function isJson()
+    {
+        return $this->jsonFlag;
+    }
+
+    /**
      * hasLayout
      *
      * @return boolean|string
@@ -609,31 +655,21 @@ class Application
         $this->getRouter()
             ->process();
 
-        // check header "accept" for catch AJAX JSON requests, and switch to JSON response
-        // for HTTP only
-        if (!$this->getRequest()->isCli()) {
-            $accept = $this->getRequest()->getHeader('accept');
-            $accept = explode(',', $accept);
-            if ($this->getRequest()->isXmlHttpRequest()
-                && in_array("application/json", $accept)
-            ) {
-                $this->useJson(true);
-            }
-        }
-
         // try to dispatch controller
         try {
-            $this->dispatchResult = $this->dispatch(
+            $dispatchResult = $this->dispatch(
                 $this->request->getModule(),
                 $this->request->getController(),
                 $this->request->getAllParams()
             );
+            $this->getResponse()->setBody($dispatchResult);
         } catch (RedirectException $e) {
-            $this->dispatchResult = $e;
+            $this->getResponse()->setException($e);
         } catch (ReloadException $e) {
-            $this->dispatchResult = $e;
+            $this->getResponse()->setException($e);
         } catch (\Exception $e) {
-            $this->dispatchResult = $this->dispatch(
+            $this->getResponse()->setException($e);
+            $dispatchResult = $this->dispatch(
                 Router::ERROR_MODULE,
                 Router::ERROR_CONTROLLER,
                 array(
@@ -641,51 +677,42 @@ class Application
                     'message' => $e->getMessage()
                 )
             );
+            $this->getResponse()->setBody($dispatchResult);
         }
 
-        return $this->dispatchResult;
+        return $this->getResponse();
     }
 
     /**
-     * dispatch
+     * Pre dispatch mount point
      *
-     * Call dispatch from any \Bluz\Package
-     * <code>
-     * $this->getApplication()->dispatch($module, $controller, array $params);
-     * </code>
+     * @param string $module
+     * @param string $controller
+     * @param array $params
      *
-     * Attach callback function to event "dispatch"
-     * <code>
-     * $this->getApplication()->getEventManager()->attach('dispatch', function($event) {
-     *     $eventParams = $event->getParams();
-     *     $app = $event->getTarget();
-     *     \Bluz\Profiler::log('bootstrap:dispatch: '.$eventParams['module'].'/'.$eventParams['controller']);
-     * });
-     * </code>
+     * @throws Exception
+     * @return void
+     */
+    protected function preDispatch($module, $controller, $params = array())
+    {
+        $this->log("app:dispatch:pre: " . $module . '/' . $controller);
+    }
+
+    /**
+     * Do dispatch
      *
      * @param string $module
      * @param string $controller
      * @param array $params
      * @throws Exception
+     *
      * @return View
      */
-    public function dispatch($module, $controller, $params = array())
+    protected function doDispatch($module, $controller, $params = array())
     {
-        $this->log("app:dispatch: " . $module . '/' . $controller);
+        $this->log("app:dispatch:do: " . $module . '/' . $controller);
         $controllerFile = $this->getControllerFile($module, $controller);
         $reflectionData = $this->reflection($controllerFile);
-
-        // system trigger "dispatch"
-        $this->getEventManager()->trigger(
-            'dispatch',
-            $this,
-            array(
-                'module' => $module,
-                'controller' => $controller,
-                'params' => $params,
-                'reflection' => $reflectionData
-            )
-        );
 
         // check acl
         if (!$this->isAllowed($module, $reflectionData)) {
@@ -776,6 +803,66 @@ class Application
     }
 
     /**
+     * postDispatch
+     *
+     * @param string $module
+     * @param string $controller
+     * @param array $params
+     * @throws Exception
+     *
+     * @return void
+     */
+    protected function postDispatch($module, $controller, $params = array())
+    {
+        $this->log("app:dispatch:post: " . $module . '/' . $controller);
+    }
+
+    /**
+     * dispatch
+     *
+     * Call dispatch from any \Bluz\Package
+     * <code>
+     * $this->getApplication()->dispatch($module, $controller, array $params);
+     * </code>
+     *
+     * Attach callback function to event "dispatch"
+     * <code>
+     * $this->getApplication()->getEventManager()->attach('dispatch', function($event) {
+     *     $eventParams = $event->getParams();
+     *     $app = $event->getTarget();
+     *     \Bluz\Profiler::log('bootstrap:dispatch: '.$eventParams['module'].'/'.$eventParams['controller']);
+     * });
+     * </code>
+     *
+     * @param string $module
+     * @param string $controller
+     * @param array $params
+     * @throws Exception
+     * @return View
+     */
+    public function dispatch($module, $controller, $params = array())
+    {
+        $this->log("app:dispatch: " . $module . '/' . $controller);
+
+        // system trigger "dispatch"
+        $this->getEventManager()->trigger(
+            'dispatch',
+            $this,
+            array(
+                'module' => $module,
+                'controller' => $controller,
+                'params' => $params
+            )
+        );
+
+        $this->preDispatch($module, $controller, $params);
+        $result = $this->doDispatch($module, $controller, $params);
+        $this->postDispatch($module, $controller, $params);
+
+        return $result;
+    }
+
+    /**
      * render
      *
      * @return void
@@ -784,28 +871,11 @@ class Application
     {
         $this->log('app:render');
 
-        $result = $this->dispatchResult;
+        $this->getResponse()->send();
 
-        /**
-         * - Why you don't use "X-" prefix?
-         * - Because it deprecated
-         * @link http://tools.ietf.org/html/rfc6648
-         */
-        if ($result instanceof RedirectException) {
-            if ($this->jsonFlag) {
-                header('Bluz-Redirect: ' . $result->getMessage(), true, 204);
-            } else {
-                header('Location: ' . $result->getMessage(), true, $result->getCode());
-            }
-            return;
-        } elseif ($result instanceof ReloadException) {
-            if ($this->jsonFlag) {
-                header('Bluz-Reload: true', true, 204);
-            } else {
-                header('Refresh: 15; url=' . $this->getRequest()->getRequestUri());
-            }
-            return;
-        }
+        return;
+
+        $result = $this->dispatchResult;
 
         if ($this->jsonFlag) {
             // Setup headers
@@ -848,48 +918,6 @@ class Application
                 $result = $result();
             }
             echo $result;
-        }
-    }
-
-    /**
-     * render for CLI
-     *
-     * @return void
-     */
-    public function output()
-    {
-        $this->log('app:output');
-
-        $result = $this->dispatchResult;
-
-        // get data from layout
-        $data = $this->getLayout()->getData();
-
-        // merge it with view data
-        if ($result instanceof View) {
-            $data = array_merge($data, $result->getData());
-        }
-
-        // inject messages if exists
-        if ($this->hasMessages()) {
-            while ($msg = $this->getMessages()->pop(Messages::TYPE_ERROR)) {
-                echo "\033[41m\033[1;37mError    \033[m\033m: ";
-                echo $msg->text . "\n";
-            }
-            while ($msg = $this->getMessages()->pop(Messages::TYPE_NOTICE)) {
-                echo "\033[44m\033[1;37mInfo     \033[m\033m: ";
-                echo $msg->text . "\n";
-            }
-            while ($msg = $this->getMessages()->pop(Messages::TYPE_SUCCESS)) {
-                echo "\033[42m\033[1;37mSuccess  \033[m\033m: ";
-                echo $msg->text . "\n";
-            }
-            echo "\n";
-        }
-        foreach ($data as $key => $value) {
-            echo "\033[1;33m$key\033[m:\n";
-            print_r($value);
-            echo "\n";
         }
     }
 

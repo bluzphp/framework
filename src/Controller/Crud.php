@@ -12,9 +12,8 @@ namespace Bluz\Controller;
 use Bluz\Application\Exception\BadRequestException;
 use Bluz\Application\Exception\NotFoundException;
 use Bluz\Application\Exception\NotImplementedException;
-use Bluz\Crud\AbstractCrud;
 use Bluz\Crud\ValidationException;
-use Bluz\Request\AbstractRequest;
+use Bluz\Http\Request;
 
 /**
  * Crud
@@ -39,27 +38,27 @@ class Crud extends AbstractController
 
         // switch by method
         switch ($this->method) {
-            case AbstractRequest::METHOD_GET:
+            case Request::METHOD_GET:
                 $row = $this->readOne($primary);
 
                 $result = ['row' => $row];
                 if ($primary) {
                     // update form
-                    $result['method'] = AbstractRequest::METHOD_PUT;
+                    $result['method'] = Request::METHOD_PUT;
                 } else {
                     // create form
-                    $result['method'] = AbstractRequest::METHOD_POST;
+                    $result['method'] = Request::METHOD_POST;
                 }
                 return $result;
                 break;
-            case AbstractRequest::METHOD_POST:
+            case Request::METHOD_POST:
                 try {
                     $result = $this->createOne($this->data);
                     if (!app()->getRequest()->isXmlHttpRequest()) {
                         $row = $this->readOne($result);
                         $result = [
                             'row'    => $row,
-                            'method' => AbstractRequest::METHOD_PUT
+                            'method' => Request::METHOD_PUT
                         ];
                         return $result;
                     }
@@ -74,8 +73,8 @@ class Crud extends AbstractController
                     return $result;
                 }
                 break;
-            case AbstractRequest::METHOD_PATCH:
-            case AbstractRequest::METHOD_PUT:
+            case Request::METHOD_PATCH:
+            case Request::METHOD_PUT:
                 try {
                     $this->updateOne($primary, $this->data);
                     if (!app()->getRequest()->isXmlHttpRequest()) {
@@ -97,7 +96,7 @@ class Crud extends AbstractController
                     return $result;
                 }
                 break;
-            case AbstractRequest::METHOD_DELETE:
+            case Request::METHOD_DELETE:
                 $this->deleteOne($primary);
                 break;
             default:

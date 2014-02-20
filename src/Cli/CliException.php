@@ -7,12 +7,12 @@
 /**
  * @namespace
  */
-namespace Bluz\Request;
+namespace Bluz\Cli;
 
 use Bluz\Common\Exception;
 
 /**
- * RequestException
+ * Exception
  *
  * @category Bluz
  * @package  Request
@@ -20,6 +20,6 @@ use Bluz\Common\Exception;
  * @author   Anton Shevchuk
  * @created  11.02.13 11:26
  */
-class RequestException extends Exception
+class CliException extends Exception
 {
 }

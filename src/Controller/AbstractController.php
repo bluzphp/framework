@@ -11,7 +11,7 @@ namespace Bluz\Controller;
 
 use Bluz\Application\Exception\ApplicationException;
 use Bluz\Crud\AbstractCrud;
-use Bluz\Request\AbstractRequest;
+use Bluz\Http\Request;
 
 /**
  * AbstractController
@@ -28,7 +28,7 @@ abstract class AbstractController
      * HTTP Method
      * @var string
      */
-    protected $method = AbstractRequest::METHOD_GET;
+    protected $method = Request::METHOD_GET;
 
     /**
      * Params of query

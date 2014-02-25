@@ -38,9 +38,14 @@ class AbstractRequest
     const METHOD_CONNECT = 'CONNECT';
 
     /**
-     * Command line interface only
+     * Command line request
      */
     const METHOD_CLI = 'CLI';
+
+    /**
+     * HTTP Request
+     */
+    const METHOD_HTTP = 'HTTP';
 
     /**
      * REQUEST_URI
@@ -327,6 +332,16 @@ class AbstractRequest
     public function isCli()
     {
         return $this->method == self::METHOD_CLI;
+    }
+
+    /**
+     * check HTTP
+     *
+     * @return boolean
+     */
+    public function isHttp()
+    {
+        return $this->method == self::METHOD_HTTP;
     }
 
     /**

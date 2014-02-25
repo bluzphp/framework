@@ -7,18 +7,20 @@
 /**
  * @namespace
  */
-namespace Bluz\Request;
+namespace Bluz\Cli;
+
+use Bluz\Request\AbstractRequest;
 
 /**
  * CLI Request
  *
  * @category Bluz
- * @package  Request
+ * @package  Cli
  *
  * @author   Anton Shevchuk
  * @created  06.07.11 16:59
  */
-class CliRequest extends AbstractRequest
+class Request extends AbstractRequest
 {
 
     /**
@@ -36,7 +38,7 @@ class CliRequest extends AbstractRequest
         unset($args[0]);
 
         if (!in_array('--uri', $args)) {
-            throw new RequestException('Attribute "--uri" is required');
+            throw new CliException('Attribute "--uri" is required');
         }
 
         $uriOrder = array_search('--uri', $args) + 1;
@@ -49,7 +51,7 @@ class CliRequest extends AbstractRequest
                 $this->setParams($params);
             }
         } else {
-            throw new RequestException('Attribute "--uri" is required');
+            throw new CliException('Attribute "--uri" is required');
         }
     }
 

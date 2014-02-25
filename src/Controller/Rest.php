@@ -13,9 +13,8 @@ use Bluz\Application\Exception\ApplicationException;
 use Bluz\Application\Exception\BadRequestException;
 use Bluz\Application\Exception\NotFoundException;
 use Bluz\Application\Exception\NotImplementedException;
-use Bluz\Crud\AbstractCrud;
 use Bluz\Crud\ValidationException;
-use Bluz\Request\AbstractRequest;
+use Bluz\Http\Request;
 
 /**
  * Controller
@@ -117,7 +116,7 @@ class Rest extends AbstractController
         // DELETE /module/rest/id -> 204 // item was deleted
         //                        -> 404 // not found
         switch ($this->method) {
-            case AbstractRequest::METHOD_GET:
+            case Request::METHOD_GET:
                 if ($this->primary) {
                     $result = $this->readOne($this->primary);
                     if (!sizeof($result)) {
@@ -138,7 +137,7 @@ class Rest extends AbstractController
                     return $this->readSet($offset, $limit, $this->params);
                 }
                 break;
-            case AbstractRequest::METHOD_POST:
+            case Request::METHOD_POST:
                 if ($this->primary) {
                     // POST + ID is incorrect behaviour
                     throw new NotImplementedException();
@@ -166,8 +165,8 @@ class Rest extends AbstractController
                 );
                 return false; // disable view
                 break;
-            case AbstractRequest::METHOD_PATCH:
-            case AbstractRequest::METHOD_PUT:
+            case Request::METHOD_PATCH:
+            case Request::METHOD_PUT:
                 if (!sizeof($this->data)) {
                     // data not found
                     throw new BadRequestException();
@@ -192,7 +191,7 @@ class Rest extends AbstractController
                 }
                 return false; // disable view
                 break;
-            case AbstractRequest::METHOD_DELETE:
+            case Request::METHOD_DELETE:
                 if ($this->primary) {
                     // delete one
                     $result = $this->deleteOne($this->primary);

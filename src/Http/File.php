@@ -7,7 +7,7 @@
 /**
  * @namespace
  */
-namespace Bluz\Request;
+namespace Bluz\Http;
 
 /**
  * HttpFile
@@ -18,7 +18,7 @@ namespace Bluz\Request;
  * @author   Anton Shevchuk
  * @created  07.02.13 15:18
  */
-class HttpFile
+class File
 {
     /**
      * string

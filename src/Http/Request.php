@@ -7,19 +7,34 @@
 /**
  * @namespace
  */
-namespace Bluz\Request;
+namespace Bluz\Http;
+
+use Bluz\Request\AbstractRequest;
 
 /**
  * HTTP Request
  *
  * @category Bluz
- * @package  Request
+ * @package  Http
  *
  * @author   Anton Shevchuk
  * @created  06.07.11 16:59
  */
-class HttpRequest extends AbstractRequest
+class Request extends AbstractRequest
 {
+    /**
+     * @const string HTTP METHOD constant names
+     */
+    const METHOD_OPTIONS = 'OPTIONS';
+    const METHOD_GET = 'GET';
+    const METHOD_HEAD = 'HEAD';
+    const METHOD_PATCH = 'PATCH';
+    const METHOD_POST = 'POST';
+    const METHOD_PUT = 'PUT';
+    const METHOD_DELETE = 'DELETE';
+    const METHOD_TRACE = 'TRACE';
+    const METHOD_CONNECT = 'CONNECT';
+
     /**
      * @const string HTTP SCHEME constant names
      */
@@ -27,7 +42,7 @@ class HttpRequest extends AbstractRequest
     const SCHEME_HTTPS = 'https';
 
     /**
-     * @var HttpFileUpload
+     * @var FileUpload
      */
     protected $fileUpload;
 
@@ -292,12 +307,12 @@ class HttpRequest extends AbstractRequest
     /**
      * getFileUpload
      *
-     * @return HttpFileUpload
+     * @return FileUpload
      */
     public function getFileUpload()
     {
         if (!$this->fileUpload) {
-            $this->fileUpload = new HttpFileUpload();
+            $this->fileUpload = new FileUpload();
         }
         return $this->fileUpload;
     }

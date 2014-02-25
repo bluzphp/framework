@@ -7,7 +7,7 @@
 /**
  * @namespace
  */
-namespace Bluz\Request;
+namespace Bluz\Http;
 
 /**
  * HttpFileUpload
@@ -18,7 +18,7 @@ namespace Bluz\Request;
  * @author   Anton Shevchuk
  * @created  07.02.13 13:20
  */
-class HttpFileUpload
+class FileUpload
 {
     protected $files = array();
 
@@ -92,7 +92,7 @@ class HttpFileUpload
         if (is_array($fileInfo['name'])) {
             foreach ($fileInfo['name'] as $subKey => $name) {
                 if (is_numeric($subKey)) {
-                    $httpFile = new HttpFile(
+                    $httpFile = new File(
                         [
                             'name' => $fileInfo['name'][$subKey],
                             'error' => $fileInfo['error'][$subKey],
@@ -106,7 +106,7 @@ class HttpFileUpload
                     foreach ($fileInfo['name'][$subKey] as $subSubKey => $subName) {
                         if (is_array($fileInfo['name'][$subKey][$subSubKey])) {
                             foreach ($fileInfo['name'][$subKey][$subSubKey] as $subSubSubKey => $subSubName) {
-                                $httpFile = new HttpFile(
+                                $httpFile = new File(
                                     [
                                         'name' => $fileInfo['name'][$subKey][$subSubKey][$subSubSubKey],
                                         'error' => $fileInfo['error'][$subKey][$subSubKey][$subSubSubKey],
@@ -118,7 +118,7 @@ class HttpFileUpload
                                 $this->files[$key . '[' . $subKey . '][' . $subSubKey . ']'][] = $httpFile;
                             }
                         } else {
-                            $httpFile = new HttpFile(
+                            $httpFile = new File(
                                 [
                                     'name' => $fileInfo['name'][$subKey][$subSubKey],
                                     'error' => $fileInfo['error'][$subKey][$subSubKey],
@@ -131,7 +131,7 @@ class HttpFileUpload
                         }
                     }
                 } else {
-                    $httpFile = new HttpFile(
+                    $httpFile = new File(
                         [
                             'name' => $fileInfo['name'][$subKey],
                             'error' => $fileInfo['error'][$subKey],
@@ -144,7 +144,7 @@ class HttpFileUpload
                 }
             }
         } else {
-            $httpFile = new HttpFile($fileInfo);
+            $httpFile = new File($fileInfo);
             $this->files[$key] = [$httpFile];
         }
     }
@@ -153,7 +153,7 @@ class HttpFileUpload
      * getFile
      *
      * @param string $name
-     * @return HttpFile
+     * @return File
      */
     public function getFile($name)
     {

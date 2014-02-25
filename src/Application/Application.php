@@ -284,9 +284,9 @@ abstract class Application
      */
     public function getAuth()
     {
-        if (!$this->auth && $conf = $this->getConfigData('auth')) {
+        if (!$this->auth && $config = $this->getConfigData('auth')) {
             $this->auth = new Auth();
-            $this->auth->setOptions($conf);
+            $this->auth->setOptions($config);
         }
         return $this->auth;
     }
@@ -299,12 +299,12 @@ abstract class Application
     public function getCache()
     {
         if (!$this->cache) {
-            $conf = $this->getConfigData('cache');
-            if (!isset($conf['enabled']) or !$conf['enabled']) {
+            $config = $this->getConfigData('cache');
+            if (!isset($config['enabled']) or !$config['enabled']) {
                 $this->cache = new Nil();
             } else {
                 $this->cache = new Cache();
-                $this->cache->setOptions($conf);
+                $this->cache->setOptions($config);
             }
         }
         return $this->cache;
@@ -317,9 +317,9 @@ abstract class Application
      */
     public function getDb()
     {
-        if (!$this->db && $conf = $this->getConfigData('db')) {
+        if (!$this->db) {
             $this->db = new Db();
-            $this->db->setOptions($conf);
+            $this->db->setOptions($this->getConfigData('db'));
         }
         return $this->db;
     }
@@ -344,20 +344,22 @@ abstract class Application
      */
     public function getLayout()
     {
-        if (!$this->layout && $conf = $this->getConfigData('layout')) {
+        if (!$this->layout) {
             $this->layout = new Layout();
-            $this->layout->setOptions($conf);
+            $this->layout->setOptions($this->getConfigData('layout'));
         }
         return $this->layout;
     }
 
     /**
-     * resetLayout
+     * Reset Layout, required for tests only
      *
+     * @return Application
      */
     public function resetLayout()
     {
         $this->layout = null;
+        return $this;
     }
 
     /**
@@ -368,8 +370,8 @@ abstract class Application
     public function getLogger()
     {
         if (!$this->logger) {
-            $conf = $this->getConfigData('logger');
-            if (!isset($conf['enabled']) or !$conf['enabled']) {
+            $config = $this->getConfigData('logger');
+            if (!isset($config['enabled']) or !$config['enabled']) {
                 $this->logger = new Nil();
             } else {
                 $this->logger = new Logger();
@@ -387,9 +389,9 @@ abstract class Application
     public function getMailer()
     {
         if (!$this->mailer) {
-            if ($conf = $this->getConfigData('mailer')) {
+            if ($config = $this->getConfigData('mailer')) {
                 $this->mailer = new Mailer();
-                $this->mailer->setOptions($conf);
+                $this->mailer->setOptions($config);
             } else {
                 throw new ConfigException(
                     "Missed `mailer` options in configuration file. <br/>\n" .
@@ -424,6 +426,7 @@ abstract class Application
     {
         if (!$this->messages) {
             $this->messages = new Messages();
+            $this->messages->setOptions($this->getConfigData('messages'));
         }
         return $this->messages;
     }
@@ -455,8 +458,8 @@ abstract class Application
     {
         if (!$this->registry) {
             $this->registry = new Registry();
-            if ($conf = $this->getConfigData('registry')) {
-                $this->registry->setData($conf);
+            if ($data = $this->getConfigData('registry')) {
+                $this->registry->setData($data);
             }
         }
         return $this->registry;
@@ -471,9 +474,7 @@ abstract class Application
     {
         if (!$this->request) {
             $this->request = new Http\Request();
-            if ($config = $this->getConfigData('request')) {
-                $this->request->setOptions($config);
-            }
+            $this->request->setOptions($this->getConfigData('request'));
 
             if ($this->request->isXmlHttpRequest()) {
                 $this->useLayout(false);
@@ -513,9 +514,7 @@ abstract class Application
     {
         if (!$this->response) {
             $this->response = new Http\Response();
-            if ($config = $this->getConfigData('response')) {
-                $this->response->setOptions($config);
-            }
+            $this->response->setOptions($this->getConfigData('response'));
         }
         return $this->response;
     }
@@ -822,12 +821,12 @@ abstract class Application
      *
      * Call dispatch from any \Bluz\Package
      * <code>
-     * $this->getApplication()->dispatch($module, $controller, array $params);
+     * app()->dispatch($module, $controller, array $params);
      * </code>
      *
      * Attach callback function to event "dispatch"
      * <code>
-     * $this->getApplication()->getEventManager()->attach('dispatch', function($event) {
+     * app()->getEventManager()->attach('dispatch', function($event) {
      *     $eventParams = $event->getParams();
      *     $app = $event->getTarget();
      *     \Bluz\Profiler::log('bootstrap:dispatch: '.$eventParams['module'].'/'.$eventParams['controller']);
@@ -872,53 +871,6 @@ abstract class Application
         $this->log('app:render');
 
         $this->getResponse()->send();
-
-        return;
-
-        $result = $this->dispatchResult;
-
-        if ($this->jsonFlag) {
-            // Setup headers
-            // HTTP does not define any limit
-            // However most web servers do limit size of headers they accept.
-            // For example in Apache default limit is 8KB, in IIS it's 16K.
-            // Server will return 413 Entity Too Large error if headers size exceeds that limit
-
-            // setup messages
-            if ($this->hasMessages()) {
-                header('Bluz-Notify: '.json_encode($this->getMessages()->popAll()));
-            }
-
-            // response without content
-            if (false === $result) {
-                return;
-            }
-
-            // prepare to JSON output
-            $json = json_encode($result);
-
-            // override response code so javascript can process it
-            header('Content-Type: application/json');
-
-            // send content length
-            header('Content-Length: '.strlen($json));
-
-            ob_clean();
-            flush();
-            echo $json;
-
-        } elseif ($this->layoutFlag) {
-            $this->getLayout()->setContent($result);
-            echo $this->getLayout();
-        } else {
-            /**
-             * Can be Closure or any object with magic method '__invoke'
-             */
-            if (is_callable($result)) {
-                $result = $result();
-            }
-            echo $result;
-        }
     }
 
     /**
@@ -926,12 +878,12 @@ abstract class Application
      *
      * Call widget from any \Bluz\Package
      * <code>
-     * $this->getApplication()->widget($module, $widget, array $params);
+     * app()->widget($module, $widget, array $params);
      * </code>
      *
      * Attach callback function to event "widget"
      * <code>
-     * $this->getApplication()->getEventManager()->attach('widget', function($event) {
+     * app()->getEventManager()->attach('widget', function($event) {
      *     $eventParams = $event->getParams();
      *     $app = $event->getTarget();
      *     \Bluz\Profiler::log('bootstrap:dispatch: '.$eventParams['module'].'/'.$eventParams['widget']);
@@ -996,12 +948,12 @@ abstract class Application
      *
      * Call API from any \Bluz\Package
      * <code>
-     * $this->getApplication()->api($module, $widget, array $params);
+     * app()->api($module, $widget, array $params);
      * </code>
      *
      * Attach callback function to event "api"
      * <code>
-     * $this->getApplication()->getEventManager()->attach('api', function($event) {
+     * app()->getEventManager()->attach('api', function($event) {
      *     $eventParams = $event->getParams();
      *     $app = $event->getTarget();
      *     \Bluz\Profiler::log('bootstrap:dispatch: '.$eventParams['module'].'/'.$eventParams['widget']);

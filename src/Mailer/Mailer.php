@@ -18,6 +18,8 @@ use Bluz\Config\ConfigException;
  * @category Bluz
  * @package  Mailer
  *
+ * @link     https://github.com/bluzphp/framework/wiki/Mailer
+ *
  * @author   Pavel Machekhin
  * @created  27.12.12 16:25
  */
@@ -40,6 +42,7 @@ class Mailer
                 "https://github.com/bluzphp/framework/wiki/Mailer</a>"
             );
         }
+        return true;
     }
 
     /**

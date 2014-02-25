@@ -50,16 +50,20 @@ trait Options
     protected $options;
 
     /**
+     * Setup, check and init options
+     *  - options must be a array
+     *  - options can be null
+     *
      * @param array $options
      * @return void
      */
-    public function setOptions(array $options)
+    public function setOptions($options)
     {
         // store options by default
-        $this->options = $options;
+        $this->options = (array) $options;
 
         // apply options
-        foreach ($options as $key => $value) {
+        foreach ($this->options as $key => $value) {
             $method = 'set' . $this->normalizeKey($key);
             if (method_exists($this, $method)) {
                 $this->$method($value);
@@ -67,9 +71,10 @@ trait Options
         }
 
         // check options
-        $this->checkOptions();
-        // initialization
-        $this->initOptions();
+        if ($this->checkOptions()) {
+            // initialization
+            $this->initOptions();
+        }
     }
 
     /**

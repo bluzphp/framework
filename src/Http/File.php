@@ -53,7 +53,7 @@ class File
             !isset($data['tmp_name']) ||
             !isset($data['error'])
         ) {
-            throw new RequestException("Invalid HTTP File Upload data");
+            throw new HttpException("Invalid HTTP File Upload data");
         }
 
         if ($data['error'] != UPLOAD_ERR_OK) {
@@ -79,13 +79,13 @@ class File
      * set filename (w/o extension)
      *
      * @param string $name
-     * @throws RequestException
+     * @throws HttpException
      * @return string
      */
     public function setName($name)
     {
         if (empty($name)) {
-            throw new RequestException("Rename error: wrong filename");
+            throw new HttpException("Rename error: wrong filename");
         }
         $this->name = $name;
         return $this;
@@ -196,7 +196,7 @@ class File
      * move uploaded file to directory
      *
      * @param $path
-     * @throws RequestException
+     * @throws HttpException
      * @return string
      */
     public function moveTo($path)
@@ -204,11 +204,11 @@ class File
         if (!$this->tmp or
             !file_exists($this->tmp)
         ) {
-            throw new RequestException("Temporary file is not exists, maybe you already moved it");
+            throw new HttpException("Temporary file is not exists, maybe you already moved it");
         }
 
         if (!is_uploaded_file($this->tmp)) {
-            throw new RequestException("Temporary file is not uploaded by POST");
+            throw new HttpException("Temporary file is not uploaded by POST");
         }
 
         if (!is_dir($path)) {
@@ -217,7 +217,7 @@ class File
         }
 
         if (!is_writable($path)) {
-            throw new RequestException("Target directory is not writable, I can't upload file");
+            throw new HttpException("Target directory is not writable, I can't upload file");
         }
 
         $path = rtrim($path, '/');

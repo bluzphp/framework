@@ -26,7 +26,7 @@ class FileUpload
      * __construct
      *
      * @param array $array The array of $_FILES
-     * @throws RequestException
+     * @throws HttpException
      */
     public function __construct($array = null)
     {
@@ -39,7 +39,7 @@ class FileUpload
                 ' bytes exceeds the maximum size of '. $displayMaxSize;
             // mute error message by user notice
             @trigger_error($error, E_USER_NOTICE);
-            throw new RequestException($error);
+            throw new HttpException($error);
         }
 
         $rawFiles = $array ? : $_FILES;

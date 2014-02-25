@@ -144,4 +144,3 @@ abstract class AbstractResponse
         return $this;
     }
 }
- 

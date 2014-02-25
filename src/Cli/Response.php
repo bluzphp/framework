@@ -66,4 +66,3 @@ class Response extends AbstractResponse
         }
     }
 }
- 

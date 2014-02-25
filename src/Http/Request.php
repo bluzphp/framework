@@ -171,6 +171,45 @@ class Request extends AbstractRequest
         return ($this->getServer('HTTPS') == 'on') ? self::SCHEME_HTTPS : self::SCHEME_HTTP;
     }
 
+    /**
+     * Is this a GET method request?
+     *
+     * @return bool
+     */
+    public function isGet()
+    {
+        return ($this->getMethod() === self::METHOD_GET);
+    }
+
+    /**
+     * Is this a POST method request?
+     *
+     * @return bool
+     */
+    public function isPost()
+    {
+        return ($this->getMethod() === self::METHOD_POST);
+    }
+
+    /**
+     * Is this a PUT method request?
+     *
+     * @return bool
+     */
+    public function isPut()
+    {
+        return ($this->getMethod() === self::METHOD_PUT);
+    }
+
+    /**
+     * Is this a DELETE method request?
+     *
+     * @return bool
+     */
+    public function isDelete()
+    {
+        return ($this->getMethod() === self::METHOD_DELETE);
+    }
 
     /**
      * Is the request a Javascript XMLHttpRequest?
@@ -246,45 +285,6 @@ class Request extends AbstractRequest
         return (isset($_GET[$key])) ? $_GET[$key] : $default;
     }
 
-    /**
-     * Is this a GET method request?
-     *
-     * @return bool
-     */
-    public function isGet()
-    {
-        return ($this->getMethod() === self::METHOD_GET);
-    }
-
-    /**
-     * Is this a POST method request?
-     *
-     * @return bool
-     */
-    public function isPost()
-    {
-        return ($this->getMethod() === self::METHOD_POST);
-    }
-
-    /**
-     * Is this a PUT method request?
-     *
-     * @return bool
-     */
-    public function isPut()
-    {
-        return ($this->getMethod() === self::METHOD_PUT);
-    }
-
-    /**
-     * Is this a DELETE method request?
-     *
-     * @return bool
-     */
-    public function isDelete()
-    {
-        return ($this->getMethod() === self::METHOD_DELETE);
-    }
 
     /**
      * Retrieve a member of the $_POST super global
@@ -397,7 +397,21 @@ class Request extends AbstractRequest
     }
 
     /**
-     * Get the request URI.
+     * Get the base URL.
+     *
+     * @return string
+     */
+    public function getBaseUrl()
+    {
+        if (null === $this->baseUrl) {
+            $this->setBaseUrl($this->detectBaseUrl());
+        }
+
+        return $this->baseUrl;
+    }
+
+    /**
+     * Get the request URI without baseUrl
      *
      * @return string
      */
@@ -415,19 +429,6 @@ class Request extends AbstractRequest
         return $this->cleanUri;
     }
 
-    /**
-     * Get the base URL.
-     *
-     * @return string
-     */
-    public function getBaseUrl()
-    {
-        if (null === $this->baseUrl) {
-            $this->setBaseUrl($this->detectBaseUrl());
-        }
-
-        return $this->baseUrl;
-    }
 
     /**
      * Get the client's IP address
@@ -458,7 +459,7 @@ class Request extends AbstractRequest
      *
      * @return string
      */
-    public function detectRequestUri()
+    protected function detectRequestUri()
     {
         $requestUri = null;
 
@@ -513,7 +514,7 @@ class Request extends AbstractRequest
      *
      * @return string
      */
-    public function detectBaseUrl()
+    protected function detectBaseUrl()
     {
         $filename = $this->getServer('SCRIPT_FILENAME', '');
         $scriptName = $this->getServer('SCRIPT_NAME');

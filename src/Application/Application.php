@@ -528,6 +528,7 @@ abstract class Application
     {
         if (!$this->router) {
             $this->router = new Router();
+            $this->router->process();
         }
         return $this->router;
     }
@@ -643,31 +644,56 @@ abstract class Application
     /**
      * process
      *
+     * - Why you don't use "X-" prefix?
+     * - Because it deprecated
+     * @link http://tools.ietf.org/html/rfc6648
+     *
      * @return mixed
      */
     public function process()
     {
         $this->log('app:process');
 
-        $this->getRequest();
+        // init request
+        $request = $this->getRequest();
 
-        $this->getRouter()
-            ->process();
+        // init router
+        $this->getRouter();
+
+        // init response
+        $response = $this->getResponse();
 
         // try to dispatch controller
         try {
             $dispatchResult = $this->dispatch(
-                $this->request->getModule(),
-                $this->request->getController(),
-                $this->request->getAllParams()
+                $request->getModule(),
+                $request->getController(),
+                $request->getAllParams()
             );
-            $this->getResponse()->setBody($dispatchResult);
+            $response->setBody($dispatchResult);
         } catch (RedirectException $e) {
-            $this->getResponse()->setException($e);
+            $response->setException($e);
+
+            if ($request->isXmlHttpRequest()) {
+                $response->setCode(204);
+                $response->setHeader('Bluz-Redirect', $e->getMessage());
+            } else {
+                $response->setCode($e->getCode());
+                $response->setHeader('Location', $e->getMessage());
+            }
         } catch (ReloadException $e) {
-            $this->getResponse()->setException($e);
+            $response->setException($e);
+
+            if ($request->isXmlHttpRequest()) {
+                $response->setCode(204);
+                $response->setHeader('Bluz-Reload', 'true');
+            } else {
+                $response->setCode($e->getCode());
+                $response->setHeader('Refresh', '15; url=' . $request->getRequestUri());
+            }
         } catch (\Exception $e) {
             $this->getResponse()->setException($e);
+
             $dispatchResult = $this->dispatch(
                 Router::ERROR_MODULE,
                 Router::ERROR_CONTROLLER,

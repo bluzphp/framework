@@ -34,27 +34,7 @@ class Response extends AbstractResponse
             header($key .': '. $value);
         }
 
-        /**
-         * - Why you don't use "X-" prefix?
-         * - Because it deprecated
-         * @link http://tools.ietf.org/html/rfc6648
-         */
-        if ($this->exception && $this->exception instanceof RedirectException) {
-            if (app()->getRequest()->isXmlHttpRequest()) {
-                header('Bluz-Redirect: ' . $this->exception->getMessage(), true, 204);
-            } else {
-                header('Location: ' . $this->exception->getMessage(), true, $this->exception->getCode());
-            }
-            return;
-        } elseif ($this->exception && $this->exception instanceof ReloadException) {
-            if (app()->getRequest()->isXmlHttpRequest()) {
-                header('Bluz-Reload: true', true, 204);
-            } else {
-                header('Refresh: 15; url=' . app()->getRequest()->getRequestUri());
-            }
-            return;
-        }
-
+        // TODO: this is application logic
         if (app()->isJson()) {
             // Setup headers
             // HTTP does not define any limit
@@ -68,7 +48,7 @@ class Response extends AbstractResponse
             }
 
             // response without content
-            if (false === $this->body) {
+            if (null === $this->body) {
                 return;
             }
 

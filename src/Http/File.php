@@ -9,6 +9,8 @@
  */
 namespace Bluz\Http;
 
+use Bluz\Request\RequestException;
+
 /**
  * HttpFile
  *
@@ -195,7 +197,7 @@ class File
     /**
      * move uploaded file to directory
      *
-     * @param $path
+     * @param string $path
      * @throws RequestException
      * @return string
      */

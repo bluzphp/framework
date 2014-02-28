@@ -9,6 +9,8 @@
  */
 namespace Bluz\Http;
 
+use Bluz\Request\RequestException;
+
 /**
  * HttpFileUpload
  *

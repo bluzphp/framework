@@ -7,12 +7,12 @@
 /**
  * @namespace
  */
-namespace Bluz\Http;
+namespace Bluz\Request;
 
 use Bluz\Common\Exception;
 
 /**
- * Exception
+ * RequestException
  *
  * @category Bluz
  * @package  Request
@@ -20,6 +20,6 @@ use Bluz\Common\Exception;
  * @author   Anton Shevchuk
  * @created  11.02.13 11:26
  */
-class HttpException extends Exception
+class RequestException extends Exception
 {
 }

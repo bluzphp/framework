@@ -30,7 +30,15 @@ abstract class AbstractResponse
      */
     protected $code = 200;
 
+    /**
+     * @var array
+     */
     protected $headers = array();
+
+    /**
+     * Result can be View|object|function
+     * @var mixed
+     */
     protected $body;
 
     /**
@@ -74,6 +82,16 @@ abstract class AbstractResponse
     }
 
     /**
+     * getCode
+     *
+     * @return int
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
      * setup headers
      *
      * @param array $headers
@@ -83,6 +101,16 @@ abstract class AbstractResponse
     {
         $this->headers = $headers;
         return $this;
+    }
+
+    /**
+     * get headers
+     *
+     * @return array
+     */
+    public function getHeaders()
+    {
+        return $this->headers;
     }
 
     /**
@@ -110,6 +138,21 @@ abstract class AbstractResponse
     }
 
     /**
+     * get header
+     *
+     * @param string $key header name
+     * @return string
+     */
+    public function getHeader($key)
+    {
+        if (isset($this->headers[$key])) {
+            return $this->headers[$key];
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * setBody
      *
      * @param mixed $body
@@ -119,6 +162,16 @@ abstract class AbstractResponse
     {
         $this->body = $body;
         return $this;
+    }
+
+    /**
+     * getBody
+     *
+     * @return mixed
+     */
+    public function getBody()
+    {
+        return $this->body;
     }
 
     /**
@@ -140,7 +193,19 @@ abstract class AbstractResponse
      */
     public function setException($exception)
     {
+        $this->clearHeaders();
+        $this->clearBody();
         $this->exception = $exception;
         return $this;
+    }
+
+    /**
+     * getException
+     *
+     * @return \Exception|null
+     */
+    public function getException()
+    {
+        return $this->exception;
     }
 }

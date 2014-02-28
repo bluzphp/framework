@@ -9,6 +9,8 @@
  */
 namespace Bluz\Http;
 
+use Bluz\Request\RequestException;
+
 /**
  * HttpFileUpload
  *
@@ -26,7 +28,7 @@ class FileUpload
      * __construct
      *
      * @param array $array The array of $_FILES
-     * @throws HttpException
+     * @throws RequestException
      */
     public function __construct($array = null)
     {
@@ -39,7 +41,7 @@ class FileUpload
                 ' bytes exceeds the maximum size of '. $displayMaxSize;
             // mute error message by user notice
             @trigger_error($error, E_USER_NOTICE);
-            throw new HttpException($error);
+            throw new RequestException($error);
         }
 
         $rawFiles = $array ? : $_FILES;

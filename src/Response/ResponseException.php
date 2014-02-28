@@ -7,19 +7,19 @@
 /**
  * @namespace
  */
-namespace Bluz\Cli;
+namespace Bluz\Response;
 
 use Bluz\Common\Exception;
 
 /**
- * Exception
+ * ResponseException
  *
  * @category Bluz
- * @package  Request
+ * @package  Response
  *
  * @author   Anton Shevchuk
- * @created  11.02.13 11:26
+ * @created  28.02.14 10:50
  */
-class CliException extends Exception
+class ResponseException extends Exception
 {
 }

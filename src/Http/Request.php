@@ -10,6 +10,7 @@
 namespace Bluz\Http;
 
 use Bluz\Request\AbstractRequest;
+use Bluz\Request\RequestException;
 
 /**
  * HTTP Request

@@ -55,7 +55,7 @@ trait Options
      *  - options can be null
      *
      * @param array $options
-     * @return void
+     * @return self
      */
     public function setOptions($options)
     {
@@ -75,6 +75,8 @@ trait Options
             // initialization
             $this->initOptions();
         }
+
+        return $this;
     }
 
     /**

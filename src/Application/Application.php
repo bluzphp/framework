@@ -12,7 +12,6 @@ namespace Bluz\Application;
 use Bluz\Acl\Acl;
 use Bluz\Acl\AclException;
 use Bluz\Application\Exception\ApplicationException;
-use Bluz\Application\Exception\NotFoundException;
 use Bluz\Application\Exception\RedirectException;
 use Bluz\Application\Exception\ReloadException;
 use Bluz\Auth\Auth;

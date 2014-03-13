@@ -692,7 +692,6 @@ abstract class Application
                 $response->setHeader('Refresh', '15; url=' . $request->getRequestUri());
             }
         } catch (\Exception $e) {
-            $this->getResponse()->setException($e);
 
             $dispatchResult = $this->dispatch(
                 Router::ERROR_MODULE,
@@ -702,7 +701,10 @@ abstract class Application
                     'message' => $e->getMessage()
                 )
             );
-            $this->getResponse()->setBody($dispatchResult);
+            $this->getResponse()
+                ->setException($e)
+                ->setCode($e->getCode())
+                ->setBody($dispatchResult);
         }
 
         return $this->getResponse();

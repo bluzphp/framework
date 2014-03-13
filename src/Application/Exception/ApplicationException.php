@@ -22,4 +22,5 @@ use Bluz\Common\Exception;
  */
 class ApplicationException extends Exception
 {
+    protected $code = 500;
 }

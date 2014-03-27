@@ -520,6 +520,18 @@ abstract class Application
     }
 
     /**
+     * setResponse
+     *
+     * @param Response\AbstractResponse $response
+     * @return Application
+     */
+    public function setResponse($response)
+    {
+        $this->response = $response;
+        return $this;
+    }
+
+    /**
      * getRouter
      *
      * @return Router

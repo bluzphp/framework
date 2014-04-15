@@ -14,8 +14,7 @@ use Bluz\Common\Exception;
 /**
  * Exception
  *
- * @category Bluz
- * @package  Auth
+ * @package Bluz\Auth
  *
  * @author   Anton Shevchuk
  * @created  12.07.11 16:46

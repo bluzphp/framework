@@ -61,7 +61,9 @@ class Response extends AbstractResponse
             // send content length
             header('Content-Length: '.strlen($this->body));
 
-            ob_clean();
+            if (ob_get_length()) {
+                ob_end_clean();
+            }
             flush();
         }
     }

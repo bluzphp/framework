@@ -719,6 +719,12 @@ abstract class Application
                     'message' => $e->getMessage()
                 )
             );
+
+            if ($this->hasLayout()) {
+                $this->getLayout()->setContent($dispatchResult);
+                $dispatchResult = $this->getLayout();
+            }
+
             $this->getResponse()
                 ->setException($e)
                 ->setCode($e->getCode())

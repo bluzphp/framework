@@ -28,16 +28,6 @@ class Layout extends View
     protected $content;
 
     /**
-     * @param      $name
-     * @param null $target
-     * @return \Bluz\EventManager\EventManager
-     */
-    public function trigger($name, $target = null)
-    {
-        return app()->getEventManager()->trigger('layout:' . $name, $target, ['layout' => $this]);
-    }
-
-    /**
      * Set content
      *
      * @param mixed $content
@@ -53,7 +43,6 @@ class Layout extends View
         } catch (\Exception $e) {
             $this->content = $e->getMessage();
         }
-        $this->content = $this->trigger('content', $this->content);
         return $this;
     }
 

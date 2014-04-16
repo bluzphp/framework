@@ -65,12 +65,6 @@ abstract class AbstractResponse
      */
     public function send()
     {
-        // Prepare body
-        // Can be Closure or any object with magic method '__invoke'
-        if (is_callable($this->body)) {
-            $this->body = call_user_func($this->body);
-        }
-
         $this->sendHeaders();
         $this->sendBody();
     }

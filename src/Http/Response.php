@@ -61,7 +61,9 @@ class Response extends AbstractResponse
             // send content length
             header('Content-Length: '.strlen($this->body));
 
-            ob_clean();
+            if (ob_get_length()) {
+                ob_end_clean();
+            }
             flush();
         }
     }
@@ -73,17 +75,6 @@ class Response extends AbstractResponse
      */
     protected function sendBody()
     {
-        if (app()->hasLayout()) {
-            app()->getLayout()->setContent($this->body);
-            echo app()->getLayout();
-        } else {
-            /**
-             * Can be Closure or any object with magic method '__invoke'
-             */
-            if (is_callable($this->body)) {
-                $this->body = call_user_func($this->body);
-            }
-            echo $this->body;
-        }
+        echo $this->body;
     }
 }

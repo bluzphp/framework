@@ -10,7 +10,8 @@
 namespace Bluz\Auth;
 
 /**
- *
+ * Interface EntityInterface
+ * @package Bluz\Auth
  */
 interface EntityInterface
 {

@@ -15,7 +15,7 @@ return
     /**
      * get current user
      *
-     * @return \Bluz\Auth\AbstractEntity|null
+     * @return \Bluz\Auth\AbstractRowEntity|null
      */
     function () {
         /** @var Application $this */

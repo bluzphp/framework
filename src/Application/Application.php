@@ -682,6 +682,12 @@ abstract class Application
                 $request->getController(),
                 $request->getAllParams()
             );
+
+            if ($this->hasLayout()) {
+                $this->getLayout()->setContent($dispatchResult);
+                $dispatchResult = $this->getLayout();
+            }
+
             $response->setBody($dispatchResult);
         } catch (RedirectException $e) {
             $response->setException($e);

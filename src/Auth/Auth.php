@@ -16,8 +16,7 @@ use Bluz\Common\Options;
  *  - DB adapter
  *  - LDAP adapter
  *
- * @category Bluz
- * @package  Auth
+ * @package  Bluz\Auth
  *
  * @author   Anton Shevchuk
  * @created  11.07.11 19:10

@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -12,8 +14,7 @@ namespace Bluz\Application\Exception;
 /**
  * Exception
  *
- * @category Application
- * @package  Exception
+ * @package  Bluz\Application\Exception
  *
  * @author   Anton Shevchuk
  * @created  23.01.13 17:46
@@ -21,14 +22,13 @@ namespace Bluz\Application\Exception;
 class NotFoundException extends ApplicationException
 {
     /**
+     * Exception message
      * @var string
      */
     protected $message = "Page Not Found";
 
     /**
-     * Redirect HTTP code
-     * 301 Moved Permanently
-     * 302 Found
+     * Not Found HTTP code
      * @var int
      */
     protected $code = 404;

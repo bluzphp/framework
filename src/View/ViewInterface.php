@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -12,8 +14,7 @@ namespace Bluz\View;
 /**
  * ViewInterface
  *
- * @category Bluz
- * @package  View
+ * @package  Bluz\View
  *
  * @author   Anton Shevchuk
  * @created  19.02.13 15:25
@@ -21,11 +22,10 @@ namespace Bluz\View;
 interface ViewInterface
 {
     /**
-     * setup path to templates
+     * Setup path to templates
      *
-     * <code>
-     * $view->setPath('/modules/users/views');
-     * </code>
+     * Example of usage
+     *     $view->setPath('/modules/users/views');
      *
      * @param string $path
      * @return ViewInterface
@@ -33,11 +33,10 @@ interface ViewInterface
     public function setPath($path);
 
     /**
-     * setup template
+     * Setup template
      *
-     * <code>
-     * $view->setTemplate('index.phtml');
-     * </code>
+     * Example of usage
+     *     $view->setTemplate('index.phtml');
      *
      * @param string $file
      * @return ViewInterface
@@ -45,7 +44,7 @@ interface ViewInterface
     public function setTemplate($file);
 
     /**
-     * merge data from array
+     * Merge data from array
      *
      * @param array $data
      * @return ViewInterface
@@ -53,7 +52,7 @@ interface ViewInterface
     public function setData($data = array());
 
     /**
-     * get data as array
+     * Get data as array
      *
      * @return array
      */

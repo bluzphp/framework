@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -12,8 +14,7 @@ namespace Bluz\Common;
 /**
  * It's just null class
  *
- * @category Bluz
- * @package  Common
+ * @package  Bluz\Common
  *
  * @author   Anton Shevchuk
  * @created  15.01.13 09:50

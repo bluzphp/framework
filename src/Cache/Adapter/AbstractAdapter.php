@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -15,17 +17,21 @@ use Bluz\Cache\CacheInterface;
 
 /**
  * Base class for all cache adapters within Bluz\Cache package
+ *
+ * @package Bluz\Cache\Adapter
  * @author murzik
  */
 abstract class AbstractAdapter implements CacheInterface
 {
     /**
+     * Cache settings
      * @var array
      */
     protected $settings = array();
 
     /**
      * Setup adapter settings
+     * @param array $settings setup adapter
      */
     public function __construct($settings = array())
     {
@@ -34,6 +40,10 @@ abstract class AbstractAdapter implements CacheInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @return mixed
+     * @throws \Bluz\Cache\InvalidArgumentException
      */
     public function get($id)
     {
@@ -43,6 +53,10 @@ abstract class AbstractAdapter implements CacheInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @return bool
+     * @throws \Bluz\Cache\InvalidArgumentException
      */
     public function contains($id)
     {
@@ -52,6 +66,12 @@ abstract class AbstractAdapter implements CacheInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @param mixed $data
+     * @param int $ttl
+     * @return bool
+     * @throws \Bluz\Cache\InvalidArgumentException
      */
     public function add($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
@@ -61,6 +81,12 @@ abstract class AbstractAdapter implements CacheInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @param mixed $data
+     * @param int $ttl
+     * @return bool
+     * @throws \Bluz\Cache\InvalidArgumentException
      */
     public function set($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
@@ -70,6 +96,10 @@ abstract class AbstractAdapter implements CacheInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @return mixed
+     * @throws \Bluz\Cache\InvalidArgumentException
      */
     public function delete($id)
     {
@@ -79,6 +109,8 @@ abstract class AbstractAdapter implements CacheInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return mixed
      */
     public function flush()
     {
@@ -109,6 +141,7 @@ abstract class AbstractAdapter implements CacheInterface
      * Must be implemented in particular cache driver implementation
      * Actual  work for \Bluz\Cache\CacheInterface::flush() goes here
      * @see \Bluz\Cache\CacheInterface::flush()
+     * @return mixed
      */
     abstract protected function doFlush();
 
@@ -116,6 +149,8 @@ abstract class AbstractAdapter implements CacheInterface
      * Must be implemented in particular cache driver implementation
      * Actual  work for \Bluz\Cache\CacheInterface::get() goes here
      * @see \Bluz\Cache\CacheInterface::get()
+     * @param string $id
+     * @return mixed
      */
     abstract protected function doGet($id);
 
@@ -123,6 +158,10 @@ abstract class AbstractAdapter implements CacheInterface
      * Must be implemented in particular cache driver implementation
      * Actual  work for \Bluz\Cache\CacheInterface::add() goes here
      * @see \Bluz\Cache\CacheInterface::add()
+     * @param string $id
+     * @param mixed $data
+     * @param int $ttl
+     * @return mixed
      */
     abstract protected function doAdd($id, $data, $ttl = Cache::TTL_NO_EXPIRY);
 
@@ -130,6 +169,10 @@ abstract class AbstractAdapter implements CacheInterface
      * Must be implemented in particular cache driver implementation
      * Actual  work for \Bluz\Cache\CacheInterface::set() goes here
      * @see \Bluz\Cache\CacheInterface::set()
+     * @param string $id
+     * @param mixed $data
+     * @param int $ttl
+     * @return mixed
      */
     abstract protected function doSet($id, $data, $ttl = Cache::TTL_NO_EXPIRY);
 
@@ -137,6 +180,8 @@ abstract class AbstractAdapter implements CacheInterface
      * Must be implemented in particular cache driver implementation
      * Actual  work for \Bluz\Cache\CacheInterface::delete() goes here
      * @see \Bluz\Cache\CacheInterface::delete()
+     * @param string $id
+     * @return mixed
      */
     abstract protected function doDelete($id);
 
@@ -144,6 +189,8 @@ abstract class AbstractAdapter implements CacheInterface
      * Must be implemented in particular cache driver implementation
      * Actual  work for \Bluz\Cache\CacheInterface::contains() goes here
      * @see Bluz\Cache\CacheInterface::contains()
+     * @param string $id
+     * @return mixed
      */
     abstract protected function doContains($id);
 }

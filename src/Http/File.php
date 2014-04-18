@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -14,8 +16,7 @@ use Bluz\Request\RequestException;
 /**
  * HttpFile
  *
- * @category Bluz
- * @package  Request
+ * @package  Bluz\Request
  *
  * @author   Anton Shevchuk
  * @created  07.02.13 15:18
@@ -35,18 +36,45 @@ class File
     const TYPE_VIDEO = 'video';
 
     /**
+     * Filename without extension
      * @var string
      */
     protected $name;
+    /**
+     * File extension
+     * @var string
+     */
     protected $ext;
+    /**
+     * File type
+     * @var string
+     */
     protected $type;
+    /**
+     * File mimetype
+     * @var string
+     */
     protected $mimetype;
+    /**
+     * Path to temporary file
+     * @var string
+     */
     protected $tmp;
+    /**
+     * Error status of upload
+     * @var int
+     */
     protected $error = UPLOAD_ERR_OK;
+    /**
+     * File size in bytes
+     * @var int
+     */
     protected $size = 0;
 
     /**
-     * __construct
+     * Construct of File
+     * @param array $data
+     * @throws \Bluz\Request\RequestException
      */
     public function __construct($data = array())
     {
@@ -78,7 +106,7 @@ class File
     }
 
     /**
-     * set filename (w/o extension)
+     * Set filename (w/o extension)
      *
      * @param string $name
      * @throws RequestException
@@ -94,7 +122,7 @@ class File
     }
 
     /**
-     * get original filename (w/o extension)
+     * Get original filename (w/o extension)
      *
      * @return string
      */
@@ -104,7 +132,7 @@ class File
     }
 
     /**
-     * get original filename (with extension)
+     * Get original filename (with extension)
      *
      * @return string
      */
@@ -114,7 +142,7 @@ class File
     }
 
     /**
-     * get file extension
+     * Get file extension
      *
      * @return string
      */
@@ -124,9 +152,17 @@ class File
     }
 
     /**
-     * return type of file, one of:
-     *   'application', 'audio', 'image', 'message',
-     *   'model', 'multipart', 'text', 'video'
+     * Return type of file
+     *
+     * One of
+     * - application
+     * - audio
+     * - image
+     * - message
+     * - model
+     * - multipart
+     * - text
+     * - video
      *
      * @return string
      */
@@ -136,7 +172,7 @@ class File
     }
 
     /**
-     * get mime type
+     * Get mime type
      *
      * @return string
      */
@@ -146,7 +182,7 @@ class File
     }
 
     /**
-     * getErrorCode
+     * Get error code
      *
      * @return integer
      */
@@ -156,9 +192,9 @@ class File
     }
 
     /**
-     * get size
+     * Get size
      *
-     * @param string $exp
+     * @param string $exp b|kb|mb|gb|tb
      * @return integer
      */
     public function getSize($exp = 'byte')
@@ -195,7 +231,7 @@ class File
     }
 
     /**
-     * move uploaded file to directory
+     * Move uploaded file to directory
      *
      * @param string $path
      * @throws RequestException

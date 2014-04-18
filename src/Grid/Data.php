@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -12,8 +14,7 @@ namespace Bluz\Grid;
 /**
  * Data
  *
- * @category Bluz
- * @package  Grid
+ * @package  Bluz\Grid
  *
  * @author   AntonShevchuk
  * @created  16.08.12 9:55

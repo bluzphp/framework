@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -12,9 +14,7 @@ namespace Bluz\Auth;
 use Bluz\Common\Options;
 
 /**
- * Auth support
- *  - DB adapter
- *  - LDAP adapter
+ * Auth class
  *
  * @package  Bluz\Auth
  *

@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -15,8 +17,7 @@ use Bluz\Request\RequestException;
 /**
  * CLI Request
  *
- * @category Bluz
- * @package  Cli
+ * @package  Bluz\Cli
  *
  * @author   Anton Shevchuk
  * @created  06.07.11 16:59

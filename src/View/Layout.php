@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -12,8 +14,7 @@ namespace Bluz\View;
 /**
  * View
  *
- * @category Bluz
- * @package  View
+ * @package  Bluz\View
  *
  * @author   Anton Shevchuk
  * @created  08.07.11 11:49
@@ -23,6 +24,7 @@ namespace Bluz\View;
 class Layout extends View
 {
     /**
+     * Content container, usually is instance of View
      * @var mixed
      */
     protected $content;

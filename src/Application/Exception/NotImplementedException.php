@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -12,8 +14,7 @@ namespace Bluz\Application\Exception;
 /**
  * Exception
  *
- * @category Bluz
- * @package  Rest
+ * @package  Bluz\Application\Exception
  *
  * @author   Anton Shevchuk
  * @created  13.08.13 13:09
@@ -21,6 +22,7 @@ namespace Bluz\Application\Exception;
 class NotImplementedException extends ApplicationException
 {
     /**
+     * Exception message
      * @var string
      */
     protected $message = "Not Implemented";

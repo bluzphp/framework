@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -12,8 +14,7 @@ namespace Bluz\EventManager;
 /**
  * Representation of an event
  *
- * @category Bluz
- * @package  EventManager
+ * @package  Bluz\EventManager
  */
 class Event
 {
@@ -40,7 +41,6 @@ class Event
      * @param  string $name Event name
      * @param  string|object $target
      * @param  array|object $params
-     * @return \Bluz\EventManager\Event
      */
     public function __construct($name, $target = null, $params = null)
     {

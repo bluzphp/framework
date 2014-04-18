@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -16,8 +18,7 @@ use Bluz\Translator\Translator;
 /**
  * Crud
  *
- * @category Bluz
- * @package  Crud
+ * @package  Bluz\Crud
  *
  * @author   Anton Shevchuk
  * @created  23.09.13 15:33

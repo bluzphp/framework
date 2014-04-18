@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -18,8 +20,7 @@ use Bluz\Http\Request;
 /**
  * Crud
  *
- * @category Bluz
- * @package  Controller
+ * @package  Bluz\Controller
  *
  * @author   Anton Shevchuk
  * @created  15.08.12 15:37
@@ -27,6 +28,8 @@ use Bluz\Http\Request;
 class Crud extends AbstractController
 {
     /**
+     * {@inheritdoc}
+     *
      * @throws NotImplementedException
      * @throws NotFoundException
      * @throws BadRequestException
@@ -121,6 +124,11 @@ class Crud extends AbstractController
 
     /**
      * {@inheritdoc}
+     *
+     * @param array $data
+     * @return mixed
+     * @throws \Bluz\Application\Exception\ApplicationException
+     * @throws \Bluz\Application\Exception\NotImplementedException
      */
     public function createOne($data)
     {
@@ -133,6 +141,12 @@ class Crud extends AbstractController
 
     /**
      * {@inheritdoc}
+     *
+     * @param mixed $id
+     * @param array $data
+     * @return int
+     * @throws \Bluz\Application\Exception\ApplicationException
+     * @throws \Bluz\Application\Exception\NotImplementedException
      */
     public function updateOne($id, $data)
     {
@@ -145,6 +159,11 @@ class Crud extends AbstractController
 
     /**
      * {@inheritdoc}
+     *
+     * @param mixed $primary
+     * @return int
+     * @throws \Bluz\Application\Exception\ApplicationException
+     * @throws \Bluz\Application\Exception\NotImplementedException
      */
     public function deleteOne($primary)
     {

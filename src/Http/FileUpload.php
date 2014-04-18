@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -14,14 +16,16 @@ use Bluz\Request\RequestException;
 /**
  * HttpFileUpload
  *
- * @category Bluz
- * @package  Request
+ * @package  Bluz\Request
  *
  * @author   Anton Shevchuk
  * @created  07.02.13 13:20
  */
 class FileUpload
 {
+    /**
+     * @var array of Files
+     */
     protected $files = array();
 
     /**

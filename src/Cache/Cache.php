@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -9,22 +11,24 @@
  */
 namespace Bluz\Cache;
 
-/**
- * Cache Frontend for Bluz\Cache system
- *
- *  - 'enabled' => Boolean,optional, true by default
- *  - 'settings' =>
- *     - 'cacheAdapter' => Settings for setup Instance of Bluz\Cache\CacheInterface.
- *                    Required if option 'enabled' set to true
- *     - 'tagAdapter' => Settings fir setup Instance of Bluz\Cache\CacheInterface. Optional.
- *                    If it is not set, 'cacheAdapter' instance will be used as a tag adapter
- *
- * @author murzik
- */
 use Bluz\Cache\Adapter;
 use Bluz\Common\Options;
 use Bluz\Config\ConfigException;
 
+/**
+ * Cache Frontend for Bluz\Cache system
+ *
+ * Configuration
+ *     'enabled' => Boolean,optional, true by default
+ *     'settings' =>
+ *         'cacheAdapter' => Settings for setup Instance of Bluz\Cache\CacheInterface.
+ *                    Required if option 'enabled' set to true
+ *         'tagAdapter' => Settings fir setup Instance of Bluz\Cache\CacheInterface. Optional.
+ *                    If it is not set, 'cacheAdapter' instance will be used as a tag adapter
+ *
+ * @package Bluz\Cache
+ * @author murzik
+ */
 class Cache implements CacheInterface, TagableInterface
 {
     use Options;
@@ -35,22 +39,25 @@ class Cache implements CacheInterface, TagableInterface
     const TTL_NO_EXPIRY = 0;
 
     /**
+     * Instance of cache adapter
      * @var Adapter\AbstractAdapter
      */
     protected $cacheAdapter = null;
 
     /**
+     * Instance of tag adapter
      * @var Adapter\AbstractAdapter
      */
     protected $tagAdapter = null;
 
     /**
+     * Prefix for tags
      * @var string
      */
     protected $tagPrefix = '@:';
 
     /**
-     * check Cache configuration
+     * Check Cache configuration
      *
      * @throws \Bluz\Config\ConfigException
      * @return boolean
@@ -69,6 +76,7 @@ class Cache implements CacheInterface, TagableInterface
     }
 
     /**
+     * Setup cache adapter
      * @param CacheInterface $adapter
      */
     public function setCacheAdapter(CacheInterface $adapter)
@@ -77,6 +85,7 @@ class Cache implements CacheInterface, TagableInterface
     }
 
     /**
+     * Setup tag adapter
      * @param CacheInterface $adapter
      */
     public function setTagAdapter(CacheInterface $adapter)
@@ -86,6 +95,9 @@ class Cache implements CacheInterface, TagableInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @return mixed
      */
     public function get($id)
     {
@@ -94,6 +106,11 @@ class Cache implements CacheInterface, TagableInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @param mixed $data
+     * @param int $ttl
+     * @return bool
      */
     public function add($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
@@ -102,6 +119,11 @@ class Cache implements CacheInterface, TagableInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @param mixed $data
+     * @param int $ttl
+     * @return bool
      */
     public function set($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
@@ -110,6 +132,9 @@ class Cache implements CacheInterface, TagableInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @return bool
      */
     public function contains($id)
     {
@@ -118,6 +143,9 @@ class Cache implements CacheInterface, TagableInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @return mixed
      */
     public function delete($id)
     {
@@ -126,6 +154,8 @@ class Cache implements CacheInterface, TagableInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return mixed
      */
     public function flush()
     {
@@ -133,7 +163,7 @@ class Cache implements CacheInterface, TagableInterface
     }
 
     /**
-     * Get underlying cache Adapter
+     * Get underlying cache adapter
      * @return Adapter\AbstractAdapter
      */
     public function getAdapter()
@@ -146,7 +176,7 @@ class Cache implements CacheInterface, TagableInterface
     }
 
     /**
-     * Get underlying cache TagAdapter
+     * Get underlying tag adapter
      * @throws CacheException
      * @return Adapter\AbstractAdapter
      */
@@ -166,7 +196,7 @@ class Cache implements CacheInterface, TagableInterface
     }
 
     /**
-     * initAdapter
+     * Init adapter
      *
      * @param mixed $settings
      * @throws CacheException
@@ -193,6 +223,11 @@ class Cache implements CacheInterface, TagableInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @param string $tag
+     * @return bool
+     * @throws CacheException
      */
     public function addTag($id, $tag)
     {
@@ -211,6 +246,10 @@ class Cache implements CacheInterface, TagableInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $tag
+     * @return bool
+     * @throws CacheException
      */
     public function deleteByTag($tag)
     {

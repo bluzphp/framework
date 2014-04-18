@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -15,8 +17,7 @@ use Bluz\Request\RequestException;
 /**
  * HTTP Request
  *
- * @category Bluz
- * @package  Http
+ * @package  Bluz\Http
  *
  * @author   Anton Shevchuk
  * @created  06.07.11 16:59
@@ -43,6 +44,7 @@ class Request extends AbstractRequest
     const SCHEME_HTTPS = 'https';
 
     /**
+     * File upload instance
      * @var FileUpload
      */
     protected $fileUpload;
@@ -76,7 +78,7 @@ class Request extends AbstractRequest
      * Access values contained in the superglobals as public members
      * Order of precedence: 1. GET, 2. POST, 3. COOKIE, 4. SERVER, 5. ENV
      *
-     * @see http://msdn.microsoft.com/en-us/library/system.web.httprequest.item.aspx
+     * @link http://msdn.microsoft.com/en-us/library/system.web.httprequest.item.aspx
      * @param string $key
      * @return mixed
      */

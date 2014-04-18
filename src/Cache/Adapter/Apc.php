@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -14,12 +16,17 @@ use Bluz\Cache\CacheException;
 
 /**
  * APC cache adapter
+ *
+ * @package Bluz\Cache\Adapter
  * @author murzik
  */
 class Apc extends AbstractAdapter
 {
     /**
-     * Check extension
+     * Check extension inside
+     *
+     * @param array $settings
+     * @throws \Bluz\Cache\CacheException
      */
     public function __construct($settings = array())
     {
@@ -32,6 +39,9 @@ class Apc extends AbstractAdapter
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @return mixed
      */
     protected function doGet($id)
     {
@@ -40,6 +50,11 @@ class Apc extends AbstractAdapter
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @param mixed $data
+     * @param int $ttl
+     * @return bool|mixed
      */
     protected function doAdd($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
@@ -48,6 +63,11 @@ class Apc extends AbstractAdapter
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @param mixed $data
+     * @param int $ttl
+     * @return array|bool|mixed
      */
     protected function doSet($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
@@ -56,6 +76,9 @@ class Apc extends AbstractAdapter
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @return bool|mixed|\string[]
      */
     protected function doContains($id)
     {
@@ -64,6 +87,9 @@ class Apc extends AbstractAdapter
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @return bool|mixed|\string[]
      */
     protected function doDelete($id)
     {
@@ -72,6 +98,8 @@ class Apc extends AbstractAdapter
 
     /**
      * {@inheritdoc}
+     *
+     * @return bool|mixed
      */
     protected function doFlush()
     {

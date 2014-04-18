@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -14,8 +16,7 @@ use Bluz\Grid;
 /**
  * Array Source Adapter for Grid package
  *
- * @category Bluz
- * @package  Grid
+ * @package  Bluz\Grid
  *
  * @author   Anton Shevchuk
  * @created  27.08.12 10:11

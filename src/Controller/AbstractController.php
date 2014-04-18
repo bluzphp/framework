@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -16,8 +18,7 @@ use Bluz\Http\Request;
 /**
  * AbstractController
  *
- * @category Bluz
- * @package  Controller
+ * @package  Bluz\Controller
  *
  * @author   Anton Shevchuk
  * @created  02.10.13 13:52
@@ -49,6 +50,7 @@ abstract class AbstractController
     protected $data = array();
 
     /**
+     * Instance of CRUD
      * @var AbstractCrud
      */
     protected $crud;
@@ -75,6 +77,8 @@ abstract class AbstractController
     }
 
     /**
+     * Controller should be executable
+     *
      * @return mixed
      */
     abstract public function __invoke();

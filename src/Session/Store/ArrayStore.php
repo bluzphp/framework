@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -12,8 +14,7 @@ namespace Bluz\Session\Store;
 /**
  * Stub
  *
- * @category Bluz
- * @package  Session
+ * @package  Bluz\Session
  *
  * @author   Anton Shevchuk
  * @created  26.01.12 13:18
@@ -21,12 +22,13 @@ namespace Bluz\Session\Store;
 class ArrayStore extends AbstractStore
 {
     /**
+     * Session store in memory
      * @var array
      */
     protected $store = array();
 
     /**
-     * start
+     * Start session
      *
      * @return bool
      */
@@ -37,7 +39,7 @@ class ArrayStore extends AbstractStore
     }
 
     /**
-     * __set
+     * {@inheritdoc}
      *
      * @param string $key
      * @param mixed $value
@@ -49,7 +51,7 @@ class ArrayStore extends AbstractStore
     }
 
     /**
-     * __get
+     * {@inheritdoc}
      *
      * @param string $key
      * @return mixed|null
@@ -59,9 +61,8 @@ class ArrayStore extends AbstractStore
         return isset($this->store[$this->namespace][$key]) ? $this->store[$this->namespace][$key] : null;
     }
 
-
     /**
-     * __isset
+     * {@inheritdoc}
      *
      * @param string $key
      * @return boolean
@@ -72,7 +73,7 @@ class ArrayStore extends AbstractStore
     }
 
     /**
-     * __unset
+     * {@inheritdoc}
      *
      * @param string $key
      * @return void
@@ -83,7 +84,7 @@ class ArrayStore extends AbstractStore
     }
 
     /**
-     * destroy
+     * {@inheritdoc}
      *
      * @return bool
      */

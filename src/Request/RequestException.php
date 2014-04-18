@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -14,8 +16,7 @@ use Bluz\Common\Exception;
 /**
  * RequestException
  *
- * @category Bluz
- * @package  Request
+ * @package  Bluz\Request
  *
  * @author   Anton Shevchuk
  * @created  11.02.13 11:26

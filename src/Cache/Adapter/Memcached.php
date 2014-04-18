@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -13,11 +15,13 @@ use Bluz\Cache\Cache;
 use Bluz\Cache\CacheException;
 
 /**
- *
+ * Class Memcached
+ * @package Bluz\Cache\Adapter
  */
 class Memcached extends AbstractAdapter
 {
     /**
+     * Instance of memcached
      * @var \Memcached
      */
     protected $memcached = null;
@@ -49,7 +53,7 @@ class Memcached extends AbstractAdapter
     }
 
     /**
-     * getHandler
+     * Get Mamcached Handler
      *
      * @return \Memcached
      */
@@ -69,6 +73,9 @@ class Memcached extends AbstractAdapter
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @return mixed
      */
     protected function doGet($id)
     {
@@ -77,6 +84,11 @@ class Memcached extends AbstractAdapter
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @param mixed $data
+     * @param int $ttl
+     * @return bool|mixed
      */
     protected function doAdd($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
@@ -85,6 +97,11 @@ class Memcached extends AbstractAdapter
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @param mixed $data
+     * @param int $ttl
+     * @return bool|mixed
      */
     protected function doSet($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
@@ -93,6 +110,9 @@ class Memcached extends AbstractAdapter
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @return bool|mixed
      */
     protected function doContains($id)
     {
@@ -102,6 +122,9 @@ class Memcached extends AbstractAdapter
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @return bool|mixed
      */
     protected function doDelete($id)
     {
@@ -110,6 +133,8 @@ class Memcached extends AbstractAdapter
 
     /**
      * {@inheritdoc}
+     *
+     * @return bool|mixed
      */
     protected function doFlush()
     {

@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -16,60 +18,18 @@ use Bluz\Db\Exception\DbException;
 /**
  * PDO wrapper
  *
- * @category Bluz
- * @package  Db
- *
- * @link https://github.com/AntonShevchuk/Bluz/wiki/Db
- *
- * <pre>
- * <code>
- * // init settings, not connect!
- * $db->setConnect(array(
- *     'type' => 'mysql',
- *     'host' => 'localhost',
- *     'name' => 'db name',
- *     'user' => 'root',
- *     'pass' => ''
- * ));
- *
- * // quote variable
- * $db->quote($id)
- *
- * // query
- * $db->query("SET NAMES 'utf8'");
- *
- * // get one
- * $db->fetchOne("SELECT COUNT(*) FROM users");
- *
- * // get row
- * $db->fetchRow("SELECT * FROM users WHERE id = ". $db->quote($id));
- * $db->fetchRow("SELECT * FROM users WHERE id = ?", array($id));
- * $db->fetchRow("SELECT * FROM users WHERE id = :id", array(':id'=>$id));
- *
- * // get array
- * $db->fetchAll("SELECT * FROM users WHERE ip = ?", array($ip));
- *
- * // get pairs
- * $pairs = $db->fetchPairs("SELECT ip, COUNT(id) FROM users GROUP BY ip", array());
- *
- * // get object
- * // .. to stdClass
- * $stdClass = $db->fetchObject('SELECT * FROM some_table WHERE id = ?', array($id));
- * // .. to new Some object
- * $someClass = $db->fetchObject('SELECT * FROM some_table WHERE id = ?', array($id), 'Some');
- * // .. to exists instance of Some object
- * $someClass = $db->fetchObject('SELECT * FROM some_table WHERE id = ?', array($id), $someClass);
- * </code>
- * </pre>
+ * @package  Bluz\Db
  *
  * @author   Anton Shevchuk
  * @created  07.07.11 15:36
+ * @link     https://github.com/AntonShevchuk/Bluz/wiki/Db
  */
 class Db
 {
     use Options;
 
     /**
+     * PDO connection settings
      * @link http://php.net/manual/en/pdo.construct.php
      * @var array
      */
@@ -83,6 +43,7 @@ class Db
     );
 
     /**
+     * PDO connection flags
      * @link http://php.net/manual/en/pdo.setattribute.php
      * @var array
      */
@@ -91,14 +52,10 @@ class Db
     );
 
     /**
+     * PDO instance
      * @var \PDO
      */
     protected $dbh;
-
-    /**
-     * @var array
-     */
-    protected $queries;
 
     /**
      * Himself instance
@@ -137,7 +94,17 @@ class Db
     }
 
     /**
-     * setConnect
+     * Setup connection
+     *
+     * Just init
+     *
+     *     $db->setConnect(array(
+     *         'type' => 'mysql',
+     *         'host' => 'localhost',
+     *         'name' => 'db name',
+     *         'user' => 'root',
+     *         'pass' => ''
+     *     ));
      *
      * @param array $connect options
      * @throws DbException
@@ -169,7 +136,7 @@ class Db
     }
 
     /**
-     * connect to Db
+     * Connect to Db
      *
      * @throws DbException
      * @return Db
@@ -232,6 +199,9 @@ class Db
     /**
      * Quotes a string for use in a query
      *
+     * Example of usage
+     *     $db->quote($_GET['id'])
+     *
      * @param string $value
      * @return string
      */
@@ -255,6 +225,9 @@ class Db
 
     /**
      * Execute SQL query
+     *
+     * Example of usage
+     *     $db->query("SET NAMES 'utf8'");
      *
      * @param string $sql <p>
      *  "UPDATE users SET name = :name WHERE id = :id"
@@ -337,6 +310,9 @@ class Db
     /**
      * Return first field from first element from the result set
      *
+     * Example of usage
+     *     $db->fetchOne("SELECT COUNT(*) FROM users");
+     *
      * @param string $sql <p>
      *  "SELECT id FROM users WHERE name = :name AND pass = :pass"
      *  </p>
@@ -358,13 +334,20 @@ class Db
     /**
      * Returns an array containing first row from the result set
      *
+     * Example of usage
+     *     $db->fetchRow("SELECT name, email FROM users WHERE id = ". $db->quote($id));
+     *     $db->fetchRow("SELECT name, email FROM users WHERE id = ?", array($id));
+     *     $db->fetchRow("SELECT name, email FROM users WHERE id = :id", array(':id'=>$id));
+     *
      * @param string $sql <p>
      *  "SELECT * FROM users WHERE name = :name AND pass = :pass"
      *  </p>
      * @param array $params <p>
      *  array (':name' => 'John', ':pass' => '123456')
      * </p>
-     * @return array
+     * @return array <pre>
+     *  array ('name' => 'John', 'email' => 'john@smith.com')
+     * </pre>
      */
     public function fetchRow($sql, $params = array())
     {
@@ -378,6 +361,9 @@ class Db
 
     /**
      * Returns an array containing all of the result set rows
+     *
+     * Example of usage
+     *     $db->fetchAll("SELECT * FROM users WHERE ip = ?", array('192.168.1.1'));
      *
      * @param string $sql <p>
      *  "SELECT * FROM users WHERE ip = :ip"
@@ -420,7 +406,9 @@ class Db
 
     /**
      * Returns an array containing all of the result set rows
+     *
      * Group by first column
+     *     $db->fetchPairs("SELECT ip, COUNT(id) FROM users GROUP BY ip", array());
      *
      * @param string $sql <p>
      *  "SELECT ip, id FROM users"
@@ -440,6 +428,7 @@ class Db
 
     /**
      * Returns an array containing all of the result set rows
+     *
      * Group by first column
      *
      * @param string $sql <p>
@@ -481,6 +470,13 @@ class Db
 
     /**
      * Returns an object containing first row from the result set
+     *
+     * Fetch object to stdClass
+     *     $stdClass = $db->fetchObject('SELECT * FROM some_table WHERE id = ?', array($id));
+     * Fetch object to new Some object
+     *     $someClass = $db->fetchObject('SELECT * FROM some_table WHERE id = ?', array($id), 'Some');
+     * Fetch object to exists instance of Some object
+     *     $someClass = $db->fetchObject('SELECT * FROM some_table WHERE id = ?', array($id), $someClass);
      *
      * @param string $sql <p>
      *  "SELECT * FROM users WHERE name = :name AND pass = :pass"
@@ -544,6 +540,13 @@ class Db
 
     /**
      * Transaction wrapper
+     *
+     * Example of usage
+     *     $db->transaction(function() use ($db) {
+     *         $db->query("INSERT INTO `table` ...");
+     *         $db->query("UPDATE `table` ...");
+     *         $db->query("DELETE FROM `table` ...");
+     *     })
      *
      * @param \Closure $process
      * @throws DbException

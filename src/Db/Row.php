@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -17,29 +19,26 @@ use Bluz\Db\Exception\TableNotFoundException;
 /**
  * Row
  *
- * @category Bluz
- * @package  Db
- * @example
- * <code>
- * namespace Application\Users;
- * class Row extends \Bluz\Db\Row
- * {
- *    public function beforeInsert()
- *    {
- *        $this->created = gmdate('Y-m-d H:i:s');
- *    }
+ * Example of Users\Row
+ *     namespace Application\Users;
+ *     class Row extends \Bluz\Db\Row
+ *     {
+ *        public function beforeInsert()
+ *        {
+ *            $this->created = gmdate('Y-m-d H:i:s');
+ *        }
  *
- *    public function beforeUpdate()
- *    {
- *        $this->updated = gmdate('Y-m-d H:i:s');
- *    }
- * }
+ *        public function beforeUpdate()
+ *        {
+ *            $this->updated = gmdate('Y-m-d H:i:s');
+ *        }
+ *     }
  *
- * $userRow = new \Application\Users\Row();
- * $userRow -> login = 'username';
- * $userRow -> save();
- * </code>
+ *     $userRow = new \Application\Users\Row();
+ *     $userRow -> login = 'username';
+ *     $userRow -> save();
  *
+ * @package  Bluz\Db
  * @author   Anton Shevchuk
  * @created  07.07.11 19:47
  */
@@ -111,6 +110,7 @@ class Row implements \JsonSerializable, \ArrayAccess
 
     /**
      * Sleep
+     *
      * @return array
      */
     public function __sleep()
@@ -187,6 +187,8 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
+     * Insert row to Db
+     *
      * @throws Exception\DbException
      * @return mixed The primary key value(s), as an associative array if the
      *     key is compound, or a scalar if the key is single-column.
@@ -240,6 +242,8 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
+     * Update row
+     *
      * @return mixed The primary key value(s), as an associative array if the
      *     key is compound, or a scalar if the key is single-column.
      */
@@ -290,7 +294,7 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
-     * Deletes existing rows.
+     * Delete existing row
      *
      * @return int The number of rows deleted.
      */
@@ -429,7 +433,6 @@ class Row implements \JsonSerializable, \ArrayAccess
     /**
      * Returns the table object, or null if this is disconnected row
      *
-     *
      * @throws TableNotFoundException
      * @throws DbException
      * @return Table|null
@@ -468,7 +471,7 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
-     * getRelation
+     * Get relation
      *
      * @param string $modelName
      * @throws RelationNotFoundException
@@ -494,7 +497,7 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
-     * setRelation
+     * Set relation
      *
      * @param Row $row
      * @return Row
@@ -541,6 +544,8 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param mixed $offset
      * @param mixed $value
      * @throws \InvalidArgumentException
@@ -555,6 +560,8 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param mixed $offset
      * @return bool
      */
@@ -564,6 +571,8 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param mixed $offset
      */
     public function offsetUnset($offset)
@@ -572,6 +581,8 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param mixed $offset
      * @return mixed|string
      */

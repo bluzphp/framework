@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -12,7 +14,8 @@ namespace Bluz\Auth;
 use Bluz\Db\Row;
 
 /**
- *
+ * Class AbstractRowEntity
+ * @package Bluz\Auth
  */
 abstract class AbstractRowEntity extends Row implements EntityInterface
 {

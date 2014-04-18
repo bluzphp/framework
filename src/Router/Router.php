@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -14,8 +16,7 @@ use Bluz\Common\Options;
 /**
  * Router
  *
- * @category Bluz
- * @package  Router
+ * @package  Bluz\Router
  *
  * @author   Anton Shevchuk
  * @created  06.07.11 18:16
@@ -33,21 +34,26 @@ class Router
     const ERROR_CONTROLLER = 'index';
 
     /**
+     * Routers map
      * @var array
      */
     protected $routers = array();
 
     /**
+     * Reverse map
      * @var array
      */
     protected $reverse = array();
 
     /**
+     * Base URL of site
      * @var string
      */
     protected $baseUrl;
 
     /**
+     * Constructor of Router
+     *
      * @return self
      */
     public function __construct()

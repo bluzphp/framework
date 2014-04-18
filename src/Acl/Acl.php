@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -14,8 +16,7 @@ use Bluz\Common\Options;
 /**
  * Acl
  *
- * @category Bluz
- * @package  Acl
+ * @package  Bluz\Acl
  *
  * @author   Anton Shevchuk
  * @created  11.07.11 15:09

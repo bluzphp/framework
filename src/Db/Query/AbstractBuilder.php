@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -17,11 +19,14 @@ use Bluz\Db\Query\CompositeBuilder;
  * Query Builders classes is responsible to dynamically create SQL queries
  * Based on Doctrine QueryBuilder code
  *
- * @see https://github.com/doctrine/dbal/blob/master/lib/Doctrine/DBAL/Query/QueryBuilder.php
+ * @package Bluz\Db\Query
+ *
+ * @link https://github.com/doctrine/dbal/blob/master/lib/Doctrine/DBAL/Query/QueryBuilder.php
  */
 abstract class AbstractBuilder
 {
     /**
+     * Instance of Db
      * @var Db
      */
     protected $adapter = null;
@@ -103,13 +108,12 @@ abstract class AbstractBuilder
     /**
      * Return the complete SQL string formed by the current specifications
      *
-     * <code>
+     * Example
      *     $sb = new SelectBuilder();
      *     $sb
      *         ->select('u')
      *         ->from('User', 'u');
      *     echo $qb->getSQL(); // SELECT u FROM User u
-     * </code>
      *
      * @return string The SQL query string.
      */
@@ -118,14 +122,13 @@ abstract class AbstractBuilder
     /**
      * Return the complete SQL string formed for use
      *
-     * <code>
+     * Example
      *     $sb = new SelectBuilder();
      *     $sb
      *         ->select('u')
      *         ->from('User', 'u')
      *         ->where('id = ?', 42);
      *     echo $qb->getQuery(); // SELECT u FROM User u WHERE id = "42"
-     * </code>
      *
      * @return string
      */
@@ -143,14 +146,13 @@ abstract class AbstractBuilder
     /**
      * Sets a query parameter for the query being constructed
      *
-     * <code>
+     * Example
      *     $sb = new SelectBuilder();
      *     $sb
      *         ->select('u')
      *         ->from('users', 'u')
      *         ->where('u.id = :user_id')
      *         ->setParameter(':user_id', 1);
-     * </code>
      *
      * @param string|integer $key The parameter position or name
      * @param mixed $value The parameter value
@@ -172,7 +174,7 @@ abstract class AbstractBuilder
     /**
      * Sets a collection of query parameters for the query being constructed
      *
-     * <code>
+     * Example
      *     $sb = new SelectBuilder();
      *     $sb
      *         ->select('u')
@@ -182,7 +184,6 @@ abstract class AbstractBuilder
      *             ':user_id1' => 1,
      *             ':user_id2' => 2
      *         ));
-     * </code>
      *
      * @param array $params The query parameters to set
      * @param array $types  The query parameters types to set
@@ -286,7 +287,7 @@ abstract class AbstractBuilder
     }
 
     /**
-     * prepareCondition
+     * Prepare condition
      *
      * @param array $args
      * @internal param $condition
@@ -296,7 +297,7 @@ abstract class AbstractBuilder
     {
         /**
          * <code>
-         *   prepareCondition("WHERE id IN (?)", [..,..]);
+         *     prepareCondition("WHERE id IN (?)", [..,..]);
          * </code>
          */
         $condition = array_shift($args);

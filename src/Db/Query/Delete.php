@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -9,10 +11,10 @@
  */
 namespace Bluz\Db\Query;
 
-use Bluz\Db\Db;
-
 /**
  * Builder of SELECT queries
+ *
+ * @package Bluz\Db\Query
  */
 class Delete extends AbstractBuilder
 {
@@ -37,12 +39,11 @@ class Delete extends AbstractBuilder
      * Turns the query being built into a bulk delete query that ranges over
      * a certain table
      *
-     * <code>
+     * Example
      *     $db = new DeleteBuilder();
      *     $db
      *         ->delete('users')
      *         ->where('id = ?');
-     * </code>
      *
      * @param string $table The table whose rows are subject to the update
      * @return self instance.

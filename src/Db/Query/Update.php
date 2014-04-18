@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -9,10 +11,10 @@
  */
 namespace Bluz\Db\Query;
 
-use Bluz\Db\Db;
-
 /**
  * Builder of SELECT queries
+ *
+ * @package Bluz\Db\Query
  */
 class Update extends AbstractBuilder
 {
@@ -38,13 +40,12 @@ class Update extends AbstractBuilder
      * Turns the query being built into a bulk update query that ranges over
      * a certain table
      *
-     * <code>
+     * Example
      *     $ub = new UpdateBuilder();
      *     $ub
      *         ->update('users')
      *         ->set('password', md5('password'))
      *         ->where('id = ?');
-     * </code>
      *
      * @param string $table The table whose rows are subject to the update
      * @return self instance.

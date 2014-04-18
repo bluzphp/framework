@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -11,6 +13,8 @@ namespace Bluz\Cache;
 
 /**
  * Bluz cache driver interface
+ *
+ * @package Bluz\Cache
  * @author Murzik
  */
 interface CacheInterface

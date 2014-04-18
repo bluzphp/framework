@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -12,8 +14,7 @@ namespace Bluz\Common;
 /**
  * Singleton
  *
- * @category Bluz
- * @package  Common
+ * @package  Bluz\Common
  *
  * @author   Anton Shevchuk
  * @created  16.05.12 14:26
@@ -21,7 +22,7 @@ namespace Bluz\Common;
 trait Singleton
 {
     /**
-     * @var self
+     * @var self instance
      */
     protected static $instance;
 

@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -18,8 +20,7 @@ use Bluz\Request\AbstractRequest;
 /**
  * Crud
  *
- * @category Bluz
- * @package  Crud
+ * @package  Bluz\Crud
  *
  * @author   AntonShevchuk
  * @created  15.08.12 15:37
@@ -27,7 +28,7 @@ use Bluz\Request\AbstractRequest;
 class Table extends AbstractCrud
 {
     /**
-     * @var \Bluz\Db\Table
+     * @var \Bluz\Db\Table instance
      */
     protected $table;
 

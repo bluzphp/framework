@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -15,8 +17,7 @@ use Psr\Log\AbstractLogger;
 /**
  * Logger
  *
- * @category Bluz
- * @package  Logger
+ * @package  Bluz\Logger
  *
  * @author   Taras Omelianenko <mail@taras.pro>
  */
@@ -25,21 +26,54 @@ class Logger extends AbstractLogger
     use Options;
 
     /**
+     * Start time
      * @var null
      */
     protected $start = null;
-    protected $timer = null;
-
     /**
+     * Part time
+     * @var null
+     */
+    protected $timer = null;
+    /**
+     * Stack of alerts
      * @var array
      */
     protected $alert = array();
+    /**
+     * Stack of alerts
+     * @var array
+     */
     protected $critical = array();
+    /**
+     * Stack of alerts
+     * @var array
+     */
     protected $debug = array();
+    /**
+     * Stack of alerts
+     * @var array
+     */
     protected $emergency = array();
+    /**
+     * Stack of alerts
+     * @var array
+     */
     protected $error = array();
+    /**
+     * Stack of alerts
+     * @var array
+     */
     protected $info = array();
+    /**
+     * Stack of alerts
+     * @var array
+     */
     protected $notice = array();
+    /**
+     * Stack of alerts
+     * @var array
+     */
     protected $warning = array();
 
     /**

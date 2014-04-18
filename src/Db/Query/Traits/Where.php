@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -17,9 +19,7 @@ use Bluz\Db\Query\CompositeBuilder;
  *  - Update Builder
  *  - Delete Builder
  *
- * @category Bluz
- * @package  Db
- * @subpackage Query
+ * @package Bluz\Db\Query\Traits
  *
  * @author   Anton Shevchuk
  * @created  17.06.13 10:38

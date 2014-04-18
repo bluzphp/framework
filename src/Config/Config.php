@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -14,8 +16,7 @@ use Bluz\Common\Options;
 /**
  * Config
  *
- * @category Bluz
- * @package  Config
+ * @package  Bluz\Config
  *
  * @author   Anton Shevchuk
  * @created  03.03.12 14:03
@@ -25,6 +26,7 @@ class Config
     use Options;
 
     /**
+     * Configuration data
      * @var array
      */
     protected $config;

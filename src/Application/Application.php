@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -40,8 +42,7 @@ use Bluz\View\View;
 /**
  * Application
  *
- * @category Bluz
- * @package  Application
+ * @package  Bluz\Application
  *
  * @method void denied()
  * @method void redirect(\string $url)
@@ -58,52 +59,52 @@ abstract class Application
     use Helper;
 
     /**
-     * @var Acl
+     * @var Acl instance
      */
     protected $acl;
 
     /**
-     * @var Auth
+     * @var Auth instance
      */
     protected $auth;
 
     /**
-     * @var Cache
+     * @var Cache instance
      */
     protected $cache;
 
     /**
-     * @var Config
+     * @var Config instance
      */
     protected $config;
 
     /**
-     * @var Db
+     * @var Db instance
      */
     protected $db;
 
     /**
-     * @var EventManager
+     * @var EventManager instance
      */
     protected $eventManager;
 
     /**
-     * @var Layout
+     * @var Layout instance
      */
     protected $layout;
 
     /**
-     * @var Logger
+     * @var Logger instance
      */
     protected $logger;
 
     /**
-     * @var Mailer
+     * @var Mailer instance
      */
     protected $mailer;
 
     /**
-     * @var Messages
+     * @var Messages instance
      */
     protected $messages;
 
@@ -115,48 +116,49 @@ abstract class Application
     protected $path;
 
     /**
-     * @var Registry
+     * @var Registry instance
      */
     protected $registry;
 
     /**
-     * @var Request\AbstractRequest
+     * @var Request\AbstractRequest instance
      */
     protected $request;
 
     /**
-     * @var Response\AbstractResponse
+     * @var Response\AbstractResponse instance
      */
     protected $response;
 
     /**
-     * @var Router
+     * @var Router instance
      */
     protected $router;
 
     /**
-     * @var Session
+     * @var Session instance
      */
     protected $session;
 
     /**
-     * @var Translator
+     * @var Translator instance
      */
     protected $translator;
 
     /**
+     * Environment name
      * @var string
      */
     protected $environment;
 
     /**
-     * Debug application
+     * Debug application flag
      * @var boolean
      */
     protected $debugFlag = false;
 
     /**
-     * Use layout flag
+     * Layout flag
      * @var boolean
      */
     protected $layoutFlag = true;
@@ -168,13 +170,13 @@ abstract class Application
     protected $jsonFlag = false;
 
     /**
-     * Widgets closures
+     * Stack of widgets closures
      * @var array
      */
     protected $widgets = array();
 
     /**
-     * api closures
+     * Stack of API closures
      * @var array
      */
     protected $api = array();

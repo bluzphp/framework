@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -9,15 +11,13 @@
  */
 namespace Bluz\View;
 
-use Bluz\Application\Application;
 use Bluz\Common\Helper;
 use Bluz\Common\Options;
 
 /**
  * View
  *
- * @category Bluz
- * @package  View
+ * @package  Bluz\View
  *
  * @method string ahref(\string $text, \string $href, array $attributes = [])
  * @method string api(\string $module, \string $method, $params = array())
@@ -59,14 +59,12 @@ class View implements ViewInterface, \JsonSerializable
     const POS_APPEND = 'append';
 
     /**
-     * @var string
+     * @var string base url
      */
     protected $baseUrl;
 
     /**
-     * View variables
-     *
-     * @var array
+     * @var array of view variables
      */
     protected $data = array();
 
@@ -88,7 +86,7 @@ class View implements ViewInterface, \JsonSerializable
     protected $partialPath = [];
 
     /**
-     * @var string
+     * @var string template name
      */
     protected $template;
 
@@ -174,6 +172,9 @@ class View implements ViewInterface, \JsonSerializable
 
     /**
      * {@inheritdoc}
+     *
+     * @param array $data
+     * @return $this|ViewInterface
      */
     public function setData($data = array())
     {
@@ -183,6 +184,8 @@ class View implements ViewInterface, \JsonSerializable
 
     /**
      * {@inheritdoc}
+     *
+     * @return array
      */
     public function getData()
     {
@@ -190,7 +193,7 @@ class View implements ViewInterface, \JsonSerializable
     }
 
     /**
-     * merge data from array
+     * Merge data from array to internal storage
      *
      * @param array $data
      * @return View
@@ -202,7 +205,7 @@ class View implements ViewInterface, \JsonSerializable
     }
 
     /**
-     * is callable
+     * Is callable
      *
      * @return string
      */
@@ -212,7 +215,7 @@ class View implements ViewInterface, \JsonSerializable
     }
 
     /**
-     * render like string
+     * Render like string
      *
      * @return string
      */
@@ -233,6 +236,9 @@ class View implements ViewInterface, \JsonSerializable
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $path
+     * @return $this|ViewInterface
      */
     public function setPath($path)
     {
@@ -242,6 +248,9 @@ class View implements ViewInterface, \JsonSerializable
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $file
+     * @return $this|ViewInterface
      */
     public function setTemplate($file)
     {
@@ -262,7 +271,7 @@ class View implements ViewInterface, \JsonSerializable
     }
 
     /**
-     * manipulation under system stack
+     * Manipulation under system stack
      *
      * @param string $key
      * @param mixed|null $value

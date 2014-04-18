@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -12,12 +14,14 @@ namespace Bluz\Db\Exception;
 /**
  * WrongPrimaryKeyException
  *
- * @category Bluz
- * @package  Db
- *
+ * @package  Bluz\Db\Exception
  * @author   Eugene Zabolotniy
  */
 class InvalidPrimaryKeyException extends DbException
 {
+    /**
+     * Exception message
+     * @var string
+     */
     public $message = "Wrong primary key";
 }

@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -10,49 +12,47 @@
 namespace Bluz\Common;
 
 /**
- * Options
+ * Options Trait
  *
- * @category Bluz
- * @package  Common
+ * Example
+ *     class Foo
+ *     {
+ *       use \Bluz\Common\Options;
  *
- * <pre>
- * <code>
- * class Foo
- * {
- *   use \Bluz\Common\Options;
+ *       protected $bar = '';
+ *       protected $baz = '';
  *
- *   protected $bar = '';
- *   protected $baz = '';
+ *       public function setBar($value)
+ *       {
+ *           $this->bar = $value;
+ *       }
  *
- *   public function setBar($value)
- *   {
- *       $this->bar = $value;
- *   }
+ *       public function setBaz($value)
+ *       {
+ *           $this->baz = $value;
+ *       }
+ *     }
  *
- *   public function setBaz($value)
- *   {
- *       $this->baz = $value;
- *   }
- * }
+ *     $Foo = new Foo(array('bar'=>123, 'baz'=>456));
  *
- * $Foo = new Foo(array('bar'=>123, 'baz'=>456));
- * </code>
- * </pre>
- *
+ * @package  Bluz\Common
  * @author   Anton Shevchuk
  * @created  12.07.11 16:15
  */
 trait Options
 {
     /**
+     * Options store
      * @var array
      */
     protected $options;
 
     /**
      * Setup, check and init options
-     *  - options must be a array
-     *  - options can be null
+     *
+     * Requirements
+     * - options must be a array
+     * - options can be null
      *
      * @param array $options
      * @return self
@@ -112,7 +112,7 @@ trait Options
     }
 
     /**
-     * get option by key
+     * Get option by key
      *
      * @param string $key
      * @return mixed
@@ -127,6 +127,8 @@ trait Options
     }
 
     /**
+     * Normalize key name
+     *
      * @param  $key
      * @return mixed
      */

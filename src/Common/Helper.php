@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -10,10 +12,9 @@
 namespace Bluz\Common;
 
 /**
- * Application
+ * Helper trait
  *
- * @category Bluz
- * @package  Common
+ * @package  Bluz\Common
  *
  * @author   Anton Shevchuk
  * @created  18.07.12 14:46
@@ -21,12 +22,12 @@ namespace Bluz\Common;
 trait Helper
 {
     /**
-     * @var array
+     * @var array of helpers
      */
     protected $helpers = array();
 
     /**
-     * @var array
+     * @var array of helpers paths
      */
     protected static $helpersPath = array();
 

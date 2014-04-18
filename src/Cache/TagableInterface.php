@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -10,6 +12,11 @@
 namespace Bluz\Cache;
 
 /**
+ * Interface for Tagable classes
+ *
+ * @todo public function getByTag?
+ *
+ * @package Bluz\Cache
  * @author murzik
  */
 interface TagableInterface
@@ -28,8 +35,4 @@ interface TagableInterface
      * @return boolean
      */
     public function deleteByTag($tag);
-
-    /**
-     * @todo public function getByTag?
-     */
 }

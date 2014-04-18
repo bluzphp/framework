@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -19,8 +21,7 @@ use Bluz\Http\Request;
 /**
  * Controller
  *
- * @category Bluz
- * @package  Controller
+ * @package  Bluz\Controller
  *
  * @author   Anton Shevchuk
  * @created  27.09.13 15:32
@@ -75,6 +76,8 @@ class Rest extends AbstractController
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @throws ApplicationException
      * @throws NotImplementedException
      * @throws NotFoundException

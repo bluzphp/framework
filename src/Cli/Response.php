@@ -1,5 +1,12 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
+ * @copyright Bluz PHP Team
+ * @link https://github.com/bluzphp/framework
+ */
+
+/**
  * @namespace
  */
 namespace Bluz\Cli;
@@ -11,8 +18,7 @@ use Bluz\View\View;
 /**
  * Response
  *
- * @category Cli
- * @package  Response
+ * @package  Bluz\Cli
  *
  * @author   Anton Shevchuk
  * @created  18.02.14 11:57

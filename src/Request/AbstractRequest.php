@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -14,8 +16,7 @@ use Bluz\Common\Options;
 /**
  * Request
  *
- * @category Bluz
- * @package  Request
+ * @package  Bluz\Request
  *
  * @author   Anton Shevchuk
  * @created  06.07.11 16:59
@@ -49,33 +50,30 @@ class AbstractRequest
 
     /**
      * REQUEST_URI
-     *
      * @var string;
      */
     protected $requestUri;
 
     /**
      * REQUEST_URI minus Base URL
-     *
      * @var string;
      */
     protected $cleanUri;
 
     /**
      * Base URL
-     *
      * @var string;
      */
     protected $baseUrl;
 
     /**
      * Base Path
-     *
      * @var string;
      */
     protected $basePath;
 
     /**
+     * HTTP Method or CLI
      * @var string
      */
     protected $method;
@@ -208,7 +206,6 @@ class AbstractRequest
      * @param string $key
      * @param mixed $value
      * @return void
-     * @deprecated
      */
     public function setParam($key, $value)
     {

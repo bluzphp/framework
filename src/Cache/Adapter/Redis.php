@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -14,11 +16,13 @@ use Bluz\Cache\CacheException;
 
 /**
  * Redis cache adapter
+ * @package Bluz\Cache\Adapter
  * @author The-Who
  */
 class Redis extends AbstractAdapter
 {
     /**
+     * Instance of Redis
      * @var \Redis
      */
     protected $redis = null;
@@ -64,7 +68,7 @@ class Redis extends AbstractAdapter
     }
 
     /**
-     * getHandler
+     * Get Redis handler
      *
      * @return \Redis
      */
@@ -88,6 +92,9 @@ class Redis extends AbstractAdapter
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @return bool|mixed|string
      */
     protected function doGet($id)
     {
@@ -96,6 +103,11 @@ class Redis extends AbstractAdapter
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @param mixed $data
+     * @param int $ttl
+     * @return bool|mixed
      */
     protected function doAdd($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
@@ -111,6 +123,11 @@ class Redis extends AbstractAdapter
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @param mixed $data
+     * @param int $ttl
+     * @return bool|mixed
      */
     protected function doSet($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
@@ -123,6 +140,9 @@ class Redis extends AbstractAdapter
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @return bool|mixed
      */
     protected function doContains($id)
     {
@@ -131,10 +151,13 @@ class Redis extends AbstractAdapter
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @return void
      */
     protected function doDelete($id)
     {
-        return $this->getHandler()->delete($id);
+        $this->getHandler()->delete($id);
     }
 
     /**

@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -15,8 +17,7 @@ use Bluz\Config\ConfigException;
 /**
  * Wrapper over PHPMailer
  *
- * @category Bluz
- * @package  Mailer
+ * @package  Bluz\Mailer
  *
  * @link     https://github.com/bluzphp/framework/wiki/Mailer
  *

@@ -1,18 +1,23 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
+ * @copyright Bluz PHP Team
+ * @link https://github.com/bluzphp/framework
+ */
+
+/**
  * @namespace
  */
 namespace Bluz\Http;
 
 use Bluz\Response\AbstractResponse;
-use Bluz\Application\Exception\RedirectException;
-use Bluz\Application\Exception\ReloadException;
 
 /**
  * Response
  *
  * @category Http
- * @package  Response
+ * @package  Bluz\Response
  *
  * @author   Anton Shevchuk
  * @created  18.02.14 11:57

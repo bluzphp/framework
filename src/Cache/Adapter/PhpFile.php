@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -17,16 +19,25 @@ use Bluz\Cache\InvalidArgumentException;
  * It can cache data that support var_export.
  * This adapter very fast and cacheable by opcode cachers but it have some limitations related to var_export.
  * It's best to use for scalar data caching
- * @see more at http://php.net/manual/en/function.var-export.php
- * @see more at http://php.net/manual/en/language.oop5.magic.php#object.set-state
+ *
+ * @package Bluz\Cache\Adapter
+ * @link http://php.net/manual/en/function.var-export.php
+ * @link http://php.net/manual/en/language.oop5.magic.php#object.set-state
  * @author murzik
  */
 class PhpFile extends FileBase
 {
+    /**
+     * Cache data
+     * @var array
+     */
     protected $data = array();
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @return bool|mixed
      */
     protected function doContains($id)
     {
@@ -43,6 +54,9 @@ class PhpFile extends FileBase
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @return bool|mixed
      */
     protected function doGet($id)
     {
@@ -63,6 +77,12 @@ class PhpFile extends FileBase
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @param mixed $data
+     * @param int $ttl
+     * @return int|mixed
+     * @throws \Bluz\Cache\InvalidArgumentException
      */
     protected function doSet($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
@@ -98,6 +118,12 @@ class PhpFile extends FileBase
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @param mixed $data
+     * @param int $ttl
+     * @return bool|int|mixed
+     * @throws \Bluz\Cache\InvalidArgumentException
      */
     protected function doAdd($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {

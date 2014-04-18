@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -14,8 +16,7 @@ use Bluz\Grid\Grid;
 /**
  * Adapter
  *
- * @category Bluz
- * @package  Grid
+ * @package  Bluz\Grid
  *
  * @author   Anton Shevchuk
  * @created  15.08.12 11:52
@@ -23,11 +24,13 @@ use Bluz\Grid\Grid;
 abstract class AbstractSource
 {
     /**
+     * Source for build grid
      * @var mixed
      */
     protected $source;
 
     /**
+     * Available filters
      * @var array
      */
     protected $filters = [

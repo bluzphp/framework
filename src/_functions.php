@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -13,6 +15,11 @@
 if (!function_exists('debug')) {
     /**
      * Debug variables
+     *
+     * Example of usage
+     *     debug(123);
+     *     debug(new stdClass());
+     *     debug($_GET, $_POST, $_FILES);
      *
      * @return void
      */
@@ -59,6 +66,10 @@ if (!function_exists('esc')) {
     /**
      * Escape variable for use in View
      *
+     * Example of usage
+     *     esc($_GET['name']);
+     *     esc($_GET['name'], ENT_QUOTES);
+     *
      * @param string $variable
      * @param int $flags
      * @return string
@@ -72,20 +83,19 @@ if (!function_exists('esc')) {
 // @codingStandardsIgnoreStart
 if (!function_exists('__')) {
     /**
-     * translate
+     * Translate message
      *
-     * <code>
-     * // simple
-     * // equal to gettext('Message')
-     * __('Message');
+     * Example of usage
+     *     // simple
+     *     // equal to gettext('Message')
+     *     __('Message');
      *
-     * // simple replace of one or more argument(s)
-     * // equal to sprintf(gettext('Message to %s'), 'Username')
-     * __('Message to %s', 'Username');
-     * </code>
+     *     // simple replace of one or more argument(s)
+     *     // equal to sprintf(gettext('Message to %s'), 'Username')
+     *     __('Message to %s', 'Username');
      *
-     * @param $message
-     * @return mixed
+     * @param string $message
+     * @return string
      */
     function __($message)
     {
@@ -95,23 +105,21 @@ if (!function_exists('__')) {
 
 if (!function_exists('_n')) {
     /**
-     * translate plural form
+     * Translate plural form
      *
-     * <code>
+     * Example of usage
+     *     // plural form + sprintf
+     *     // equal to sprintf(ngettext('%d comment', '%d comments', 4), 4)
+     *     _n('%d comment', '%d comments', 4, 4)
      *
-     * // plural form + sprintf
-     * // equal to sprintf(ngettext('%d comment', '%d comments', 4), 4)
-     * _n('%d comment', '%d comments', 4, 4)
+     *     // plural form + sprintf
+     *     // equal to sprintf(ngettext('%d comment', '%d comments', 4), 4, 'Topic')
+     *     _n('%d comment to %s', '%d comments to %s', 4, 'Topic')
      *
-     * // plural form + sprintf
-     * // equal to sprintf(ngettext('%d comment', '%d comments', 4), 4, 'Topic')
-     * _n('%d comment to %s', '%d comments to %s', 4, 'Topic')
-     * </code>
-     *
-     * @param $singular
-     * @param $plural
-     * @param $number
-     * @return mixed
+     * @param string $singular
+     * @param string $plural
+     * @param integer $number
+     * @return string
      */
     function _n($singular, $plural, $number)
     {

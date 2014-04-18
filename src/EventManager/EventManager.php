@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -12,12 +14,12 @@ namespace Bluz\EventManager;
 /**
  * Event manager
  *
- * @category Bluz
- * @package  EventManager
+ * @package  Bluz\EventManager
  */
 class EventManager
 {
     /**
+     * Stack of listeners
      * @var array
      */
     protected $listeners = array();

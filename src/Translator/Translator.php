@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -16,8 +18,7 @@ use Bluz\Config\ConfigException;
  * Translator
  * based on gettext library
  *
- * @category Bluz
- * @package  Translator
+ * @package  Bluz\Translator
  *
  * @author   Anton Shevchuk
  * @created  23.04.13 16:37
@@ -27,17 +28,20 @@ class Translator
     use Options;
 
     /**
-     * @see http://www.loc.gov/standards/iso639-2/php/code_list.php
+     * Locale
+     * @link http://www.loc.gov/standards/iso639-2/php/code_list.php
      * @var string
      */
     protected $locale = 'en_US';
 
     /**
+     * Text Domain
      * @var string
      */
     protected $domain = 'messages';
 
     /**
+     * Path to text domain files
      * @var string
      */
     protected $path;
@@ -109,7 +113,7 @@ class Translator
     }
 
     /**
-     * add text domain for gettext
+     * Add text domain for gettext
      *
      * @param string $domain of text for gettext setup
      * @param string $path on filesystem
@@ -132,8 +136,9 @@ class Translator
     }
 
     /**
-     * translate
+     * Translate message
      *
+     * Example of usage:
      * <code>
      * // simple
      * // equal to gettext('Message')
@@ -144,7 +149,7 @@ class Translator
      * Translator::translate('Message to %s', 'Username');
      * </code>
      *
-     * @param $message
+     * @param string $message
      * @return string
      */
     public static function translate($message)
@@ -162,8 +167,9 @@ class Translator
     }
 
     /**
-     * translate plural form
+     * Translate plural form
      *
+     * Example of usage:
      * <code>
      * // plural form + sprintf
      * // equal to sprintf(ngettext('%d comment', '%d comments', 4), 4)
@@ -173,10 +179,11 @@ class Translator
      * // equal to sprintf(ngettext('%d comment', '%d comments', 4), 4, 'Topic')
      * Translator::translatePlural('%d comment to %s', '%d comments to %s', 4, 'Topic')
      * </code>
-     * @see http://docs.translatehouse.org/projects/localization-guide/en/latest/l10n/pluralforms.html
-     * @param $singular
-     * @param $plural
-     * @param $number
+     *
+     * @link http://docs.translatehouse.org/projects/localization-guide/en/latest/l10n/pluralforms.html
+     * @param string $singular
+     * @param string $plural
+     * @param integer $number
      * @return string
      */
     public static function translatePlural($singular, $plural, $number)

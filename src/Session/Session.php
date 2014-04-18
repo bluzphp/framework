@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -14,8 +16,7 @@ use Bluz\Common\Options;
 /**
  * Session
  *
- * @category Bluz
- * @package  Session
+ * @package  Bluz\Session
  *
  * @author   Anton Shevchuk
  * @created  11.07.11 19:19
@@ -70,7 +71,7 @@ class Session
     }
 
     /**
-     * getStore
+     * Get session store
      *
      * @throws SessionException
      * @return Store\AbstractStore
@@ -95,7 +96,7 @@ class Session
     }
 
     /**
-     * __set
+     * Set key/value pair
      *
      * @param string $key
      * @param mixed $value
@@ -107,7 +108,7 @@ class Session
     }
 
     /**
-     * __get
+     * Get value by key
      *
      * @param string $key
      * @return mixed

@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -9,11 +11,12 @@
  */
 namespace Bluz\Db\Query;
 
-use Bluz\Db\Db;
 use Bluz\Db\Exception\DbException;
 
 /**
  * Builder of SELECT queries
+ *
+ * @package Bluz\Db\Query
  */
 class Select extends AbstractBuilder
 {
@@ -32,6 +35,9 @@ class Select extends AbstractBuilder
 
     /**
      * {@inheritdoc}
+     *
+     * @param null $fetchType
+     * @return array|mixed
      */
     public function execute($fetchType = null)
     {
@@ -96,13 +102,12 @@ class Select extends AbstractBuilder
      * Specifies an item that is to be returned in the query result
      * Replaces any previously specified selections, if any
      *
-     * <code>
+     * Example
      *     $sb = new Select();
      *     $sb
      *         ->select('u.id', 'p.id')
      *         ->from('users', 'u')
      *         ->leftJoin('u', 'phonenumbers', 'p', 'u.id = p.user_id');
-     * </code>
      *
      * @param mixed $select The selection expressions.
      * @return Select This QueryBuilder instance.
@@ -117,14 +122,13 @@ class Select extends AbstractBuilder
     /**
      * Adds an item that is to be returned in the query result.
      *
-     * <code>
+     * Example
      *     $sb = new Select();
      *     $sb
      *         ->select('u.id')
      *         ->addSelect('p.id')
      *         ->from('users', 'u')
      *         ->leftJoin('u', 'phonenumbers', 'u.id = p.user_id');
-     * </code>
      *
      * @param mixed $select The selection expression.
      * @return Select This QueryBuilder instance.
@@ -139,13 +143,12 @@ class Select extends AbstractBuilder
     /**
      * Creates and adds a join to the query
      *
-     * <code>
+     * Example
      *     $sb = new Select();
      *     $sb
      *         ->select('u.name')
      *         ->from('users', 'u')
      *         ->join('u', 'phonenumbers', 'p', 'p.is_primary = 1');
-     * </code>
      *
      * @param string $fromAlias The alias that points to a from clause
      * @param string $join The table name to join
@@ -161,13 +164,12 @@ class Select extends AbstractBuilder
     /**
      * Creates and adds a join to the query
      *
-     * <code>
+     * Example
      *     $sb = new Select();
      *     $sb
      *         ->select('u.name')
      *         ->from('users', 'u')
      *         ->innerJoin('u', 'phonenumbers', 'p', 'p.is_primary = 1');
-     * </code>
      *
      * @param string $fromAlias The alias that points to a from clause
      * @param string $join The table name to join
@@ -196,13 +198,12 @@ class Select extends AbstractBuilder
     /**
      * Creates and adds a left join to the query.
      *
-     * <code>
+     * Example
      *     $sb = new Select();
      *     $sb
      *         ->select('u.name')
      *         ->from('users', 'u')
      *         ->leftJoin('u', 'phonenumbers', 'p', 'p.is_primary = 1');
-     * </code>
      *
      * @param string $fromAlias The alias that points to a from clause
      * @param string $join The table name to join
@@ -231,13 +232,12 @@ class Select extends AbstractBuilder
     /**
      * Creates and adds a right join to the query.
      *
-     * <code>
+     * Example
      *     $sb = new Select();
      *     $sb
      *         ->select('u.name')
      *         ->from('users', 'u')
      *         ->rightJoin('u', 'phonenumbers', 'p', 'p.is_primary = 1');
-     * </code>
      *
      * @param string $fromAlias The alias that points to a from clause
      * @param string $join The table name to join
@@ -267,13 +267,12 @@ class Select extends AbstractBuilder
      * Specifies a grouping over the results of the query.
      * Replaces any previously specified groupings, if any.
      *
-     * <code>
+     * Example
      *     $sb = new Select();
      *     $sb
      *         ->select('u.name')
      *         ->from('users', 'u')
      *         ->groupBy('u.id');
-     * </code>
      *
      * @param mixed $groupBy The grouping expression.
      * @return Select This QueryBuilder instance.
@@ -292,14 +291,13 @@ class Select extends AbstractBuilder
     /**
      * Adds a grouping expression to the query.
      *
-     * <code>
+     * Example
      *     $sb = new Select();
      *     $sb
      *         ->select('u.name')
      *         ->from('users', 'u')
      *         ->groupBy('u.lastLogin');
      *         ->addGroupBy('u.createdAt')
-     * </code>
      *
      * @param mixed $groupBy The grouping expression.
      * @return Select This QueryBuilder instance.
@@ -314,7 +312,6 @@ class Select extends AbstractBuilder
 
         return $this->addQueryPart('groupBy', $groupBy, true);
     }
-
 
     /**
      * Specifies an ordering for the query results
@@ -344,6 +341,7 @@ class Select extends AbstractBuilder
         $order = ('ASC' == $order ? 'ASC' : 'DESC');
         return $this->addQueryPart('orderBy', $sort . ' ' . $order, true);
     }
+
     /**
      * Specifies a restriction over the groups of the query.
      * Replaces any previous having restrictions, if any.
@@ -416,6 +414,8 @@ class Select extends AbstractBuilder
     }
 
     /**
+     * Generate SQL string for JOINs
+     *
      * @param $fromAlias
      * @return string
      */

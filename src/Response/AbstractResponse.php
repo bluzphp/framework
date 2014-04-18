@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -14,8 +16,7 @@ use Bluz\Common\Options;
 /**
  * AbstractResponse
  *
- * @category Bluz
- * @package  Response
+ * @package  Bluz\Response
  *
  * @author   Anton Shevchuk
  * @created  18.02.14 11:11
@@ -31,6 +32,7 @@ abstract class AbstractResponse
     protected $code = 200;
 
     /**
+     * Stack of headers
      * @var array
      */
     protected $headers = array();
@@ -42,6 +44,7 @@ abstract class AbstractResponse
     protected $body;
 
     /**
+     * Catched exception
      * @var \Exception
      */
     protected $exception;

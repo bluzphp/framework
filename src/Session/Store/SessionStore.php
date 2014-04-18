@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -14,8 +16,7 @@ use Bluz\Session\SessionException;
 /**
  * Session
  *
- * @category Bluz
- * @package  Session
+ * @package  Bluz\Session
  *
  * @author   Anton Shevchuk
  * @created  11.07.11 19:19
@@ -30,7 +31,7 @@ class SessionStore extends AbstractStore
     protected $started = false;
 
     /**
-     * set session save path
+     * Set session save path
      *
      * @param string $savePath
      * @throws \Bluz\Session\SessionException
@@ -48,7 +49,7 @@ class SessionStore extends AbstractStore
     }
 
     /**
-     * start
+     * {@inheritdoc}
      *
      * @throws \Bluz\Session\SessionException
      * @return bool
@@ -78,7 +79,7 @@ class SessionStore extends AbstractStore
     }
 
     /**
-     * set
+     * {@inheritdoc}
      *
      * @param string $key
      * @param mixed $value
@@ -91,7 +92,7 @@ class SessionStore extends AbstractStore
     }
 
     /**
-     * get
+     * {@inheritdoc}
      *
      * @param string $key
      * @param string $key
@@ -110,7 +111,7 @@ class SessionStore extends AbstractStore
     }
 
     /**
-     * __isset
+     * {@inheritdoc}
      *
      * @param string $key
      * @return boolean
@@ -127,7 +128,7 @@ class SessionStore extends AbstractStore
     }
 
     /**
-     * __unset
+     * {@inheritdoc}
      *
      * @param string $key
      * @return void
@@ -137,9 +138,8 @@ class SessionStore extends AbstractStore
         unset($_SESSION[$this->namespace][$key]);
     }
 
-
     /**
-     * destroy
+     * {@inheritdoc}
      *
      * @return boolean
      */

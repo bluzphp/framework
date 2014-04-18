@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -15,74 +17,65 @@ use Bluz\Db\Exception\InvalidPrimaryKeyException;
 /**
  * Table
  *
- * @category Bluz
- * @package  Db
+ * Example of Users\Table
+ *     namespace Application\Users;
+ *     class Table extends \Bluz\Db\Table
+ *     {
+ *        protected $table = 'users';
+ *        protected $primary = array('id');
+ *     }
  *
- * <pre>
- * <code>
- * namespace Application\Users;
- * class Table extends \Bluz\Db\Table
- * {
- *    protected $table = 'users';
- *    protected $primary = array('id');
- * }
+ *     $userRows = \Application\Users\Table::find(1,2,3,4,5);
+ *     foreach ($userRows as $userRow) {
+ *        $userRow -> description = 'In first 5';
+ *        $userRow -> save();
+ *     }
  *
- * $userRows = \Application\Users\Table::find(1,2,3,4,5);
- * foreach ($userRows as $userRow) {
- *    $userRow -> description = 'In first 5';
- *    $userRow -> save();
- * }
- *
- * </code>
- * </pre>
- *
+ * @package  Bluz\Db
  * @author   Anton Shevchuk
  * @created  08.07.11 17:32
  */
 abstract class Table
 {
     /**
-     * The table name.
-     *
+     * The table name
      * @var string
      */
     protected $table = null;
 
     /**
      * Table columns
-     *
      * @var array
      */
     protected $columns = [];
 
     /**
      * Default SQL query for select
-     *
      * @var string
      */
     protected $select = "";
 
     /**
      * The primary key column or columns.
-     * Should be declared as an array.
-     *
+     * Should be declared as an array
      * @var array
      */
     protected $primary;
 
     /**
      * The sequence name, required for PostgreSQL
-     *
      * @var string
      */
     protected $sequence;
 
     /**
+     * Db default adapter
      * @var Db
      */
     protected $adapter = null;
 
     /**
+     * Class name
      * @var string
      */
     protected $rowClass;
@@ -377,20 +370,16 @@ abstract class Table
      *  - predefine "from" section as current table name and first letter as alias
      *  - predefine fetch type
      *
-     * <pre>
-     * <code>
-     * // use default select "*"
-     * $select = Users\Table::select();
-     * $arrUsers = $select->where('u.id = ?', $id)
-     *     ->execute();
+     *     // use default select "*"
+     *     $select = Users\Table::select();
+     *     $arrUsers = $select->where('u.id = ?', $id)
+     *         ->execute();
      *
-     * // setup custom select "u.id, u.login"
-     * $select = Users\Table::select();
-     * $arrUsers = $select->select('u.id, u.login')
-     *     ->where('u.id = ?', $id)
-     *     ->execute();
-     * </code>
-     * </pre>
+     *     // setup custom select "u.id, u.login"
+     *     $select = Users\Table::select();
+     *     $arrUsers = $select->select('u.id, u.login')
+     *         ->where('u.id = ?', $id)
+     *         ->execute();
      *
      * @return Query\Select
      */
@@ -407,18 +396,15 @@ abstract class Table
     }
 
     /**
-     * <pre>
-     * <code>
-     * // WHERE alias = 'foo'
-     * Table::findWhere(['alias'=>'foo']);
-     * // WHERE alias = 'foo' OR 'alias' = 'bar'
-     * Table::findWhere(['alias'=>'foo'], ['alias'=>'bar']);
-     * // WHERE (alias = 'foo' AND userId = 2) OR ('alias' = 'bar' AND userId = 4)
-     * Table::findWhere(['alias'=>'foo', 'userId'=> 2], ['alias'=>'foo', 'userId'=>4]);
-     * // WHERE alias IN ('foo', 'bar')
-     * Table::findWhere(['alias'=> ['foo', 'bar']]);
-     * </code>
-     * </pre>
+     * Find rows by WHERE
+     *     // WHERE alias = 'foo'
+     *     Table::findWhere(['alias'=>'foo']);
+     *     // WHERE alias = 'foo' OR 'alias' = 'bar'
+     *     Table::findWhere(['alias'=>'foo'], ['alias'=>'bar']);
+     *     // WHERE (alias = 'foo' AND userId = 2) OR ('alias' = 'bar' AND userId = 4)
+     *     Table::findWhere(['alias'=>'foo', 'userId'=> 2], ['alias'=>'foo', 'userId'=>4]);
+     *     // WHERE alias IN ('foo', 'bar')
+     *     Table::findWhere(['alias'=> ['foo', 'bar']]);
      *
      * @throws \InvalidArgumentException
      * @throws Exception\DbException
@@ -504,11 +490,7 @@ abstract class Table
     /**
      * Insert new record to table and return last insert Id
      *
-     * <pre>
-     * <code>
-     * Table::insert(['login' => 'Man', 'email' => 'man@example.com'])
-     * </code>
-     * </pre>
+     *     Table::insert(['login' => 'Man', 'email' => 'man@example.com'])
      *
      * @param  array $data Column-value pairs
      * @throws Exception\DbException
@@ -547,11 +529,7 @@ abstract class Table
     /**
      * Updates existing rows
      *
-     * <pre>
-     * <code>
-     * Table::insert(['login' => 'Man', 'email' => 'man@domain.com'], ['id' => 42])
-     * </code>
-     * </pre>
+     *     Table::insert(['login' => 'Man', 'email' => 'man@domain.com'], ['id' => 42])
      *
      * @param  array $data Column-value pairs.
      * @param  array $where An array of SQL WHERE clause(s)
@@ -589,12 +567,8 @@ abstract class Table
     /**
      * Deletes existing rows
      *
-     * <pre>
-     * <code>
-     * Table::delete(['login' => 'Man'])
-     * </code>
-      * </pre>
-     *
+     *     Table::delete(['login' => 'Man'])
+     * 
      * @param  array $where An array of SQL WHERE clause(s)
      * @throws Exception\DbException
      * @return integer The number of rows deleted

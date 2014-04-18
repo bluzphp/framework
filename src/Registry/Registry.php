@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -14,8 +16,7 @@ use Bluz\Common\Options;
 /**
  * Registry
  *
- * @category Bluz
- * @package  Registry
+ * @package  Bluz\Registry
  *
  * @author   Anton Shevchuk
  */
@@ -42,6 +43,8 @@ class Registry
     }
 
     /**
+     * exists key
+     *
      * @param string $key
      * @return mixed
      */

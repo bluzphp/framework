@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -15,8 +17,7 @@ use Bluz\Translator\Translator;
 /**
  * Realization of Flash Messages
  *
- * @category Bluz
- * @package  Messages
+ * @package  Bluz\Messages
  *
  * @author   Anton Shevchuk
  */
@@ -29,6 +30,7 @@ class Messages
     const TYPE_NOTICE = 'notice';
 
     /**
+     * Stack of messages types
      * @var array
      */
     protected $types = array(

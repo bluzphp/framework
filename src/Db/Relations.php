@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -14,8 +16,7 @@ use Bluz\Db\Exception\DbException;
 /**
  * Relations map of Db tables
  *
- * @category Bluz
- * @package  Db
+ * @package  Bluz\Db
  *
  * @author   Anton Shevchuk
  * @created  12.11.13 13:22
@@ -23,31 +24,25 @@ use Bluz\Db\Exception\DbException;
 class Relations
 {
     /**
-     * <pre>
-     * <code>
-     * array(
-     *     'table1:table2' => ['table1'=>'foreignKey', 'table2'=>'primaryKey'],
-     *     'pages:users' => ['pages'=>'userId', 'users'=>'id'],
-     *     'pages_tags:pages' => ['pages_tags'=>'pageId', 'pages'=>'id'],
-     *     'pages_tags:tags' => ['pages_tags'=>'tagId', 'tags'=>'id'],
-     *     'pages:tags' => ['pages_tags'],
-     * )
-     * </code>
-     * </pre>
+     * Relation stack, i.e.
+     *     array(
+     *         'table1:table2' => ['table1'=>'foreignKey', 'table2'=>'primaryKey'],
+     *         'pages:users' => ['pages'=>'userId', 'users'=>'id'],
+     *         'pages_tags:pages' => ['pages_tags'=>'pageId', 'pages'=>'id'],
+     *         'pages_tags:tags' => ['pages_tags'=>'tagId', 'tags'=>'id'],
+     *         'pages:tags' => ['pages_tags'],
+     *     )
      *
      * @var array
      */
     protected static $relations;
 
     /**
-     * <pre>
-     * <code>
-     * array(
-     *     'table_name' => '\Application\TableName\Table',
-     *     'users' => '\Application\Users\Table',
-     * )
-     * </code>
-     * </pre>
+     * Class map, i.e.
+     *     array(
+     *         'table_name' => '\Application\TableName\Table',
+     *         'users' => '\Application\Users\Table',
+     *     )
      *
      * @var array
      */

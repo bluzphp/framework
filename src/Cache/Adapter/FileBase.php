@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -13,12 +15,24 @@ use Bluz\Cache\InvalidArgumentException;
 
 /**
  * Base class for all filesystem-based cache adapters
+ *
  * @todo http://habrahabr.ru/post/148527/#comment_5014715
+ *
+ * @package Bluz\Cache\Adapter
  * @author murzik
  */
 abstract class FileBase extends AbstractAdapter
 {
+    /**
+     * Directory of cache files
+     * @var null|string
+     */
     protected $cacheDir = null;
+
+    /**
+     * Extension of cache files
+     * @var string
+     */
     protected $extension = ".bluzcache";
 
     /**
@@ -49,6 +63,7 @@ abstract class FileBase extends AbstractAdapter
 
     /**
      * Flush implementation for all file-based cache implementations
+     *
      * @return bool
      */
     protected function doFlush()
@@ -68,6 +83,7 @@ abstract class FileBase extends AbstractAdapter
 
     /**
      * Generate path to cache file based on cache entry id
+     *
      * @param string $id cache entry id
      * @return string path to file
      */
@@ -82,6 +98,9 @@ abstract class FileBase extends AbstractAdapter
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $id
+     * @return bool|mixed
      */
     protected function doDelete($id)
     {

@@ -1,5 +1,7 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
@@ -9,10 +11,10 @@
  */
 namespace Bluz\Db\Query;
 
-use Bluz\Db\Db;
-
 /**
  * Builder of SELECT queries
+ *
+ * @package Bluz\Db\Query
  */
 class Insert extends AbstractBuilder
 {
@@ -20,6 +22,9 @@ class Insert extends AbstractBuilder
 
     /**
      * {@inheritdoc}
+     *
+     * @param null $sequence
+     * @return int|mixed|string
      */
     public function execute($sequence = null)
     {
@@ -45,14 +50,12 @@ class Insert extends AbstractBuilder
      * Turns the query being built into an insert query that inserts into
      * a certain table
      *
-     * <code>
-     *
+     * Example
      *     $ib = new InsertBuilder();
      *     $ib
      *         ->insert('users')
      *         ->set('name', 'username')
      *         ->set('password', md5('password'));
-     * </code>
      *
      * @param string $table The table into which the rows should be inserted
      * @return self instance

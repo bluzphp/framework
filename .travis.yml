@@ -13,7 +13,7 @@ before_script:
   - mysql -uroot bluz < tests/dump.sql
 script:
   # PHPUnit tests
-  - php vendor/bin/phpunit --configuration tests/phpunit.xml.dist --coverage-text
+  - php vendor/bin/phpunit --configuration tests/phpunit.xml.dist --coverage-text --coverage-clover=.reports/clover.xml
   - mkdir .reports
   # Code style
   - php vendor/bin/phpcs ./src --standard=PSR1
@@ -27,5 +27,8 @@ script:
   #- php vendor/bin/pdepend --jdepend-xml=.reports/jdepend.xml --jdepend-chart=.reports/dependencies.svg --overview-pyramid=.reports/pyramid.svg  ./src
   # Mess detection
   #- php vendor/bin/phpmd ./src text codesize,unusedcode,naming
+
+after_script:
+  - php vendor/bin/coveralls -v
 notifications:
   email: false

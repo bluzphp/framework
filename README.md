@@ -5,6 +5,8 @@ Easy to setup, easy to use.
 ## Achievements
 
 [![Build Status](https://secure.travis-ci.org/bluzphp/framework.png?branch=master)](https://travis-ci.org/bluzphp/framework)
+[![Dependency Status](https://www.versioneye.com/php/bluzphp:framework/badge.png)](https://www.versioneye.com/php/bluzphp:framework)
+
 [![Latest Stable Version](https://poser.pugx.org/bluzphp/framework/v/stable.png)](https://packagist.org/packages/bluzphp/framework)
 [![Total Downloads](https://poser.pugx.org/bluzphp/framework/downloads.png)](https://packagist.org/packages/bluzphp/framework)
 

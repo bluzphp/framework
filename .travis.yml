@@ -14,7 +14,7 @@ before_script:
 script:
   - mkdir .reports
   # PHPUnit tests
-  - php vendor/bin/phpunit --configuration tests/phpunit.xml.dist --coverage-text # --coverage-clover=.reports/clover.xml
+  - php vendor/bin/phpunit --configuration tests/phpunit.xml.dist --coverage-text --coverage-clover=.reports/clover.xml
   # Code style
   - php vendor/bin/phpcs ./src --standard=PSR1
   - php vendor/bin/phpcs ./src --standard=PSR2

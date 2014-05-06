@@ -21,18 +21,18 @@ namespace Bluz\Db\Query\Traits;
  * @author   Anton Shevchuk
  * @created  17.06.13 10:46
  */
-trait From {
+trait From
+{
 
     /**
+     * Set FROM
+     *
      * Create and add a query root corresponding to the table identified by the
      * given alias, forming a cartesian product with any existing query roots
-     *
-     * <code>
      *     $sb = new SelectBuilder();
      *     $sb
      *         ->select('u.id')
      *         ->from('users', 'u')
-     * </code>
      *
      * @param string $from   The table
      * @param string $alias  The alias of the table

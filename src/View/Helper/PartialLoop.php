@@ -11,32 +11,28 @@
  */
 namespace Bluz\View\Helper;
 
-use Bluz\Application\Application;
 use Bluz\View\View;
 use Bluz\View\ViewException;
 
 return
     /**
-     * partial loop
+     * Partial loop View Helper
      *
-     * <pre>
-     * <code>
-     * <?php
-     *  $data = array(2,4,6,8);
-     *  $this->partialLoop('tr.phtml', $data, array('colspan'=>2));
-     * ?>
-     * <?php
-     *  <tr>
-     *    <th>
-     *      <?=$key?>
-     *    </th>
-     *    <td colspan="<?=$colspan?>">
-     *      <?=$value?>
-     *    </td>
-     *  </tr>
-     * ?>
-     * </code>
-     * </pre>
+     * Example of usage:
+     *     <?php
+     *      $data = array(2,4,6,8);
+     *      $this->partialLoop('tr.phtml', $data, array('colspan'=>2));
+     *     ?>
+     *     <?php
+     *      <tr>
+     *        <th>
+     *          <?=$key?>
+     *        </th>
+     *        <td colspan="<?=$colspan?>">
+     *          <?=$value?>
+     *        </td>
+     *      </tr>
+     *     ?>
      *
      * @param       $template
      * @param array $data

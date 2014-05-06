@@ -16,13 +16,10 @@ use Bluz\View\View;
 
 return
     /**
-     * widget
+     * Widget call View Helper
      *
-     * <pre>
-     * <code>
-     * $this->widget($module, $controller, array $params);
-     * </code>
-     * </pre>
+     * Example of usage:
+     *     $this->widget($module, $controller, array $params);
      *
      * @param string $module
      * @param string $widget

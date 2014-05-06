@@ -110,7 +110,6 @@ abstract class Application
 
     /**
      * Application path
-     *
      * @var string
      */
     protected $path;
@@ -169,6 +168,7 @@ abstract class Application
      */
     protected $jsonFlag = false;
 
+
     /**
      * Stack of widgets closures
      * @var array
@@ -182,10 +182,16 @@ abstract class Application
     protected $api = array();
 
     /**
-     * Temporary variable for save dispatch result
-     * @var null
+     * Dispatched module name
+     * @var string
      */
-    protected $dispatchResult = null;
+    protected $dispatchModule;
+
+    /**
+     * Dispatched controller name
+     * @var string
+     */
+    protected $dispatchController;
 
     /**
      * init
@@ -656,8 +662,9 @@ abstract class Application
     }
 
     /**
-     * process
+     * Process application
      *
+     * Note:
      * - Why you don't use "X-" prefix?
      * - Because it deprecated
      * @link http://tools.ietf.org/html/rfc6648
@@ -856,7 +863,7 @@ abstract class Application
     }
 
     /**
-     * postDispatch
+     * Post dispatch mount point
      *
      * @param string $module
      * @param string $controller
@@ -871,21 +878,17 @@ abstract class Application
     }
 
     /**
-     * dispatch
+     * Dispatch controller with params
      *
      * Call dispatch from any \Bluz\Package
-     * <code>
-     * app()->dispatch($module, $controller, array $params);
-     * </code>
+     *     app()->dispatch($module, $controller, array $params);
      *
      * Attach callback function to event "dispatch"
-     * <code>
-     * app()->getEventManager()->attach('dispatch', function($event) {
-     *     $eventParams = $event->getParams();
-     *     $app = $event->getTarget();
-     *     \Bluz\Profiler::log('bootstrap:dispatch: '.$eventParams['module'].'/'.$eventParams['controller']);
-     * });
-     * </code>
+     *     app()->getEventManager()->attach('dispatch', function($event) {
+     *         $eventParams = $event->getParams();
+     *         $app = $event->getTarget();
+     *         \Bluz\Profiler::log('bootstrap:dispatch: '.$eventParams['module'].'/'.$eventParams['controller']);
+     *     });
      *
      * @param string $module
      * @param string $controller
@@ -907,6 +910,9 @@ abstract class Application
                 'params' => $params
             )
         );
+
+        $this->dispatchModule = $module;
+        $this->dispatchController = $controller;
 
         $this->preDispatch($module, $controller, $params);
         $result = $this->doDispatch($module, $controller, $params);
@@ -931,18 +937,14 @@ abstract class Application
      * widget
      *
      * Call widget from any \Bluz\Package
-     * <code>
-     * app()->widget($module, $widget, array $params);
-     * </code>
+     *     app()->widget($module, $widget, array $params);
      *
      * Attach callback function to event "widget"
-     * <code>
-     * app()->getEventManager()->attach('widget', function($event) {
-     *     $eventParams = $event->getParams();
-     *     $app = $event->getTarget();
-     *     \Bluz\Profiler::log('bootstrap:dispatch: '.$eventParams['module'].'/'.$eventParams['widget']);
-     * });
-     * </code>
+     *     app()->getEventManager()->attach('widget', function($event) {
+     *         $eventParams = $event->getParams();
+     *         $app = $event->getTarget();
+     *         \Bluz\Profiler::log('bootstrap:dispatch: '.$eventParams['module'].'/'.$eventParams['widget']);
+     *     });
      *
      * @param string $module
      * @param string $widget
@@ -1001,18 +1003,14 @@ abstract class Application
      * api
      *
      * Call API from any \Bluz\Package
-     * <code>
-     * app()->api($module, $widget, array $params);
-     * </code>
+     *     app()->api($module, $widget, array $params);
      *
      * Attach callback function to event "api"
-     * <code>
-     * app()->getEventManager()->attach('api', function($event) {
-     *     $eventParams = $event->getParams();
-     *     $app = $event->getTarget();
-     *     \Bluz\Profiler::log('bootstrap:dispatch: '.$eventParams['module'].'/'.$eventParams['widget']);
-     * });
-     * </code>
+     *     app()->getEventManager()->attach('api', function($event) {
+     *         $eventParams = $event->getParams();
+     *         $app = $event->getTarget();
+     *         \Bluz\Profiler::log('bootstrap:dispatch: '.$eventParams['module'].'/'.$eventParams['widget']);
+     *     });
      *
      * @param string $module
      * @param string $method

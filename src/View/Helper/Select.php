@@ -15,35 +15,34 @@ use Bluz\View\View;
 
 return
     /**
+     * Select View Helper
+     *
+     * Example of usage:
+     *     $this->select("car", [
+     *     "none" => "No Car"
+     *     "class-A" => [
+     *        'citroen-c1' => 'Citroen C1',
+     *        'mercedes-benz-a200' => 'Mercedes Benz A200',
+     *     ],
+     *     "class-B" => [
+     *        'audi-a1' => 'Audi A1',
+     *        'citroen-c3' => 'Citroen C3',
+     *     ],
+     *     ], "none", ["id"=>"car"]);
+     *
+     *     <select name="car" id="car">
+     *       <option value="none" selected="selected">No car</option>
+     *       <optgroup label="class-A">
+     *         <option value="citroen-c1">Citroen C1</option>
+     *         <option value="mercedes-benz-a200">Mercedes Benz A200</option>
+     *       </optgroup>
+     *       <optgroup label="class-B">
+     *         <option value="audi-a1">Audi A1</option>
+     *         <option value="citroen-c3">Citroen C3</option>
+     *       </optgroup>
+     *     </select>
+     *
      * @author The-Who
-     *
-     * <code>
-     * $this->select("car", [
-     * "none" => "No Car"
-     * "class-A" => [
-     *    'citroen-c1' => 'Citroen C1',
-     *    'mercedes-benz-a200' => 'Mercedes Benz A200',
-     * ],
-     * "class-B" => [
-     *    'audi-a1' => 'Audi A1',
-     *    'citroen-c3' => 'Citroen C3',
-     * ],
-     * ], "none", ["id"=>"car"]);
-     *
-     * <select name="car" id="car">
-     *   <option value="none" selected="selected">No car</option>
-     *   <optgroup label="class-A">
-     *     <option value="citroen-c1">Citroen C1</option>
-     *     <option value="mercedes-benz-a200">Mercedes Benz A200</option>
-     *   </optgroup>
-     *   <optgroup label="class-B">
-     *     <option value="audi-a1">Audi A1</option>
-     *     <option value="citroen-c3">Citroen C3</option>
-     *   </optgroup>
-     * </select>
-     *
-     * </code>
-     *
      * @param string $name
      * @param array $options
      * @param array|string $selected

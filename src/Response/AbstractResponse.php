@@ -44,7 +44,7 @@ abstract class AbstractResponse
     protected $body;
 
     /**
-     * Catched exception
+     * Catches exception
      * @var \Exception
      */
     protected $exception;

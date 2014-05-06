@@ -16,11 +16,10 @@ use Bluz\View\View;
 
 return
     /**
-     * dispatch
+     * Dispatch controller View Helper
      *
-     * <code>
-     * $this->dispatch($module, $controller, array $params);
-     * </code>
+     * Example of usage:
+     *     $this->dispatch($module, $controller, array $params);
      *
      * @param string $module
      * @param string $controller

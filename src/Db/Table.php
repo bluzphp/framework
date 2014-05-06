@@ -291,21 +291,17 @@ abstract class Table
      *
      * The find() method always returns a array
      *
-     * <pre>
-     * <code>
-     * // row by primary key
-     * // return array
-     * Table::find(123);
-     * // row by compound primary key
-     * // return array
-     * Table::find([123, 'abc']);
+     * Row by primary key, return array
+     *     Table::find(123);
      *
-     * // multiple rows by primary key
-     * Table::find(123, 234, 345);
-     * // multiple rows by compound primary key
-     * Table::find([123, 'abc'], [234, 'def'], [345, 'ghi'])
-     * </code>
-     * </pre>
+     * Row by compound primary key, return array
+     *     Table::find([123, 'abc']);
+     *
+     * Multiple rows by primary key
+     *     Table::find(123, 234, 345);
+     *
+     * Multiple rows by compound primary key
+     *     Table::find([123, 'abc'], [234, 'def'], [345, 'ghi'])
      *
      * @internal param mixed $key The value(s) of the primary keys.
      * @throws InvalidPrimaryKeyException if wrong count of values passed

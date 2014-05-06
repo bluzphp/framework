@@ -22,7 +22,8 @@ namespace Bluz\Db\Query\Traits;
  * @author   Anton Shevchuk
  * @created  17.06.13 10:00
  */
-trait Order {
+trait Order
+{
 
     /**
      * Specifies an ordering for the query results

@@ -21,8 +21,8 @@ namespace Bluz\Db\Query\Traits;
  * @author   Anton Shevchuk
  * @created  17.06.13 10:00
  */
-trait Set {
-
+trait Set
+{
     /**
      * Set key-value pair
      *

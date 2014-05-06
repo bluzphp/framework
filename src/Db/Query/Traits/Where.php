@@ -24,8 +24,8 @@ use Bluz\Db\Query\CompositeBuilder;
  * @author   Anton Shevchuk
  * @created  17.06.13 10:38
  */
-trait Where {
-
+trait Where
+{
     /**
      * Set WHERE condition
      *

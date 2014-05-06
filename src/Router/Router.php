@@ -326,14 +326,13 @@ class Router
     }
 
     /**
-     * process default router
+     * Process default router
      *
-     * <code>
-     *  /
-     *  /:module/
-     *  /:module/:controller/
-     *  /:module/:controller/:key1/:value1/:key2/:value2...
-     * </code>
+     * Default routers examples
+     *     /
+     *     /:module/
+     *     /:module/:controller/
+     *     /:module/:controller/:key1/:value1/:key2/:value2...
      *
      * @return boolean
      */

@@ -15,15 +15,11 @@ use Bluz\View\View;
 
 return
     /**
-     * API call from View
+     * API call View Helper
+     *
      * Be carefully, use it for calculate/update/save some data
      * For render information use Widgets!
-     *
-     * <pre>
-     * <code>
-     * $this->api($module, $method, array $params);
-     * </code>
-     * </pre>
+     *     $this->api($module, $method, array $params);
      *
      * @param string $module
      * @param string $method

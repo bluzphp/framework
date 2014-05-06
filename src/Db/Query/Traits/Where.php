@@ -27,17 +27,16 @@ use Bluz\Db\Query\CompositeBuilder;
 trait Where {
 
     /**
+     * Set WHERE condition
+     *
      * Specifies one or more restrictions to the query result
      * Replaces any previously specified restrictions, if any
-     *
-     * <code>
      *     $sb = new SelectBuilder();
      *     $sb
      *         ->select('u.name')
      *         ->from('users', 'u')
      *         ->where('u.id = ?', $id)
      *      ;
-     * </code>
      *
      * @param mixed $condition The query restriction predicates
      * @return $this
@@ -50,17 +49,16 @@ trait Where {
     }
 
     /**
+     * Add WHERE .. AND .. condition
+     *
      * Adds one or more restrictions to the query results, forming a logical
      * conjunction with any previously specified restrictions.
-     *
-     * <code>
      *     $sb = new SelectBuilder();
      *     $sb
      *         ->select('u')
      *         ->from('users', 'u')
      *         ->where('u.username LIKE ?', '%Smith%')
      *         ->andWhere('u.is_active = ?', 1);
-     * </code>
      *
      * @param mixed $condition The query restriction predicates
      * @return $this
@@ -80,17 +78,16 @@ trait Where {
     }
 
     /**
+     * Add WHERE .. OR .. condition
+     *
      * Adds one or more restrictions to the query results, forming a logical
      * disjunction with any previously specified restrictions.
-     *
-     * <code>
      *     $sb = new SelectBuilder();
      *     $sb
      *         ->select('u.name')
      *         ->from('users', 'u')
      *         ->where('u.id = 1')
      *         ->orWhere('u.id = ?', 2);
-     * </code>
      *
      * @param mixed $condition The query restriction predicates
      * @return $this

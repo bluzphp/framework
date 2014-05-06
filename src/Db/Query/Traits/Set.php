@@ -24,15 +24,14 @@ namespace Bluz\Db\Query\Traits;
 trait Set {
 
     /**
-     * Sets a new value for a column in a insert/update query
+     * Set key-value pair
      *
-     * <code>
+     * Sets a new value for a column in a insert/update query
      *     $ub = new UpdateBuilder();
      *     $ub
      *         ->update('users')
      *         ->set('password', md5('password'))
      *         ->where('id = ?');
-     * </code>
      *
      * @param string $key The column to set
      * @param string $value The value, expression, placeholder, etc

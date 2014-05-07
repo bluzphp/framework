@@ -10,11 +10,8 @@
         "psr/log": "1.*"
     },
     "require-dev": {
-        "pdepend/pdepend": "dev-master",
-        "phpmd/phpmd": "dev-master",
         "phpunit/phpunit": "4.1.*",
         "satooshi/php-coveralls": "dev-master",
-        "sebastian/phpcpd": "dev-master",
         "squizlabs/php_codesniffer": "1.*"
     },
     "suggest": {

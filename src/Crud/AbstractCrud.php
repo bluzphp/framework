@@ -11,7 +11,6 @@
  */
 namespace Bluz\Crud;
 
-use Bluz\Request\AbstractRequest;
 use Bluz\Application\Exception\NotImplementedException;
 use Bluz\Translator\Translator;
 

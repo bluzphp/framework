@@ -166,7 +166,7 @@ abstract class Table
     }
 
     /**
-     * set select query
+     * Set select query
      *
      * @param $select
      * @return Table
@@ -178,9 +178,9 @@ abstract class Table
     }
 
     /**
-     * get select query
+     * Get select query
      *
-     * @return Table
+     * @return string
      */
     public function getSelectQuery()
     {
@@ -188,7 +188,7 @@ abstract class Table
     }
 
     /**
-     * get primary key(s)
+     * Get primary key(s)
      *
      * @throws InvalidPrimaryKeyException if primary key was not set or has
      *                                    wrong format
@@ -203,7 +203,7 @@ abstract class Table
     }
 
     /**
-     * getTable
+     * Get table name
      *
      * @return string
      */

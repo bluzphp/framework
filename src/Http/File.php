@@ -110,7 +110,7 @@ class File
      *
      * @param string $name
      * @throws RequestException
-     * @return string
+     * @return File
      */
     public function setName($name)
     {

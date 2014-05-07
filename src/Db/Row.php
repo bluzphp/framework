@@ -111,7 +111,7 @@ class Row implements \JsonSerializable, \ArrayAccess
     /**
      * Sleep
      *
-     * @return array
+     * @return string[]
      */
     public function __sleep()
     {
@@ -584,7 +584,7 @@ class Row implements \JsonSerializable, \ArrayAccess
      * {@inheritdoc}
      *
      * @param mixed $offset
-     * @return mixed|string
+     * @return string
      */
     public function offsetGet($offset)
     {

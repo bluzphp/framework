@@ -250,7 +250,7 @@ class AbstractRequest
      * Set raw params, w/out module and controller
      *
      * @param array $params
-     * @return array
+     * @return AbstractRequest
      */
     public function setRawParams(array $params)
     {

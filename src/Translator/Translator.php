@@ -110,6 +110,7 @@ class Translator
             // Setup default domain
             textdomain($this->domain);
         }
+        return true;
     }
 
     /**

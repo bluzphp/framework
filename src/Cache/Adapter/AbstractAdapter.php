@@ -119,7 +119,7 @@ abstract class AbstractAdapter implements CacheInterface
 
     /**
      * Cast given $inputValue to string.
-     * @param mixed $inputValue
+     * @param string $inputValue
      * @throws InvalidArgumentException if given $input value not a number or string
      * @return string $castedToString
      * @internal defence from "fool".

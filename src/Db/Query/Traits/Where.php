@@ -38,7 +38,7 @@ trait Where
      *         ->where('u.id = ?', $id)
      *      ;
      *
-     * @param mixed $condition The query restriction predicates
+     * @param string $condition The query restriction predicates
      * @return $this
      */
     public function where($condition)
@@ -60,7 +60,7 @@ trait Where
      *         ->where('u.username LIKE ?', '%Smith%')
      *         ->andWhere('u.is_active = ?', 1);
      *
-     * @param mixed $condition The query restriction predicates
+     * @param string $condition The query restriction predicates
      * @return $this
      */
     public function andWhere($condition)
@@ -89,7 +89,7 @@ trait Where
      *         ->where('u.id = 1')
      *         ->orWhere('u.id = ?', 2);
      *
-     * @param mixed $condition The query restriction predicates
+     * @param string $condition The query restriction predicates
      * @return $this
      */
     public function orWhere($condition)

@@ -130,7 +130,7 @@ trait Options
      * Normalize key name
      *
      * @param  $key
-     * @return mixed
+     * @return string
      */
     private function normalizeKey($key)
     {

@@ -47,9 +47,9 @@ class EventManager
     /**
      * trigger
      *
-     * @param      $event
-     * @param null $target
-     * @param null $params
+     * @param string $event
+     * @param string|object $target
+     * @param array|object $params
      * @return EventManager
      */
     public function trigger($event, $target = null, $params = null)

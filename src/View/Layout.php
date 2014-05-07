@@ -32,7 +32,7 @@ class Layout extends View
     /**
      * Set content
      *
-     * @param mixed $content
+     * @param View|callable $content
      * @return View
      */
     public function setContent($content)

@@ -40,7 +40,7 @@ class Config
     /**
      * setup path to configuration files
      *
-     * @param $path
+     * @param string $path
      * @throws ConfigException
      * @return self
      */
@@ -57,7 +57,7 @@ class Config
      *
      * @param string $environment
      * @throws ConfigException
-     * @return bool
+     * @return void
      */
     public function load($environment = null)
     {

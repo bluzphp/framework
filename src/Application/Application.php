@@ -621,7 +621,7 @@ abstract class Application
     /**
      * hasLayout
      *
-     * @return boolean|string
+     * @return boolean
      */
     public function hasLayout()
     {
@@ -669,7 +669,7 @@ abstract class Application
      * - Because it deprecated
      * @link http://tools.ietf.org/html/rfc6648
      *
-     * @return mixed
+     * @return Response\AbstractResponse
      */
     public function process()
     {
@@ -1273,7 +1273,7 @@ abstract class Application
      *
      * @param  string $module
      * @param  string $method
-     * @return \Closure
+     * @return string
      * @throws Exception
      */
     protected function getApiFile($module, $method)

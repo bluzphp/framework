@@ -12,10 +12,8 @@
 namespace Bluz\Crud;
 
 use Bluz\Application\Exception\NotFoundException;
-use Bluz\Common\Options;
 use Bluz\Db;
 use Bluz\Db\Row;
-use Bluz\Request\AbstractRequest;
 
 /**
  * Crud

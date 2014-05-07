@@ -11,7 +11,6 @@
  */
 namespace Bluz\Grid;
 
-use Bluz\Application\Application;
 use Bluz\Common\Helper;
 use Bluz\Common\Options;
 

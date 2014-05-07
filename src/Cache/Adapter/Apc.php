@@ -54,7 +54,7 @@ class Apc extends AbstractAdapter
      * @param string $id
      * @param mixed $data
      * @param int $ttl
-     * @return bool|mixed
+     * @return boolean
      */
     protected function doAdd($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
@@ -67,7 +67,7 @@ class Apc extends AbstractAdapter
      * @param string $id
      * @param mixed $data
      * @param int $ttl
-     * @return array|bool|mixed
+     * @return boolean
      */
     protected function doSet($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
@@ -78,7 +78,7 @@ class Apc extends AbstractAdapter
      * {@inheritdoc}
      *
      * @param string $id
-     * @return bool|mixed|\string[]
+     * @return boolean|string[]
      */
     protected function doContains($id)
     {
@@ -89,7 +89,7 @@ class Apc extends AbstractAdapter
      * {@inheritdoc}
      *
      * @param string $id
-     * @return bool|mixed|\string[]
+     * @return boolean|string[]
      */
     protected function doDelete($id)
     {
@@ -99,7 +99,7 @@ class Apc extends AbstractAdapter
     /**
      * {@inheritdoc}
      *
-     * @return bool|mixed
+     * @return boolean
      */
     protected function doFlush()
     {

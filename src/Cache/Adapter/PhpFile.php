@@ -37,7 +37,7 @@ class PhpFile extends FileBase
      * {@inheritdoc}
      *
      * @param string $id
-     * @return bool|mixed
+     * @return boolean
      */
     protected function doContains($id)
     {
@@ -81,8 +81,8 @@ class PhpFile extends FileBase
      * @param string $id
      * @param mixed $data
      * @param int $ttl
-     * @return int|mixed
-     * @throws \Bluz\Cache\InvalidArgumentException
+     * @return integer
+     * @throws InvalidArgumentException
      */
     protected function doSet($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
@@ -123,7 +123,7 @@ class PhpFile extends FileBase
      * @param mixed $data
      * @param int $ttl
      * @return bool|int|mixed
-     * @throws \Bluz\Cache\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     protected function doAdd($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {

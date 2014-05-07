@@ -156,9 +156,9 @@ abstract class AbstractResponse
     }
 
     /**
-     * setBody
+     * Set response body
      *
-     * @param mixed $body
+     * @param \Bluz\View\View $body
      * @return AbstractResponse
      */
     public function setBody($body)
@@ -168,7 +168,7 @@ abstract class AbstractResponse
     }
 
     /**
-     * getBody
+     * Get response body
      *
      * @return mixed
      */
@@ -178,7 +178,7 @@ abstract class AbstractResponse
     }
 
     /**
-     * clearBody
+     * Clear response body
      *
      * @return AbstractResponse
      */
@@ -205,7 +205,7 @@ abstract class AbstractResponse
     /**
      * getException
      *
-     * @return \Exception|null
+     * @return \Exception
      */
     public function getException()
     {

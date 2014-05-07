@@ -104,7 +104,7 @@ class View implements ViewInterface, \JsonSerializable
     /**
      * __sleep
      *
-     * @return array
+     * @return string[]
      */
     public function __sleep()
     {
@@ -131,7 +131,7 @@ class View implements ViewInterface, \JsonSerializable
      * Is set a variable
      *
      * @param string $key
-     * @return mixed
+     * @return boolean
      */
     public function __isset($key)
     {
@@ -261,7 +261,7 @@ class View implements ViewInterface, \JsonSerializable
     /**
      * Add partial path for use inside partial and partialLoop helpers
      *
-     * @param $path
+     * @param string $path
      * @return View
      */
     public function addPartialPath($path)

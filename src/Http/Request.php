@@ -12,7 +12,6 @@
 namespace Bluz\Http;
 
 use Bluz\Request\AbstractRequest;
-use Bluz\Request\RequestException;
 
 /**
  * HTTP Request
@@ -345,7 +344,7 @@ class Request extends AbstractRequest
      * If no $key is passed, returns the entire $_SERVER array.
      *
      * @param string $key
-     * @param mixed $default Default value to use if key not found
+     * @param string $default Default value to use if key not found
      * @return mixed Returns null if key does not exist
      */
     public function getServer($key = null, $default = null)

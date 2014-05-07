@@ -13,7 +13,6 @@ namespace Bluz\Db\Query;
 
 use Bluz\Db\Db;
 use Bluz\Db\Exception\DbException;
-use Bluz\Db\Query\CompositeBuilder;
 
 /**
  * Query Builders classes is responsible to dynamically create SQL queries
@@ -69,7 +68,7 @@ abstract class AbstractBuilder
     /**
      * Execute this query using the bound parameters and their types
      *
-     * @return mixed
+     * @return integer|boolean
      */
     public function execute()
     {

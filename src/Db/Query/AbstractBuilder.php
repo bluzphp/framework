@@ -68,7 +68,7 @@ abstract class AbstractBuilder
     /**
      * Execute this query using the bound parameters and their types
      *
-     * @return integer|boolean
+     * @return integer
      */
     public function execute()
     {

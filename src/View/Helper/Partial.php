@@ -11,7 +11,6 @@
  */
 namespace Bluz\View\Helper;
 
-use Bluz\Application\Application;
 use Bluz\View\View;
 use Bluz\View\ViewException;
 

@@ -13,13 +13,13 @@ before_script:
   - mysql -uroot bluz < tests/dump.sql
 script:
   - mkdir .reports
+  # Code style
+  - php vendor/bin/phpcs ./src --standard=PSR1 --encoding=utf-8
+  - php vendor/bin/phpcs ./src --standard=PSR2 --encoding=utf-8
   # PHPUnit tests
   - php vendor/bin/phpunit --configuration tests/phpunit.xml.dist --coverage-clover=.reports/clover.xml
-  # Code style
-  - php vendor/bin/phpcs ./src --standard=PSR1
-  - php vendor/bin/phpcs ./src --standard=PSR2
   # Duplicate code
-  - php vendor/bin/phpcpd --log-pmd .reports/pmd-cpd.xml src
+  #- php vendor/bin/phpcpd --log-pmd .reports/pmd-cpd.xml src
   # Lines of code
   #- php vendor/bin/phploc --log-csv .reports/phploc.csv src
   # works incorrect with latest PHP versions

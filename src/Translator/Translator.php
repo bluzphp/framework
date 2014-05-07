@@ -86,7 +86,7 @@ class Translator
      * Initialization
      *
      * @throw \Bluz\Config\ConfigException
-     * @return boolean
+     * @return void
      */
     protected function initOptions()
     {
@@ -110,7 +110,6 @@ class Translator
             // Setup default domain
             textdomain($this->domain);
         }
-        return true;
     }
 
     /**

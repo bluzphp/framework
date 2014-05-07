@@ -15,7 +15,7 @@ use Bluz\Application\Exception\RedirectException;
 
 return
     /**
-     * redirect to url
+     * Redirect to url
      *
      * @param string $url
      * @throws RedirectException

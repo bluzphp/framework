@@ -302,7 +302,7 @@ abstract class Application
     /**
      * if enabled return configured Cache or Nil otherwise
      *
-     * @return Cache|Nil
+     * @return Cache instance or Nil
      */
     public function getCache()
     {
@@ -373,7 +373,7 @@ abstract class Application
     /**
      * load logger
      *
-     * @return Logger
+     * @return Logger instance or Nil
      */
     public function getLogger()
     {
@@ -1068,6 +1068,7 @@ abstract class Application
 
             // TODO: workaround for get reflection of closure function
             $bootstrap = $view = $module = $controller = null;
+            /** @var callable $closure */
             $closure = include $file;
 
             if (!is_callable($closure)) {

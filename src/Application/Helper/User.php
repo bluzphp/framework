@@ -15,12 +15,12 @@ use Bluz\Application\Application;
 
 return
     /**
-     * get current user
+     * Get current user
      *
+     * @var Application $this
      * @return \Bluz\Auth\AbstractRowEntity|null
      */
     function () {
-        /** @var Application $this */
         return $this->getAuth() ?
             $this->getAuth()->getIdentity() :
             null;

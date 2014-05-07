@@ -24,8 +24,8 @@ class Nil
     /**
      * Magic call
      *
-     * @param $method
-     * @param $args
+     * @param string $method
+     * @param array $args
      * @return null
      */
     public function __call($method, $args)
@@ -36,8 +36,8 @@ class Nil
     /**
      * Magic call for static
      *
-     * @param $method
-     * @param $args
+     * @param string $method
+     * @param array $args
      * @return null
      */
     public static function __callStatic($method, $args)
@@ -48,7 +48,7 @@ class Nil
     /**
      * __get
      *
-     * @param $key
+     * @param string $key
      * @return null
      */
     public function __get($key)
@@ -59,8 +59,8 @@ class Nil
     /**
      * __set
      *
-     * @param $key
-     * @param $value
+     * @param string $key
+     * @param mixed $value
      * @return null
      */
     public function __set($key, $value)

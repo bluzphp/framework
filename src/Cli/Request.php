@@ -50,7 +50,9 @@ class Request extends AbstractRequest
             $this->setRequestUri($uri);
             if ($query = parse_url($uri, PHP_URL_QUERY)) {
                 parse_str($query, $params);
-                $this->setParams($params);
+                if (is_array($params)) {
+                    $this->setParams($params);
+                }
             }
         } else {
             throw new RequestException('Attribute "--uri" is required');
@@ -96,10 +98,9 @@ class Request extends AbstractRequest
     /**
      * Get the client's IP address
      *
-     * @param  boolean $checkProxy
      * @return string
      */
-    public function getClientIp($checkProxy = true)
+    public function getClientIp()
     {
         return '127.0.0.1';
     }

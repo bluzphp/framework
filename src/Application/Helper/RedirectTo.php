@@ -20,10 +20,10 @@ return
      * @param string $module
      * @param string $controller
      * @param array $params
+     * @var Application $this
      * @return void
      */
     function ($module = 'index', $controller = 'index', $params = array()) {
-        /** @var Application $this */
         $url = $this->getRouter()->url($module, $controller, $params);
         $this->redirect($url);
     };

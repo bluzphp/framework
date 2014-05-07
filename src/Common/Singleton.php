@@ -27,39 +27,10 @@ trait Singleton
     protected static $instance;
 
     /**
-     * Disabled by access level
-     * @return self
-     */
-    protected function __construct()
-    {
-        static::setInstance($this);
-    }
-
-    /**
-     * setInstance
-     *
-     * @param self $instance
-     * @throws Exception
-     * @return self
-     */
-    final public static function setInstance($instance)
-    {
-        if ($instance instanceof static) {
-            static::$instance = $instance;
-        } else {
-            throw new Exception(
-                'First parameter for method `' . __METHOD__ . '`'.
-                ' should be instance of `' . __CLASS__ . '`'
-            );
-        }
-        return static::$instance;
-    }
-
-    /**
-     * getInstance
+     * Get class instance
      *
      * @throws Exception
-     * @return static
+     * @return static::$instance
      */
     final public static function getInstance()
     {
@@ -71,7 +42,7 @@ trait Singleton
     /**
      * Disabled by access level
      */
-    protected function __wakeup()
+    protected function __construct()
     {
 
     }

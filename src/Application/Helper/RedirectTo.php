@@ -17,10 +17,10 @@ return
     /**
      * redirect to controller
      *
+     * @var Application $this
      * @param string $module
      * @param string $controller
      * @param array $params
-     * @var Application $this
      * @return void
      */
     function ($module = 'index', $controller = 'index', $params = array()) {

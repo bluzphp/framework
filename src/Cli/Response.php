@@ -35,16 +35,13 @@ class Response extends AbstractResponse
         // output messages if exists
         if (app()->hasMessages()) {
             while ($msg = app()->getMessages()->pop(Messages::TYPE_ERROR)) {
-                echo "\033[41m\033[1;37mError    \033[m\033m: ";
-                echo $msg->text . "\n";
+                echo "\033[41m\033[1;37mError    \033[m\033m: ". $msg->text . "\n";
             }
             while ($msg = app()->getMessages()->pop(Messages::TYPE_NOTICE)) {
-                echo "\033[44m\033[1;37mInfo     \033[m\033m: ";
-                echo $msg->text . "\n";
+                echo "\033[44m\033[1;37mInfo     \033[m\033m: ". $msg->text . "\n";
             }
             while ($msg = app()->getMessages()->pop(Messages::TYPE_SUCCESS)) {
-                echo "\033[42m\033[1;37mSuccess  \033[m\033m: ";
-                echo $msg->text . "\n";
+                echo "\033[42m\033[1;37mSuccess  \033[m\033m: ". $msg->text . "\n";
             }
             echo "\n";
         }

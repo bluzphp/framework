@@ -21,6 +21,7 @@ return
     /**
      * @var Grid\Grid $this
      */
+    $rewrite = array();
     $rewrite['limit'] = (int)$limit;
 
     if ($limit != $this->getLimit()) {

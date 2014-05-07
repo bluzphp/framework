@@ -15,7 +15,8 @@ use Bluz\Application\Exception\ForbiddenException;
 
 return
     /**
-     * get current user
+     * Denied helper
+     * can be declared inside Boostrap
      *
      * @return boolean
      */

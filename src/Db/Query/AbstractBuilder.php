@@ -224,7 +224,7 @@ abstract class AbstractBuilder
      * 'groupBy', 'having' and 'orderBy'
      *
      * @param string  $sqlPartName
-     * @param string  $sqlPart
+     * @param string|array  $sqlPart
      * @param boolean $append
      * @return self instance
      */

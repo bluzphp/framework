@@ -18,8 +18,8 @@ namespace Bluz\Db\Query\Traits;
  *
  * @package Bluz\Db\Query\Traits
  *
- * @method \Bluz\Db\Query\AbstractBuilder addQueryPart() addQueryPart(string $sqlPartName, mixed $sqlPart, $append = false)
- * @method \Bluz\Db\Query\AbstractBuilder setParameter() setParameter(string $key, mixed $value, $type = \PDO::PARAM_STR)
+ * @method \Bluz\Db\Query\AbstractBuilder addQueryPart(string $sqlPartName, mixed $sqlPart, $append = false)
+ * @method \Bluz\Db\Query\AbstractBuilder setParameter(string $key, mixed $value, $type = \PDO::PARAM_STR)
  * @method \Bluz\Db\Db getAdapter()
  *
  * @author   Anton Shevchuk

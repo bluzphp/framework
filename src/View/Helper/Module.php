@@ -19,7 +19,7 @@ return
      * or check to current module
      *
      * @param string $module
-     * @return string|boolean
+     * @return string|bool
      */
     function ($module = null) {
     /** @var View $this */

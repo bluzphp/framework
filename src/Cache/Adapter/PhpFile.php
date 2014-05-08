@@ -37,7 +37,7 @@ class PhpFile extends FileBase
      * {@inheritdoc}
      *
      * @param string $id
-     * @return boolean
+     * @return bool
      */
     protected function doContains($id)
     {

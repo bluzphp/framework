@@ -550,7 +550,7 @@ class Db
      *
      * @param \Closure $process
      * @throws DbException
-     * @return boolean
+     * @return bool
      */
     public function transaction($process)
     {

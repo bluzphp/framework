@@ -11,12 +11,17 @@
  */
 namespace Bluz\Db\Query\Traits;
 
+use Bluz\Db\Query\AbstractBuilder;
+
 /**
  * From Trait, required for:
  *  - Select Builder
  *  - Delete Builder
  *
  * @package Bluz\Db\Query\Traits
+ *
+ * @property array $aliases
+ * @method AbstractBuilder addQueryPart(string $sqlPartName, mixed $sqlPart, $append = false)
  *
  * @author   Anton Shevchuk
  * @created  17.06.13 10:46
@@ -36,7 +41,7 @@ trait From
      *
      * @param string $from   The table
      * @param string $alias  The alias of the table
-     * @return $this
+     * @return AbstractBuilder
      */
     public function from($from, $alias)
     {

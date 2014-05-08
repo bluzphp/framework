@@ -225,7 +225,7 @@ abstract class AbstractBuilder
      *
      * @param string  $sqlPartName
      * @param string|array  $sqlPart
-     * @param boolean $append
+     * @param bool $append
      * @return self instance
      */
     protected function addQueryPart($sqlPartName, $sqlPart, $append = false)

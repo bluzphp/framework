@@ -161,7 +161,7 @@ abstract class AbstractCrud
      *
      * @param null $primary
      * @param array $data
-     * @return boolean
+     * @return bool
      */
     public function validate($primary, $data)
     {
@@ -172,7 +172,7 @@ abstract class AbstractCrud
      * createValidation
      *
      * @param array $data
-     * @return boolean
+     * @return bool
      */
     public function validateCreate($data)
     {
@@ -184,7 +184,7 @@ abstract class AbstractCrud
      *
      * @param mixed $primary
      * @param array $data
-     * @return boolean
+     * @return bool
      */
     public function validateUpdate($primary, $data)
     {
@@ -220,7 +220,7 @@ abstract class AbstractCrud
     /**
      * Has errors
      *
-     * @return boolean
+     * @return bool
      */
     public function hasErrors()
     {

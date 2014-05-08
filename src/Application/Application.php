@@ -152,19 +152,19 @@ abstract class Application
 
     /**
      * Debug application flag
-     * @var boolean
+     * @var bool
      */
     protected $debugFlag = false;
 
     /**
      * Layout flag
-     * @var boolean
+     * @var bool
      */
     protected $layoutFlag = true;
 
     /**
      * JSON response flag
-     * @var boolean
+     * @var bool
      */
     protected $jsonFlag = false;
 
@@ -414,7 +414,7 @@ abstract class Application
     /**
      * hasMessages
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMessages()
     {
@@ -601,7 +601,7 @@ abstract class Application
     /**
      * isDebug
      *
-     * @return boolean
+     * @return bool
      */
     public function isDebug()
     {
@@ -611,7 +611,7 @@ abstract class Application
     /**
      * isJson
      *
-     * @return boolean
+     * @return bool
      */
     public function isJson()
     {
@@ -621,7 +621,7 @@ abstract class Application
     /**
      * hasLayout
      *
-     * @return boolean
+     * @return bool
      */
     public function hasLayout()
     {
@@ -631,7 +631,7 @@ abstract class Application
     /**
      * useLayout
      *
-     * @param boolean|string $flag
+     * @param bool|string $flag
      * @return Application
      */
     public function useLayout($flag = true)
@@ -648,7 +648,7 @@ abstract class Application
     /**
      * useJson
      *
-     * @param boolean $flag
+     * @param bool $flag
      * @return Application
      */
     public function useJson($flag = true)
@@ -1219,7 +1219,7 @@ abstract class Application
      *
      * @param string $module
      * @param array $reflection
-     * @return boolean
+     * @return bool
      */
     public function isAllowed($module, $reflection)
     {

@@ -69,7 +69,7 @@ abstract class AbstractStore
     /**
      * Check key
      * @param string $key
-     * @return boolean
+     * @return bool
      */
     abstract public function __isset($key);
 

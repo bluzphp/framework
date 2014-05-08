@@ -85,7 +85,7 @@ class Config
     /**
      * __get
      *
-     * @param $key
+     * @param string $key
      * @return mixed
      */
     public function __get($key)
@@ -100,8 +100,8 @@ class Config
     /**
      * __set
      *
-     * @param $key
-     * @param $value
+     * @param string $key
+     * @param mixed $value
      * @throws ConfigException
      * @return void
      */
@@ -113,8 +113,8 @@ class Config
     /**
      * __isset
      *
-     * @param $key
-     * @return boolean
+     * @param string $key
+     * @return bool
      */
     public function __isset($key)
     {

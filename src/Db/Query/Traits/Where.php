@@ -11,6 +11,7 @@
  */
 namespace Bluz\Db\Query\Traits;
 
+use Bluz\Db\Query\AbstractBuilder;
 use Bluz\Db\Query\CompositeBuilder;
 
 /**
@@ -20,6 +21,10 @@ use Bluz\Db\Query\CompositeBuilder;
  *  - Delete Builder
  *
  * @package Bluz\Db\Query\Traits
+ *
+ * @method AbstractBuilder addQueryPart(string $sqlPartName, mixed $sqlPart, $append = 'true')
+ * @method mixed getQueryPart(string $queryPartName)
+ * @method string prepareCondition($args = array())
  *
  * @author   Anton Shevchuk
  * @created  17.06.13 10:38
@@ -39,7 +44,7 @@ trait Where
      *      ;
      *
      * @param string $condition The query restriction predicates
-     * @return $this
+     * @return AbstractBuilder
      */
     public function where($condition)
     {
@@ -61,7 +66,7 @@ trait Where
      *         ->andWhere('u.is_active = ?', 1);
      *
      * @param string $condition The query restriction predicates
-     * @return $this
+     * @return AbstractBuilder
      */
     public function andWhere($condition)
     {
@@ -90,7 +95,7 @@ trait Where
      *         ->orWhere('u.id = ?', 2);
      *
      * @param string $condition The query restriction predicates
-     * @return $this
+     * @return AbstractBuilder
      */
     public function orWhere($condition)
     {

@@ -30,7 +30,7 @@ class Acl
      *
      * @param string $module
      * @param string $privilege
-     * @return boolean
+     * @return bool
      */
     public function isAllowed($module, $privilege)
     {

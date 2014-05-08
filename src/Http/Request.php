@@ -105,7 +105,7 @@ class Request extends AbstractRequest
      * Check to see if a property is set
      *
      * @param string $key
-     * @return boolean
+     * @return bool
      */
     public function __isset($key)
     {
@@ -218,7 +218,7 @@ class Request extends AbstractRequest
      *
      * Should work with Prototype/Script.aculo.us, possibly others.
      *
-     * @return boolean
+     * @return bool
      */
     public function isXmlHttpRequest()
     {
@@ -228,7 +228,7 @@ class Request extends AbstractRequest
     /**
      * Is this a Flash request?
      *
-     * @return boolean
+     * @return bool
      */
     public function isFlashRequest()
     {
@@ -242,7 +242,7 @@ class Request extends AbstractRequest
      * Accept header, 'Accept-Encoding' to get the Accept-Encoding header.
      *
      * @param string $header HTTP header name
-     * @return string|boolean HTTP header value, or false if not found
+     * @return string|bool HTTP header value, or false if not found
      */
     public function getHeader($header)
     {
@@ -435,7 +435,7 @@ class Request extends AbstractRequest
     /**
      * Get the client's IP address
      *
-     * @param  boolean $checkProxy
+     * @param  bool $checkProxy
      * @return string
      */
     public function getClientIp($checkProxy = true)

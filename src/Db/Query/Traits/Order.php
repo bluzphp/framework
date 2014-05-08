@@ -33,7 +33,7 @@ trait Order
      *
      * @param string $sort expression
      * @param string $order direction
-     * @return $this
+     * @return \Bluz\Db\Query\AbstractBuilder
      */
     public function orderBy($sort, $order = 'ASC')
     {
@@ -45,7 +45,7 @@ trait Order
      *
      * @param string $sort expression
      * @param string $order direction
-     * @return $this
+     * @return \Bluz\Db\Query\AbstractBuilder
      */
     public function addOrderBy($sort, $order = 'ASC')
     {

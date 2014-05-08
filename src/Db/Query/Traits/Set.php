@@ -39,7 +39,7 @@ trait Set
      *
      * @param string $key The column to set
      * @param string $value The value, expression, placeholder, etc
-     * @return $this
+     * @return \Bluz\Db\Query\AbstractBuilder
      */
     public function set($key, $value)
     {

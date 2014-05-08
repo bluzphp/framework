@@ -43,7 +43,7 @@ trait Where
      *      ;
      *
      * @param string $condition The query restriction predicates
-     * @return $this
+     * @return \Bluz\Db\Query\AbstractBuilder
      */
     public function where($condition)
     {
@@ -65,7 +65,7 @@ trait Where
      *         ->andWhere('u.is_active = ?', 1);
      *
      * @param string $condition The query restriction predicates
-     * @return $this
+     * @return \Bluz\Db\Query\AbstractBuilder
      */
     public function andWhere($condition)
     {
@@ -94,7 +94,7 @@ trait Where
      *         ->orWhere('u.id = ?', 2);
      *
      * @param string $condition The query restriction predicates
-     * @return $this
+     * @return \Bluz\Db\Query\AbstractBuilder
      */
     public function orWhere($condition)
     {

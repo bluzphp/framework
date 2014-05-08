@@ -19,6 +19,8 @@ namespace Bluz\Db\Query\Traits;
  *
  * @package Bluz\Db\Query\Traits
  *
+ * @method $this addQueryPart(string $sqlPartName, mixed $sqlPart, $append = false)
+ *
  * @author   Anton Shevchuk
  * @created  17.06.13 10:00
  */

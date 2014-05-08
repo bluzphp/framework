@@ -2,7 +2,7 @@
          backupStaticAttributes="false"
          stopOnFailure="false"
          colors="true"
-         verbose="true"
+         verbose="false"
          bootstrap="./bootstrap.php">
     <testsuites>
         <testsuite name="Framework Test Suite">

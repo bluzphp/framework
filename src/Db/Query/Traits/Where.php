@@ -21,6 +21,10 @@ use Bluz\Db\Query\CompositeBuilder;
  *
  * @package Bluz\Db\Query\Traits
  *
+ * @method $this addQueryPart(string $sqlPartName, mixed $sqlPart, $append = false)
+ * @method mixed getQueryPart(string $queryPartName)
+ * @method string prepareCondition($args = array())
+ *
  * @author   Anton Shevchuk
  * @created  17.06.13 10:38
  */

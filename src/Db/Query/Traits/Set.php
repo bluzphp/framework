@@ -11,6 +11,9 @@
  */
 namespace Bluz\Db\Query\Traits;
 
+use Bluz\Db\Db;
+use Bluz\Db\Query\AbstractBuilder;
+
 /**
  * Set Trait, required for:
  *  - Insert Builder
@@ -18,9 +21,9 @@ namespace Bluz\Db\Query\Traits;
  *
  * @package Bluz\Db\Query\Traits
  *
- * @method \Bluz\Db\Query\AbstractBuilder addQueryPart(string $sqlPartName, mixed $sqlPart, $append = false)
- * @method \Bluz\Db\Query\AbstractBuilder setParameter(string $key, mixed $value, $type = \PDO::PARAM_STR)
- * @method \Bluz\Db\Db getAdapter()
+ * @method AbstractBuilder addQueryPart(string $sqlPartName, mixed $sqlPart, $append = false)
+ * @method AbstractBuilder setParameter(string $key, mixed $value, $type = \PDO::PARAM_STR)
+ * @method Db getAdapter()
  *
  * @author   Anton Shevchuk
  * @created  17.06.13 10:00
@@ -39,7 +42,7 @@ trait Set
      *
      * @param string $key The column to set
      * @param string $value The value, expression, placeholder, etc
-     * @return \Bluz\Db\Query\AbstractBuilder
+     * @return AbstractBuilder
      */
     public function set($key, $value)
     {

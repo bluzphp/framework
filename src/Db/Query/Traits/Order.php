@@ -11,6 +11,8 @@
  */
 namespace Bluz\Db\Query\Traits;
 
+use Bluz\Db\Query\AbstractBuilder;
+
 /**
  * Order Trait, required for:
  *  - Select Builder
@@ -19,7 +21,7 @@ namespace Bluz\Db\Query\Traits;
  *
  * @package Bluz\Db\Query\Traits
  *
- * @method \Bluz\Db\Query\AbstractBuilder addQueryPart(string $sqlPartName, mixed $sqlPart, $append = false)
+ * @method AbstractBuilder addQueryPart(string $sqlPartName, mixed $sqlPart, $append = false)
  *
  * @author   Anton Shevchuk
  * @created  17.06.13 10:00
@@ -33,7 +35,7 @@ trait Order
      *
      * @param string $sort expression
      * @param string $order direction
-     * @return \Bluz\Db\Query\AbstractBuilder
+     * @return AbstractBuilder
      */
     public function orderBy($sort, $order = 'ASC')
     {
@@ -45,7 +47,7 @@ trait Order
      *
      * @param string $sort expression
      * @param string $order direction
-     * @return \Bluz\Db\Query\AbstractBuilder
+     * @return AbstractBuilder
      */
     public function addOrderBy($sort, $order = 'ASC')
     {

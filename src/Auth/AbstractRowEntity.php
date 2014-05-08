@@ -30,7 +30,7 @@ abstract class AbstractRowEntity extends Row implements EntityInterface
      * Can entity login
      *
      * @throws AuthException
-     * @return boolean
+     * @return bool
      */
     abstract public function tryLogin();
 
@@ -39,7 +39,7 @@ abstract class AbstractRowEntity extends Row implements EntityInterface
      *
      * @param string $module
      * @param string $privilege
-     * @return boolean
+     * @return bool
      */
     public function hasPrivilege($module, $privilege)
     {

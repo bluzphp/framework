@@ -32,7 +32,7 @@ class Mailer
      * checkOptions
      *
      * @throws ConfigException
-     * @return boolean
+     * @return bool
      */
     protected function checkOptions()
     {

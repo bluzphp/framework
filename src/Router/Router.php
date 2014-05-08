@@ -291,7 +291,7 @@ class Router
     /**
      * process default router
      *
-     * @return boolean
+     * @return bool
      */
     protected function processDefault()
     {
@@ -303,7 +303,7 @@ class Router
     /**
      * process custom router
      *
-     * @return boolean
+     * @return bool
      */
     protected function processCustom()
     {
@@ -334,7 +334,7 @@ class Router
      *     /:module/:controller/
      *     /:module/:controller/:key1/:value1/:key2/:value2...
      *
-     * @return boolean
+     * @return bool
      */
     protected function processRoute()
     {

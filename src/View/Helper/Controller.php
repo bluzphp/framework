@@ -19,7 +19,7 @@ return
      * or check to current controller
      *
      * @param string $controller
-     * @return string|boolean
+     * @return string|bool
      */
     function ($controller = null) {
     /** @var View $this */

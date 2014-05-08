@@ -88,7 +88,7 @@ class Memcached extends AbstractAdapter
      * @param string $id
      * @param mixed $data
      * @param int $ttl
-     * @return boolean
+     * @return bool
      */
     protected function doAdd($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
@@ -101,7 +101,7 @@ class Memcached extends AbstractAdapter
      * @param string $id
      * @param mixed $data
      * @param int $ttl
-     * @return boolean
+     * @return bool
      */
     protected function doSet($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
@@ -112,7 +112,7 @@ class Memcached extends AbstractAdapter
      * {@inheritdoc}
      *
      * @param string $id
-     * @return boolean
+     * @return bool
      */
     protected function doContains($id)
     {
@@ -124,7 +124,7 @@ class Memcached extends AbstractAdapter
      * {@inheritdoc}
      *
      * @param string $id
-     * @return boolean
+     * @return bool
      */
     protected function doDelete($id)
     {
@@ -134,7 +134,7 @@ class Memcached extends AbstractAdapter
     /**
      * {@inheritdoc}
      *
-     * @return boolean
+     * @return bool
      */
     protected function doFlush()
     {

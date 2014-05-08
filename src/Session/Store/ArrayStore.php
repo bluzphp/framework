@@ -65,7 +65,7 @@ class ArrayStore extends AbstractStore
      * {@inheritdoc}
      *
      * @param string $key
-     * @return boolean
+     * @return bool
      */
     public function __isset($key)
     {

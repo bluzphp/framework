@@ -18,7 +18,7 @@ return
      * Denied helper
      * can be declared inside Boostrap
      *
-     * @return boolean
+     * @return bool
      */
     function () {
         throw new ForbiddenException();

@@ -60,7 +60,7 @@ class Cache implements CacheInterface, TagableInterface
      * Check Cache configuration
      *
      * @throws \Bluz\Config\ConfigException
-     * @return boolean
+     * @return bool
      */
     protected function checkOptions()
     {

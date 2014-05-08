@@ -114,7 +114,7 @@ class SessionStore extends AbstractStore
      * {@inheritdoc}
      *
      * @param string $key
-     * @return boolean
+     * @return bool
      */
     public function __isset($key)
     {
@@ -141,7 +141,7 @@ class SessionStore extends AbstractStore
     /**
      * {@inheritdoc}
      *
-     * @return boolean
+     * @return bool
      */
     public function destroy()
     {
@@ -151,7 +151,7 @@ class SessionStore extends AbstractStore
     /**
      * Returns true if session ID is set.
      *
-     * @return boolean
+     * @return bool
      */
     protected function hasSessionId()
     {

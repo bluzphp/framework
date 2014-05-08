@@ -25,12 +25,12 @@ use Bluz\Common\Options;
  * @method string baseUrl(\string $file = null)
  * @method array|null breadCrumbs(array $data = [])
  * @method string checkbox($name, $value = null, $checked = false, array $attributes = [])
- * @method string|boolean controller(\string $controller = null)
+ * @method string|bool controller(\string $controller = null)
  * @method string|View dispatch($module, $controller, $params = array())
  * @method string|null headScript(\string $script = null)
  * @method string|null headStyle(\string $style = null, $media = 'all')
  * @method string|View meta(\string $name = null, string $content = null)
- * @method string|boolean module(\string $module = null)
+ * @method string|bool module(\string $module = null)
  * @method string|View link(string $src = null, string $rel = 'stylesheet')
  * @method string partial($__template, $__params = array())
  * @method string partialLoop($template, $data = [], $params = [])
@@ -39,7 +39,7 @@ use Bluz\Common\Options;
  * @method string select($name, array $options = [], $selected = null, array $attributes = [])
  * @method string style(\string $style, $media = 'all')
  * @method string|View title(\string $title = null, $position = 'replace', $separator = ' :: ')
- * @method string|View url(\string $module, \string $controller, array $params = [], boolean $checkAccess = false)
+ * @method string|View url(\string $module, \string $controller, array $params = [], bool $checkAccess = false)
  * @method \Bluz\Auth\AbstractRowEntity|null user()
  * @method void widget($module, $widget, $params = [])
  *
@@ -131,7 +131,7 @@ class View implements ViewInterface, \JsonSerializable
      * Is set a variable
      *
      * @param string $key
-     * @return boolean
+     * @return bool
      */
     public function __isset($key)
     {

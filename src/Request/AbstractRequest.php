@@ -181,7 +181,7 @@ class AbstractRequest
      * Check to see if a property is set
      *
      * @param string $key
-     * @return boolean
+     * @return bool
      */
     public function __isset($key)
     {
@@ -324,7 +324,7 @@ class AbstractRequest
     /**
      * check CLI
      *
-     * @return boolean
+     * @return bool
      */
     public function isCli()
     {
@@ -334,7 +334,7 @@ class AbstractRequest
     /**
      * check HTTP
      *
-     * @return boolean
+     * @return bool
      */
     public function isHttp()
     {

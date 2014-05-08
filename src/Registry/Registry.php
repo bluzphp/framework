@@ -46,7 +46,7 @@ class Registry
      * exists key
      *
      * @param string $key
-     * @return boolean
+     * @return bool
      */
     public function __isset($key)
     {

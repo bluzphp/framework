@@ -616,7 +616,7 @@ abstract class Grid
      * Check filter
      *
      * @param string $filter
-     * @return boolean
+     * @return bool
      */
     public function checkFilter($filter)
     {

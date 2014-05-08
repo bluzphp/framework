@@ -93,7 +93,7 @@ trait Options
      * Validation
      *
      * @throws \Bluz\Config\ConfigException
-     * @return boolean
+     * @return bool
      */
     protected function checkOptions()
     {

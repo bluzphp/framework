@@ -29,7 +29,7 @@ interface EntityInterface
      *
      * @param string $module
      * @param string $privilege
-     * @return boolean
+     * @return bool
      */
     public function hasPrivilege($module, $privilege);
 }

@@ -35,13 +35,13 @@ class Response extends AbstractResponse
         // output messages if exists
         if (app()->hasMessages()) {
             while ($msg = app()->getMessages()->pop(Messages::TYPE_ERROR)) {
-                echo "\033[41m\033[1;37mError    \033[m\033m: ". $msg->text . "\n";
+                echo Colorize::text("Error   ", "white", "red", true) . ": ". $msg->text . "\n";
             }
             while ($msg = app()->getMessages()->pop(Messages::TYPE_NOTICE)) {
-                echo "\033[44m\033[1;37mInfo     \033[m\033m: ". $msg->text . "\n";
+                echo Colorize::text("Info    ", "white", "blue", true) . ": ". $msg->text . "\n";
             }
             while ($msg = app()->getMessages()->pop(Messages::TYPE_SUCCESS)) {
-                echo "\033[42m\033[1;37mSuccess  \033[m\033m: ". $msg->text . "\n";
+                echo Colorize::text("Success ", "white", "green", true) . ": ". $msg->text . "\n";
             }
             echo "\n";
         }
@@ -63,7 +63,7 @@ class Response extends AbstractResponse
 
         // just print to console
         foreach ($response as $key => $value) {
-            echo "\033[1;33m$key\033[m:\n";
+            echo Colorize::text($key, "yellow", null, true) . ": ";
             print_r($value);
             echo "\n";
         }

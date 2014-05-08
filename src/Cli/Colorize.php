@@ -85,4 +85,3 @@ class Colorize
         return $colored;
     }
 }
- 

@@ -94,7 +94,7 @@ if (!function_exists('__')) {
      *     // equal to sprintf(gettext('Message to %s'), 'Username')
      *     __('Message to %s', 'Username');
      *
-     * @param string $message
+     * @param string $message,...
      * @return string
      */
     function __($message)
@@ -118,7 +118,7 @@ if (!function_exists('_n')) {
      *
      * @param string $singular
      * @param string $plural
-     * @param integer $number
+     * @param integer $number,...
      * @return string
      */
     function _n($singular, $plural, $number)

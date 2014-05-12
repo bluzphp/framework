@@ -101,7 +101,7 @@ class View implements ViewInterface, \JsonSerializable
      */
     public function __sleep()
     {
-        return ['baseUrl', 'data', 'system', 'path', 'template'];
+        return ['baseUrl', 'data', 'path', 'template'];
     }
 
     /**

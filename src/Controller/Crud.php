@@ -99,7 +99,6 @@ class Crud extends AbstractController
                 break;
             default:
                 throw new NotImplementedException();
-                break;
         }
         return $result;
     }

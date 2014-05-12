@@ -50,7 +50,7 @@ trait Where
     {
         $condition = $this->prepareCondition(func_get_args());
 
-        return $this->addQueryPart('where', $condition);
+        return $this->addQueryPart('where', $condition, false);
     }
 
     /**
@@ -79,7 +79,7 @@ trait Where
         } else {
             $where = new CompositeBuilder([$where, $condition]);
         }
-        return $this->addQueryPart('where', $where);
+        return $this->addQueryPart('where', $where, false);
     }
 
     /**
@@ -108,6 +108,6 @@ trait Where
         } else {
             $where = new CompositeBuilder([$where, $condition], 'OR');
         }
-        return $this->addQueryPart('where', $where);
+        return $this->addQueryPart('where', $where, false);
     }
 }

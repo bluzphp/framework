@@ -140,7 +140,6 @@ class Rest extends AbstractController
 
                     return $this->readSet($offset, $limit, $this->params);
                 }
-                break;
             case Request::METHOD_POST:
                 if ($this->primary) {
                     // POST + ID is incorrect behaviour
@@ -168,7 +167,6 @@ class Rest extends AbstractController
                     'Location: '.app()->getRouter()->url($request->getModule(), $request->getController()).'/'.$uid
                 );
                 return false; // disable view
-                break;
             case Request::METHOD_PATCH:
             case Request::METHOD_PUT:
                 if (!sizeof($this->data)) {
@@ -194,7 +192,6 @@ class Rest extends AbstractController
                     return ['errors' => $this->getCrud()->getErrors()];
                 }
                 return false; // disable view
-                break;
             case Request::METHOD_DELETE:
                 if ($this->primary) {
                     // delete one
@@ -215,10 +212,8 @@ class Rest extends AbstractController
                     http_response_code(204);
                 }
                 return false; // disable view
-                break;
             default:
                 throw new NotImplementedException();
-                break;
         }
     }
 }

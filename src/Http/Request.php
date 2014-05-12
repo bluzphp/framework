@@ -245,7 +245,7 @@ class Request extends AbstractRequest
      * Accept header, 'Accept-Encoding' to get the Accept-Encoding header.
      *
      * @param string $header HTTP header name
-     * @return string|bool HTTP header value, or false if not found
+     * @return string|false HTTP header value, or false if not found
      */
     public function getHeader($header)
     {

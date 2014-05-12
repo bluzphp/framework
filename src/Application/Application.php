@@ -496,6 +496,7 @@ abstract class Application
                         $this->useJson(true);
                     }
                 }
+
             }
         }
         return $this->request;

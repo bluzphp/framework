@@ -42,7 +42,7 @@ class Session
 
     /**
      * Session store parameters
-     * @var string
+     * @var array
      */
     protected $storeSettings = array();
 

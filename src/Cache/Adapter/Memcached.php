@@ -60,12 +60,17 @@ class Memcached extends AbstractAdapter
     public function getHandler()
     {
         if (!$this->memcached) {
-            $this->memcached = new \Memcached();
-            $this->memcached->addServers($this->settings['servers']);
+
+            $persistentId = isset($this->settings['persistent']) ? $this->settings['persistent'] : null;
+
+            $this->memcached = new \Memcached($persistentId);
+
+            if (!$this->memcached->getServerList()) {
+                $this->memcached->addServers($this->settings['servers']);
+            }
+
             if (isset($this->settings['options'])) {
-                foreach ($this->settings['options'] as $key => $value) {
-                    $this->memcached->setOption($key, $value);
-                }
+                $this->memcached->setOptions($this->settings['options']);
             }
         }
         return $this->memcached;

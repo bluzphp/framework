@@ -359,7 +359,7 @@ class Select extends AbstractBuilder
      * Adds a restriction over the groups of the query, forming a logical
      * conjunction with any existing having restrictions
      *
-     * @param mixed $condition The restriction to append
+     * @param mixed $condition,... The restriction to append
      * @return Select
      */
     public function andHaving($condition)
@@ -380,7 +380,7 @@ class Select extends AbstractBuilder
      * Adds a restriction over the groups of the query, forming a logical
      * disjunction with any existing having restrictions.
      *
-     * @param mixed $condition The restriction to add
+     * @param mixed $condition,... The restriction to add
      * @return Select
      */
     public function orHaving($condition)
@@ -416,7 +416,7 @@ class Select extends AbstractBuilder
     /**
      * Generate SQL string for JOINs
      *
-     * @param $fromAlias
+     * @param $fromAlias,...
      * @return string
      */
     protected function getSQLForJoins($fromAlias)

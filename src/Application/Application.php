@@ -233,7 +233,7 @@ abstract class Application
     }
 
     /**
-     * log message, working with logger
+     * Log message, working with logger
      *
      * @param string $message
      * @param array $context
@@ -245,7 +245,7 @@ abstract class Application
     }
 
     /**
-     * load config file
+     * Load configuration file
      *
      * @param string|null $environment
      * @return Config
@@ -261,7 +261,7 @@ abstract class Application
     }
 
     /**
-     * config
+     * Get configuration for same section and subsection
      *
      * @param string|null $section of config
      * @param string|null $subsection of config
@@ -273,7 +273,7 @@ abstract class Application
     }
 
     /**
-     * getAcl
+     * Get Acl instance
      *
      * @return Acl
      */
@@ -286,7 +286,7 @@ abstract class Application
     }
 
     /**
-     * getAuth
+     * Get Auth instance
      *
      * @return Auth
      */
@@ -300,7 +300,7 @@ abstract class Application
     }
 
     /**
-     * if enabled return configured Cache or Nil otherwise
+     * If enabled return configured Cache or Nil otherwise
      *
      * @return Cache instance or Nil
      */
@@ -319,7 +319,7 @@ abstract class Application
     }
 
     /**
-     * getDb
+     * Get Db Instance
      *
      * @return Db
      */
@@ -333,7 +333,7 @@ abstract class Application
     }
 
     /**
-     * getEventManager
+     * Get EventManager instance
      *
      * @return EventManager
      */
@@ -346,7 +346,7 @@ abstract class Application
     }
 
     /**
-     * getLayout
+     * Get Layout instance
      *
      * @return Layout
      */
@@ -371,7 +371,7 @@ abstract class Application
     }
 
     /**
-     * load logger
+     * Get logger instance
      *
      * @return Logger instance or Nil
      */
@@ -389,7 +389,7 @@ abstract class Application
     }
 
     /**
-     * getMailer
+     * Get Mailer instance
      *
      * @throws ConfigException
      * @return Mailer
@@ -412,7 +412,7 @@ abstract class Application
     }
 
     /**
-     * hasMessages
+     * Check Messages
      *
      * @return bool
      */
@@ -426,7 +426,7 @@ abstract class Application
     }
 
     /**
-     * getMessages
+     * Get Messages instance
      *
      * @return Messages
      */
@@ -440,7 +440,7 @@ abstract class Application
     }
 
     /**
-     * getPath
+     * Get path to Application
      *
      * @return string
      */
@@ -458,7 +458,7 @@ abstract class Application
     }
 
     /**
-     * getRegistry
+     * Get Registry instance
      *
      * @return Registry
      */
@@ -474,7 +474,7 @@ abstract class Application
     }
 
     /**
-     * getRequest
+     * Get Request instance
      *
      * @return Http\Request
      */
@@ -488,13 +488,13 @@ abstract class Application
                 $this->useLayout(false);
 
                 // check header "accept" for catch AJAX JSON requests, and switch to JSON response
-                $accept = $this->getRequest()->getHeader('accept');
-
-                // MIME type can be "application/json", "application/json; charset=utf-8" etc.
-                $accept = str_replace(';', ',', $accept);
-                $accept = explode(',', $accept);
-                if (in_array("application/json", $accept)) {
-                    $this->useJson(true);
+                if ($accept = $this->getRequest()->getHeader('accept')) {
+                    // MIME type can be "application/json", "application/json; charset=utf-8" etc.
+                    $accept = str_replace(';', ',', $accept);
+                    $accept = explode(',', $accept);
+                    if (in_array("application/json", $accept)) {
+                        $this->useJson(true);
+                    }
                 }
             }
         }
@@ -502,7 +502,7 @@ abstract class Application
     }
 
     /**
-     * setRequest
+     * Set Request instance
      *
      * @param Request\AbstractRequest $request
      * @return Application
@@ -514,7 +514,7 @@ abstract class Application
     }
 
     /**
-     * getResponse
+     * Get Response instance
      *
      * @return Response\AbstractResponse
      */
@@ -528,7 +528,7 @@ abstract class Application
     }
 
     /**
-     * setResponse
+     * Set Response instance
      *
      * @param Response\AbstractResponse $response
      * @return Application
@@ -540,7 +540,7 @@ abstract class Application
     }
 
     /**
-     * getRouter
+     * Get Router instance
      *
      * @return Router
      */
@@ -554,7 +554,7 @@ abstract class Application
     }
 
     /**
-     * getSession
+     * Get Session instance
      *
      * @return Session
      */
@@ -570,7 +570,7 @@ abstract class Application
     }
 
     /**
-     * getTranslator
+     * Get Translator instance
      *
      * @return Translator
      */
@@ -584,7 +584,7 @@ abstract class Application
     }
 
     /**
-     * return new instance of view
+     * Create new instance of view and return it
      *
      * @return View
      */
@@ -599,7 +599,7 @@ abstract class Application
     }
 
     /**
-     * isDebug
+     * Check debug flag
      *
      * @return bool
      */
@@ -609,7 +609,7 @@ abstract class Application
     }
 
     /**
-     * isJson
+     * Check Json flag
      *
      * @return bool
      */
@@ -619,7 +619,7 @@ abstract class Application
     }
 
     /**
-     * hasLayout
+     * Check Layout flag
      *
      * @return bool
      */
@@ -629,7 +629,7 @@ abstract class Application
     }
 
     /**
-     * useLayout
+     * Set Layout template and/or flag
      *
      * @param bool|string $flag
      * @return Application
@@ -646,7 +646,7 @@ abstract class Application
     }
 
     /**
-     * useJson
+     * Set Json flag
      *
      * @param bool $flag
      * @return Application
@@ -922,7 +922,7 @@ abstract class Application
     }
 
     /**
-     * render
+     * Render, is send Response
      *
      * @return void
      */
@@ -934,7 +934,7 @@ abstract class Application
     }
 
     /**
-     * widget
+     * Widget call
      *
      * Call widget from any \Bluz\Package
      *     app()->widget($module, $widget, array $params);
@@ -1000,7 +1000,7 @@ abstract class Application
     }
 
     /**
-     * api
+     * Api call
      *
      * Call API from any \Bluz\Package
      *     app()->api($module, $widget, array $params);
@@ -1055,7 +1055,7 @@ abstract class Application
     }
 
     /**
-     * reflection for anonymous function
+     * Retrieve reflection for anonymous function
      *
      * @param string $file
      * @throws Exception
@@ -1169,7 +1169,7 @@ abstract class Application
     }
 
     /**
-     * process params:
+     * Process params
      *  - type conversion
      *  - default values
      *

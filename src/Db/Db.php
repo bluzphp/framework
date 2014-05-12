@@ -113,6 +113,18 @@ class Db
     public function setConnect(array $connect)
     {
         $this->connect = array_merge($this->connect, $connect);
+        $this->checkConnect();
+        return $this;
+    }
+
+    /**
+     * Check connection options
+     *
+     * @throws Exception\DbException
+     * @return void
+     */
+    private function checkConnect()
+    {
         if (empty($this->connect['type']) or
             empty($this->connect['host']) or
             empty($this->connect['name']) or
@@ -120,7 +132,6 @@ class Db
         ) {
             throw new DbException('Db connection can\'t be initialized: required type, host, db name and user');
         }
-        return $this;
     }
 
     /**
@@ -144,14 +155,8 @@ class Db
     public function connect()
     {
         if (empty($this->dbh)) {
-            if (empty($this->connect['type']) or
-                empty($this->connect['host']) or
-                empty($this->connect['name']) or
-                empty($this->connect['user'])
-            ) {
-                throw new DbException('Db connection can\'t be initialized: required type, host, db name and user');
-            }
             try {
+                $this->checkConnect();
                 $this->log("Connect to " . $this->connect['host']);
                 $this->dbh = new \PDO(
                     $this->connect['type'] . ":host=" . $this->connect['host'] . ";dbname=" . $this->connect['name'],
@@ -258,7 +263,7 @@ class Db
     /**
      * Create new query select builder
      *
-     * @param string $select The selection expressions
+     * @param string $select,... The selection expressions
      * @return Query\Select
      */
     public function select($select)

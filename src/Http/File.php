@@ -206,22 +206,18 @@ class File
             case 'terabyte':
             case 'terabytes':
                 return round($this->size / (1024 * 1024 * 1024 * 1024));
-                break;
             case 'gb':
             case 'gigabyte':
             case 'gigabytes':
                 return round($this->size / (1024 * 1024 * 1024));
-                break;
             case 'mb':
             case 'megabyte':
             case 'megabytes':
                 return round($this->size / (1024 * 1024));
-                break;
             case 'kb':
             case 'kilobyte':
             case 'kilobytes':
                 return round($this->size / 1024);
-                break;
             case 'b':
             case 'byte':
             case 'bytes':

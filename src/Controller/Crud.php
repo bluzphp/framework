@@ -52,7 +52,6 @@ class Crud extends AbstractController
                     // create form
                     $result['method'] = Request::METHOD_POST;
                 }
-                return $result;
                 break;
             case Request::METHOD_POST:
                 try {
@@ -63,7 +62,6 @@ class Crud extends AbstractController
                             'row'    => $row,
                             'method' => Request::METHOD_PUT
                         ];
-                        return $result;
                     }
                 } catch (ValidationException $e) {
                     $row = $this->readOne(null);
@@ -73,20 +71,18 @@ class Crud extends AbstractController
                         'errors' => $this->getCrud()->getErrors(),
                         'method' => $this->getMethod()
                     ];
-                    return $result;
                 }
                 break;
             case Request::METHOD_PATCH:
             case Request::METHOD_PUT:
                 try {
-                    $this->updateOne($primary, $this->data);
+                    $result = $this->updateOne($primary, $this->data);
                     if (!app()->getRequest()->isXmlHttpRequest()) {
                         $row = $this->readOne($primary);
                         $result = [
                             'row'    => $row,
                             'method' => $this->getMethod()
                         ];
-                        return $result;
                     }
                 } catch (ValidationException $e) {
                     $row = $this->readOne($primary);
@@ -96,16 +92,16 @@ class Crud extends AbstractController
                         'errors' => $this->getCrud()->getErrors(),
                         'method' => $this->getMethod()
                     ];
-                    return $result;
                 }
                 break;
             case Request::METHOD_DELETE:
-                $this->deleteOne($primary);
+                $result = $this->deleteOne($primary);
                 break;
             default:
                 throw new NotImplementedException();
                 break;
         }
+        return $result;
     }
 
     /**

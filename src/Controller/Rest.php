@@ -88,10 +88,11 @@ class Rest extends AbstractController
     {
         $request = app()->getRequest();
 
-        $accept = $request->getHeader('accept');
-        $accept = explode(',', $accept);
-        if (in_array("application/json", $accept)) {
-            app()->useJson(true);
+        if ($accept = $request->getHeader('accept')) {
+            $accept = explode(',', $accept);
+            if (in_array("application/json", $accept)) {
+                app()->useJson(true);
+            }
         }
 
         // everyone method can return:

@@ -43,7 +43,7 @@ trait Where
      *         ->where('u.id = ?', $id)
      *      ;
      *
-     * @param string $condition The query restriction predicates
+     * @param string $condition,... The query restriction predicates
      * @return AbstractBuilder
      */
     public function where($condition)
@@ -65,7 +65,7 @@ trait Where
      *         ->where('u.username LIKE ?', '%Smith%')
      *         ->andWhere('u.is_active = ?', 1);
      *
-     * @param string $condition The query restriction predicates
+     * @param string $condition,... The query restriction predicates
      * @return AbstractBuilder
      */
     public function andWhere($condition)
@@ -94,7 +94,7 @@ trait Where
      *         ->where('u.id = 1')
      *         ->orWhere('u.id = ?', 2);
      *
-     * @param string $condition The query restriction predicates
+     * @param string $condition,... The query restriction predicates
      * @return AbstractBuilder
      */
     public function orWhere($condition)

@@ -16,7 +16,7 @@ use Bluz\View\ViewException;
 
 return
     /**
-     * Partial loop View Helper
+     * Render partial script in loop
      *
      * Example of usage:
      *     <?php
@@ -34,6 +34,7 @@ return
      *      </tr>
      *     ?>
      *
+     * @var View $this
      * @param       $template
      * @param array $data
      * @param array $params
@@ -41,7 +42,6 @@ return
      * @return string
      */
     function ($template, $data = array(), $params = array()) {
-    /** @var View $this */
     if (!is_array($data)
         && (!$data instanceof \Traversable)
         && (is_object($data) && !method_exists($data, 'toArray'))

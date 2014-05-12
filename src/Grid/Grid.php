@@ -322,7 +322,7 @@ abstract class Grid
                         $filterType = substr($filter, 0, $pos);
                         $filter = substr($filter, $pos + 1);
 
-                        if ($pos = strpos($filter, '-')) {
+                        if (strpos($filter, '-')) {
                             $filterValue = substr($filter, 0, strpos($filter, '-'));
                             $filter = substr($filter, strpos($filter, '-') + 1);
                         } else {

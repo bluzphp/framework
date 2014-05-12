@@ -15,33 +15,37 @@ use Bluz\View\View;
 
 return
     /**
+     * Set or generate <title> code for <head>
+     *
+     * @var View $this
      * @param string $title
      * @param string $position
      * @param string $separator
-     * return string|View
+     * @return string|View
      */
     function ($title = null, $position = View::POS_REPLACE, $separator = ' :: ') {
-    /** @var View $this */
+
     if (app()->hasLayout()) {
-        // it's stack for <head>
-        $layout = app()->getLayout();
-        if ($title === null) {
-            return $layout->system('title');
+        // it's stack for <title> tag
+        if (null === $title) {
+            return app()->getRegistry()->__get('layout:title');
         } else {
+            $oldTitle = app()->getRegistry()->__get('layout:title');
             // switch statement for $position
             switch ($position) {
                 case View::POS_PREPEND:
-                    $result = $title . (!$layout->system('title') ? : $separator . $layout->system('title'));
+                    $result = $title . (!$oldTitle ? : $separator . $oldTitle);
                     break;
                 case View::POS_APPEND:
-                    $result = (!$layout->system('title') ? : $layout->system('title') . $separator) . $title;
+                    $result = (!$oldTitle ? : $oldTitle . $separator) . $title;
                     break;
                 case View::POS_REPLACE:
                 default:
                     $result = $title;
                     break;
             }
-            $layout->system('title', $result);
+            app()->getRegistry()->__set('layout:title', $result);
+            return $this;
         }
     }
     return '';

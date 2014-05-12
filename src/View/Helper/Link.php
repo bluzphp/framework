@@ -15,16 +15,16 @@ use Bluz\View\View;
 
 return
     /**
+     * Set or generate <link> code for <head>
+     *
+     * @var View $this
      * @param array $link
-     * @return string
+     * @return string|View
      */
     function (array $link = null) {
-    /** @var View $this */
     if (app()->hasLayout()) {
         // it's stack for <head>
-        $layout = app()->getLayout();
-
-        $links = $layout->system('link') ? : [];
+        $links = app()->getRegistry()->__get('layout:link') ? : [];
 
         if (null === $link) {
             $links = array_unique($links);
@@ -36,11 +36,12 @@ return
                 $links
             );
             // clear system vars
-            $layout->system('link', []);
+            app()->getRegistry()->__set('layout:link', []);
             return join("\n", $links);
         } else {
             $links[] = $link;
-            $layout->system('link', $links);
+            app()->getRegistry()->__set('layout:link', $links);
+            return $this;
         }
     }
     return '';

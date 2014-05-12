@@ -43,14 +43,14 @@ trait Where
      *         ->where('u.id = ?', $id)
      *      ;
      *
-     * @param string $condition The query restriction predicates
+     * @param string $condition,... The query restriction predicates
      * @return AbstractBuilder
      */
     public function where($condition)
     {
         $condition = $this->prepareCondition(func_get_args());
 
-        return $this->addQueryPart('where', $condition);
+        return $this->addQueryPart('where', $condition, false);
     }
 
     /**
@@ -65,7 +65,7 @@ trait Where
      *         ->where('u.username LIKE ?', '%Smith%')
      *         ->andWhere('u.is_active = ?', 1);
      *
-     * @param string $condition The query restriction predicates
+     * @param string $condition,... The query restriction predicates
      * @return AbstractBuilder
      */
     public function andWhere($condition)
@@ -79,7 +79,7 @@ trait Where
         } else {
             $where = new CompositeBuilder([$where, $condition]);
         }
-        return $this->addQueryPart('where', $where);
+        return $this->addQueryPart('where', $where, false);
     }
 
     /**
@@ -94,7 +94,7 @@ trait Where
      *         ->where('u.id = 1')
      *         ->orWhere('u.id = ?', 2);
      *
-     * @param string $condition The query restriction predicates
+     * @param string $condition,... The query restriction predicates
      * @return AbstractBuilder
      */
     public function orWhere($condition)
@@ -108,6 +108,6 @@ trait Where
         } else {
             $where = new CompositeBuilder([$where, $condition], 'OR');
         }
-        return $this->addQueryPart('where', $where);
+        return $this->addQueryPart('where', $where, false);
     }
 }

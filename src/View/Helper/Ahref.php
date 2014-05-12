@@ -15,15 +15,17 @@ use Bluz\View\View;
 
 return
     /**
+     * Generate HTML for <a> element
+     *
      * @author ErgallM
      *
+     * @var View $this
      * @param string $text
      * @param string|array $href
      * @param array $attributes HTML attributes
-     * @return \Closure
+     * @return string
      */
     function ($text, $href, array $attributes = []) {
-    /** @var View $this */
     // if href is settings for url helper
     if (is_array($href)) {
         $href = call_user_func_array(array($this, 'url'), $href);

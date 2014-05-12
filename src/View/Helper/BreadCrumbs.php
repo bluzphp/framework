@@ -15,18 +15,20 @@ use Bluz\View\View;
 
 return
     /**
+     * Set or Get Breadcrumbs
+     *
+     * @var View $this
      * @param array $data
-     * @return array|null
+     * @return array|View
      */
     function (array $data = []) {
-    /** @var View $this */
     if (app()->hasLayout()) {
-        $layout = app()->getLayout();
         if (sizeof($data)) {
-            $layout->system('breadcrumbs', $data);
+            app()->getRegistry()->__set('layout:breadcrumbs', $data);
+            return $this;
         } else {
-            return $layout->system('breadcrumbs');
+            return app()->getRegistry()->__get('layout:breadcrumbs');
         }
     }
-    return null;
+    return [];
     };

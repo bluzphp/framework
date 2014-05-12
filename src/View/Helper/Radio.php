@@ -15,13 +15,16 @@ use Bluz\View\View;
 
 return
     /**
+     * Generate HTML for <input type="radio">
+     *
      * @author The-Who
      *
+     * @var View $this
      * @param string $name
      * @param string|null $value
      * @param bool $checked
      * @param array $attributes
-     * @return \Closure
+     * @return string
      */
     function ($name, $value = null, $checked = false, array $attributes = []) {
     /** @var View $this */

@@ -15,12 +15,12 @@ use Bluz\View\View;
 
 return
     /**
-     * get current user
+     * Get current user
      *
+     * @var View $this
      * @return \Bluz\Auth\AbstractRowEntity|null
      */
     function () {
-    /** @var View $this */
     return app()->getAuth() ?
         app()->getAuth()->getIdentity() :
         null;

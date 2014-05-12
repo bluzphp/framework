@@ -53,6 +53,6 @@ class Update extends AbstractBuilder
     public function update($table)
     {
         $table = $this->getAdapter()->quoteIdentifier($table);
-        return $this->addQueryPart('from', array('table' => $table));
+        return $this->addQueryPart('from', array('table' => $table), false);
     }
 }

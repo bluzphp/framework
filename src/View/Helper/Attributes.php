@@ -15,13 +15,15 @@ use Bluz\View\View;
 
 return
     /**
+     * Generate HTML attributes
+     *
      * @author The-Who
      *
+     * @var View $this
      * @param array $attributes
-     * @return \Closure
+     * @return string
      */
     function (array $attributes = []) {
-    /** @var View $this */
     if (empty($attributes)) {
         return '';
     }

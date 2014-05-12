@@ -88,10 +88,11 @@ class Rest extends AbstractController
     {
         $request = app()->getRequest();
 
-        $accept = $request->getHeader('accept');
-        $accept = explode(',', $accept);
-        if (in_array("application/json", $accept)) {
-            app()->useJson(true);
+        if ($accept = $request->getHeader('accept')) {
+            $accept = explode(',', $accept);
+            if (in_array("application/json", $accept)) {
+                app()->useJson(true);
+            }
         }
 
         // everyone method can return:
@@ -167,7 +168,6 @@ class Rest extends AbstractController
                     'Location: '.app()->getRouter()->url($request->getModule(), $request->getController()).'/'.$uid
                 );
                 return false; // disable view
-                break;
             case Request::METHOD_PATCH:
             case Request::METHOD_PUT:
                 if (!sizeof($this->data)) {
@@ -193,7 +193,6 @@ class Rest extends AbstractController
                     return ['errors' => $this->getCrud()->getErrors()];
                 }
                 return false; // disable view
-                break;
             case Request::METHOD_DELETE:
                 if ($this->primary) {
                     // delete one
@@ -214,10 +213,8 @@ class Rest extends AbstractController
                     http_response_code(204);
                 }
                 return false; // disable view
-                break;
             default:
                 throw new NotImplementedException();
-                break;
         }
     }
 }

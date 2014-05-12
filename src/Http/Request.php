@@ -57,7 +57,7 @@ class Request extends AbstractRequest
         $request = file_get_contents('php://input');
 
         // support header like "application/json" and "application/json; charset=utf-8"
-        if (stristr($this->getHeader('Content-Type'), 'application/json')) {
+        if ($this->getHeader('Content-Type') && stristr($this->getHeader('Content-Type'), 'application/json')) {
             $data = (array) json_decode($request);
         } else {
             switch ($this->method) {
@@ -232,8 +232,11 @@ class Request extends AbstractRequest
      */
     public function isFlashRequest()
     {
-        $header = strtolower($this->getHeader('USER_AGENT'));
-        return (strstr($header, ' flash')) ? true : false;
+        if ($header = $this->getHeader('USER_AGENT')) {
+            return (strstr(strtolower($header), ' flash')) ? true : false;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -242,7 +245,7 @@ class Request extends AbstractRequest
      * Accept header, 'Accept-Encoding' to get the Accept-Encoding header.
      *
      * @param string $header HTTP header name
-     * @return string|bool HTTP header value, or false if not found
+     * @return string|false HTTP header value, or false if not found
      */
     public function getHeader($header)
     {

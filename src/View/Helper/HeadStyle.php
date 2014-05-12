@@ -15,21 +15,20 @@ use Bluz\View\View;
 
 return
     /**
+     * Set or generate <style> code for <head>
+     *
+     * @var View $this
      * @param string $script
-     * @return string|void
+     * @return string|View
      */
     function ($style = null, $media = 'all') {
-    /** @var View $this */
     if (app()->hasLayout()) {
         // it's stack for <head>
-        $view = app()->getLayout();
-
-        $headStyle = $view->system('headStyle') ? : [];
+        $headStyle = app()->getRegistry()->__get('layout:headStyle') ? : [];
 
         if (null === $style) {
             // clear system vars
-            $view->system('headStyle', []);
-
+            app()->getRegistry()->__set('layout:headStyle', []);
             array_walk(
                 $headStyle,
                 function (&$item, $key) {
@@ -39,10 +38,11 @@ return
             return join("\n", $headStyle);
         } else {
             $headStyle[$style] = $media;
-            $view->system('headStyle', $headStyle);
+            app()->getRegistry()->__set('layout:headStyle', $headStyle);
+            return $this;
         }
     } else {
-        // it's just alias to script() call
+        // it's just alias to style() call
         return $this->style($style);
     }
     };

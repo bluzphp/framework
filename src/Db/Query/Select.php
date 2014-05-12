@@ -285,7 +285,7 @@ class Select extends AbstractBuilder
 
         $groupBy = is_array($groupBy) ? $groupBy : func_get_args();
 
-        return $this->addQueryPart('groupBy', $groupBy);
+        return $this->addQueryPart('groupBy', $groupBy, false);
     }
 
     /**
@@ -325,7 +325,7 @@ class Select extends AbstractBuilder
     {
         $order = strtoupper($order);
         $order = ('ASC' == $order ? 'ASC' : 'DESC');
-        return $this->addQueryPart('orderBy', $sort . ' ' . $order);
+        return $this->addQueryPart('orderBy', $sort . ' ' . $order, false);
     }
 
     /**
@@ -352,14 +352,14 @@ class Select extends AbstractBuilder
     public function having($condition)
     {
         $condition = $this->prepareCondition(func_get_args());
-        return $this->addQueryPart('having', $condition);
+        return $this->addQueryPart('having', $condition, false);
     }
 
     /**
      * Adds a restriction over the groups of the query, forming a logical
      * conjunction with any existing having restrictions
      *
-     * @param mixed $condition The restriction to append
+     * @param mixed $condition,... The restriction to append
      * @return Select
      */
     public function andHaving($condition)
@@ -373,14 +373,14 @@ class Select extends AbstractBuilder
             $having = new CompositeBuilder([$having, $condition]);
         }
 
-        return $this->addQueryPart('having', $having);
+        return $this->addQueryPart('having', $having, false);
     }
 
     /**
      * Adds a restriction over the groups of the query, forming a logical
      * disjunction with any existing having restrictions.
      *
-     * @param mixed $condition The restriction to add
+     * @param mixed $condition,... The restriction to add
      * @return Select
      */
     public function orHaving($condition)
@@ -394,7 +394,7 @@ class Select extends AbstractBuilder
             $having = new CompositeBuilder([$having, $condition], 'OR');
         }
 
-        return $this->addQueryPart('having', $having);
+        return $this->addQueryPart('having', $having, false);
     }
 
     /**
@@ -416,7 +416,7 @@ class Select extends AbstractBuilder
     /**
      * Generate SQL string for JOINs
      *
-     * @param $fromAlias
+     * @param $fromAlias,...
      * @return string
      */
     protected function getSQLForJoins($fromAlias)

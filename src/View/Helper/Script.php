@@ -16,7 +16,7 @@ use Bluz\View\View;
 return
     /**
      * @param string $script
-     * @return string|View
+     * @return string
      */
     function ($script) {
     /** @var View $this */

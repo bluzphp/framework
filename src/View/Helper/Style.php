@@ -17,7 +17,7 @@ return
     /**
      * @param string $style
      * @param string $media
-     * @return string|View
+     * @return string
      */
     function ($style, $media = 'all') {
     /** @var View $this */

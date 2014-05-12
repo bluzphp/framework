@@ -24,7 +24,7 @@ return
      * @param string $module
      * @param string $widget
      * @param array $params
-     * @return View
+     * @return void
      */
     function ($module, $widget, $params = array()) {
     /** @var View $this */
@@ -34,7 +34,6 @@ return
         call_user_func_array($widgetClosure, $params);
     } catch (AclException $e) {
         // nothing for Acl exception
-        return null;
     } catch (\Exception $e) {
         if (app()->isDebug()) {
             // exception message for developers

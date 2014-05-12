@@ -20,7 +20,7 @@ return
      * @param string $text
      * @param string|array $href
      * @param array $attributes HTML attributes
-     * @return \Closure
+     * @return string
      */
     function ($text, $href, array $attributes = []) {
     /** @var View $this */

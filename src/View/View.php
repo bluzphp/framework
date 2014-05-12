@@ -69,13 +69,6 @@ class View implements ViewInterface, \JsonSerializable
     protected $data = array();
 
     /**
-     * System variables, should be uses for helpers
-     *
-     * @var array
-     */
-    protected $system = array();
-
-    /**
      * @var string path to template
      */
     protected $path;
@@ -267,27 +260,6 @@ class View implements ViewInterface, \JsonSerializable
     public function addPartialPath($path)
     {
         $this->partialPath[] = $path;
-        return $this;
-    }
-
-    /**
-     * Manipulation under system stack
-     *
-     * @param string $key
-     * @param mixed|null $value
-     * @return mixed|View
-     */
-    protected function system($key, $value = null)
-    {
-        if (null === $value) {
-            if (isset($this->system[$key])) {
-                return $this->system[$key];
-            } else {
-                return null;
-            }
-        } else {
-            $this->system[$key] = $value;
-        }
         return $this;
     }
 

@@ -47,7 +47,7 @@ return
      * @param array $options
      * @param array|string $selected
      * @param array $attributes
-     * @return \Closure
+     * @return string
      */
     function ($name, array $options = [], $selected = null, array $attributes = []) {
     /** @var View $this */

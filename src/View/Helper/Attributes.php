@@ -18,7 +18,7 @@ return
      * @author The-Who
      *
      * @param array $attributes
-     * @return \Closure
+     * @return string
      */
     function (array $attributes = []) {
     /** @var View $this */

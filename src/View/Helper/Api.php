@@ -24,7 +24,7 @@ return
      * @param string $module
      * @param string $method
      * @param array $params
-     * @return View
+     * @return mixed
      */
     function ($module, $method, $params = array()) {
     /** @var View $this */
@@ -41,5 +41,6 @@ return
                 $e->getMessage() .
                 '</div>';
         }
+        return false;
     }
     };

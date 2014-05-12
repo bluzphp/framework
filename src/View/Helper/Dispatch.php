@@ -24,7 +24,7 @@ return
      * @param string $module
      * @param string $controller
      * @param array $params
-     * @return View|null
+     * @return View|string|null
      */
     function ($module, $controller, $params = array()) {
     /** @var View $this */

@@ -15,13 +15,16 @@ use Bluz\View\View;
 
 return
     /**
+     * Set or generate <title> code for <head>
+     *
+     * @var View $this
      * @param string $title
      * @param string $position
      * @param string $separator
      * @return string|View
      */
     function ($title = null, $position = View::POS_REPLACE, $separator = ' :: ') {
-    /** @var View $this */
+
     if (app()->hasLayout()) {
         // it's stack for <title> tag
         if (null === $title) {

@@ -16,21 +16,20 @@ use Bluz\View\View;
 
 return
     /**
-     * Widget call View Helper
+     * Widget call
      *
      * Example of usage:
      *     $this->widget($module, $controller, array $params);
      *
+     * @var View $this
      * @param string $module
      * @param string $widget
      * @param array $params
      * @return void
      */
     function ($module, $widget, $params = array()) {
-    /** @var View $this */
-    $application = app();
     try {
-        $widgetClosure = $application->widget($module, $widget);
+        $widgetClosure = app()->widget($module, $widget);
         call_user_func_array($widgetClosure, $params);
     } catch (AclException $e) {
         // nothing for Acl exception

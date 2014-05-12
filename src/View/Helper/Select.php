@@ -15,7 +15,7 @@ use Bluz\View\View;
 
 return
     /**
-     * Select View Helper
+     * Generate HTML for <select> element
      *
      * Example of usage:
      *     $this->select("car", [
@@ -43,6 +43,7 @@ return
      *     </select>
      *
      * @author The-Who
+     * @var View $this
      * @param string $name
      * @param array $options
      * @param array|string $selected
@@ -50,7 +51,6 @@ return
      * @return string
      */
     function ($name, array $options = [], $selected = null, array $attributes = []) {
-    /** @var View $this */
     $attributes['name'] = $name;
 
     if (!is_array($selected)) {

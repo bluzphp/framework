@@ -15,19 +15,19 @@ use Bluz\View\View;
 
 return
     /**
-     * API call View Helper
+     * API call
      *
      * Be carefully, use it for calculate/update/save some data
      * For render information use Widgets!
      *     $this->api($module, $method, array $params);
      *
+     * @var View $this
      * @param string $module
      * @param string $method
      * @param array $params
      * @return mixed
      */
     function ($module, $method, $params = array()) {
-    /** @var View $this */
     $application = app();
     try {
         $apiClosure = $application->api($module, $method);

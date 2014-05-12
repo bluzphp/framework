@@ -15,11 +15,13 @@ use Bluz\View\View;
 
 return
     /**
+     * Set or generate <style> code for <head>
+     *
+     * @var View $this
      * @param string $script
      * @return string|View
      */
     function ($style = null, $media = 'all') {
-    /** @var View $this */
     if (app()->hasLayout()) {
         // it's stack for <head>
         $headStyle = app()->getRegistry()->__get('layout:headStyle') ? : [];

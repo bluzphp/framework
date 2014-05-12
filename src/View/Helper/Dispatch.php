@@ -21,16 +21,15 @@ return
      * Example of usage:
      *     $this->dispatch($module, $controller, array $params);
      *
+     * @var View $this
      * @param string $module
      * @param string $controller
      * @param array $params
      * @return View|string|null
      */
     function ($module, $controller, $params = array()) {
-    /** @var View $this */
-    $application = app();
     try {
-        $view = $application->dispatch($module, $controller, $params);
+        $view = app()->dispatch($module, $controller, $params);
     } catch (AclException $e) {
         // nothing for Acl exception
         return null;

@@ -16,6 +16,9 @@ use Bluz\View\ViewException;
 
 return
     /**
+     * Generate URL
+     *
+     * @var View $this
      * @param string $module
      * @param string $controller
      * @param array $params
@@ -23,14 +26,11 @@ return
      * @return string|null
      */
     function ($module, $controller, array $params = [], $checkAccess = false) {
-    /** @var View $this */
-    $app = app();
-
     try {
         if ($checkAccess) {
-            $controllerFile = $app->getControllerFile($module, $controller);
-            $reflectionData = $app->reflection($controllerFile);
-            if (!$app->isAllowed($module, $reflectionData)) {
+            $controllerFile = app()->getControllerFile($module, $controller);
+            $reflectionData = app()->reflection($controllerFile);
+            if (!app()->isAllowed($module, $reflectionData)) {
                 return null;
             }
         }
@@ -39,15 +39,15 @@ return
     }
 
     if (null === $module) {
-        $module = $app->getRequest()->getModule();
+        $module = app()->getRequest()->getModule();
     }
     if (null === $controller) {
-        $controller = $app->getRequest()->getController();
+        $controller = app()->getRequest()->getController();
     }
     if (null === $params) {
-        $params = $app->getRequest()->getParams();
+        $params = app()->getRequest()->getParams();
     }
 
-    return $app->getRouter()
+    return app()->getRouter()
         ->url($module, $controller, $params);
     };

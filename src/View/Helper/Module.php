@@ -18,11 +18,11 @@ return
      * Return module name
      * or check to current module
      *
+     * @var View $this
      * @param string $module
      * @return string|bool
      */
     function ($module = null) {
-    /** @var View $this */
     $request = app()->getRequest();
     if (null == $module) {
         return $request->getModule();

@@ -15,8 +15,11 @@ use Bluz\View\View;
 
 return
     /**
+     * Generate HTML for <input type="checkbox">
+     *
      * @author The-Who
      *
+     * @var View $this
      * @param string $name
      * @param string|null $value
      * @param bool $checked

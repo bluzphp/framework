@@ -16,13 +16,13 @@ use Bluz\View\View;
 return
 
     /**
-     * baseUrl
+     * Get baseUrl
      *
+     * @var View $this
      * @param string $file
      * @return string
      */
     function ($file = null) {
-    /** @var View $this */
     // setup baseUrl
     if (!$this->baseUrl) {
         $this->baseUrl = app()

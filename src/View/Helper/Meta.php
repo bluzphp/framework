@@ -15,12 +15,14 @@ use Bluz\View\View;
 
 return
     /**
+     * Set or generate <meta> code for <head>
+     *
+     * @var View $this
      * @param string|array|null $name
      * @param string|null $content
      * @return string|View
      */
     function ($name = null, $content = null) {
-    /** @var View $this */
     if (app()->hasLayout()) {
         // it's stack for <head>
         $meta = app()->getRegistry()->__get('layout:meta') ? : [];

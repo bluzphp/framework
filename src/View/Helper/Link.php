@@ -15,11 +15,13 @@ use Bluz\View\View;
 
 return
     /**
+     * Set or generate <link> code for <head>
+     *
+     * @var View $this
      * @param array $link
      * @return string|View
      */
     function (array $link = null) {
-    /** @var View $this */
     if (app()->hasLayout()) {
         // it's stack for <head>
         $links = app()->getRegistry()->__get('layout:link') ? : [];

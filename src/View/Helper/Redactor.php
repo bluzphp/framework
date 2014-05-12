@@ -15,14 +15,16 @@ use Bluz\View\View;
 
 return
     /**
-     * Setup redactorjs
+     * Generate HTML and JavaScript for WYSIWYG redactor
      *
+     * @link http://imperavi.com/redactor/
+     *
+     * @var View $this
      * @param string $selector
      * @param array $settings
      * @return string
      */
     function ($selector, array $settings = []) {
-    /** @var View $this */
     $defaultSettings = [
         'imageUpload' => $this->url('media', 'upload') // default media upload controller
     ];

@@ -15,11 +15,13 @@ use Bluz\View\View;
 
 return
     /**
+     * Set or generate <script> code for <head>
+     *
+     * @var View $this
      * @param string $script
      * @return string|View
      */
     function ($script = null) {
-    /** @var View $this */
     if (app()->hasLayout()) {
         // it's stack for <head>
         $headScripts = app()->getRegistry()->__get('layout:headScripts') ? : [];

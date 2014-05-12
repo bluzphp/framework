@@ -29,8 +29,6 @@ return
         if (null === $style) {
             // clear system vars
             app()->getRegistry()->__set('layout:headStyle', []);
-
-            $headStyle = array_map([$this, 'script'], $headStyle);
             array_walk(
                 $headStyle,
                 function (&$item, $key) {

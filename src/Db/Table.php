@@ -416,7 +416,7 @@ abstract class Table
 
         if (sizeof($whereList) == 2 && is_string($whereList[0])) {
             $whereClause = $whereList[0];
-            $whereParams = $whereList[1];
+            $whereParams = (array)$whereList[1];
         } elseif (sizeof($whereList)) {
             $whereOrTerms = array();
             foreach ($whereList as $keyValueSets) {

@@ -41,7 +41,7 @@ class ApplicationTest extends TestCase
      *
      * @return void
      */
-    public function testGetPackages()
+    public function testGettersOfPackages()
     {
         $this->assertInstanceOf('\Bluz\Acl\Acl', $this->getApp()->getAcl());
         $this->assertInstanceOf('\Bluz\Auth\Auth', $this->getApp()->getAuth());
@@ -61,5 +61,19 @@ class ApplicationTest extends TestCase
         $this->assertInstanceOf('\Bluz\Session\Session', $this->getApp()->getSession());
         $this->assertInstanceOf('\Bluz\Translator\Translator', $this->getApp()->getTranslator());
         $this->assertInstanceOf('\Bluz\View\View', $this->getApp()->getView());
+    }
+
+    /**
+     * @covers \Bluz\Application\Application::getConfigData
+     * @return void
+     */
+    public function testGetConfigData()
+    {
+        // merged
+        //  - configs/application.php
+        //  - configs/app.testing.php
+        $this->assertEquals(10, sizeof($this->getApp()->getConfigData()));
+        $this->assertEquals(["foo" => "bar"], $this->getApp()->getConfigData("test"));
+        $this->assertEquals("bar", $this->getApp()->getConfigData("test", "foo"));
     }
 }

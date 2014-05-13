@@ -20,5 +20,8 @@ return array(
     ),
     "logger" => array(
         "enabled" => true,
+    ),
+    "test" => array(
+        "foo" => "bar"
     )
 );

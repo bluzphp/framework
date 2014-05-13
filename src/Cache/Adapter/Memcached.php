@@ -33,7 +33,7 @@ class Memcached extends AbstractAdapter
      */
     public function __construct($settings = array())
     {
-        // check extension
+        // check Memcached extension
         if (!extension_loaded('memcached')) {
             throw new CacheException(
                 "Memcached extension not installed/enabled.
@@ -41,7 +41,7 @@ class Memcached extends AbstractAdapter
             );
         }
 
-        // check settings
+        // check Memcached settings
         if (!is_array($settings) or empty($settings) or !isset($settings['servers'])) {
             throw new CacheException(
                 "Memcached configuration is missed.

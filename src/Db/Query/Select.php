@@ -76,13 +76,11 @@ class Select extends AbstractBuilder
         $query = "SELECT " . implode(', ', $this->sqlParts['select']) . " FROM ";
 
         $fromClauses = array();
-        $knownAliases = array();
 
         // Loop through all FROM clauses
         foreach ($this->sqlParts['from'] as $from) {
-            $knownAliases[$from['alias']] = true;
             $fromClause = $from['table'] . ' ' . $from['alias']
-                . $this->getSQLForJoins($from['alias'], $knownAliases);
+                . $this->getSQLForJoins($from['alias']);
 
             $fromClauses[$from['alias']] = $fromClause;
         }

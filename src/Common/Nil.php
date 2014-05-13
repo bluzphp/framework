@@ -16,6 +16,9 @@ namespace Bluz\Common;
  *
  * @package  Bluz\Common
  *
+ * @method null get($key)
+ * @method null set($key, $value)
+ *
  * @author   Anton Shevchuk
  * @created  15.01.13 09:50
  */

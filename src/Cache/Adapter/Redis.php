@@ -109,7 +109,7 @@ class Redis extends AbstractAdapter
      * @param string $id
      * @param mixed $data
      * @param int $ttl
-     * @return bool|mixed
+     * @return bool
      */
     protected function doAdd($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
@@ -125,7 +125,7 @@ class Redis extends AbstractAdapter
      * @param string $id
      * @param mixed $data
      * @param int $ttl
-     * @return bool|mixed
+     * @return bool
      */
     protected function doSet($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
@@ -140,7 +140,7 @@ class Redis extends AbstractAdapter
      * {@inheritdoc}
      *
      * @param string $id
-     * @return bool|mixed
+     * @return bool
      */
     protected function doContains($id)
     {
@@ -151,11 +151,11 @@ class Redis extends AbstractAdapter
      * {@inheritdoc}
      *
      * @param string $id
-     * @return void
+     * @return int Number of keys deleted.
      */
     protected function doDelete($id)
     {
-        $this->getHandler()->delete($id);
+        return $this->getHandler()->del($id);
     }
 
     /**

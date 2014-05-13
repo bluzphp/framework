@@ -94,7 +94,7 @@ trait Where
      *         ->where('u.id = 1')
      *         ->orWhere('u.id = ?', 2);
      *
-     * @param string $condition,... The query restriction predicates
+     * @internal param string $condition,.. Optional the query restriction predicates
      * @return AbstractBuilder
      */
     public function orWhere()

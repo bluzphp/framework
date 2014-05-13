@@ -81,7 +81,7 @@ class PhpFile extends FileBase
      * @param string $id
      * @param mixed $data
      * @param int $ttl
-     * @return integer
+     * @return integer The number of bytes that were written to the file, or false on failure.
      * @throws InvalidArgumentException
      */
     protected function doSet($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
@@ -122,7 +122,7 @@ class PhpFile extends FileBase
      * @param string $id
      * @param mixed $data
      * @param int $ttl
-     * @return bool|int|mixed
+     * @return bool|int
      * @throws InvalidArgumentException
      */
     protected function doAdd($id, $data, $ttl = Cache::TTL_NO_EXPIRY)

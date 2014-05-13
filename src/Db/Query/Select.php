@@ -59,7 +59,7 @@ class Select extends AbstractBuilder
     /**
      * Setup fetch type, any of PDO, or any Class
      *
-     * @param $fetchType
+     * @param string $fetchType
      * @return Select instance
      */
     public function setFetchType($fetchType)

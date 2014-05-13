@@ -12,7 +12,8 @@
 namespace Bluz\Db\Query\Traits;
 
 use Bluz\Db\Db;
-use Bluz\Db\Query\AbstractBuilder;
+use Bluz\Db\Query\Insert;
+use Bluz\Db\Query\Update;
 
 /**
  * Set Trait, required for:
@@ -21,8 +22,8 @@ use Bluz\Db\Query\AbstractBuilder;
  *
  * @package Bluz\Db\Query\Traits
  *
- * @method AbstractBuilder addQueryPart(string $sqlPartName, mixed $sqlPart, $append = false)
- * @method AbstractBuilder setParameter(string $key, mixed $value, $type = \PDO::PARAM_STR)
+ * @method Insert|Update addQueryPart(string $sqlPartName, mixed $sqlPart, $append = false)
+ * @method Insert|Update setParameter(string $key, mixed $value, $type = \PDO::PARAM_STR)
  * @method Db getAdapter()
  *
  * @author   Anton Shevchuk
@@ -42,11 +43,11 @@ trait Set
      *
      * @param string $key The column to set
      * @param string $value The value, expression, placeholder, etc
-     * @return AbstractBuilder
+     * @return Insert|Update
      */
     public function set($key, $value)
     {
-        $this->setParameter(null, $value);
+        $this->setParameter(null, $value, \PDO::PARAM_STR);
         $key = $this->getAdapter()->quoteIdentifier($key);
         return $this->addQueryPart('set', $key .' = ?', true);
     }
@@ -66,7 +67,7 @@ trait Set
      * </code>
      *
      * @param array $data
-     * @return $this
+     * @return Insert|Update
      */
     public function setArray(array $data)
     {

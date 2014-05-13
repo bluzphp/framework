@@ -11,7 +11,8 @@
  */
 namespace Bluz\Db\Query\Traits;
 
-use Bluz\Db\Query\AbstractBuilder;
+use Bluz\Db\Query\Delete;
+use Bluz\Db\Query\Select;
 
 /**
  * From Trait, required for:
@@ -21,14 +22,13 @@ use Bluz\Db\Query\AbstractBuilder;
  * @package Bluz\Db\Query\Traits
  *
  * @property array $aliases
- * @method AbstractBuilder addQueryPart(string $sqlPartName, mixed $sqlPart, $append = false)
+ * @method Select|Delete addQueryPart(string $sqlPartName, mixed $sqlPart, $append = false)
  *
  * @author   Anton Shevchuk
  * @created  17.06.13 10:46
  */
 trait From
 {
-
     /**
      * Set FROM
      *
@@ -41,7 +41,7 @@ trait From
      *
      * @param string $from   The table
      * @param string $alias  The alias of the table
-     * @return AbstractBuilder
+     * @return Select|Delete
      */
     public function from($from, $alias)
     {

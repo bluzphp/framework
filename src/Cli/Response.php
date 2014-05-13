@@ -34,16 +34,27 @@ class Response extends AbstractResponse
     {
         // output messages if exists
         if (app()->hasMessages()) {
-            while ($msg = app()->getMessages()->pop(Messages::TYPE_ERROR)) {
-                echo Colorize::text("Error   ", "white", "red", true) . ": ". $msg->text . "\n";
+            $messages = app()->getMessages()->popAll();
+            foreach ($messages as $type => $stack) {
+                if (!sizeof($stack)) {
+                    continue;
+                }
+                echo "\n";
+                switch ($type) {
+                    case Messages::TYPE_ERROR:
+                        echo Colorize::text("Errors  ", "white", "red", true);
+                        break;
+                    case Messages::TYPE_NOTICE:
+                        echo Colorize::text("Info    ", "white", "blue", true);
+                        break;
+                    case Messages::TYPE_SUCCESS:
+                        echo Colorize::text("Success ", "white", "green", true);
+                        break;
+                }
+                echo ":\n\t";
+                echo join("\n\t", $stack);
             }
-            while ($msg = app()->getMessages()->pop(Messages::TYPE_NOTICE)) {
-                echo Colorize::text("Info    ", "white", "blue", true) . ": ". $msg->text . "\n";
-            }
-            while ($msg = app()->getMessages()->pop(Messages::TYPE_SUCCESS)) {
-                echo Colorize::text("Success ", "white", "green", true) . ": ". $msg->text . "\n";
-            }
-            echo "\n";
+            echo "\n\n";
         }
     }
 

@@ -1069,7 +1069,7 @@ abstract class Application
 
             // TODO: workaround for get reflection of closure function
             $bootstrap = $view = $module = $controller = null;
-            /** @var callable $closure */
+            /** @var \Closure|object $closure */
             $closure = include $file;
 
             if (!is_callable($closure)) {
@@ -1082,13 +1082,10 @@ abstract class Application
                 'values' => [],
             );
 
-            switch (get_class($closure)) {
-                case 'Closure':
-                    $reflection = new \ReflectionFunction($closure);
-                    break;
-                default:
-                    $reflection = new \ReflectionObject($closure);
-                    break;
+            if ('Closure' == get_class($closure)) {
+                $reflection = new \ReflectionFunction($closure);
+            } else {
+                $reflection = new \ReflectionObject($closure);
             }
 
             // check and normalize params by doc comment
@@ -1100,7 +1097,9 @@ abstract class Application
                     $data[$key][] = trim($matches[2][$i]);
                 }
             }
-            if (method_exists($reflection, 'getParameters')) {
+
+            // parameters available for Closure only
+            if ('Closure' == get_class($closure)) {
                 // get params and convert it to simple array
                 $reflectionParams = $reflection->getParameters();
 

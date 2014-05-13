@@ -11,7 +11,9 @@
  */
 namespace Bluz\Db\Query\Traits;
 
-use Bluz\Db\Query\AbstractBuilder;
+use Bluz\Db\Query\Delete;
+use Bluz\Db\Query\Select;
+use Bluz\Db\Query\Update;
 
 /**
  * Order Trait, required for:
@@ -21,7 +23,7 @@ use Bluz\Db\Query\AbstractBuilder;
  *
  * @package Bluz\Db\Query\Traits
  *
- * @method AbstractBuilder addQueryPart(string $sqlPartName, mixed $sqlPart, $append = false)
+ * @method Select|Update|Delete addQueryPart(string $sqlPartName, mixed $sqlPart, $append = false)
  *
  * @author   Anton Shevchuk
  * @created  17.06.13 10:00
@@ -35,7 +37,7 @@ trait Order
      *
      * @param string $sort expression
      * @param string $order direction
-     * @return AbstractBuilder
+     * @return Select|Update|Delete
      */
     public function orderBy($sort, $order = 'ASC')
     {
@@ -47,7 +49,7 @@ trait Order
      *
      * @param string $sort expression
      * @param string $order direction
-     * @return AbstractBuilder
+     * @return Select|Update|Delete
      */
     public function addOrderBy($sort, $order = 'ASC')
     {

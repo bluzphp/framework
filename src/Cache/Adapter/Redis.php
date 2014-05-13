@@ -49,14 +49,16 @@ class Redis extends AbstractAdapter
      */
     public function __construct($settings = array())
     {
+        // check Redis extension
         if (!extension_loaded('redis')) {
-            $msg = "Redis extension not installed/enabled.
-                    Install and/or enable Redis extension [http://pecl.php.net/package/redis].
-                    See phpinfo() for more information";
-            throw new CacheException($msg);
+            throw new CacheException(
+                "Redis extension not installed/enabled.
+                Install and/or enable Redis extension [http://pecl.php.net/package/redis].
+                See phpinfo() for more information"
+            );
         }
 
-        // Check settings
+        // check Redis settings
         if (!is_array($settings) or empty($settings)) {
             throw new CacheException(
                 "Redis configuration is missed.
@@ -107,16 +109,12 @@ class Redis extends AbstractAdapter
      * @param string $id
      * @param mixed $data
      * @param int $ttl
-     * @return bool|mixed
+     * @return bool
      */
     protected function doAdd($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
         if (!$this->doContains($id)) {
-            if (Cache::TTL_NO_EXPIRY == $ttl) {
-                return $this->getHandler()->set($id, $data);
-            } else {
-                return $this->getHandler()->setex($id, $ttl, $data);
-            }
+            $this->doSet($id, $data, $ttl);
         }
         return false;
     }
@@ -127,7 +125,7 @@ class Redis extends AbstractAdapter
      * @param string $id
      * @param mixed $data
      * @param int $ttl
-     * @return bool|mixed
+     * @return bool
      */
     protected function doSet($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
@@ -142,7 +140,7 @@ class Redis extends AbstractAdapter
      * {@inheritdoc}
      *
      * @param string $id
-     * @return bool|mixed
+     * @return bool
      */
     protected function doContains($id)
     {
@@ -153,11 +151,11 @@ class Redis extends AbstractAdapter
      * {@inheritdoc}
      *
      * @param string $id
-     * @return void
+     * @return int Number of keys deleted.
      */
     protected function doDelete($id)
     {
-        $this->getHandler()->delete($id);
+        return $this->getHandler()->del($id);
     }
 
     /**

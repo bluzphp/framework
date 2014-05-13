@@ -140,7 +140,7 @@ class Rest extends AbstractController
 
                     return $this->readSet($offset, $limit, $this->params);
                 }
-                break;
+                // break
             case Request::METHOD_POST:
                 if ($this->primary) {
                     // POST + ID is incorrect behaviour

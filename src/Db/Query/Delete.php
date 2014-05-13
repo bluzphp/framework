@@ -12,7 +12,7 @@
 namespace Bluz\Db\Query;
 
 /**
- * Builder of SELECT queries
+ * Builder of DELETE queries
  *
  * @package Bluz\Db\Query
  */
@@ -20,10 +20,13 @@ class Delete extends AbstractBuilder
 {
     use Traits\From;
     use Traits\Where;
+    use Traits\Order;
     use Traits\Limit;
 
     /**
      * {@inheritdoc}
+     *
+     * @return string
      */
     public function getSql()
     {
@@ -46,7 +49,7 @@ class Delete extends AbstractBuilder
      *         ->where('id = ?');
      *
      * @param string $table The table whose rows are subject to the update
-     * @return self instance.
+     * @return Delete instance
      */
     public function delete($table)
     {

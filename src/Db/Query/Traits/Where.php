@@ -11,8 +11,10 @@
  */
 namespace Bluz\Db\Query\Traits;
 
-use Bluz\Db\Query\AbstractBuilder;
 use Bluz\Db\Query\CompositeBuilder;
+use Bluz\Db\Query\Delete;
+use Bluz\Db\Query\Select;
+use Bluz\Db\Query\Update;
 
 /**
  * Order Trait, required for:
@@ -22,7 +24,7 @@ use Bluz\Db\Query\CompositeBuilder;
  *
  * @package Bluz\Db\Query\Traits
  *
- * @method AbstractBuilder addQueryPart(string $sqlPartName, mixed $sqlPart, $append = 'true')
+ * @method Select|Update|Delete addQueryPart(string $sqlPartName, mixed $sqlPart, $append = 'true')
  * @method mixed getQueryPart(string $queryPartName)
  * @method string prepareCondition($args = array())
  *
@@ -43,10 +45,10 @@ trait Where
      *         ->where('u.id = ?', $id)
      *      ;
      *
-     * @param string $condition,... The query restriction predicates
-     * @return AbstractBuilder
+     * @internal param string $condition Optional the query restriction predicates
+     * @return Select|Update|Delete
      */
-    public function where($condition)
+    public function where()
     {
         $condition = $this->prepareCondition(func_get_args());
 
@@ -65,10 +67,10 @@ trait Where
      *         ->where('u.username LIKE ?', '%Smith%')
      *         ->andWhere('u.is_active = ?', 1);
      *
-     * @param string $condition,... The query restriction predicates
-     * @return AbstractBuilder
+     * @internal param string $condition,.. Optional the query restriction predicates
+     * @return Select|Update|Delete
      */
-    public function andWhere($condition)
+    public function andWhere()
     {
         $condition = $this->prepareCondition(func_get_args());
 
@@ -94,10 +96,10 @@ trait Where
      *         ->where('u.id = 1')
      *         ->orWhere('u.id = ?', 2);
      *
-     * @param string $condition,... The query restriction predicates
-     * @return AbstractBuilder
+     * @internal param string $condition,.. Optional the query restriction predicates
+     * @return Select|Update|Delete
      */
-    public function orWhere($condition)
+    public function orWhere()
     {
         $condition = $this->prepareCondition(func_get_args());
 

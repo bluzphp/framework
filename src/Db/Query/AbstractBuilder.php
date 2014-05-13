@@ -240,7 +240,7 @@ abstract class AbstractBuilder
         if ($append) {
             if ($sqlPartName == "orderBy" || $sqlPartName == "groupBy"
                 || $sqlPartName == "select" || $sqlPartName == "set") {
-                foreach ($sqlPart as $part) {
+                foreach ((array)$sqlPart as $part) {
                     $this->sqlParts[$sqlPartName][] = $part;
                 }
             } elseif ($isArray && is_array($sqlPart[key($sqlPart)])) {

@@ -12,7 +12,7 @@
 namespace Bluz\Db\Query;
 
 /**
- * Builder of SELECT queries
+ * Builder of INSERT queries
  *
  * @package Bluz\Db\Query
  */

@@ -12,7 +12,7 @@
 namespace Bluz\Db\Query;
 
 /**
- * Builder of SELECT queries
+ * Builder of UPDATE queries
  *
  * @package Bluz\Db\Query
  */
@@ -20,6 +20,7 @@ class Update extends AbstractBuilder
 {
     use Traits\Set;
     use Traits\Where;
+    use Traits\Order;
     use Traits\Limit;
 
     /**

@@ -11,8 +11,10 @@
  */
 namespace Bluz\Db\Query\Traits;
 
-use Bluz\Db\Query\AbstractBuilder;
 use Bluz\Db\Query\CompositeBuilder;
+use Bluz\Db\Query\Delete;
+use Bluz\Db\Query\Select;
+use Bluz\Db\Query\Update;
 
 /**
  * Order Trait, required for:
@@ -22,7 +24,7 @@ use Bluz\Db\Query\CompositeBuilder;
  *
  * @package Bluz\Db\Query\Traits
  *
- * @method $this addQueryPart(string $sqlPartName, mixed $sqlPart, $append = 'true')
+ * @method Select|Update|Delete addQueryPart(string $sqlPartName, mixed $sqlPart, $append = 'true')
  * @method mixed getQueryPart(string $queryPartName)
  * @method string prepareCondition($args = array())
  *
@@ -44,7 +46,7 @@ trait Where
      *      ;
      *
      * @internal param string $condition Optional the query restriction predicates
-     * @return $this
+     * @return Select|Update|Delete
      */
     public function where()
     {
@@ -66,7 +68,7 @@ trait Where
      *         ->andWhere('u.is_active = ?', 1);
      *
      * @internal param string $condition,.. Optional the query restriction predicates
-     * @return $this
+     * @return Select|Update|Delete
      */
     public function andWhere()
     {
@@ -95,7 +97,7 @@ trait Where
      *         ->orWhere('u.id = ?', 2);
      *
      * @internal param string $condition,.. Optional the query restriction predicates
-     * @return $this
+     * @return Select|Update|Delete
      */
     public function orWhere()
     {

@@ -12,7 +12,7 @@
 namespace Bluz\Db\Query;
 
 /**
- * Builder of SELECT queries
+ * Builder of DELETE queries
  *
  * @package Bluz\Db\Query
  */
@@ -20,6 +20,7 @@ class Delete extends AbstractBuilder
 {
     use Traits\From;
     use Traits\Where;
+    use Traits\Order;
     use Traits\Limit;
 
     /**

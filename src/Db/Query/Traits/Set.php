@@ -21,8 +21,8 @@ use Bluz\Db\Query\AbstractBuilder;
  *
  * @package Bluz\Db\Query\Traits
  *
- * @method AbstractBuilder addQueryPart(string $sqlPartName, mixed $sqlPart, $append = false)
- * @method AbstractBuilder setParameter(string $key, mixed $value, $type = \PDO::PARAM_STR)
+ * @method $this addQueryPart(string $sqlPartName, mixed $sqlPart, $append = false)
+ * @method $this setParameter(string $key, mixed $value, $type = \PDO::PARAM_STR)
  * @method Db getAdapter()
  *
  * @author   Anton Shevchuk
@@ -42,7 +42,7 @@ trait Set
      *
      * @param string $key The column to set
      * @param string $value The value, expression, placeholder, etc
-     * @return AbstractBuilder
+     * @return $this
      */
     public function set($key, $value)
     {

@@ -21,7 +21,7 @@ use Bluz\Db\Query\AbstractBuilder;
  *
  * @package Bluz\Db\Query\Traits
  *
- * @method AbstractBuilder addQueryPart(string $sqlPartName, mixed $sqlPart, $append = false)
+ * @method $this addQueryPart(string $sqlPartName, mixed $sqlPart, $append = false)
  *
  * @author   Anton Shevchuk
  * @created  17.06.13 10:00
@@ -35,7 +35,7 @@ trait Order
      *
      * @param string $sort expression
      * @param string $order direction
-     * @return AbstractBuilder
+     * @return $this
      */
     public function orderBy($sort, $order = 'ASC')
     {
@@ -47,7 +47,7 @@ trait Order
      *
      * @param string $sort expression
      * @param string $order direction
-     * @return AbstractBuilder
+     * @return $this
      */
     public function addOrderBy($sort, $order = 'ASC')
     {

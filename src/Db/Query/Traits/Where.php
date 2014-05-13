@@ -22,7 +22,7 @@ use Bluz\Db\Query\CompositeBuilder;
  *
  * @package Bluz\Db\Query\Traits
  *
- * @method AbstractBuilder addQueryPart(string $sqlPartName, mixed $sqlPart, $append = 'true')
+ * @method $this addQueryPart(string $sqlPartName, mixed $sqlPart, $append = 'true')
  * @method mixed getQueryPart(string $queryPartName)
  * @method string prepareCondition($args = array())
  *
@@ -44,7 +44,7 @@ trait Where
      *      ;
      *
      * @internal param string $condition Optional the query restriction predicates
-     * @return AbstractBuilder
+     * @return $this
      */
     public function where()
     {
@@ -66,7 +66,7 @@ trait Where
      *         ->andWhere('u.is_active = ?', 1);
      *
      * @internal param string $condition,.. Optional the query restriction predicates
-     * @return AbstractBuilder
+     * @return $this
      */
     public function andWhere()
     {
@@ -95,7 +95,7 @@ trait Where
      *         ->orWhere('u.id = ?', 2);
      *
      * @internal param string $condition,.. Optional the query restriction predicates
-     * @return AbstractBuilder
+     * @return $this
      */
     public function orWhere()
     {

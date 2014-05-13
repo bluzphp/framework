@@ -40,7 +40,7 @@ trait From
      *
      * @param string $from   The table
      * @param string $alias  The alias of the table
-     * @return self
+     * @return $this
      */
     public function from($from, $alias)
     {

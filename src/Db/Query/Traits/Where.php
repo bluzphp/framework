@@ -43,10 +43,10 @@ trait Where
      *         ->where('u.id = ?', $id)
      *      ;
      *
-     * @param string $condition,... The query restriction predicates
+     * @internal param string $condition Optional the query restriction predicates
      * @return AbstractBuilder
      */
-    public function where($condition)
+    public function where()
     {
         $condition = $this->prepareCondition(func_get_args());
 
@@ -65,10 +65,10 @@ trait Where
      *         ->where('u.username LIKE ?', '%Smith%')
      *         ->andWhere('u.is_active = ?', 1);
      *
-     * @param string $condition,... The query restriction predicates
+     * @internal param string $condition,.. Optional the query restriction predicates
      * @return AbstractBuilder
      */
-    public function andWhere($condition)
+    public function andWhere()
     {
         $condition = $this->prepareCondition(func_get_args());
 
@@ -97,7 +97,7 @@ trait Where
      * @param string $condition,... The query restriction predicates
      * @return AbstractBuilder
      */
-    public function orWhere($condition)
+    public function orWhere()
     {
         $condition = $this->prepareCondition(func_get_args());
 

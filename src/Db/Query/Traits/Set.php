@@ -46,7 +46,7 @@ trait Set
      */
     public function set($key, $value)
     {
-        $this->setParameter(null, $value);
+        $this->setParameter(null, $value, \PDO::PARAM_STR);
         $key = $this->getAdapter()->quoteIdentifier($key);
         return $this->addQueryPart('set', $key .' = ?', true);
     }

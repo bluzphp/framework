@@ -18,5 +18,7 @@ return array(
             "pass" => "",
         ),
     ),
-    "profiler" => false,
+    "logger" => array(
+        "enabled" => true,
+    )
 );

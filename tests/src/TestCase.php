@@ -25,16 +25,21 @@ class TestCase extends \PHPUnit_Framework_TestCase
     /**
      * Application entity
      *
-     * @var Bluz\Application
+     * @var BootstrapTest
      */
-    protected $app;
+    private $app;
 
     /**
-     * Setup TestCase
+     * getApp
+     *
+     * @return BootstrapTest
      */
-    protected function setUp()
+    protected function getApp()
     {
-//        $this->app = BootstrapTest::getInstance();
-//        $this->app->init('testing');
+        if (!$this->app) {
+            $this->app = BootstrapTest::getInstance();
+            $this->app->init('testing');
+        }
+        return $this->app;
     }
 }

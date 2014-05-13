@@ -40,7 +40,6 @@ return array(
             "CharSet" => "UTF-8"
         ],
     ),
-    "profiler" => DEBUG,
     "request" => array(
         "baseUrl" => '/',
     ),

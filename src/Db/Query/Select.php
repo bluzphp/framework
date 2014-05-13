@@ -60,7 +60,7 @@ class Select extends AbstractBuilder
      * Setup fetch type, any of PDO, or any Class
      *
      * @param $fetchType
-     * @return Select This QueryBuilder instance.
+     * @return Select instance
      */
     public function setFetchType($fetchType)
     {
@@ -70,6 +70,8 @@ class Select extends AbstractBuilder
 
     /**
      * {@inheritdoc}
+     *
+     * @return string
      */
     public function getSql()
     {
@@ -108,7 +110,7 @@ class Select extends AbstractBuilder
      *         ->leftJoin('u', 'phonenumbers', 'p', 'u.id = p.user_id');
      *
      * @param mixed $select,... The selection expressions.
-     * @return Select This QueryBuilder instance.
+     * @return Select instance
      */
     public function select($select)
     {
@@ -129,7 +131,7 @@ class Select extends AbstractBuilder
      *         ->leftJoin('u', 'phonenumbers', 'u.id = p.user_id');
      *
      * @param mixed $select,... The selection expression.
-     * @return Select This QueryBuilder instance.
+     * @return Select instance
      */
     public function addSelect($select)
     {
@@ -152,7 +154,7 @@ class Select extends AbstractBuilder
      * @param string $join The table name to join
      * @param string $alias The alias of the join table
      * @param string $condition The condition for the join
-     * @return self instance
+     * @return Select instance
      */
     public function join($fromAlias, $join, $alias, $condition = null)
     {
@@ -173,7 +175,7 @@ class Select extends AbstractBuilder
      * @param string $join The table name to join
      * @param string $alias The alias of the join table
      * @param string $condition The condition for the join
-     * @return self instance
+     * @return Select instance
      */
     public function innerJoin($fromAlias, $join, $alias, $condition = null)
     {
@@ -207,7 +209,7 @@ class Select extends AbstractBuilder
      * @param string $join The table name to join
      * @param string $alias The alias of the join table
      * @param string $condition The condition for the join
-     * @return self instance
+     * @return Select instance
      */
     public function leftJoin($fromAlias, $join, $alias, $condition = null)
     {
@@ -241,7 +243,7 @@ class Select extends AbstractBuilder
      * @param string $join The table name to join
      * @param string $alias The alias of the join table
      * @param string $condition The condition for the join
-     * @return self instance
+     * @return Select instance
      */
     public function rightJoin($fromAlias, $join, $alias, $condition = null)
     {
@@ -273,7 +275,7 @@ class Select extends AbstractBuilder
      *         ->groupBy('u.id');
      *
      * @param array $groupBy,... The grouping expression.
-     * @return Select This QueryBuilder instance.
+     * @return Select instance
      */
     public function groupBy($groupBy)
     {
@@ -298,7 +300,7 @@ class Select extends AbstractBuilder
      *         ->addGroupBy('u.createdAt')
      *
      * @param mixed $groupBy,... The grouping expression.
-     * @return Select This QueryBuilder instance.
+     * @return Select instance
      */
     public function addGroupBy($groupBy)
     {
@@ -317,7 +319,7 @@ class Select extends AbstractBuilder
      *
      * @param string $sort The ordering expression.
      * @param string $order The ordering direction.
-     * @return Select This QueryBuilder instance.
+     * @return Select instance
      */
     public function orderBy($sort, $order = 'ASC')
     {
@@ -331,7 +333,7 @@ class Select extends AbstractBuilder
      *
      * @param string $sort The ordering expression.
      * @param string $order The ordering direction.
-     * @return Select This QueryBuilder instance.
+     * @return Select instance
      */
     public function addOrderBy($sort, $order = 'ASC')
     {

@@ -25,6 +25,8 @@ class Update extends AbstractBuilder
 
     /**
      * {@inheritdoc}
+     *
+     * @return string
      */
     public function getSql()
     {
@@ -49,7 +51,7 @@ class Update extends AbstractBuilder
      *         ->where('id = ?');
      *
      * @param string $table The table whose rows are subject to the update
-     * @return self instance.
+     * @return Update instance
      */
     public function update($table)
     {

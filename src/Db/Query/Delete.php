@@ -25,6 +25,8 @@ class Delete extends AbstractBuilder
 
     /**
      * {@inheritdoc}
+     *
+     * @return string
      */
     public function getSql()
     {
@@ -47,7 +49,7 @@ class Delete extends AbstractBuilder
      *         ->where('id = ?');
      *
      * @param string $table The table whose rows are subject to the update
-     * @return self instance.
+     * @return Delete instance
      */
     public function delete($table)
     {

@@ -37,6 +37,8 @@ class Insert extends AbstractBuilder
 
     /**
      * {@inheritdoc}
+     *
+     * @return string
      */
     public function getSql()
     {
@@ -58,7 +60,7 @@ class Insert extends AbstractBuilder
      *         ->set('password', md5('password'));
      *
      * @param string $table The table into which the rows should be inserted
-     * @return self instance
+     * @return Insert instance
      */
     public function insert($table)
     {

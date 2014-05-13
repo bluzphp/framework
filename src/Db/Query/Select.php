@@ -344,10 +344,10 @@ class Select extends AbstractBuilder
      * Specifies a restriction over the groups of the query.
      * Replaces any previous having restrictions, if any.
      *
-     * @param mixed $condition The query restriction predicates
+     * @internal param mixed $condition,... The query restriction predicates
      * @return Select
      */
-    public function having($condition)
+    public function having()
     {
         $condition = $this->prepareCondition(func_get_args());
         return $this->addQueryPart('having', $condition, false);
@@ -357,10 +357,10 @@ class Select extends AbstractBuilder
      * Adds a restriction over the groups of the query, forming a logical
      * conjunction with any existing having restrictions
      *
-     * @param mixed $condition,... The restriction to append
+     * @internal param mixed $condition,... The query restriction predicates
      * @return Select
      */
-    public function andHaving($condition)
+    public function andHaving()
     {
         $condition = $this->prepareCondition(func_get_args());
         $having = $this->getQueryPart('having');
@@ -378,10 +378,10 @@ class Select extends AbstractBuilder
      * Adds a restriction over the groups of the query, forming a logical
      * disjunction with any existing having restrictions.
      *
-     * @param mixed $condition,... The restriction to add
+     * @internal param mixed $condition,... The query restriction predicates
      * @return Select
      */
-    public function orHaving($condition)
+    public function orHaving()
     {
         $condition = $this->prepareCondition(func_get_args());
         $having = $this->getQueryPart('having');

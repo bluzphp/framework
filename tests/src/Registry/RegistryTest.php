@@ -63,6 +63,8 @@ class RegistryTest extends Bluz\Tests\TestCase
      */
     public function testSetGet()
     {
+        $this->assertNull($this->registry->foo);
+
         $this->registry->foo = 'baz';
 
         $this->assertEquals('baz', $this->registry->foo);

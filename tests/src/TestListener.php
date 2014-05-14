@@ -94,7 +94,7 @@ class TestListener implements \PHPUnit_Framework_TestListener
      */
     public function startTest(\PHPUnit_Framework_Test $test)
     {
-        $name = sprintf('%-30.30s', $test->getName());
+        $name = sprintf('%-40.40s', $test->getName());
 
         echo "\n\t-> " . Colorize::text($name, 'green', null, true);
     }

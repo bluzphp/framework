@@ -21,6 +21,9 @@ return array(
     "logger" => array(
         "enabled" => true,
     ),
+    "registry" => array(
+        "moo" => "baz"
+    ),
     "test" => array(
         "foo" => "bar"
     )

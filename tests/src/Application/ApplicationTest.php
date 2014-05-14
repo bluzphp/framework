@@ -72,8 +72,21 @@ class ApplicationTest extends TestCase
         // merged
         //  - configs/application.php
         //  - configs/app.testing.php
-        $this->assertEquals(10, sizeof($this->getApp()->getConfigData()));
+        // hardcoded numbers of configuration items
+        $this->assertEquals(11, sizeof($this->getApp()->getConfigData()));
         $this->assertEquals(["foo" => "bar"], $this->getApp()->getConfigData("test"));
         $this->assertEquals("bar", $this->getApp()->getConfigData("test", "foo"));
+    }
+
+    /**
+     * Test Registry configuration setup
+     *
+     * @return void
+     */
+    public function testRegistry()
+    {
+        $this->assertEquals(["moo" => "baz"], $this->getApp()->getConfigData("registry"));
+        $this->assertEquals("baz", $this->getApp()->getConfigData("registry", "moo"));
+        $this->assertEquals("baz", $this->getApp()->getRegistry()->moo);
     }
 }

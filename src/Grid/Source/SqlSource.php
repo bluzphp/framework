@@ -28,7 +28,7 @@ class SqlSource extends AbstractSource
     /**
      * setSource
      *
-     * @param $source
+     * @param string $source
      * @throws \Bluz\Grid\GridException
      * @return self
      */

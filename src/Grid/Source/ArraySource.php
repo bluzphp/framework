@@ -26,7 +26,7 @@ class ArraySource extends AbstractSource
     /**
      * setSource
      *
-     * @param $source
+     * @param array $source
      * @throws Grid\GridException
      * @return self
      */

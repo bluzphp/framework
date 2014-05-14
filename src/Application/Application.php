@@ -45,8 +45,8 @@ use Bluz\View\View;
  * @package  Bluz\Application
  *
  * @method void denied()
- * @method void redirect(\string $url)
- * @method void redirectTo(\string $module, \string $controller, array $params = array())
+ * @method void redirect(string $url)
+ * @method void redirectTo(string $module, string $controller, array $params = array())
  * @method void reload()
  * @method \Bluz\Auth\AbstractRowEntity user()
  *

@@ -46,7 +46,7 @@ abstract class AbstractSource
     /**
      * Setup adapter source
      *
-     * @param $source
+     * @param mixed $source
      * @return AbstractSource
      */
     abstract public function setSource($source);

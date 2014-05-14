@@ -41,7 +41,7 @@ class ApplicationTest extends TestCase
      *
      * @return void
      */
-    public function testGetPackages()
+    public function testGettersOfPackages()
     {
         $this->assertInstanceOf('\Bluz\Acl\Acl', $this->getApp()->getAcl());
         $this->assertInstanceOf('\Bluz\Auth\Auth', $this->getApp()->getAuth());
@@ -61,5 +61,32 @@ class ApplicationTest extends TestCase
         $this->assertInstanceOf('\Bluz\Session\Session', $this->getApp()->getSession());
         $this->assertInstanceOf('\Bluz\Translator\Translator', $this->getApp()->getTranslator());
         $this->assertInstanceOf('\Bluz\View\View', $this->getApp()->getView());
+    }
+
+    /**
+     * @covers \Bluz\Application\Application::getConfigData
+     * @return void
+     */
+    public function testGetConfigData()
+    {
+        // merged
+        //  - configs/application.php
+        //  - configs/app.testing.php
+        // hardcoded numbers of configuration items
+        $this->assertEquals(11, sizeof($this->getApp()->getConfigData()));
+        $this->assertEquals(["foo" => "bar"], $this->getApp()->getConfigData("test"));
+        $this->assertEquals("bar", $this->getApp()->getConfigData("test", "foo"));
+    }
+
+    /**
+     * Test Registry configuration setup
+     *
+     * @return void
+     */
+    public function testRegistry()
+    {
+        $this->assertEquals(["moo" => "baz"], $this->getApp()->getConfigData("registry"));
+        $this->assertEquals("baz", $this->getApp()->getConfigData("registry", "moo"));
+        $this->assertEquals("baz", $this->getApp()->getRegistry()->moo);
     }
 }

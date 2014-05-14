@@ -153,9 +153,9 @@ class EventManagerTest extends Bluz\Tests\TestCase
             return $event->getTarget() + $event->getParam('plus');
         });
 
-        $result = $this->eventManager->trigger('test', 0, ['plus'=>10]);
+        $result = $this->eventManager->trigger('test', 10, ['plus'=>10]);
 
-        $this->assertEquals(10, $result);
+        $this->assertEquals(20, $result);
     }
 
     /**

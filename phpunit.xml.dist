@@ -3,10 +3,10 @@
          stopOnFailure="false"
          colors="true"
          verbose="false"
-         bootstrap="./bootstrap.php">
+         bootstrap="./tests/bootstrap.php">
     <testsuites>
         <testsuite name="Framework Test Suite">
-            <directory>./src/</directory>
+            <directory>./tests/src/</directory>
         </testsuite>
     </testsuites>
     <listeners>
@@ -21,11 +21,10 @@
     </php>
     <filter>
         <whitelist>
-            <directory suffix=".php">../Bluz</directory>
-            <exclude>
-                <directory suffix=".phtml">../Bluz</directory>
-                <directory suffix=".php">../Bluz/configs</directory>
-            </exclude>
+            <directory suffix=".php">./src</directory>
         </whitelist>
+        <blacklist>
+            <directory suffix=".php">./vendor</directory>
+        </blacklist>
     </filter>
 </phpunit>

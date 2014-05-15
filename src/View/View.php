@@ -19,7 +19,7 @@ use Bluz\Common\Options;
  *
  * @package  Bluz\View
  *
- * @method string ahref(string $text, string $href, array $attributes = [])
+ * @method string ahref(string $text, mixed $href, array $attributes = [])
  * @method string api(string $module, string $method, $params = array())
  * @method string attributes(array $attributes = [])
  * @method string baseUrl(string $file = null)

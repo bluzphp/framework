@@ -251,12 +251,9 @@ abstract class AbstractBuilder
             } else {
                 $this->sqlParts[$sqlPartName] = $sqlPart;
             }
-
-            return $this;
+        } else {
+            $this->sqlParts[$sqlPartName] = $sqlPart;
         }
-
-        $this->sqlParts[$sqlPartName] = $sqlPart;
-
         return $this;
     }
 

@@ -41,7 +41,9 @@ trait Order
      */
     public function orderBy($sort, $order = 'ASC')
     {
-        return $this->addQueryPart('orderBy', $sort . ' ' . (! $order ? 'ASC' : $order), false);
+        $order = strtoupper($order);
+        $order = ('ASC' == $order ? 'ASC' : 'DESC');
+        return $this->addQueryPart('orderBy', $sort .' '. $order, false);
     }
 
     /**
@@ -53,6 +55,8 @@ trait Order
      */
     public function addOrderBy($sort, $order = 'ASC')
     {
-        return $this->addQueryPart('orderBy', $sort . ' ' . (! $order ? 'ASC' : $order), true);
+        $order = strtoupper($order);
+        $order = ('ASC' == $order ? 'ASC' : 'DESC');
+        return $this->addQueryPart('orderBy', $sort .' '. $order, true);
     }
 }

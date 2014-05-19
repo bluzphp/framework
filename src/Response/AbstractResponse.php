@@ -12,6 +12,7 @@
 namespace Bluz\Response;
 
 use Bluz\Common\Options;
+use Bluz\View\View;
 
 /**
  * AbstractResponse
@@ -158,7 +159,7 @@ abstract class AbstractResponse
     /**
      * Set response body
      *
-     * @param \Bluz\View\View $body
+     * @param View|\Closure $body
      * @return AbstractResponse
      */
     public function setBody($body)
@@ -170,7 +171,7 @@ abstract class AbstractResponse
     /**
      * Get response body
      *
-     * @return mixed
+     * @return View|\Closure
      */
     public function getBody()
     {

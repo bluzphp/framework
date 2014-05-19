@@ -40,7 +40,7 @@ abstract class AbstractResponse
 
     /**
      * Result can be View|object|function
-     * @var mixed
+     * @var View
      */
     protected $body;
 
@@ -159,7 +159,7 @@ abstract class AbstractResponse
     /**
      * Set response body
      *
-     * @param View|\Closure $body
+     * @param View $body
      * @return AbstractResponse
      */
     public function setBody($body)
@@ -171,7 +171,7 @@ abstract class AbstractResponse
     /**
      * Get response body
      *
-     * @return View|\Closure
+     * @return View
      */
     public function getBody()
     {

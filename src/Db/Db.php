@@ -535,6 +535,9 @@ class Db
         } elseif (is_string($object)) {
             // some class name
             $result = $stmt->fetchAll(\PDO::FETCH_CLASS, $object);
+        } else {
+            // when?
+            $result = null;
         }
         $stmt->closeCursor();
         $this->log($sql, $params);

@@ -283,6 +283,18 @@ abstract class AbstractBuilder
     }
 
     /**
+     * setFromQueryPart
+     *
+     * @param string $table
+     * @return self instance
+     */
+    protected function setFromQueryPart($table)
+    {
+        $table = $this->getAdapter()->quoteIdentifier($table);
+        return $this->addQueryPart('from', array('table' => $table), false);
+    }
+
+    /**
      * Prepare condition
      *
      * @param array $args

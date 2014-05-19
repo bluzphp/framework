@@ -33,14 +33,6 @@ return
         $apiClosure = $application->api($module, $method);
         return call_user_func_array($apiClosure, $params);
     } catch (\Exception $e) {
-        if (app()->isDebug()) {
-            // exception message for developers
-            echo
-                '<div class="alert alert-error">' .
-                '<strong>API "' . $module . '/' . $method . '"</strong>: ' .
-                $e->getMessage() .
-                '</div>';
-        }
-        return false;
+        return $this->exception($e);
     }
     };

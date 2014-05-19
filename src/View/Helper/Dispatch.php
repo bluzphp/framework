@@ -34,17 +34,7 @@ return
         // nothing for Acl exception
         return null;
     } catch (\Exception $e) {
-        if (app()->isDebug()) {
-            // exception message for developers
-            return
-                '<div class="alert alert-error">' .
-                '<strong>Dispatch of "' . $module . '/' . $controller . '"</strong>: ' .
-                $e->getMessage() .
-                '</div>';
-        } else {
-            // nothing for production
-            return null;
-        }
+        return $this->exception($e);
     }
 
     // run closure

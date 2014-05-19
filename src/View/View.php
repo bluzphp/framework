@@ -27,6 +27,7 @@ use Bluz\Common\Options;
  * @method string checkbox($name, $value = null, $checked = false, array $attributes = [])
  * @method string|bool controller(string $controller = null)
  * @method string|View dispatch($module, $controller, $params = array())
+ * @method string exception(\Exception $exception)
  * @method string|null headScript(string $script = null)
  * @method string|null headStyle(string $style = null, $media = 'all')
  * @method string|View meta(string $name = null, string $content = null)

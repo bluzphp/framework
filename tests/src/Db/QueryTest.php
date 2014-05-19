@@ -39,6 +39,8 @@ class QueryTest extends Bluz\Tests\TestCase
             ->orWhere('u.id IN (?)', [4, 5])
             ->andWhere('u.status = ? OR u.status = ?', 'active', 'pending')
             ->orWhere('u.login LIKE (?)', 'A%')
+            ->orderBy('u.id')
+            ->addOrderBy('u.login')
             ->limit(5)
         ;
 
@@ -46,6 +48,7 @@ class QueryTest extends Bluz\Tests\TestCase
             . ' FROM users u LEFT JOIN users_actions ua ON ua.userId = u.id'
             . ' WHERE (((u.id = "4" OR u.id = "5") OR (u.id IN ("4","5")))'
             . ' AND (u.status = "active" OR u.status = "pending")) OR (u.login LIKE ("A%"))'
+            . ' ORDER BY u.id ASC, u.login ASC'
             . ' LIMIT 5 OFFSET 0';
 
         $this->assertEquals($builder->getQuery(), $check);

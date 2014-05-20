@@ -100,6 +100,7 @@ class ArraySource extends AbstractSource
                         }
                         return true;
                     }
+                    return true;
                 }
             );
         }

@@ -72,10 +72,17 @@ class Response extends AbstractResponse
             $response = $response->getData();
         }
 
-        // just print to console
-        foreach ($response as $key => $value) {
-            echo Colorize::text($key, "yellow", null, true) . ": ";
-            print_r($value);
+        // output
+        if (is_array($response)) {
+            // just print to console
+            foreach ($response as $key => $value) {
+                echo Colorize::text($key, "yellow", null, true) . ": ";
+                print_r($value);
+                echo "\n";
+            }
+        } else {
+            echo Colorize::text("Response", "yellow", null, true) . ": ";
+            print_r($response);
             echo "\n";
         }
     }

@@ -16,6 +16,7 @@ use Bluz\Acl\AclException;
 use Bluz\Application\Exception\ApplicationException;
 use Bluz\Application\Exception\RedirectException;
 use Bluz\Application\Exception\ReloadException;
+use Bluz\Auth\AbstractRowEntity;
 use Bluz\Auth\Auth;
 use Bluz\Cache\Cache;
 use Bluz\Common\Exception;
@@ -48,7 +49,7 @@ use Bluz\View\View;
  * @method void redirect(string $url)
  * @method void redirectTo(string $module, string $controller, array $params = array())
  * @method void reload()
- * @method \Bluz\Auth\AbstractRowEntity user()
+ * @method AbstractRowEntity user()
  *
  * @author   Anton Shevchuk
  * @created  06.07.11 16:25

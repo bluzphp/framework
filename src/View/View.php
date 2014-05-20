@@ -11,6 +11,7 @@
  */
 namespace Bluz\View;
 
+use Bluz\Auth\AbstractRowEntity;
 use Bluz\Common\Helper;
 use Bluz\Common\Options;
 
@@ -27,6 +28,7 @@ use Bluz\Common\Options;
  * @method string checkbox($name, $value = null, $checked = false, array $attributes = [])
  * @method string|bool controller(string $controller = null)
  * @method string|View dispatch($module, $controller, $params = array())
+ * @method string exception(\Exception $exception)
  * @method string|null headScript(string $script = null)
  * @method string|null headStyle(string $style = null, $media = 'all')
  * @method string|View meta(string $name = null, string $content = null)
@@ -40,7 +42,7 @@ use Bluz\Common\Options;
  * @method string style(string $style, $media = 'all')
  * @method string|View title(string $title = null, $position = 'replace', $separator = ' :: ')
  * @method string|View url(string $module, string $controller, array $params = [], bool $checkAccess = false)
- * @method \Bluz\Auth\AbstractRowEntity|null user()
+ * @method AbstractRowEntity|null user()
  * @method void widget($module, $widget, $params = [])
  *
  * @author   Anton Shevchuk, ErgallM

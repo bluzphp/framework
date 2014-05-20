@@ -89,11 +89,12 @@ abstract class FileBase extends AbstractAdapter
      */
     protected function getFilename($id)
     {
-        // Copypasted from Doctrine\Common\Cache\FileCache
-        $path = implode(str_split(md5($id), 12), DIRECTORY_SEPARATOR);
+        // make uid as hash from id
+        // split it by 4 chars for make directory structure
+        $path = join(DIRECTORY_SEPARATOR, str_split(md5($id), 4));
         $path = $this->cacheDir . DIRECTORY_SEPARATOR . $path;
 
-        return $path . DIRECTORY_SEPARATOR . $id . $this->extension;
+        return $path . $this->extension;
     }
 
     /**

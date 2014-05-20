@@ -55,9 +55,10 @@ class Request extends AbstractRequest
     {
         $this->method = $this->getServer('REQUEST_METHOD');
         $request = file_get_contents('php://input');
+        $contentType = $this->getHeader('Content-Type');
 
         // support header like "application/json" and "application/json; charset=utf-8"
-        if ($this->getHeader('Content-Type') && stristr($this->getHeader('Content-Type'), 'application/json')) {
+        if ($contentType && stristr($contentType, 'application/json')) {
             $data = (array) json_decode($request);
         } else {
             switch ($this->method) {

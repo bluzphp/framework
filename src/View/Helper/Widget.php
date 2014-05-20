@@ -34,13 +34,6 @@ return
     } catch (AclException $e) {
         // nothing for Acl exception
     } catch (\Exception $e) {
-        if (app()->isDebug()) {
-            // exception message for developers
-            echo
-                '<div class="alert alert-error">' .
-                '<strong>Widget "' . $module . '/' . $widget . '"</strong>: ' .
-                $e->getMessage() .
-                '</div>';
-        }
+        echo $this->exception($e);
     }
     };

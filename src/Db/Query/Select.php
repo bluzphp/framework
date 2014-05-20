@@ -314,35 +314,6 @@ class Select extends AbstractBuilder
     }
 
     /**
-     * Specifies an ordering for the query results
-     * Replaces any previously specified orderings, if any
-     *
-     * @param string $sort The ordering expression.
-     * @param string $order The ordering direction.
-     * @return Select instance
-     */
-    public function orderBy($sort, $order = 'ASC')
-    {
-        $order = strtoupper($order);
-        $order = ('ASC' == $order ? 'ASC' : 'DESC');
-        return $this->addQueryPart('orderBy', $sort . ' ' . $order, false);
-    }
-
-    /**
-     * Adds an ordering to the query results
-     *
-     * @param string $sort The ordering expression.
-     * @param string $order The ordering direction.
-     * @return Select instance
-     */
-    public function addOrderBy($sort, $order = 'ASC')
-    {
-        $order = strtoupper($order);
-        $order = ('ASC' == $order ? 'ASC' : 'DESC');
-        return $this->addQueryPart('orderBy', $sort . ' ' . $order, true);
-    }
-
-    /**
      * Specifies a restriction over the groups of the query.
      * Replaces any previous having restrictions, if any.
      *

@@ -495,7 +495,6 @@ class Db
     public function fetchObject($sql, $params = array(), $object = "stdClass")
     {
         $stmt = $this->prepare($sql);
-        $result = null;
         $stmt->execute($params);
         if (is_object($object)) {
             // some instance
@@ -526,7 +525,6 @@ class Db
     public function fetchObjects($sql, $params = array(), $object = null)
     {
         $stmt = $this->prepare($sql);
-        $result = null;
         $stmt->execute($params);
         if (!$object) {
             // StdClass
@@ -537,6 +535,9 @@ class Db
         } elseif (is_string($object)) {
             // some class name
             $result = $stmt->fetchAll(\PDO::FETCH_CLASS, $object);
+        } else {
+            // when?
+            $result = null;
         }
         $stmt->closeCursor();
         $this->log($sql, $params);

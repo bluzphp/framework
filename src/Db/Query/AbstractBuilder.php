@@ -251,12 +251,9 @@ abstract class AbstractBuilder
             } else {
                 $this->sqlParts[$sqlPartName] = $sqlPart;
             }
-
-            return $this;
+        } else {
+            $this->sqlParts[$sqlPartName] = $sqlPart;
         }
-
-        $this->sqlParts[$sqlPartName] = $sqlPart;
-
         return $this;
     }
 
@@ -283,6 +280,18 @@ abstract class AbstractBuilder
             ? array() : null;
 
         return $this;
+    }
+
+    /**
+     * setFromQueryPart
+     *
+     * @param string $table
+     * @return self instance
+     */
+    protected function setFromQueryPart($table)
+    {
+        $table = $this->getAdapter()->quoteIdentifier($table);
+        return $this->addQueryPart('from', array('table' => $table), false);
     }
 
     /**

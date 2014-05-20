@@ -26,6 +26,11 @@ use Bluz\Grid;
 class SqlSource extends AbstractSource
 {
     /**
+     * @var string SQL
+     */
+    protected $source;
+
+    /**
      * setSource
      *
      * @param string $source

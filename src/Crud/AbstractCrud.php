@@ -228,6 +228,17 @@ abstract class AbstractCrud
     }
 
     /**
+     * Clear errors
+     *
+     * @return self
+     */
+    public function clearErrors()
+    {
+        $this->errors = array();
+        return $this;
+    }
+
+    /**
      * Check errors stack and throw 
      * @throws ValidationException
      */

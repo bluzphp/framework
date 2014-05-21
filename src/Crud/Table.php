@@ -112,6 +112,7 @@ class Table extends AbstractCrud
      */
     public function createOne($data)
     {
+        $this->clearErrors();
         $this->validate(null, $data);
         $this->validateCreate($data);
         $this->checkErrors();
@@ -138,6 +139,7 @@ class Table extends AbstractCrud
             throw new NotFoundException("Record not found");
         }
 
+        $this->clearErrors();
         $this->validate($primary, $data);
         $this->validateUpdate($primary, $data);
         $this->checkErrors();

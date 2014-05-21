@@ -1176,7 +1176,7 @@ abstract class Application
      *
      * @param array $reflectionData
      * @param array $rawData
-     * @return callable
+     * @return array
      */
     private function params($reflectionData, $rawData)
     {

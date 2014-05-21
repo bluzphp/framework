@@ -159,13 +159,15 @@ class Rest extends AbstractController
                     }
                     $uid = join('-', array_values($result));
                 } catch (ValidationException $e) {
-                    http_response_code(400);
+                    app()->getResponse()->setCode(400);
                     return ['errors' => $this->getCrud()->getErrors()];
                 }
 
-                http_response_code(201);
-                header(
-                    'Location: '.app()->getRouter()->url($request->getModule(), $request->getController()).'/'.$uid
+
+                app()->getResponse()->setCode(201);
+                app()->getResponse()->setHeader(
+                    'Location',
+                    app()->getRouter()->url($request->getModule(), $request->getController()).'/'.$uid
                 );
                 return false; // disable view
             case Request::METHOD_PATCH:
@@ -186,10 +188,10 @@ class Rest extends AbstractController
                     // if $result === 0 it's means a update is not apply
                     // or records not found
                     if (0 === $result) {
-                        http_response_code(304);
+                        app()->getResponse()->setCode(304);
                     }
                 } catch (ValidationException $e) {
-                    http_response_code(400);
+                    app()->getResponse()->setCode(400);
                     return ['errors' => $this->getCrud()->getErrors()];
                 }
                 return false; // disable view
@@ -210,7 +212,7 @@ class Rest extends AbstractController
                 if (0 === $result) {
                     throw new NotFoundException();
                 } else {
-                    http_response_code(204);
+                    app()->getResponse()->setCode(204);
                 }
                 return false; // disable view
             default:

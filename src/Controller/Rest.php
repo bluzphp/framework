@@ -126,7 +126,7 @@ class Rest extends AbstractController
                     if (!sizeof($result)) {
                         throw new NotFoundException();
                     }
-                    return current($result);
+                    return [$result];
                 } else {
                     // setup default offset and limit - safe way
                     $offset = isset($this->params['offset'])?$this->params['offset']:0;

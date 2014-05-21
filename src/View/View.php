@@ -41,7 +41,7 @@ use Bluz\Common\Options;
  * @method string select($name, array $options = [], $selected = null, array $attributes = [])
  * @method string style(string $style, $media = 'all')
  * @method string|View title(string $title = null, $position = 'replace', $separator = ' :: ')
- * @method string|View url(string $module, string $controller, array $params = [], bool $checkAccess = false)
+ * @method string|null url(string $module, string $controller, array $params = [], bool $checkAccess = false)
  * @method AbstractRowEntity|null user()
  * @method void widget($module, $widget, $params = [])
  *

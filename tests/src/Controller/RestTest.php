@@ -12,6 +12,7 @@ namespace Bluz\Tests\Controller;
 use Bluz\Http;
 use Bluz\Http\Request;
 use Bluz\Controller;
+use Bluz\Tests\BootstrapTest;
 use Bluz\Tests\Fixtures\Models\TestCrud;
 use Bluz\Tests\TestCase;
 
@@ -22,6 +23,53 @@ use Bluz\Tests\TestCase;
  */
 class RestTest extends TestCase
 {
+    /**
+     * Setup `test` table before the first test
+     */
+    public static function setUpBeforeClass()
+    {
+        BootstrapTest::getInstance()->getDb()->insert('test')->setArray(
+            [
+                'id' => 1,
+                'name' => 'Donatello',
+                'email' => 'donatello@turtles.org'
+            ]
+        )->execute();
+
+        BootstrapTest::getInstance()->getDb()->insert('test')->setArray(
+            [
+                'id' => 2,
+                'name' => 'Leonardo',
+                'email' => 'leonardo@turtles.org'
+            ]
+        )->execute();
+
+        BootstrapTest::getInstance()->getDb()->insert('test')->setArray(
+            [
+                'id' => 3,
+                'name' => 'Michelangelo',
+                'email' => 'michelangelo@turtles.org'
+            ]
+        )->execute();
+
+        BootstrapTest::getInstance()->getDb()->insert('test')->setArray(
+            [
+                'id' => 4,
+                'name' => 'Raphael',
+                'email' => 'raphael@turtles.org'
+            ]
+        )->execute();
+    }
+
+    /**
+     * Drop `test` table after the last test
+     */
+    public static function tearDownAfterClass()
+    {
+        BootstrapTest::getInstance()->getDb()->delete('test')->where('id IN (?)', [1,2,3,4])->execute();
+        BootstrapTest::getInstance()->getDb()->delete('test')->where('email = ?', 'splinter@turtles.org')->execute();
+    }
+
     /**
      * GET with PRIMARY should return RECORD
      */

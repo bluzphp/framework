@@ -39,5 +39,5 @@ class TestTable extends \Bluz\Db\Table
      * Class name
      * @var string
      */
-    protected $rowClass = "\\Bluz\\Tests\\Fixtures\\Models\\TestRow";
+    protected $rowClass = '\Bluz\Tests\Fixtures\Models\TestRow';
 }

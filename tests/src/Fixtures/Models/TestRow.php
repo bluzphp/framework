@@ -21,4 +21,13 @@ namespace Bluz\Tests\Fixtures\Models;
  */
 class TestRow extends \Bluz\Db\Row
 {
+    /**
+     * Return table instance for manipulation
+     *
+     * @return TestTable
+     */
+    public function getTable()
+    {
+        return TestTable::getInstance();
+    }
 }

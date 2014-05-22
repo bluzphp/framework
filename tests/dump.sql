@@ -18,15 +18,6 @@ CREATE TABLE `test` (
 /*Data for the table `test` */
 
 insert  into `test`(`id`,`name`,`email`,`status`) values
-  (1,'Patric','nunc.sed@velitegestas.com','active'),
-  (2,'Tula','euismod@justo.org','active'),
-  (3,'Courtney','lacus.Nulla@nonhendreritid.org','active'),
-  (4,'April','tincidunt.nibh.Phasellus@adipiscingMaurismolestie.ca','disable'),
-  (5,'Lesley','non@milaciniamattis.com','disable'),
-  (6,'Frances','libero.mauris.aliquam@faucibusid.ca','disable'),
-  (7,'Emma Nilson','magna@temporest.edu','disable'),
-  (8,'Emerald','nunc.nulla@Lorem.ca','disable'),
-  (9,'Marsden','Donec.dignissim.magna@posuereatvelit.org','delete'),
   (10,'Jonah','dictum@pharetra.ca','disable'),
   (11,'Connor','congue.In.scelerisque@Integervulputaterisus.ca','disable'),
   (12,'Jessica','imperdiet.ornare@iaculisnec.com','delete'),

@@ -11,7 +11,3 @@ define('PATH_VENDOR', PATH_ROOT . '/vendor');
 
 // init autoloader
 require_once PATH_ROOT . '/vendor/autoload.php';
-
-// application
-$app = Bluz\Tests\BootstrapTest::getInstance();
-$app->init('testing');

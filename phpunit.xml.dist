@@ -12,13 +12,6 @@
     <listeners>
         <listener class="\Bluz\Tests\TestListener" />
     </listeners>
-    <php>
-        <var name="DB_TYPE" value="mysql" />
-        <var name="DB_HOST" value="localhost" />
-        <var name="DB_NAME" value="bluz" />
-        <var name="DB_USER" value="root" />
-        <var name="DB_PASS" value="" />
-    </php>
     <filter>
         <whitelist>
             <directory suffix=".php">./src</directory>

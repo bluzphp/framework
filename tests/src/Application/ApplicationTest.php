@@ -10,7 +10,6 @@
 namespace Bluz\Tests\Application;
 
 use Bluz\Tests\TestCase;
-use Bluz\Application\Application;
 
 /**
  * ApplicationTest
@@ -26,7 +25,7 @@ class ApplicationTest extends TestCase
      */
     public function testReflection()
     {
-        $controllerFile = dirname(__FILE__) .'/../Fixtures/ConcreteControllerWithData.php';
+        $controllerFile = dirname(__FILE__) .'/../Fixtures/Controllers/ConcreteWithData.php';
 
         $reflectionData = $this->getApp()->reflection($controllerFile);
 

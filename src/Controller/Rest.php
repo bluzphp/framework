@@ -88,13 +88,6 @@ class Rest extends AbstractController
     {
         $request = app()->getRequest();
 
-        if ($accept = $request->getHeader('accept')) {
-            $accept = explode(',', $accept);
-            if (in_array("application/json", $accept)) {
-                app()->useJson(true);
-            }
-        }
-
         // everyone method can return:
         // >> 401 Unauthorized - if authorization is required
         // >> 403 Forbidden - if user don't have permissions

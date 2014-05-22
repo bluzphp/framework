@@ -54,13 +54,14 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected function resetApp()
     {
-        $this->app->resetLayout();
-
-        $this->app->getAuth()->clearIdentity();
-        $this->app->setRequest(new Http\Request());
-        $this->app->setResponse(new Http\Response());
-        $this->app->useJson(false);
-        $this->app->useLayout(true);
-        $this->app->getMessages()->popAll();
+        if ($this->app) {
+            $this->app->resetLayout();
+            $this->app->getAuth()->clearIdentity();
+            $this->app->setRequest(new Http\Request());
+            $this->app->setResponse(new Http\Response());
+            $this->app->useJson(false);
+            $this->app->useLayout(true);
+            $this->app->getMessages()->popAll();
+        }
     }
 }

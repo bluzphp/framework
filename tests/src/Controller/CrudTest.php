@@ -71,6 +71,17 @@ class CrudTest extends TestCase
     }
 
     /**
+     * Tear Down
+     *
+     * @return void
+     */
+    protected function tearDown()
+    {
+        parent::tearDown();
+        $this->resetApp();
+    }
+
+    /**
      * Process Crud
      *
      * @return mixed
@@ -235,6 +246,18 @@ class CrudTest extends TestCase
         $request = $this->getApp()->getRequest();
         $request->setMethod(Http\Request::METHOD_DELETE);
         $request->setParams(['id' => 100042]);
+
+        $this->processCrud();
+    }
+
+    /**
+     * HEAD should return EXCEPTION
+     * @expectedException \Bluz\Application\Exception\NotImplementedException
+     */
+    public function testNotImplementedException()
+    {
+        $request = $this->getApp()->getRequest();
+        $request->setMethod(Http\Request::METHOD_HEAD);
 
         $this->processCrud();
     }

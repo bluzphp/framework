@@ -7,7 +7,7 @@
 /**
  * @namespace
  */
-namespace Application;
+namespace Bluz\Tests\Fixtures\Controllers;
 
 return
 /**
@@ -20,7 +20,7 @@ return
  * @param int $a
  * @param float $b
  * @param string $c
- * @return \closure
+ * @return array
  */
 function ($a, $b, $c = null) {
     /**

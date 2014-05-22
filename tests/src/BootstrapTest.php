@@ -14,13 +14,30 @@ use Bluz\Application\Application;
 /**
  * Bootstrap
  *
- * @category Bluz
- * @package  Tests
+ * @package  Bluz\Tests
  *
  * @author   Anton Shevchuk
  * @created  20.07.11 17:38
  */
 class BootstrapTest extends Application
 {
+    /**
+     * Get dispatched module name
+     *
+     * @return string
+     */
+    public function getModule()
+    {
+        return $this->dispatchModule;
+    }
 
+    /**
+     * Get dispatched controller name
+     *
+     * @return string
+     */
+    public function getController()
+    {
+        return $this->dispatchController;
+    }
 }

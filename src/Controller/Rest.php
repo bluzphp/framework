@@ -181,6 +181,7 @@ class Rest extends AbstractController
                     if ($this->primary) {
                         // update one item
                         $result = $this->updateOne($this->primary, $this->data);
+                        var_dump($result, $this->primary, $this->data);
                     } else {
                         // update collection
                         $result = $this->updateSet($this->data);

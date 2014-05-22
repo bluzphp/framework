@@ -111,6 +111,19 @@ class RestTest extends TestCase
     }
 
     /**
+     * GET with invalid PRIMARY should return ERROR
+     * @expectedException \Bluz\Application\Exception\NotFoundException
+     */
+    public function testReadOneError()
+    {
+        $request = $this->getApp()->getRequest();
+        $request->setMethod(Request::METHOD_GET);
+        $request->setRawParams([100042]);
+
+        $this->processRest();
+    }
+
+    /**
      * GET request should return SET of records
      */
     public function testReadSet()
@@ -120,6 +133,21 @@ class RestTest extends TestCase
 
         $_GET['offset'] = 0;
         $_GET['limit'] = 3;
+
+        $result = $this->processRest();
+
+        $this->assertEquals(sizeof($result), 3);
+    }
+
+    /**
+     * GET request should return SET of records
+     */
+    public function testReadSetWithRange()
+    {
+        $request = $this->getApp()->getRequest();
+        $request->setMethod(Request::METHOD_GET);
+
+        $_SERVER['HTTP_RANGE'] = 'test=0-3';
 
         $result = $this->processRest();
 
@@ -202,6 +230,23 @@ class RestTest extends TestCase
             ['leonardo@turtles.ua']
         );
         $this->assertEquals($id, 2);
+    }
+
+    /**
+     * PUT request with PRIMARY should UPDATE record
+     */
+    public function testUpdateWithSameDate()
+    {
+        $request = $this->getApp()->getRequest();
+        $request->setMethod(Request::METHOD_PUT);
+        $request->setRawParams([1]);
+        $request->setParams(['name' => 'Donatello', 'email' => 'donatello@turtles.org']);
+
+        $result = $this->processRest();
+        $this->assertFalse($result);
+
+        $response = $this->getApp()->getResponse();
+        $this->assertEquals(304, $response->getCode());
     }
 
     /**
@@ -321,6 +366,18 @@ class RestTest extends TestCase
                 ['id' => 4],
             ]
         );
+
+        $this->processRest();
+    }
+
+    /**
+     * HEAD should return EXCEPTION
+     * @expectedException \Bluz\Application\Exception\NotImplementedException
+     */
+    public function testNotImplementedException()
+    {
+        $request = $this->getApp()->getRequest();
+        $request->setMethod(Http\Request::METHOD_HEAD);
 
         $this->processRest();
     }

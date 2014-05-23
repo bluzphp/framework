@@ -11,7 +11,6 @@
  */
 namespace Bluz\Controller;
 
-use Bluz\Application\Exception\ApplicationException;
 use Bluz\Application\Exception\BadRequestException;
 use Bluz\Application\Exception\NotFoundException;
 use Bluz\Application\Exception\NotImplementedException;

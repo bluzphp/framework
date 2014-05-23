@@ -29,7 +29,7 @@ class AclTest extends Bluz\Tests\TestCase
     public function testAllow()
     {
         $this->getApp()->getAuth()->setIdentity(new UserAdmin());
-        $this->assertTrue($this->app->getAcl()->isAllowed('any', 'any'));
+        $this->assertTrue($this->getApp()->getAcl()->isAllowed('any', 'any'));
     }
     /**
      * Test deny access
@@ -37,7 +37,7 @@ class AclTest extends Bluz\Tests\TestCase
     public function testDeny()
     {
         $this->getApp()->getAuth()->setIdentity(new UserGuest());
-        $this->assertFalse($this->app->getAcl()->isAllowed('any', 'any'));
+        $this->assertFalse($this->getApp()->getAcl()->isAllowed('any', 'any'));
     }
 }
  

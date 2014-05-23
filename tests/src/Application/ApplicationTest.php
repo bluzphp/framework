@@ -9,6 +9,8 @@
  */
 namespace Bluz\Tests\Application;
 
+use Bluz\Http\Request;
+use Bluz\Router\Router;
 use Bluz\Tests\TestCase;
 
 /**
@@ -19,6 +21,17 @@ use Bluz\Tests\TestCase;
  */
 class ApplicationTest extends TestCase
 {
+    /**
+     * Tear Down
+     *
+     * @return void
+     */
+    protected function tearDown()
+    {
+        parent::tearDown();
+        $this->resetApp();
+    }
+
     /**
      * @covers \Bluz\Application\Application::reflection
      * @return void
@@ -87,5 +100,46 @@ class ApplicationTest extends TestCase
         $this->assertEquals(["moo" => "baz"], $this->getApp()->getConfigData("registry"));
         $this->assertEquals("baz", $this->getApp()->getConfigData("registry", "moo"));
         $this->assertEquals("baz", $this->getApp()->getRegistry()->moo);
+    }
+
+    /**
+     * Test run Index Controller if Index Module
+     */
+    public function testIndexController()
+    {
+        // setup Request
+        $request = $this->getApp()->getRequest();
+        $request->setRequestUri('/');
+        $request->setMethod(Request::METHOD_GET);
+        $this->getApp()->setRequest($request);
+
+        // run Router
+        $this->getApp()->getRouter()->process();
+
+        // run Application
+        $this->getApp()->process();
+
+        $this->assertEquals(Router::DEFAULT_MODULE, $this->getApp()->getModule());
+        $this->assertEquals(Router::DEFAULT_CONTROLLER, $this->getApp()->getController());
+    }
+
+    /**
+     * Test run Error Controller
+     */
+    public function testErrorController()
+    {
+        // setup Request
+        $request = $this->getApp()->getRequest();
+        $request->setRequestUri(uniqid('module'). '/'. uniqid('controller'));
+        $request->setMethod(Request::METHOD_GET);
+        $this->getApp()->setRequest($request);
+
+        // run Router
+        $this->getApp()->getRouter()->process();
+
+        // run Application
+        $this->getApp()->process();
+        $this->assertEquals(Router::ERROR_MODULE, $this->getApp()->getModule());
+        $this->assertEquals(Router::ERROR_CONTROLLER, $this->getApp()->getController());
     }
 }

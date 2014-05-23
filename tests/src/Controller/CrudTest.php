@@ -184,7 +184,7 @@ class CrudTest extends TestCase
         $this->assertInstanceOf('Bluz\Tests\Fixtures\Models\TestRow', $result['row']);
         $this->assertEquals(2, $result['row']['id']);
 
-        $id = $this->app->getDb()->fetchOne(
+        $id = $this->getApp()->getDb()->fetchOne(
             'SELECT `id` FROM `test` WHERE `email` = ?',
             ['leonardo@turtles.ua']
         );
@@ -233,7 +233,7 @@ class CrudTest extends TestCase
         $result = $this->processCrud();
         $this->assertEquals(1, $result);
 
-        $count = $this->app->getDb()->fetchOne('SELECT count(*) FROM `test` WHERE `id` = ?', [3]);
+        $count = $this->getApp()->getDb()->fetchOne('SELECT count(*) FROM `test` WHERE `id` = ?', [3]);
         $this->assertEquals(0, $count);
     }
 

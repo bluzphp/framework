@@ -855,7 +855,7 @@ abstract class Application
             $view->setData($result);
         }
 
-        if (isset($reflectionData['cache'])) {
+        if (isset($reflectionData['cache'], $cacheKey)) {
             $this->getCache()->set($cacheKey, $view, intval($reflectionData['cache']) * 60);
             $this->getCache()->addTag($cacheKey, 'view');
             $this->getCache()->addTag($cacheKey, 'view:' . $module);
@@ -1100,8 +1100,8 @@ abstract class Application
                 }
             }
 
-            // parameters available for Closure only
-            if ('Closure' == get_class($closure)) {
+            // parameters available only for \ReflectionFunction
+            if ($reflection instanceof \ReflectionFunction) {
                 // get params and convert it to simple array
                 $reflectionParams = $reflection->getParameters();
 

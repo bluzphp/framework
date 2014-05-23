@@ -13,6 +13,8 @@ Easy to setup, easy to use.
 [![Latest Stable Version](https://poser.pugx.org/bluzphp/framework/v/stable.png)](https://packagist.org/packages/bluzphp/framework)
 [![Total Downloads](https://poser.pugx.org/bluzphp/framework/downloads.png)](https://packagist.org/packages/bluzphp/framework)
 
+[![License](https://poser.pugx.org/bluzphp/framework/license.svg)](https://packagist.org/packages/bluzphp/framework)
+
 ## Installation
 
 The best way is setup the [skeleton][1] application

@@ -11,7 +11,6 @@
  */
 namespace Bluz\Controller;
 
-use Bluz\Application\Exception\ApplicationException;
 use Bluz\Application\Exception\BadRequestException;
 use Bluz\Application\Exception\NotFoundException;
 use Bluz\Application\Exception\NotImplementedException;
@@ -78,7 +77,6 @@ class Rest extends AbstractController
     /**
      * {@inheritdoc}
      *
-     * @throws ApplicationException
      * @throws NotImplementedException
      * @throws NotFoundException
      * @throws BadRequestException
@@ -87,13 +85,6 @@ class Rest extends AbstractController
     public function __invoke()
     {
         $request = app()->getRequest();
-
-        if ($accept = $request->getHeader('accept')) {
-            $accept = explode(',', $accept);
-            if (in_array("application/json", $accept)) {
-                app()->useJson(true);
-            }
-        }
 
         // everyone method can return:
         // >> 401 Unauthorized - if authorization is required
@@ -122,10 +113,8 @@ class Rest extends AbstractController
         switch ($this->method) {
             case Request::METHOD_GET:
                 if ($this->primary) {
+                    // @throws NotFoundException
                     $result = $this->readOne($this->primary);
-                    if (!sizeof($result)) {
-                        throw new NotFoundException();
-                    }
                     return [$result];
                 } else {
                     // setup default offset and limit - safe way
@@ -154,15 +143,14 @@ class Rest extends AbstractController
                 try {
                     $result = $this->createOne($this->data);
                     if (!$result) {
-                        // internal error
-                        throw new ApplicationException;
+                        // system can't create record with this data
+                        throw new BadRequestException();
                     }
                     $uid = join('-', array_values($result));
                 } catch (ValidationException $e) {
                     app()->getResponse()->setCode(400);
                     return ['errors' => $this->getCrud()->getErrors()];
                 }
-
 
                 app()->getResponse()->setCode(201);
                 app()->getResponse()->setHeader(
@@ -198,22 +186,18 @@ class Rest extends AbstractController
             case Request::METHOD_DELETE:
                 if ($this->primary) {
                     // delete one
-                    $result = $this->deleteOne($this->primary);
+                    // @throws NotFoundException
+                    $this->deleteOne($this->primary);
                 } else {
                     // delete collection
+                    // @throws NotFoundException
                     if (!sizeof($this->data)) {
                         // data not exist
                         throw new BadRequestException();
                     }
-                    $result = $this->deleteSet($this->data);
+                    $this->deleteSet($this->data);
                 }
-                // if $result === 0 it's means a update is not apply
-                // or records not found
-                if (0 === $result) {
-                    throw new NotFoundException();
-                } else {
-                    app()->getResponse()->setCode(204);
-                }
+                app()->getResponse()->setCode(204);
                 return false; // disable view
             default:
                 throw new NotImplementedException();

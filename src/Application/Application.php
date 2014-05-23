@@ -485,19 +485,20 @@ abstract class Application
             $this->request = new Http\Request();
             $this->request->setOptions($this->getConfigData('request'));
 
+            // disable layout for AJAX requests
             if ($this->request->isXmlHttpRequest()) {
                 $this->useLayout(false);
+            }
 
-                // check header "accept" for catch AJAX JSON requests, and switch to JSON response
-                if ($accept = $this->getRequest()->getHeader('accept')) {
-                    // MIME type can be "application/json", "application/json; charset=utf-8" etc.
-                    $accept = str_replace(';', ',', $accept);
-                    $accept = explode(',', $accept);
-                    if (in_array("application/json", $accept)) {
-                        $this->useJson(true);
-                    }
+            // check header "accept" for catch JSON requests, and switch to JSON response
+            // for AJAX and REST requests
+            if ($accept = $this->getRequest()->getHeader('accept')) {
+                // MIME type can be "application/json", "application/json; charset=utf-8" etc.
+                $accept = str_replace(';', ',', $accept);
+                $accept = explode(',', $accept);
+                if (in_array("application/json", $accept)) {
+                    $this->useJson(true);
                 }
-
             }
         }
         return $this->request;

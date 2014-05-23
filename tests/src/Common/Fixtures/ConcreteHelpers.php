@@ -14,7 +14,6 @@ use Bluz\Common\Helper;
 /**
  * Concrete class with Helpers trait
  *
- * @category Tests
  * @package  Bluz\Tests\Common
  *
  * @method integer HelperFunction($argument)
@@ -27,13 +26,4 @@ use Bluz\Common\Helper;
 class ConcreteHelpers
 {
     use Helper;
-
-    /**
-     * Constructor of ConcreteHelpers
-     *
-     * @access  public
-     */
-    public function __construct()
-    {
-    }
 }

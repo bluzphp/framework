@@ -14,7 +14,7 @@ use Bluz\Tests\Common\Fixtures\ConcreteHelpers;
 
 /**
  * Tests for Helper trait
- * @category Tests
+ *
  * @package  Bluz\Tests\Common
  *
  * @author   Anton Shevchuk

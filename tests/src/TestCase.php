@@ -30,7 +30,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      *
      * @var \Application\Tests\BootstrapTest
      */
-    protected $app;
+    private $app;
 
     /**
      * Get Application instance

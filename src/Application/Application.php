@@ -1100,7 +1100,7 @@ abstract class Application
                 }
             }
 
-            // parameters available only for \ReflectionFunction
+            // parameters available for Closure only
             if ($reflection instanceof \ReflectionFunction) {
                 // get params and convert it to simple array
                 $reflectionParams = $reflection->getParameters();

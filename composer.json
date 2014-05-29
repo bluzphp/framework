@@ -32,18 +32,8 @@
     },
     "authors": [
         {
-            "name": "Anton Shevchuk",
-            "email": "AntonShevchuk@gmail.com"
-        },
-        {
-            "name": "Eugene Zabolotniy",
-            "email": "realbaziak@gmail.com"
-        },
-        {
-            "name": "Maks Slesarenko"
-        },
-        {
-            "name": "EagleMoor"
+            "name": "Bluz Framework Contributors",
+            "homepage": "https://github.com/bluzphp/framework/graphs/contributors"
         }
     ],
     "support": {

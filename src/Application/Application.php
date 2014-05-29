@@ -722,6 +722,7 @@ abstract class Application
                 $response->setHeader('Refresh', '15; url=' . $request->getRequestUri());
             }
         } catch (\Exception $e) {
+            $response->setException($e);
 
             $dispatchResult = $this->dispatch(
                 Router::ERROR_MODULE,
@@ -737,9 +738,7 @@ abstract class Application
                 $dispatchResult = $this->getLayout();
             }
 
-            $this->getResponse()
-                ->setException($e)
-                ->setCode($e->getCode())
+            $response->setCode($e->getCode())
                 ->setBody($dispatchResult);
         }
 
@@ -1100,7 +1099,7 @@ abstract class Application
                 }
             }
 
-            // parameters available only for \ReflectionFunction
+            // parameters available for Closure only
             if ($reflection instanceof \ReflectionFunction) {
                 // get params and convert it to simple array
                 $reflectionParams = $reflection->getParameters();

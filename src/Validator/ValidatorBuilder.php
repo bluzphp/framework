@@ -29,12 +29,12 @@ class ValidatorBuilder
      *
      * @var array
      */
-    protected $validators;
+    protected $validators = array();
 
     /**
      * @var array
      */
-    protected $errors;
+    protected $errors = array();
 
     /**
      * add
@@ -59,7 +59,7 @@ class ValidatorBuilder
     /**
      * Validate chain of rules
      *
-     * @param mixed $input
+     * @param array|object $input
      * @return bool
      */
     public function validate($input)
@@ -82,10 +82,24 @@ class ValidatorBuilder
                     }
                     $this->errors[$key][] = $validator->getError();
                     $result = false;
+                    break; // stop on first fail
                 }
             }
         }
         return $result;
+    }
+
+    /**
+     * Assert
+     *
+     * @param array|object $input
+     * @return void
+     */
+    public function assert($input)
+    {
+        if (!$this->validate($input)) {
+            throw new ValidatorException("Invalid Arguments");
+        }
     }
 
     /**

@@ -194,8 +194,8 @@ abstract class AbstractCrud
     /**
      * Add new errors to stack
      *
-     * @param $message
-     * @param $field
+     * @param string $message
+     * @param string $field
      * @return self
      */
     protected function addError($message, $field)
@@ -204,6 +204,18 @@ abstract class AbstractCrud
             $this->errors[$field] = array();
         }
         $this->errors[$field][] = Translator::translate($message);
+        return $this;
+    }
+
+    /**
+     * Set errors stack
+     *
+     * @param array $messages
+     * @return self
+     */
+    protected function setErrors($messages)
+    {
+        $this->errors = $messages;
         return $this;
     }
 

@@ -169,7 +169,6 @@ abstract class Application
      */
     protected $jsonFlag = false;
 
-
     /**
      * Stack of widgets closures
      * @var array

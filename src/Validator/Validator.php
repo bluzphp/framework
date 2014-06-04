@@ -212,7 +212,7 @@ class Validator
     public function assert($input)
     {
         if (!$this->validate($input)) {
-            throw new ValidatorException($this->getError());
+            throw new ValidatorException($this->getError()?:'');
         }
     }
 

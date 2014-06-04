@@ -42,10 +42,10 @@ class ValidatorBuilder
      * add
      *
      * @param string $name
-     * @param Validator $validator...
+     * @internal param Validator $validator,...
      * @return ValidatorBuilder
      */
-    public function add($name, $validator)
+    public function add($name)
     {
         $validators = func_get_args();
         array_shift($validators);
@@ -67,13 +67,16 @@ class ValidatorBuilder
     public function validate($input)
     {
         $result = true;
-        foreach ($input as $key => $value) {
-            // properties without validation
-            if (!isset($this->validators[$key])) {
-                continue;
+        // check be validators
+        foreach ($this->validators as $key => $validators) {
+            // undefined property
+            if (isset($input[$key])) {
+                $value = $input[$key];
+            } else {
+                $value = null;
             }
-            // check be validators
-            foreach ($this->validators[$key] as $validator) {
+
+            foreach ($validators as $validator) {
                 /* @var Validator $validator */
                 if (!$validator->getName()) {
                     // setup field name as property name

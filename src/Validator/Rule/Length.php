@@ -72,8 +72,9 @@ class Length extends AbstractRule
      */
     public function validate($input)
     {
-        $length = $this->extractLength($input);
-
+        if (!$length = $this->extractLength($input)) {
+            return false;
+        }
         return $this->validateMin($length) && $this->validateMax($length);
     }
 

@@ -11,6 +11,8 @@
  */
 namespace Bluz\Validator\Rule;
 
+use Bluz\Validator\Exception\ValidatorException;
+
 /**
  * AbstractRule
  *
@@ -23,18 +25,31 @@ abstract class AbstractRule
 {
     /**
      * Template for output
-     *   - %1$s - name
-     *   - %2$s - input value
+     *   - {{name}} - name of field
+     *   - {{input}} - input value
      *
      * @var string
      */
-    protected $template = 'Field "%1$s" has invalid value "%2$s"';
+    protected $template = 'Field "{{name}}" has invalid value "{{input}}"';
 
     /**
      * @param mixed $input
      * @return bool
      */
     abstract public function validate($input);
+
+    /**
+     * Assert
+     *
+     * @param $input
+     * @return void
+     */
+    public function assert($input)
+    {
+        if (!$this->validate($input)) {
+            throw new ValidatorException();
+        }
+    }
 
     /**
      * Set custom template for error message
@@ -48,13 +63,22 @@ abstract class AbstractRule
     }
 
     /**
+     * Get template
+     *
+     * @return string
+     */
+    public function getTemplate()
+    {
+        return __($this->template);
+    }
+
+    /**
      * __toString
      *
      * @return string
      */
     public function __toString()
     {
-        return __($this->template);
+        return $this->getTemplate();
     }
 }
- 

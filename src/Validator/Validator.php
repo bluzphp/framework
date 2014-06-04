@@ -11,18 +11,29 @@
  */
 namespace Bluz\Validator;
 
+use Bluz\Validator\Exception\ValidatorException;
 use Bluz\Validator\Rule\AbstractRule;
+
+use Bluz\Validator\Exception\ComponentException;
 
 /**
  * Validator
  *
  * @package  Bluz\Validator
  *
+ * @method static Validator alpha()
+ * @method static Validator alphaNumeric()
  * @method static Validator callback($callback)
+ * @method static Validator length($min = null, $max = null, $inclusive = true)
+ * @method static Validator max($maxValue, $inclusive = false)
+ * @method static Validator min($minValue, $inclusive = false)
  * @method static Validator notEmpty()
+ * @method static Validator noWhitespace()
  * @method static Validator numeric()
  * @method static Validator regexp($expression)
  * @method static Validator string()
+ *
+ * @see https://github.com/Respect/Validation
  *
  * @author   Anton Shevchuk
  * @created  30.05.2014 10:03
@@ -55,6 +66,16 @@ class Validator
     protected $error;
 
     /**
+     * Create new instance if Validator
+     *
+     * @return Validator
+     */
+    public static function create()
+    {
+        return new static;
+    }
+
+    /**
      * Magic static call for create instance of Validator
      *
      * @param string $ruleName
@@ -63,7 +84,7 @@ class Validator
      */
     public static function __callStatic($ruleName, $arguments)
     {
-        $validator = new static;
+        $validator = self::create();
 
         return $validator->__call($ruleName, $arguments);
     }
@@ -73,11 +94,16 @@ class Validator
      *
      * @param string $ruleName
      * @param array $arguments
+     * @throws Exception\ComponentException
      * @return Validator
      */
     public function __call($ruleName, $arguments)
     {
         $ruleClass = '\\Bluz\\Validator\\Rule\\' . ucfirst($ruleName);
+
+        if (!class_exists($ruleClass)) {
+            throw new ComponentException();
+        }
 
         if (sizeof($arguments)) {
             $reflection = new \ReflectionClass($ruleClass);
@@ -178,21 +204,16 @@ class Validator
     }
 
     /**
-     * Validate by array key or object property
+     * Assert
      *
      * @param array|object $input
-     * @param string $key
-     * @param bool $all
-     * @return bool
+     * @return void
      */
-    public function validateProperty($input, $key, $all = false)
+    public function assert($input)
     {
-        if (is_array($input) && isset($input[$key])) {
-            $this->input = $input[$key];
-        } elseif (is_object($input) && isset($input->{$key})) {
-            $this->input = $input->{$key};
+        if (!$this->validate($input)) {
+            throw new ValidatorException($this->getError());
         }
-        return $this->validate($this->input, $all);
     }
 
     /**
@@ -238,7 +259,10 @@ class Validator
      */
     protected function prepareError($message)
     {
-        return sprintf($message, $this->getName(), $this->getInput());
+        $message = str_replace('{{name}}', $this->getName(), $message);
+        $message = str_replace('{{input}}', esc($this->getInput()), $message);
+
+        return $message;
     }
 
     /**

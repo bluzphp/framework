@@ -9,12 +9,12 @@
 /**
  * @namespace
  */
-namespace Bluz\Validator;
+namespace Bluz\Validator\Exception;
 
 /**
  * ValidatorException
  *
- * @package  Bluz\Validator
+ * @package  Bluz\Validator\Exception
  *
  * @author   Anton Shevchuk
  * @created  30.05.2014 14:47
@@ -23,4 +23,3 @@ class ValidatorException extends \InvalidArgumentException
 {
 
 }
- 

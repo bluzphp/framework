@@ -11,7 +11,7 @@
  */
 namespace Bluz\Validator\Rule;
 
-use Bluz\Validator\ValidatorException;
+use Bluz\Validator\Exception\ComponentException;
 
 /**
  * Class Callback
@@ -22,7 +22,7 @@ class Callback extends AbstractRule
     /**
      * @var string
      */
-    protected $template = '"%1$s" must be valid';
+    protected $template = '"{{name}}" must be valid';
 
     /**
      * @var callable
@@ -31,11 +31,12 @@ class Callback extends AbstractRule
 
     /**
      * @param callable $callback
+     * @throws \Bluz\Validator\Exception\ComponentException
      */
     public function __construct($callback)
     {
         if (!is_callable($callback)) {
-            throw new ValidatorException('Invalid callback');
+            throw new ComponentException('Invalid callback function');
         }
 
         $this->callback = $callback;

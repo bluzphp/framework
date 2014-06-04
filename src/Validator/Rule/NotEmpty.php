@@ -20,7 +20,7 @@ class NotEmpty extends AbstractRule
     /**
      * @var string
      */
-    protected $template = 'The value of "%1$s" must not be empty';
+    protected $template = 'The value of "{{name}}" must not be empty';
 
     /**
      * @param mixed $input

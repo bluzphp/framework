@@ -20,7 +20,7 @@ class Numeric extends AbstractRule
     /**
      * @var string
      */
-    protected $template = 'The value of "%1$s" must be numeric';
+    protected $template = 'The value of "{{name}}" must be numeric';
 
     /**
      * @param mixed $input

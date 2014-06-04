@@ -20,7 +20,7 @@ class Regexp extends AbstractRule
     /**
      * @var string
      */
-    protected $template = '"%1$s" must validate with regular expression rule';
+    protected $template = '"{{name}}" must validate with regular expression rule';
 
     /**
      * @var string

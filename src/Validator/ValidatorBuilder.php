@@ -11,6 +11,8 @@
  */
 namespace Bluz\Validator;
 
+use Bluz\Validator\Exception\ValidatorException;
+
 /**
  * Validator Builder
  *
@@ -66,9 +68,11 @@ class ValidatorBuilder
     {
         $result = true;
         foreach ($input as $key => $value) {
+            // properties without validation
             if (!isset($this->validators[$key])) {
                 continue;
             }
+            // check be validators
             foreach ($this->validators[$key] as $validator) {
                 /* @var Validator $validator */
                 if (!$validator->getName()) {
@@ -76,7 +80,7 @@ class ValidatorBuilder
                     $validator->setName(ucfirst($key));
                 }
 
-                if (!$validator->validateProperty($input, $key)) {
+                if (!$validator->validate($value, $key)) {
                     if (!isset($this->errors[$key])) {
                         $this->errors[$key] = array();
                     }
@@ -112,4 +116,3 @@ class ValidatorBuilder
         return $this->errors;
     }
 }
- 

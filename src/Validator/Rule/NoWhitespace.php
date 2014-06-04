@@ -12,22 +12,22 @@
 namespace Bluz\Validator\Rule;
 
 /**
- * Class String
+ * Class NoWhitespace
  * @package Bluz\Validator\Rule
  */
-class String extends AbstractRule
+class NoWhitespace extends AbstractRule
 {
     /**
      * @var string
      */
-    protected $template = '"{{name}}" must be a string';
+    protected $template = '"{{name}}" must not contain whitespace';
 
     /**
-     * @param mixed $input
+     * @param string $input
      * @return bool
      */
     public function validate($input)
     {
-        return is_string($input);
+        return is_null($input) || !preg_match('/\s/', $input);
     }
 }

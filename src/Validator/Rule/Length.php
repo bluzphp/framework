@@ -79,8 +79,8 @@ class Length extends AbstractRule
     }
 
     /**
-     * @param $input
-     * @return bool|int
+     * @param string $input
+     * @return integer
      */
     protected function extractLength($input)
     {

@@ -11,7 +11,7 @@
  */
 namespace Bluz\Validator\Rule;
 
-use  Bluz\Validator\Exception\ComponentException;
+use Bluz\Validator\Exception\ComponentException;
 
 /**
  * Class AbstractFilterRule
@@ -25,8 +25,8 @@ abstract class AbstractFilterRule extends AbstractRule
     protected $additionalChars = "";
 
     /**
-     * @param $input
-     * @return mixed
+     * @param string $input
+     * @return bool
      */
     abstract protected function validateClean($input);
 
@@ -44,7 +44,7 @@ abstract class AbstractFilterRule extends AbstractRule
 
     /**
      * @param string $input
-     * @return mixed
+     * @return string
      */
     protected function filter($input)
     {

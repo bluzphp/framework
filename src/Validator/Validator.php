@@ -11,10 +11,9 @@
  */
 namespace Bluz\Validator;
 
-use Bluz\Validator\Exception\ValidatorException;
 use Bluz\Validator\Rule\AbstractRule;
-
 use Bluz\Validator\Exception\ComponentException;
+use Bluz\Validator\Exception\ValidatorException;
 
 /**
  * Validator
@@ -174,7 +173,7 @@ class Validator
     /**
      * Get input data
      *
-     * @return mixed
+     * @return string
      */
     public function getInput()
     {
@@ -232,7 +231,7 @@ class Validator
     /**
      * Get error message
      *
-     * @return bool|string
+     * @return false|string
      */
     public function getError()
     {

@@ -69,13 +69,28 @@ class ValidatorBuilder
         $result = true;
         // check be validators
         foreach ($this->validators as $key => $validators) {
-            // undefined property
-            if (isset($input[$key])) {
+            // extract input from ...
+            if (is_array($input) && isset($input[$key])) {
+                // array
                 $value = $input[$key];
+            } elseif (is_object($input) && isset($input->{$key})) {
+                // object
+                $value = $input->{$key};
             } else {
+                // ... oh, not exists
                 $value = null;
+                // check chains for required
+                foreach ($validators as $validator) {
+                    /* @var Validator $validator */
+                    if ($validator->isRequired()) {
+                        $this->errors[$key][] = $validator->getError();
+                        break;
+                    }
+                }
+                break;
             }
 
+            // run validators chain
             foreach ($validators as $validator) {
                 /* @var Validator $validator */
                 if (!$validator->getName()) {

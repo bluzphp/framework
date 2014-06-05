@@ -9,9 +9,14 @@
  */
 namespace Bluz\Tests\Validator\Rule;
 
+use Bluz\Tests;
 use Bluz\Validator\Rule\AlphaNumeric;
 
-class AlphaNumericTest extends \PHPUnit_Framework_TestCase
+/**
+ * Class AlphaNumericTest
+ * @package Bluz\Tests\Validator\Rule
+ */
+class AlphaNumericTest extends Tests\TestCase
 {
     /**
      * @dataProvider providerForValidAlphaNumeric
@@ -79,8 +84,8 @@ class AlphaNumericTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array('', ''),
-            array('alganet', ''),
-            array('alganet', 'alganet'),
+            array('foobar', ''),
+            array('foobar', 'foobar'),
             array('0alg-anet0', '0-9'),
             array('1', ''),
             array("\t", ''),
@@ -89,7 +94,7 @@ class AlphaNumericTest extends \PHPUnit_Framework_TestCase
             array('foobar', ''),
             array('rubinho_', '_'),
             array('google.com', '.'),
-            array('alganet alganet', ''),
+            array('foobar foobar', ''),
             array("\nabc", ''),
             array("\tdef", ''),
             array("\nabc \t", ''),

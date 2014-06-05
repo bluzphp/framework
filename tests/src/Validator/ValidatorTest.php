@@ -13,12 +13,8 @@ use Bluz\Tests;
 use Bluz\Validator\Validator;
 
 /**
- * ValidatorTest
- *
- * @package  Bluz\Tests
- *
- * @author   Anton Shevchuk
- * @created  04.06.2014 13:34
+ * Class ValidatorTest
+ * @package Bluz\Tests\Validator
  */
 class ValidatorTest extends Tests\TestCase
 {

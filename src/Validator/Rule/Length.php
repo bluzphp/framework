@@ -47,13 +47,13 @@ class Length extends AbstractRule
         $this->maxValue = $max;
         $this->inclusive = $inclusive;
 
-        if (!is_numeric($min)) {
+        if ($min && !is_numeric($min)) {
             throw new ComponentException(
                 __('"%s" is not a valid numeric length', $min)
             );
         }
 
-        if (!is_numeric($max)) {
+        if ($max && !is_numeric($max)) {
             throw new ComponentException(
                 __('"%s" is not a valid numeric length', $max)
             );

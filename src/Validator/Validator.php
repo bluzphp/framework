@@ -29,6 +29,7 @@ use Bluz\Validator\Exception\ValidatorException;
  * @method static Validator notEmpty()
  * @method static Validator noWhitespace()
  * @method static Validator numeric()
+ * @method static Validator required()
  * @method static Validator regexp($expression)
  * @method static Validator string()
  *
@@ -63,6 +64,11 @@ class Validator
      * @var string rule as text
      */
     protected $error;
+
+    /**
+     * @var bool
+     */
+    protected $required = false;
 
     /**
      * Create new instance if Validator
@@ -104,6 +110,10 @@ class Validator
             throw new ComponentException();
         }
 
+        if ($ruleName == 'required') {
+            $this->required = true;
+        }
+
         if (sizeof($arguments)) {
             $reflection = new \ReflectionClass($ruleClass);
             $rule = $reflection->newInstanceArgs($arguments);
@@ -114,6 +124,16 @@ class Validator
         $this->addRule($rule);
 
         return $this;
+    }
+
+    /**
+     * Get required flag
+     *
+     * @return bool
+     */
+    public function isRequired()
+    {
+        return $this->required;
     }
 
     /**

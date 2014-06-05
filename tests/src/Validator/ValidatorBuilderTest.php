@@ -14,12 +14,8 @@ use Bluz\Validator\Validator;
 use Bluz\Validator\ValidatorBuilder;
 
 /**
- * ValidatorBuilderTest
- *
- * @package  Bluz\Tests
- *
- * @author   Anton Shevchuk
- * @created  04.06.2014 13:34
+ * Class ValidatorBuilderTest
+ * @package Bluz\Tests\Validator
  */
 class ValidatorBuilderTest extends Tests\TestCase
 {
@@ -55,7 +51,7 @@ class ValidatorBuilderTest extends Tests\TestCase
             );
             $validator->add(
                 'bar',
-                Validator::notEmpty(),
+                Validator::required(),
                 Validator::callback('is_int')
             );
             $validator->assert(['foo' => 'something']);
@@ -67,5 +63,31 @@ class ValidatorBuilderTest extends Tests\TestCase
             $this->assertArrayHasKey('foo', $errors);
             $this->assertArrayHasKey('bar', $errors);
         }
+    }
+
+    /**
+     * Setup multi builder for object
+     */
+    public function testValidatorBuilderForRuleSetAnd()
+    {
+        $object = new \stdClass();
+        $object->foo = 0;
+        $object->bar = 42;
+
+        $validator = new ValidatorBuilder();
+        $validator->add(
+            'foo',
+            Validator::numeric()
+        );
+        $validator->add(
+            'bar',
+            Validator::required(),
+            Validator::callback('is_int')
+        );
+        $validator->add(
+            'quz',
+            Validator::numeric()
+        );
+        $this->assertTrue($validator->validate($object));
     }
 }

@@ -9,9 +9,14 @@
  */
 namespace Bluz\Tests\Validator\Rule;
 
+use Bluz\Tests;
 use Bluz\Validator\Rule\Alpha;
 
-class AlphaTest extends \PHPUnit_Framework_TestCase
+/**
+ * Class AlphaTest
+ * @package Bluz\Tests\Validator\Rule
+ */
+class AlphaTest extends Tests\TestCase
 {
     /**
      * @dataProvider providerForValidAlpha
@@ -79,16 +84,16 @@ class AlphaTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array('', ''),
-            array('alganet', ''),
-            array('alganet', 'alganet'),
+            array('foobar', ''),
+            array('foobar', 'foobar'),
             array('0alg-anet0', '0-9'),
             array('a', ''),
             array("\t", ''),
             array("\n", ''),
             array('foobar', ''),
-            array('rubinho_', '_'),
-            array('google.com', '.'),
-            array('alganet alganet', ''),
+            array('python_', '_'),
+            array('google.com.ua', '.'),
+            array('foobar foobar', ''),
             array("\nabc", ''),
             array("\tdef", ''),
             array("\nabc \t", ''),

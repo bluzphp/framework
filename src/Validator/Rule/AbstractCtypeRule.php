@@ -29,9 +29,7 @@ abstract class AbstractCtypeRule extends AbstractFilterRule
      */
     protected function filter($input)
     {
-        if (!empty($this->additionalChars)) {
-            $input = str_replace(str_split($this->additionalChars), '', $input);
-        }
+        $input = parent::filter((string) $input);
         return preg_replace('/\s/', '', $input);
     }
 

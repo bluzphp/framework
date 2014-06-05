@@ -25,6 +25,7 @@ class MaxTest extends Tests\TestCase
     {
         $max = new Max($maxValue, $inclusive);
         $this->assertTrue($max->validate($input));
+        $this->assertNotEmpty($max->__toString());
     }
 
     /**

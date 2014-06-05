@@ -77,7 +77,7 @@ class ValidatorTest extends Tests\TestCase
     /**
      * Complex test
      */
-    public function testComplexRuleValidation()
+    public function testErrorTextValidationInComplex()
     {
         $validator = Validator::create()
             ->setName('username')
@@ -89,9 +89,20 @@ class ValidatorTest extends Tests\TestCase
             . "\"username\" must have a length between 1 and 15\n"
             . "\"username\" must not contain whitespace";
 
-        $this->assertFalse($validator->validate('really messed up screen#name'));
-        $this->assertFalse($validator('really messed up screen#name'));
         $this->assertEquals($validator->__toString(), $ruleText);
+
+        $customRuleText = "Username must contain only letters, digits and underscore, \n"
+            . "must have a length between 1 and 15";
+
+        $validator->setError($customRuleText);
+
+        $this->assertEquals($validator->__toString(), $customRuleText);
+
+        $this->assertFalse($validator->validate('user#name'));
+        $this->assertFalse($validator('user#name'));
+
+        $this->assertCount(1, $validator->getInvalidRules());
+        $this->assertCount(1, $validator->getErrors());
     }
 
     /**
@@ -103,6 +114,6 @@ class ValidatorTest extends Tests\TestCase
     {
         $validator = Validator::alphaNumeric('_')->length(1, 15)->noWhitespace();
 
-        $validator->assert('really messed up screen#name');
+        $validator->assert('invalid user name');
     }
 }

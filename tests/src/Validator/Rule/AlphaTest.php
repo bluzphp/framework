@@ -25,15 +25,18 @@ class AlphaTest extends Tests\TestCase
     {
         $validator = new Alpha($additional);
         $this->assertTrue($validator->validate($validAlpha));
+        $this->assertTrue($validator->assert($validAlpha));
     }
 
     /**
      * @dataProvider providerForInvalidAlpha
+     * @expectedException \Bluz\Validator\Exception\ValidatorException
      */
     public function testInvalidAlphanumericCharsShouldReturnFalse($invalidAlpha, $additional)
     {
         $validator = new Alpha($additional);
         $this->assertFalse($validator->validate($invalidAlpha));
+        $this->assertFalse($validator->assert($invalidAlpha));
     }
 
     /**
@@ -52,6 +55,18 @@ class AlphaTest extends Tests\TestCase
     {
         $validator = new Alpha($additional);
         $this->assertTrue($validator->validate($query));
+    }
+
+    /**
+     * Check templates
+     */
+    public function testTemplates()
+    {
+        $validator = new Alpha();
+        $this->assertNotEmpty($validator->__toString());
+
+        $validator = new Alpha('[]');
+        $this->assertNotEmpty($validator->__toString());
     }
 
     /**

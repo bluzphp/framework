@@ -26,6 +26,7 @@ class MinTest extends Tests\TestCase
     {
         $min = new Min($minValue, $inclusive);
         $this->assertTrue($min->validate($input));
+        $this->assertNotEmpty($min->__toString());
     }
 
     /**

@@ -42,24 +42,14 @@ abstract class AbstractRule
      * Assert
      *
      * @param $input
-     * @return void
+     * @return bool
      */
     public function assert($input)
     {
         if (!$this->validate($input)) {
             throw new ValidatorException();
         }
-    }
-
-    /**
-     * Set custom template for error message
-     *
-     * @param string $template
-     * @return self
-     */
-    public function setTemplate($template)
-    {
-        $this->template = $template;
+        return true;
     }
 
     /**

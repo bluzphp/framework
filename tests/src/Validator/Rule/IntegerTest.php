@@ -15,10 +15,13 @@ use Bluz\Validator\Rule\Integer;
 class IntegerTest extends Tests\TestCase
 {
     /**
-     * @var Integer
+     * @var \Bluz\Validator\Rule\Integer
      */
     protected $validator;
 
+    /**
+     * Setup validator instance
+     */
     protected function setUp()
     {
         $this->validator = new Integer;
@@ -26,7 +29,6 @@ class IntegerTest extends Tests\TestCase
 
     /**
      * @dataProvider providerForInt
-     *
      */
     public function testValidIntegersShouldReturnTrue($input)
     {

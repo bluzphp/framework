@@ -23,6 +23,7 @@ use Bluz\Validator\Exception\ValidatorException;
  * @method static Validator alpha()
  * @method static Validator alphaNumeric()
  * @method static Validator callback($callback)
+ * @method static Validator date($format)
  * @method static Validator integer()
  * @method static Validator length($min = null, $max = null, $inclusive = true)
  * @method static Validator max($maxValue, $inclusive = false)

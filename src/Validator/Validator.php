@@ -222,7 +222,7 @@ class Validator
     public function validate($input, $all = false)
     {
         $this->input = $input;
-        $this->invalid = array();
+        $this->invalid = array(); // clean
         foreach ($this->getRules() as $rule) {
             if (!$rule->validate($this->input)) {
                 $this->invalid[] = $rule;

@@ -90,6 +90,7 @@ class ValidatorTest extends Tests\TestCase
             . "\"username\" must not contain whitespace";
 
         $this->assertFalse($validator->validate('really messed up screen#name'));
+        $this->assertFalse($validator('really messed up screen#name'));
         $this->assertEquals($validator->__toString(), $ruleText);
     }
 

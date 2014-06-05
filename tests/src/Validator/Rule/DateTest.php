@@ -13,6 +13,10 @@ use Bluz\Tests;
 use Bluz\Validator\Rule\Date;
 use DateTime;
 
+/**
+ * Class DateTest
+ * @package Bluz\Tests\Validator\Rule
+ */
 class DateTest extends Tests\TestCase
 {
     /**

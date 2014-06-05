@@ -20,7 +20,7 @@ class Email extends AbstractRule
     /**
      * @var string
      */
-    protected $template = 'The value of "{{name}}" is required';
+    protected $template = '"{{name}}" must be valid email';
 
     /**
      * @var bool

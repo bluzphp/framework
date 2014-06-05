@@ -56,7 +56,7 @@ class DateTest extends Tests\TestCase
     /**
      * @dataProvider providerForFail
      */
-    public function testInvalidDateShouldFail($format, $date)
+    public function testInvalidateDateShouldFail($format, $date)
     {
         $validator = new Date($format);
         $this->assertFalse($validator->validate($date));
@@ -67,7 +67,7 @@ class DateTest extends Tests\TestCase
      * @dataProvider providerForFail
      * @expectedException \Bluz\Validator\Exception\ValidatorException
      */
-    public function testFormatsShouldValidateDateStrings_and_throw_DateException_on_failure($format, $date)
+    public function testInvalidateDateThrowException($format, $date)
     {
         $validator = new Date($format);
         $validator->assert($date);
@@ -90,6 +90,7 @@ class DateTest extends Tests\TestCase
     public function providerForFail()
     {
         return array(
+            array(null, 'invalid date'),
             array('Y-m-d', '2009-09-00'),
             array('y-m-d', '2009-09-09'),
             array('y-m-d', new \stdClass),

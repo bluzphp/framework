@@ -34,6 +34,7 @@ class LengthTest extends Tests\TestCase
     {
         $validator = new Length($min, $max, false);
         $this->assertFalse($validator->validate($string));
+        $this->assertNotEmpty($validator->getTemplate());
     }
 
     /**
@@ -75,8 +76,8 @@ class LengthTest extends Tests\TestCase
     public function providerForInvalidLengthInclusive()
     {
         return array(
-            array('foobar', 1, 6),
             array(range(1, 20), 1, 20),
+            array('foobar', 1, 6),
             array('foobar', 6, null), // null is a valid max length, means "no maximum",
             array('foobar', null, 6)  // null is a valid min length, means "no minimum"
         );
@@ -88,6 +89,7 @@ class LengthTest extends Tests\TestCase
     public function providerForInvalidLength()
     {
         return array(
+            array(0, 1, 3),
             array('foobar', 1, 3),
             array((object) array('foo'=>'bar', 'bar'=>'baz'), 3, 5),
             array(range(1, 50), 1, 30),

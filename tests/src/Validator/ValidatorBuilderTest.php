@@ -68,7 +68,7 @@ class ValidatorBuilderTest extends Tests\TestCase
     /**
      * Setup multi builder for object
      */
-    public function testValidatorBuilderForRuleSetAnd()
+    public function testValidatorBuilderForRuleSetAndObject()
     {
         $object = new \stdClass();
         $object->foo = 0;
@@ -81,7 +81,10 @@ class ValidatorBuilderTest extends Tests\TestCase
         );
         $validator->add(
             'bar',
-            Validator::required(),
+            Validator::required()
+        );
+        $validator->add(
+            'bar',
             Validator::callback('is_int')
         );
         $validator->add(
@@ -89,5 +92,6 @@ class ValidatorBuilderTest extends Tests\TestCase
             Validator::numeric()
         );
         $this->assertTrue($validator->validate($object));
+        $this->assertTrue($validator->assert($object));
     }
 }

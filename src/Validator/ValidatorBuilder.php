@@ -114,14 +114,15 @@ class ValidatorBuilder
     /**
      * Assert
      *
-     * @param array|object $input
-     * @return void
+     * @param mixed $input
+     * @return bool
      */
     public function assert($input)
     {
         if (!$this->validate($input)) {
             throw new ValidatorException("Invalid Arguments");
         }
+        return true;
     }
 
     /**

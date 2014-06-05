@@ -59,6 +59,17 @@ class ValidatorTest extends Tests\TestCase
     }
 
     /**
+     * Setup custom error text for one rule in chain
+     */
+    public function testValidRules()
+    {
+        $validator = Validator::callback('is_int');
+
+        $this->assertTrue($validator->validate(42));
+        $this->assertTrue($validator->assert(42));
+    }
+
+    /**
      * Setup custom error text for many rules in chain
      */
     public function testSetCustomErrorTextForValidatorChainShouldUseItAsErrorMessage()

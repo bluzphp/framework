@@ -237,14 +237,15 @@ class Validator
     /**
      * Assert
      *
-     * @param array|object $input
-     * @return void
+     * @param mixed $input
+     * @return bool
      */
     public function assert($input)
     {
         if (!$this->validate($input)) {
             throw new ValidatorException($this->getError()?:'');
         }
+        return true;
     }
 
     /**

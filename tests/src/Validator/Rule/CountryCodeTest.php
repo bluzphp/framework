@@ -10,16 +10,16 @@
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
-use Bluz\Validator\Rule\Required;
+use Bluz\Validator\Rule\CountryCode;
 
 /**
- * Class RequiredTest
+ * Class CountryCodeTest
  * @package Bluz\Tests\Validator\Rule
  */
-class RequiredTest extends Tests\TestCase
+class CountryCodeTest extends Tests\TestCase
 {
     /**
-     * @var Required
+     * @var CountryCode
      */
     protected $validator;
 
@@ -29,13 +29,13 @@ class RequiredTest extends Tests\TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->validator = new Required;
+        $this->validator = new CountryCode;
     }
 
     /**
      * @dataProvider providerForPass
      */
-    public function testRequired($input)
+    public function testValidCountryCodeShouldReturnTrue($input)
     {
         $this->assertTrue($this->validator->validate($input));
     }
@@ -43,7 +43,7 @@ class RequiredTest extends Tests\TestCase
     /**
      * @dataProvider providerForFail
      */
-    public function testNotExists($input)
+    public function testInvalidCountryCodeShouldReturnFalse($input)
     {
         $this->assertFalse($this->validator->validate($input));
     }
@@ -54,11 +54,7 @@ class RequiredTest extends Tests\TestCase
     public function providerForPass()
     {
         return array(
-            array(1),
-            array('foo'),
-            array(array(5)),
-            array(array(0)),
-            array(new \stdClass)
+            array('UA'),
         );
     }
 
@@ -69,8 +65,7 @@ class RequiredTest extends Tests\TestCase
     {
         return array(
             array(''),
-            array(false),
-            array(null)
+            array('UKR'),
         );
     }
 }

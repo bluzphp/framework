@@ -10,16 +10,16 @@
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
-use Bluz\Validator\Rule\Required;
+use Bluz\Validator\Rule\Json;
 
 /**
- * Class RequiredTest
+ * Class JsonTest
  * @package Bluz\Tests\Validator\Rule
  */
-class RequiredTest extends Tests\TestCase
+class JsonTest extends Tests\TestCase
 {
     /**
-     * @var Required
+     * @var \Bluz\Validator\Rule\Json
      */
     protected $validator;
 
@@ -29,23 +29,25 @@ class RequiredTest extends Tests\TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->validator = new Required;
+        $this->validator = new Json();
     }
-
     /**
      * @dataProvider providerForPass
      */
-    public function testRequired($input)
+    public function testValidJsonsShouldReturnTrue($input)
     {
         $this->assertTrue($this->validator->validate($input));
+        $this->assertTrue($this->validator->assert($input));
     }
 
     /**
      * @dataProvider providerForFail
+     * @expectedException \Bluz\Validator\Exception\ValidatorException
      */
-    public function testNotExists($input)
+    public function testInvalidJsonsShouldThrowJsonException($input)
     {
         $this->assertFalse($this->validator->validate($input));
+        $this->assertFalse($this->validator->assert($input));
     }
 
     /**
@@ -54,11 +56,11 @@ class RequiredTest extends Tests\TestCase
     public function providerForPass()
     {
         return array(
-            array(1),
-            array('foo'),
-            array(array(5)),
-            array(array(0)),
-            array(new \stdClass)
+            array('2'),
+            array('"abc"'),
+            array('[1,2,3]'),
+            array('["foo", "bar", "number", 1]'),
+            array('{"foo": "bar", "number":1}'),
         );
     }
 
@@ -69,8 +71,7 @@ class RequiredTest extends Tests\TestCase
     {
         return array(
             array(''),
-            array(false),
-            array(null)
+            array('{foo:bar}'),
         );
     }
 }

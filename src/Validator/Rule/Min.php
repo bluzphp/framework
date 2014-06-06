@@ -15,17 +15,12 @@ namespace Bluz\Validator\Rule;
  * Class Min
  * @package Bluz\Validator\Rule
  */
-class Min extends AbstractRule
+class Min extends AbstractCompareRule
 {
     /**
      * @var numeric
      */
     protected $minValue;
-
-    /**
-     * @var bool
-     */
-    protected $inclusive;
 
     /**
      * @param numeric $minValue
@@ -43,11 +38,7 @@ class Min extends AbstractRule
      */
     public function validate($input)
     {
-        if ($this->inclusive) {
-            return $input >= $this->minValue;
-        } else {
-            return $input > $this->minValue;
-        }
+        return $this->less($this->minValue, $input);
     }
 
     /**

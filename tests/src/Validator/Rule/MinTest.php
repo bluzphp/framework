@@ -19,8 +19,7 @@ use Bluz\Validator\Rule\Min;
 class MinTest extends Tests\TestCase
 {
     /**
-     * @dataProvider providerForValidMin
-     *
+     * @dataProvider providerForPass
      */
     public function testValidMinShouldReturnTrue($minValue, $inclusive, $input)
     {
@@ -30,7 +29,7 @@ class MinTest extends Tests\TestCase
     }
 
     /**
-     * @dataProvider providerForInvalidMin
+     * @dataProvider providerForFail
      */
     public function testInvalidMinShouldReturnFalse($minValue, $inclusive, $input)
     {
@@ -41,7 +40,7 @@ class MinTest extends Tests\TestCase
     /**
      * @return array
      */
-    public function providerForValidMin()
+    public function providerForPass()
     {
         return array(
             array(0, true, ''),       // empty string is equal zero
@@ -56,7 +55,7 @@ class MinTest extends Tests\TestCase
     /**
      * @return array
      */
-    public function providerForInvalidMin()
+    public function providerForFail()
     {
         return array(
             array(0, false, ''),     // empty string is equal zero

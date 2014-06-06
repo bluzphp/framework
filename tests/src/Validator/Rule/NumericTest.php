@@ -33,8 +33,7 @@ class NumericTest extends Tests\TestCase
     }
 
     /**
-     * @dataProvider providerForNumeric
-     *
+     * @dataProvider providerForPass
      */
     public function testNumeric($input)
     {
@@ -42,7 +41,7 @@ class NumericTest extends Tests\TestCase
     }
 
     /**
-     * @dataProvider providerForNotNumeric
+     * @dataProvider providerForFail
      */
     public function testNotNumeric($input)
     {
@@ -52,7 +51,7 @@ class NumericTest extends Tests\TestCase
     /**
      * @return array
      */
-    public function providerForNumeric()
+    public function providerForPass()
     {
         return array(
             array(165),
@@ -67,7 +66,7 @@ class NumericTest extends Tests\TestCase
     /**
      * @return array
      */
-    public function providerForNotNumeric()
+    public function providerForFail()
     {
         return array(
             array(null),

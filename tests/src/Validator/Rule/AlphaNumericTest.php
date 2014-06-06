@@ -19,7 +19,7 @@ use Bluz\Validator\Rule\AlphaNumeric;
 class AlphaNumericTest extends Tests\TestCase
 {
     /**
-     * @dataProvider providerForValidAlphaNumeric
+     * @dataProvider providerForPass
      */
     public function testValidAlphaNumericCharsShouldReturnTrue($validAlphaNumeric, $additional)
     {
@@ -29,7 +29,7 @@ class AlphaNumericTest extends Tests\TestCase
     }
 
     /**
-     * @dataProvider providerForInvalidAlphaNumeric
+     * @dataProvider providerForFail
      * @expectedException \Bluz\Validator\Exception\ValidatorException
      */
     public function testInvalidAlphaNumericCharsShouldReturnFalse($invalidAlphaNumeric, $additional)
@@ -40,7 +40,7 @@ class AlphaNumericTest extends Tests\TestCase
     }
 
     /**
-     * @dataProvider providerForInvalidParams
+     * @dataProvider providerForComponentException
      * @expectedException \Bluz\Validator\Exception\ComponentException
      */
     public function testInvalidConstructorParamsShouldThrowComponentException($additional)
@@ -72,30 +72,7 @@ class AlphaNumericTest extends Tests\TestCase
     /**
      * @return array
      */
-    public function providerAdditionalChars()
-    {
-        return array(
-            array('!@#$%^&*(){}', '!@#$%^&*(){} abc 123'),
-            array('[]?+=/\\-_|"\',<>.', "[]?+=/\\-_|\"',<>. \t \n abc 123"),
-        );
-    }
-
-    /**
-     * @return array
-     */
-    public function providerForInvalidParams()
-    {
-        return array(
-            array(new \stdClass),
-            array(array()),
-            array(0x2)
-        );
-    }
-
-    /**
-     * @return array
-     */
-    public function providerForValidAlphaNumeric()
+    public function providerForPass()
     {
         return array(
             array('', ''),
@@ -120,7 +97,7 @@ class AlphaNumericTest extends Tests\TestCase
     /**
      * @return array
      */
-    public function providerForInvalidAlphaNumeric()
+    public function providerForFail()
     {
         return array(
             array('@#$', ''),
@@ -130,6 +107,29 @@ class AlphaNumericTest extends Tests\TestCase
             array(null, ''),
             array(new \stdClass, ''),
             array(array(), ''),
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function providerForComponentException()
+    {
+        return array(
+            array(new \stdClass),
+            array(array()),
+            array(0x2)
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function providerAdditionalChars()
+    {
+        return array(
+            array('!@#$%^&*(){}', '!@#$%^&*(){} abc 123'),
+            array('[]?+=/\\-_|"\',<>.', "[]?+=/\\-_|\"',<>. \t \n abc 123"),
         );
     }
 }

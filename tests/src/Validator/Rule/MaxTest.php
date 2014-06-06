@@ -19,7 +19,7 @@ use Bluz\Validator\Rule\Max;
 class MaxTest extends Tests\TestCase
 {
     /**
-     * @dataProvider providerForValidMax
+     * @dataProvider providerForPass
      */
     public function testValidMaxInputShouldReturnTrue($maxValue, $inclusive, $input)
     {
@@ -29,7 +29,7 @@ class MaxTest extends Tests\TestCase
     }
 
     /**
-     * @dataProvider providerForInvalidMax
+     * @dataProvider providerForFail
      */
     public function testInvalidMaxValueShouldReturnFalse($maxValue, $inclusive, $input)
     {
@@ -40,7 +40,7 @@ class MaxTest extends Tests\TestCase
     /**
      * @return array
      */
-    public function providerForValidMax()
+    public function providerForPass()
     {
         return array(
             array(200, true, ''),     // empty string is equal zero
@@ -55,7 +55,7 @@ class MaxTest extends Tests\TestCase
     /**
      * @return array
      */
-    public function providerForInvalidMax()
+    public function providerForFail()
     {
         return array(
             array(200, false, 300),

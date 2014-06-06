@@ -10,16 +10,16 @@
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
-use Bluz\Validator\Rule\Required;
+use Bluz\Validator\Rule\Negative;
 
 /**
- * Class RequiredTest
+ * Class NegativeTest
  * @package Bluz\Tests\Validator\Rule
  */
-class RequiredTest extends Tests\TestCase
+class NegativeTest extends Tests\TestCase
 {
     /**
-     * @var Required
+     * @var \Bluz\Validator\Rule\Negative
      */
     protected $validator;
 
@@ -29,23 +29,26 @@ class RequiredTest extends Tests\TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->validator = new Required;
+        $this->validator = new Negative();
     }
 
     /**
      * @dataProvider providerForPass
      */
-    public function testRequired($input)
+    public function testNegativeShouldPass($input)
     {
         $this->assertTrue($this->validator->validate($input));
+        $this->assertTrue($this->validator->assert($input));
     }
 
     /**
      * @dataProvider providerForFail
+     * @expectedException \Bluz\Validator\Exception\ValidatorException
      */
-    public function testNotExists($input)
+    public function testNotNegativeNumbersShouldThrowNegativeException($input)
     {
         $this->assertFalse($this->validator->validate($input));
+        $this->assertFalse($this->validator->assert($input));
     }
 
     /**
@@ -54,11 +57,9 @@ class RequiredTest extends Tests\TestCase
     public function providerForPass()
     {
         return array(
-            array(1),
-            array('foo'),
-            array(array(5)),
-            array(array(0)),
-            array(new \stdClass)
+            array('-1.44'),
+            array(-1e-5),
+            array(-10),
         );
     }
 
@@ -68,9 +69,17 @@ class RequiredTest extends Tests\TestCase
     public function providerForFail()
     {
         return array(
+            array(0),
+            array(-0),
+            array(null),
             array(''),
-            array(false),
-            array(null)
+            array('a'),
+            array(' '),
+            array('Foo'),
+            array(16),
+            array('165'),
+            array(123456),
+            array(1e10),
         );
     }
 }

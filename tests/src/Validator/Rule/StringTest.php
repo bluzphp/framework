@@ -19,7 +19,7 @@ use Bluz\Validator\Rule\String;
 class StringTest extends Tests\TestCase
 {
     /**
-     * @var String
+     * @var \Bluz\Validator\Rule\String
      */
     protected $validator;
 
@@ -29,8 +29,7 @@ class StringTest extends Tests\TestCase
     }
 
     /**
-     * @dataProvider providerForString
-     *
+     * @dataProvider providerForPass
      */
     public function testString($input)
     {
@@ -38,7 +37,7 @@ class StringTest extends Tests\TestCase
     }
 
     /**
-     * @dataProvider providerForNotString
+     * @dataProvider providerForFail
      */
     public function testNotString($input)
     {
@@ -48,7 +47,7 @@ class StringTest extends Tests\TestCase
     /**
      * @return array
      */
-    public function providerForString()
+    public function providerForPass()
     {
         return array(
             array(''),
@@ -59,7 +58,7 @@ class StringTest extends Tests\TestCase
     /**
      * @return array
      */
-    public function providerForNotString()
+    public function providerForFail()
     {
         return array(
             array(null),

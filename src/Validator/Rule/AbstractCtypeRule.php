@@ -34,8 +34,8 @@ abstract class AbstractCtypeRule extends AbstractFilterRule
     }
 
     /**
-     * @param $input
-     * @return mixed
+     * @param string $input
+     * @return bool
      */
     public function validateClean($input)
     {

@@ -15,17 +15,12 @@ namespace Bluz\Validator\Rule;
  * Class Max
  * @package Bluz\Validator\Rule
  */
-class Max extends AbstractRule
+class Max extends AbstractCompareRule
 {
     /**
      * @var numeric
      */
     protected $maxValue;
-
-    /**
-     * @var bool
-     */
-    protected $inclusive;
 
     /**
      * @param numeric $maxValue
@@ -43,11 +38,7 @@ class Max extends AbstractRule
      */
     public function validate($input)
     {
-        if ($this->inclusive) {
-            return $input <= $this->maxValue;
-        } else {
-            return $input < $this->maxValue;
-        }
+        return $this->less($input, $this->maxValue);
     }
 
     /**

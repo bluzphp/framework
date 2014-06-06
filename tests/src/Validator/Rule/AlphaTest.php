@@ -19,7 +19,7 @@ use Bluz\Validator\Rule\Alpha;
 class AlphaTest extends Tests\TestCase
 {
     /**
-     * @dataProvider providerForValidAlpha
+     * @dataProvider providerForPass
      */
     public function testValidAlphanumericCharsShouldReturnTrue($validAlpha, $additional)
     {
@@ -29,7 +29,7 @@ class AlphaTest extends Tests\TestCase
     }
 
     /**
-     * @dataProvider providerForInvalidAlpha
+     * @dataProvider providerForFail
      * @expectedException \Bluz\Validator\Exception\ValidatorException
      */
     public function testInvalidAlphanumericCharsShouldReturnFalse($invalidAlpha, $additional)
@@ -40,7 +40,7 @@ class AlphaTest extends Tests\TestCase
     }
 
     /**
-     * @dataProvider providerForInvalidParams
+     * @dataProvider providerForComponentException
      * @expectedException \Bluz\Validator\Exception\ComponentException
      */
     public function testInvalidConstructorParamsShouldThrowComponentException($additional)
@@ -72,30 +72,7 @@ class AlphaTest extends Tests\TestCase
     /**
      * @return array
      */
-    public function providerAdditionalChars()
-    {
-        return array(
-            array('!@#$%^&*(){}', '!@#$%^&*(){} abc'),
-            array('[]?+=/\\-_|"\',<>.', "[]?+=/\\-_|\"',<>. \t \n abc"),
-        );
-    }
-
-    /**
-     * @return array
-     */
-    public function providerForInvalidParams()
-    {
-        return array(
-            array(new \stdClass),
-            array(array()),
-            array(0x2)
-        );
-    }
-
-    /**
-     * @return array
-     */
-    public function providerForValidAlpha()
+    public function providerForPass()
     {
         return array(
             array('', ''),
@@ -118,7 +95,7 @@ class AlphaTest extends Tests\TestCase
     /**
      * @return array
      */
-    public function providerForInvalidAlpha()
+    public function providerForFail()
     {
         return array(
             array('@#$', ''),
@@ -134,5 +111,27 @@ class AlphaTest extends Tests\TestCase
             array(array(), ''),
         );
     }
-}
 
+    /**
+     * @return array
+     */
+    public function providerForComponentException()
+    {
+        return array(
+            array(new \stdClass),
+            array(array()),
+            array(0x2)
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function providerAdditionalChars()
+    {
+        return array(
+            array('!@#$%^&*(){}', '!@#$%^&*(){} abc'),
+            array('[]?+=/\\-_|"\',<>.', "[]?+=/\\-_|\"',<>. \t \n abc"),
+        );
+    }
+}

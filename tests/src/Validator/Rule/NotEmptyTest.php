@@ -33,7 +33,7 @@ class NotEmptyTest extends Tests\TestCase
     }
 
     /**
-     * @dataProvider providerForNotEmpty
+     * @dataProvider providerForPass
      */
     public function testStringNotEmpty($input)
     {
@@ -41,7 +41,7 @@ class NotEmptyTest extends Tests\TestCase
     }
 
     /**
-     * @dataProvider providerForEmpty
+     * @dataProvider providerForFail
      */
     public function testStringEmpty($input)
     {
@@ -51,7 +51,7 @@ class NotEmptyTest extends Tests\TestCase
     /**
      * @return array
      */
-    public function providerForNotEmpty()
+    public function providerForPass()
     {
         return array(
             array(1),
@@ -65,7 +65,7 @@ class NotEmptyTest extends Tests\TestCase
     /**
      * @return array
      */
-    public function providerForEmpty()
+    public function providerForFail()
     {
         return array(
             array(''),

@@ -19,23 +19,42 @@ use Bluz\Validator\Rule\Regexp;
 class RegexTest extends Tests\TestCase
 {
     /**
-     * Positive
+     * @dataProvider providerForPass
      */
-    public function testValidRegexp()
+    public function testValidRegexp($expression, $input)
     {
-        $v = new Regexp('/^[a-z]+$/');
-        $this->assertTrue($v->validate('foobar'));
-
-        $v = new Regexp('/^[a-z]+$/i');
-        $this->assertTrue($v->validate('FooBar'));
+        $v = new Regexp($expression);
+        $this->assertTrue($v->validate($input));
     }
 
     /**
-     * Negative
+     * @dataProvider providerForFail
      */
-    public function testInvalidRegexp()
+    public function testInvalidRegexp($expression, $input)
     {
-        $v = new Regexp('/^w+$/');
-        $this->assertFalse($v->validate('foo bar'));
+        $v = new Regexp($expression);
+        $this->assertFalse($v->validate($input));
+    }
+
+    /**
+     * @return array
+     */
+    public function providerForPass()
+    {
+        return array(
+            array('/^[a-z]+$/', 'foobar'),
+            array('/^[a-z]+$/i', 'FooBar'),
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function providerForFail()
+    {
+        return array(
+            array('/^[a-z]+$/', 'foo bar'),
+            array('/^w+$/', 'foo bar'),
+        );
     }
 }

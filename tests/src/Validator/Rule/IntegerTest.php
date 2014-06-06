@@ -12,6 +12,10 @@ namespace Bluz\Tests\Validator\Rule;
 use Bluz\Tests;
 use Bluz\Validator\Rule\Integer;
 
+/**
+ * Class IntegerTest
+ * @package Bluz\Tests\Validator\Rule
+ */
 class IntegerTest extends Tests\TestCase
 {
     /**
@@ -28,7 +32,7 @@ class IntegerTest extends Tests\TestCase
     }
 
     /**
-     * @dataProvider providerForInt
+     * @dataProvider providerForPass
      */
     public function testValidIntegersShouldReturnTrue($input)
     {
@@ -36,7 +40,7 @@ class IntegerTest extends Tests\TestCase
     }
 
     /**
-     * @dataProvider providerForNotInt
+     * @dataProvider providerForFail
      */
     public function testInvalidIntegersShouldReturnFalse($input)
     {
@@ -46,7 +50,7 @@ class IntegerTest extends Tests\TestCase
     /**
      * @return array
      */
-    public function providerForInt()
+    public function providerForPass()
     {
         return array(
             array(16),
@@ -59,7 +63,7 @@ class IntegerTest extends Tests\TestCase
     /**
      * @return array
      */
-    public function providerForNotInt()
+    public function providerForFail()
     {
         return array(
             array(null),

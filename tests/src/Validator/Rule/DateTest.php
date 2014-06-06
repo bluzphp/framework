@@ -9,9 +9,9 @@
  */
 namespace Bluz\Tests\Validator\Rule;
 
+use \DateTime;
 use Bluz\Tests;
 use Bluz\Validator\Rule\Date;
-use DateTime;
 
 /**
  * Class DateTest

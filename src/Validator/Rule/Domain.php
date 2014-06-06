@@ -12,15 +12,15 @@
 namespace Bluz\Validator\Rule;
 
 /**
- * Class Email
+ * Class Domain
  * @package Bluz\Validator\Rule
  */
-class Email extends AbstractRule
+class Domain extends AbstractRule
 {
     /**
      * @var string
      */
-    protected $template = '"{{name}}" must be valid email';
+    protected $template = '"{{name}}" must be valid domain';
 
     /**
      * @var bool
@@ -36,20 +36,23 @@ class Email extends AbstractRule
     }
 
     /**
-     * @param mixed $input
+     * @param string $input
      * @return bool
      */
     public function validate($input)
     {
-        if (is_string($input) && filter_var($input, FILTER_VALIDATE_EMAIL)) {
-            list(, $domain) = explode("@", $input, 2);
+        // check by regular expression
+        if (preg_match("/^([a-z\d](-*[a-z\d])*)(\.([a-z\d](-*[a-z\d])*))*$/i", $input)
+            && preg_match("/^.{1,253}$/", $input)
+            && preg_match("/^[^\.]{1,63}(\.[^\.]{1,63})*$/", $input)) {
+
+            // check by DNS record
             if ($this->checkDns) {
-                return checkdnsrr($domain, "MX") or checkdnsrr($domain, "A");
+                return checkdnsrr($input, "A");
             } else {
                 return true;
             }
-        } else {
-            return false;
         }
+        return false;
     }
 }

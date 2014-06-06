@@ -25,8 +25,8 @@ abstract class AbstractCompareRule extends AbstractRule
     /**
      * $what less $than
      *
-     * @param numeric $what
-     * @param numeric $than
+     * @param mixed $what
+     * @param mixed $than
      * @return bool
      */
     protected function less($what, $than)

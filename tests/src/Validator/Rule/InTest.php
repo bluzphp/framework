@@ -21,9 +21,9 @@ class InTest extends Tests\TestCase
     /**
      * @dataProvider providerForPass
      */
-    public function testSuccessInValidatorCases($input, $options = null)
+    public function testSuccessInValidatorCases($input, $haystack = null, $strict = false)
     {
-        $v = new In($options);
+        $v = new In($haystack, $strict);
         $this->assertTrue($v->validate($input));
         $this->assertTrue($v->assert($input));
     }
@@ -32,9 +32,9 @@ class InTest extends Tests\TestCase
      * @dataProvider providerForFail
      * @expectedException \Bluz\Validator\Exception\ValidatorException
      */
-    public function testInvalidInChecksShouldThrowInException($input, $options, $strict = false)
+    public function testInvalidInChecksShouldThrowInException($input, $haystack, $strict = false)
     {
-        $v = new In($options, $strict);
+        $v = new In($haystack, $strict);
         $this->assertFalse($v->validate($input));
         $this->assertNotEmpty($v->__toString($input));
         $this->assertFalse($v->assert($input));
@@ -50,7 +50,7 @@ class InTest extends Tests\TestCase
             array('foo', 'barfoobaz'),
             array('foo', 'foobarbaz'),
             array('foo', 'barbazfoo'),
-            array('foo', 'barbazfoo', true),
+            array('foo', 'foo', true),
             array('1', array(1, 2, 3)),
             array('1', array('1', 2, 3), true),
         );
@@ -68,6 +68,7 @@ class InTest extends Tests\TestCase
             array('foo', 'barfaabaz'),
             array('foo', 'faabarbaz'),
             array('foo', 'baabazfaa'),
+            array('Foo', 'barbazfoo', true),
             array('1', array(1, 2, 3), true),
         );
     }

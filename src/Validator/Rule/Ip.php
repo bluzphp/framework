@@ -167,8 +167,10 @@ class Ip extends AbstractRule
 
         $input = sprintf('%u', ip2long($input));
 
-        return bccomp($input, sprintf('%u', ip2long($this->networkRange['min']))) >= 0
-               && bccomp($input, sprintf('%u', ip2long($this->networkRange['max']))) <= 0;
+        $min = sprintf('%u', ip2long($this->networkRange['min']));
+        $max = sprintf('%u', ip2long($this->networkRange['max']));
+
+        return ($input >= $min) && ($input <= $max);
     }
 
     /**
@@ -192,7 +194,13 @@ class Ip extends AbstractRule
     public function getTemplate()
     {
         if ($this->networkRange) {
-            return __('"{{name}}" must be an IP address in the "%s" range', $this->networkRange);
+            $message = $this->networkRange['min'];
+            if (isset($this->networkRange['max'])) {
+                $message .= '-' . $this->networkRange['max'];
+            } else {
+                $message .= '/' . long2ip($this->networkRange['mask']);
+            }
+            return __('"{{name}}" must be an IP address in the "%s" range', $message);
         } else {
             return __('"{{name}}" must be an IP address');
         }

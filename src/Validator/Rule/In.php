@@ -71,6 +71,11 @@ class In extends AbstractRule
      */
     public function getTemplate()
     {
-        return __('"{{name}}" must be in (%s)', $this->haystack);
+        if (is_array($this->haystack)) {
+            $haystack = join(', ', $this->haystack);
+        } else {
+            $haystack = $this->haystack;
+        }
+        return __('"{{name}}" must be in (%s)', $haystack);
     }
 }

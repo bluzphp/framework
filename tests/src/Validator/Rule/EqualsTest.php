@@ -36,6 +36,7 @@ class EqualsTest extends Tests\TestCase
     {
         $validator = new Equals($start, $identical);
         $this->assertFalse($validator->validate($input));
+        $this->assertNotEmpty($validator->__toString());
         $this->assertFalse($validator->assert($input));
     }
 

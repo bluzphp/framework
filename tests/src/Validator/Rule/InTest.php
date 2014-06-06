@@ -36,9 +36,13 @@ class InTest extends Tests\TestCase
     {
         $v = new In($options, $strict);
         $this->assertFalse($v->validate($input));
+        $this->assertNotEmpty($v->__toString($input));
         $this->assertFalse($v->assert($input));
     }
 
+    /**
+     * @return array
+     */
     public function providerForPass()
     {
         return array(
@@ -46,15 +50,20 @@ class InTest extends Tests\TestCase
             array('foo', 'barfoobaz'),
             array('foo', 'foobarbaz'),
             array('foo', 'barbazfoo'),
+            array('foo', 'barbazfoo', true),
             array('1', array(1, 2, 3)),
             array('1', array('1', 2, 3), true),
         );
     }
 
+    /**
+     * @return array
+     */
     public function providerForFail()
     {
         return array(
             array('', 'barfoobaz'),
+            array('', 42),
             array('bat', array('foo', 'bar')),
             array('foo', 'barfaabaz'),
             array('foo', 'faabarbaz'),

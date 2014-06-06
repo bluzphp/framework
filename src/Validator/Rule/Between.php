@@ -61,7 +61,7 @@ class Between extends AbstractCompareRule
      *
      * @return string
      */
-    function getTemplate()
+    public function getTemplate()
     {
         return __('{{name}} must be between %1 and %2', $this->minValue, $this->maxValue);
     }

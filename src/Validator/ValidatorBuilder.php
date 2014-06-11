@@ -77,8 +77,7 @@ class ValidatorBuilder
                 // object
                 $value = $input->{$key};
             } else {
-                // ... oh, not exists
-                $value = null;
+                // ... oh, not exists key
                 // check chains for required
                 foreach ($validators as $validator) {
                     /* @var Validator $validator */

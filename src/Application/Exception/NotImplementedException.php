@@ -27,7 +27,6 @@ class NotImplementedException extends ApplicationException
      */
     protected $message = "Not Implemented";
 
-
     /**
      * Not Implemented HTTP Code
      * @var int

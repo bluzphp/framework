@@ -34,7 +34,9 @@ class ArrayStore extends AbstractStore
      */
     public function start()
     {
-        $this->store[$this->namespace] = array();
+        if (!$this->started) {
+            $this->started = true;
+        }
         return true;
     }
 

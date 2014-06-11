@@ -18,7 +18,7 @@ use Bluz\Validator\Exception\ComponentException;
  * Class Length
  * @package Bluz\Validator\Rule
  */
-class Length extends AbstractRule
+class Length extends AbstractCompareRule
 {
     /**
      * @var integer
@@ -29,11 +29,6 @@ class Length extends AbstractRule
      * @var integer
      */
     protected $maxValue;
-
-    /**
-     * @var bool
-     */
-    protected $inclusive;
 
     /**
      * @param integer|null $min
@@ -75,7 +70,9 @@ class Length extends AbstractRule
         if (!$length = $this->extractLength($input)) {
             return false;
         }
-        return $this->validateMin($length) && $this->validateMax($length);
+
+        return (is_null($this->minValue) or $this->less($this->minValue, $length))
+            && (is_null($this->maxValue) or $this->less($length, $this->maxValue));
     }
 
     /**
@@ -93,40 +90,6 @@ class Length extends AbstractRule
         } else {
             return false;
         }
-    }
-
-    /**
-     * @param integer $length
-     * @return bool
-     */
-    protected function validateMin($length)
-    {
-        if (is_null($this->minValue)) {
-            return true;
-        }
-
-        if ($this->inclusive) {
-            return $length >= $this->minValue;
-        }
-
-        return $length > $this->minValue;
-    }
-
-    /**
-     * @param integer $length
-     * @return bool
-     */
-    protected function validateMax($length)
-    {
-        if (is_null($this->maxValue)) {
-            return true;
-        }
-
-        if ($this->inclusive) {
-            return $length <= $this->maxValue;
-        }
-
-        return $length < $this->maxValue;
     }
 
     /**

@@ -16,18 +16,18 @@ use Bluz\Validator\Exception\ComponentException;
 class Between extends AbstractCompareRule
 {
     /**
-     * @var null
+     * @var mixed
      */
     protected $minValue;
 
     /**
-     * @var null
+     * @var mixed
      */
     protected $maxValue;
 
     /**
-     * @param numeric $min
-     * @param numeric $max
+     * @param mixed $min
+     * @param mixed $max
      * @param bool $inclusive
      * @throws \Bluz\Validator\Exception\ComponentException
      */

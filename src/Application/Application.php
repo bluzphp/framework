@@ -121,12 +121,12 @@ abstract class Application
     protected $registry;
 
     /**
-     * @var Request\AbstractRequest instance
+     * @var Http\Request instance
      */
     protected $request;
 
     /**
-     * @var Response\AbstractResponse instance
+     * @var Http\Response instance
      */
     protected $response;
 

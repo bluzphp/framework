@@ -29,5 +29,5 @@ class AclException extends Exception
      * 403 Forbidden
      * @var int
      */
-    protected $code = 401;
+    protected $code = 403;
 }

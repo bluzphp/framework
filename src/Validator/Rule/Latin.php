@@ -12,18 +12,18 @@
 namespace Bluz\Validator\Rule;
 
 /**
- * Class AlphaNumeric
+ * Class String
  * @package Bluz\Validator\Rule
  */
-class AlphaNumeric extends AbstractCtypeRule
+class Latin extends AbstractFilterRule
 {
     /**
-     * @param string $input
+     * @param mixed $input
      * @return bool
      */
-    protected function validateClean($input)
+    public function validateClean($input)
     {
-        return ctype_alnum($input);
+        return (bool) preg_match('/^[a-z]+$/i', $input);
     }
 
     /**
@@ -34,9 +34,9 @@ class AlphaNumeric extends AbstractCtypeRule
     public function getTemplate()
     {
         if (empty($this->additionalChars)) {
-            return __('"{{name}}" must contain only letters and digits');
+            return __('"{{name}}" must contain only Latin letters');
         } else {
-            return __('"{{name}}" must contain only letters, digits and "%s"', $this->additionalChars);
+            return __('"{{name}}" must contain only Latin letters and "%s"', $this->additionalChars);
         }
     }
 }

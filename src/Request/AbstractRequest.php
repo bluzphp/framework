@@ -12,6 +12,7 @@
 namespace Bluz\Request;
 
 use Bluz\Common\Options;
+use Bluz\Http;
 
 /**
  * Request
@@ -338,7 +339,7 @@ class AbstractRequest
      */
     public function isHttp()
     {
-        return $this->method == self::METHOD_HTTP;
+        return $this instanceof Http\Request;
     }
 
     /**

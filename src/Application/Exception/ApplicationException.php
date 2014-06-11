@@ -22,9 +22,4 @@ use Bluz\Common\Exception;
  */
 class ApplicationException extends Exception
 {
-    /**
-     * Used as default HTTP code for exceptions
-     * @var int
-     */
-    protected $code = 500;
 }

@@ -21,4 +21,9 @@ namespace Bluz\Common;
  */
 class Exception extends \Exception
 {
+    /**
+     * Used as default HTTP code for exceptions
+     * @var int
+     */
+    protected $code = 500;
 }

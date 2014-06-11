@@ -20,10 +20,11 @@ use Bluz\Validator\Exception\ValidatorException;
  *
  * @package  Bluz\Validator
  *
- * @method static Validator alpha()
- * @method static Validator alphaNumeric()
+ * @method static Validator alpha($additionalCharacters = '')
+ * @method static Validator alphaNumeric($additionalCharacters = '')
  * @method static Validator between($min, $max, $inclusive = false)
  * @method static Validator callback($callback)
+ * @method static Validator condition($condition)
  * @method static Validator contains($containsValue, $identical = false)
  * @method static Validator countryCode()
  * @method static Validator creditCard()
@@ -36,6 +37,8 @@ use Bluz\Validator\Exception\ValidatorException;
  * @method static Validator integer()
  * @method static Validator ip($options = null)
  * @method static Validator json()
+ * @method static Validator latin($additionalCharacters = '')
+ * @method static Validator latinNumeric($additionalCharacters = '')
  * @method static Validator length($min = null, $max = null, $inclusive = true)
  * @method static Validator max($maxValue, $inclusive = false)
  * @method static Validator min($minValue, $inclusive = false)
@@ -131,7 +134,7 @@ class Validator
             $reflection = new \ReflectionClass($ruleClass);
             $rule = $reflection->newInstanceArgs($arguments);
         } else {
-            $rule = new $ruleClass($arguments);
+            $rule = new $ruleClass();
         }
 
         $this->addRule($rule);

@@ -24,13 +24,6 @@ use Bluz\Session\SessionException;
 class SessionStore extends AbstractStore
 {
     /**
-     * Start or not
-     *
-     * @var bool
-     */
-    protected $started = false;
-
-    /**
      * Set session save path
      *
      * @param string $savePath
@@ -57,25 +50,20 @@ class SessionStore extends AbstractStore
     public function start()
     {
         if (!$this->started) {
-            if (headers_sent($filename, $linenum)) {
+            if (headers_sent($fileName, $lineNum)) {
                 throw new SessionException(
                     "Session must be started before any output has been sent to the browser;" .
-                    " output started in {$filename}/{$linenum}"
+                    " output started in {$fileName}/{$lineNum}"
                 );
-            } else {
-                if (session_id() !== '') {
-                    $this->started = true;
-                } else {
-                    $this->started = session_start();
-                }
-                if (!isset($_SESSION[$this->namespace])) {
-                    $_SESSION[$this->namespace] = array();
-                }
-                return $this->started;
             }
-        } else {
-            return true;
+
+            if (session_id() !== '') {
+                $this->started = true;
+            } else {
+                $this->started = session_start();
+            }
         }
+        return $this->started;
     }
 
     /**
@@ -104,9 +92,6 @@ class SessionStore extends AbstractStore
             return null;
         }
 
-        if (!isset($_SESSION[$this->namespace][$key])) {
-            return null;
-        }
         return $_SESSION[$this->namespace][$key];
     }
 
@@ -124,7 +109,7 @@ class SessionStore extends AbstractStore
         }
         $this->start();
 
-        return isset($_SESSION[$this->namespace][$key]);
+        return isset($_SESSION[$this->namespace], $_SESSION[$this->namespace][$key]);
     }
 
     /**
@@ -149,7 +134,7 @@ class SessionStore extends AbstractStore
     }
 
     /**
-     * Returns true if session ID is set.
+     * Returns true if session ID is set
      *
      * @return bool
      */

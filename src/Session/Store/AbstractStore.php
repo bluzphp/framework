@@ -26,6 +26,13 @@ abstract class AbstractStore
     use Options;
 
     /**
+     * Start or not
+     *
+     * @var bool
+     */
+    protected $started = false;
+
+    /**
      * Session namespace
      *
      * @var string

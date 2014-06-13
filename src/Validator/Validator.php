@@ -47,6 +47,7 @@ use Bluz\Validator\Exception\ValidatorException;
  * @method static Validator numeric()
  * @method static Validator required()
  * @method static Validator regexp($expression)
+ * @method static Validator slug()
  * @method static Validator string()
  *
  * @see https://github.com/Respect/Validation

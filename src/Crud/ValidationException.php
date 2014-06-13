@@ -20,4 +20,9 @@ use Bluz\Common\Exception;
  */
 class ValidationException extends Exception
 {
+    /**
+     * Bad Request HTTP Code
+     * @var int
+     */
+    protected $code = 400;
 }

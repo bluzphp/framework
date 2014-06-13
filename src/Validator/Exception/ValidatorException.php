@@ -21,5 +21,9 @@ namespace Bluz\Validator\Exception;
  */
 class ValidatorException extends \InvalidArgumentException
 {
-
+    /**
+     * Bad Request HTTP Code
+     * @var int
+     */
+    protected $code = 400;
 }

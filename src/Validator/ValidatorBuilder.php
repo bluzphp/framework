@@ -83,6 +83,7 @@ class ValidatorBuilder
                     /* @var Validator $validator */
                     if ($validator->isRequired()) {
                         $this->errors[$key][] = $validator->getError();
+                        $result = false;
                         break;
                     }
                 }
@@ -97,7 +98,7 @@ class ValidatorBuilder
                     $validator->setName(ucfirst($key));
                 }
 
-                if (!$validator->validate($value, $key)) {
+                if (!$validator->validate($value)) {
                     if (!isset($this->errors[$key])) {
                         $this->errors[$key] = array();
                     }

@@ -100,7 +100,7 @@ class Translator
             define('LC_MESSAGES', 6);
         }
 
-        setlocale(LC_ALL, $this->locale);
+        setlocale(LC_MESSAGES, $this->locale);
 
         // For gettext only
         if (function_exists('gettext')) {

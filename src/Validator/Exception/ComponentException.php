@@ -22,5 +22,4 @@ use Bluz\Common\Exception;
  */
 class ComponentException extends Exception
 {
-
 }

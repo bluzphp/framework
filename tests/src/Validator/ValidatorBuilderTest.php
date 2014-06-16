@@ -94,4 +94,25 @@ class ValidatorBuilderTest extends Tests\TestCase
         $this->assertTrue($validator->validate($object));
         $this->assertTrue($validator->assert($object));
     }
+
+
+    /**
+     * Setup multi builder for empty object
+     * @expectedException \Bluz\Validator\Exception\ValidatorException
+     */
+    public function testValidatorBuilderForEmptySet()
+    {
+
+        $validator = new ValidatorBuilder();
+        $validator->add(
+            'foo',
+            Validator::required()
+        );
+        $validator->add(
+            'bar',
+            Validator::numeric()
+        );
+        $this->assertFalse($validator->validate(array()));
+        $this->assertFalse($validator->assert(array()));
+    }
 }

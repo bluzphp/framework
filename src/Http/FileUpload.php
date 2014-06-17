@@ -29,6 +29,12 @@ class FileUpload
     protected $files = array();
 
     /**
+     * Class wrapper to work with a downloadable file
+     * @var string
+     */
+    protected $className = 'Bluz\Http\File';
+
+    /**
      * __construct
      *
      * @param array $array The array of $_FILES
@@ -98,7 +104,7 @@ class FileUpload
         if (is_array($fileInfo['name'])) {
             foreach ($fileInfo['name'] as $subKey => $name) {
                 if (is_numeric($subKey)) {
-                    $httpFile = new File(
+                    $httpFile = new $this->className(
                         [
                             'name' => $fileInfo['name'][$subKey],
                             'error' => $fileInfo['error'][$subKey],
@@ -112,7 +118,7 @@ class FileUpload
                     foreach ($fileInfo['name'][$subKey] as $subSubKey => $subName) {
                         if (is_array($fileInfo['name'][$subKey][$subSubKey])) {
                             foreach ($fileInfo['name'][$subKey][$subSubKey] as $subSubSubKey => $subSubName) {
-                                $httpFile = new File(
+                                $httpFile = new $this->className(
                                     [
                                         'name' => $fileInfo['name'][$subKey][$subSubKey][$subSubSubKey],
                                         'error' => $fileInfo['error'][$subKey][$subSubKey][$subSubSubKey],
@@ -124,7 +130,7 @@ class FileUpload
                                 $this->files[$key . '[' . $subKey . '][' . $subSubKey . ']'][] = $httpFile;
                             }
                         } else {
-                            $httpFile = new File(
+                            $httpFile = new $this->className(
                                 [
                                     'name' => $fileInfo['name'][$subKey][$subSubKey],
                                     'error' => $fileInfo['error'][$subKey][$subSubKey],
@@ -137,7 +143,7 @@ class FileUpload
                         }
                     }
                 } else {
-                    $httpFile = new File(
+                    $httpFile = new $this->className(
                         [
                             'name' => $fileInfo['name'][$subKey],
                             'error' => $fileInfo['error'][$subKey],
@@ -150,7 +156,7 @@ class FileUpload
                 }
             }
         } else {
-            $httpFile = new File($fileInfo);
+            $httpFile = new $this->className($fileInfo);
             $this->files[$key] = [$httpFile];
         }
     }

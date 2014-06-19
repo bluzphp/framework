@@ -311,6 +311,18 @@ class Request extends AbstractRequest
     }
 
     /**
+     * setFileUpload
+     *
+     * @param FileUpload $fileUpload
+     *
+     * @return void
+     */
+    public function setFileUpload(FileUpload $fileUpload)
+    {
+        $this->fileUpload = $fileUpload;
+    }
+
+    /**
      * getFileUpload
      *
      * @return FileUpload

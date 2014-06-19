@@ -317,15 +317,15 @@ class Request extends AbstractRequest
     }
 
     /**
-     * setUploadClassName
+     * setFileUpload
      *
-     * @param string $className
+     * @param FileUpload $fileUpload
      *
      * @return void
      */
-    public function setUploadClassName($className)
+    public function setFileUpload(FileUpload $fileUpload)
     {
-        $this->className = $className;
+        $this->className = $fileUpload;
     }
 
     /**

@@ -29,12 +29,6 @@ class FileUpload
     protected $files = array();
 
     /**
-     * Class wrapper to work with a downloadable file
-     * @var string
-     */
-    protected $className = 'Bluz\Http\File';
-
-    /**
      * __construct
      *
      * @param array $array The array of $_FILES
@@ -104,61 +98,82 @@ class FileUpload
         if (is_array($fileInfo['name'])) {
             foreach ($fileInfo['name'] as $subKey => $name) {
                 if (is_numeric($subKey)) {
-                    $httpFile = new $this->className(
-                        [
-                            'name' => $fileInfo['name'][$subKey],
-                            'error' => $fileInfo['error'][$subKey],
-                            'tmp_name' => $fileInfo['tmp_name'][$subKey],
-                            'type' => $fileInfo['type'][$subKey],
-                            'size' => $fileInfo['size'][$subKey],
-                        ]
+                    $httpFile = $this->createFile(
+                        $fileInfo['name'][$subKey],
+                        $fileInfo['error'][$subKey],
+                        $fileInfo['tmp_name'][$subKey],
+                        $fileInfo['type'][$subKey],
+                        $fileInfo['size'][$subKey]
                     );
                     $this->files[$key][] = $httpFile;
                 } elseif (is_array($fileInfo['name'][$subKey])) {
                     foreach ($fileInfo['name'][$subKey] as $subSubKey => $subName) {
                         if (is_array($fileInfo['name'][$subKey][$subSubKey])) {
                             foreach ($fileInfo['name'][$subKey][$subSubKey] as $subSubSubKey => $subSubName) {
-                                $httpFile = new $this->className(
-                                    [
-                                        'name' => $fileInfo['name'][$subKey][$subSubKey][$subSubSubKey],
-                                        'error' => $fileInfo['error'][$subKey][$subSubKey][$subSubSubKey],
-                                        'tmp_name' => $fileInfo['tmp_name'][$subKey][$subSubKey][$subSubSubKey],
-                                        'type' => $fileInfo['type'][$subKey][$subSubKey][$subSubSubKey],
-                                        'size' => $fileInfo['size'][$subKey][$subSubKey][$subSubSubKey],
-                                    ]
+                                $httpFile = $this->createFile(
+                                    $fileInfo['name'][$subKey][$subSubKey][$subSubSubKey],
+                                    $fileInfo['error'][$subKey][$subSubKey][$subSubSubKey],
+                                    $fileInfo['tmp_name'][$subKey][$subSubKey][$subSubSubKey],
+                                    $fileInfo['type'][$subKey][$subSubKey][$subSubSubKey],
+                                    $fileInfo['size'][$subKey][$subSubKey][$subSubSubKey]
                                 );
                                 $this->files[$key . '[' . $subKey . '][' . $subSubKey . ']'][] = $httpFile;
                             }
                         } else {
-                            $httpFile = new $this->className(
-                                [
-                                    'name' => $fileInfo['name'][$subKey][$subSubKey],
-                                    'error' => $fileInfo['error'][$subKey][$subSubKey],
-                                    'tmp_name' => $fileInfo['tmp_name'][$subKey][$subSubKey],
-                                    'type' => $fileInfo['type'][$subKey][$subSubKey],
-                                    'size' => $fileInfo['size'][$subKey][$subSubKey],
-                                ]
+                            $httpFile = $this->createFile(
+                                $fileInfo['name'][$subKey][$subSubKey],
+                                $fileInfo['error'][$subKey][$subSubKey],
+                                $fileInfo['tmp_name'][$subKey][$subSubKey],
+                                $fileInfo['type'][$subKey][$subSubKey],
+                                $fileInfo['size'][$subKey][$subSubKey]
                             );
                             $this->files[$key . '[' . $subKey . ']'][] = $httpFile;
                         }
                     }
                 } else {
-                    $httpFile = new $this->className(
-                        [
-                            'name' => $fileInfo['name'][$subKey],
-                            'error' => $fileInfo['error'][$subKey],
-                            'tmp_name' => $fileInfo['tmp_name'][$subKey],
-                            'type' => $fileInfo['type'][$subKey],
-                            'size' => $fileInfo['size'][$subKey],
-                        ]
+                    $httpFile = $this->createFile(
+                        $fileInfo['name'][$subKey],
+                        $fileInfo['error'][$subKey],
+                        $fileInfo['tmp_name'][$subKey],
+                        $fileInfo['type'][$subKey],
+                        $fileInfo['size'][$subKey]
                     );
                     $this->files[$key . '[' . $subKey . ']'][] = $httpFile;
                 }
             }
         } else {
-            $httpFile = new $this->className($fileInfo);
+            $httpFile = $this->createFile(
+                $fileInfo['name'],
+                $fileInfo['error'],
+                $fileInfo['tmp_name'],
+                $fileInfo['type'],
+                $fileInfo['size']
+            );
             $this->files[$key] = [$httpFile];
         }
+    }
+
+    /**
+     * createFile
+     *
+     * @param string $name
+     * @param int $error
+     * @param string $tmpName
+     * @param string $type
+     * @param int $size
+     * @return File instance
+     */
+    public function createFile($name, $error, $tmpName, $type, $size)
+    {
+        return new File(
+            [
+                'name' => $name,
+                'error' => $error,
+                'tmp_name' => $tmpName,
+                'type' => $type,
+                'size' => $size
+            ]
+        );
     }
 
     /**

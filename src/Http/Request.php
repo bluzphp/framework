@@ -49,12 +49,6 @@ class Request extends AbstractRequest
     protected $fileUpload;
 
     /**
-     * Class handler downloadable files
-     * @var string
-     */
-    protected $className = 'Bluz\Http\FileUpload';
-
-    /**
      * Constructor
      */
     public function __construct()
@@ -325,7 +319,7 @@ class Request extends AbstractRequest
      */
     public function setFileUpload(FileUpload $fileUpload)
     {
-        $this->className = $fileUpload;
+        $this->fileUpload = $fileUpload;
     }
 
     /**
@@ -336,7 +330,7 @@ class Request extends AbstractRequest
     public function getFileUpload()
     {
         if (!$this->fileUpload) {
-            $this->fileUpload = new $this->className();
+            $this->fileUpload = new FileUpload();
         }
         return $this->fileUpload;
     }

@@ -42,7 +42,7 @@ class FileTest extends Bluz\Tests\TestCase
         parent::setUp();
         $this->path = $this->getApp()->getConfigData('tmp_name', 'image1');
         $file = array(
-            'name' => 'test.jpg',
+            'name' => 'test.jpeg',
             'size' => filesize($this->path),
             'type' => 'image/jpeg',
             'tmp_name' => $this->path,
@@ -76,7 +76,7 @@ class FileTest extends Bluz\Tests\TestCase
     public function testGetFullName()
     {
         $result = $this->httpFile->getFullName();
-        $this->assertEquals('test.jpg', $result);
+        $this->assertEquals('test.jpeg', $result);
     }
 
     /**
@@ -85,7 +85,7 @@ class FileTest extends Bluz\Tests\TestCase
     public function testGetExtension()
     {
         $result = $this->httpFile->getExtension();
-        $this->assertEquals('jpg', $result);
+        $this->assertEquals('jpeg', $result);
     }
 
     /**

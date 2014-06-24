@@ -63,7 +63,7 @@ class FileUploadTest extends Bluz\Tests\TestCase
     {
         $_FILES = array(
             'file' => array(
-                'name' => 'test.jpg',
+                'name' => 'test.jpeg',
                 'size' => filesize($this->path1),
                 'type' => 'image/jpeg',
                 'tmp_name' => $this->path1,
@@ -84,8 +84,8 @@ class FileUploadTest extends Bluz\Tests\TestCase
         $_FILES = array(
             'file' => array(
                 'name' => array(
-                    'test.jpg',
-                    'test1.jpg'
+                    'test.jpeg',
+                    'test1.jpeg'
                 ),
                 'size' => array(
                     filesize($this->path1),
@@ -119,7 +119,7 @@ class FileUploadTest extends Bluz\Tests\TestCase
         $_FILES = array(
             'file' => array(
                 'name' => array(
-                    'a' => 'test.jpg'
+                    'a' => 'test.jpeg'
                 ),
                 'size' => array(
                     'a' => filesize($this->path1)
@@ -150,7 +150,7 @@ class FileUploadTest extends Bluz\Tests\TestCase
             'file' => array(
                 'name' => array(
                     'a' => array(
-                        'b' => 'test.jpg'
+                        'b' => 'test.jpeg'
                     )
                 ),
                 'size' => array(
@@ -191,8 +191,8 @@ class FileUploadTest extends Bluz\Tests\TestCase
                 'name' => array(
                     'a' => array(
                         'b' => array(
-                            'test.jpg',
-                            'test1.jpg'
+                            'test.jpeg',
+                            'test1.jpeg'
                         )
                     )
                 ),
@@ -241,7 +241,7 @@ class FileUploadTest extends Bluz\Tests\TestCase
      */
     public function testCreateFile()
     {
-        $name = 'test.jpg';
+        $name = 'test.jpeg';
         $error = 0;
         $tmpName = $this->path1;
         $type = 'image/jpeg';

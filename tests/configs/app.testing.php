@@ -26,5 +26,9 @@ return array(
     ),
     "test" => array(
         "foo" => "bar"
+    ),
+    "tmp_name" => array(
+        "image1" => PATH_ROOT."/tests/src/Fixtures/Http/test.jpg",
+        "image2" => PATH_ROOT."/tests/src/Fixtures/Http/test1.jpg"
     )
 );

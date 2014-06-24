@@ -85,7 +85,7 @@ class ApplicationTest extends TestCase
         //  - configs/application.php
         //  - configs/app.testing.php
         // hardcoded numbers of configuration items
-        $this->assertEquals(11, sizeof($this->getApp()->getConfigData()));
+        $this->assertEquals(12, sizeof($this->getApp()->getConfigData()));
         $this->assertEquals(["foo" => "bar"], $this->getApp()->getConfigData("test"));
         $this->assertEquals("bar", $this->getApp()->getConfigData("test", "foo"));
     }

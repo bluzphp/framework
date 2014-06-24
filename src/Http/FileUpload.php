@@ -127,7 +127,7 @@ class FileUpload
                                 $fileInfo['type'][$subKey][$subSubKey],
                                 $fileInfo['size'][$subKey][$subSubKey]
                             );
-                            $this->files[$key . '[' . $subKey . ']'][] = $httpFile;
+                            $this->files[$key . '[' . $subKey . '][' . $subSubKey . ']'][] = $httpFile;
                         }
                     }
                 } else {

@@ -27,14 +27,14 @@ class Logger extends AbstractLogger
 
     /**
      * Start time
-     * @var null
+     * @var float
      */
-    protected $start = null;
+    protected $start;
     /**
      * Part time
-     * @var null
+     * @var float
      */
-    protected $timer = null;
+    protected $timer;
     /**
      * Stack of alerts
      * @var array

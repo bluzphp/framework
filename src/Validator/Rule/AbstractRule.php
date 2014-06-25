@@ -33,7 +33,7 @@ abstract class AbstractRule
     protected $template = 'Field "{{name}}" has invalid value "{{input}}"';
 
     /**
-     * @param string $input
+     * @param mixed $input
      * @return bool
      */
     abstract public function validate($input);

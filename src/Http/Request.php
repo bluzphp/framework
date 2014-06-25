@@ -279,8 +279,8 @@ class Request extends AbstractRequest
      * If no $key is passed, returns the entire $_GET array.
      *
      * @param string $key
-     * @param mixed $default Default value to use if key not found
-     * @return mixed Returns null if key does not exist
+     * @param string|array $default Default value to use if key not found
+     * @return string|array Returns null if key does not exist
      */
     public function getQuery($key = null, $default = null)
     {
@@ -298,8 +298,8 @@ class Request extends AbstractRequest
      * If no $key is passed, returns the entire $_POST array.
      *
      * @param string $key
-     * @param mixed $default Default value to use if key not found
-     * @return mixed Returns null if key does not exist
+     * @param string|array $default Default value to use if key not found
+     * @return string|array Returns null if key does not exist
      */
     public function getPost($key = null, $default = null)
     {
@@ -342,8 +342,8 @@ class Request extends AbstractRequest
      *
      * @todo How to retrieve from nested arrays
      * @param string $key
-     * @param mixed $default Default value to use if key not found
-     * @return mixed Returns null if key does not exist
+     * @param string $default Default value to use if key not found
+     * @return string|array Returns null if key does not exist
      */
     public function getCookie($key = null, $default = null)
     {
@@ -361,7 +361,7 @@ class Request extends AbstractRequest
      *
      * @param string $key
      * @param string $default Default value to use if key not found
-     * @return mixed Returns null if key does not exist
+     * @return string|array Returns null if key does not exist
      */
     public function getServer($key = null, $default = null)
     {

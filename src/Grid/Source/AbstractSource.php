@@ -47,7 +47,7 @@ abstract class AbstractSource
      * Setup adapter source
      *
      * @param mixed $source
-     * @return AbstractSource
+     * @return self
      */
     abstract public function setSource($source);
 
@@ -55,7 +55,7 @@ abstract class AbstractSource
      * Process source
      *
      * @param array $settings
-     * @return AbstractSource
+     * @return \Bluz\Grid\Data
      */
     abstract public function process(array $settings = []);
 }

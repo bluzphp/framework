@@ -39,7 +39,7 @@ abstract class AbstractController
 
     /**
      * Identifier
-     * @var string
+     * @var array
      */
     protected $primary;
 

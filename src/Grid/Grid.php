@@ -115,7 +115,7 @@ abstract class Grid
 
     /**
      * Default order
-     * @var string
+     * @var array
      */
     protected $defaultOrder;
 
@@ -778,7 +778,7 @@ abstract class Grid
     /**
      * Get default order
      *
-     * @return integer
+     * @return array
      */
     public function getDefaultOrder()
     {

@@ -22,7 +22,7 @@ namespace Bluz\Common;
 trait Singleton
 {
     /**
-     * @var self instance
+     * @var static instance
      */
     protected static $instance;
 

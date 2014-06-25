@@ -40,13 +40,13 @@ class Cache implements CacheInterface, TagableInterface
 
     /**
      * Instance of cache adapter
-     * @var Adapter\AbstractAdapter
+     * @var CacheInterface
      */
     protected $cacheAdapter = null;
 
     /**
      * Instance of tag adapter
-     * @var Adapter\AbstractAdapter
+     * @var CacheInterface
      */
     protected $tagAdapter = null;
 

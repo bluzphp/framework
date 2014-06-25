@@ -127,7 +127,7 @@ class Config
      * @param string|null $section of config
      * @param string|null $subsection of config
      * @throws ConfigException
-     * @return array
+     * @return array|mixed
      */
     public function getData($section = null, $subsection = null)
     {

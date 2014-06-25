@@ -265,7 +265,7 @@ abstract class Application
      *
      * @param string|null $section of config
      * @param string|null $subsection of config
-     * @return array
+     * @return array|mixed
      */
     public function getConfigData($section = null, $subsection = null)
     {
@@ -506,7 +506,7 @@ abstract class Application
     /**
      * Set Request instance
      *
-     * @param Request\AbstractRequest $request
+     * @param Http\Request $request
      * @return Application
      */
     public function setRequest($request)
@@ -518,7 +518,7 @@ abstract class Application
     /**
      * Get Response instance
      *
-     * @return Response\AbstractResponse
+     * @return Http\Response
      */
     public function getResponse()
     {
@@ -532,7 +532,7 @@ abstract class Application
     /**
      * Set Response instance
      *
-     * @param Response\AbstractResponse $response
+     * @param Http\Response $response
      * @return Application
      */
     public function setResponse($response)

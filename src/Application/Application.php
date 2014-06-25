@@ -212,7 +212,7 @@ abstract class Application
             $this->getConfig($environment);
 
             if ($debug = $this->getConfigData('debug')) {
-                $this->debugFlag = $debug;
+                $this->debugFlag = (bool) $debug;
             }
 
             // first log message

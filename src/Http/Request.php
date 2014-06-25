@@ -291,7 +291,6 @@ class Request extends AbstractRequest
         return (isset($_GET[$key])) ? $_GET[$key] : $default;
     }
 
-
     /**
      * Retrieve a member of the $_POST super global
      *
@@ -308,6 +307,43 @@ class Request extends AbstractRequest
         }
 
         return (isset($_POST[$key])) ? $_POST[$key] : $default;
+    }
+
+    /**
+     * Retrieve a member of the $_COOKIE super global
+     *
+     * If no $key is passed, returns the entire $_COOKIE array.
+     *
+     * @todo How to retrieve from nested arrays
+     * @param string $key
+     * @param string $default Default value to use if key not found
+     * @return string|array Returns null if key does not exist
+     */
+    public function getCookie($key = null, $default = null)
+    {
+        if (null === $key) {
+            return $_COOKIE;
+        }
+
+        return (isset($_COOKIE[$key])) ? $_COOKIE[$key] : $default;
+    }
+
+    /**
+     * Retrieve a member of the $_SERVER super global
+     *
+     * If no $key is passed, returns the entire $_SERVER array.
+     *
+     * @param string $key
+     * @param string $default Default value to use if key not found
+     * @return string Returns null if key does not exist
+     */
+    public function getServer($key = null, $default = null)
+    {
+        if (null === $key) {
+            return $_SERVER;
+        }
+
+        return (isset($_SERVER[$key])) ? $_SERVER[$key] : $default;
     }
 
     /**
@@ -333,43 +369,6 @@ class Request extends AbstractRequest
             $this->fileUpload = new FileUpload();
         }
         return $this->fileUpload;
-    }
-
-    /**
-     * Retrieve a member of the $_COOKIE superglobal
-     *
-     * If no $key is passed, returns the entire $_COOKIE array.
-     *
-     * @todo How to retrieve from nested arrays
-     * @param string $key
-     * @param string $default Default value to use if key not found
-     * @return string|array Returns null if key does not exist
-     */
-    public function getCookie($key = null, $default = null)
-    {
-        if (null === $key) {
-            return $_COOKIE;
-        }
-
-        return (isset($_COOKIE[$key])) ? $_COOKIE[$key] : $default;
-    }
-
-    /**
-     * Retrieve a member of the $_SERVER superglobal
-     *
-     * If no $key is passed, returns the entire $_SERVER array.
-     *
-     * @param string $key
-     * @param string $default Default value to use if key not found
-     * @return string|array Returns null if key does not exist
-     */
-    public function getServer($key = null, $default = null)
-    {
-        if (null === $key) {
-            return $_SERVER;
-        }
-
-        return (isset($_SERVER[$key])) ? $_SERVER[$key] : $default;
     }
 
     /**

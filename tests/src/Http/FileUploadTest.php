@@ -235,20 +235,4 @@ class FileUploadTest extends Bluz\Tests\TestCase
         $result = $request->getFileUpload()->getFiles('file[a][b]');
         $this->assertNotEmpty($result);
     }
-
-    /**
-     * Test create file
-     */
-    public function testCreateFile()
-    {
-        $name = 'test.jpeg';
-        $error = 0;
-        $tmpName = $this->path1;
-        $type = 'image/jpeg';
-        $size = filesize($this->path1);
-
-        $request = $this->getApp()->getRequest();
-        $result = $request->getFileUpload()->createFile($name, $error, $tmpName, $type, $size);
-        $this->assertInstanceOf('Bluz\Http\File', $result);
-    }
 }

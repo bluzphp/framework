@@ -98,82 +98,71 @@ class FileUpload
         if (is_array($fileInfo['name'])) {
             foreach ($fileInfo['name'] as $subKey => $name) {
                 if (is_numeric($subKey)) {
-                    $httpFile = $this->createFile(
-                        $fileInfo['name'][$subKey],
-                        $fileInfo['error'][$subKey],
-                        $fileInfo['tmp_name'][$subKey],
-                        $fileInfo['type'][$subKey],
-                        $fileInfo['size'][$subKey]
-                    );
-                    $this->files[$key][] = $httpFile;
+                    $this->createFile($fileInfo, $key);
                 } elseif (is_array($fileInfo['name'][$subKey])) {
                     foreach ($fileInfo['name'][$subKey] as $subSubKey => $subName) {
                         if (is_array($fileInfo['name'][$subKey][$subSubKey])) {
                             foreach ($fileInfo['name'][$subKey][$subSubKey] as $subSubSubKey => $subSubName) {
-                                $httpFile = $this->createFile(
-                                    $fileInfo['name'][$subKey][$subSubKey][$subSubSubKey],
-                                    $fileInfo['error'][$subKey][$subSubKey][$subSubSubKey],
-                                    $fileInfo['tmp_name'][$subKey][$subSubKey][$subSubSubKey],
-                                    $fileInfo['type'][$subKey][$subSubKey][$subSubSubKey],
-                                    $fileInfo['size'][$subKey][$subSubKey][$subSubSubKey]
-                                );
-                                $this->files[$key . '[' . $subKey . '][' . $subSubKey . ']'][] = $httpFile;
+                                $this->createFile($fileInfo, $key, $subKey, $subSubKey);
                             }
                         } else {
-                            $httpFile = $this->createFile(
-                                $fileInfo['name'][$subKey][$subSubKey],
-                                $fileInfo['error'][$subKey][$subSubKey],
-                                $fileInfo['tmp_name'][$subKey][$subSubKey],
-                                $fileInfo['type'][$subKey][$subSubKey],
-                                $fileInfo['size'][$subKey][$subSubKey]
-                            );
-                            $this->files[$key . '[' . $subKey . '][' . $subSubKey . ']'][] = $httpFile;
+                            $this->createFile($fileInfo, $key, $subKey, $subSubKey);
                         }
                     }
                 } else {
-                    $httpFile = $this->createFile(
-                        $fileInfo['name'][$subKey],
-                        $fileInfo['error'][$subKey],
-                        $fileInfo['tmp_name'][$subKey],
-                        $fileInfo['type'][$subKey],
-                        $fileInfo['size'][$subKey]
-                    );
-                    $this->files[$key . '[' . $subKey . ']'][] = $httpFile;
+                    $this->createFile($fileInfo, $key, $subKey);
                 }
             }
         } else {
-            $httpFile = $this->createFile(
-                $fileInfo['name'],
-                $fileInfo['error'],
-                $fileInfo['tmp_name'],
-                $fileInfo['type'],
-                $fileInfo['size']
-            );
-            $this->files[$key] = [$httpFile];
+            $this->createFile($fileInfo, $key);
         }
     }
 
     /**
      * createFile
      *
-     * @param string $name
-     * @param int $error
-     * @param string $tmpName
-     * @param string $type
-     * @param int $size
+     * @param array $fileInfo
+     * @param string $fileKey
+     * @param string $subKey
+     * @param string $subSubKey
+     * @param string $subSubSubKey
+     *
      * @return File instance
      */
-    public function createFile($name, $error, $tmpName, $type, $size)
+    public function createFile($fileInfo, $fileKey, $subKey = null, $subSubKey = null, $subSubSubKey = null)
     {
-        return new File(
-            [
-                'name' => $name,
-                'error' => $error,
-                'tmp_name' => $tmpName,
-                'type' => $type,
-                'size' => $size
-            ]
-        );
+        $argList = func_get_args();
+        $fileInfo = array_shift($argList);
+        $fileKey = array_shift($argList);
+
+        foreach ($fileInfo as $key => $value) {
+            $fileInfo[$key] = $this->parseArray($value, $argList);
+        }
+
+        if (count($argList)) {
+            $fileKey .= '[' . implode("][", $argList) . ']';
+        }
+
+        $this->files[$fileKey][] = new File($fileInfo);
+    }
+
+    /**
+     * parseArray
+     *
+     * @param array|string $nameArr
+     * @param array|null $argList
+     *
+     * @return string
+     */
+    public function parseArray($nameArr, $argList)
+    {
+        if (!is_array($nameArr)) {
+            return $nameArr;
+        }
+
+        $subKey = current($argList);
+        array_shift($argList);
+        return $this->parseArray($nameArr[$subKey], $argList);
     }
 
     /**

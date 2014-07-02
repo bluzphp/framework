@@ -12,7 +12,7 @@
 namespace Bluz\Validator\Exception;
 
 /**
- * ValidatorException
+ * Validator Exception
  *
  * @package  Bluz\Validator\Exception
  *
@@ -26,4 +26,30 @@ class ValidatorException extends \InvalidArgumentException
      * @var int
      */
     protected $code = 400;
+
+    /**
+     * @var array of error messages
+     */
+    protected $errors = array();
+
+    /**
+     * Set errors
+     *
+     * @param array $errors
+     * @return array
+     */
+    public function setErrors($errors)
+    {
+        $this->errors = $errors;
+    }
+
+    /**
+     * Get errors
+     *
+     * @return array
+     */
+    public function getErrors()
+    {
+        return $this->errors;
+    }
 }

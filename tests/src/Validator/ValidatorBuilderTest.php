@@ -10,6 +10,7 @@
 namespace Bluz\Tests\Validator;
 
 use Bluz\Tests;
+use Bluz\Validator\Exception\ValidatorException;
 use Bluz\Validator\Validator;
 use Bluz\Validator\ValidatorBuilder;
 
@@ -33,8 +34,9 @@ class ValidatorBuilderTest extends Tests\TestCase
                     ->setError('"{{name}}" is not numeric, is equal "{{input}}"')
             );
             $validator->assert(['some' => 'something']);
-        } catch (\Exception $e) {
+        } catch (ValidatorException $e) {
             $this->assertEquals('Invalid Arguments', $e->getMessage());
+            $this->assertArrayHasKey('some', $e->getErrors());
         }
     }
 
@@ -94,7 +96,6 @@ class ValidatorBuilderTest extends Tests\TestCase
         $this->assertTrue($validator->validate($object));
         $this->assertTrue($validator->assert($object));
     }
-
 
     /**
      * Setup multi builder for empty object

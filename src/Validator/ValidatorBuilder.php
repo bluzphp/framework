@@ -66,49 +66,71 @@ class ValidatorBuilder
      */
     public function validate($input)
     {
+        $this->errors = array();
         $result = true;
         // check be validators
         foreach ($this->validators as $key => $validators) {
-            // extract input from ...
-            if (is_array($input) && isset($input[$key])) {
-                // array
-                $value = $input[$key];
-            } elseif (is_object($input) && isset($input->{$key})) {
-                // object
-                $value = $input->{$key};
-            } else {
-                // ... oh, not exists key
-                // check chains for required
-                foreach ($validators as $validator) {
-                    /* @var Validator $validator */
-                    if ($validator->isRequired()) {
-                        $this->errors[$key][] = $validator->getError();
-                        $result = false;
-                        break;
-                    }
-                }
-                break;
-            }
-
-            // run validators chain
-            foreach ($validators as $validator) {
-                /* @var Validator $validator */
-                if (!$validator->getName()) {
-                    // setup field name as property name
-                    $validator->setName(ucfirst($key));
-                }
-
-                if (!$validator->validate($value)) {
-                    if (!isset($this->errors[$key])) {
-                        $this->errors[$key] = array();
-                    }
-                    $this->errors[$key][] = $validator->getError();
-                    $result = false;
-                    break; // stop on first fail
-                }
+            if (!$this->validateItem($key, $input)) {
+                $result = false;
             }
         }
         return $result;
+    }
+
+    /**
+     * Validate chain of rules for single item
+     *
+     * @param string $key
+     * @param array|object $input
+     * @return bool
+     */
+    public function validateItem($key, $input)
+    {
+        // w/out any rules element is valid
+        if (!isset($this->validators[$key])) {
+            return true;
+        }
+
+        $validators = $this->validators[$key];
+
+        // check be validators
+        // extract input from ...
+        if (is_array($input) && isset($input[$key])) {
+            // array
+            $value = $input[$key];
+        } elseif (is_object($input) && isset($input->{$key})) {
+            // object
+            $value = $input->{$key};
+        } else {
+            // ... oh, not exists key
+            // check chains for required
+            foreach ($validators as $validator) {
+                /* @var Validator $validator */
+                if ($validator->isRequired()) {
+                    $this->errors[$key][] = $validator->getError();
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // run validators chain
+        foreach ($validators as $validator) {
+            /* @var Validator $validator */
+            if (!$validator->getName()) {
+                // setup field name as property name
+                $validator->setName(ucfirst($key));
+            }
+
+            if (!$validator->validate($value)) {
+                if (!isset($this->errors[$key])) {
+                    $this->errors[$key] = array();
+                }
+                $this->errors[$key][] = $validator->getError();
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

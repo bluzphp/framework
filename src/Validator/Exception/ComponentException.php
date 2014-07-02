@@ -14,7 +14,8 @@ namespace Bluz\Validator\Exception;
 use Bluz\Common\Exception;
 
 /**
- * Class ComponentException
+ * Component Exception
+ *
  * @package  Bluz\Validator\Exception
  *
  * @author   Anton Shevchuk

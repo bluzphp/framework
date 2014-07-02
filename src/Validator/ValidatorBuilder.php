@@ -142,7 +142,9 @@ class ValidatorBuilder
     public function assert($input)
     {
         if (!$this->validate($input)) {
-            throw new ValidatorException("Invalid Arguments");
+            $exception = new ValidatorException("Invalid Arguments");
+            $exception->setErrors($this->errors);
+            throw $exception;
         }
         return true;
     }

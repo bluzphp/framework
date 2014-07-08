@@ -52,37 +52,12 @@ class ValidatorBuilder
         // extract name, not used
         array_shift($validators);
 
-        // extract validator
-        $validator = array_shift($validators);
-
-        // merge validator chains inside one validator
-        if (sizeof($validators)) {
-            $validator = $this->mergeValidators($validator, $validators);
-        }
-
-        // if already exists, merge it
         if (isset($this->validators[$name])) {
-            $this->validators[$name] = $this->mergeValidators($this->validators[$name], $validator);
+            $this->validators[$name] = array_merge($this->validators[$name], $validators);
         } else {
-            $this->validators[$name] = $validator;
+            $this->validators[$name] = $validators;
         }
         return $this;
-    }
-
-    /**
-     * mergeValidators
-     *
-     * @param Validator $recipient
-     * @param Validator[] $validators
-     * @return Validator
-     */
-    protected function mergeValidators($recipient, $validators)
-    {
-        foreach ($validators as $validator) {
-            $rules = $validator->getRules();
-            $recipient->addRules($rules);
-        }
-        return $recipient;
     }
 
     /**
@@ -118,14 +93,7 @@ class ValidatorBuilder
             return true;
         }
 
-        /* @var Validator $validator */
-        $validator = $this->validators[$key];
-
-        // run validators chain
-        if (!$validator->getName()) {
-            // setup field name as property name
-            $validator->setName(ucfirst($key));
-        }
+        $validators = $this->validators[$key];
 
         // check be validators
         // extract input from ...
@@ -138,16 +106,37 @@ class ValidatorBuilder
         } else {
             // ... oh, not exists key
             // check chains for required
-            if (!$validator->isRequired()) {
-                return true;
+            $required = false;
+            foreach ($validators as $validator) {
+                /* @var Validator $validator */
+                if ($validator->isRequired()) {
+                    $required = true;
+                    break;
+                }
             }
 
-            $value = false;
+            if ($required) {
+                $value = '';
+            } else {
+                return true;
+            }
         }
 
-        if (!$validator->validate($value)) {
-            $this->errors[$key] = $validator->getError();
-            return false;
+        // run validators chain
+        foreach ($validators as $validator) {
+            /* @var Validator $validator */
+            if (!$validator->getName()) {
+                // setup field name as property name
+                $validator->setName(ucfirst($key));
+            }
+
+            if (!$validator->validate($value)) {
+                if (!isset($this->errors[$key])) {
+                    $this->errors[$key] = array();
+                }
+                $this->errors[$key][] = $validator->getError();
+                return false;
+            }
         }
         return true;
     }

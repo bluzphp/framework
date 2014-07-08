@@ -130,7 +130,7 @@ class Validator
             $rule = new $ruleClass();
         }
 
-        $this->addRule($rule);
+        $this->rules[] = $rule;
 
         return $this;
     }
@@ -148,50 +148,6 @@ class Validator
             }
         }
         return false;
-    }
-
-    /**
-     * Add rule to validator
-     *
-     * @param AbstractRule $rule
-     * @return Validator
-     */
-    public function addRule($rule)
-    {
-        $this->rules[] = $rule;
-        return $this;
-    }
-
-    /**
-     * Add rule to validator
-     *
-     * @param AbstractRule[] $rules
-     * @return Validator
-     */
-    public function addRules($rules)
-    {
-        $this->rules = array_merge($this->rules, $rules);
-        return $this;
-    }
-
-    /**
-     * Get all rules
-     *
-     * @return AbstractRule[]
-     */
-    public function getRules()
-    {
-        return $this->rules;
-    }
-
-    /**
-     * Get Invalid Rules
-     *
-     * @return AbstractRule[]
-     */
-    public function getInvalidRules()
-    {
-        return $this->invalid;
     }
 
     /**
@@ -248,7 +204,7 @@ class Validator
     {
         $this->input = $input;
         $this->invalid = array(); // clean
-        foreach ($this->getRules() as $rule) {
+        foreach ($this->rules as $rule) {
 
             if (!$rule->validate($this->input)) {
                 $this->invalid[] = $rule;

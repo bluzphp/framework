@@ -163,6 +163,7 @@ class CrudTest extends TestCase
         $request->setParams(['name' => '', 'email' => '']);
 
         $result = $this->processCrud();
+
         $this->assertEquals(Request::METHOD_POST, $result['method']);
         $this->assertInstanceOf('Bluz\Tests\Fixtures\Models\TestRow', $result['row']);
         $this->assertNull($result['row']['id']);
@@ -215,6 +216,7 @@ class CrudTest extends TestCase
 
 
         $result = $this->processCrud();
+
         $this->assertEquals(Request::METHOD_PUT, $result['method']);
         $this->assertInstanceOf('Bluz\Tests\Fixtures\Models\TestRow', $result['row']);
         $this->assertEquals(2, $result['row']['id']);

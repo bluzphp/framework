@@ -25,15 +25,9 @@ use Bluz\Translator\Translator;
 abstract class AbstractCrud
 {
     /**
-     * Default limit for pagination
+     * Default limit for READ SET of elements
      */
     const DEFAULT_LIMIT = 10;
-
-    /**
-     * Errors stack
-     * @var array
-     */
-    protected $errors = array();
 
     /**
      * getInstance
@@ -154,110 +148,5 @@ abstract class AbstractCrud
     public function deleteSet($data)
     {
         throw new NotImplementedException();
-    }
-
-    /**
-     * validate
-     *
-     * @param null $primary
-     * @param array $data
-     * @return bool
-     */
-    public function validate($primary, $data)
-    {
-        return !$this->hasErrors();
-    }
-
-    /**
-     * createValidation
-     *
-     * @param array $data
-     * @return bool
-     */
-    public function validateCreate($data)
-    {
-        return !$this->hasErrors();
-    }
-
-    /**
-     * updateValidation
-     *
-     * @param mixed $primary
-     * @param array $data
-     * @return bool
-     */
-    public function validateUpdate($primary, $data)
-    {
-        return !$this->hasErrors();
-    }
-
-    /**
-     * Add new errors to stack
-     *
-     * @param string $message
-     * @param string $field
-     * @return self
-     */
-    protected function addError($message, $field)
-    {
-        if (!isset($this->errors[$field])) {
-            $this->errors[$field] = array();
-        }
-        $this->errors[$field][] = Translator::translate($message);
-        return $this;
-    }
-
-    /**
-     * Set errors stack
-     *
-     * @param array $messages
-     * @return self
-     */
-    protected function setErrors($messages)
-    {
-        $this->errors = $messages;
-        return $this;
-    }
-
-    /**
-     * Get errors stack
-     *
-     * @return mixed
-     */
-    public function getErrors()
-    {
-        return $this->errors;
-    }
-
-    /**
-     * Has errors
-     *
-     * @return bool
-     */
-    public function hasErrors()
-    {
-        return sizeof($this->errors);
-    }
-
-    /**
-     * Clear errors
-     *
-     * @return self
-     */
-    public function clearErrors()
-    {
-        $this->errors = array();
-        return $this;
-    }
-
-    /**
-     * Check errors stack and throw 
-     * @throws ValidationException
-     */
-    public function checkErrors()
-    {
-        if ($this->hasErrors()) {
-            throw new ValidationException('Your request contains error(s) please fix them before try again');
-        }
     }
 }

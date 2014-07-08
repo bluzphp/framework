@@ -14,8 +14,8 @@ namespace Bluz\Controller;
 use Bluz\Application\Exception\BadRequestException;
 use Bluz\Application\Exception\NotFoundException;
 use Bluz\Application\Exception\NotImplementedException;
-use Bluz\Crud\ValidationException;
 use Bluz\Http\Request;
+use Bluz\Validator\Exception\ValidatorException;
 
 /**
  * Controller
@@ -147,9 +147,9 @@ class Rest extends AbstractController
                         throw new BadRequestException();
                     }
                     $uid = join('-', array_values($result));
-                } catch (ValidationException $e) {
+                } catch (ValidatorException $e) {
                     app()->getResponse()->setCode(400);
-                    return ['errors' => $this->getCrud()->getErrors()];
+                    return ['errors' => $e->getErrors()];
                 }
 
                 app()->getResponse()->setCode(201);
@@ -178,9 +178,9 @@ class Rest extends AbstractController
                     if (0 === $result) {
                         app()->getResponse()->setCode(304);
                     }
-                } catch (ValidationException $e) {
+                } catch (ValidatorException $e) {
                     app()->getResponse()->setCode(400);
-                    return ['errors' => $this->getCrud()->getErrors()];
+                    return ['errors' => $e->getErrors()];
                 }
                 return false; // disable view
             case Request::METHOD_DELETE:

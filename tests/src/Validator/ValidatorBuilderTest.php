@@ -49,6 +49,7 @@ class ValidatorBuilderTest extends Tests\TestCase
         try {
             $validator->add(
                 'foo',
+                Validator::required(),
                 Validator::callback('is_int')
             );
             $validator->add(
@@ -56,12 +57,18 @@ class ValidatorBuilderTest extends Tests\TestCase
                 Validator::required(),
                 Validator::callback('is_int')
             );
+            $validator->add(
+                'quz',
+                Validator::required(),
+                Validator::callback('is_int')
+            );
             $validator->assert(['foo' => 'something']);
-        } catch (\Exception $e) {
+        } catch (ValidatorException $e) {
 
             $this->assertEquals('Invalid Arguments', $e->getMessage());
 
             $errors = $validator->getErrors();
+
             $this->assertArrayHasKey('foo', $errors);
             $this->assertArrayHasKey('bar', $errors);
         }

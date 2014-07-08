@@ -28,6 +28,11 @@ class ValidatorException extends \InvalidArgumentException
     protected $code = 400;
 
     /**
+     * @var string
+     */
+    protected $message = "Invalid Arguments";
+
+    /**
      * @var array of error messages
      */
     protected $errors = array();

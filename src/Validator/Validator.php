@@ -14,6 +14,7 @@ namespace Bluz\Validator;
 use Bluz\Validator\Rule\AbstractRule;
 use Bluz\Validator\Exception\ComponentException;
 use Bluz\Validator\Exception\ValidatorException;
+use Bluz\Validator\Rule\Required;
 
 /**
  * Validator
@@ -83,11 +84,6 @@ class Validator
     protected $error;
 
     /**
-     * @var bool
-     */
-    protected $required = false;
-
-    /**
      * Create new instance if Validator
      *
      * @return Validator
@@ -127,10 +123,6 @@ class Validator
             throw new ComponentException();
         }
 
-        if ($ruleName == 'required') {
-            $this->required = true;
-        }
-
         if (sizeof($arguments)) {
             $reflection = new \ReflectionClass($ruleClass);
             $rule = $reflection->newInstanceArgs($arguments);
@@ -150,7 +142,12 @@ class Validator
      */
     public function isRequired()
     {
-        return $this->required;
+        foreach ($this->rules as $rule) {
+            if ($rule instanceof Required) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -162,6 +159,18 @@ class Validator
     public function addRule($rule)
     {
         $this->rules[] = $rule;
+        return $this;
+    }
+
+    /**
+     * Add rule to validator
+     *
+     * @param AbstractRule[] $rules
+     * @return Validator
+     */
+    public function addRules($rules)
+    {
+        $this->rules = array_merge($this->rules, $rules);
         return $this;
     }
 
@@ -240,6 +249,7 @@ class Validator
         $this->input = $input;
         $this->invalid = array(); // clean
         foreach ($this->getRules() as $rule) {
+
             if (!$rule->validate($this->input)) {
                 $this->invalid[] = $rule;
                 if (!$all) {
@@ -300,20 +310,6 @@ class Validator
     }
 
     /**
-     * Prepare error message for output
-     *
-     * @param string $message
-     * @return string
-     */
-    protected function prepareError($message)
-    {
-        $message = str_replace('{{name}}', $this->getName(), $message);
-        $message = str_replace('{{input}}', esc($this->getInput()), $message);
-
-        return $message;
-    }
-
-    /**
      * getErrors
      *
      * @return string[]
@@ -325,6 +321,20 @@ class Validator
             $output[] = $this->prepareError($rule);
         }
         return $output;
+    }
+
+    /**
+     * Prepare error message for output
+     *
+     * @param string $message
+     * @return string
+     */
+    protected function prepareError($message)
+    {
+        $message = str_replace('{{name}}', $this->getName(), $message);
+        $message = str_replace('{{input}}', esc($this->getInput()), $message);
+
+        return $message;
     }
 
     /**

@@ -26,10 +26,10 @@ class ValidatorBuilder
     /**
      * Stack of validators
      *
-     *   ['foo'] => [Validator, Validator,...]
-     *   ['bar'] => [Validator, Validator,...]
+     *   ['foo'] => Validator
+     *   ['bar'] => Validator
      *
-     * @var array
+     * @var Validator[]
      */
     protected $validators = array();
 
@@ -42,20 +42,47 @@ class ValidatorBuilder
      * add
      *
      * @param string $name
-     * @internal param Validator $validator,...
+     * @internal Validator $validator,...
      * @return ValidatorBuilder
      */
     public function add($name)
     {
         $validators = func_get_args();
+
+        // extract name, not used
         array_shift($validators);
 
+        // extract validator
+        $validator = array_shift($validators);
+
+        // merge validator chains inside one validator
+        if (sizeof($validators)) {
+            $validator = $this->mergeValidators($validator, $validators);
+        }
+
+        // if already exists, merge it
         if (isset($this->validators[$name])) {
-            $this->validators[$name] = array_merge($this->validators[$name], $validators);
+            $this->validators[$name] = $this->mergeValidators($this->validators[$name], $validator);
         } else {
-            $this->validators[$name] = $validators;
+            $this->validators[$name] = $validator;
         }
         return $this;
+    }
+
+    /**
+     * mergeValidators
+     *
+     * @param Validator $recipient
+     * @param Validator[] $validators
+     * @return Validator
+     */
+    protected function mergeValidators($recipient, $validators)
+    {
+        foreach ($validators as $validator) {
+            $rules = $validator->getRules();
+            $recipient->addRules($rules);
+        }
+        return $recipient;
     }
 
     /**
@@ -91,7 +118,14 @@ class ValidatorBuilder
             return true;
         }
 
-        $validators = $this->validators[$key];
+        /* @var Validator $validator */
+        $validator = $this->validators[$key];
+
+        // run validators chain
+        if (!$validator->getName()) {
+            // setup field name as property name
+            $validator->setName(ucfirst($key));
+        }
 
         // check be validators
         // extract input from ...
@@ -104,31 +138,16 @@ class ValidatorBuilder
         } else {
             // ... oh, not exists key
             // check chains for required
-            foreach ($validators as $validator) {
-                /* @var Validator $validator */
-                if ($validator->isRequired()) {
-                    $this->errors[$key][] = $validator->getError();
-                    return false;
-                }
+            if (!$validator->isRequired()) {
+                return true;
             }
-            return true;
+
+            $value = false;
         }
 
-        // run validators chain
-        foreach ($validators as $validator) {
-            /* @var Validator $validator */
-            if (!$validator->getName()) {
-                // setup field name as property name
-                $validator->setName(ucfirst($key));
-            }
-
-            if (!$validator->validate($value)) {
-                if (!isset($this->errors[$key])) {
-                    $this->errors[$key] = array();
-                }
-                $this->errors[$key][] = $validator->getError();
-                return false;
-            }
+        if (!$validator->validate($value)) {
+            $this->errors[$key] = $validator->getError();
+            return false;
         }
         return true;
     }
@@ -142,8 +161,8 @@ class ValidatorBuilder
     public function assert($input)
     {
         if (!$this->validate($input)) {
-            $exception = new ValidatorException("Invalid Arguments");
-            $exception->setErrors($this->errors);
+            $exception = new ValidatorException();
+            $exception->setErrors($this->getErrors());
             throw $exception;
         }
         return true;

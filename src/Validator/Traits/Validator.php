@@ -4,6 +4,7 @@
  */
 namespace Bluz\Validator\Traits;
 
+use Bluz\Validator\Exception\ValidatorException;
 use Bluz\Validator\ValidatorBuilder;
 
 /**
@@ -50,7 +51,7 @@ trait Validator
     }
 
     /**
-     * validate
+     * Validate input data
      *
      * @param array|object $input
      * @return boolean
@@ -61,7 +62,7 @@ trait Validator
     }
 
     /**
-     * assert
+     * Assert input data
      *
      * @param array|object $input
      * @return boolean
@@ -69,5 +70,19 @@ trait Validator
     public function assert($input)
     {
         return $this->getValidatorBuilder()->assert($input);
+    }
+
+    /**
+     * Prepare exception
+     *
+     * @param string $field
+     * @param string $message
+     * @return ValidatorException
+     */
+    protected function exception($field, $message)
+    {
+        $exception = new ValidatorException($message);
+        $exception->setErrors([$field => $message]);
+        return $exception;
     }
 }

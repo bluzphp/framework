@@ -26,8 +26,8 @@ class ValidatorBuilder
     /**
      * Stack of validators
      *
-     *   ['foo'] => [Validator, Validator,...]
-     *   ['bar'] => [Validator, Validator,...]
+     *   ['foo'] => [Validator, ...]
+     *   ['bar'] => [Validator, ...]
      *
      * @var array
      */
@@ -42,12 +42,14 @@ class ValidatorBuilder
      * add
      *
      * @param string $name
-     * @internal param Validator $validator,...
+     * @internal Validator $validator,...
      * @return ValidatorBuilder
      */
     public function add($name)
     {
         $validators = func_get_args();
+
+        // extract name, not used
         array_shift($validators);
 
         if (isset($this->validators[$name])) {
@@ -104,14 +106,20 @@ class ValidatorBuilder
         } else {
             // ... oh, not exists key
             // check chains for required
+            $required = false;
             foreach ($validators as $validator) {
                 /* @var Validator $validator */
                 if ($validator->isRequired()) {
-                    $this->errors[$key][] = $validator->getError();
-                    return false;
+                    $required = true;
+                    break;
                 }
             }
-            return true;
+
+            if ($required) {
+                $value = '';
+            } else {
+                return true;
+            }
         }
 
         // run validators chain
@@ -142,8 +150,8 @@ class ValidatorBuilder
     public function assert($input)
     {
         if (!$this->validate($input)) {
-            $exception = new ValidatorException("Invalid Arguments");
-            $exception->setErrors($this->errors);
+            $exception = new ValidatorException();
+            $exception->setErrors($this->getErrors());
             throw $exception;
         }
         return true;

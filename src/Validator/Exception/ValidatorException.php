@@ -28,15 +28,46 @@ class ValidatorException extends \InvalidArgumentException
     protected $code = 400;
 
     /**
+     * @var string
+     */
+    protected $message = "Invalid Arguments";
+
+    /**
      * @var array of error messages
      */
     protected $errors = array();
 
     /**
+     * throwException
+     *
+     * @param $key
+     * @param $error
+     * @return self
+     */
+    public static function exception($key, $error)
+    {
+        $exception = new self;
+        $exception->setError($key, $error);
+        return $exception;
+    }
+
+    /**
+     * Set error by Key
+     *
+     * @param string $key
+     * @param string $error
+     * @return void
+     */
+    public function setError($key, $error)
+    {
+        $this->errors[$key] = $error;
+    }
+
+    /**
      * Set errors
      *
      * @param array $errors
-     * @return array
+     * @return void
      */
     public function setErrors($errors)
     {

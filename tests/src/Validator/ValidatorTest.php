@@ -112,7 +112,6 @@ class ValidatorTest extends Tests\TestCase
         $this->assertFalse($validator->validate('user#name'));
         $this->assertFalse($validator('user#name'));
 
-        $this->assertCount(1, $validator->getInvalidRules());
         $this->assertCount(1, $validator->getErrors());
     }
 

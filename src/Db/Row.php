@@ -200,18 +200,21 @@ class Row implements \JsonSerializable, \ArrayAccess
          */
         $this->beforeInsert();
 
+        $data = $this->toArray();
+
+        /**
+         * Execute validator logic
+         * Can throw ValidatorException
+         */
+        if (method_exists($this, 'assert')) {
+            $this->assert($data);
+        }
+
+        $table = $this->getTable();
+
         /**
          * Execute the INSERT (this may throw an exception)
          */
-        $data = $this->toArray();
-
-        $table = $this->getTable();
-        $data = $table->filterColumns($data);
-
-        if (!sizeof($data)) {
-            throw new DbException("Columns data for table `{$table->getName()}` is missed");
-        }
-
         $primaryKey = $table->insert($data);
 
         /**
@@ -254,13 +257,23 @@ class Row implements \JsonSerializable, \ArrayAccess
          */
         $this->beforeUpdate();
 
+        $data = $this->toArray();
+
+        /**
+         * Execute validator logic
+         * Can throw ValidatorException
+         */
+        if (method_exists($this, 'assert')) {
+            $this->assert($data);
+        }
+
         $primaryKey = $this->getPrimaryKey();
 
         /**
          * Compare the data to the modified fields array to discover
          * which columns have been changed.
          */
-        $diffData = array_diff_assoc($this->toArray(), $this->clean);
+        $diffData = array_diff_assoc($data, $this->clean);
 
         $table = $this->getTable();
         $diffData = $table->filterColumns($diffData);

@@ -9,6 +9,9 @@
  */
 namespace Bluz\Tests\Fixtures\Models;
 
+use Bluz\Validator\Traits\Validator;
+use Bluz\Validator\Validator as v;
+
 /**
  * Test Row
  *
@@ -21,6 +24,8 @@ namespace Bluz\Tests\Fixtures\Models;
  */
 class TestRow extends \Bluz\Db\Row
 {
+    use Validator;
+
     /**
      * Return table instance for manipulation
      *
@@ -29,5 +34,23 @@ class TestRow extends \Bluz\Db\Row
     public function getTable()
     {
         return TestTable::getInstance();
+    }
+
+    /**
+     * beforeInsert
+     *
+     * @return void
+     */
+    public function beforeSave()
+    {
+        $this->addValidator(
+            'name',
+            v::required()->notEmpty()->latin()
+        );
+
+        $this->addValidator(
+            'email',
+            v::required()->notEmpty()->email()
+        );
     }
 }

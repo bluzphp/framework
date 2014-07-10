@@ -14,8 +14,8 @@ namespace Bluz\Controller;
 use Bluz\Application\Exception\BadRequestException;
 use Bluz\Application\Exception\NotFoundException;
 use Bluz\Application\Exception\NotImplementedException;
-use Bluz\Crud\ValidationException;
 use Bluz\Http\Request;
+use Bluz\Validator\Exception\ValidatorException;
 
 /**
  * Crud
@@ -63,12 +63,12 @@ class Crud extends AbstractController
                             'method' => Request::METHOD_PUT
                         ];
                     }
-                } catch (ValidationException $e) {
+                } catch (ValidatorException $e) {
                     $row = $this->readOne(null);
                     $row->setFromArray($this->data);
                     $result = [
                         'row'    => $row,
-                        'errors' => $this->getCrud()->getErrors(),
+                        'errors' => $e->getErrors(),
                         'method' => $this->getMethod()
                     ];
                 }
@@ -84,12 +84,12 @@ class Crud extends AbstractController
                             'method' => $this->getMethod()
                         ];
                     }
-                } catch (ValidationException $e) {
+                } catch (ValidatorException $e) {
                     $row = $this->readOne($primary);
                     $row->setFromArray($this->data);
                     $result = [
                         'row'    => $row,
-                        'errors' => $this->getCrud()->getErrors(),
+                        'errors' => $e->getErrors(),
                         'method' => $this->getMethod()
                     ];
                 }

@@ -106,7 +106,7 @@ abstract class Table
 
         // setup default select query
         if (empty($this->select)) {
-            $this->select = "SELECT * FROM ". $this->table;
+            $this->select = "SELECT * FROM `{$this->table}`";
         }
 
         $this->init();
@@ -319,7 +319,7 @@ abstract class Table
             if (count($keyValues) < count($keyNames)) {
                 throw new InvalidPrimaryKeyException(
                     "Too few columns for the primary key.\n" .
-                    "Please check " . get_class($self) . " initialization or usage.\n" .
+                    "Please check " . get_called_class() . " initialization or usage.\n" .
                     "Settings described at https://github.com/bluzphp/framework/wiki/Db-Table"
                 );
             }
@@ -327,7 +327,7 @@ abstract class Table
             if (count($keyValues) > count($keyNames)) {
                 throw new InvalidPrimaryKeyException(
                     "Too many columns for the primary key.\n" .
-                    "Please check " . get_class($self) . " initialization or usage.\n" .
+                    "Please check " . get_called_class() . " initialization or usage.\n" .
                     "Settings described at https://github.com/bluzphp/framework/wiki/Db-Table"
                 );
             }

@@ -211,11 +211,6 @@ class Row implements \JsonSerializable, \ArrayAccess
         }
 
         $table = $this->getTable();
-        $data = $table->filterColumns($data);
-
-        if (!sizeof($data)) {
-            throw new DbException("Columns data for table `{$table->getName()}` is missed");
-        }
 
         /**
          * Execute the INSERT (this may throw an exception)

@@ -71,18 +71,4 @@ trait Validator
     {
         return $this->getValidatorBuilder()->assert($input);
     }
-
-    /**
-     * Prepare exception
-     *
-     * @param string $field
-     * @param string $message
-     * @return ValidatorException
-     */
-    protected function exception($field, $message)
-    {
-        $exception = new ValidatorException($message);
-        $exception->setErrors([$field => $message]);
-        return $exception;
-    }
 }

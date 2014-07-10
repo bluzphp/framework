@@ -52,7 +52,5 @@ class TestRow extends \Bluz\Db\Row
             'email',
             v::required()->notEmpty()->email()
         );
-
-        $this->assert($this->toArray());
     }
 }

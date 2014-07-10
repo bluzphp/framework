@@ -26,10 +26,10 @@ class ValidatorBuilder
     /**
      * Stack of validators
      *
-     *   ['foo'] => Validator
-     *   ['bar'] => Validator
+     *   ['foo'] => [Validator, ...]
+     *   ['bar'] => [Validator, ...]
      *
-     * @var Validator[]
+     * @var array
      */
     protected $validators = array();
 

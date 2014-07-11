@@ -21,7 +21,7 @@ class Version extends AbstractRule
     /**
      * @var string
      */
-    protected $template = '"{{name}}" must be a version';
+    protected $template = '{{name}} must be a version';
 
     /**
      * @param string $input

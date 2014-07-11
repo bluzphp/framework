@@ -34,9 +34,9 @@ class Latin extends AbstractFilterRule
     public function getTemplate()
     {
         if (empty($this->additionalChars)) {
-            return __('"{{name}}" must contain only Latin letters');
+            return __('{{name}} must contain only Latin letters');
         } else {
-            return __('"{{name}}" must contain only Latin letters and "%s"', $this->additionalChars);
+            return __('{{name}} must contain only Latin letters and "%s"', $this->additionalChars);
         }
     }
 }

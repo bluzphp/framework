@@ -34,9 +34,9 @@ class AlphaNumeric extends AbstractCtypeRule
     public function getTemplate()
     {
         if (empty($this->additionalChars)) {
-            return __('"{{name}}" must contain only letters and digits');
+            return __('{{name}} must contain only letters and digits');
         } else {
-            return __('"{{name}}" must contain only letters, digits and "%s"', $this->additionalChars);
+            return __('{{name}} must contain only letters, digits and "%s"', $this->additionalChars);
         }
     }
 }

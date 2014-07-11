@@ -18,11 +18,6 @@ namespace Bluz\Validator\Rule;
 class Condition extends AbstractRule
 {
     /**
-     * @var string
-     */
-    protected $template = '"{{name}}" is invalid';
-
-    /**
      * @var bool
      */
     protected $condition;

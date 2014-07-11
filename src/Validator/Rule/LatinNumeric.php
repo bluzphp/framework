@@ -34,9 +34,9 @@ class LatinNumeric extends AbstractFilterRule
     public function getTemplate()
     {
         if (empty($this->additionalChars)) {
-            return __('"{{name}}" must contain only Latin letters and digits');
+            return __('{{name}} must contain only Latin letters and digits');
         } else {
-            return __('"{{name}}" must contain only Latin letters, digits and "%s"', $this->additionalChars);
+            return __('{{name}} must contain only Latin letters, digits and "%s"', $this->additionalChars);
         }
     }
 }

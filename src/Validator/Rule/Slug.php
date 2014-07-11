@@ -20,7 +20,7 @@ class Slug extends AbstractRule
     /**
      * @var string
      */
-    protected $template = '"{{name}}" must be a valid slug';
+    protected $template = '{{name}} must be a valid slug';
 
     /**
      * @param string $input

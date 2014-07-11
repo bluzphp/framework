@@ -20,11 +20,6 @@ class Equals extends AbstractRule
     /**
      * @var string
      */
-    protected $template = '{{name}} must be a version';
-
-    /**
-     * @var string
-     */
     protected $compareTo;
 
     /**
@@ -63,9 +58,9 @@ class Equals extends AbstractRule
     public function getTemplate()
     {
         if ($this->identical) {
-            return __('"{{name}}" must be identical as "%s"', $this->compareTo);
+            return __('{{name}} must be identical as "%s"', $this->compareTo);
         } else {
-            return __('"{{name}}" must be equals "%s"', $this->compareTo);
+            return __('{{name}} must be equals "%s"', $this->compareTo);
         }
     }
 }

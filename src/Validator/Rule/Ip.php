@@ -200,9 +200,9 @@ class Ip extends AbstractRule
             } else {
                 $message .= '/' . long2ip($this->networkRange['mask']);
             }
-            return __('"{{name}}" must be an IP address in the "%s" range', $message);
+            return __('{{name}} must be an IP address in the "%s" range', $message);
         } else {
-            return __('"{{name}}" must be an IP address');
+            return __('{{name}} must be an IP address');
         }
     }
 }

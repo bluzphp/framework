@@ -76,6 +76,6 @@ class In extends AbstractRule
         } else {
             $haystack = $this->haystack;
         }
-        return __('"{{name}}" must be in (%s)', $haystack);
+        return __('{{name}} must be in %s', $haystack);
     }
 }

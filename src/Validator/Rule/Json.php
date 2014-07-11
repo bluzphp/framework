@@ -20,7 +20,7 @@ class Json extends AbstractRule
     /**
      * @var string
      */
-    protected $template = '"{{name}}" must be a valid JSON string';
+    protected $template = '{{name}} must be a valid JSON string';
 
     /**
      * @param string $input

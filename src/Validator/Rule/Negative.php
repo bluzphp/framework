@@ -20,7 +20,7 @@ class Negative extends AbstractRule
     /**
      * @var string
      */
-    protected $template = '"{{name}}" must be negative';
+    protected $template = '{{name}} must be negative';
 
     /**
      * @param string $input

@@ -20,7 +20,7 @@ class String extends AbstractRule
     /**
      * @var string
      */
-    protected $template = '"{{name}}" must be a string';
+    protected $template = '{{name}} must be a string';
 
     /**
      * @param mixed $input

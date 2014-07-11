@@ -60,9 +60,9 @@ class Date extends AbstractRule
     public function getTemplate()
     {
         if ($this->format) {
-            return __('"{{name}}" must be a valid date. Sample format: "%s"', $this->format);
+            return __('{{name}} must be a valid date. Sample format: "%s"', $this->format);
         } else {
-            return __('"{{name}}" must be a valid date');
+            return __('{{name}} must be a valid date');
         }
     }
 }

@@ -12,7 +12,6 @@
 namespace Bluz\Crud;
 
 use Bluz\Application\Exception\NotImplementedException;
-use Bluz\Translator\Translator;
 
 /**
  * Crud

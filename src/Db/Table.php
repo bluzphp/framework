@@ -490,7 +490,7 @@ abstract class Table
      *
      * @param  array $data Column-value pairs
      * @throws Exception\DbException
-     * @return mixed Primary key or null
+     * @return string|null Primary key or null
      */
     public static function insert(array $data)
     {

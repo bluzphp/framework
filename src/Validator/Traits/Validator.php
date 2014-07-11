@@ -4,7 +4,6 @@
  */
 namespace Bluz\Validator\Traits;
 
-use Bluz\Validator\Exception\ValidatorException;
 use Bluz\Validator\ValidatorBuilder;
 
 /**

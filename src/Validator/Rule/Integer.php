@@ -20,7 +20,7 @@ class Integer extends AbstractRule
     /**
      * @var string
      */
-    protected $template = '"{{name}}" must be an integer number';
+    protected $template = '{{name}} must be an integer number';
 
     /**
      * @param mixed $input

@@ -63,6 +63,6 @@ class Contains extends AbstractRule
      */
     public function getTemplate()
     {
-        return __('"{{name}}" must contain the value "%s"', $this->containsValue);
+        return __('{{name}} must contain the value "%s"', $this->containsValue);
     }
 }

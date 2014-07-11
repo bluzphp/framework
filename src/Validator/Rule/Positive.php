@@ -20,7 +20,7 @@ class Positive extends AbstractRule
     /**
      * @var string
      */
-    protected $template = '"{{name}}" must be positive';
+    protected $template = '{{name}} must be positive';
 
     /**
      * @param string $input

@@ -20,7 +20,7 @@ class Domain extends AbstractRule
     /**
      * @var string
      */
-    protected $template = '"{{name}}" must be valid domain';
+    protected $template = '{{name}} must be a valid domain';
 
     /**
      * @var bool

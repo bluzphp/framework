@@ -20,7 +20,7 @@ class NoWhitespace extends AbstractRule
     /**
      * @var string
      */
-    protected $template = '"{{name}}" must not contain whitespace';
+    protected $template = '{{name}} must not contain whitespace';
 
     /**
      * @param string $input

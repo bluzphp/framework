@@ -20,7 +20,7 @@ class Required extends AbstractRule
     /**
      * @var string
      */
-    protected $template = 'The value of "{{name}}" is required';
+    protected $template = '{{name}} is required';
 
     /**
      * @param mixed $input

@@ -20,7 +20,7 @@ class Float extends AbstractRule
     /**
      * @var string
      */
-    protected $template = '"{{name}}" must be a float number';
+    protected $template = '{{name}} must be a float number';
 
     /**
      * @param string $input

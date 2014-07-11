@@ -12,6 +12,7 @@
 namespace Bluz\Validator\Rule;
 
 use Bluz\Validator\Exception\ValidatorException;
+use Bluz\Translator\Translator;
 
 /**
  * AbstractRule
@@ -30,7 +31,7 @@ abstract class AbstractRule
      *
      * @var string
      */
-    protected $template = 'Field "{{name}}" has invalid value "{{input}}"';
+    protected $template = '{{name}} has invalid value {{input}}';
 
     /**
      * @param mixed $input
@@ -59,7 +60,7 @@ abstract class AbstractRule
      */
     public function getTemplate()
     {
-        return __($this->template);
+        return Translator::translate($this->template);
     }
 
     /**

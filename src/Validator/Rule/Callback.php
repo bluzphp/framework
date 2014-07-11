@@ -20,11 +20,6 @@ use Bluz\Validator\Exception\ComponentException;
 class Callback extends AbstractRule
 {
     /**
-     * @var string
-     */
-    protected $template = '"{{name}}" must be valid';
-
-    /**
      * @var callable
      */
     protected $callback;

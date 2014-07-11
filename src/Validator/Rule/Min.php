@@ -49,9 +49,9 @@ class Min extends AbstractCompareRule
     public function getTemplate()
     {
         if ($this->inclusive) {
-            return __('"{{name}}" must be greater than or equals "%s"', $this->minValue);
+            return __('{{name}} must be greater than or equals "%s"', $this->minValue);
         } else {
-            return __('"{{name}}" must be greater than "%s"', $this->minValue);
+            return __('{{name}} must be greater than "%s"', $this->minValue);
         }
     }
 }

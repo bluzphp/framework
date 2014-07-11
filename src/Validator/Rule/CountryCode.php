@@ -20,7 +20,7 @@ class CountryCode extends AbstractRule
     /**
      * @var string
      */
-    protected $template = '"{{name}}" must be a valid country';
+    protected $template = '{{name}} must be a valid country code';
 
     /**
      * @var array

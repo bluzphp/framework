@@ -49,9 +49,9 @@ class Max extends AbstractCompareRule
     public function getTemplate()
     {
         if ($this->inclusive) {
-            return __('"{{name}}" must be lower than or equals "%s"', $this->maxValue);
+            return __('{{name}} must be lower than or equals "%s"', $this->maxValue);
         } else {
-            return __('"{{name}}" must be lower than "%s"', $this->maxValue);
+            return __('{{name}} must be lower than "%s"', $this->maxValue);
         }
     }
 }

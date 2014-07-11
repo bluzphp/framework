@@ -20,7 +20,7 @@ class CreditCard extends AbstractRule
     /**
      * @var string
      */
-    protected $template = '"{{name}}" must be a valid Credit Card number';
+    protected $template = '{{name}} must be a valid Credit Card number';
 
     /**
      * @param string $input

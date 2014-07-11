@@ -12,6 +12,7 @@
 namespace Bluz\View\Helper;
 
 use Bluz\View\View;
+use Bluz\Translator\Translator;
 
 return
     /**
@@ -46,5 +47,5 @@ return
 
     $attributes = $this->attributes($attributes);
 
-    return '<a href="' . $href . '" ' . $attributes . '>' . __($text) . '</a>';
+    return '<a href="' . $href . '" ' . $attributes . '>' . Translator::translate($text) . '</a>';
     };

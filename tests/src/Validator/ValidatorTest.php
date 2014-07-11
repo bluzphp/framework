@@ -96,9 +96,9 @@ class ValidatorTest extends Tests\TestCase
             ->length(1, 15)
             ->noWhitespace();
 
-        $ruleText = "\"username\" must contain only letters, digits and \"_\"\n"
-            . "\"username\" must have a length between 1 and 15\n"
-            . "\"username\" must not contain whitespace";
+        $ruleText = "username must contain only letters, digits and \"_\"\n"
+            . "username must have a length between 1 and 15\n"
+            . "username must not contain whitespace";
 
         $this->assertEquals($validator->__toString(), $ruleText);
 

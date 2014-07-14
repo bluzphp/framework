@@ -24,7 +24,6 @@ namespace Bluz\Db\Query\Traits;
  */
 trait Limit
 {
-
     /**
      * @var integer The maximum number of results to retrieve/update/delete
      */

@@ -134,8 +134,8 @@ abstract class AbstractController
     public function getCrud()
     {
         if (!$this->crud) {
-            $restClass = get_called_class();
-            $crudClass = substr($restClass, 0, strrpos($restClass, '\\', 1) + 1) . 'Crud';
+            $controllerClass = get_called_class();
+            $crudClass = substr($controllerClass, 0, strrpos($controllerClass, '\\', 1) + 1) . 'Crud';
 
             // check class initialization
             if (!class_exists($crudClass) or !is_subclass_of($crudClass, '\Bluz\Crud\AbstractCrud')) {

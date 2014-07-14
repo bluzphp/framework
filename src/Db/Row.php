@@ -11,7 +11,6 @@
  */
 namespace Bluz\Db;
 
-use Bluz\Application\Exception\ApplicationException;
 use Bluz\Db\Exception\DbException;
 use Bluz\Db\Exception\InvalidPrimaryKeyException;
 use Bluz\Db\Exception\RelationNotFoundException;
@@ -46,15 +45,19 @@ use Bluz\Db\Exception\TableNotFoundException;
 class Row implements \JsonSerializable, \ArrayAccess
 {
     /**
-     * Table class or instance.
-     *
+     * Table class instance
      * @var Table
      */
     protected $table;
 
     /**
-     * Primary row key(s).
-     *
+     * Table class name
+     * @var string
+     */
+    protected $tableClass;
+
+    /**
+     * Primary row key(s)
      * @var array
      */
     protected $primary;
@@ -79,23 +82,19 @@ class Row implements \JsonSerializable, \ArrayAccess
 
     /**
      * Relations rows
-     *
      * @var array
      */
     protected $relations = array();
 
     /**
      * Relations data
-     *
      * @var array
      */
     protected $relationsData = array();
 
     /**
-     * __construct
-     *
      * @param array $data
-     * @return \Bluz\Db\Row
+     * @return Row
      */
     public function __construct($data = array())
     {
@@ -190,7 +189,6 @@ class Row implements \JsonSerializable, \ArrayAccess
     /**
      * Insert row to Db
      *
-     * @throws Exception\DbException
      * @return mixed The primary key value(s), as an associative array if the
      *     key is compound, or a scalar if the key is single-column.
      */
@@ -248,8 +246,7 @@ class Row implements \JsonSerializable, \ArrayAccess
     /**
      * Update row
      *
-     * @return mixed The primary key value(s), as an associative array if the
-     *     key is compound, or a scalar if the key is single-column.
+     * @return integer The number of rows updated
      */
     protected function doUpdate()
     {
@@ -310,7 +307,7 @@ class Row implements \JsonSerializable, \ArrayAccess
     /**
      * Delete existing row
      *
-     * @return int The number of rows deleted.
+     * @return integer The number of deleted rows
      */
     public function delete()
     {
@@ -358,6 +355,7 @@ class Row implements \JsonSerializable, \ArrayAccess
 
     /**
      * Refreshes properties from the database
+     *
      * @return void
      */
     public function refresh()
@@ -468,8 +466,8 @@ class Row implements \JsonSerializable, \ArrayAccess
             return $this->table;
         }
 
-        if (is_string($this->table)) {
-            $tableClass = $this->table;
+        if ($this->tableClass) {
+            $tableClass = $this->tableClass;
         } else {
             // try to guess table class
             $rowClass = get_class($this);
@@ -495,7 +493,20 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
-     * Get relation
+     * Set relation
+     *
+     * @param Row $row
+     * @return Row
+     */
+    public function setRelation(Row $row)
+    {
+        $class = get_class($row);
+        $this->relations[$class] = $row;
+        return $this;
+    }
+
+    /**
+     * Get relation by name
      *
      * @param string $modelName
      * @throws RelationNotFoundException
@@ -526,34 +537,11 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
-     * Set relation
-     *
-     * @param Row $row
-     * @return Row
-     */
-    public function setRelation(Row $row)
-    {
-        $class = get_class($row);
-        $this->relations[$class] = $row;
-        return $this;
-    }
-
-    /**
      * Implement JsonSerializable
      *
      * @return array
      */
     public function jsonSerialize()
-    {
-        return $this->data;
-    }
-
-    /**
-     * Returns the column/value data as an array.
-     *
-     * @return array
-     */
-    public function toArray()
     {
         return $this->data;
     }
@@ -573,8 +561,16 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
-     * {@inheritdoc}
+     * Returns the column/value data as an array.
      *
+     * @return array
+     */
+    public function toArray()
+    {
+        return $this->data;
+    }
+
+    /**
      * @param mixed $offset
      * @param mixed $value
      * @throws \InvalidArgumentException
@@ -589,8 +585,6 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param mixed $offset
      * @return bool
      */
@@ -600,8 +594,6 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param mixed $offset
      */
     public function offsetUnset($offset)
@@ -610,8 +602,6 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param mixed $offset
      * @return string
      */

@@ -22,5 +22,5 @@ use Bluz\Db;
  */
 class ConcreteRowWithInvalidTable extends Bluz\Db\Row
 {
-    protected $table = 'InvalidTable';
+    protected $tableClass = 'InvalidTable';
 }

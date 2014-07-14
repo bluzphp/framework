@@ -41,7 +41,7 @@ abstract class Table
      * The table name
      * @var string
      */
-    protected $table = null;
+    protected $table;
 
     /**
      * Table columns
@@ -81,9 +81,7 @@ abstract class Table
     protected $rowClass;
 
     /**
-     * __construct
-     *
-     * @return \Bluz\Db\Table
+     * @return Table
      */
     private function __construct()
     {
@@ -113,14 +111,14 @@ abstract class Table
     }
 
     /**
-     * Init
+     * Initialization hook
      */
     public function init()
     {
     }
 
     /**
-     * getInstance
+     * Get Table instance
      *
      * @return static
      */

@@ -444,6 +444,17 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
+     * Setup Table instance
+     *
+     * @param Table $table
+     * @return void
+     */
+    public function setTable(Table $table)
+    {
+        $this->table = $table;
+    }
+
+    /**
      * Returns the table object, or null if this is disconnected row
      *
      * @throws TableNotFoundException

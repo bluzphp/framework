@@ -479,7 +479,9 @@ abstract class Table
     public static function create(array $data = [])
     {
         $rowClass = static::getInstance()->rowClass;
+        /** @var Row $row */
         $row = new $rowClass($data);
+        $row->setTable(static::getInstance());
         return $row;
     }
 

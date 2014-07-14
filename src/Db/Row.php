@@ -11,6 +11,7 @@
  */
 namespace Bluz\Db;
 
+use Bluz\Application\Exception\ApplicationException;
 use Bluz\Db\Exception\DbException;
 use Bluz\Db\Exception\InvalidPrimaryKeyException;
 use Bluz\Db\Exception\RelationNotFoundException;
@@ -447,18 +448,18 @@ class Row implements \JsonSerializable, \ArrayAccess
      * Setup Table instance
      *
      * @param Table $table
-     * @return void
+     * @return self
      */
     public function setTable(Table $table)
     {
         $this->table = $table;
+        return $this;
     }
 
     /**
      * Returns the table object, or null if this is disconnected row
      *
-     * @throws TableNotFoundException
-     * @throws DbException
+     * @throws ApplicationException
      * @return Table|null
      */
     public function getTable()
@@ -468,38 +469,38 @@ class Row implements \JsonSerializable, \ArrayAccess
         }
 
         if (is_string($this->table)) {
-            $classTable = $this->table;
+            $tableClass = $this->table;
         } else {
             // try to guess table class
-            $classRow = get_class($this);
+            $rowClass = get_class($this);
             /**
-             * @var string $classTable is child of \Bluz\Db\Table
+             * @var string $tableClass is child of \Bluz\Db\Table
              */
-            $classTable = substr($classRow, 0, strrpos($classRow, '\\', 1) + 1) . 'Table';
+            $tableClass = substr($rowClass, 0, strrpos($rowClass, '\\', 1) + 1) . 'Table';
         }
 
-        try {
-            if (class_exists($classTable)) {
-                if ($table = call_user_func(array($classTable, 'getInstance'))) {
-                    $this->table = $table;
-                    return $this->table;
-                } else {
-                    throw new DbException('"' . $classTable . '" is invalid');
-                }
-            } else {
-                throw new DbException('"' . $classTable . '" not found');
-            }
-        } catch (\Exception $e) {
-            throw new TableNotFoundException('Can\'t find table class: ' . $e->getMessage());
+        // check class initialization
+        if (class_exists($tableClass) or !is_subclass_of($tableClass, '\Bluz\Db\Table')) {
+            throw new ApplicationException("`Table` class is not exists or not initialized");
         }
+
+        /**
+         * @var Table $tableClass
+         */
+        $table = $tableClass::getInstance();
+
+        $this->setTable($table);
+
+        return $table;
     }
 
     /**
      * Get relation
      *
      * @param string $modelName
-     * @throws RelationNotFoundException
-     * @return \Bluz\Db\Row
+     * @throws Exception\RelationNotFoundException
+     * @throws ApplicationException
+     * @return Row
      */
     public function getRelation($modelName)
     {
@@ -514,6 +515,11 @@ class Row implements \JsonSerializable, \ArrayAccess
         $classRow = substr($currentClass, 0, strrpos($currentClass, '\\'));
         $nameSpace = substr($currentClass, 0, strrpos($classRow, '\\'));
         $classRow = $nameSpace . '\\' . $modelName . '\\Row';
+
+        // check class initialization
+        if (class_exists($classRow) or !is_subclass_of($classRow, '\Bluz\Db\Row')) {
+            throw new ApplicationException("`Row` class is not exists or not initialized");
+        }
 
         $this->relations[$modelName] = new $classRow($this->relationsData[$modelName]);
 

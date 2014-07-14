@@ -127,7 +127,7 @@ class Crud extends AbstractController
      */
     public function createOne($data)
     {
-        $result = $this->getCrud()->createOne($data);
+        $result = parent::createOne($data);
 
         app()->getMessages()->addSuccess("Record was created");
 
@@ -145,7 +145,7 @@ class Crud extends AbstractController
      */
     public function updateOne($id, $data)
     {
-        $result = $this->getCrud()->updateOne($id, $data);
+        $result = parent::updateOne($id, $data);
 
         app()->getMessages()->addSuccess("Record was updated");
 
@@ -162,7 +162,7 @@ class Crud extends AbstractController
      */
     public function deleteOne($primary)
     {
-        $result = $this->getCrud()->deleteOne($primary);
+        $result = parent::deleteOne($primary);
 
         app()->getMessages()->addSuccess("Record was deleted");
 

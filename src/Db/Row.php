@@ -45,15 +45,19 @@ use Bluz\Db\Exception\TableNotFoundException;
 class Row implements \JsonSerializable, \ArrayAccess
 {
     /**
-     * Table class or instance.
-     *
+     * Table class instance
      * @var Table
      */
     protected $table;
 
     /**
-     * Primary row key(s).
-     *
+     * Table class name
+     * @var string
+     */
+    protected $tableClass;
+
+    /**
+     * Primary row key(s)
      * @var array
      */
     protected $primary;
@@ -78,23 +82,19 @@ class Row implements \JsonSerializable, \ArrayAccess
 
     /**
      * Relations rows
-     *
      * @var array
      */
     protected $relations = array();
 
     /**
      * Relations data
-     *
      * @var array
      */
     protected $relationsData = array();
 
     /**
-     * __construct
-     *
      * @param array $data
-     * @return \Bluz\Db\Row
+     * @return Row
      */
     public function __construct($data = array())
     {
@@ -189,7 +189,6 @@ class Row implements \JsonSerializable, \ArrayAccess
     /**
      * Insert row to Db
      *
-     * @throws Exception\DbException
      * @return mixed The primary key value(s), as an associative array if the
      *     key is compound, or a scalar if the key is single-column.
      */
@@ -247,8 +246,7 @@ class Row implements \JsonSerializable, \ArrayAccess
     /**
      * Update row
      *
-     * @return mixed The primary key value(s), as an associative array if the
-     *     key is compound, or a scalar if the key is single-column.
+     * @return integer The number of rows updated
      */
     protected function doUpdate()
     {
@@ -309,7 +307,7 @@ class Row implements \JsonSerializable, \ArrayAccess
     /**
      * Delete existing row
      *
-     * @return int The number of rows deleted.
+     * @return integer The number of deleted rows
      */
     public function delete()
     {
@@ -357,6 +355,7 @@ class Row implements \JsonSerializable, \ArrayAccess
 
     /**
      * Refreshes properties from the database
+     *
      * @return void
      */
     public function refresh()
@@ -444,11 +443,22 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
+     * Setup Table instance
+     *
+     * @param Table $table
+     * @return self
+     */
+    public function setTable(Table $table)
+    {
+        $this->table = $table;
+        return $this;
+    }
+
+    /**
      * Returns the table object, or null if this is disconnected row
      *
      * @throws TableNotFoundException
-     * @throws DbException
-     * @return Table|null
+     * @return Table
      */
     public function getTable()
     {
@@ -456,57 +466,30 @@ class Row implements \JsonSerializable, \ArrayAccess
             return $this->table;
         }
 
-        if (is_string($this->table)) {
-            $classTable = $this->table;
+        if ($this->tableClass) {
+            $tableClass = $this->tableClass;
         } else {
             // try to guess table class
-            $classRow = get_class($this);
+            $rowClass = get_class($this);
             /**
-             * @var string $classTable is child of \Bluz\Db\Table
+             * @var string $tableClass is child of \Bluz\Db\Table
              */
-            $classTable = substr($classRow, 0, strrpos($classRow, '\\', 1) + 1) . 'Table';
+            $tableClass = substr($rowClass, 0, strrpos($rowClass, '\\', 1) + 1) . 'Table';
         }
 
-        try {
-            if (class_exists($classTable)) {
-                if ($table = call_user_func(array($classTable, 'getInstance'))) {
-                    $this->table = $table;
-                    return $this->table;
-                } else {
-                    throw new DbException('"' . $classTable . '" is invalid');
-                }
-            } else {
-                throw new DbException('"' . $classTable . '" not found');
-            }
-        } catch (\Exception $e) {
-            throw new TableNotFoundException('Can\'t find table class: ' . $e->getMessage());
+        // check class initialization
+        if (!class_exists($tableClass) or !is_subclass_of($tableClass, '\Bluz\Db\Table')) {
+            throw new TableNotFoundException("`Table` class is not exists or not initialized");
         }
-    }
 
-    /**
-     * Get relation
-     *
-     * @param string $modelName
-     * @throws RelationNotFoundException
-     * @return \Bluz\Db\Row
-     */
-    public function getRelation($modelName)
-    {
-        if (isset($this->relations[$modelName])) {
-            return $this->relations[$modelName];
-        } elseif (!isset($this->relationsData[$modelName])) {
-            throw new RelationNotFoundException(
-                'Can\'t found relation data for model "' . $modelName . '"'
-            );
-        }
-        $currentClass = get_class($this);
-        $classRow = substr($currentClass, 0, strrpos($currentClass, '\\'));
-        $nameSpace = substr($currentClass, 0, strrpos($classRow, '\\'));
-        $classRow = $nameSpace . '\\' . $modelName . '\\Row';
+        /**
+         * @var Table $tableClass
+         */
+        $table = $tableClass::getInstance();
 
-        $this->relations[$modelName] = new $classRow($this->relationsData[$modelName]);
+        $this->setTable($table);
 
-        return $this->relations[$modelName];
+        return $table;
     }
 
     /**
@@ -523,21 +506,42 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
+     * Get relation by name
+     *
+     * @param string $modelName
+     * @throws RelationNotFoundException
+     * @return Row
+     */
+    public function getRelation($modelName)
+    {
+        if (isset($this->relations[$modelName])) {
+            return $this->relations[$modelName];
+        } elseif (!isset($this->relationsData[$modelName])) {
+            throw new RelationNotFoundException(
+                'Can\'t found relation data for model "' . $modelName . '"'
+            );
+        }
+        $currentClass = get_class($this);
+        $classRow = substr($currentClass, 0, strrpos($currentClass, '\\'));
+        $nameSpace = substr($currentClass, 0, strrpos($classRow, '\\'));
+        $classRow = $nameSpace . '\\' . $modelName . '\\Row';
+
+        // check class initialization
+        if (!class_exists($classRow) or !is_subclass_of($classRow, '\Bluz\Db\Row')) {
+            throw new RelationNotFoundException("`Row` class is not exists or not initialized");
+        }
+
+        $this->relations[$modelName] = new $classRow($this->relationsData[$modelName]);
+
+        return $this->relations[$modelName];
+    }
+
+    /**
      * Implement JsonSerializable
      *
      * @return array
      */
     public function jsonSerialize()
-    {
-        return $this->data;
-    }
-
-    /**
-     * Returns the column/value data as an array.
-     *
-     * @return array
-     */
-    public function toArray()
     {
         return $this->data;
     }
@@ -557,8 +561,16 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
-     * {@inheritdoc}
+     * Returns the column/value data as an array.
      *
+     * @return array
+     */
+    public function toArray()
+    {
+        return $this->data;
+    }
+
+    /**
      * @param mixed $offset
      * @param mixed $value
      * @throws \InvalidArgumentException
@@ -573,8 +585,6 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param mixed $offset
      * @return bool
      */
@@ -584,8 +594,6 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param mixed $offset
      */
     public function offsetUnset($offset)
@@ -594,8 +602,6 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param mixed $offset
      * @return string
      */

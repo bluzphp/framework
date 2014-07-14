@@ -11,6 +11,7 @@
  */
 namespace Bluz\Crud;
 
+use Bluz\Application\Exception\ApplicationException;
 use Bluz\Application\Exception\NotFoundException;
 use Bluz\Db;
 use Bluz\Db\Row;
@@ -45,7 +46,7 @@ class Table extends AbstractCrud
     /**
      * Return table instance for manipulation
      *
-     * @throws CrudException
+     * @throws ApplicationException
      * @return Db\Table
      */
     public function getTable()
@@ -55,8 +56,8 @@ class Table extends AbstractCrud
             $tableClass = substr($crudClass, 0, strrpos($crudClass, '\\', 1) + 1) . 'Table';
 
             // check class initialization
-            if (!is_subclass_of($tableClass, '\Bluz\Db\Table')) {
-                throw new CrudException("`Table` class is not exists or not initialized");
+            if (!class_exists($tableClass) or !is_subclass_of($tableClass, '\Bluz\Db\Table')) {
+                throw new ApplicationException("`Table` class is not exists or not initialized");
             }
 
             /**

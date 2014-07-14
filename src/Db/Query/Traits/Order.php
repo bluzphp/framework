@@ -30,7 +30,6 @@ use Bluz\Db\Query\Update;
  */
 trait Order
 {
-
     /**
      * Specifies an ordering for the query results
      * Replaces any previously specified orderings, if any

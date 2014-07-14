@@ -459,8 +459,8 @@ class Row implements \JsonSerializable, \ArrayAccess
     /**
      * Returns the table object, or null if this is disconnected row
      *
-     * @throws ApplicationException
-     * @return Table|null
+     * @throws TableNotFoundException
+     * @return Table
      */
     public function getTable()
     {
@@ -480,8 +480,8 @@ class Row implements \JsonSerializable, \ArrayAccess
         }
 
         // check class initialization
-        if (class_exists($tableClass) or !is_subclass_of($tableClass, '\Bluz\Db\Table')) {
-            throw new ApplicationException("`Table` class is not exists or not initialized");
+        if (!class_exists($tableClass) or !is_subclass_of($tableClass, '\Bluz\Db\Table')) {
+            throw new TableNotFoundException("`Table` class is not exists or not initialized");
         }
 
         /**
@@ -498,8 +498,7 @@ class Row implements \JsonSerializable, \ArrayAccess
      * Get relation
      *
      * @param string $modelName
-     * @throws Exception\RelationNotFoundException
-     * @throws ApplicationException
+     * @throws RelationNotFoundException
      * @return Row
      */
     public function getRelation($modelName)
@@ -517,8 +516,8 @@ class Row implements \JsonSerializable, \ArrayAccess
         $classRow = $nameSpace . '\\' . $modelName . '\\Row';
 
         // check class initialization
-        if (class_exists($classRow) or !is_subclass_of($classRow, '\Bluz\Db\Row')) {
-            throw new ApplicationException("`Row` class is not exists or not initialized");
+        if (!class_exists($classRow) or !is_subclass_of($classRow, '\Bluz\Db\Row')) {
+            throw new RelationNotFoundException("`Row` class is not exists or not initialized");
         }
 
         $this->relations[$modelName] = new $classRow($this->relationsData[$modelName]);

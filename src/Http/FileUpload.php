@@ -87,7 +87,6 @@ class FileUpload
 
     /**
      * process file information from array
-     * FIXME: this hell
      *
      * @param $key
      * @param $fileInfo
@@ -99,15 +98,10 @@ class FileUpload
             foreach ($fileInfo['name'] as $subKey => $name) {
                 if (is_numeric($subKey)) {
                     $this->createFile($fileInfo, $key);
+                    break;
                 } elseif (is_array($fileInfo['name'][$subKey])) {
                     foreach ($fileInfo['name'][$subKey] as $subSubKey => $subName) {
-                        if (is_array($fileInfo['name'][$subKey][$subSubKey])) {
-                            foreach ($fileInfo['name'][$subKey][$subSubKey] as $subSubSubKey => $subSubName) {
-                                $this->createFile($fileInfo, $key, $subKey, $subSubKey);
-                            }
-                        } else {
-                            $this->createFile($fileInfo, $key, $subKey, $subSubKey);
-                        }
+                        $this->createFile($fileInfo, $key, $subKey, $subSubKey);
                     }
                 } else {
                     $this->createFile($fileInfo, $key, $subKey);
@@ -135,34 +129,48 @@ class FileUpload
         $fileInfo = array_shift($argList);
         $fileKey = array_shift($argList);
 
+        $result = array();
         foreach ($fileInfo as $key => $value) {
-            $fileInfo[$key] = $this->parseArray($value, $argList);
+            $parsedArr = $this->parseArray($value, $argList);
+            if (!is_array($parsedArr)) {
+                $result[0][$key] = $parsedArr;
+            } else {
+                foreach ($parsedArr as $k => $v) {
+                    $result[$k][$key] = $v;
+                }
+            }
         }
 
         if (count($argList)) {
             $fileKey .= '[' . implode("][", $argList) . ']';
         }
 
-        $this->files[$fileKey][] = new File($fileInfo);
+        foreach ($result as $file) {
+            $this->files[$fileKey][] = new File($file);
+        }
     }
 
     /**
      * parseArray
      *
-     * @param array|string $nameArr
+     * @param array|string $paramArr
      * @param array|null $argList
      *
      * @return string
      */
-    public function parseArray($nameArr, $argList)
+    public function parseArray($paramArr, $argList)
     {
-        if (!is_array($nameArr)) {
-            return $nameArr;
+        if (!is_array($paramArr)) {
+            return $paramArr;
         }
 
         $subKey = current($argList);
+        if ($subKey === false) {
+            return $paramArr;
+        }
+
         array_shift($argList);
-        return $this->parseArray($nameArr[$subKey], $argList);
+        return $this->parseArray($paramArr[$subKey], $argList);
     }
 
     /**

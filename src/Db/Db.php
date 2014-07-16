@@ -545,6 +545,35 @@ class Db
     }
 
     /**
+     * Returns an array of linked objects containing the result set
+     *
+     * @param string $sql <p>
+     *  "SELECT '__users', u.*, '__users_profile', up.*
+     *   FROM users u
+     *   LEFT JOIN users_profile up ON up.userId = u.id"
+     *   WHERE u.name = :name
+     *  </p>
+     * @param array $params <p>
+     *  array (':name' => 'John')
+     * </p>
+     * @return array
+     */
+    public function fetchRelations($sql, $params = array())
+    {
+        $stmt = $this->prepare($sql);
+        $stmt->execute($params);
+
+        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        // prepare results
+        $result = Relations::fetch($result);
+
+        $stmt->closeCursor();
+        $this->log($sql, $params);
+        return $result;
+    }
+
+    /**
      * Transaction wrapper
      *
      * Example of usage

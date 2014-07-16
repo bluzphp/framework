@@ -87,12 +87,6 @@ class Row implements \JsonSerializable, \ArrayAccess
     protected $relations = array();
 
     /**
-     * Relations data
-     * @var array
-     */
-    protected $relationsData = array();
-
-    /**
      * @param array $data
      * @return Row
      */
@@ -128,18 +122,7 @@ class Row implements \JsonSerializable, \ArrayAccess
      */
     public function __set($columnName, $value)
     {
-        if (strpos($columnName, '__') === 0) {
-            // it's just relation data
-            list($modelName, $columnName) = preg_split('/_/', substr($columnName, 2), 2);
-            if (!empty($modelName) && !empty($columnName)) {
-                if (!isset($this->relationsData[$modelName])) {
-                    $this->relationsData[$modelName] = array();
-                }
-                $this->relationsData[$modelName][$columnName] = $value;
-            }
-        } else {
-            $this->data[$columnName] = $value;
-        }
+        $this->data[$columnName] = $value;
     }
 
     /**
@@ -500,40 +483,32 @@ class Row implements \JsonSerializable, \ArrayAccess
      */
     public function setRelation(Row $row)
     {
-        $class = get_class($row);
-        $this->relations[$class] = $row;
+        $tableName = $row->getTable()->getName();
+        $this->relations[$tableName] = [$row];
         return $this;
     }
 
     /**
      * Get relation by name
      *
-     * @param string $modelName
+     * @param string $tableName
      * @throws RelationNotFoundException
      * @return Row
      */
-    public function getRelation($modelName)
+    public function getRelation($tableName)
     {
-        if (isset($this->relations[$modelName])) {
-            return $this->relations[$modelName];
-        } elseif (!isset($this->relationsData[$modelName])) {
-            throw new RelationNotFoundException(
-                'Can\'t found relation data for model "' . $modelName . '"'
-            );
-        }
-        $currentClass = get_class($this);
-        $classRow = substr($currentClass, 0, strrpos($currentClass, '\\'));
-        $nameSpace = substr($currentClass, 0, strrpos($classRow, '\\'));
-        $classRow = $nameSpace . '\\' . $modelName . '\\Row';
-
-        // check class initialization
-        if (!class_exists($classRow) or !is_subclass_of($classRow, '\Bluz\Db\Row')) {
-            throw new RelationNotFoundException("`Row` class is not exists or not initialized");
+        if (!isset($this->relations[$tableName])) {
+            $relation = Relations::findRelation($this, $tableName);
+            if (!$relation) {
+                throw new RelationNotFoundException(
+                    'Can\'t found relation data for model "' . $tableName . '"'
+                );
+            } else {
+                $this->relations[$tableName] = $relation;
+            }
         }
 
-        $this->relations[$modelName] = new $classRow($this->relationsData[$modelName]);
-
-        return $this->relations[$modelName];
+        return $this->relations[$tableName];
     }
 
     /**

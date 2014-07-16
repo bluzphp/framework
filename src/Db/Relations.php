@@ -11,7 +11,7 @@
  */
 namespace Bluz\Db;
 
-use Bluz\Db\Exception\DbException;
+use Bluz\Db\Exception\RelationNotFoundException;
 
 /**
  * Relations map of Db tables
@@ -46,7 +46,7 @@ class Relations
      *
      * @var array
      */
-    protected static $classMap;
+    protected static $tableClassMap;
 
     /**
      * Setup relation between two tables
@@ -101,23 +101,52 @@ class Relations
     }
 
     /**
+     * findRelation
+     *
+     * @param Row $row
+     * @param string $tableRelation
+     * @throws Exception\RelationNotFoundException
+     * @return array
+     */
+    public static function findRelation($row, $tableRelation)
+    {
+        $tableRow = $row->getTable()->getName();
+
+        if (!$relations = Relations::getRelations($tableRow, $tableRelation)) {
+            throw new RelationNotFoundException(
+                "Relations between table `$tableRow` and `$tableRelation` is not defined"
+            );
+        }
+
+        // check many-to-many relations
+        if (sizeof($relations) == 1) {
+            $relations = Relations::getRelations($tableRow, current($relations));
+        }
+
+        $field = $relations[$tableRow];
+        $key = $row->{$field};
+
+        return Relations::findRelations($tableRow, $tableRelation, [$key]);
+    }
+
+    /**
      * Find Relations between two tables
      *
      * @param string $tableOne
      * @param string $tableTwo target table
      * @param array $keys from first table
-     * @throws Exception\DbException
+     * @throws Exception\RelationNotFoundException
      * @return array
      */
     public static function findRelations($tableOne, $tableTwo, $keys)
     {
         $keys = (array) $keys;
         if (!$relations = self::getRelations($tableOne, $tableTwo)) {
-            throw new DbException("Relations between table `$tableOne` and `$tableTwo` is not defined");
+            throw new RelationNotFoundException("Relations between table `$tableOne` and `$tableTwo` is not defined");
         }
 
         /* @var Table $tableTwoClass name */
-        $tableTwoClass = self::$classMap[$tableTwo];
+        $tableTwoClass = self::getTableClass($tableTwo);
         /* @var Query\Select $tableTwoSelect */
         $tableTwoSelect = $tableTwoClass::getInstance()->select();
 
@@ -166,6 +195,73 @@ class Relations
      */
     public static function addClassMap($tableName, $className)
     {
-        self::$classMap[$tableName] = $className;
+        self::$tableClassMap[$tableName] = $className;
+    }
+
+    /**
+     * Get information about Table classes
+     *
+     * @param string $tableName
+     * @throws Exception\RelationNotFoundException
+     * @return string
+     */
+    public static function getTableClass($tableName)
+    {
+        if (!isset(self::$tableClassMap[$tableName])) {
+            // try to detect
+            $modelName = ucwords(str_replace(['-', '_'], ' ', $tableName));
+            $modelName = str_replace(' ', '', $modelName);
+            $className = '\\Application\\'.$modelName.'\\Table';
+
+            if (!class_exists($className)) {
+                throw new RelationNotFoundException("Related class for table `$tableName` not found");
+            }
+            self::$tableClassMap[$tableName] = $className;
+        }
+        return self::$tableClassMap[$tableName];
+    }
+
+    /**
+     * Get information about Table classes
+     *
+     * @param string $tableName
+     * @param array $data
+     * @throws Exception\RelationNotFoundException
+     * @return Row
+     */
+    public static function createRow($tableName, $data)
+    {
+        $tableClass = self::getTableClass($tableName);
+
+        /* @var Table $tableClass name */
+        return $tableClass::getInstance()->create($data);
+    }
+
+    /**
+     * Fetch by Divider
+     *
+     * @access  public
+     * @param array $input
+     * @return array
+     */
+    public static function fetch($input)
+    {
+        $output = array();
+        $map = array();
+        foreach ($input as $i => $row) {
+            $table = '';
+            foreach ($row as $key => $value) {
+                if (strpos($key, '__') === 0) {
+                    $table = substr($key, 2);
+                    continue;
+                }
+                $map[$i][$table][$key] = $value;
+            }
+            foreach ($map[$i] as $table => &$data) {
+                $data = self::createRow($table, $data);
+            }
+            $output[] = $map;
+        }
+        return $output;
     }
 }

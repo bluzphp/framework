@@ -113,7 +113,9 @@ class Relations
         $tableRow = $row->getTable()->getName();
 
         if (!$relations = Relations::getRelations($tableRow, $tableRelation)) {
-            throw new RelationNotFoundException("Relations between table `$tableRow` and `$tableRelation` is not defined");
+            throw new RelationNotFoundException(
+                "Relations between table `$tableRow` and `$tableRelation` is not defined"
+            );
         }
 
         // check many-to-many relations

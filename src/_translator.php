@@ -7,7 +7,12 @@
  * @created  11.07.2014 13:57
  */
 
-/** Validator Rules */
+/** Controller\Crud */
+_('Record was created');
+_('Record was updated');
+_('Record was deleted');
+
+/** Validator\Rule\* */
 _('{{name}} has invalid value {{input}}');
 _('{{name}} must contain only letters');
 _('{{name}} must contain only letters and "%s"');

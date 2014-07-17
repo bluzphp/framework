@@ -146,7 +146,11 @@ class Rest extends AbstractController
                         // system can't create record with this data
                         throw new BadRequestException();
                     }
-                    $uid = join('-', array_values($result));
+
+                    if (is_array($result)) {
+                        $result = join('-', array_values($result));
+                    }
+
                 } catch (ValidatorException $e) {
                     app()->getResponse()->setCode(400);
                     return ['errors' => $e->getErrors()];
@@ -155,7 +159,7 @@ class Rest extends AbstractController
                 app()->getResponse()->setCode(201);
                 app()->getResponse()->setHeader(
                     'Location',
-                    app()->getRouter()->url($request->getModule(), $request->getController()).'/'.$uid
+                    app()->getRouter()->url($request->getModule(), $request->getController()).'/'.$result
                 );
                 return false; // disable view
             case Request::METHOD_PATCH:

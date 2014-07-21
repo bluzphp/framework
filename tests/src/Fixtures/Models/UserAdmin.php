@@ -21,9 +21,9 @@ class UserAdmin extends AbstractRowEntity
      *
      * @return void
      */
-    public function tryLogin()
+    public function login()
     {
-        return;
+        app()->getAuth()->setIdentity($this);
     }
 
     /**

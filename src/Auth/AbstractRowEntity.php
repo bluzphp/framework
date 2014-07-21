@@ -14,27 +14,26 @@ namespace Bluz\Auth;
 use Bluz\Db\Row;
 
 /**
- * Class AbstractRowEntity
- * @package Bluz\Auth
+ * Abstract class for Users\Row
  *
- * @property int $id
+ * @package Bluz\Auth
  */
 abstract class AbstractRowEntity extends Row implements EntityInterface
 {
-    /**
-     * Get roles
-     *
-     * @return array
-     */
-    abstract public function getPrivileges();
-
     /**
      * Can entity login
      *
      * @throws AuthException
      * @return bool
      */
-    abstract public function tryLogin();
+    abstract public function login();
+
+    /**
+     * Get roles
+     *
+     * @return array
+     */
+    abstract public function getPrivileges();
 
     /**
      * Has role a privilege
@@ -48,15 +47,5 @@ abstract class AbstractRowEntity extends Row implements EntityInterface
         $privileges = $this->getPrivileges();
 
         return in_array($module.':'.$privilege, $privileges);
-    }
-
-    /**
-     * Login
-     * @throw AuthException
-     */
-    public function login()
-    {
-        $this->tryLogin();
-        app()->getAuth()->setIdentity($this);
     }
 }

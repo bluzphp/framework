@@ -9,7 +9,6 @@
  */
 namespace Bluz\Auth;
 
-use Bluz\Db\Row;
 use Bluz\Db\Table;
 
 /**
@@ -17,8 +16,8 @@ use Bluz\Db\Table;
  *
  * @package  Bluz\Auth
  *
- * @method   static Row findRow($primaryKey)
- * @method   static Row findRowWhere($whereList)
+ * @method   static AbstractRow findRow($primaryKey)
+ * @method   static AbstractRow findRowWhere($whereList)
  *
  * @author   Anton Shevchuk
  * @created  12.07.11 15:28
@@ -60,7 +59,7 @@ abstract class AbstractTable extends Table
      *
      * @param string $provider
      * @param string $foreignKey
-     * @return Row
+     * @return AbstractRow
      */
     public function getAuthRow($provider, $foreignKey)
     {

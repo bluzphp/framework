@@ -11,6 +11,10 @@
  */
 namespace Bluz\Db\Query\Traits;
 
+use Bluz\Db\Query\Delete;
+use Bluz\Db\Query\Select;
+use Bluz\Db\Query\Update;
+
 /**
  * Limit Trait, required for:
  *  - Select Builder
@@ -39,7 +43,7 @@ trait Limit
      *
      * @param integer $limit The maximum number of results to retrieve
      * @param integer $offset
-     * @return $this
+     * @return Select|Update|Delete
      */
     public function limit($limit, $offset = 0)
     {
@@ -52,7 +56,7 @@ trait Limit
      * Setup limit for the query
      *
      * @param integer $limit
-     * @return $this
+     * @return Select|Update|Delete
      */
     public function setLimit($limit)
     {
@@ -64,7 +68,7 @@ trait Limit
      * Setup offset for the query
      *
      * @param integer $offset
-     * @return $this
+     * @return Select|Update|Delete
      */
     public function setOffset($offset)
     {

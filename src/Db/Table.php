@@ -224,10 +224,10 @@ abstract class Table
 
                 $columns = $this->getAdapter()->fetchColumn(
                     '
-                    SELECT `column_name`
+                    SELECT COLUMN_NAME
                     FROM INFORMATION_SCHEMA.COLUMNS
-                    WHERE `table_schema` = ?
-                      AND `table_name` = ?',
+                    WHERE TABLE_SCHEMA = ?
+                      AND TABLE_NAME = ?',
                     [$connect['name'], $this->getName()]
                 );
                 app()->getCache()->set('table:columns:'. $this->table, $columns);
@@ -469,6 +469,20 @@ abstract class Table
     }
 
     /**
+     * Prepare array for WHERE or SET statements
+     *
+     * @return array
+     */
+    private static function prepareStatement($where)
+    {
+        $keys = array_keys($where);
+        foreach ($keys as &$key) {
+            $key = Db::getDefaultAdapter()->quoteIdentifier($key) . ' = ?';
+        }
+        return $keys;
+    }
+
+    /**
      * Create Row instance
      *
      * @param array $data
@@ -504,7 +518,9 @@ abstract class Table
             );
         }
 
-        $sql = "INSERT INTO `{$self->table}` SET `" . join('` = ?,`', array_keys($data)) . "` = ?";
+        $table = Db::getDefaultAdapter()->quoteIdentifier($self->table);
+
+        $sql = "INSERT INTO $table SET " . join(',', static::prepareStatement($data));
         $result = $self->getAdapter()->query($sql, array_values($data));
         if (!$result) {
             return null;
@@ -553,9 +569,11 @@ abstract class Table
             );
         }
 
-        $sql = "UPDATE `{$self->table}`"
-            . " SET `" . join('` = ?,`', array_keys($data)) . "` = ?"
-            . " WHERE `" . join('` = ? AND `', array_keys($where)) . "` = ?";
+        $table = Db::getDefaultAdapter()->quoteIdentifier($self->table);
+
+        $sql = "UPDATE $table"
+            . " SET " . join(',', static::prepareStatement($data))
+            . " WHERE " . join(' AND ', static::prepareStatement($where));
 
         return $self->getAdapter()->query($sql, array_merge(array_values($data), array_values($where)));
     }
@@ -588,8 +606,10 @@ abstract class Table
             );
         }
 
-        $sql = "DELETE FROM `{$self->table}`"
-            . " WHERE `" . join('` = ? AND `', array_keys($where)) . "` = ?";
+        $table = Db::getDefaultAdapter()->quoteIdentifier($self->table);
+
+        $sql = "DELETE FROM $table"
+            . " WHERE " . join(' AND ', static::prepareStatement($where));
         return $self->getAdapter()->query($sql, array_values($where));
     }
 }

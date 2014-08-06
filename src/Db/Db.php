@@ -223,7 +223,7 @@ class Db
      */
     public function quoteIdentifier($identifier)
     {
-        // switch statement for $this->getDefaultAdapter()
+        // switch statement for DB type
         switch ($this->connect['type']) {
             case 'mysql':
                 return '`' . str_replace('`', '``', $identifier) . '`';

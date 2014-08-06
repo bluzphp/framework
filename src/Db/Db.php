@@ -218,14 +218,22 @@ class Db
     /**
      * Quote a string so it can be safely used as a table or column name
      *
-     * @param string $value
+     * @param string $identifier
      * @return string
      */
-    public function quoteIdentifier($value)
+    public function quoteIdentifier($identifier)
     {
-        // remove "back ticks" from table/column name
-        $value = str_replace("`", "", $value);
-        return "`".$value."`";
+        // switch statement for DB type
+        switch ($this->connect['type']) {
+            case 'mysql':
+                return '`' . str_replace('`', '``', $identifier) . '`';
+                break;
+            case 'postgresql':
+            case 'sqlite':
+            default:
+                return '"' . str_replace('"', '\\' . '"', $identifier) . '"';
+                break;
+        }
     }
 
     /**

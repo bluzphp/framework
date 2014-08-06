@@ -16,6 +16,7 @@ use Bluz\Db\Row;
 /**
  * Abstract class for Users\Row
  *
+ * @property integer $id
  * @package Bluz\Auth
  */
 abstract class AbstractRowEntity extends Row implements EntityInterface

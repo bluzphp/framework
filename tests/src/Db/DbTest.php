@@ -21,35 +21,165 @@ use Bluz\Tests\Db\Fixtures;
 class DbTest extends Bluz\Tests\TestCase
 {
     /**
-     * @todo Implement testInsert().
+     * Initial application with `testing` configuration
+     */
+    public function testGetDefaultAdapter()
+    {
+        $adapter = $this->getApp()->getDb()->getDefaultAdapter();
+
+        $this->assertInstanceOf('\Bluz\Db\Db', $adapter);
+    }
+
+    /**
+     * Initial application with empty configuration
+     * @expectedException \Bluz\Db\Exception\DbException
+     */
+    public function testCheckConnectException()
+    {
+        $db = new Db\Db();
+        $db->setConnect(array());
+    }
+
+    /**
+     * fetchOne
+     */
+    public function testFetchOne()
+    {
+        $result = $this->getApp()->getDb()->fetchOne("SELECT COUNT(*) FROM test");
+        $this->assertEquals(42, $result);
+    }
+
+    /**
+     * fetchRow
+     */
+    public function testFetchRow()
+    {
+        $result = $this->getApp()->getDb()->fetchRow("SELECT * FROM test LIMIT 1");
+        $this->assertEquals(4, sizeof($result));
+    }
+
+    /**
+     * fetchAll
+     */
+    public function testFetchAll()
+    {
+        $result = $this->getApp()->getDb()->fetchAll("SELECT * FROM test LIMIT 10");
+        $this->assertEquals(10, sizeof($result));
+    }
+
+    /**
+     * fetchColumn
+     */
+    public function testFetchColumn()
+    {
+        $result = $this->getApp()->getDb()->fetchColumn("SELECT id FROM test LIMIT 10");
+        $this->assertEquals(10, sizeof($result));
+    }
+
+    /**
+     * fetchGroup
+     */
+    public function testFetchGroup()
+    {
+        $result = $this->getApp()->getDb()->fetchGroup("SELECT status, id, name FROM test");
+
+        $this->assertArrayHasKey('active', $result);
+        $this->assertArrayHasKey('disable', $result);
+        $this->assertArrayHasKey('delete', $result);
+    }
+
+    /**
+     * fetchColumnGroup
+     */
+    public function testFetchColumnGroup()
+    {
+        $result = $this->getApp()->getDb()->fetchColumnGroup("SELECT status, COUNT(id) FROM test GROUP BY status");
+
+        $this->assertArrayHasKey('active', $result);
+        $this->assertArrayHasKey('disable', $result);
+        $this->assertArrayHasKey('delete', $result);
+    }
+
+    /**
+     * fetchPairs
+     */
+    public function testFetchPairs()
+    {
+        $result = $this->getApp()->getDb()->fetchPairs("SELECT email, name FROM test LIMIT 10");
+        $this->assertEquals(10, sizeof($result));
+    }
+
+    /**
+     * fetchObject to default class
+     */
+    public function testFetchObjectToStdClass()
+    {
+        $result = $this->getApp()->getDb()->fetchObject("SELECT * FROM test LIMIT 1");
+        $this->assertInstanceOf('\stdClass', $result);
+    }
+
+    /**
+     * fetchObjects to declared class
+     */
+    public function testFetchObjectToDeclaredClass()
+    {
+        $result = $this->getApp()->getDb()->fetchObject("SELECT * FROM test LIMIT 10", array(), 'stdClass');
+        $this->assertInstanceOf('\stdClass', $result);
+    }
+
+    /**
+     * fetchObject to instance
+     */
+    public function testFetchObjectToInstance()
+    {
+        $result = $this->getApp()->getDb()->fetchObject("SELECT * FROM test LIMIT 1", array(), new \stdClass());
+        $this->assertInstanceOf('\stdClass', $result);
+    }
+
+    /**
+     * fetchObjects to default class
+     */
+    public function testFetchObjectsToStdClass()
+    {
+        $result = $this->getApp()->getDb()->fetchObjects("SELECT * FROM test LIMIT 10");
+        $this->assertEquals(10, sizeof($result));
+        $this->assertInstanceOf('\stdClass', current($result));
+    }
+
+    /**
+     * fetchObjects to declared class
+     */
+    public function testFetchObjectsToDeclaredClass()
+    {
+        $result = $this->getApp()->getDb()->fetchObjects("SELECT * FROM test LIMIT 10", array(), 'stdClass');
+        $this->assertEquals(10, sizeof($result));
+        $this->assertInstanceOf('\stdClass', current($result));
+    }
+
+    /**
+     * Insert Query Builder
      */
     public function testInsert()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $query = $this->getApp()->getDb()->insert('test');
+        $this->assertInstanceOf('\Bluz\Db\Query\Insert', $query);
     }
 
     /**
-     * @todo Implement testUpdate().
+     * Update Query Builder
      */
     public function testUpdate()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $query = $this->getApp()->getDb()->update('test');
+        $this->assertInstanceOf('\Bluz\Db\Query\Update', $query);
     }
 
     /**
-     * @todo Implement testDelete().
+     * Delete Query Builder
      */
     public function testDelete()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $query = $this->getApp()->getDb()->delete('test');
+        $this->assertInstanceOf('\Bluz\Db\Query\Delete', $query);
     }
 }

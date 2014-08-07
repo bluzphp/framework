@@ -421,7 +421,7 @@ class Db
      * Returns an array containing all of the result set rows
      *
      * Group by first column
-     *     $db->fetchPairs("SELECT ip, COUNT(id) FROM users GROUP BY ip", array());
+     *     $db->fetchGroup("SELECT ip, COUNT(id) FROM users GROUP BY ip", array());
      *
      * @param string $sql <p>
      *  "SELECT ip, id FROM users"
@@ -504,13 +504,14 @@ class Db
     {
         $stmt = $this->prepare($sql);
         $stmt->execute($params);
-        if (is_object($object)) {
+
+        if (is_string($object)) {
+            // some class name
+            $result = $stmt->fetchObject($object);
+        } else {
             // some instance
             $stmt->setFetchMode(\PDO::FETCH_INTO, $object);
             $result = $stmt->fetch(\PDO::FETCH_INTO);
-        } else {
-            // some class name
-            $result = $stmt->fetchObject($object);
         }
 
         $stmt->closeCursor();
@@ -534,19 +535,15 @@ class Db
     {
         $stmt = $this->prepare($sql);
         $stmt->execute($params);
-        if (!$object) {
-            // StdClass
-            $result = $stmt->fetchAll(\PDO::FETCH_OBJ);
-        } elseif (is_object($object)) {
-            // some instance
-            $result = $stmt->fetchAll(\PDO::FETCH_INTO, $object);
-        } elseif (is_string($object)) {
+
+        if (is_string($object)) {
             // some class name
             $result = $stmt->fetchAll(\PDO::FETCH_CLASS, $object);
         } else {
-            // when?
-            $result = null;
+            // StdClass
+            $result = $stmt->fetchAll(\PDO::FETCH_OBJ);
         }
+
         $stmt->closeCursor();
         $this->log($sql, $params);
         return $result;

@@ -58,7 +58,8 @@ insert  into `test`(`id`,`name`,`email`,`status`) values
   (47,'Dante','egestas.Aliquam.fringilla@Curabiturdictum.org','active'),
   (48,'Sybill','mauris@sodales.com','disable'),
   (49,'Quentin','molestie.in@felisNullatempor.org','disable'),
-  (50,'Hyacinth','egestas.a@vestibulumnec.org','delete')
+  (50,'Hyacinth','egestas.a@vestibulumnec.org','delete'),
+  (51,'Getman','getman@gov.ua','active')
   ;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

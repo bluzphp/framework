@@ -7,7 +7,7 @@
 /**
  * @namespace
  */
-namespace Bluz\Tests\Fixtures\Models;
+namespace Bluz\Tests\Fixtures\Models\Test;
 
 /**
  * Crud based on Db\Table
@@ -17,20 +17,20 @@ namespace Bluz\Tests\Fixtures\Models;
  * @author   Anton Shevchuk
  * @created  03.09.12 13:11
  */
-class TestCrud extends \Bluz\Crud\Table
+class Crud extends \Bluz\Crud\Table
 {
     /**
      * Return table instance for manipulation
      *
-     * @return TestTable
+     * @return Table
      */
     public function getTable()
     {
         if (!$this->table) {
             /**
-             * @var TestTable $tableClass
+             * @var Table $tableClass
              */
-            $table = TestTable::getInstance();
+            $table = Table::getInstance();
 
             $this->setTable($table);
         }
@@ -60,7 +60,7 @@ class TestCrud extends \Bluz\Crud\Table
             $select->setOffset($offset);
         }
 
-        $result = $select->execute('\\Bluz\\Tests\\Fixtures\\Models\\TestRow');
+        $result = $select->execute('\\Bluz\\Tests\\Fixtures\\Models\\Test\\Row');
 
         if ($limit) {
             $total = app()->getDb()->fetchOne('SELECT FOUND_ROWS()');

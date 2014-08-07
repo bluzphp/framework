@@ -7,20 +7,20 @@
 /**
  * @namespace
  */
-namespace Bluz\Tests\Fixtures\Models;
+namespace Bluz\Tests\Fixtures\Models\Test;
 
 /**
  * Table
  *
  * @package  Bluz\Tests\Fixtures
  *
- * @method   static TestRow findRow($primaryKey)
- * @method   static TestRow findRowWhere($whereList)
+ * @method   static Row findRow($primaryKey)
+ * @method   static Row findRowWhere($whereList)
  *
  * @author   Anton Shevchuk
  * @created  08.07.11 17:36
  */
-class TestTable extends \Bluz\Db\Table
+class Table extends \Bluz\Db\Table
 {
     /**
      * Table
@@ -39,5 +39,5 @@ class TestTable extends \Bluz\Db\Table
      * Class name
      * @var string
      */
-    protected $rowClass = '\Bluz\Tests\Fixtures\Models\TestRow';
+    protected $rowClass = '\Bluz\Tests\Fixtures\Models\Test\Row';
 }

@@ -13,11 +13,11 @@ use Bluz\Http;
 use Bluz\Http\Request;
 use Bluz\Controller;
 use Bluz\Tests\BootstrapTest;
-use Bluz\Tests\Fixtures\Models\TestCrud;
+use Bluz\Tests\Fixtures\Models\Test\Crud;
 use Bluz\Tests\TestCase;
 
 /**
- * @package  Application\Tests\Test
+ * @package  Bluz\Tests
  * @author   Anton Shevchuk
  * @created  21.05.14 11:28
  */
@@ -89,7 +89,7 @@ class RestTest extends TestCase
     protected function processRest()
     {
         $restController = new Controller\Rest();
-        $restController->setCrud(TestCrud::getInstance());
+        $restController->setCrud(Crud::getInstance());
         return $restController();
     }
 
@@ -106,7 +106,7 @@ class RestTest extends TestCase
 
         $row = current($result);
 
-        $this->assertInstanceOf('Bluz\Tests\Fixtures\Models\TestRow', $row);
+        $this->assertInstanceOf('Bluz\Tests\Fixtures\Models\Test\Row', $row);
         $this->assertEquals(1, $row['id']);
     }
 

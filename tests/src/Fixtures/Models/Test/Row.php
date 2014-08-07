@@ -7,7 +7,7 @@
 /**
  * @namespace
  */
-namespace Bluz\Tests\Fixtures\Models;
+namespace Bluz\Tests\Fixtures\Models\Test;
 
 use Bluz\Validator\Traits\Validator;
 use Bluz\Validator\Validator as v;
@@ -22,18 +22,18 @@ use Bluz\Validator\Validator as v;
  *
  * @package  Bluz\Tests\Fixtures
  */
-class TestRow extends \Bluz\Db\Row
+class Row extends \Bluz\Db\Row
 {
     use Validator;
 
     /**
      * Return table instance for manipulation
      *
-     * @return TestTable
+     * @return Table
      */
     public function getTable()
     {
-        return TestTable::getInstance();
+        return Table::getInstance();
     }
 
     /**

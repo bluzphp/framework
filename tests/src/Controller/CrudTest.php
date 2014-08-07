@@ -13,11 +13,11 @@ use Bluz\Http;
 use Bluz\Http\Request;
 use Bluz\Controller;
 use Bluz\Tests\BootstrapTest;
-use Bluz\Tests\Fixtures\Models\TestCrud;
+use Bluz\Tests\Fixtures\Models\Test\Crud;
 use Bluz\Tests\TestCase;
 
 /**
- * @package  Application\Tests\Test
+ * @package  Bluz\Tests
  * @author   Anton Shevchuk
  * @created  21.05.14 11:28
  */
@@ -89,7 +89,7 @@ class CrudTest extends TestCase
     protected function processCrud()
     {
         $crudController = new Controller\Crud();
-        $crudController->setCrud(TestCrud::getInstance());
+        $crudController->setCrud(Crud::getInstance());
         return $crudController();
     }
 
@@ -104,7 +104,7 @@ class CrudTest extends TestCase
         $result = $this->processCrud();
 
         $this->assertEquals(Request::METHOD_POST, $result['method']);
-        $this->assertInstanceOf('Bluz\Tests\Fixtures\Models\TestRow', $result['row']);
+        $this->assertInstanceOf('Bluz\Tests\Fixtures\Models\Test\Row', $result['row']);
         $this->assertNull($result['row']['id']);
     }
 
@@ -120,7 +120,7 @@ class CrudTest extends TestCase
         $result = $this->processCrud();
 
         $this->assertEquals(Request::METHOD_PUT, $result['method']);
-        $this->assertInstanceOf('Bluz\Tests\Fixtures\Models\TestRow', $result['row']);
+        $this->assertInstanceOf('Bluz\Tests\Fixtures\Models\Test\Row', $result['row']);
         $this->assertEquals(1, $result['row']['id']);
     }
     /**
@@ -148,7 +148,7 @@ class CrudTest extends TestCase
         $result = $this->processCrud();
 
         $this->assertEquals(Request::METHOD_PUT, $result['method']);
-        $this->assertInstanceOf('Bluz\Tests\Fixtures\Models\TestRow', $result['row']);
+        $this->assertInstanceOf('Bluz\Tests\Fixtures\Models\Test\Row', $result['row']);
         $this->assertNotNull($result['row']['id']);
     }
 
@@ -165,7 +165,7 @@ class CrudTest extends TestCase
         $result = $this->processCrud();
 
         $this->assertEquals(Request::METHOD_POST, $result['method']);
-        $this->assertInstanceOf('Bluz\Tests\Fixtures\Models\TestRow', $result['row']);
+        $this->assertInstanceOf('Bluz\Tests\Fixtures\Models\Test\Row', $result['row']);
         $this->assertNull($result['row']['id']);
         $this->assertEquals(sizeof($result['errors']), 2);
     }
@@ -182,7 +182,7 @@ class CrudTest extends TestCase
         $result = $this->processCrud();
 
         $this->assertEquals(Request::METHOD_PUT, $result['method']);
-        $this->assertInstanceOf('Bluz\Tests\Fixtures\Models\TestRow', $result['row']);
+        $this->assertInstanceOf('Bluz\Tests\Fixtures\Models\Test\Row', $result['row']);
         $this->assertEquals(2, $result['row']['id']);
 
         $id = $this->getApp()->getDb()->fetchOne(
@@ -218,7 +218,7 @@ class CrudTest extends TestCase
         $result = $this->processCrud();
 
         $this->assertEquals(Request::METHOD_PUT, $result['method']);
-        $this->assertInstanceOf('Bluz\Tests\Fixtures\Models\TestRow', $result['row']);
+        $this->assertInstanceOf('Bluz\Tests\Fixtures\Models\Test\Row', $result['row']);
         $this->assertEquals(2, $result['row']['id']);
         $this->assertEquals(sizeof($result['errors']), 2);
     }

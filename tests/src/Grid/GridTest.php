@@ -9,6 +9,9 @@
  */
 namespace Bluz\Tests\Grid;
 
+use Bluz\Grid\Source\ArraySource;
+use Bluz\Grid\Source\SelectSource;
+use Bluz\Grid\Source\SqlSource;
 use Bluz\Tests\TestCase;
 use Bluz\Tests\Fixtures\Models\Test;
 
@@ -19,6 +22,16 @@ use Bluz\Tests\Fixtures\Models\Test;
  */
 class GridTest extends TestCase
 {
+
+    /**
+     * Setup Application
+     */
+    public function setUp()
+    {
+        parent::setUp();
+        $this->getApp();
+    }
+
     /**
      * Array Source
      */
@@ -27,6 +40,16 @@ class GridTest extends TestCase
         $grid = new Test\ArrayGrid();
         $this->assertEquals(3, $grid->pages());
         $this->assertEquals(10, $grid->total());
+    }
+
+    /**
+     * Array Source Exception
+     * @expectedException \Bluz\Grid\GridException
+     */
+    public function testArraySourceThrowsGridException()
+    {
+        $adapter = new ArraySource();
+        $adapter->setSource('wrong source type');
     }
 
     /**
@@ -40,6 +63,16 @@ class GridTest extends TestCase
     }
 
     /**
+     * SQL Source Exception
+     * @expectedException \Bluz\Grid\GridException
+     */
+    public function testSqlSourceThrowsGridException()
+    {
+        $adapter = new SqlSource();
+        $adapter->setSource(['wrong source type']);
+    }
+
+    /**
      * Select Source
      */
     public function testSelectGrid()
@@ -47,5 +80,107 @@ class GridTest extends TestCase
         $grid = new Test\SelectGrid();
         $this->assertEquals(5, $grid->pages());
         $this->assertEquals(42, $grid->total());
+    }
+
+    /**
+     * Select Source Exception
+     * @expectedException \Bluz\Grid\GridException
+     */
+    public function testSelectSourceThrowsGridException()
+    {
+        $adapter = new SelectSource();
+        $adapter->setSource('wrong source type');
+    }
+
+    /**
+     * Helper First
+     */
+    public function testGridHelperFirst()
+    {
+        $grid = new Test\ArrayGrid();
+        $this->assertEquals('/', $grid->first());
+    }
+
+    /**
+     * Helper Last
+     */
+    public function testGridHelperLast()
+    {
+        $grid = new Test\ArrayGrid();
+        $this->assertEquals('/index/index/arr-page/3', $grid->last());
+    }
+
+    /**
+     * Helper Limit
+     */
+    public function testGridHelperLimit()
+    {
+        $grid = new Test\ArrayGrid();
+        $this->assertEquals('/index/index/arr-limit/25', $grid->limit());
+    }
+
+    /**
+     * Helper Next
+     */
+    public function testGridHelperNext()
+    {
+        $grid = new Test\ArrayGrid();
+        $this->assertEquals('/index/index/arr-page/2', $grid->next());
+    }
+
+    /**
+     * Helper Order
+     */
+    public function testGridHelperOrder()
+    {
+        $grid = new Test\ArrayGrid();
+        $this->assertEquals('/index/index/arr-order-name/asc', $grid->order('name'));
+    }
+
+    /**
+     * Helper Page
+     */
+    public function testGridHelperPage()
+    {
+        $grid = new Test\ArrayGrid();
+        $this->assertEquals('/index/index/arr-page/2', $grid->page(2));
+        $this->assertNull($grid->page(42));
+    }
+
+    /**
+     * Helper Pages
+     */
+    public function testGridHelperPages()
+    {
+        $grid = new Test\ArrayGrid();
+        $this->assertEquals(3, $grid->pages());
+    }
+
+    /**
+     * Helper Prev
+     */
+    public function testGridHelperPrev()
+    {
+        $grid = new Test\ArrayGrid();
+        $grid->setPage(3);
+        $this->assertEquals('/index/index/arr-page/2', $grid->prev());
+    }
+
+    /**
+     * Helper Reset
+     */
+    public function testGridHelperReset()
+    {
+        $grid = new Test\ArrayGrid();
+        $this->assertEquals('/', $grid->reset());
+    }
+
+    /**
+     * Helper Total
+     */
+    public function testGridHelperTotal()
+    {
+        $grid = new Test\ArrayGrid();
+        $this->assertEquals(10, $grid->total());
     }
 }

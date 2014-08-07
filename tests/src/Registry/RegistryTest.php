@@ -32,7 +32,7 @@ class RegistryTest extends Bluz\Tests\TestCase
      *
      * @return void
      */
-    function setUp()
+    public function setUp()
     {
         parent::setUp();
 

@@ -64,4 +64,37 @@ class TestCase extends \PHPUnit_Framework_TestCase
             $this->app->getMessages()->popAll();
         }
     }
+
+    /**
+     * Assert Array Size
+     * @param array|\ArrayObject $array
+     * @param integer $size
+     * @param string $message
+     */
+    protected function assertArrayHasSize($array, $size, $message = null)
+    {
+        $this->assertEquals(
+            $size,
+            sizeof($array),
+            $message ?: 'Failed asserting that array has size '.$size.' matches expected '.sizeof($array). '.'
+        );
+    }
+
+    /**
+     * Assert Array Key has Size
+     * @param array|\ArrayObject $array
+     * @param string $key
+     * @param integer $size
+     * @param string $message
+     */
+    protected function assertArrayHasKeyAndSize($array, $key, $size, $message = null)
+    {
+        if (!$message) {
+            $message = 'Failed asserting that array has key '.$key.' with size '.$size
+                . ' matches expected '.sizeof($array). '.';
+        }
+
+        $this->assertArrayHasKey($key, $array, $message);
+        $this->assertEquals($size, sizeof($array[$key]), $message);
+    }
 }

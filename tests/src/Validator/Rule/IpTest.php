@@ -157,5 +157,4 @@ class IpTest extends Tests\TestCase
             array('220.78.176.3', '220.78.168.0/255.255.248.0'),
         );
     }
-
 }

@@ -46,7 +46,7 @@ class EventManagerTest extends Bluz\Tests\TestCase
     public function testTriggerSimpleEvent()
     {
         $counter = 0;
-        $this->eventManager->attach('test', function() use (&$counter) {
+        $this->eventManager->attach('test', function () use (&$counter) {
             $counter++;
         });
         $this->eventManager->trigger('test');
@@ -59,13 +59,13 @@ class EventManagerTest extends Bluz\Tests\TestCase
     public function testTriggerThreeEvents()
     {
         $counter = 0;
-        $this->eventManager->attach('test', function() use (&$counter) {
+        $this->eventManager->attach('test', function () use (&$counter) {
             $counter++;
         });
-        $this->eventManager->attach('test', function() use (&$counter) {
+        $this->eventManager->attach('test', function () use (&$counter) {
             $counter++;
         });
-        $this->eventManager->attach('test', function() use (&$counter) {
+        $this->eventManager->attach('test', function () use (&$counter) {
             $counter++;
         });
         $this->eventManager->trigger('test');
@@ -78,10 +78,10 @@ class EventManagerTest extends Bluz\Tests\TestCase
     public function testTriggerTwoEventsWithPriority()
     {
         $counter = 0;
-        $this->eventManager->attach('test', function() use (&$counter) {
+        $this->eventManager->attach('test', function () use (&$counter) {
             $counter *= 2;
         }, 2);
-        $this->eventManager->attach('test', function() use (&$counter) {
+        $this->eventManager->attach('test', function () use (&$counter) {
             $counter++;
         });
         $this->eventManager->trigger('test');
@@ -94,11 +94,11 @@ class EventManagerTest extends Bluz\Tests\TestCase
     public function testTriggerTwoEventsWithAbort()
     {
         $counter = 0;
-        $this->eventManager->attach('test', function() use (&$counter) {
+        $this->eventManager->attach('test', function () use (&$counter) {
             $counter++;
             return false;
         });
-        $this->eventManager->attach('test', function() use (&$counter) {
+        $this->eventManager->attach('test', function () use (&$counter) {
             $counter *= 2;
         });
         $this->eventManager->trigger('test');
@@ -112,11 +112,11 @@ class EventManagerTest extends Bluz\Tests\TestCase
     {
         $counter = 0;
         // namespace is first
-        $this->eventManager->attach('some', function() use (&$counter) {
+        $this->eventManager->attach('some', function () use (&$counter) {
             $counter++;
         });
         // event is secondary
-        $this->eventManager->attach('some:test', function() use (&$counter) {
+        $this->eventManager->attach('some:test', function () use (&$counter) {
             $counter *= 2;
         });
         $this->eventManager->trigger('some:test');
@@ -129,11 +129,11 @@ class EventManagerTest extends Bluz\Tests\TestCase
     public function testTriggerWithTarget()
     {
         // first
-        $this->eventManager->attach('test', function(/* @var Event */ $event) {
+        $this->eventManager->attach('test', function (/* @var Event */ $event) {
             return $event->getTarget() + 1;
         });
         // second
-        $this->eventManager->attach('test', function(/* @var Event */ $event) {
+        $this->eventManager->attach('test', function (/* @var Event */ $event) {
             return $event->getTarget() + 1;
         });
 
@@ -149,7 +149,7 @@ class EventManagerTest extends Bluz\Tests\TestCase
      */
     public function testTriggerWithParams()
     {
-        $this->eventManager->attach('test', function(/* @var Event */ $event) {
+        $this->eventManager->attach('test', function (/* @var Event */ $event) {
             return $event->getTarget() + $event->getParam('plus');
         });
 
@@ -167,4 +167,3 @@ class EventManagerTest extends Bluz\Tests\TestCase
         $this->eventManager->trigger('test', null, 'wrong type params');
     }
 }
- 

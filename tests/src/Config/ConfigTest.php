@@ -11,9 +11,9 @@ namespace Bluz\Tests\Config;
 
 use Bluz;
 use Bluz\Config;
-use Bluz\Tests;
+use Bluz\Tests\TestCase;
 
-class ConfigTest extends Bluz\Tests\TestCase
+class ConfigTest extends TestCase
 {
     /**
      * @var Config\Config

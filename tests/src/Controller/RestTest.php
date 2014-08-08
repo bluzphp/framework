@@ -66,7 +66,7 @@ class RestTest extends TestCase
      */
     public static function tearDownAfterClass()
     {
-        BootstrapTest::getInstance()->getDb()->delete('test')->where('id IN (?)', [1,2,3,4])->execute();
+        BootstrapTest::getInstance()->getDb()->delete('test')->where('id IN (?)', [1, 2, 3, 4])->execute();
         BootstrapTest::getInstance()->getDb()->delete('test')->where('email = ?', 'splinter@turtles.org')->execute();
     }
 

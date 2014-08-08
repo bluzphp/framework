@@ -61,7 +61,7 @@ class ConfigTest extends TestCase
 
     /**
      * @covers Bluz\Config\Config::load
-     * @expectedException Bluz\Config\ConfigException
+     * @expectedException \Bluz\Config\ConfigException
      */
     public function testLoadConfigPathIsNotSetup()
     {
@@ -70,7 +70,7 @@ class ConfigTest extends TestCase
 
     /**
      * @covers Bluz\Config\Config::load
-     * @expectedException Bluz\Config\ConfigException
+     * @expectedException \Bluz\Config\ConfigException
      */
     public function testLoadConfigFileNotFound()
     {
@@ -156,7 +156,7 @@ class ConfigTest extends TestCase
 
     /**
      * @covers Bluz\Config\Config::__set
-     * @expectedException Bluz\Config\ConfigException
+     * @expectedException \Bluz\Config\ConfigException
      */
     public function testSetReadOnly()
     {
@@ -165,7 +165,7 @@ class ConfigTest extends TestCase
 
     /**
      * @covers Bluz\Config\Config::getData
-     * @expectedException Bluz\Config\ConfigException
+     * @expectedException \Bluz\Config\ConfigException
      */
     public function testGetDataNotLoadedFromConfig()
     {

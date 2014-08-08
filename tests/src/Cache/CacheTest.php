@@ -46,6 +46,15 @@ class CacheTest extends TestCase
         return $cache;
     }
 
+    /**
+     * Cache Throws Exception for invalid configuration
+     * @expectedException \Bluz\Config\ConfigException
+     */
+    public function testCacheThrowsException()
+    {
+        $cache = new Cache();
+        $cache->setOptions(array());
+    }
 
     /**
      * Simple Cache test for File adapter
@@ -69,16 +78,30 @@ class CacheTest extends TestCase
 
         $cache->set('foo', 'bar0');
         $cache->set('qux', 'bar1');
-        $cache->set('baz', 'bar2');
+        $cache->add('baz', 'bar2');
 
         $cache->addTag('foo', 'test');
         $cache->addTag('qux', 'test');
 
         $cache->delete('baz');
         $cache->deleteByTag('test');
+        $cache->deleteByTag('unused');
 
         $this->assertFalse($cache->get('foo'));
         $this->assertFalse($cache->get('qux'));
         $this->assertFalse($cache->get('baz'));
+    }
+
+    /**
+     * testFileCacheFlush
+     */
+    public function testFileCacheFlush()
+    {
+        $cache = $this->prepareFileCache();
+
+        $cache->set('foo', 'bar');
+        $cache->flush();
+
+        $this->assertFalse($cache->get('foo'));
     }
 }

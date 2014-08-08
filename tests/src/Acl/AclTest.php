@@ -9,7 +9,7 @@
  */
 namespace Bluz\Tests\Acl;
 
-use Bluz;
+use Bluz\Tests\TestCase;
 use Bluz\Tests\Fixtures\Models\UserAdmin;
 use Bluz\Tests\Fixtures\Models\UserGuest;
 
@@ -21,7 +21,7 @@ use Bluz\Tests\Fixtures\Models\UserGuest;
  * @author   Anton Shevchuk
  * @created  14.05.2014 11:09
  */
-class AclTest extends Bluz\Tests\TestCase
+class AclTest extends TestCase
 {
     /**
      * Test allow access
@@ -40,4 +40,3 @@ class AclTest extends Bluz\Tests\TestCase
         $this->assertFalse($this->getApp()->getAcl()->isAllowed('any', 'any'));
     }
 }
- 

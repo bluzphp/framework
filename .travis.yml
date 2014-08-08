@@ -17,9 +17,12 @@ before_script:
   - mysql -uroot bluz < tests/dump.sql
 script:
   - mkdir .reports
+  - chmod a+w ./tests/cache
   # Code style
   - php vendor/bin/phpcs ./src --standard=PSR1 --encoding=utf-8
   - php vendor/bin/phpcs ./src --standard=PSR2 --encoding=utf-8
+  - php vendor/bin/phpcs ./tests/src --standard=PSR1 --encoding=utf-8
+  - php vendor/bin/phpcs ./tests/src --standard=PSR2 --encoding=utf-8
   # PHPUnit tests
   - php vendor/bin/phpunit --configuration ./phpunit.xml.dist --coverage-clover=.reports/clover.xml
   # Duplicate code

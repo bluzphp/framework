@@ -95,6 +95,6 @@ class TestCase extends \PHPUnit_Framework_TestCase
         }
 
         $this->assertArrayHasKey($key, $array, $message);
-        $this->assertEquals($size,  sizeof($array[$key]), $message);
+        $this->assertEquals($size, sizeof($array[$key]), $message);
     }
 }

@@ -31,12 +31,13 @@ class CallbackTest extends Tests\TestCase
     /**
      * Setup Callbacks
      */
-    public function setUp() {
+    public function setUp()
+    {
         parent::setUp();
-        $this->alwaysTrue = new Callback(function() {
+        $this->alwaysTrue = new Callback(function () {
             return true;
         });
-        $this->alwaysFalse = new Callback(function() {
+        $this->alwaysFalse = new Callback(function () {
             return false;
         });
     }

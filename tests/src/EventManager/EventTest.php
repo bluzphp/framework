@@ -68,4 +68,3 @@ class EventTest extends Bluz\Tests\TestCase
         new Event('test', null, 'wrong type');
     }
 }
- 

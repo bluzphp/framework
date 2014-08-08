@@ -77,4 +77,3 @@ class SlugTest extends Tests\TestCase
         );
     }
 }
-

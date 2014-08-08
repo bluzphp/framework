@@ -84,4 +84,3 @@ class RegistryTest extends Bluz\Tests\TestCase
         $this->assertFalse(isset($this->registry->boo));
     }
 }
- 

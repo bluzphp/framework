@@ -66,6 +66,21 @@ class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Assert Array is Equals
+     * @param array $expected
+     * @param array $actual
+     * @param string $message
+     */
+    protected function assertEqualsArray($expected, $actual, $message = null)
+    {
+        $this->assertSame(
+            array_diff($expected, $actual),
+            array_diff($actual, $expected),
+            $message ?: 'Failed asserting that two arrays is equals.'
+        );
+    }
+
+    /**
      * Assert Array Size
      * @param array|\ArrayObject $array
      * @param integer $size

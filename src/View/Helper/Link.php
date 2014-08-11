@@ -27,7 +27,6 @@ return
         $links = app()->getRegistry()->__get('layout:link') ? : [];
 
         if (null === $link) {
-            $links = array_unique($links);
             // prepare to output
             $links = array_map(
                 function ($attr) {
@@ -37,6 +36,7 @@ return
             );
             // clear system vars
             app()->getRegistry()->__set('layout:link', []);
+            $links = array_unique($links);
             return join("\n", $links);
         } else {
             $links[] = $link;

@@ -107,6 +107,14 @@ class ViewTest extends TestCase
 
         $this->assertEmpty($view->ahref('text', null));
         $this->assertEquals('<a href="test/test" >text</a>', $view->ahref('text', 'test/test'));
+        $this->assertEquals(
+            '<a href="/" class="on">text</a>',
+            $view->ahref('text', [Router::DEFAULT_MODULE, Router::DEFAULT_CONTROLLER])
+        );
+        $this->assertEquals(
+            '<a href="/" class="foo on">text</a>',
+            $view->ahref('text', [Router::DEFAULT_MODULE, Router::DEFAULT_CONTROLLER], ['class' => 'foo'])
+        );
     }
 
     /**
@@ -281,6 +289,36 @@ class ViewTest extends TestCase
     }
 
     /**
+     * Helper Meta with Array
+     */
+    public function testViewHelperMetaArray()
+    {
+        $view = $this->getApp()->getView();
+
+        $view->meta(
+            [
+                'name' => 'keywords',
+                'content' => 'foo, bar, baz, qux'
+            ]
+        );
+
+        $view->meta(
+            [
+                'name' => 'description',
+                'content' => 'foo bar baz qux'
+            ]
+        );
+
+        $result = $view->meta();
+
+        $this->assertEquals(
+            '<meta name="keywords" content="foo, bar, baz, qux"/>'.
+            '<meta name="description" content="foo bar baz qux"/>',
+            str_replace(["\t", "\n", "\r"], '', $result)
+        );
+    }
+
+    /**
      * Helper Module
      */
     public function testViewHelperModule()
@@ -316,6 +354,19 @@ class ViewTest extends TestCase
     }
 
     /**
+     * Helper Script inline
+     */
+    public function testViewHelperScriptPlain()
+    {
+        $view = $this->getApp()->getView();
+
+        $result = $view->script('alert("foo=bar")');
+        $result = str_replace(["\t", "\n", "\r"], '', $result);
+
+        $this->assertEquals('<script type="text/javascript"><!--alert("foo=bar")//--></script>', $result);
+    }
+
+    /**
      * Helper Select
      */
     public function testViewHelperSelect()
@@ -335,13 +386,15 @@ class ViewTest extends TestCase
                     'citroen-c3' => 'Citroen C3',
                 ],
             ],
-            "none",
+            null,
             ["id"=>"car"]
         );
 
+        $result = str_replace(["\t", "\n", "\r"], '', $result);
+
         $this->assertEquals(
             '<select id="car" name="car">'.
-            '<option value="none" selected="selected">No Car</option>'.
+            '<option value="none">No Car</option>'.
             '<optgroup label="class-A">'.
             '<option value="citroen-c1">Citroen C1</option>'.
             '<option value="mercedes-benz-a200">Mercedes Benz A200</option>'.
@@ -351,12 +404,46 @@ class ViewTest extends TestCase
             '<option value="citroen-c3">Citroen C3</option>'.
             '</optgroup>'.
             '</select>',
-            str_replace(["\t", "\n", "\r"], '', $result)
+            $result
         );
     }
 
     /**
-     * Helper Script
+     * Helper Select
+     */
+    public function testViewHelperSelectMultiple()
+    {
+        $view = $this->getApp()->getView();
+
+        $result = $view->select(
+            "car",
+            [
+                'citroen-c1' => 'Citroen C1',
+                'mercedes-benz-a200' => 'Mercedes Benz A200',
+                'audi-a1' => 'Audi A1',
+                'citroen-c3' => 'Citroen C3',
+            ],
+            [
+                'citroen-c1',
+                'citroen-c3'
+            ]
+        );
+
+        $result = str_replace(["\t", "\n", "\r"], '', $result);
+
+        $this->assertEquals(
+            '<select name="car" multiple="multiple">'.
+            '<option value="citroen-c1" selected="selected">Citroen C1</option>'.
+            '<option value="mercedes-benz-a200">Mercedes Benz A200</option>'.
+            '<option value="audi-a1">Audi A1</option>'.
+            '<option value="citroen-c3" selected="selected">Citroen C3</option>'.
+            '</select>',
+            $result
+        );
+    }
+
+    /**
+     * Helper Style
      */
     public function testViewHelperStyle()
     {
@@ -365,6 +452,19 @@ class ViewTest extends TestCase
         $result = $view->style('foo.css');
 
         $this->assertEquals('<link href="/foo.css" rel="stylesheet" media="all"/>', trim($result));
+    }
+
+    /**
+     * Helper Style inline
+     */
+    public function testViewHelperStylePlain()
+    {
+        $view = $this->getApp()->getView();
+
+        $result = $view->style('#my{color:red}');
+        $result = str_replace(["\t", "\n", "\r"], '', $result);
+
+        $this->assertEquals('<style type="text/css" media="all">#my{color:red}</style>', $result);
     }
 
     /**
@@ -391,6 +491,21 @@ class ViewTest extends TestCase
         $view = $this->getApp()->getView();
 
         $this->assertEquals('/test/test/foo/bar', $view->url('test', 'test', ['foo' => 'bar']));
+        $this->assertEquals('/test/test', $view->url('test', 'test', null));
+        $this->assertEquals('/test', $view->url('test', null));
+        $this->assertEquals('/index/test', $view->url(null, 'test'));
+    }
+
+    /**
+     * Helper Url Exceptions
+     *
+     * @expectedException \Bluz\View\ViewException
+     */
+    public function testViewHelperUrlException()
+    {
+        $view = $this->getApp()->getView();
+
+        $this->assertEquals('/test/test', $view->url('test', 'test', [], true));
     }
 
     /**

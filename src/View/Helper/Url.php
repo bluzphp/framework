@@ -25,7 +25,7 @@ return
      * @param bool $checkAccess
      * @return string|null
      */
-    function ($module, $controller, array $params = [], $checkAccess = false) {
+    function ($module, $controller, $params = [], $checkAccess = false) {
     try {
         if ($checkAccess) {
             $controllerFile = app()->getControllerFile($module, $controller);

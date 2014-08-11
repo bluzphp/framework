@@ -323,7 +323,7 @@ class ViewTest extends TestCase
         $view = $this->getApp()->getView();
 
         $result = $view->select(
-            "car", 
+            "car",
             [
                 "none" => "No Car",
                 "class-A" => [

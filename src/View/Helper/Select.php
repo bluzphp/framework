@@ -19,7 +19,7 @@ return
      *
      * Example of usage:
      *     $this->select("car", [
-     *     "none" => "No Car"
+     *     "none" => "No Car",
      *     "class-A" => [
      *        'citroen-c1' => 'Citroen C1',
      *        'mercedes-benz-a200' => 'Mercedes Benz A200',
@@ -61,7 +61,7 @@ return
             // convert one option to an array
             $selected = array((string)$selected);
         }
-    } elseif (is_array($selected) && count($selected) > 1) {
+    } elseif (is_array($selected) && sizeof($selected) > 1) {
         $attributes['multiple'] = 'multiple';
     }
 

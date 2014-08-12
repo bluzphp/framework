@@ -145,7 +145,7 @@ class Router
     }
 
     /**
-     * getFullUrl
+     * Build full URL to controller
      *
      * @param string $module
      * @param string $controller
@@ -164,7 +164,7 @@ class Router
     }
 
     /**
-     * build URL
+     * Build URL to controller
      *
      * @param string $module
      * @param string $controller
@@ -193,7 +193,7 @@ class Router
 
 
     /**
-     * build URL by default route
+     * Build URL by custom route
      *
      * @param string $module
      * @param string $controller
@@ -219,6 +219,8 @@ class Router
         }
         // clean optional params
         $url = preg_replace('/\{\$[a-z0-9-_]+\}/i', '', $url);
+        // clean regular expression (.*)
+        $url = preg_replace('/\(\.\*\)/i', '', $url);
         // replace "//" with "/"
         $url = str_replace('//', '/', $url);
 
@@ -229,7 +231,7 @@ class Router
     }
 
     /**
-     * build URL by default route
+     * Build URL by default route
      *
      * @param string $module
      * @param string $controller
@@ -289,7 +291,7 @@ class Router
     }
 
     /**
-     * process default router
+     * Process default router
      *
      * @return bool
      */
@@ -301,7 +303,7 @@ class Router
 
 
     /**
-     * process custom router
+     * Process custom router
      *
      * @return bool
      */
@@ -326,7 +328,7 @@ class Router
     }
 
     /**
-     * Process default router
+     * Process router by default rules
      *
      * Default routers examples
      *     /

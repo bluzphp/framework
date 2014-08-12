@@ -393,7 +393,9 @@ class Request extends AbstractRequest
 
         if (null === $name) {
             return '';
-        } elseif (($scheme == self::SCHEME_HTTP && $port == 80) || ($scheme == self::SCHEME_HTTPS && $port == 443)) {
+        } elseif (($scheme == self::SCHEME_HTTP && $port == 80)
+            || ($scheme == self::SCHEME_HTTPS && $port == 443)
+            || !$port) {
             return $name;
         } else {
             return $name . ':' . $port;

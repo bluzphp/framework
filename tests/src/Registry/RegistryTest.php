@@ -11,6 +11,7 @@ namespace Bluz\Tests\Registry;
 
 use Bluz;
 use Bluz\Registry\Registry;
+use Bluz\Tests\TestCase;
 
 /**
  * RegistryTest
@@ -20,7 +21,7 @@ use Bluz\Registry\Registry;
  * @author   Anton Shevchuk
  * @created  14.05.2014 11:09
  */
-class RegistryTest extends Bluz\Tests\TestCase
+class RegistryTest extends TestCase
 {
     /**
      * @var Registry

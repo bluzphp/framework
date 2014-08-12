@@ -45,7 +45,8 @@ class RouterTest extends TestCase
         $router = $this->getApp()->getRouter();
 
         $this->assertEquals(
-            '/another-route.html', $router->url('test', 'route-static')
+            '/another-route.html',
+            $router->url('test', 'route-static')
         );
         $this->assertEquals(
             '/test/param/42/',

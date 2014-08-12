@@ -49,4 +49,3 @@ class SingletonTest extends TestCase
 
     }
 }
- 

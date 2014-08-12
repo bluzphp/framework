@@ -95,7 +95,7 @@ class GridTest extends TestCase
     /**
      * Helper First
      */
-    public function testGridHelperFirst()
+    public function testHelperFirst()
     {
         $grid = new Test\ArrayGrid();
         $this->assertEquals('/', $grid->first());
@@ -104,7 +104,7 @@ class GridTest extends TestCase
     /**
      * Helper Last
      */
-    public function testGridHelperLast()
+    public function testHelperLast()
     {
         $grid = new Test\ArrayGrid();
         $this->assertEquals('/index/index/arr-page/3', $grid->last());
@@ -113,7 +113,7 @@ class GridTest extends TestCase
     /**
      * Helper Limit
      */
-    public function testGridHelperLimit()
+    public function testHelperLimit()
     {
         $grid = new Test\ArrayGrid();
         $this->assertEquals('/index/index/arr-limit/25', $grid->limit());
@@ -122,7 +122,7 @@ class GridTest extends TestCase
     /**
      * Helper Next
      */
-    public function testGridHelperNext()
+    public function testHelperNext()
     {
         $grid = new Test\ArrayGrid();
         $this->assertEquals('/index/index/arr-page/2', $grid->next());
@@ -131,7 +131,7 @@ class GridTest extends TestCase
     /**
      * Helper Order
      */
-    public function testGridHelperOrder()
+    public function testHelperOrder()
     {
         $grid = new Test\ArrayGrid();
         $this->assertEquals('/index/index/arr-order-name/asc', $grid->order('name'));
@@ -140,7 +140,7 @@ class GridTest extends TestCase
     /**
      * Helper Page
      */
-    public function testGridHelperPage()
+    public function testHelperPage()
     {
         $grid = new Test\ArrayGrid();
         $this->assertEquals('/index/index/arr-page/2', $grid->page(2));
@@ -150,7 +150,7 @@ class GridTest extends TestCase
     /**
      * Helper Pages
      */
-    public function testGridHelperPages()
+    public function testHelperPages()
     {
         $grid = new Test\ArrayGrid();
         $this->assertEquals(3, $grid->pages());
@@ -159,7 +159,7 @@ class GridTest extends TestCase
     /**
      * Helper Prev
      */
-    public function testGridHelperPrev()
+    public function testHelperPrev()
     {
         $grid = new Test\ArrayGrid();
         $grid->setPage(3);
@@ -169,7 +169,7 @@ class GridTest extends TestCase
     /**
      * Helper Reset
      */
-    public function testGridHelperReset()
+    public function testHelperReset()
     {
         $grid = new Test\ArrayGrid();
         $this->assertEquals('/', $grid->reset());
@@ -178,7 +178,7 @@ class GridTest extends TestCase
     /**
      * Helper Total
      */
-    public function testGridHelperTotal()
+    public function testHelperTotal()
     {
         $grid = new Test\ArrayGrid();
         $this->assertEquals(10, $grid->total());

@@ -42,9 +42,10 @@ return
      * @return string
      */
     function ($template, $data = array(), $params = array()) {
+
     if (!is_array($data)
-        && (!$data instanceof \Traversable)
-        && (is_object($data) && !method_exists($data, 'toArray'))
+        && !($data instanceof \Traversable)
+        && !(is_object($data) && method_exists($data, 'toArray'))
     ) {
         throw new \InvalidArgumentException('PartialLoop helper requires iterable data');
     }

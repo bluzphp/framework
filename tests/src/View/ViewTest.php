@@ -9,7 +9,6 @@
  */
 namespace Bluz\Tests\View;
 
-use Bluz\Http\Request;
 use Bluz\Router\Router;
 use Bluz\Tests\TestCase;
 use Bluz\View\View;
@@ -101,7 +100,7 @@ class ViewTest extends TestCase
     /**
      * Helper Ahref
      */
-    public function testViewHelperAhref()
+    public function testHelperAhref()
     {
         $view = $this->getApp()->getView();
 
@@ -121,7 +120,7 @@ class ViewTest extends TestCase
      * Helper Api
      *  - this API call is not exists -> call Exception helper
      */
-    public function testViewHelperApi()
+    public function testHelperApi()
     {
         $view = $this->getApp()->getView();
 
@@ -131,7 +130,7 @@ class ViewTest extends TestCase
     /**
      * Helper Attributes
      */
-    public function testViewHelperAttributes()
+    public function testHelperAttributes()
     {
         $view = $this->getApp()->getView();
 
@@ -145,7 +144,7 @@ class ViewTest extends TestCase
     /**
      * Helper BaseUrl
      */
-    public function testViewHelperBaseUrl()
+    public function testHelperBaseUrl()
     {
         $view = $this->getApp()->getView();
 
@@ -156,7 +155,7 @@ class ViewTest extends TestCase
     /**
      * Helper Breadcrumbs
      */
-    public function testViewHelperBreadcrumbs()
+    public function testHelperBreadcrumbs()
     {
         $view = $this->getApp()->getView();
 
@@ -168,7 +167,7 @@ class ViewTest extends TestCase
     /**
      * Helper Checkbox
      */
-    public function testViewHelperCheckbox()
+    public function testHelperCheckbox()
     {
         $view = $this->getApp()->getView();
 
@@ -180,7 +179,7 @@ class ViewTest extends TestCase
     /**
      * Helper Controller
      */
-    public function testViewHelperController()
+    public function testHelperController()
     {
         $view = $this->getApp()->getView();
 
@@ -192,7 +191,7 @@ class ViewTest extends TestCase
      * Helper Dispatch
      *  - this Controller is not exists -> call Exception helper
      */
-    public function testViewHelperDispatch()
+    public function testHelperDispatch()
     {
         $view = $this->getApp()->getView();
 
@@ -203,7 +202,7 @@ class ViewTest extends TestCase
      * Helper Exception
      *  - should be empty for disabled debug
      */
-    public function testViewHelperException()
+    public function testHelperException()
     {
         $view = $this->getApp()->getView();
 
@@ -213,7 +212,7 @@ class ViewTest extends TestCase
     /**
      * Helper Script
      */
-    public function testViewHelperHeadScript()
+    public function testHelperHeadScript()
     {
         $view = $this->getApp()->getView();
 
@@ -233,7 +232,7 @@ class ViewTest extends TestCase
     /**
      * Helper Style
      */
-    public function testViewHelperHeadStyle()
+    public function testHelperHeadStyle()
     {
         $view = $this->getApp()->getView();
 
@@ -253,7 +252,7 @@ class ViewTest extends TestCase
     /**
      * Helper Link
      */
-    public function testViewHelperLink()
+    public function testHelperLink()
     {
         $view = $this->getApp()->getView();
 
@@ -272,7 +271,7 @@ class ViewTest extends TestCase
     /**
      * Helper Meta
      */
-    public function testViewHelperMeta()
+    public function testHelperMeta()
     {
         $view = $this->getApp()->getView();
 
@@ -291,7 +290,7 @@ class ViewTest extends TestCase
     /**
      * Helper Meta with Array
      */
-    public function testViewHelperMetaArray()
+    public function testHelperMetaArray()
     {
         $view = $this->getApp()->getView();
 
@@ -321,7 +320,7 @@ class ViewTest extends TestCase
     /**
      * Helper Module
      */
-    public function testViewHelperModule()
+    public function testHelperModule()
     {
         $view = $this->getApp()->getView();
 
@@ -330,9 +329,61 @@ class ViewTest extends TestCase
     }
 
     /**
+     * Helper Partial
+     */
+    public function testHelperPartial()
+    {
+        $this->markTestIncomplete("Need to implement template");
+    }
+
+    /**
+     * Helper Partial throws
+     *
+     * @expectedException \Bluz\View\ViewException
+     */
+    public function testHelperPartialNotFoundTrowsException()
+    {
+        $view = $this->getApp()->getView();
+
+        $view->partial('file-not-exists.phtml');
+    }
+
+    /**
+     * Helper Partial Loop
+     */
+    public function testHelperPartialLoop()
+    {
+        $this->markTestIncomplete("Need to implement template");
+    }
+
+    /**
+     * Helper Partial Loop throws
+     *
+     * @expectedException \InvalidArgumentException
+     */
+    public function testHelperPartialLoopInvalidArgumentsTrowsException()
+    {
+        $view = $this->getApp()->getView();
+
+        $view->partialLoop('file-not-exists.phtml', null);
+    }
+
+    /**
+     * Helper Partial Loop throws
+     *
+     * @expectedException \Bluz\View\ViewException
+     */
+    public function testHelperPartialLoopNotFoundTrowsException()
+    {
+        $view = $this->getApp()->getView();
+
+        $view->partialLoop('file-not-exists.phtml', ['foo', 'bar']);
+    }
+
+    /**
      * Helper Radio
      */
-    public function testViewHelperRadio()
+    public function testHelperRadio()
     {
         $view = $this->getApp()->getView();
 
@@ -342,9 +393,22 @@ class ViewTest extends TestCase
     }
 
     /**
+     * Helper Redactor
+     */
+    public function testHelperRedactor()
+    {
+        $view = $this->getApp()->getView();
+
+        $view->redactor('#editor');
+
+        $this->assertNotEmpty($view->headScript());
+        $this->assertNotEmpty($view->headStyle());
+    }
+
+    /**
      * Helper Script
      */
-    public function testViewHelperScript()
+    public function testHelperScript()
     {
         $view = $this->getApp()->getView();
 
@@ -356,7 +420,7 @@ class ViewTest extends TestCase
     /**
      * Helper Script inline
      */
-    public function testViewHelperScriptPlain()
+    public function testHelperScriptPlain()
     {
         $view = $this->getApp()->getView();
 
@@ -369,7 +433,7 @@ class ViewTest extends TestCase
     /**
      * Helper Select
      */
-    public function testViewHelperSelect()
+    public function testHelperSelect()
     {
         $view = $this->getApp()->getView();
 
@@ -411,7 +475,7 @@ class ViewTest extends TestCase
     /**
      * Helper Select
      */
-    public function testViewHelperSelectMultiple()
+    public function testHelperSelectMultiple()
     {
         $view = $this->getApp()->getView();
 
@@ -445,7 +509,7 @@ class ViewTest extends TestCase
     /**
      * Helper Style
      */
-    public function testViewHelperStyle()
+    public function testHelperStyle()
     {
         $view = $this->getApp()->getView();
 
@@ -457,7 +521,7 @@ class ViewTest extends TestCase
     /**
      * Helper Style inline
      */
-    public function testViewHelperStylePlain()
+    public function testHelperStylePlain()
     {
         $view = $this->getApp()->getView();
 
@@ -470,7 +534,7 @@ class ViewTest extends TestCase
     /**
      * Helper Title
      */
-    public function testViewHelperTitle()
+    public function testHelperTitle()
     {
         $view = $this->getApp()->getView();
 
@@ -486,7 +550,7 @@ class ViewTest extends TestCase
     /**
      * Helper Url
      */
-    public function testViewHelperUrl()
+    public function testHelperUrl()
     {
         $view = $this->getApp()->getView();
 
@@ -501,7 +565,7 @@ class ViewTest extends TestCase
      *
      * @expectedException \Bluz\View\ViewException
      */
-    public function testViewHelperUrlException()
+    public function testHelperUrlException()
     {
         $view = $this->getApp()->getView();
 
@@ -511,7 +575,7 @@ class ViewTest extends TestCase
     /**
      * Helper User
      */
-    public function testViewHelperUser()
+    public function testHelperUser()
     {
         $view = $this->getApp()->getView();
 
@@ -522,7 +586,7 @@ class ViewTest extends TestCase
      * Helper Widget
      *  - this Widget is not exists -> call Exception helper
      */
-    public function testViewHelperWidget()
+    public function testHelperWidget()
     {
         $view = $this->getApp()->getView();
 

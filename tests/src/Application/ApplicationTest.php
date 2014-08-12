@@ -85,6 +85,7 @@ class ApplicationTest extends TestCase
         //  - configs/application.php
         //  - configs/app.testing.php
         // hardcoded numbers of configuration items
+
         $this->assertEquals(12, sizeof($this->getApp()->getConfigData()));
         $this->assertEquals(["foo" => "bar"], $this->getApp()->getConfigData("test"));
         $this->assertEquals("bar", $this->getApp()->getConfigData("test", "foo"));
@@ -141,5 +142,54 @@ class ApplicationTest extends TestCase
         $this->getApp()->process();
         $this->assertEquals(Router::ERROR_MODULE, $this->getApp()->getModule());
         $this->assertEquals(Router::ERROR_CONTROLLER, $this->getApp()->getController());
+    }
+
+    /**
+     * Test Helper Denied
+     *
+     * @expectedException \Bluz\Application\Exception\ForbiddenException
+     */
+    public function testHelperDenied()
+    {
+        $this->getApp()->denied();
+    }
+
+    /**
+     * Test Helper Redirect
+     *
+     * @expectedException \Bluz\Application\Exception\RedirectException
+     */
+    public function testHelperRedirect()
+    {
+        $this->getApp()->redirect('/');
+    }
+
+    /**
+     * Test Helper RedirectTo
+     *
+     * @expectedException \Bluz\Application\Exception\RedirectException
+     */
+    public function testHelperRedirectTo()
+    {
+        $this->getApp()->redirectTo(Router::DEFAULT_MODULE, Router::DEFAULT_CONTROLLER);
+    }
+
+    /**
+     * Test Helper Reload
+     *
+     * @expectedException \Bluz\Application\Exception\ReloadException
+     */
+    public function testHelperReload()
+    {
+        $this->getApp()->reload();
+    }
+
+    /**
+     * Test Helper User
+     */
+    public function testHelperUser()
+    {
+        $result = $this->getApp()->user();
+        $this->assertNull($result);
     }
 }

@@ -57,4 +57,3 @@ class AuthTest extends TestCase
         $this->assertNull($auth->getIdentity());
     }
 }
- 

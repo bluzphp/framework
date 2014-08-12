@@ -24,7 +24,6 @@ use Bluz\Request\RequestException;
  */
 class Request extends AbstractRequest
 {
-
     /**
      * Constructor
      *

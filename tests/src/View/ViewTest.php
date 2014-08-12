@@ -9,7 +9,6 @@
  */
 namespace Bluz\Tests\View;
 
-use Bluz\Http\Request;
 use Bluz\Router\Router;
 use Bluz\Tests\TestCase;
 use Bluz\View\View;
@@ -330,6 +329,58 @@ class ViewTest extends TestCase
     }
 
     /**
+     * Helper Partial
+     */
+    public function testViewHelperPartial()
+    {
+        $this->markTestIncomplete("Need to implement template");
+    }
+
+    /**
+     * Helper Partial throws
+     *
+     * @expectedException \Bluz\View\ViewException
+     */
+    public function testViewHelperPartialNotFoundTrowsException()
+    {
+        $view = $this->getApp()->getView();
+
+        $view->partial('file-not-exists.phtml');
+    }
+
+    /**
+     * Helper Partial Loop
+     */
+    public function testViewHelperPartialLoop()
+    {
+        $this->markTestIncomplete("Need to implement template");
+    }
+
+    /**
+     * Helper Partial Loop throws
+     *
+     * @expectedException \InvalidArgumentException
+     */
+    public function testViewHelperPartialLoopInvalidArgumentsTrowsException()
+    {
+        $view = $this->getApp()->getView();
+
+        $view->partialLoop('file-not-exists.phtml', null);
+    }
+
+    /**
+     * Helper Partial Loop throws
+     *
+     * @expectedException \Bluz\View\ViewException
+     */
+    public function testViewHelperPartialLoopNotFoundTrowsException()
+    {
+        $view = $this->getApp()->getView();
+
+        $view->partialLoop('file-not-exists.phtml', ['foo', 'bar']);
+    }
+
+    /**
      * Helper Radio
      */
     public function testViewHelperRadio()
@@ -339,6 +390,19 @@ class ViewTest extends TestCase
         $result = $view->radio('test', 1, true, ['class' => 'foo']);
 
         $this->assertEquals('<input class="foo" checked="checked" value="1" name="test" type="radio"/>', $result);
+    }
+
+    /**
+     * Helper Redactor
+     */
+    public function testViewHelperRedactor()
+    {
+        $view = $this->getApp()->getView();
+
+        $view->redactor('#editor');
+
+        $this->assertNotEmpty($view->headScript());
+        $this->assertNotEmpty($view->headStyle());
     }
 
     /**

@@ -38,6 +38,7 @@ return
             }
         }
     }
+
     if (!$__file) {
         throw new ViewException("Template '{$__template}' not found");
     }

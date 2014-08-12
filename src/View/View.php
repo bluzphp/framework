@@ -37,6 +37,7 @@ use Bluz\Common\Options;
  * @method string partial($__template, $__params = array())
  * @method string partialLoop($template, $data = [], $params = [])
  * @method string radio($name, $value = null, $checked = false, array $attributes = [])
+ * @method string redactor($selector, array $settings = [])
  * @method string script(string $script)
  * @method string select($name, array $options = [], $selected = null, array $attributes = [])
  * @method string style(string $style, $media = 'all')
@@ -275,7 +276,8 @@ class View implements ViewInterface, \JsonSerializable
     {
         ob_start();
         try {
-            if (!file_exists($this->path . '/' . $this->template)) {
+            if (!file_exists($this->path . '/' . $this->template)
+                or !is_file($this->path . '/' . $this->template)) {
                 throw new ViewException("Template '{$this->template}' not found");
             }
             extract($this->data);

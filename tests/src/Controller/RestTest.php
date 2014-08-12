@@ -167,7 +167,7 @@ class RestTest extends TestCase
         $this->assertFalse($result);
 
         $primary = $this->getApp()->getDb()->fetchOne(
-            'SELECT id FROM `test` WHERE `name` = ?',
+            'SELECT id FROM test WHERE name = ?',
             ['Splinter']
         );
 
@@ -226,7 +226,7 @@ class RestTest extends TestCase
         $this->assertFalse($result);
 
         $id = $this->getApp()->getDb()->fetchOne(
-            'SELECT `id` FROM `test` WHERE `email` = ?',
+            'SELECT id FROM test WHERE email = ?',
             ['leonardo@turtles.ua']
         );
         $this->assertEquals($id, 2);
@@ -321,7 +321,7 @@ class RestTest extends TestCase
         $this->assertFalse($result);
 
         $count = $this->getApp()->getDb()->fetchOne(
-            'SELECT count(*) FROM `test` WHERE `id` = ?',
+            'SELECT count(*) FROM test WHERE id = ?',
             [1]
         );
         $this->assertEquals($count, 0);

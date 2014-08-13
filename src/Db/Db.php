@@ -66,14 +66,11 @@ class Db
     /**
      * setDefaultAdapter
      *
-     * @param bool $flag
      * @return Db
      */
-    public function setDefaultAdapter($flag = true)
+    public function setDefaultAdapter()
     {
-        if ($flag) {
-            self::$adapter = $this;
-        }
+        self::$adapter = $this;
         return $this;
     }
 

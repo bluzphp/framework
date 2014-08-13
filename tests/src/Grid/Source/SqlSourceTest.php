@@ -11,7 +11,7 @@ namespace Bluz\Tests\Grid\Source;
 
 use Bluz\Grid\Source\SqlSource;
 use Bluz\Tests\TestCase;
-use Bluz\Tests\Fixtures\Models\Test;
+use Bluz\Tests\Grid\Fixtures\SqlGrid;
 
 /**
  * @package  Bluz\Tests
@@ -34,7 +34,7 @@ class GridTest extends TestCase
      */
     public function testSqlGrid()
     {
-        $grid = new Test\SqlGrid();
+        $grid = new SqlGrid();
         $this->assertEquals(5, $grid->pages());
         $this->assertEquals(42, $grid->total());
     }

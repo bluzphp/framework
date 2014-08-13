@@ -7,10 +7,11 @@
 /**
  * @namespace
  */
-namespace Bluz\Tests\Fixtures\Models\Test;
+namespace Bluz\Tests\Grid\Fixtures;
 
+use Bluz\Db\Query\Select;
 use Bluz\Grid\Grid;
-use Bluz\Grid\Source\SqlSource;
+use Bluz\Grid\Source\SelectSource;
 
 /**
  * Test Grid based on SQL
@@ -18,8 +19,11 @@ use Bluz\Grid\Source\SqlSource;
  * @category Application
  * @package  Test
  */
-class SqlGrid extends Grid
+class SelectGrid extends Grid
 {
+    /**
+     * @var string
+     */
     protected $uid = 'sql';
 
     /**
@@ -30,14 +34,17 @@ class SqlGrid extends Grid
     public function init()
     {
          // Array
-         $adapter = new SqlSource();
-         $adapter->setSource('SELECT * FROM test');
+         $adapter = new SelectSource();
+
+         $select = new Select();
+         $select->select('*')->from('test', 't');
+
+         $adapter->setSource($select);
 
          $this->setAdapter($adapter);
          $this->setDefaultLimit(10);
          $this->setAllowOrders(['name', 'id', 'status']);
          $this->setAllowFilters(['status', 'id']);
-         $this->setDefaultOrder('name', Grid::ORDER_DESC);
 
          return $this;
     }

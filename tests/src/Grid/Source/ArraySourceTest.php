@@ -12,7 +12,7 @@ namespace Bluz\Tests\Grid\Source;
 use Bluz\Grid\Grid;
 use Bluz\Grid\Source\ArraySource;
 use Bluz\Tests\TestCase;
-use Bluz\Tests\Fixtures\Models\Test;
+use Bluz\Tests\Grid\Fixtures\ArrayGrid;
 
 /**
  * @package  Bluz\Tests
@@ -35,7 +35,7 @@ class ArraySourceTest extends TestCase
      */
     public function testArrayGrid()
     {
-        $grid = new Test\ArrayGrid();
+        $grid = new ArrayGrid();
         $this->assertEquals(3, $grid->pages());
         $this->assertEquals(10, $grid->total());
     }
@@ -55,7 +55,7 @@ class ArraySourceTest extends TestCase
      */
     public function testOrders()
     {
-        $grid = new Test\ArrayGrid();
+        $grid = new ArrayGrid();
         $grid->setDefaultOrder('id', Grid::ORDER_DESC);
         $grid->getData();
 
@@ -68,7 +68,7 @@ class ArraySourceTest extends TestCase
      */
     public function testFilters()
     {
-        $grid = new Test\ArrayGrid();
+        $grid = new ArrayGrid();
 
         $grid->addFilter('id', Grid::FILTER_GT, 1);  // id > 1
         $grid->addFilter('id', Grid::FILTER_GE, 2);  // id >= 2
@@ -84,7 +84,7 @@ class ArraySourceTest extends TestCase
      */
     public function testFilterEqual()
     {
-        $grid = new Test\ArrayGrid();
+        $grid = new ArrayGrid();
 
         $grid->addFilter('id', Grid::FILTER_EQ, 1);  // id = 1
 
@@ -97,7 +97,7 @@ class ArraySourceTest extends TestCase
      */
     public function testFilterNotEqual()
     {
-        $grid = new Test\ArrayGrid();
+        $grid = new ArrayGrid();
 
         $grid->addFilter('id', Grid::FILTER_NE, 1);  // id != 1
 
@@ -110,7 +110,7 @@ class ArraySourceTest extends TestCase
      */
     public function testFilterLike()
     {
-        $grid = new Test\ArrayGrid();
+        $grid = new ArrayGrid();
 
         $grid->addFilter('email', Grid::FILTER_LIKE, '^m@');  // preg_match('/^m@/', email)
 

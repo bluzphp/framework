@@ -11,7 +11,7 @@ namespace Bluz\Tests\Grid\Source;
 
 use Bluz\Grid\Source\SelectSource;
 use Bluz\Tests\TestCase;
-use Bluz\Tests\Fixtures\Models\Test;
+use Bluz\Tests\Grid\Fixtures\SelectGrid;
 
 /**
  * @package  Bluz\Tests
@@ -34,7 +34,7 @@ class SelectSourceTest extends TestCase
      */
     public function testSelectGrid()
     {
-        $grid = new Test\SelectGrid();
+        $grid = new SelectGrid();
         $this->assertEquals(5, $grid->pages());
         $this->assertEquals(42, $grid->total());
     }

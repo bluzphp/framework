@@ -30,7 +30,6 @@ class GridTest extends TestCase
     }
 
     /**
-     * @covers Grid::addOrder
      * @covers Grid::addOrders
      * @covers Grid::setOrders
      * @covers Grid::getOrders

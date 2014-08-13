@@ -30,9 +30,10 @@ class GridTest extends TestCase
     }
 
     /**
-     * @covers Grid::addOrders
-     * @covers Grid::setOrders
-     * @covers Grid::getOrders
+     * @covers \Bluz\Grid\Grid::addOrder
+     * @covers \Bluz\Grid\Grid::addOrders
+     * @covers \Bluz\Grid\Grid::setOrders
+     * @covers \Bluz\Grid\Grid::getOrders
      */
     public function testOrders()
     {
@@ -48,7 +49,7 @@ class GridTest extends TestCase
     }
 
     /**
-     * @covers Grid::getPrefix
+     * @covers \Bluz\Grid\Grid::getPrefix
      */
     public function testGetPrefix()
     {
@@ -75,7 +76,7 @@ class GridTest extends TestCase
     }
 
     /**
-     * @covers Grid::getDefaultLimit
+     * @covers \Bluz\Grid\Grid::getDefaultLimit
      */
     public function testGetDefaultLimit()
     {

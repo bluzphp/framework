@@ -766,9 +766,6 @@ abstract class Grid
      */
     public function setDefaultOrder($column, $order = Grid::ORDER_ASC)
     {
-        if (empty($column)) {
-            throw new GridException('Wrong default order value, should be not empty');
-        }
         $this->setOrder($column, $order);
 
         $this->defaultOrder = array($column => $order);

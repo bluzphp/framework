@@ -9,7 +9,7 @@
  */
 namespace Bluz\Tests\Grid;
 
-use Bluz\Grid\Source\ArraySource;
+use Bluz\Grid\Grid;
 use Bluz\Grid\Source\SelectSource;
 use Bluz\Grid\Source\SqlSource;
 use Bluz\Tests\TestCase;
@@ -22,7 +22,6 @@ use Bluz\Tests\Fixtures\Models\Test;
  */
 class GridTest extends TestCase
 {
-
     /**
      * Setup Application
      */
@@ -33,63 +32,39 @@ class GridTest extends TestCase
     }
 
     /**
-     * Array Source
+     * @expectedException \Bluz\Grid\GridException
      */
-    public function testArrayGrid()
+    public function testWrongColumnFilterThrowException()
     {
         $grid = new Test\ArrayGrid();
-        $this->assertEquals(3, $grid->pages());
-        $this->assertEquals(10, $grid->total());
+        $grid->addFilter('not exist', Grid::FILTER_EQ, 'not found');
     }
 
     /**
-     * Array Source Exception
      * @expectedException \Bluz\Grid\GridException
      */
-    public function testArraySourceThrowsGridException()
+    public function testWrongFilterNameThrowException()
     {
-        $adapter = new ArraySource();
-        $adapter->setSource('wrong source type');
+        $grid = new Test\ArrayGrid();
+        $grid->addFilter('id', 'not exist', 'not found');
     }
 
     /**
-     * SQL Source
-     */
-    public function testSqlGrid()
-    {
-        $grid = new Test\SqlGrid();
-        $this->assertEquals(5, $grid->pages());
-        $this->assertEquals(42, $grid->total());
-    }
-
-    /**
-     * SQL Source Exception
      * @expectedException \Bluz\Grid\GridException
      */
-    public function testSqlSourceThrowsGridException()
+    public function testWrongOrderThrowException()
     {
-        $adapter = new SqlSource();
-        $adapter->setSource(['wrong source type']);
+        $grid = new Test\ArrayGrid();
+        $grid->setDefaultOrder('not exist');
     }
 
     /**
-     * Select Source
-     */
-    public function testSelectGrid()
-    {
-        $grid = new Test\SelectGrid();
-        $this->assertEquals(5, $grid->pages());
-        $this->assertEquals(42, $grid->total());
-    }
-
-    /**
-     * Select Source Exception
      * @expectedException \Bluz\Grid\GridException
      */
-    public function testSelectSourceThrowsGridException()
+    public function testWrongOrderDirectionThrowException()
     {
-        $adapter = new SelectSource();
-        $adapter->setSource('wrong source type');
+        $grid = new Test\ArrayGrid();
+        $grid->setDefaultOrder('id', 'not exist');
     }
 
     /**

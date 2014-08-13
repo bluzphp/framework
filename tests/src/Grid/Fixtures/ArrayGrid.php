@@ -7,7 +7,7 @@
 /**
  * @namespace
  */
-namespace Bluz\Tests\Fixtures\Models\Test;
+namespace Bluz\Tests\Grid\Fixtures;
 
 use Bluz\Grid\Grid;
 use Bluz\Grid\Source\ArraySource;
@@ -20,7 +20,11 @@ use Bluz\Grid\Source\ArraySource;
  */
 class ArrayGrid extends Grid
 {
+    /**
+     * @var string
+     */
     protected $uid = 'arr';
+
     /**
      * init
      * 
@@ -48,7 +52,7 @@ class ArrayGrid extends Grid
          $this->setAdapter($adapter);
          $this->setDefaultLimit(4);
          $this->setAllowOrders(['name', 'email', 'id']);
-         $this->setAllowFilters(['name', 'status', 'id']);
+         $this->setAllowFilters(['name', 'email', 'status', 'id']);
 
          return $this;
     }

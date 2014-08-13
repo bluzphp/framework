@@ -9,11 +9,9 @@
  */
 namespace Bluz\Tests\Grid;
 
-use Bluz\Grid\Source\ArraySource;
-use Bluz\Grid\Source\SelectSource;
-use Bluz\Grid\Source\SqlSource;
+use Bluz\Grid\Grid;
 use Bluz\Tests\TestCase;
-use Bluz\Tests\Fixtures\Models\Test;
+use Bluz\Tests\Grid\Fixtures\ArrayGrid;
 
 /**
  * @package  Bluz\Tests
@@ -22,7 +20,6 @@ use Bluz\Tests\Fixtures\Models\Test;
  */
 class GridTest extends TestCase
 {
-
     /**
      * Setup Application
      */
@@ -33,63 +30,103 @@ class GridTest extends TestCase
     }
 
     /**
-     * Array Source
+     * @covers \Bluz\Grid\Grid::addOrder
+     * @covers \Bluz\Grid\Grid::addOrders
+     * @covers \Bluz\Grid\Grid::setOrders
+     * @covers \Bluz\Grid\Grid::getOrders
      */
-    public function testArrayGrid()
+    public function testOrders()
     {
-        $grid = new Test\ArrayGrid();
-        $this->assertEquals(3, $grid->pages());
-        $this->assertEquals(10, $grid->total());
+        $orders = [
+            'name' => Grid::ORDER_ASC,
+            'email' => Grid::ORDER_DESC
+        ];
+
+        $grid = new ArrayGrid();
+        $grid->setOrders($orders);
+
+        $this->assertEqualsArray($orders, $grid->getOrders());
     }
 
     /**
-     * Array Source Exception
+     * @covers \Bluz\Grid\Grid::getPrefix
+     */
+    public function testGetPrefix()
+    {
+        $grid = new ArrayGrid();
+        $this->assertEquals('arr-', $grid->getPrefix());
+    }
+
+    /**
      * @expectedException \Bluz\Grid\GridException
      */
-    public function testArraySourceThrowsGridException()
+    public function testWrongPageThrowException()
     {
-        $adapter = new ArraySource();
-        $adapter->setSource('wrong source type');
+        $grid = new ArrayGrid();
+        $grid->setPage(0);
     }
 
     /**
-     * SQL Source
-     */
-    public function testSqlGrid()
-    {
-        $grid = new Test\SqlGrid();
-        $this->assertEquals(5, $grid->pages());
-        $this->assertEquals(42, $grid->total());
-    }
-
-    /**
-     * SQL Source Exception
      * @expectedException \Bluz\Grid\GridException
      */
-    public function testSqlSourceThrowsGridException()
+    public function testWrongLimitThrowException()
     {
-        $adapter = new SqlSource();
-        $adapter->setSource(['wrong source type']);
+        $grid = new ArrayGrid();
+        $grid->setLimit(0);
     }
 
     /**
-     * Select Source
+     * @covers \Bluz\Grid\Grid::getDefaultLimit
      */
-    public function testSelectGrid()
+    public function testGetDefaultLimit()
     {
-        $grid = new Test\SelectGrid();
-        $this->assertEquals(5, $grid->pages());
-        $this->assertEquals(42, $grid->total());
+        $grid = new ArrayGrid();
+        $this->assertEquals(4, $grid->getDefaultLimit());
     }
 
     /**
-     * Select Source Exception
      * @expectedException \Bluz\Grid\GridException
      */
-    public function testSelectSourceThrowsGridException()
+    public function testWrongDefaultLimitThrowException()
     {
-        $adapter = new SelectSource();
-        $adapter->setSource('wrong source type');
+        $grid = new ArrayGrid();
+        $grid->setDefaultLimit(0);
+    }
+
+    /**
+     * @expectedException \Bluz\Grid\GridException
+     */
+    public function testWrongColumnFilterThrowException()
+    {
+        $grid = new ArrayGrid();
+        $grid->addFilter('not exist', Grid::FILTER_EQ, 'not found');
+    }
+
+    /**
+     * @expectedException \Bluz\Grid\GridException
+     */
+    public function testWrongFilterNameThrowException()
+    {
+        $grid = new ArrayGrid();
+        $grid->addFilter('id', 'not exist', 'not found');
+    }
+
+    /**
+     * @expectedException \Bluz\Grid\GridException
+     */
+    public function testWrongOrderThrowException()
+    {
+        $grid = new ArrayGrid();
+        $grid->setDefaultOrder('not exist');
+    }
+
+    /**
+     * @expectedException \Bluz\Grid\GridException
+     */
+    public function testWrongOrderDirectionThrowException()
+    {
+        $grid = new ArrayGrid();
+        $grid->setDefaultOrder('id', 'not exist');
     }
 
     /**
@@ -97,7 +134,7 @@ class GridTest extends TestCase
      */
     public function testHelperFirst()
     {
-        $grid = new Test\ArrayGrid();
+        $grid = new ArrayGrid();
         $this->assertEquals('/', $grid->first());
     }
 
@@ -106,7 +143,7 @@ class GridTest extends TestCase
      */
     public function testHelperLast()
     {
-        $grid = new Test\ArrayGrid();
+        $grid = new ArrayGrid();
         $this->assertEquals('/index/index/arr-page/3', $grid->last());
     }
 
@@ -115,7 +152,7 @@ class GridTest extends TestCase
      */
     public function testHelperLimit()
     {
-        $grid = new Test\ArrayGrid();
+        $grid = new ArrayGrid();
         $this->assertEquals('/index/index/arr-limit/25', $grid->limit());
     }
 
@@ -124,7 +161,7 @@ class GridTest extends TestCase
      */
     public function testHelperNext()
     {
-        $grid = new Test\ArrayGrid();
+        $grid = new ArrayGrid();
         $this->assertEquals('/index/index/arr-page/2', $grid->next());
     }
 
@@ -133,7 +170,7 @@ class GridTest extends TestCase
      */
     public function testHelperOrder()
     {
-        $grid = new Test\ArrayGrid();
+        $grid = new ArrayGrid();
         $this->assertEquals('/index/index/arr-order-name/asc', $grid->order('name'));
     }
 
@@ -142,7 +179,7 @@ class GridTest extends TestCase
      */
     public function testHelperPage()
     {
-        $grid = new Test\ArrayGrid();
+        $grid = new ArrayGrid();
         $this->assertEquals('/index/index/arr-page/2', $grid->page(2));
         $this->assertNull($grid->page(42));
     }
@@ -152,7 +189,7 @@ class GridTest extends TestCase
      */
     public function testHelperPages()
     {
-        $grid = new Test\ArrayGrid();
+        $grid = new ArrayGrid();
         $this->assertEquals(3, $grid->pages());
     }
 
@@ -161,7 +198,7 @@ class GridTest extends TestCase
      */
     public function testHelperPrev()
     {
-        $grid = new Test\ArrayGrid();
+        $grid = new ArrayGrid();
         $grid->setPage(3);
         $this->assertEquals('/index/index/arr-page/2', $grid->prev());
     }
@@ -171,7 +208,7 @@ class GridTest extends TestCase
      */
     public function testHelperReset()
     {
-        $grid = new Test\ArrayGrid();
+        $grid = new ArrayGrid();
         $this->assertEquals('/', $grid->reset());
     }
 
@@ -180,7 +217,7 @@ class GridTest extends TestCase
      */
     public function testHelperTotal()
     {
-        $grid = new Test\ArrayGrid();
+        $grid = new ArrayGrid();
         $this->assertEquals(10, $grid->total());
     }
 }

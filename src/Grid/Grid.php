@@ -563,9 +563,7 @@ abstract class Grid
     public function setOrders(array $orders)
     {
         $this->orders = [];
-        foreach ($orders as $column => $order) {
-            $this->addOrder($column, $order);
-        }
+        $this->addOrders($orders);
         return $this;
     }
 
@@ -766,9 +764,6 @@ abstract class Grid
      */
     public function setDefaultOrder($column, $order = Grid::ORDER_ASC)
     {
-        if (empty($column)) {
-            throw new GridException('Wrong default order value, should be not empty');
-        }
         $this->setOrder($column, $order);
 
         $this->defaultOrder = array($column => $order);

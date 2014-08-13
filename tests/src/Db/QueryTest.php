@@ -27,6 +27,14 @@ use Bluz\Tests;
 class QueryTest extends Bluz\Tests\TestCase
 {
     /**
+     * setUp
+     */
+    public function setUp()
+    {
+        $this->getApp()->getDb()->setDefaultAdapter();
+    }
+
+    /**
      * Complex test of select builder
      */
     public function testSelect()

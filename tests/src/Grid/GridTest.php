@@ -30,7 +30,26 @@ class GridTest extends TestCase
     }
 
     /**
-     * getPrefix
+     * @covers Grid::addOrder
+     * @covers Grid::addOrders
+     * @covers Grid::setOrders
+     * @covers Grid::getOrders
+     */
+    public function testOrders()
+    {
+        $orders = [
+            'name' => Grid::ORDER_ASC,
+            'email' => Grid::ORDER_DESC
+        ];
+
+        $grid = new ArrayGrid();
+        $grid->setOrders($orders);
+
+        $this->assertEqualsArray($orders, $grid->getOrders());
+    }
+
+    /**
+     * @covers Grid::getPrefix
      */
     public function testGetPrefix()
     {
@@ -57,7 +76,7 @@ class GridTest extends TestCase
     }
 
     /**
-     * getDefaultLimit
+     * @covers Grid::getDefaultLimit
      */
     public function testGetDefaultLimit()
     {

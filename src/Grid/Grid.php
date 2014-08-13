@@ -563,9 +563,7 @@ abstract class Grid
     public function setOrders(array $orders)
     {
         $this->orders = [];
-        foreach ($orders as $column => $order) {
-            $this->addOrder($column, $order);
-        }
+        $this->addOrders($orders);
         return $this;
     }
 

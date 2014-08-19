@@ -11,6 +11,7 @@ namespace Bluz\Tests\Mailer;
 
 use Bluz\Mailer\Mailer;
 use Bluz\Tests\TestCase;
+
 /**
  * MailerTest
  *
@@ -39,4 +40,3 @@ class MailerTest extends TestCase
         $mailer->create();
     }
 }
- 

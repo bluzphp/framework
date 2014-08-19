@@ -54,6 +54,15 @@ class Mailer
      */
     public function create()
     {
+        // can initial, can't use
+        if (!class_exists('\PHPMailer')) {
+            throw new MailerException(
+                "PHPMailer library is required for `Bluz\\Mailer` package. <br/>\n" .
+                "Read more: <a href='https://github.com/bluzphp/framework/wiki/Mailer'>".
+                "https://github.com/bluzphp/framework/wiki/Mailer</a>"
+            );
+        }
+
         $mail = new \PHPMailer();
         $mail->WordWrap = 920; // RFC 2822 Compliant for Max 998 characters per line
 

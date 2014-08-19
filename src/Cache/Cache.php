@@ -27,6 +27,9 @@ use Bluz\Config\ConfigException;
  *                    If it is not set, 'cacheAdapter' instance will be used as a tag adapter
  *
  * @package Bluz\Cache
+ *
+ * @link https://github.com/bluzphp/framework/wiki/Cache
+ *
  * @author murzik
  */
 class Cache implements CacheInterface, TagableInterface

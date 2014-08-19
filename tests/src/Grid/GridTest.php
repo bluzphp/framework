@@ -130,6 +130,33 @@ class GridTest extends TestCase
     }
 
     /**
+     * Helper Filter
+     */
+    public function testHelperFilter()
+    {
+        $grid = new ArrayGrid();
+        $this->assertEquals('/index/index/arr-filter-id/ne-1', $grid->filter('id', Grid::FILTER_NE, 1));
+    }
+
+    /**
+     * Helper Filter
+     */
+    public function testHelperWrongFilterColumnReturnNull()
+    {
+        $grid = new ArrayGrid();
+        $this->assertNull($grid->filter('not exist', Grid::FILTER_NE, 1));
+    }
+
+    /**
+     * Helper Filter
+     */
+    public function testHelperWrongFilterNameReturnNull()
+    {
+        $grid = new ArrayGrid();
+        $this->assertNull($grid->filter('id', 'not exist', 1));
+    }
+
+    /**
      * Helper First
      */
     public function testHelperFirst()

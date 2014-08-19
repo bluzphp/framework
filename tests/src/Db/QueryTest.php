@@ -41,7 +41,8 @@ class QueryTest extends Bluz\Tests\TestCase
     {
         $builder = new Select();
         $builder = $builder
-            ->select('u.*', 'ua.*')
+            ->select('u.*')
+            ->addSelect('ua.*')
             ->from('users', 'u')
             ->leftJoin('u', 'users_actions', 'ua', 'ua.userId = u.id')
             ->where('u.id = ? OR u.id = ?', 4, 5)
@@ -59,6 +60,68 @@ class QueryTest extends Bluz\Tests\TestCase
             . ' AND (u.status = "active" OR u.status = "pending")) OR (u.login LIKE ("A%"))'
             . ' ORDER BY u.id ASC, u.login ASC'
             . ' LIMIT 5 OFFSET 0';
+
+        $this->assertEquals($builder->getQuery(), $check);
+    }
+
+    /**
+     * Complex test of select builder
+     */
+    public function testSelectWithGroupAndHaving()
+    {
+        $builder = new Select();
+        $builder = $builder
+            ->select('p.*')
+            ->from('pages', 'p')
+            ->groupBy('p.userId')
+            ->addGroupBy('MONTH(p.added)')
+            ->having('MONTH(p.added) = "2"')
+            ->orHaving('MONTH(p.added) = "4"')
+            ->andHaving('p.userId <> 0')
+        ;
+
+        $check = 'SELECT p.*'
+            . ' FROM pages p'
+            . ' GROUP BY p.userId, MONTH(p.added)'
+            . ' HAVING ((MONTH(p.added) = "2") OR (MONTH(p.added) = "4")) AND (p.userId <> 0)';
+
+        $this->assertEquals($builder->getQuery(), $check);
+    }
+
+
+
+    /**
+     * Complex test of select builder
+     */
+    public function testSelectWithInnerJoin()
+    {
+        $builder = new Select();
+        $builder = $builder
+            ->select('u.*', 'p.*')
+            ->from('users', 'u')
+            ->join('u', 'pages', 'p', 'p.userId = u.id')
+        ;
+
+        $check = 'SELECT u.*, p.*'
+            . ' FROM users u INNER JOIN pages p ON p.userId = u.id';
+
+        $this->assertEquals($builder->getQuery(), $check);
+    }
+
+    /**
+     * Complex test of select builder
+     */
+    public function testSelectWithRightJoin()
+    {
+        $builder = new Select();
+        $builder = $builder
+            ->select('u.*', 'p.*')
+            ->from('users', 'u')
+            ->rightJoin('u', 'pages', 'p', 'p.userId = u.id')
+        ;
+
+        $check = 'SELECT u.*, p.*'
+            . ' FROM users u RIGHT JOIN pages p ON p.userId = u.id';
 
         $this->assertEquals($builder->getQuery(), $check);
     }

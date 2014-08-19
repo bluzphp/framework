@@ -20,9 +20,10 @@ use Bluz\Db\Exception\DbException;
  *
  * @package  Bluz\Db
  *
+ * @link     https://github.com/AntonShevchuk/Bluz/wiki/Db
+ *
  * @author   Anton Shevchuk
  * @created  07.07.11 15:36
- * @link     https://github.com/AntonShevchuk/Bluz/wiki/Db
  */
 class Db
 {

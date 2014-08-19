@@ -13,7 +13,7 @@ namespace Bluz\Validator\Rule;
 
 /**
  * Class Version
- * @see http://semver.org/
+ * @link http://semver.org/
  * @package Bluz\Validator\Rule
  */
 class Version extends AbstractRule

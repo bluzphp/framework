@@ -51,10 +51,6 @@ class QueryTest extends Bluz\Tests\TestCase
             ->orWhere('u.login LIKE (?)', 'A%')
             ->orderBy('u.id')
             ->addOrderBy('u.login')
-            ->groupBy('u.id')
-            ->addGroupBy('u.status')
-            ->having('u.id')
-            ->andHaving('u.status')
             ->limit(5)
         ;
 
@@ -62,13 +58,37 @@ class QueryTest extends Bluz\Tests\TestCase
             . ' FROM users u LEFT JOIN users_actions ua ON ua.userId = u.id'
             . ' WHERE (((u.id = "4" OR u.id = "5") OR (u.id IN ("4","5")))'
             . ' AND (u.status = "active" OR u.status = "pending")) OR (u.login LIKE ("A%"))'
-            . ' GROUP BY u.id, u.status'
-            . ' HAVING (u.id) AND (u.status)'
             . ' ORDER BY u.id ASC, u.login ASC'
             . ' LIMIT 5 OFFSET 0';
 
         $this->assertEquals($builder->getQuery(), $check);
     }
+
+    /**
+     * Complex test of select builder
+     */
+    public function testSelectWithGroupAndHaving()
+    {
+        $builder = new Select();
+        $builder = $builder
+            ->select('p.*')
+            ->from('pages', 'p')
+            ->groupBy('p.userId')
+            ->addGroupBy('MONTH(p.added)')
+            ->having('MONTH(p.added) = "2"')
+            ->orHaving('MONTH(p.added) = "4"')
+            ->andHaving('p.userId <> 0')
+        ;
+
+        $check = 'SELECT p.*'
+            . ' FROM pages p'
+            . ' GROUP BY p.userId, MONTH(p.added)'
+            . ' HAVING ((MONTH(p.added) = "2") OR (MONTH(p.added) = "4")) AND (p.userId <> 0)';
+
+        $this->assertEquals($builder->getQuery(), $check);
+    }
+
+
 
     /**
      * Complex test of select builder

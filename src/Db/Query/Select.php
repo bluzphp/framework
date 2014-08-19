@@ -338,7 +338,7 @@ class Select extends AbstractBuilder
         $condition = $this->prepareCondition(func_get_args());
         $having = $this->getQueryPart('having');
 
-        if ($having instanceof CompositeBuilder) {
+        if ($having instanceof CompositeBuilder && $having->getType() == 'AND') {
             $having->add($condition);
         } else {
             $having = new CompositeBuilder([$having, $condition]);
@@ -359,7 +359,7 @@ class Select extends AbstractBuilder
         $condition = $this->prepareCondition(func_get_args());
         $having = $this->getQueryPart('having');
 
-        if ($having instanceof CompositeBuilder) {
+        if ($having instanceof CompositeBuilder && $having->getType() == 'OR') {
             $having->add($condition);
         } else {
             $having = new CompositeBuilder([$having, $condition], 'OR');

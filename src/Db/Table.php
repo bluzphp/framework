@@ -104,7 +104,8 @@ abstract class Table
 
         // setup default select query
         if (empty($this->select)) {
-            $this->select = "SELECT * FROM `{$this->table}`";
+            $this->select = "SELECT * ".
+                "FROM " . $this->getAdapter()->quoteIdentifier($this->table);
         }
 
         $this->init();

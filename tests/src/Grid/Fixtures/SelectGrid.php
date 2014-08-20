@@ -44,7 +44,7 @@ class SelectGrid extends Grid
          $this->setAdapter($adapter);
          $this->setDefaultLimit(10);
          $this->setAllowOrders(['name', 'id', 'status']);
-         $this->setAllowFilters(['status', 'id']);
+         $this->setAllowFilters(['status', 'id', 'email']);
 
          return $this;
     }

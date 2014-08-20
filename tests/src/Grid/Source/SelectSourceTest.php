@@ -36,7 +36,9 @@ class SelectSourceTest extends TestCase
     public function testSelectGrid()
     {
         $grid = new SelectGrid();
+        $grid->setDefaultOrder('id', Grid::ORDER_DESC);
         $grid->addFilter('id', Grid::FILTER_GT, 1);  // id > 1
+        $grid->addFilter('email', Grid::FILTER_LIKE, '@');
         $this->assertEquals(5, $grid->pages());
         $this->assertEquals(42, $grid->total());
     }

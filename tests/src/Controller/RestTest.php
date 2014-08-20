@@ -28,6 +28,9 @@ class RestTest extends TestCase
      */
     public static function setUpBeforeClass()
     {
+        $env = getenv('BLUZ_ENV') ?: 'testing';
+        BootstrapTest::getInstance()->init($env);
+
         BootstrapTest::getInstance()->getDb()->insert('test')->setArray(
             [
                 'id' => 1,
@@ -101,6 +104,42 @@ class RestTest extends TestCase
         $request = $this->getApp()->getRequest();
         $request->setMethod(Request::METHOD_GET);
         $request->setRawParams([1]);
+
+        $result = $this->processRest();
+
+        $row = current($result);
+
+        $this->assertInstanceOf('Bluz\Tests\Fixtures\Models\Test\Row', $row);
+        $this->assertEquals(1, $row['id']);
+    }
+
+    /**
+     * GET with PRIMARY and RELATION should return SET of RELATIONS
+     * @todo realization
+     */
+    public function testReadOneWithRelations()
+    {
+        $request = $this->getApp()->getRequest();
+        $request->setMethod(Request::METHOD_GET);
+        $request->setRawParams([1, 'pages']);
+
+        $result = $this->processRest();
+
+        $row = current($result);
+
+        $this->assertInstanceOf('Bluz\Tests\Fixtures\Models\Test\Row', $row);
+        $this->assertEquals(1, $row['id']);
+    }
+
+    /**
+     * GET with PRIMARY, RELATION and PRIMARY OF RELATION should return RECORD
+     * @todo realization
+     */
+    public function testReadOneWithOneRelation()
+    {
+        $request = $this->getApp()->getRequest();
+        $request->setMethod(Request::METHOD_GET);
+        $request->setRawParams([1, 'pages', 1]);
 
         $result = $this->processRest();
 

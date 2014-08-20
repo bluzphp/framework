@@ -50,10 +50,20 @@ class CacheTest extends TestCase
      * Cache Throws Exception for invalid configuration
      * @expectedException \Bluz\Config\ConfigException
      */
-    public function testCacheThrowsException()
+    public function testCacheWithEmptyConfigurationThrowsException()
     {
         $cache = new Cache();
         $cache->setOptions(array());
+    }
+
+    /**
+     * Cache Throws Exception for invalid key
+     * @expectedException \Bluz\Cache\InvalidArgumentException
+     */
+    public function testCacheWithInvalidKeyThrowsException()
+    {
+        $cache = $this->prepareFileCache();
+        $cache->set(new \stdClass(), 'bar');
     }
 
     /**

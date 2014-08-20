@@ -931,6 +931,24 @@ abstract class Application
     {
         $this->log('app:render');
 
+        if ($this->isJson()) {
+            // setup messages
+            if ($this->hasMessages()) {
+                $this->getResponse()->setHeader('Bluz-Notify', json_encode(app()->getMessages()->popAll()));
+            }
+
+            // prepare body
+            if ($body = $this->getResponse()->getBody()) {
+                $body = json_encode($body);
+                // prepare to JSON output
+                $this->getResponse()->setBody($body);
+                // override response code so javascript can process it
+                $this->getResponse()->setHeader('Content-Type', 'application/json');
+                // setup content length
+                $this->getResponse()->setHeader('Content-Length', strlen($body));
+            }
+        }
+
         $this->getResponse()->send();
     }
 

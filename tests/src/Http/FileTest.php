@@ -11,6 +11,7 @@ namespace Bluz\Tests\Http;
 
 use Bluz;
 use Bluz\Http\File;
+use Bluz\Tests\TestCase;
 
 /**
  * FileTest
@@ -20,7 +21,7 @@ use Bluz\Http\File;
  * @author   Taras Seryogin
  * @created  24.06.14 12.41
  */
-class FileTest extends Bluz\Tests\TestCase
+class FileTest extends TestCase
 {
     /**
      * @var string Path to test image

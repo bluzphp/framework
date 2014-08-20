@@ -37,4 +37,3 @@ class ResponseTest extends TestCase
         $response->send();
     }
 }
- 

@@ -145,6 +145,16 @@ class ApplicationTest extends TestCase
     }
 
     /**
+     * Test Response Json
+     */
+    public function testRender()
+    {
+        $this->expectOutputString('foo');
+        $this->getApp()->getResponse()->setBody('foo');
+        $this->getApp()->render();
+    }
+
+    /**
      * Test Helper Denied
      *
      * @expectedException \Bluz\Application\Exception\ForbiddenException

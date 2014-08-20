@@ -28,6 +28,9 @@ class CrudTest extends TestCase
      */
     public static function setUpBeforeClass()
     {
+        $env = getenv('BLUZ_ENV') ?: 'testing';
+        BootstrapTest::getInstance()->init($env);
+
         BootstrapTest::getInstance()->getDb()->insert('test')->setArray(
             [
                 'id' => 1,

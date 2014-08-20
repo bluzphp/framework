@@ -9,6 +9,7 @@
  */
 namespace Bluz\Tests\Grid\Source;
 
+use Bluz\Grid\Grid;
 use Bluz\Grid\Source\SelectSource;
 use Bluz\Tests\TestCase;
 use Bluz\Tests\Grid\Fixtures\SelectGrid;
@@ -35,6 +36,7 @@ class SelectSourceTest extends TestCase
     public function testSelectGrid()
     {
         $grid = new SelectGrid();
+        $grid->addFilter('id', Grid::FILTER_GT, 1);  // id > 1
         $this->assertEquals(5, $grid->pages());
         $this->assertEquals(42, $grid->total());
     }

@@ -37,6 +37,19 @@ class SessionTest extends TestCase
 
         $this->session = new Session();
         $this->session->setStore('array');
+        $this->session->getStore()->start();
+    }
+
+    /**
+     * Test Destroy session
+     * @covers \Bluz\Session\Store\ArrayStore::destroy()
+     */
+    public function testDestroy()
+    {
+        $this->session->foo = 'bar';
+        $this->session->getStore()->destroy();
+
+        $this->assertNull($this->session->foo);
     }
 
     /**

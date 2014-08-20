@@ -148,17 +148,6 @@ class AbstractRequest
     }
 
     /**
-     * Access values
-     *
-     * @param string $key
-     * @return mixed
-     */
-    public function __get($key)
-    {
-        return (isset($this->params[$key]) ? $this->params[$key] : null);
-    }
-
-    /**
      * Set an action parameter
      *
      * A $value of null will unset the $key if it exists
@@ -176,6 +165,17 @@ class AbstractRequest
         } elseif (null !== $value) {
             $this->params[$key] = $value;
         }
+    }
+
+    /**
+     * Access values
+     *
+     * @param string $key
+     * @return mixed
+     */
+    public function __get($key)
+    {
+        return (isset($this->params[$key]) ? $this->params[$key] : null);
     }
 
     /**
@@ -248,6 +248,16 @@ class AbstractRequest
     }
 
     /**
+     * Get all request parameters
+     *
+     * @return array
+     */
+    public function getAllParams()
+    {
+        return $this->params;
+    }
+
+    /**
      * Set raw params, w/out module and controller
      *
      * @param array $params
@@ -267,17 +277,6 @@ class AbstractRequest
     public function getRawParams()
     {
         return $this->rawParams;
-    }
-
-
-    /**
-     * Get all request parameters
-     *
-     * @return array
-     */
-    public function getAllParams()
-    {
-        return $this->params;
     }
 
     /**

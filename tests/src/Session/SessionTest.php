@@ -37,6 +37,7 @@ class SessionTest extends TestCase
 
         $this->session = new Session();
         $this->session->setStore('array');
+        $this->session->getStore()->setNamespace('testing');
         $this->session->getStore()->start();
     }
 

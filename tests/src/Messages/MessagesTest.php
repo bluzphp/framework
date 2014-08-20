@@ -39,6 +39,17 @@ class MessagesTest extends TestCase
     }
 
     /**
+     * Test Messages with empty container
+     */
+    public function testMessagesEmpty()
+    {
+        $this->assertEquals(0, $this->getApp()->getMessages()->count());
+        $this->assertNull($this->getApp()->getMessages()->pop(Messages::TYPE_ERROR));
+        $this->assertNull($this->getApp()->getMessages()->pop(Messages::TYPE_NOTICE));
+        $this->assertNull($this->getApp()->getMessages()->pop(Messages::TYPE_SUCCESS));
+    }
+
+    /**
      * Test Messages container
      */
     public function testMessagesPop()

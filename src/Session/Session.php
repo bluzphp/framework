@@ -54,7 +54,7 @@ class Session
      */
     public function setStore($store)
     {
-        $this->storeName = $store;
+        $this->storeName = strtolower($store);
         return $this;
     }
 
@@ -119,7 +119,7 @@ class Session
     }
 
     /**
-     * Isset Offset
+     * Isset
      *
      * @param  mixed $key
      * @return bool
@@ -130,7 +130,7 @@ class Session
     }
 
     /**
-     * Unset Offset
+     * Unset
      *
      * @param  mixed $key
      * @return void

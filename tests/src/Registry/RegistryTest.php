@@ -84,4 +84,18 @@ class RegistryTest extends TestCase
         $this->assertTrue(isset($this->registry->moo));
         $this->assertFalse(isset($this->registry->boo));
     }
+
+    /**
+     * Complex test for __unset
+     *
+     * @covers \Bluz\Registry\Registry::__unset()
+     * @return void
+     */
+    public function testUnset()
+    {
+        $this->registry->moo = 'maz';
+        unset($this->registry->moo);
+
+        $this->assertNull($this->registry->moo);
+    }
 }

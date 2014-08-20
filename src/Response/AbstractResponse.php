@@ -159,7 +159,7 @@ abstract class AbstractResponse
     /**
      * Set response body
      *
-     * @param View $body
+     * @param View|string $body
      * @return AbstractResponse
      */
     public function setBody($body)

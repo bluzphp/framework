@@ -43,18 +43,7 @@ class Registry
     }
 
     /**
-     * exists key
-     *
-     * @param string $key
-     * @return bool
-     */
-    public function __isset($key)
-    {
-        return array_key_exists($key, $this->data);
-    }
-
-    /**
-     * setter for key
+     * Set key/value pair
      *
      * @param string $key
      * @param mixed $value
@@ -66,7 +55,7 @@ class Registry
     }
 
     /**
-     * getter for key
+     * Get value by key
      *
      * @param string $key
      * @return mixed
@@ -78,5 +67,27 @@ class Registry
         } else {
             return null;
         }
+    }
+
+    /**
+     * Isset
+     *
+     * @param string $key
+     * @return bool
+     */
+    public function __isset($key)
+    {
+        return array_key_exists($key, $this->data);
+    }
+
+    /**
+     * Unset
+     *
+     * @param string $key
+     * @return void
+     */
+    public function __unset($key)
+    {
+        unset($this->data[$key]);
     }
 }

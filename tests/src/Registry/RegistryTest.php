@@ -30,8 +30,6 @@ class RegistryTest extends TestCase
 
     /**
      * setUp
-     *
-     * @return void
      */
     public function setUp()
     {
@@ -44,7 +42,6 @@ class RegistryTest extends TestCase
      * setDataTest
      *
      * @covers \Bluz\Registry\Registry::setData()
-     * @return void
      */
     public function testSetData()
     {
@@ -60,7 +57,6 @@ class RegistryTest extends TestCase
      *
      * @covers \Bluz\Registry\Registry::__set()
      * @covers \Bluz\Registry\Registry::__get()
-     * @return void
      */
     public function testSetGet()
     {
@@ -75,7 +71,6 @@ class RegistryTest extends TestCase
      * Complex test for __isset
      *
      * @covers \Bluz\Registry\Registry::__isset()
-     * @return void
      */
     public function testIsset()
     {
@@ -89,7 +84,6 @@ class RegistryTest extends TestCase
      * Complex test for __unset
      *
      * @covers \Bluz\Registry\Registry::__unset()
-     * @return void
      */
     public function testUnset()
     {

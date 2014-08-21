@@ -56,8 +56,6 @@ class OptionsTest extends TestCase
 
     /**
      * Test get options
-     *
-     * @return void
      */
     public function testGetOptions()
     {
@@ -69,8 +67,6 @@ class OptionsTest extends TestCase
 
     /**
      * Test get options
-     *
-     * @return void
      */
     public function testGetFalseOption()
     {

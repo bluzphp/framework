@@ -63,8 +63,11 @@ class RequestTest extends TestCase
     /**
      * Complex test of getters
      *
-     * @covers \Bluz\Http\Request::__get()
-     * @return void
+     * @covers \Bluz\Http\Request::getQuery()
+     * @covers \Bluz\Http\Request::getPost()
+     * @covers \Bluz\Http\Request::getCookie()
+     * @covers \Bluz\Http\Request::getServer()
+     * @covers \Bluz\Http\Request::getEnv()
      */
     public function testGetters()
     {
@@ -84,7 +87,6 @@ class RequestTest extends TestCase
      * Complex test for magic getter
      *
      * @covers \Bluz\Http\Request::__get()
-     * @return void
      */
     public function testGet()
     {
@@ -100,7 +102,6 @@ class RequestTest extends TestCase
      * Complex test for magic __isset
      *
      * @covers \Bluz\Http\Request::__isset()
-     * @return void
      */
     public function testIsset()
     {
@@ -116,7 +117,6 @@ class RequestTest extends TestCase
      * Complex test for magic __unset
      *
      * @covers \Bluz\Http\Request::__unset()
-     * @return void
      */
     public function testUnset()
     {

@@ -23,8 +23,6 @@ class ApplicationTest extends TestCase
 {
     /**
      * Tear Down
-     *
-     * @return void
      */
     protected function tearDown()
     {
@@ -34,7 +32,6 @@ class ApplicationTest extends TestCase
 
     /**
      * @covers \Bluz\Application\Application::reflection
-     * @return void
      */
     public function testReflection()
     {
@@ -50,8 +47,6 @@ class ApplicationTest extends TestCase
 
     /**
      * Check all getters of Application
-     *
-     * @return void
      */
     public function testGettersOfPackages()
     {
@@ -77,7 +72,6 @@ class ApplicationTest extends TestCase
 
     /**
      * @covers \Bluz\Application\Application::getConfigData
-     * @return void
      */
     public function testGetConfigData()
     {
@@ -93,8 +87,6 @@ class ApplicationTest extends TestCase
 
     /**
      * Test Registry configuration setup
-     *
-     * @return void
      */
     public function testRegistry()
     {

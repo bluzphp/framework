@@ -71,8 +71,6 @@ class CrudTest extends TestCase
 
     /**
      * Tear Down
-     *
-     * @return void
      */
     protected function tearDown()
     {

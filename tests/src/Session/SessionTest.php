@@ -29,7 +29,6 @@ class SessionTest extends TestCase
 
     /**
      * setUp
-     * @return void
      */
     public function setUp()
     {
@@ -60,7 +59,6 @@ class SessionTest extends TestCase
      * @covers \Bluz\Session\Session::__get()
      * @covers \Bluz\Session\Store\ArrayStore::__set()
      * @covers \Bluz\Session\Store\ArrayStore::__get()
-     * @return void
      */
     public function testSetGet()
     {
@@ -76,7 +74,6 @@ class SessionTest extends TestCase
      *
      * @covers \Bluz\Session\Session::__isset()
      * @covers \Bluz\Session\Store\ArrayStore::__isset()
-     * @return void
      */
     public function testIsset()
     {
@@ -91,7 +88,6 @@ class SessionTest extends TestCase
      *
      * @covers \Bluz\Session\Session::__unset()
      * @covers \Bluz\Session\Store\ArrayStore::__unset()
-     * @return void
      */
     public function testUnset()
     {

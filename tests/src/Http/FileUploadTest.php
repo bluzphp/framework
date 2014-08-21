@@ -32,9 +32,7 @@ class FileUploadTest extends Bluz\Tests\TestCase
     protected $path2;
 
     /**
-     * setUp
-     *
-     * @return void
+     * SetUp
      */
     protected function setUp()
     {

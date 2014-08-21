@@ -34,9 +34,7 @@ class FileTest extends TestCase
     protected $httpFile;
 
     /**
-     * setUp
-     *
-     * @return void
+     * SetUp
      */
     protected function setUp()
     {

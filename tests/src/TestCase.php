@@ -30,38 +30,38 @@ class TestCase extends \PHPUnit_Framework_TestCase
      *
      * @var \Application\Tests\BootstrapTest
      */
-    private $app;
+    static private $app;
 
     /**
      * Get Application instance
      *
      * @return BootstrapTest
      */
-    protected function getApp()
+    static protected function getApp()
     {
-        if (!$this->app) {
+        if (!self::$app) {
             $env = getenv('BLUZ_ENV') ?: 'testing';
 
-            $this->app = BootstrapTest::getInstance();
-            $this->app->init($env);
+            self::$app = BootstrapTest::getInstance();
+            self::$app->init($env);
         }
 
-        return $this->app;
+        return self::$app;
     }
 
     /**
      * Reset layout and Request
      */
-    protected function resetApp()
+    static protected function resetApp()
     {
-        if ($this->app) {
-            $this->app->resetLayout();
-            $this->app->getAuth()->clearIdentity();
-            $this->app->setRequest(new Http\Request());
-            $this->app->setResponse(new Http\Response());
-            $this->app->useJson(false);
-            $this->app->useLayout(true);
-            $this->app->getMessages()->popAll();
+        if (self::$app) {
+            self::$app->resetLayout();
+            self::$app->getAuth()->clearIdentity();
+            self::$app->setRequest(new Http\Request());
+            self::$app->setResponse(new Http\Response());
+            self::$app->useJson(false);
+            self::$app->useLayout(true);
+            self::$app->getMessages()->popAll();
         }
     }
 

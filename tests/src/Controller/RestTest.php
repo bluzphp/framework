@@ -12,7 +12,6 @@ namespace Bluz\Tests\Controller;
 use Bluz\Http;
 use Bluz\Http\Request;
 use Bluz\Controller;
-use Bluz\Tests\BootstrapTest;
 use Bluz\Tests\Fixtures\Models\Test\Crud;
 use Bluz\Tests\TestCase;
 
@@ -28,10 +27,7 @@ class RestTest extends TestCase
      */
     public static function setUpBeforeClass()
     {
-        $env = getenv('BLUZ_ENV') ?: 'testing';
-        BootstrapTest::getInstance()->init($env);
-
-        BootstrapTest::getInstance()->getDb()->insert('test')->setArray(
+        self::getApp()->getDb()->insert('test')->setArray(
             [
                 'id' => 1,
                 'name' => 'Donatello',
@@ -39,7 +35,7 @@ class RestTest extends TestCase
             ]
         )->execute();
 
-        BootstrapTest::getInstance()->getDb()->insert('test')->setArray(
+        self::getApp()->getDb()->insert('test')->setArray(
             [
                 'id' => 2,
                 'name' => 'Leonardo',
@@ -47,7 +43,7 @@ class RestTest extends TestCase
             ]
         )->execute();
 
-        BootstrapTest::getInstance()->getDb()->insert('test')->setArray(
+        self::getApp()->getDb()->insert('test')->setArray(
             [
                 'id' => 3,
                 'name' => 'Michelangelo',
@@ -55,7 +51,7 @@ class RestTest extends TestCase
             ]
         )->execute();
 
-        BootstrapTest::getInstance()->getDb()->insert('test')->setArray(
+        self::getApp()->getDb()->insert('test')->setArray(
             [
                 'id' => 4,
                 'name' => 'Raphael',
@@ -69,14 +65,12 @@ class RestTest extends TestCase
      */
     public static function tearDownAfterClass()
     {
-        BootstrapTest::getInstance()->getDb()->delete('test')->where('id IN (?)', [1, 2, 3, 4])->execute();
-        BootstrapTest::getInstance()->getDb()->delete('test')->where('email = ?', 'splinter@turtles.org')->execute();
+        self::getApp()->getDb()->delete('test')->where('id IN (?)', [1, 2, 3, 4])->execute();
+        self::getApp()->getDb()->delete('test')->where('email = ?', 'splinter@turtles.org')->execute();
     }
 
     /**
      * Tear Down
-     *
-     * @return void
      */
     protected function tearDown()
     {

@@ -28,6 +28,8 @@ class UserAdmin extends AbstractRowEntity
 
     /**
      * Get user privileges
+     *
+     * @return array
      */
     public function getPrivileges()
     {

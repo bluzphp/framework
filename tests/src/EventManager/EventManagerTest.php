@@ -30,8 +30,6 @@ class EventManagerTest extends Bluz\Tests\TestCase
 
     /**
      * setUp
-     *
-     * @return void
      */
     public function setUp()
     {
@@ -41,7 +39,7 @@ class EventManagerTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @return void
+     * Test one event
      */
     public function testTriggerSimpleEvent()
     {
@@ -54,7 +52,7 @@ class EventManagerTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @return void
+     * Test three events
      */
     public function testTriggerThreeEvents()
     {
@@ -73,7 +71,7 @@ class EventManagerTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @return void
+     * Test events with priority
      */
     public function testTriggerTwoEventsWithPriority()
     {
@@ -89,7 +87,7 @@ class EventManagerTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @return void
+     * Test events with abort chain call
      */
     public function testTriggerTwoEventsWithAbort()
     {
@@ -106,7 +104,7 @@ class EventManagerTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @return void
+     * Test usage of namespaces
      */
     public function testTriggerWithNamespace()
     {
@@ -124,7 +122,7 @@ class EventManagerTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @return void
+     * Test target usage
      */
     public function testTriggerWithTarget()
     {
@@ -145,7 +143,7 @@ class EventManagerTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @return void
+     * Test params
      */
     public function testTriggerWithParams()
     {
@@ -159,7 +157,7 @@ class EventManagerTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * testTriggerWithWrongParams
+     * Test wrong params
      * @expectedException Bluz\EventManager\EventException
      */
     public function testEventSetParamsException()

@@ -23,7 +23,7 @@ use Bluz\EventManager\Event;
 class EventTest extends Bluz\Tests\TestCase
 {
     /**
-     * @return void
+     * Complex test of event getters
      */
     public function testEventMethods()
     {
@@ -41,7 +41,7 @@ class EventTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @return void
+     * Complex test of event getters with object
      */
     public function testEventMethodsWithObject()
     {
@@ -60,7 +60,7 @@ class EventTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * testTriggerWithWrongParams
+     * Test trigger with wong params
      * @expectedException Bluz\EventManager\EventException
      */
     public function testEventSetParamsException()

@@ -21,7 +21,6 @@ class UserGuest extends AbstractRowEntity
      * Can entity login
      *
      * @throws ApplicationException
-     * @return void
      */
     public function login()
     {
@@ -30,6 +29,8 @@ class UserGuest extends AbstractRowEntity
 
     /**
      * Get user privileges
+     *
+     * @return array
      */
     public function getPrivileges()
     {

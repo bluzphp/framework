@@ -55,5 +55,21 @@ class RequestTest extends TestCase
         $this->assertEquals('qux', $this->getApp()->getRequest()->getParam('baz'));
 
         $this->assertEqualsArray(['foo' => 'bar', 'baz' => 'qux'], $this->getApp()->getRequest()->getParams());
+        $this->assertEqualsArray(['foo' => 'bar', 'baz' => 'qux'], $this->getApp()->getRequest()->getAllParams());
+    }
+
+    /**
+     * Test of `param`
+     */
+    public function testParamUnset()
+    {
+        $this->getApp()->getRequest()->foo = 'bar';
+        $this->getApp()->getRequest()->baz = 'qux';
+
+        unset($this->getApp()->getRequest()->foo);
+        $this->getApp()->getRequest()->setParam('baz', null);
+
+        $this->assertFalse(isset($this->getApp()->getRequest()->foo));
+        $this->assertFalse(isset($this->getApp()->getRequest()->baz));
     }
 }

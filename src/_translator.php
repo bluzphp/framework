@@ -1,11 +1,20 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
+ * @copyright Bluz PHP Team
+ * @link https://github.com/bluzphp/framework
+ */
+
+/**
  * This is file required for poedit parser only
  * Please, don't use it for anything else
  * 
  * @author   Anton Shevchuk
  * @created  11.07.2014 13:57
  */
+
+// @codeCoverageIgnoreStart
 
 /** Controller\Crud */
 _('Record was created');
@@ -51,3 +60,5 @@ _('{{name}} is required');
 _('{{name}} must be a valid slug');
 _('{{name}} must be a string');
 _('{{name}} must be a version');
+
+// @codeCoverageIgnoreEnd

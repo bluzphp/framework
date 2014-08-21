@@ -12,8 +12,6 @@ namespace Bluz\Tests\Request;
 use Bluz\Tests\TestCase;
 
 /**
- * RequestTest
- *
  * @package  Bluz\Tests\Http
  *
  * @author   Anton Shevchuk
@@ -39,7 +37,7 @@ class RequestTest extends TestCase
     }
 
     /**
-     * Test of `param`
+     * Test of params
      */
     public function testParamManipulation()
     {
@@ -59,7 +57,7 @@ class RequestTest extends TestCase
     }
 
     /**
-     * Test of `param`
+     * Test unset of params
      */
     public function testParamUnset()
     {

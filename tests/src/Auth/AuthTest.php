@@ -42,8 +42,7 @@ class AuthTest extends TestCase
     /**
      * Test Auth Identity clear
      *
-     * @covers \Bluz\Auth\Auth::setIdentity
-     * @covers \Bluz\Auth\Auth::getIdentity
+     * @covers \Bluz\Auth\Auth::clearIdentity
      */
     public function testAuthClearIdentity()
     {

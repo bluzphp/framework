@@ -66,6 +66,14 @@ class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Reset super-globals variables
+     */
+    protected static function resetGlobals()
+    {
+        $_GET = $_POST = array();
+    }
+
+    /**
      * Assert Array is Equals
      * @param array $expected
      * @param array $actual

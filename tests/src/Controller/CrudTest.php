@@ -67,6 +67,8 @@ class CrudTest extends TestCase
     {
         self::getApp()->getDb()->delete('test')->where('id IN (?)', [1, 2, 3, 4])->execute();
         self::getApp()->getDb()->delete('test')->where('email = ?', 'splinter@turtles.org')->execute();
+
+        self::resetGlobals();
     }
 
     /**
@@ -75,7 +77,7 @@ class CrudTest extends TestCase
     protected function tearDown()
     {
         parent::tearDown();
-        $this->resetApp();
+        self::resetApp();
     }
 
     /**

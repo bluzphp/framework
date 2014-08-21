@@ -9,6 +9,7 @@
  */
 namespace Bluz\Tests\Auth;
 
+use Bluz\Tests\Fixtures\Models\Auth\Table;
 use Bluz\Tests\TestCase;
 use Bluz\Tests\Fixtures\Models\UserAdmin;
 
@@ -54,5 +55,15 @@ class AuthTest extends TestCase
         $auth->clearIdentity();
 
         $this->assertNull($auth->getIdentity());
+    }
+
+    /**
+     * Test get Auth\Row
+     */
+    public function testGetAuthRow()
+    {
+        $authRow = Table::getInstance()->getAuthRow(Table::PROVIDER_EQUALS, 'admin');
+
+        $this->assertInstanceOf('\Bluz\Auth\AbstractRow', $authRow);
     }
 }

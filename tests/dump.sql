@@ -5,8 +5,25 @@
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-/*Table structure for table `test` */
 
+/*Table structure for table `auth` */
+CREATE TABLE auth (
+  userId BIGINT UNSIGNED NOT NULL,
+  provider VARCHAR(64) NOT NULL,
+  foreignKey VARCHAR(255) NOT NULL,
+  token VARCHAR(64) NOT NULL,
+  tokenSecret VARCHAR(64) NOT NULL,
+  tokenType CHAR(8) NOT NULL,
+  created TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  updated TIMESTAMP,
+  PRIMARY KEY ( userId, provider )
+);
+/*Data for the table `auth` */
+INSERT INTO `auth` (`userId`, `provider`, `foreignKey`, `token`, `tokenSecret`, `tokenType`, `created`)
+VALUES
+  (1,'equals','admin','f9705d72d58b2a305ab6f5913ba60a61','secretsalt','access','2012-11-09 07:40:46');
+
+/*Table structure for table `test` */
 CREATE TABLE `test` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -16,7 +33,6 @@ CREATE TABLE `test` (
 ) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
 
 /*Data for the table `test` */
-
 insert  into `test`(`id`,`name`,`email`,`status`) values
   (10,'Jonah','dictum@pharetra.ca','disable'),
   (11,'Connor','congue.In.scelerisque@Integervulputaterisus.ca','disable'),

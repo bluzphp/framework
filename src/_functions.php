@@ -14,8 +14,6 @@
  * @created  07.09.12 11:29
  */
 
-// @codeCoverageIgnoreStart
-
 if (!function_exists('debug')) {
     /**
      * Debug variables
@@ -25,6 +23,7 @@ if (!function_exists('debug')) {
      *     debug(new stdClass());
      *     debug($_GET, $_POST, $_FILES);
      *
+     * @codeCoverageIgnore
      * @return void
      */
     function debug()
@@ -131,4 +130,3 @@ if (!function_exists('_n')) {
     }
 }
 // @codingStandardsIgnoreEnd
-// @codeCoverageIgnoreEnd

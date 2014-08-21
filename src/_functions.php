@@ -6,12 +6,14 @@
  * @link https://github.com/bluzphp/framework
  */
 
+
 /**
  * Simple functions of framework
  * be careful with this way
  * @author   Anton Shevchuk
  * @created  07.09.12 11:29
  */
+
 if (!function_exists('debug')) {
     /**
      * Debug variables
@@ -21,6 +23,7 @@ if (!function_exists('debug')) {
      *     debug(new stdClass());
      *     debug($_GET, $_POST, $_FILES);
      *
+     * @codeCoverageIgnore
      * @return void
      */
     function debug()

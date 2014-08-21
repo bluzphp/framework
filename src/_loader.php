@@ -7,12 +7,14 @@
  */
 
 /**
- * files in this list is core of framework
+ * Files in this list is core of framework
  * use require_once it's really faster than use Loader for it
  *
  * @author   Anton Shevchuk
  * @created  15.07.11 13:21
  */
+
+// @codeCoverageIgnoreStart
 
 // add current directory to include path
 set_include_path(dirname(__FILE__) . PATH_SEPARATOR . get_include_path());
@@ -42,3 +44,5 @@ require_once 'Translator/Translator.php';
 require_once 'View/ViewInterface.php';
 require_once 'View/View.php';
 require_once 'View/Layout.php';
+
+// @codeCoverageIgnoreEnd

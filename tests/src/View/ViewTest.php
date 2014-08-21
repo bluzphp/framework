@@ -333,7 +333,11 @@ class ViewTest extends TestCase
      */
     public function testHelperPartial()
     {
-        $this->markTestIncomplete("Need to implement template");
+        $view = $this->getApp()->getView();
+        $view->setPath($this->getApp()->getPath() . '/modules/index/views');
+
+        $result = $view->partial('partial/partial.phtml', ['foo' => 'bar']);
+        $this->assertEquals('bar', $result);
     }
 
     /**
@@ -353,7 +357,11 @@ class ViewTest extends TestCase
      */
     public function testHelperPartialLoop()
     {
-        $this->markTestIncomplete("Need to implement template");
+        $view = $this->getApp()->getView();
+        $view->setPath($this->getApp()->getPath() . '/modules/index/views');
+
+        $result = $view->partialLoop('partial/partial-loop.phtml', [1, 2, 3], ['foo' => 'bar']);
+        $this->assertEquals('bar:0:1:bar:1:2:bar:2:3:', $result);
     }
 
     /**
@@ -467,6 +475,38 @@ class ViewTest extends TestCase
             '<option value="audi-a1">Audi A1</option>'.
             '<option value="citroen-c3">Citroen C3</option>'.
             '</optgroup>'.
+            '</select>',
+            $result
+        );
+    }
+
+    /**
+     * Helper Select
+     */
+    public function testHelperSelectWithSelectedElement()
+    {
+        $view = $this->getApp()->getView();
+
+        $result = $view->select(
+            "car",
+            [
+                "none" => "No Car",
+                'citroen-c1' => 'Citroen C1',
+                'citroen-c3' => 'Citroen C3',
+                'citroen-c4' => 'Citroen C4',
+            ],
+            'citroen-c4',
+            ["id"=>"car"]
+        );
+
+        $result = str_replace(["\t", "\n", "\r"], '', $result);
+
+        $this->assertEquals(
+            '<select id="car" name="car">'.
+            '<option value="none">No Car</option>'.
+            '<option value="citroen-c1">Citroen C1</option>'.
+            '<option value="citroen-c3">Citroen C3</option>'.
+            '<option value="citroen-c4" selected="selected">Citroen C4</option>'.
             '</select>',
             $result
         );

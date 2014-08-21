@@ -82,6 +82,7 @@ class ValidatorBuilderTest extends Tests\TestCase
         $object = new \stdClass();
         $object->foo = 0;
         $object->bar = 42;
+        $object->pass = 'always';
 
         $validator = new ValidatorBuilder();
         $validator->add(

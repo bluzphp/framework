@@ -37,7 +37,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      *
      * @return BootstrapTest
      */
-    static protected function getApp()
+    protected static function getApp()
     {
         if (!self::$app) {
             $env = getenv('BLUZ_ENV') ?: 'testing';
@@ -52,7 +52,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     /**
      * Reset layout and Request
      */
-    static protected function resetApp()
+    protected static function resetApp()
     {
         if (self::$app) {
             self::$app->resetLayout();

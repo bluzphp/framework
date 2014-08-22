@@ -33,6 +33,7 @@ class ResponseTest extends TestCase
         $response = new Response();
         $response->setHeader('foo', 'bar');
         $response->addHeader('foo', 'baz');
+        $response->setHeader('qux', []);
 
         $response->send();
     }

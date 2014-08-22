@@ -229,7 +229,7 @@ abstract class AbstractResponse
      */
     public function setHeader($header, $value)
     {
-        $this->headers[$header] = array($value);
+        $this->headers[$header] = (array) $value;
     }
 
     /**

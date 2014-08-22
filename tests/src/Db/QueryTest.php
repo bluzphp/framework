@@ -16,7 +16,7 @@ use Bluz\Db\Query\Select;
 use Bluz\Db\Query\Insert;
 use Bluz\Db\Query\Update;
 use Bluz\Db\Query\Delete;
-use Bluz\Tests;
+use Bluz\Tests\TestCase;
 
 /**
  * Test class for Query Builder.
@@ -24,7 +24,7 @@ use Bluz\Tests;
  * @todo Separate to 4 tests for every builder
  * @todo Write tests for different DB type
  */
-class QueryTest extends Bluz\Tests\TestCase
+class QueryTest extends TestCase
 {
     /**
      * setUp
@@ -133,6 +133,26 @@ class QueryTest extends Bluz\Tests\TestCase
             . ' FROM users u RIGHT JOIN pages p ON p.userId = u.id';
 
         $this->assertEquals($builder->getQuery(), $check);
+    }
+
+    /**
+     * Complex test of select builder
+     */
+    public function testSelectToStringConversion()
+    {
+        $builder = new Select();
+        $builder = $builder
+            ->select('u.*', 'p.*')
+            ->from('users', 'u')
+            ->join('u', 'pages', 'p', 'p.userId = u.id')
+            ->where('u.id = ? OR u.id = ?', 4, 5)
+        ;
+
+        $check = 'SELECT u.*, p.*'
+            . ' FROM users u INNER JOIN pages p ON p.userId = u.id'
+            . ' WHERE u.id = ? OR u.id = ?';
+
+        $this->assertEquals($check, (string) $builder);
     }
 
     /**

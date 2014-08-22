@@ -35,6 +35,14 @@ class QueryTest extends Bluz\Tests\TestCase
     }
 
     /**
+     * tearDown
+     */
+    public function tearDown()
+    {
+        self::getApp()->getDb()->delete('test')->where('email = ?', 'example@domain.com')->execute();
+    }
+
+    /**
      * Complex test of select builder
      */
     public function testSelect()
@@ -88,8 +96,6 @@ class QueryTest extends Bluz\Tests\TestCase
         $this->assertEquals($builder->getQuery(), $check);
     }
 
-
-
     /**
      * Complex test of select builder
      */
@@ -140,6 +146,7 @@ class QueryTest extends Bluz\Tests\TestCase
         $check = 'INSERT INTO `test` SET `name` = "example", `email` = "example@domain.com"';
 
         $this->assertEquals($builder->getQuery(), $check);
+        $this->assertGreaterThan(0, $builder->execute());
     }
 
     /**
@@ -155,11 +162,12 @@ class QueryTest extends Bluz\Tests\TestCase
                     'status' => 'disable'
                 ]
             )
-            ->where('id = ?', 5)
+            ->where('email = ?', 'example@domain.com')
         ;
-        $check = 'UPDATE `test` SET `status` = "disable" WHERE id = "5"';
+        $check = 'UPDATE `test` SET `status` = "disable" WHERE email = "example@domain.com"';
 
         $this->assertEquals($builder->getQuery(), $check);
+        $this->assertEquals(0, $builder->execute());
     }
 
     /**
@@ -170,11 +178,12 @@ class QueryTest extends Bluz\Tests\TestCase
         $builder = new Delete();
         $builder = $builder
             ->delete('test')
-            ->where('id = ?', 5)
+            ->where('email = ?', 'example@domain.com')
             ->limit(1)
         ;
-        $check = 'DELETE FROM `test` WHERE id = "5" LIMIT 1';
+        $check = 'DELETE FROM `test` WHERE email = "example@domain.com" LIMIT 1';
 
         $this->assertEquals($builder->getQuery(), $check);
+        $this->assertEquals(0, $builder->execute());
     }
 }

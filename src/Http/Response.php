@@ -41,7 +41,7 @@ class Response extends AbstractResponse
 
         // Send stored headers
         foreach ($this->headers as $key => $value) {
-            header($key .': '. $value);
+            header($key .': '. join(', ', $value));
         }
     }
 

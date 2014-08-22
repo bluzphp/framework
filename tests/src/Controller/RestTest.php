@@ -281,7 +281,7 @@ class RestTest extends TestCase
         $this->assertFalse($result);
 
         $response = $this->getApp()->getResponse();
-        $this->assertEquals(304, $response->getCode());
+        $this->assertEquals(304, $response->getStatusCode());
     }
 
     /**

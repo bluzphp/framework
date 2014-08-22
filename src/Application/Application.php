@@ -704,20 +704,20 @@ abstract class Application
             $response->setException($e);
 
             if ($request->isXmlHttpRequest()) {
-                $response->setCode(204);
+                $response->setStatusCode(204);
                 $response->setHeader('Bluz-Redirect', $e->getMessage());
             } else {
-                $response->setCode($e->getCode());
+                $response->setStatusCode($e->getCode());
                 $response->setHeader('Location', $e->getMessage());
             }
         } catch (ReloadException $e) {
             $response->setException($e);
 
             if ($request->isXmlHttpRequest()) {
-                $response->setCode(204);
+                $response->setStatusCode(204);
                 $response->setHeader('Bluz-Reload', 'true');
             } else {
-                $response->setCode($e->getCode());
+                $response->setStatusCode($e->getCode());
                 $response->setHeader('Refresh', '15; url=' . $request->getRequestUri());
             }
         } catch (\Exception $e) {
@@ -737,8 +737,8 @@ abstract class Application
                 $dispatchResult = $this->getLayout();
             }
 
-            $response->setCode($e->getCode())
-                ->setBody($dispatchResult);
+            $response->setStatusCode($e->getCode());
+            $response->setBody($dispatchResult);
         }
 
         return $this->getResponse();

@@ -82,17 +82,20 @@ class QueryTest extends Bluz\Tests\TestCase
             ->select('p.*')
             ->from('pages', 'p')
             ->groupBy('p.userId')
-            ->addGroupBy('MONTH(p.added)')
-            ->having('MONTH(p.added) = "2"')
-            ->orHaving('MONTH(p.added) = "4"')
+            ->addGroupBy('MONTH(p.created)')
+            ->having('MONTH(p.created) = :month1')
+            ->orHaving('MONTH(p.created) = :month2')
             ->andHaving('p.userId <> 0')
+            ->setParameters([':month1' => 2, ':month2' => 4]);
         ;
 
         $check = 'SELECT p.*'
             . ' FROM pages p'
-            . ' GROUP BY p.userId, MONTH(p.added)'
-            . ' HAVING ((MONTH(p.added) = "2") OR (MONTH(p.added) = "4")) AND (p.userId <> 0)';
+            . ' GROUP BY p.userId, MONTH(p.created)'
+            . ' HAVING ((MONTH(p.created) = :month1) OR (MONTH(p.created) = :month2)) AND (p.userId <> 0)';
 
+        $this->assertEquals(2, $builder->getParameter(':month1'));
+        $this->assertEquals(4, $builder->getParameter(':month2'));
         $this->assertEquals($builder->getQuery(), $check);
     }
 

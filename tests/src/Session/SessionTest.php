@@ -59,6 +59,7 @@ class SessionTest extends TestCase
      * @covers \Bluz\Session\Session::__get()
      * @covers \Bluz\Session\Store\ArrayStore::__set()
      * @covers \Bluz\Session\Store\ArrayStore::__get()
+     * @covers \Bluz\Session\Store\AbstractStore::setNamespace()
      */
     public function testSetGet()
     {

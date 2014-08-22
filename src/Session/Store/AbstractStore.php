@@ -40,19 +40,18 @@ abstract class AbstractStore
     protected $namespace = 'Bluz';
 
     /**
-     * setNamespace
+     * Set Namespace
      *
      * @param string $namespace
-     * @return AbstractStore
+     * @return void
      */
     public function setNamespace($namespace)
     {
         $this->namespace = $namespace;
-        return $this;
     }
 
     /**
-     * start
+     * Start session
      *
      * @return bool
      */

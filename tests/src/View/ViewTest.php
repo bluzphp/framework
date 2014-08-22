@@ -31,7 +31,7 @@ class ViewTest extends TestCase
      * @covers \Bluz\View\View::__isset
      * @covers \Bluz\View\View::__unset
      */
-    public function testViewContainer()
+    public function testMagicMethods()
     {
         $view = new View();
 
@@ -43,6 +43,16 @@ class ViewTest extends TestCase
         $this->assertTrue(isset($view->foo));
         $this->assertEquals('bar', $view->foo);
         $this->assertNull($view->baz);
+    }
+
+    /**
+     * @covers \Bluz\View\View::__set
+     * @expectedException \Bluz\View\ViewException
+     */
+    public function testSetInvalidThrowException()
+    {
+        $view = new View();
+        $view->__set([], []);
     }
 
     /**

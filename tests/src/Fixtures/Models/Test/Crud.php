@@ -70,7 +70,10 @@ class Crud extends \Bluz\Crud\Table
 
         if (sizeof($result) < $total) {
             app()->getResponse()->setStatusCode(206);
-            app()->getResponse()->setHeader('Content-Range', 'items '.$offset.'-'.($offset+sizeof($result)).'/'. $total);
+            app()->getResponse()->setHeader(
+                'Content-Range',
+                'items '.$offset.'-'.($offset+sizeof($result)).'/'. $total
+            );
         }
 
         return $result;

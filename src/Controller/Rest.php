@@ -152,11 +152,11 @@ class Rest extends AbstractController
                     }
 
                 } catch (ValidatorException $e) {
-                    app()->getResponse()->setCode(400);
+                    app()->getResponse()->setStatusCode(400);
                     return ['errors' => $e->getErrors()];
                 }
 
-                app()->getResponse()->setCode(201);
+                app()->getResponse()->setStatusCode(201);
                 app()->getResponse()->setHeader(
                     'Location',
                     app()->getRouter()->url($request->getModule(), $request->getController()).'/'.$result
@@ -180,10 +180,10 @@ class Rest extends AbstractController
                     // if $result === 0 it's means a update is not apply
                     // or records not found
                     if (0 === $result) {
-                        app()->getResponse()->setCode(304);
+                        app()->getResponse()->setStatusCode(304);
                     }
                 } catch (ValidatorException $e) {
-                    app()->getResponse()->setCode(400);
+                    app()->getResponse()->setStatusCode(400);
                     return ['errors' => $e->getErrors()];
                 }
                 return false; // disable view
@@ -201,7 +201,7 @@ class Rest extends AbstractController
                     }
                     $this->deleteSet($this->data);
                 }
-                app()->getResponse()->setCode(204);
+                app()->getResponse()->setStatusCode(204);
                 return false; // disable view
             default:
                 throw new NotImplementedException();

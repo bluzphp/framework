@@ -39,6 +39,11 @@ abstract class AbstractResponse
     protected $code = 200;
 
     /**
+     * @var string
+     */
+    protected $phrase;
+
+    /**
      * Stack of headers
      * @var array
      */
@@ -91,24 +96,55 @@ abstract class AbstractResponse
     }
 
     /**
-     * setCode
+     * Sets the status code of this response.
      *
-     * @param integer $code
+     * @param int $code The 3-digit integer result code to set.
      * @return void
      */
-    public function setCode($code)
+    public function setStatusCode($code)
     {
         $this->code = (int) $code;
     }
 
     /**
-     * getCode
+     * Gets the response Status-Code.
      *
-     * @return int
+     * The Status-Code is a 3-digit integer result code of the server's attempt
+     * to understand and satisfy the request.
+     *
+     * @return int Status code.
      */
-    public function getCode()
+    public function getStatusCode()
     {
         return $this->code;
+    }
+
+    /**
+     * Gets the response Reason-Phrase, a short textual description of the Status-Code.
+     *
+     * Because a Reason-Phrase is not a required element in response
+     * Status-Line, the Reason-Phrase value MAY be null. Implementations MAY
+     * choose to return the default RFC 2616 recommended reason phrase for the
+     * response's Status-Code.
+     *
+     * @return string|null Reason phrase, or null if unknown.
+     */
+    public function getReasonPhrase()
+    {
+        return $this->phrase;
+    }
+
+    /**
+     * Sets the Reason-Phrase of the response.
+     *
+     * If no Reason-Phrase is specified, implementations MAY choose to default
+     * to the RFC 2616 recommended reason phrase for the response's Status-Code.
+     *
+     * @param string $phrase The Reason-Phrase to set.
+     */
+    public function setReasonPhrase($phrase)
+    {
+        $this->phrase = $phrase;
     }
 
     /**
@@ -157,7 +193,7 @@ abstract class AbstractResponse
     public function getHeader($header)
     {
         if ($this->hasHeader($header)) {
-            return join(',', $this->headers[$header]);
+            return join(', ', $this->headers[$header]);
         } else {
             return '';
         }

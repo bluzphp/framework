@@ -26,7 +26,44 @@ class GridTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->getApp();
+        self::getApp();
+    }
+
+    /**
+     * Reset application
+     */
+    public function tearDown()
+    {
+        self::resetApp();
+    }
+
+    /**
+     * Process Request
+     */
+    public function testProcessRequest()
+    {
+        $request = $this->getApp()->getRequest();
+        $request->setParam('arr-page', 2);  // 2 page
+        $request->setParam('arr-limit', 2); // 2 rows per page
+        $request->setParam('arr-order-id', 'desc');
+        $request->setParam('arr-filter-name', 'ne-Smith');
+        $request->setParam('arr-filter-status', 'disable');
+
+        $grid = new ArrayGrid();
+
+        $this->assertEquals(8, $grid->total());
+        $this->assertEquals(4, $grid->pages());
+    }
+
+    /**
+     * Custom Module and Controller
+     */
+    public function testCustomControllerAndModule()
+    {
+        $grid = new ArrayGrid();
+        $grid->setModule('module');
+        $grid->setController('controller');
+        $this->assertEquals('/module/controller', $grid->reset());
     }
 
     /**

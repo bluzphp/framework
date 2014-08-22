@@ -36,7 +36,7 @@ class Response extends AbstractResponse
             if (!sizeof($value)) {
                 continue;
             }
-            echo $name .": ". join(',', $value) ."\n";
+            echo $name .": ". join(', ', $value) ."\n";
         }
         if (sizeof($this->headers)) {
             echo "\n";

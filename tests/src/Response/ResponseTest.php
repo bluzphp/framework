@@ -34,6 +34,25 @@ class ResponseTest extends TestCase
     }
 
     /**
+     * Test initial values of Response properties
+     */
+    public function testGetters()
+    {
+        $this->assertNotEmpty($this->response->getProtocolVersion());
+        $this->assertNull($this->response->getReasonPhrase());
+        $this->assertNull($this->response->getException());
+    }
+
+    /**
+     * Test initial values of Response properties
+     */
+    public function testSetGetReasonPhrase()
+    {
+        $this->response->setReasonPhrase('OK');
+        $this->assertEquals('OK', $this->response->getReasonPhrase());
+    }
+
+    /**
      * @covers \Bluz\Response\AbstractResponse::setHeader
      * @covers \Bluz\Response\AbstractResponse::getHeader
      * @covers \Bluz\Response\AbstractResponse::hasHeader
@@ -44,6 +63,7 @@ class ResponseTest extends TestCase
 
         $this->assertTrue($this->response->hasHeader('foo'));
         $this->assertEquals('bar', $this->response->getHeader('foo'));
+        $this->assertEmpty($this->response->getHeader('baz'));
     }
 
     /**
@@ -53,12 +73,24 @@ class ResponseTest extends TestCase
      */
     public function testAddHeader()
     {
-        $this->response->setHeader('foo', 'bar');
+        $this->response->addHeader('foo', 'bar');
         $this->response->addHeader('foo', 'baz');
 
         $this->assertTrue($this->response->hasHeader('foo'));
         $this->assertEquals('bar, baz', $this->response->getHeader('foo'));
         $this->assertEqualsArray(['bar', 'baz'], $this->response->getHeaderAsArray('foo'));
+        $this->assertEqualsArray([], $this->response->getHeaderAsArray('baz'));
+    }
+
+    /**
+     * @covers \Bluz\Response\AbstractResponse::removeHeader
+     */
+    public function testRemoveHeader()
+    {
+        $this->response->addHeader('foo', 'bar');
+        $this->response->removeHeader('foo');
+
+        $this->assertFalse($this->response->hasHeader('foo'));
     }
 
     /**
@@ -73,5 +105,18 @@ class ResponseTest extends TestCase
 
         $this->assertEquals(2, sizeof($this->response->getHeaders()));
         $this->assertArrayHasKeyAndSize($this->response->getHeaders(), 'foo', 2);
+    }
+
+    /**
+     * @covers \Bluz\Response\AbstractResponse::removeHeaders
+     */
+    public function testRemoveHeaders()
+    {
+        $this->response->addHeader('foo', 'bar');
+        $this->response->addHeader('baz', 'qux');
+        $this->response->removeHeaders();
+
+        $this->assertFalse($this->response->hasHeader('foo'));
+        $this->assertFalse($this->response->hasHeader('baz'));
     }
 }

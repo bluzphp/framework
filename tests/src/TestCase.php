@@ -74,7 +74,8 @@ class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Assert Array is Equals
+     * Assert one-level Arrays is Equals
+     *
      * @param array $expected
      * @param array $actual
      * @param string $message

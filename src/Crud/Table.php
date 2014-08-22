@@ -71,7 +71,7 @@ class Table extends AbstractCrud
     }
 
     /**
-     * getPrimaryKey
+     * Get primary key
      *
      * @return array
      */

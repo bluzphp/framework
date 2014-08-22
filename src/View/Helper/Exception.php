@@ -23,12 +23,14 @@ return
      */
     function ($exception) {
     if (app()->isDebug()) {
+        // @codeCoverageIgnoreStart
         // exception message for developers
         return
             '<div class="alert alert-error">' .
             '<strong>Exception</strong>: ' .
             $exception->getMessage() .
             '</div>';
+        // @codeCoverageIgnoreEnd
     } else {
         return '';
     }

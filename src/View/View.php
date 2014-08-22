@@ -285,9 +285,11 @@ class View implements ViewInterface, \JsonSerializable
         } catch (\Exception $e) {
             // clean output
             ob_end_clean();
+            // @codeCoverageIgnoreStart
             if (app()->isDebug()) {
                 return $e->getMessage() ."\n<br/>". $e->getTraceAsString();
             }
+            // @codeCoverageIgnoreEnd
             // nothing for production
             return '';
         }

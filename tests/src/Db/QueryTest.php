@@ -16,7 +16,7 @@ use Bluz\Db\Query\Select;
 use Bluz\Db\Query\Insert;
 use Bluz\Db\Query\Update;
 use Bluz\Db\Query\Delete;
-use Bluz\Tests;
+use Bluz\Tests\TestCase;
 
 /**
  * Test class for Query Builder.
@@ -24,7 +24,7 @@ use Bluz\Tests;
  * @todo Separate to 4 tests for every builder
  * @todo Write tests for different DB type
  */
-class QueryTest extends Bluz\Tests\TestCase
+class QueryTest extends TestCase
 {
     /**
      * setUp
@@ -32,6 +32,14 @@ class QueryTest extends Bluz\Tests\TestCase
     public function setUp()
     {
         $this->getApp()->getDb()->setDefaultAdapter();
+    }
+
+    /**
+     * tearDown
+     */
+    public function tearDown()
+    {
+        self::getApp()->getDb()->delete('test')->where('email = ?', 'example@domain.com')->execute();
     }
 
     /**
@@ -74,21 +82,22 @@ class QueryTest extends Bluz\Tests\TestCase
             ->select('p.*')
             ->from('pages', 'p')
             ->groupBy('p.userId')
-            ->addGroupBy('MONTH(p.added)')
-            ->having('MONTH(p.added) = "2"')
-            ->orHaving('MONTH(p.added) = "4"')
+            ->addGroupBy('MONTH(p.created)')
+            ->having('MONTH(p.created) = :month1')
+            ->orHaving('MONTH(p.created) = :month2')
             ->andHaving('p.userId <> 0')
+            ->setParameters([':month1' => 2, ':month2' => 4]);
         ;
 
         $check = 'SELECT p.*'
             . ' FROM pages p'
-            . ' GROUP BY p.userId, MONTH(p.added)'
-            . ' HAVING ((MONTH(p.added) = "2") OR (MONTH(p.added) = "4")) AND (p.userId <> 0)';
+            . ' GROUP BY p.userId, MONTH(p.created)'
+            . ' HAVING ((MONTH(p.created) = :month1) OR (MONTH(p.created) = :month2)) AND (p.userId <> 0)';
 
+        $this->assertEquals(2, $builder->getParameter(':month1'));
+        $this->assertEquals(4, $builder->getParameter(':month2'));
         $this->assertEquals($builder->getQuery(), $check);
     }
-
-
 
     /**
      * Complex test of select builder
@@ -127,6 +136,26 @@ class QueryTest extends Bluz\Tests\TestCase
     }
 
     /**
+     * Complex test of select builder
+     */
+    public function testSelectToStringConversion()
+    {
+        $builder = new Select();
+        $builder = $builder
+            ->select('u.*', 'p.*')
+            ->from('users', 'u')
+            ->join('u', 'pages', 'p', 'p.userId = u.id')
+            ->where('u.id = ? OR u.id = ?', 4, 5)
+        ;
+
+        $check = 'SELECT u.*, p.*'
+            . ' FROM users u INNER JOIN pages p ON p.userId = u.id'
+            . ' WHERE u.id = ? OR u.id = ?';
+
+        $this->assertEquals($check, (string) $builder);
+    }
+
+    /**
      * Complex test of insert builder
      */
     public function testInsert()
@@ -140,6 +169,7 @@ class QueryTest extends Bluz\Tests\TestCase
         $check = 'INSERT INTO `test` SET `name` = "example", `email` = "example@domain.com"';
 
         $this->assertEquals($builder->getQuery(), $check);
+        $this->assertGreaterThan(0, $builder->execute());
     }
 
     /**
@@ -155,11 +185,12 @@ class QueryTest extends Bluz\Tests\TestCase
                     'status' => 'disable'
                 ]
             )
-            ->where('id = ?', 5)
+            ->where('email = ?', 'example@domain.com')
         ;
-        $check = 'UPDATE `test` SET `status` = "disable" WHERE id = "5"';
+        $check = 'UPDATE `test` SET `status` = "disable" WHERE email = "example@domain.com"';
 
         $this->assertEquals($builder->getQuery(), $check);
+        $this->assertEquals(0, $builder->execute());
     }
 
     /**
@@ -170,11 +201,12 @@ class QueryTest extends Bluz\Tests\TestCase
         $builder = new Delete();
         $builder = $builder
             ->delete('test')
-            ->where('id = ?', 5)
+            ->where('email = ?', 'example@domain.com')
             ->limit(1)
         ;
-        $check = 'DELETE FROM `test` WHERE id = "5" LIMIT 1';
+        $check = 'DELETE FROM `test` WHERE email = "example@domain.com" LIMIT 1';
 
         $this->assertEquals($builder->getQuery(), $check);
+        $this->assertEquals(0, $builder->execute());
     }
 }

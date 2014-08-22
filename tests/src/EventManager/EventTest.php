@@ -61,7 +61,7 @@ class EventTest extends Bluz\Tests\TestCase
 
     /**
      * Test trigger with wong params
-     * @expectedException Bluz\EventManager\EventException
+     * @expectedException \Bluz\EventManager\EventException
      */
     public function testEventSetParamsException()
     {

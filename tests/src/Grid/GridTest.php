@@ -135,7 +135,15 @@ class GridTest extends TestCase
     public function testHelperFilter()
     {
         $grid = new ArrayGrid();
-        $this->assertEquals('/index/index/arr-filter-id/ne-1', $grid->filter('id', Grid::FILTER_NE, 1));
+        $grid->addFilter('name', Grid::FILTER_NE, 'Smith');
+        $this->assertEquals(
+            '/index/index/arr-filter-id/ne-1',
+            $grid->filter('id', Grid::FILTER_NE, 1)
+        );
+        $this->assertEquals(
+            '/index/index/arr-filter-name/ne-Smith/arr-filter-id/ne-1',
+            $grid->filter('id', Grid::FILTER_NE, 1, false)
+        );
     }
 
     /**
@@ -193,6 +201,16 @@ class GridTest extends TestCase
     }
 
     /**
+     * Helper Next
+     */
+    public function testHelperNextReturnNull()
+    {
+        $grid = new ArrayGrid();
+        $grid->setPage(3);
+        $this->assertNull($grid->next());
+    }
+
+    /**
      * Helper Order
      */
     public function testHelperOrder()
@@ -201,6 +219,16 @@ class GridTest extends TestCase
         $this->assertNull($grid->order('not exists'));
         $this->assertEquals('/index/index/arr-order-name/asc', $grid->order('name'));
         $this->assertEquals('/index/index/arr-order-name/asc', $grid->order('name', 'asc', 'asc', false));
+    }
+
+    /**
+     * Helper Order
+     */
+    public function testHelperOrderReverseCurrentOrder()
+    {
+        $grid = new ArrayGrid();
+        $grid->setOrder('name');
+        $this->assertEquals('/index/index/arr-order-name/desc', $grid->order('name'));
     }
 
     /**
@@ -230,6 +258,15 @@ class GridTest extends TestCase
         $grid = new ArrayGrid();
         $grid->setPage(3);
         $this->assertEquals('/index/index/arr-page/2', $grid->prev());
+    }
+
+    /**
+     * Helper Prev
+     */
+    public function testHelperPrevReturnNull()
+    {
+        $grid = new ArrayGrid();
+        $this->assertNull($grid->prev());
     }
 
     /**

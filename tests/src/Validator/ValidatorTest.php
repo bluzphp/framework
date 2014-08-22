@@ -10,6 +10,7 @@
 namespace Bluz\Tests\Validator;
 
 use Bluz\Tests;
+use Bluz\Validator\Exception\ValidatorException;
 use Bluz\Validator\Validator;
 
 /**
@@ -125,5 +126,18 @@ class ValidatorTest extends Tests\TestCase
         $validator = Validator::alphaNumeric('_')->length(1, 15)->noWhitespace();
 
         $validator->assert('invalid user name');
+    }
+
+    /**
+     * Test ValidatorException
+     * @expectedException \Bluz\Validator\Exception\ValidatorException
+     */
+    public function testValidatorException()
+    {
+        $exception = ValidatorException::exception('foo', 'bar');
+
+        $this->assertEqualsArray(['foo' => 'bar'], $exception->getErrors());
+
+        throw $exception;
     }
 }

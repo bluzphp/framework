@@ -11,7 +11,6 @@
  */
 namespace Bluz\Cli;
 
-use Bluz\Messages\Messages;
 use Bluz\Response\AbstractResponse;
 use Bluz\View\View;
 

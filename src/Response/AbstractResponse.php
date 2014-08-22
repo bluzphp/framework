@@ -39,7 +39,7 @@ abstract class AbstractResponse
     protected $code = 200;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $phrase;
 

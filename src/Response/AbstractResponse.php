@@ -27,6 +27,12 @@ abstract class AbstractResponse
     use Options;
 
     /**
+     * HTTP protocol version
+     * @var string
+     */
+    protected $protocol = '1.1';
+
+    /**
      * Response code equal to HTTP status codes
      * @var int
      */
@@ -72,17 +78,27 @@ abstract class AbstractResponse
         $this->sendHeaders();
         $this->sendBody();
     }
+    /**
+     * Gets the HTTP protocol version as a string.
+     *
+     * The string MUST contain only the HTTP version number (e.g., "1.1", "1.0").
+     *
+     * @return string HTTP protocol version.
+     */
+    public function getProtocolVersion()
+    {
+        return $this->protocol;
+    }
 
     /**
      * setCode
      *
      * @param integer $code
-     * @return AbstractResponse
+     * @return void
      */
     public function setCode($code)
     {
         $this->code = (int) $code;
-        return $this;
     }
 
     /**
@@ -96,21 +112,17 @@ abstract class AbstractResponse
     }
 
     /**
-     * setup headers
+     * Gets all message headers.
      *
-     * @param array $headers
-     * @return AbstractResponse
-     */
-    public function setHeaders($headers)
-    {
-        $this->headers = $headers;
-        return $this;
-    }
-
-    /**
-     * get headers
+     * The keys represent the header name as it will be sent over the wire, and
+     * each value is an array of strings associated with the header.
      *
-     * @return array
+     *     // Represent the headers as a string
+     *     foreach ($message->getHeaders() as $name => $values) {
+     *         echo $name . ": " . implode(", ", $values);
+     *     }
+     *
+     * @return array Returns an associative array of the message's headers.
      */
     public function getHeaders()
     {
@@ -118,54 +130,156 @@ abstract class AbstractResponse
     }
 
     /**
-     * clear all headers
+     * Checks if a header exists by the given case-insensitive name.
      *
-     * @return AbstractResponse
+     * @param string $header Case-insensitive header name.
+     *
+     * @return bool Returns true if any header names match the given header
+     *     name using a case-insensitive string comparison. Returns false if
+     *     no matching header name is found in the message.
      */
-    public function clearHeaders()
+    public function hasHeader($header)
     {
-        $this->headers = array();
-        return $this;
+        return isset($this->headers[$header]);
     }
 
     /**
-     * add/set header
+     * Retrieve a header by the given case-insensitive name as a string.
      *
-     * @param string $key header name
-     * @param string $value header value
-     * @return AbstractResponse
-     */
-    public function setHeader($key, $value)
-    {
-        $this->headers[$key] = $value;
-        return $this;
-    }
-
-    /**
-     * get header
+     * This method returns all of the header values of the given
+     * case-insensitive header name as a string concatenated together using
+     * a comma.
      *
-     * @param string $key header name
+     * @param string $header Case-insensitive header name.
+     *
      * @return string
      */
-    public function getHeader($key)
+    public function getHeader($header)
     {
-        if (isset($this->headers[$key])) {
-            return $this->headers[$key];
+        if ($this->hasHeader($header)) {
+            return join(',', $this->headers[$header]);
         } else {
-            return false;
+            return '';
         }
+    }
+
+    /**
+     * Retrieves a header by the given case-insensitive name as an array of strings.
+     *
+     * @param string $header Case-insensitive header name.
+     *
+     * @return string[]
+     */
+    public function getHeaderAsArray($header)
+    {
+        if ($this->hasHeader($header)) {
+            return $this->headers[$header];
+        } else {
+            return array();
+        }
+    }
+
+    /**
+     * Sets a header, replacing any existing values of any headers with the
+     * same case-insensitive name.
+     *
+     * The header name is case-insensitive. The header values MUST be a string
+     * or an array of strings.
+     *
+     * @param string $header Header name
+     * @param string|string[] $value  Header value(s)
+     *
+     * @return void
+     */
+    public function setHeader($header, $value)
+    {
+        $this->headers[$header] = array($value);
+    }
+
+    /**
+     * Sets headers, replacing any headers that have already been set on the message.
+     *
+     * The array keys MUST be a string. The array values must be either a
+     * string or an array of strings.
+     *
+     * @param array $headers Headers to set.
+     *
+     * @return void
+     */
+    public function setHeaders(array $headers)
+    {
+        $this->headers = $headers;
+    }
+
+    /**
+     * Appends a header value for the specified header.
+     *
+     * Existing values for the specified header will be maintained. The new
+     * value will be appended to the existing list.
+     *
+     * @param string $header Header name to add
+     * @param string $value  Value of the header
+     *
+     * @return void
+     */
+    public function addHeader($header, $value)
+    {
+        if ($this->hasHeader($header)) {
+            $this->headers[$header][] = $value;
+        } else {
+            $this->setHeader($header, $value);
+        }
+    }
+
+    /**
+     * Merges in an associative array of headers.
+     *
+     * Each array key MUST be a string representing the case-insensitive name
+     * of a header. Each value MUST be either a string or an array of strings.
+     * For each value, the value is appended to any existing header of the same
+     * name, or, if a header does not already exist by the given name, then the
+     * header is added.
+     *
+     * @param array $headers Associative array of headers to add to the message
+     *
+     * @return void
+     */
+    public function addHeaders(array $headers)
+    {
+        $this->headers = array_merge_recursive($this->headers, $headers);
+    }
+
+    /**
+     * Remove a specific header by case-insensitive name.
+     *
+     * @param string $header HTTP header to remove
+     *
+     * @return void
+     */
+    public function removeHeader($header)
+    {
+        unset($this->headers[$header]);
+    }
+
+    /**
+     * Remove all headers
+     *
+     * @return void
+     */
+    public function removeHeaders()
+    {
+        $this->headers = array();
     }
 
     /**
      * Set response body
      *
      * @param View|string $body
-     * @return AbstractResponse
+     * @return void
      */
     public function setBody($body)
     {
         $this->body = $body;
-        return $this;
     }
 
     /**
@@ -181,12 +295,11 @@ abstract class AbstractResponse
     /**
      * Clear response body
      *
-     * @return AbstractResponse
+     * @return void
      */
     public function clearBody()
     {
         $this->body = null;
-        return $this;
     }
 
     /**
@@ -197,7 +310,7 @@ abstract class AbstractResponse
      */
     public function setException($exception)
     {
-        $this->clearHeaders();
+        $this->removeHeaders();
         $this->clearBody();
         $this->exception = $exception;
         return $this;

@@ -32,29 +32,15 @@ class Response extends AbstractResponse
      */
     protected function sendHeaders()
     {
-        // output messages if exists
-        if (app()->hasMessages()) {
-            $messages = app()->getMessages()->popAll();
-            foreach ($messages as $type => $stack) {
-                if (!sizeof($stack)) {
-                    continue;
-                }
-                echo "\n";
-                switch ($type) {
-                    case Messages::TYPE_ERROR:
-                        echo Colorize::text("Errors  ", "white", "red", true);
-                        break;
-                    case Messages::TYPE_NOTICE:
-                        echo Colorize::text("Info    ", "white", "blue", true);
-                        break;
-                    case Messages::TYPE_SUCCESS:
-                        echo Colorize::text("Success ", "white", "green", true);
-                        break;
-                }
-                echo ":\n\t";
-                echo join("\n\t", $stack);
+        // output headers
+        foreach ($this->getHeaders() as $name => $value) {
+            if (!sizeof($value)) {
+                continue;
             }
-            echo "\n\n";
+            echo $name .": ". join(',', $value) ."\n";
+        }
+        if (sizeof($this->headers)) {
+            echo "\n";
         }
     }
 
@@ -76,14 +62,12 @@ class Response extends AbstractResponse
         if (is_array($response)) {
             // just print to console
             foreach ($response as $key => $value) {
-                echo Colorize::text($key, "yellow", null, true) . ": ";
+                echo $key . ": ";
                 print_r($value);
                 echo "\n";
             }
         } else {
-            echo Colorize::text("Response", "yellow", null, true) . ": ";
             print_r($response);
-            echo "\n";
         }
     }
 }

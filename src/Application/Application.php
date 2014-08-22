@@ -737,8 +737,8 @@ abstract class Application
                 $dispatchResult = $this->getLayout();
             }
 
-            $response->setCode($e->getCode())
-                ->setBody($dispatchResult);
+            $response->setCode($e->getCode());
+            $response->setBody($dispatchResult);
         }
 
         return $this->getResponse();

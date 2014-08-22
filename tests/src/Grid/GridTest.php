@@ -198,7 +198,9 @@ class GridTest extends TestCase
     public function testHelperOrder()
     {
         $grid = new ArrayGrid();
+        $this->assertNull($grid->order('not exists'));
         $this->assertEquals('/index/index/arr-order-name/asc', $grid->order('name'));
+        $this->assertEquals('/index/index/arr-order-name/asc', $grid->order('name', 'asc', 'asc', false));
     }
 
     /**

@@ -58,4 +58,20 @@ class TranslatorTest extends TestCase
 
         $this->assertEquals('messages', $translator->translatePlural('message', 'messages', 2));
     }
+
+    /**
+     * Test Plural Translate
+     */
+    public function testPluralTranslateWithAdditionalParams()
+    {
+        $translator = new Translator();
+        $translator->setDomain('messages');
+        $translator->setLocale('uk_UA');
+        $translator->setPath(PATH_APPLICATION .'/locale');
+
+        $this->assertEquals(
+            '2 messages',
+            $translator->translatePlural('%d message', '%d messages', 2, 2)
+        );
+    }
 }

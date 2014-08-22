@@ -182,8 +182,10 @@ class ViewTest extends TestCase
         $view = $this->getApp()->getView();
 
         $result = $view->checkbox('test', 1, true, ['class' => 'foo']);
-
         $this->assertEquals('<input class="foo" checked="checked" value="1" name="test" type="checkbox"/>', $result);
+
+        $result = $view->checkbox('sex', 'male', 'male', ['class' => 'foo']);
+        $this->assertEquals('<input class="foo" checked="checked" value="male" name="sex" type="checkbox"/>', $result);
     }
 
     /**

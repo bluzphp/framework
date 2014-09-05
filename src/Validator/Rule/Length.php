@@ -99,7 +99,7 @@ class Length extends AbstractCompareRule
      */
     public function getTemplate()
     {
-        if (!$this->minValue) {            
+        if (!$this->minValue) {
             return __('{{name}} must have a length lower than %d', $this->maxValue);
         } elseif (!$this->maxValue) {
             return __('{{name}} must have a length greater than %d', $this->minValue);

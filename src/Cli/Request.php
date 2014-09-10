@@ -27,34 +27,35 @@ class Request extends AbstractRequest
     /**
      * Constructor
      *
-     * @example $> php index.php --uri "/index/index/?foo=bar"
+     * @example $> php bin/cli.php --uri "/index/index/?foo=bar"
      */
     public function __construct()
     {
         $this->method = self::METHOD_CLI;
 
-        $args = $_SERVER["argv"];
+        $arguments = getopt("u:", ["uri:"]);
 
-        // unset script name
-        unset($args[0]);
-
-        if (!in_array('--uri', $args)) {
-            throw new RequestException('Attribute "--uri" is required');
+        if (!array_key_exists('u', $arguments) && !array_key_exists('uri', $arguments)) {
+            throw new RequestException('Attribute `--uri` is required');
         }
 
-        $uriOrder = array_search('--uri', $args) + 1;
+        $uri = isset($arguments['u']) ? $arguments['u'] : $arguments['uri'];
 
-        if (isset($args[$uriOrder])) {
-            $uri = $args[$uriOrder];
-            $this->setRequestUri($uri);
-            if ($query = parse_url($uri, PHP_URL_QUERY)) {
-                parse_str($query, $params);
-                if (is_array($params)) {
-                    $this->setParams($params);
-                }
+        $path = parse_url($uri, PHP_URL_PATH);
+        $query = parse_url($uri, PHP_URL_QUERY);
+
+        // two syntax should be has equal result
+        //     /module/controller?foo=bar
+        //     /module/controller/?foo=bar
+        $uri = rtrim($path, '/') .'/'. ($query ? '?'.$query : '');
+
+        $this->setRequestUri($uri);
+
+        if ($query) {
+            parse_str($query, $params);
+            if (is_array($params)) {
+                $this->setParams($params);
             }
-        } else {
-            throw new RequestException('Attribute "--uri" is required');
         }
     }
 

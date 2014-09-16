@@ -218,6 +218,14 @@ abstract class Application
             // first log message
             $this->log('app:init');
 
+            // initial php settings
+            if ($ini = $this->getConfigData('php')) {
+                foreach ($ini as $key => $value) {
+                    $result = ini_set($key, $value);
+                    $this->log('app:init:php:'.$key.':'.($result?:'---'));
+                }
+            }
+
             // initial session, start inside class
             $this->getSession();
 

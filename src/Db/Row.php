@@ -11,6 +11,7 @@
  */
 namespace Bluz\Db;
 
+use Bluz\Common\Container;
 use Bluz\Db\Exception\DbException;
 use Bluz\Db\Exception\InvalidPrimaryKeyException;
 use Bluz\Db\Exception\RelationNotFoundException;
@@ -44,6 +45,8 @@ use Bluz\Db\Exception\TableNotFoundException;
  */
 class Row implements \JsonSerializable, \ArrayAccess
 {
+    use Container;
+
     /**
      * Table class instance
      * @var Table
@@ -61,15 +64,6 @@ class Row implements \JsonSerializable, \ArrayAccess
      * @var array
      */
     protected $primary;
-
-    /**
-     * The data for each column in the row (column_name => value).
-     * The keys must match the physical names of columns in the
-     * table for which this row is defined.
-     *
-     * @var array
-     */
-    protected $data = array();
 
     /**
      * This is set to a copy of $data when the data is fetched from
@@ -109,36 +103,7 @@ class Row implements \JsonSerializable, \ArrayAccess
      */
     public function __sleep()
     {
-        return array('primary', 'data', 'clean');
-    }
-
-    /**
-     * Set row field value
-     *
-     * @param  string $columnName The column key.
-     * @param  mixed $value      The value for the property.
-     * @return void
-     * @throws DbException
-     */
-    public function __set($columnName, $value)
-    {
-        $this->data[$columnName] = $value;
-    }
-
-    /**
-     * Retrieve row field value
-     *
-     * @param  string $columnName The user-specified column name.
-     * @return string             The corresponding column value.
-     * @throws DbException if the $columnName is not a column in the row.
-     */
-    public function __get($columnName)
-    {
-        if (isset($this->data[$columnName])) {
-            return $this->data[$columnName];
-        } else {
-            return null;
-        }
+        return array('primary', 'container', 'clean');
     }
 
     /**
@@ -315,9 +280,8 @@ class Row implements \JsonSerializable, \ArrayAccess
         /**
          * Reset all fields to null to indicate that the row is not there
          */
-        foreach ($this->data as &$value) {
-            $value = null;
-        }
+        $this->resetArray();
+
         return $result;
     }
 
@@ -509,79 +473,5 @@ class Row implements \JsonSerializable, \ArrayAccess
         }
 
         return $this->relations[$tableName];
-    }
-
-    /**
-     * Implement JsonSerializable
-     *
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->data;
-    }
-
-    /**
-     * Sets all data in the row from an array
-     *
-     * @param  array $data
-     * @return Row Provides a fluent interface
-     */
-    public function setFromArray(array $data)
-    {
-        foreach ($data as $columnName => $value) {
-            $this->$columnName = $value;
-        }
-        return $this;
-    }
-
-    /**
-     * Returns the column/value data as an array.
-     *
-     * @return array
-     */
-    public function toArray()
-    {
-        return $this->data;
-    }
-
-    /**
-     * @param mixed $offset
-     * @param mixed $value
-     * @throws \InvalidArgumentException
-     */
-    public function offsetSet($offset, $value)
-    {
-        if (is_null($offset)) {
-            throw new \InvalidArgumentException('Class `Db\Row` not fully support `ArrayAccess`');
-        } else {
-            $this->__set($offset, $value);
-        }
-    }
-
-    /**
-     * @param mixed $offset
-     * @return bool
-     */
-    public function offsetExists($offset)
-    {
-        return isset($this->data[$offset]);
-    }
-
-    /**
-     * @param mixed $offset
-     */
-    public function offsetUnset($offset)
-    {
-        unset($this->data[$offset]);
-    }
-
-    /**
-     * @param mixed $offset
-     * @return string
-     */
-    public function offsetGet($offset)
-    {
-        return $this->__get($offset);
     }
 }

@@ -44,7 +44,7 @@ return array(
         "baseUrl" => '/',
     ),
     "session" => array(
-        "store" => "array"
+
     ),
     "translator" => array(
         "domain" => "messages",

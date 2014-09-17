@@ -30,12 +30,10 @@ class CacheTest extends TestCase
     public function prepareFileCache()
     {
         $settings = [
+            "cacheAdapter" => "phpFile",
             "settings" => [
-                "cacheAdapter" => [
-                    "name" => "phpFile",
-                    "settings" => [
-                        "cacheDir" => PATH_APPLICATION .'/cache'
-                    ]
+                "phpFile" => [
+                    "cacheDir" => PATH_APPLICATION .'/cache'
                 ]
             ]
         ];

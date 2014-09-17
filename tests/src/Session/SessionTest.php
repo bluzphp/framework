@@ -35,19 +35,19 @@ class SessionTest extends TestCase
         parent::setUp();
 
         $this->session = new Session();
-        $this->session->setStore('array');
-        $this->session->getStore()->setNamespace('testing');
-        $this->session->getStore()->start();
+        $this->session->setNamespace('testing');
+        $this->session->start();
     }
 
     /**
-     * Test Destroy session
-     * @covers \Bluz\Session\Store\ArrayStore::destroy()
+     * Test Start and Destroy session
+     * @covers \Bluz\Session\Session::start()
+     * @covers \Bluz\Session\Session::destroy()
      */
     public function testDestroy()
     {
         $this->session->foo = 'bar';
-        $this->session->getStore()->destroy();
+        $this->session->destroy();
 
         $this->assertNull($this->session->foo);
     }
@@ -57,9 +57,6 @@ class SessionTest extends TestCase
      *
      * @covers \Bluz\Session\Session::__set()
      * @covers \Bluz\Session\Session::__get()
-     * @covers \Bluz\Session\Store\ArrayStore::__set()
-     * @covers \Bluz\Session\Store\ArrayStore::__get()
-     * @covers \Bluz\Session\Store\AbstractStore::setNamespace()
      */
     public function testSetGet()
     {
@@ -74,7 +71,6 @@ class SessionTest extends TestCase
      * Complex test for __isset
      *
      * @covers \Bluz\Session\Session::__isset()
-     * @covers \Bluz\Session\Store\ArrayStore::__isset()
      */
     public function testIsset()
     {
@@ -88,7 +84,6 @@ class SessionTest extends TestCase
      * Complex test for __unset
      *
      * @covers \Bluz\Session\Session::__unset()
-     * @covers \Bluz\Session\Store\ArrayStore::__unset()
      */
     public function testUnset()
     {

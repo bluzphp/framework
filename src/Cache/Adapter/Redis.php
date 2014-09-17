@@ -61,8 +61,7 @@ class Redis extends AbstractAdapter
         // check Redis settings
         if (!is_array($settings) or empty($settings)) {
             throw new CacheException(
-                "Redis configuration is missed.
-                Please check 'cache' configuration section"
+                "Redis configuration is missed. Please check 'cache' configuration section"
             );
         }
 

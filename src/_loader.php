@@ -33,16 +33,16 @@ require_once 'Application/Exception/ApplicationException.php';
 
 // packages and support
 require_once 'Config/Config.php';
+require_once 'Db/Db.php';
 require_once 'EventManager/Event.php';
 require_once 'EventManager/EventManager.php';
 require_once 'Messages/Messages.php';
+require_once 'Response/AbstractResponse.php';
 require_once 'Request/AbstractRequest.php';
 require_once 'Router/Router.php';
 require_once 'Session/Session.php';
-require_once 'Session/Store/AbstractStore.php';
 require_once 'Translator/Translator.php';
 require_once 'View/ViewInterface.php';
 require_once 'View/View.php';
-require_once 'View/Layout.php';
 
 // @codeCoverageIgnoreEnd

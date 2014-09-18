@@ -386,11 +386,10 @@ abstract class Application
     public function getLogger()
     {
         if (!$this->logger) {
-            $config = $this->getConfigData('logger');
-            if (!isset($config['enabled']) or !$config['enabled']) {
-                $this->logger = new Nil();
-            } else {
+            if ($this->getConfigData('logger', 'enabled')) {
                 $this->logger = new Logger();
+            } else {
+                $this->logger = new Nil();
             }
         }
         return $this->logger;

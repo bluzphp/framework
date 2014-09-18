@@ -36,7 +36,7 @@ class Mailer
      */
     protected function checkOptions()
     {
-        if (!isset($this->options['from']['email'])) {
+        if (!$this->getOption('from', 'email')) {
             throw new ConfigException(
                 "Missed `from.email` option in `mailer` configuration. <br/>\n" .
                 "Read more: <a href='https://github.com/bluzphp/framework/wiki/Mailer'>".
@@ -66,22 +66,22 @@ class Mailer
         $mail = new \PHPMailer();
         $mail->WordWrap = 920; // RFC 2822 Compliant for Max 998 characters per line
 
-        $fromEmail = $this->options['from']['email'];
-        $fromName = isset($this->options['from']['name']) ? $this->options['from']['name'] : '';
+        $fromEmail = $this->getOption('from', 'email');
+        $fromName = $this->getOption('from', 'name') ?: '';
 
         // setup options from config
         $mail->SetFrom($fromEmail, $fromName, false);
 
         // setup options
-        if (isset($this->options['settings'])) {
-            foreach ($this->options['settings'] as $name => $value) {
+        if ($settings = $this->getOption('settings')) {
+            foreach ($settings as $name => $value) {
                 $mail->set($name, $value);
             }
         }
 
         // setup custom headers
-        if (isset($this->options['headers'])) {
-            foreach ($this->options['headers'] as $header => $value) {
+        if ($headers = $this->getOption('headers')) {
+            foreach ($headers as $header => $value) {
                 $mail->AddCustomHeader($header, $value);
             }
         }
@@ -100,8 +100,8 @@ class Mailer
      */
     public function send(\PHPMailer $mail)
     {
-        if (isset($this->options['subjectTemplate'])) {
-            $mail->Subject = sprintf($this->options['subjectTemplate'], $mail->Subject);
+        if ($template = $this->getOption('subjectTemplate')) {
+            $mail->Subject = sprintf($template, $mail->Subject);
         }
 
         if (!$mail->Send()) {

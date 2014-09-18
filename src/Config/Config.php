@@ -59,27 +59,45 @@ class Config
      * @throws ConfigException
      * @return void
      */
-    public function load($environment = null)
+    public function init($environment = null)
     {
         if (!$this->path) {
             throw new ConfigException('Configuration directory is not setup');
         }
 
-        $configFile = $this->path . '/application.php';
+        $this->config = $this->loadFiles($this->path .'/default');
 
-        if (!is_file($configFile) or !is_readable($configFile)) {
-            throw new ConfigException('Configuration file is not found');
+        if (!is_null($environment)) {
+            $customConfig = $this->loadFiles($this->path . '/' . $environment);
+            $this->config = array_replace_recursive($this->config, $customConfig);
+        }
+    }
+
+    /**
+     * Load configuration files to array
+     *
+     * @param string $path
+     * @throws ConfigException
+     * @return array
+     */
+    protected function loadFiles($path)
+    {
+        $config = array();
+
+        if (!is_dir($path)) {
+            throw new ConfigException('Configuration directory `'.$path.'` not found');
         }
 
-        $this->config = require $configFile;
+        $iterator = new \GlobIterator(
+            $path .'/*.php',
+            \FilesystemIterator::KEY_AS_FILENAME | \FilesystemIterator::CURRENT_AS_PATHNAME
+        );
 
-        if (null !== $environment) {
-            $customConfig = $this->path . '/app.' . $environment . '.php';
-            if (is_file($customConfig) && is_readable($customConfig)) {
-                $customConfig = require $customConfig;
-                $this->config = array_replace_recursive($this->config, $customConfig);
-            }
+        foreach ($iterator as $name => $file) {
+            $name = substr($name, 0, -4);
+            $config[$name] = include $file;
         }
+        return $config;
     }
 
     /**

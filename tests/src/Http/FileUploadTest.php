@@ -37,8 +37,8 @@ class FileUploadTest extends Bluz\Tests\TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->path1 = $this->getApp()->getConfigData('tmp_name', 'image1');
-        $this->path2 = $this->getApp()->getConfigData('tmp_name', 'image2');
+        $this->path1 = $this->getApp()->getConfigData('temp', 'image1');
+        $this->path2 = $this->getApp()->getConfigData('temp', 'image2');
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_SERVER['CONTENT_LENGTH'] = 0;
     }

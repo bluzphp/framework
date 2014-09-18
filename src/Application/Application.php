@@ -263,7 +263,7 @@ abstract class Application
         if (!$this->config) {
             $this->config = new Config();
             $this->config->setPath($this->getPath() . '/configs');
-            $this->config->load($environment);
+            $this->config->init($environment);
         }
         return $this->config;
     }
@@ -386,7 +386,7 @@ abstract class Application
     public function getLogger()
     {
         if (!$this->logger) {
-            if ($this->getConfigData('logger', 'enabled')) {
+            if ($this->getConfigData('logger')) {
                 $this->logger = new Logger();
             } else {
                 $this->logger = new Nil();

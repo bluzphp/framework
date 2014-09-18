@@ -56,7 +56,7 @@ class Db
      * PDO instance
      * @var \PDO
      */
-    protected $dbh;
+    protected $handler;
 
     /**
      * Himself instance
@@ -152,11 +152,11 @@ class Db
      */
     public function connect()
     {
-        if (empty($this->dbh)) {
+        if (empty($this->handler)) {
             try {
                 $this->checkConnect();
                 $this->log("Connect to " . $this->connect['host']);
-                $this->dbh = new \PDO(
+                $this->handler = new \PDO(
                     $this->connect['type'] . ":host=" . $this->connect['host'] . ";dbname=" . $this->connect['name'],
                     $this->connect['user'],
                     $this->connect['pass'],
@@ -164,7 +164,7 @@ class Db
                 );
 
                 foreach ($this->attributes as $attribute => $value) {
-                    $this->dbh->setAttribute($attribute, $value);
+                    $this->handler->setAttribute($attribute, $value);
                 }
 
                 $this->log("Connected");
@@ -182,10 +182,10 @@ class Db
      */
     public function handler()
     {
-        if (empty($this->dbh)) {
+        if (empty($this->handler)) {
             $this->connect();
         }
-        return $this->dbh;
+        return $this->handler;
     }
 
     /**
@@ -631,8 +631,8 @@ class Db
      */
     public function disconnect()
     {
-        if ($this->dbh) {
-            $this->dbh = null;
+        if ($this->handler) {
+            $this->handler = null;
         }
         self::$adapter = null;
     }

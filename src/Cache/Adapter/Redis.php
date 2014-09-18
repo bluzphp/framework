@@ -25,7 +25,7 @@ class Redis extends AbstractAdapter
      * Instance of Redis
      * @var \Redis
      */
-    protected $redis = null;
+    protected $handler = null;
 
     /**
      * Default Redis settings
@@ -75,20 +75,20 @@ class Redis extends AbstractAdapter
      */
     public function getHandler()
     {
-        if (!$this->redis) {
-            $this->redis = new \Redis();
+        if (!$this->handler) {
+            $this->handler = new \Redis();
             if ($this->settings['persistence']) {
-                $this->redis->pconnect($this->settings['host'], $this->settings['port'], $this->settings['timeout']);
+                $this->handler->pconnect($this->settings['host'], $this->settings['port'], $this->settings['timeout']);
             } else {
-                $this->redis->connect($this->settings['host'], $this->settings['port'], $this->settings['timeout']);
+                $this->handler->connect($this->settings['host'], $this->settings['port'], $this->settings['timeout']);
             }
             if (isset($this->settings['options'])) {
                 foreach ($this->settings['options'] as $key => $value) {
-                    $this->redis->setOption($key, $value);
+                    $this->handler->setOption($key, $value);
                 }
             }
         }
-        return $this->redis;
+        return $this->handler;
     }
 
     /**

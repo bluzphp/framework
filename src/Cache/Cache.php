@@ -20,11 +20,11 @@ use Bluz\Config\ConfigException;
  *
  * Configuration
  *     'enabled' => Boolean,optional, true by default
+ *     'cacheAdapter' => 'redis'   // Required if option 'enabled' set to true
+ *     'tagAdapter' => 'memcached' // Optional
  *     'settings' =>
- *         'cacheAdapter' => Settings for setup Instance of Bluz\Cache\CacheInterface.
- *                    Required if option 'enabled' set to true
- *         'tagAdapter' => Settings fir setup Instance of Bluz\Cache\CacheInterface. Optional.
- *                    If it is not set, 'cacheAdapter' instance will be used as a tag adapter
+ *         'redis' => []           // Settings for setup Instance of Bluz\Cache\CacheInterface.
+ *         'memcached' => []       // Settings for another cache adapter
  *
  * @package Bluz\Cache
  *
@@ -45,7 +45,7 @@ class Cache implements CacheInterface, TagableInterface
      * Instance of cache adapter
      * @var CacheInterface
      */
-    protected $cacheAdapter = null;
+    protected $adapter = null;
 
     /**
      * Instance of tag adapter
@@ -68,7 +68,7 @@ class Cache implements CacheInterface, TagableInterface
     protected function checkOptions()
     {
         // check cache Adapter instance and settings for initialize it
-        if (!isset($this->options['settings'], $this->options['settings']['cacheAdapter'])) {
+        if (!$this->getOption('cacheAdapter')) {
             throw new ConfigException(
                 "Missed `cacheAdapter` option in cache `settings` configuration. <br/>\n" .
                 "Read more: <a href='https://github.com/bluzphp/framework/wiki/Cache'>".
@@ -76,24 +76,6 @@ class Cache implements CacheInterface, TagableInterface
             );
         }
         return true;
-    }
-
-    /**
-     * Setup cache adapter
-     * @param CacheInterface $adapter
-     */
-    public function setCacheAdapter(CacheInterface $adapter)
-    {
-        $this->cacheAdapter = $adapter;
-    }
-
-    /**
-     * Setup tag adapter
-     * @param CacheInterface $adapter
-     */
-    public function setTagAdapter(CacheInterface $adapter)
-    {
-        $this->tagAdapter = $adapter;
     }
 
     /**
@@ -169,30 +151,31 @@ class Cache implements CacheInterface, TagableInterface
      * Get underlying cache adapter
      * @return Adapter\AbstractAdapter
      */
-    public function getAdapter()
+    protected function getAdapter()
     {
-        if (!$this->cacheAdapter) {
-            $this->cacheAdapter = $this->initAdapter($this->options['settings']['cacheAdapter']);
+        if (!$this->adapter) {
+            $this->adapter = $this->initAdapter($this->getOption('cacheAdapter'));
         }
 
-        return $this->cacheAdapter;
+        return $this->adapter;
     }
 
     /**
      * Get underlying tag adapter
      * @throws CacheException
+     * @throws ConfigException
      * @return Adapter\AbstractAdapter
      */
-    public function getTagAdapter()
+    protected function getTagAdapter()
     {
         if (!$this->tagAdapter) {
             // create instance of new adapter
-            if (isset($this->options['settings']['tagAdapter'])) {
-                $this->tagAdapter = $this->initAdapter($this->options['settings']['tagAdapter']);
+            if ($tagAdapter = $this->getOption('tagAdapter')) {
+                $this->tagAdapter = $this->initAdapter($tagAdapter);
             } elseif ($adapter = $this->getAdapter()) {
                 $this->tagAdapter = $adapter;
             } else {
-                throw new CacheException("Tag Adapter can't initialize. Configuration is missed");
+                throw new ConfigException("Tag Adapter can't initialize. Configuration is missed");
             }
         }
         return $this->tagAdapter;
@@ -201,19 +184,13 @@ class Cache implements CacheInterface, TagableInterface
     /**
      * Init adapter
      *
-     * @param mixed $settings
+     * @param string $adapterName
      * @throws CacheException
      * @return Adapter\AbstractAdapter
      */
-    protected function initAdapter($settings)
+    protected function initAdapter($adapterName)
     {
-        if (is_string($settings)) {
-            $adapterName = $settings;
-            $adapterSettings = [];
-        } elseif (isset($settings['name'], $settings['settings'])) {
-            $adapterName = $settings['name'];
-            $adapterSettings = $settings['settings'];
-        } else {
+        if (!$adapterSettings = $this->getOption('settings', $adapterName)) {
             throw new CacheException("Cache Adapter can't initialize. Configuration is missed");
         }
 

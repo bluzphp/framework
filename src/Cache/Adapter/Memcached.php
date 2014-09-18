@@ -24,7 +24,7 @@ class Memcached extends AbstractAdapter
      * Instance of memcached
      * @var \Memcached
      */
-    protected $memcached = null;
+    protected $handler = null;
 
     /**
      * Check and setup memcached servers
@@ -59,21 +59,21 @@ class Memcached extends AbstractAdapter
      */
     public function getHandler()
     {
-        if (!$this->memcached) {
+        if (!$this->handler) {
 
             $persistentId = isset($this->settings['persistent']) ? $this->settings['persistent'] : null;
 
-            $this->memcached = new \Memcached($persistentId);
+            $this->handler = new \Memcached($persistentId);
 
-            if (!$this->memcached->getServerList()) {
-                $this->memcached->addServers($this->settings['servers']);
+            if (!$this->handler->getServerList()) {
+                $this->handler->addServers($this->settings['servers']);
             }
 
             if (isset($this->settings['options'])) {
-                $this->memcached->setOptions($this->settings['options']);
+                $this->handler->setOptions($this->settings['options']);
             }
         }
-        return $this->memcached;
+        return $this->handler;
     }
 
     /**

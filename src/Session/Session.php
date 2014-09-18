@@ -12,6 +12,7 @@
 namespace Bluz\Session;
 
 use Bluz\Common\Options;
+use Bluz\Config\ConfigException;
 
 /**
  * Session
@@ -29,70 +30,301 @@ class Session
     use Options;
 
     /**
-     * Session store instance
-     * @var Store\AbstractStore
+     * @var string value returned by session_name()
      */
-    protected $store = null;
+    protected $name;
 
     /**
-     * Session store name
-     * @var string
+     * @var string namespace
      */
-    protected $storeName = 'session';
+    protected $namespace = 'bluz';
 
     /**
-     * Session store parameters
-     * @var array
+     * @var string|\SessionHandlerInterface
      */
-    protected $storeSettings = array();
+    protected $adapter;
 
     /**
-     * setStore
+     * Attempt to set the session name
      *
-     * @param string $store description
-     * @return Session
-     */
-    public function setStore($store)
-    {
-        $this->storeName = strtolower($store);
-        return $this;
-    }
-
-    /**
-     * setSettings
+     * If the session has already been started, or if the name provided fails
+     * validation, an exception will be raised.
      *
-     * @param array $settings
-     * @return Session
-     */
-    public function setSettings(array $settings)
-    {
-        $this->storeSettings = $settings;
-        return $this;
-    }
-
-    /**
-     * Get session store
-     *
+     * @param  string $name
      * @throws SessionException
-     * @return Store\AbstractStore
+     * @return Session
      */
-    public function getStore()
+    public function setName($name)
     {
-        if (!$this->store) {
-            // switch statement for $store
-            switch ($this->storeName) {
-                case 'array':
-                    $this->store = new Store\ArrayStore();
-                    break;
-                case 'session':
-                default:
-                    $this->store = new Store\SessionStore();
-                    break;
-            }
-            $this->store->setOptions($this->storeSettings);
+        if ($this->sessionExists()) {
+            throw new SessionException(
+                'Cannot set session name after a session has already started'
+            );
         }
 
-        return $this->store;
+        if (!preg_match('/^[a-zA-Z0-9]+$/', $name)) {
+            throw new SessionException(
+                'Name provided contains invalid characters; must be alphanumeric only'
+            );
+        }
+
+        $this->name = $name;
+        session_name($name);
+        return $this;
+    }
+
+    /**
+     * Get session name
+     *
+     * Proxies to {@link session_name()}.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        if (null === $this->name) {
+            // If we're grabbing via session_name(), we don't need our
+            // validation routine; additionally, calling setName() after
+            // session_start() can lead to issues, and often we just need the name
+            // in order to do things such as setting cookies.
+            $this->name = session_name();
+        }
+        return $this->name;
+    }
+
+    /**
+     * Set Namespace
+     *
+     * @param string $namespace
+     * @return Session
+     */
+    public function setNamespace($namespace)
+    {
+        $this->namespace = $namespace;
+        return $this;
+    }
+
+    /**
+     * Get Namespace
+     *
+     * @return string
+     */
+    public function getNamespace()
+    {
+        return $this->namespace;
+    }
+
+    /**
+     * Set session ID
+     *
+     * Can safely be called in the middle of a session.
+     *
+     * @param  string $id
+     * @throws SessionException
+     * @return Session
+     */
+    public function setId($id)
+    {
+        if ($this->sessionExists()) {
+            throw new SessionException(
+                'Session has already been started, to change the session ID call regenerateId()'
+            );
+        }
+        session_id($id);
+        return $this;
+    }
+
+    /**
+     * Get session ID
+     *
+     * Proxies to {@link session_id()}
+     *
+     * @return string
+     */
+    public function getId()
+    {
+        return session_id();
+    }
+
+    /**
+     * Regenerate id
+     *
+     * Regenerate the session ID, using session save handler's
+     * native ID generation Can safely be called in the middle of a session.
+     *
+     * @param  bool $deleteOldSession
+     * @return Session
+     */
+    public function regenerateId($deleteOldSession = true)
+    {
+        session_regenerate_id((bool) $deleteOldSession);
+        return $this;
+    }
+
+    /**
+     * Returns true if session ID is set
+     *
+     * @return bool
+     */
+    public function cookieExists()
+    {
+        return isset($_COOKIE[session_name()]);
+    }
+
+    /**
+     * Does a session started and is it currently active?
+     *
+     * @return bool
+     */
+    public function sessionExists()
+    {
+        $sid = defined('SID') ? constant('SID') : false;
+        if ($sid !== false && $this->getId()) {
+            return true;
+        }
+        if (headers_sent()) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Start session
+     *
+     * if No session currently exists, attempt to start it. Calls
+     * {@link isValid()} once session_start() is called, and raises an
+     * exception if validation fails.
+     *
+     * @return void
+     * @throws SessionException
+     */
+    public function start()
+    {
+        if ($this->sessionExists()) {
+            return;
+        }
+
+        $this->initAdapter();
+
+        session_start();
+
+        // check storage
+        if (!isset($_SESSION[$this->getNamespace()])) {
+            $_SESSION[$this->getNamespace()] = array();
+        }
+    }
+
+    /**
+     * Destroy/end a session
+     *
+     * @return void
+     */
+    public function destroy()
+    {
+        if (!$this->cookieExists() or !$this->sessionExists()) {
+            return;
+        }
+
+        session_destroy();
+
+        // send expire cookies
+        $this->expireSessionCookie();
+
+        // clear session data
+        unset($_SESSION[$this->getNamespace()]);
+    }
+
+    /**
+     * Set session save handler object
+     *
+     * @param  string|\SessionHandlerInterface $saveHandler
+     * @return Session
+     */
+    public function setAdapter($saveHandler)
+    {
+        $this->adapter = $saveHandler;
+        return $this;
+    }
+
+    /**
+     * Get SaveHandler Object
+     *
+     * @return \SessionHandlerInterface
+     */
+    public function getAdapter()
+    {
+        return $this->adapter;
+    }
+
+    /**
+     * Register Save Handler with ext/session
+     *
+     * Since ext/session is coupled to this particular session manager
+     * register the save handler with ext/session.
+     *
+     * @throws ConfigException
+     * @return bool
+     */
+    protected function initAdapter()
+    {
+        if (is_null($this->adapter) or $this->adapter === 'files') {
+            // try to apply settings
+            if ($settings = $this->getOption('settings', 'files')) {
+                $this->setSavePath($settings['save_path']);
+            }
+            return true;
+        } elseif (is_string($this->adapter)) {
+            $adapterClass = '\\Bluz\\Session\\Adapter\\'.ucfirst($this->adapter);
+            if (!class_exists($adapterClass) or !is_subclass_of($adapterClass, '\SessionHandlerInterface')) {
+                throw new ConfigException("`$adapterClass` class is not exists or not initialized");
+            }
+            $settings = $this->getOption('settings', $this->adapter) ?: array();
+
+            $this->adapter = new $adapterClass($settings);
+        }
+
+        return session_set_save_handler($this->adapter);
+    }
+
+    /**
+     * Expire the session cookie
+     *
+     * Sends a session cookie with no value, and with an expiry in the past.
+     *
+     * @return void
+     */
+    public function expireSessionCookie()
+    {
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(
+                $this->getName(),
+                '',
+                $_SERVER['REQUEST_TIME'] - 42000,
+                $params["path"],
+                $params["domain"],
+                $params["secure"],
+                $params["httponly"]
+            );
+        }
+    }
+
+    /**
+     * Set session save path
+     *
+     * @param string $savePath
+     * @throws ConfigException
+     * @return Session
+     */
+    protected function setSavePath($savePath)
+    {
+        if (!is_dir($savePath)
+            or !is_writable($savePath)
+        ) {
+            throw new ConfigException('Session path is not writable');
+        }
+        session_save_path($savePath);
+        return $this;
     }
 
     /**
@@ -104,7 +336,8 @@ class Session
      */
     public function __set($key, $value)
     {
-        $this->getStore()->__set($key, $value);
+        $this->start();
+        $_SESSION[$this->namespace][$key] = $value;
     }
 
     /**
@@ -115,7 +348,11 @@ class Session
      */
     public function __get($key)
     {
-        return $this->getStore()->__get($key);
+        if ($this->__isset($key)) {
+            return $_SESSION[$this->namespace][$key];
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -126,7 +363,12 @@ class Session
      */
     public function __isset($key)
     {
-        return $this->getStore()->__isset($key);
+        if ($this->cookieExists()) {
+            $this->start();
+            return isset($_SESSION[$this->namespace][$key]);
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -137,6 +379,9 @@ class Session
      */
     public function __unset($key)
     {
-        $this->getStore()->__unset($key);
+        if ($this->cookieExists()) {
+            $this->start();
+            unset($_SESSION[$this->namespace][$key]);
+        }
     }
 }

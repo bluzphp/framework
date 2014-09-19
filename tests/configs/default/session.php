@@ -13,7 +13,7 @@ return array(
             "save_path" => PATH_ROOT . '/tests/sessions'
         ),
         "redis" => array(
-            "host" => '10.10.0.116'
+            "host" => 'localhost'
         )
     )
 );

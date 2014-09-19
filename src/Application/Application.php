@@ -262,8 +262,9 @@ abstract class Application
     {
         if (!$this->config) {
             $this->config = new Config();
-            $this->config->setPath($this->getPath() . '/configs');
-            $this->config->init($environment);
+            $this->config->setPath($this->getPath());
+            $this->config->setEnvironment($environment);
+            $this->config->init();
         }
         return $this->config;
     }

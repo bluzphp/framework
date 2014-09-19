@@ -13,14 +13,14 @@ return array(
         "memcached" => array(
             "persistent" => "uid",
             "servers" => [
-                ["memcached", 11211, 1],
+                ["localhost", 11211, 1],
             ]
         ),
         "phpFile" => array(
             "cacheDir" => PATH_ROOT . '/tests/cache'
         ),
         "redis" => array(
-            "host" => 'redis',
+            "host" => 'localhost',
             "options" => array(
                 \Redis::OPT_SERIALIZER => \Redis::SERIALIZER_PHP
             )

@@ -23,7 +23,7 @@ class ConfigTest extends TestCase
     /**
      * @var string Path to config dir
      */
-    protected $configPath;
+    protected $path;
 
     /**
      * @var string Path to empty config dir
@@ -38,7 +38,7 @@ class ConfigTest extends TestCase
     {
         parent::setUp();
         $this->config = new Bluz\Config\Config();
-        $this->configPath = dirname(__FILE__) . '/Fixtures/configs';
+        $this->path = dirname(__FILE__) . '/Fixtures/';
         $this->emptyConfigsDir = dirname(__FILE__) . '/Fixtures/emptyConfigsDir';
     }
 
@@ -56,7 +56,7 @@ class ConfigTest extends TestCase
      */
     public function testSetPath()
     {
-        $this->config->setPath($this->configPath);
+        $this->config->setPath($this->path);
     }
 
     /**
@@ -83,7 +83,7 @@ class ConfigTest extends TestCase
      */
     public function testLoad()
     {
-        $this->config->setPath($this->configPath);
+        $this->config->setPath($this->path);
         $this->config->init();
     }
 
@@ -92,10 +92,11 @@ class ConfigTest extends TestCase
      */
     public function testLoadConfigWithEnvironment()
     {
-        $this->config->setPath($this->configPath);
+        $this->config->setPath($this->path);
         $this->config->init();
         $configWithoutEnvironment = $this->config->getData();
-        $this->config->init('testing');
+        $this->config->setEnvironment('testing');
+        $this->config->init();
         $configWithEnvironment = $this->config->getData();
         $this->assertNotEquals($configWithoutEnvironment, $configWithEnvironment);
     }
@@ -106,8 +107,9 @@ class ConfigTest extends TestCase
      */
     public function testLoadConfigWithWrongEnvironment()
     {
-        $this->config->setPath($this->configPath);
-        $this->config->init('not_existed_environment');
+        $this->config->setPath($this->path);
+        $this->config->setEnvironment('not_existed_environment');
+        $this->config->init();
     }
 
     /**
@@ -115,7 +117,7 @@ class ConfigTest extends TestCase
      */
     public function testGet()
     {
-        $this->config->setPath($this->configPath);
+        $this->config->setPath($this->path);
         $this->config->init();
         $this->assertEquals('default', $this->config->getData('application', 'section1'));
     }
@@ -125,7 +127,7 @@ class ConfigTest extends TestCase
      */
     public function testGetByNotExistedKey()
     {
-        $this->config->setPath($this->configPath);
+        $this->config->setPath($this->path);
         $this->config->init();
         $this->assertNull($this->config->section_doesnt_exist);
     }
@@ -135,7 +137,7 @@ class ConfigTest extends TestCase
      */
     public function testIsset()
     {
-        $this->config->setPath($this->configPath);
+        $this->config->setPath($this->path);
         $this->config->init();
         $this->assertTrue(isset($this->config->application));
         $this->assertFalse(isset($this->config->section_doesnt_exist));
@@ -146,7 +148,7 @@ class ConfigTest extends TestCase
      */
     public function testIssetNotExistedKey()
     {
-        $this->config->setPath($this->configPath);
+        $this->config->setPath($this->path);
         $this->config->init();
         $this->assertFalse(isset($this->config->section_doesnt_exist));
     }
@@ -166,7 +168,7 @@ class ConfigTest extends TestCase
      */
     public function testGetDataNotLoadedFromConfig()
     {
-        $this->config->setPath($this->configPath);
+        $this->config->setPath($this->path);
         $this->config->getData();
     }
 
@@ -175,7 +177,7 @@ class ConfigTest extends TestCase
      */
     public function testGetData()
     {
-        $this->config->setPath($this->configPath);
+        $this->config->setPath($this->path);
         $this->config->init();
         $this->assertEquals(
             ['application' => ['section1'=>'default', 'section2'=>[], 'section3'=>[]]],
@@ -188,7 +190,7 @@ class ConfigTest extends TestCase
      */
     public function testGetDataByNotExistedSection()
     {
-        $this->config->setPath($this->configPath);
+        $this->config->setPath($this->path);
         $this->config->init();
         $this->assertNull($this->config->getData('section_doesnt_exist'));
     }
@@ -198,7 +200,7 @@ class ConfigTest extends TestCase
      */
     public function testGetDataBySection()
     {
-        $this->config->setPath($this->configPath);
+        $this->config->setPath($this->path);
         $this->config->init();
         $this->assertEquals(
             ['section1'=>'default', 'section2'=>[], 'section3'=>[]],
@@ -211,8 +213,61 @@ class ConfigTest extends TestCase
      */
     public function testGetDataBySubSection()
     {
-        $this->config->setPath($this->configPath);
-        $this->config->init('testing');
+        $this->config->setPath($this->path);
+        $this->config->setEnvironment('testing');
+        $this->config->init();
         $this->assertEquals(1, $this->config->getData('application', 'section1'));
+    }
+
+
+    /**
+     * @covers Bluz\Config\Config::getModuleData
+     */
+    public function testGetModuleData()
+    {
+        $this->config->setPath($this->path);
+        $this->assertEquals(
+            ['foo' => 'bar', 'qux' => 'bar'],
+            $this->config->getModuleData('index')
+        );
+    }
+
+    /**
+     * @covers Bluz\Config\Config::
+     * @expectedException \Bluz\Config\ConfigException
+     */
+    public function testGetModuleDataByNotExistedModule()
+    {
+        $this->config->setPath($this->path);
+        $this->assertNull($this->config->getModuleData('module_doesnt_exist'));
+    }
+
+    /**
+     * @covers Bluz\Config\Config::getModuleData
+     */
+    public function testGetModuleDataBySection()
+    {
+        $this->config->setPath($this->path);
+        $this->assertEquals('bar', $this->config->getModuleData('index', 'foo'));
+    }
+
+
+    /**
+     * @covers Bluz\Config\Config::getModuleData
+     */
+    public function testGetModuleDataByNotExistedSection()
+    {
+        $this->config->setPath($this->path);
+        $this->assertNull($this->config->getModuleData('index', 'section_doesnt_exist'));
+    }
+
+    /**
+     * @covers Bluz\Config\Config::getModuleData
+     */
+    public function testGetModuleDataBySectionWithEnvironment()
+    {
+        $this->config->setPath($this->path);
+        $this->config->setEnvironment('testing');
+        $this->assertEquals('baz', $this->config->getModuleData('index', 'foo'));
     }
 }

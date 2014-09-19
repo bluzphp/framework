@@ -233,7 +233,7 @@ class ConfigTest extends TestCase
     }
 
     /**
-     * @covers Bluz\Config\Config::
+     * @covers Bluz\Config\Config::getModuleData
      * @expectedException \Bluz\Config\ConfigException
      */
     public function testGetModuleDataByNotExistedModule()

@@ -151,7 +151,7 @@ class Cache implements CacheInterface, TagableInterface
      * Get underlying cache adapter
      * @return Adapter\AbstractAdapter
      */
-    protected function getAdapter()
+    public function getAdapter()
     {
         if (!$this->adapter) {
             $this->adapter = $this->initAdapter($this->getOption('adapter'));
@@ -166,7 +166,7 @@ class Cache implements CacheInterface, TagableInterface
      * @throws ConfigException
      * @return Adapter\AbstractAdapter
      */
-    protected function getTagAdapter()
+    public function getTagAdapter()
     {
         if (!$this->tagAdapter) {
             // create instance of new adapter

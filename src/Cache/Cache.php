@@ -68,9 +68,9 @@ class Cache implements CacheInterface, TagableInterface
     protected function checkOptions()
     {
         // check cache Adapter instance and settings for initialize it
-        if (!$this->getOption('cacheAdapter')) {
+        if (!$this->getOption('adapter')) {
             throw new ConfigException(
-                "Missed `cacheAdapter` option in cache `settings` configuration. <br/>\n" .
+                "Missed `adapter` option in cache `settings` configuration. <br/>\n" .
                 "Read more: <a href='https://github.com/bluzphp/framework/wiki/Cache'>".
                 "https://github.com/bluzphp/framework/wiki/Cache</a>"
             );
@@ -154,7 +154,7 @@ class Cache implements CacheInterface, TagableInterface
     protected function getAdapter()
     {
         if (!$this->adapter) {
-            $this->adapter = $this->initAdapter($this->getOption('cacheAdapter'));
+            $this->adapter = $this->initAdapter($this->getOption('adapter'));
         }
 
         return $this->adapter;

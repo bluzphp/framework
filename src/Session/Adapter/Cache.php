@@ -14,14 +14,14 @@ namespace Bluz\Session\Adapter;
 use Bluz\Config\ConfigException;
 
 /**
- * Redis session handler
+ * Cache session handler
  * @package Bluz\Session\Adapter
  */
-class Redis implements \SessionHandlerInterface
+class Cache implements \SessionHandlerInterface
 {
     /**
      * Instance of Redis
-     * @var \Redis
+     * @var \Bluz\Cache\Cache
      */
     protected $handler = null;
 
@@ -36,17 +36,6 @@ class Redis implements \SessionHandlerInterface
     protected $ttl = 1800;
 
     /**
-     * Default Redis settings
-     * @var array
-     */
-    protected $settings = array(
-        'host' => '127.0.0.1',
-        'port' => '6379',
-        'timeout' => null,
-        'persistence' => false,
-    );
-
-    /**
      * Check and setup Redis server
      *
      * @param array $settings
@@ -54,44 +43,22 @@ class Redis implements \SessionHandlerInterface
      */
     public function __construct($settings = array())
     {
-        // check Redis extension
-        if (!extension_loaded('redis')) {
-            throw new ConfigException(
-                "Redis extension not installed/enabled.
-                Install and/or enable Redis extension [http://pecl.php.net/package/redis].
-                See phpinfo() for more information"
-            );
-        }
+        $this->handler = app()->getCache();
 
-        // check Redis settings
-        if (!is_array($settings) or empty($settings)) {
-            throw new ConfigException(
-                "Redis configuration is missed. Please check 'session' configuration section"
-            );
+        if (!$this->handler) {
+            throw new ConfigException("Cache package not enabled.");
         }
-
-        $this->settings = array_replace_recursive($this->settings, $settings);
     }
 
     /**
      * Get Redis handler
      *
-     * @return \Redis
+     * @return \Bluz\Cache\Cache
      */
     protected function getHandler()
     {
         if (!$this->handler) {
-            $this->handler = new \Redis();
-            if ($this->settings['persistence']) {
-                $this->handler->pconnect($this->settings['host'], $this->settings['port'], $this->settings['timeout']);
-            } else {
-                $this->handler->connect($this->settings['host'], $this->settings['port'], $this->settings['timeout']);
-            }
-            if (isset($this->settings['options'])) {
-                foreach ($this->settings['options'] as $key => $value) {
-                    $this->handler->setOption($key, $value);
-                }
-            }
+            $this->handler = app()->getCache();
         }
         return $this->handler;
     }
@@ -127,7 +94,7 @@ class Redis implements \SessionHandlerInterface
     {
         $id = $this->prefix . $id;
         $data = $this->getHandler()->get($id);
-        $this->getHandler()->expire($id, $this->ttl);
+        $this->getHandler()->set($id, $data, $this->ttl);
         return $data;
     }
 
@@ -139,8 +106,7 @@ class Redis implements \SessionHandlerInterface
     public function write($id, $data)
     {
         $id = $this->prefix . $id;
-        $this->getHandler()->set($id, $data);
-        $this->getHandler()->expire($id, $this->ttl);
+        $this->getHandler()->set($id, $data, $this->ttl);
     }
 
     /**
@@ -149,7 +115,7 @@ class Redis implements \SessionHandlerInterface
      */
     public function destroy($id)
     {
-        $this->getHandler()->del($this->prefix . $id);
+        $this->getHandler()->delete($this->prefix . $id);
     }
 
     /**

@@ -5,7 +5,7 @@
  * @link https://github.com/bluzphp/framework/wiki/Db
  * @return array
  */
-array(
+return array(
     "connect" => array(
         "type" => "mysql",
         "host" => "localhost",

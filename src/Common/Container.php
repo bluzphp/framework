@@ -21,8 +21,8 @@ namespace Bluz\Common;
  * @author   Anton Shevchuk
  * @created  17.09.2014 16:03
  */
-trait Container {
-
+trait Container
+{
     /**
      * @var array
      */

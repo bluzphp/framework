@@ -20,10 +20,7 @@ return array(
             "cacheDir" => PATH_ROOT . '/tests/cache'
         ),
         "redis" => array(
-            "host" => 'localhost',
-            "options" => array(
-                \Redis::OPT_SERIALIZER => \Redis::SERIALIZER_PHP
-            )
+            "host" => 'localhost'
         ),
     )
 );

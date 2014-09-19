@@ -145,11 +145,7 @@ class Config
      */
     public function __get($key)
     {
-        if (isset($this->config[$key])) {
-            return $this->config[$key];
-        } else {
-            return null;
-        }
+        return $this->getData($key);
     }
 
     /**
@@ -179,26 +175,26 @@ class Config
     /**
      * Return configuration by key
      *
+     * @param string|null $key of config
      * @param string|null $section of config
-     * @param string|null $subsection of config
      * @throws ConfigException
      * @return array|mixed
      */
-    public function getData($section = null, $subsection = null)
+    public function getData($key = null, $section = null)
     {
         if (!$this->config) {
             throw new ConfigException('System configuration is missing');
         }
 
-        if (!is_null($section) && isset($this->config[$section])) {
-            if ($subsection
-                && isset($this->config[$section][$subsection])
+        if (!is_null($key) && isset($this->config[$key])) {
+            if ($section
+                && isset($this->config[$key][$section])
             ) {
-                return $this->config[$section][$subsection];
+                return $this->config[$key][$section];
             } else {
-                return $this->config[$section];
+                return $this->config[$key];
             }
-        } elseif (!is_null($section)) {
+        } elseif (!is_null($key)) {
             return null;
         } else {
             return $this->config;

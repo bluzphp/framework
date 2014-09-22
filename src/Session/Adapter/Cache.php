@@ -11,6 +11,7 @@
  */
 namespace Bluz\Session\Adapter;
 
+use Bluz\Common\Nil;
 use Bluz\Config\ConfigException;
 
 /**
@@ -53,12 +54,19 @@ class Cache implements \SessionHandlerInterface
     /**
      * Get Redis handler
      *
+     * @throws ConfigException
      * @return \Bluz\Cache\Cache
      */
     protected function getHandler()
     {
         if (!$this->handler) {
             $this->handler = app()->getCache();
+
+            if ($this->handler instanceof Nil) {
+                throw new ConfigException(
+                    "Cache configuration is missed or disabled. Please check 'cache' configuration section"
+                );
+            }
         }
         return $this->handler;
     }

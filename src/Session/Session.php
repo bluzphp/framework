@@ -330,8 +330,8 @@ class Session
     /**
      * Set key/value pair
      *
-     * @param string $key
-     * @param mixed $value
+     * @param  string $key
+     * @param  mixed $value
      * @return void
      */
     public function __set($key, $value)
@@ -343,7 +343,7 @@ class Session
     /**
      * Get value by key
      *
-     * @param string $key
+     * @param  string $key
      * @return mixed
      */
     public function __get($key)
@@ -358,7 +358,7 @@ class Session
     /**
      * Isset
      *
-     * @param  mixed $key
+     * @param  string $key
      * @return bool
      */
     public function __isset($key)
@@ -374,7 +374,7 @@ class Session
     /**
      * Unset
      *
-     * @param  mixed $key
+     * @param  string $key
      * @return void
      */
     public function __unset($key)

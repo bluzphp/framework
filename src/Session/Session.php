@@ -287,6 +287,26 @@ class Session
     }
 
     /**
+     * Set the session cookie lifetime
+     *
+     * If a session already exists, destroys it (without sending an expiration
+     * cookie), regenerates the session ID, and restarts the session.
+     *
+     * @param  int $ttl in seconds
+     * @return void
+     */
+    public function setSessionCookieLifetime($ttl)
+    {
+        // Set new cookie TTL
+        session_set_cookie_params($ttl);
+
+        if ($this->sessionExists()) {
+            // There is a running session so we'll regenerate id to send a new cookie
+            $this->regenerateId();
+        }
+    }
+
+    /**
      * Expire the session cookie
      *
      * Sends a session cookie with no value, and with an expiry in the past.

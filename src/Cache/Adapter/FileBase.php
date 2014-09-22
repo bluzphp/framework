@@ -19,7 +19,7 @@ use Bluz\Cache\InvalidArgumentException;
  * @todo http://habrahabr.ru/post/148527/#comment_5014715
  *
  * @package Bluz\Cache\Adapter
- * @author murzik
+ * @author  murzik
  */
 abstract class FileBase extends AbstractAdapter
 {

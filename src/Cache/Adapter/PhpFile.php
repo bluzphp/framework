@@ -21,9 +21,9 @@ use Bluz\Cache\InvalidArgumentException;
  * It's best to use for scalar data caching
  *
  * @package Bluz\Cache\Adapter
- * @link http://php.net/manual/en/function.var-export.php
- * @link http://php.net/manual/en/language.oop5.magic.php#object.set-state
- * @author murzik
+ * @link    http://php.net/manual/en/function.var-export.php
+ * @link    http://php.net/manual/en/language.oop5.magic.php#object.set-state
+ * @author  murzik
  */
 class PhpFile extends FileBase
 {

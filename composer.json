@@ -18,7 +18,8 @@
         "ext-gettext": "required by Bluz\\Translator (https://github.com/bluzphp/framework/wiki/Translator)",
         "ext-redis": "required by Redis adapter for Bluz\\Cache (https://github.com/bluzphp/framework/wiki/Cache)",
         "ext-memcached": "required by Memcached adapter for Bluz\\Cache (https://github.com/bluzphp/framework/wiki/Cache)",
-        "phpmailer/phpmailer": "required by Bluz\\Mailer (https://github.com/bluzphp/framework/wiki/Mailer)"
+        "phpmailer/phpmailer": "required by Bluz\\Mailer (https://github.com/bluzphp/framework/wiki/Mailer)",
+        "predis/predis": "required by Cache\\Adapter\\Predis ()"
     },
     "autoload": {
         "psr-4": {

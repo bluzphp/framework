@@ -19,7 +19,7 @@ use Bluz\Cache\CacheInterface;
  * Base class for all cache adapters within Bluz\Cache package
  *
  * @package Bluz\Cache\Adapter
- * @author murzik
+ * @author  murzik
  */
 abstract class AbstractAdapter implements CacheInterface
 {

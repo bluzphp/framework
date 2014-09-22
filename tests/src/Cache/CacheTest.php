@@ -55,16 +55,6 @@ class CacheTest extends TestCase
     }
 
     /**
-     * Cache Throws Exception for invalid key
-     * @expectedException \Bluz\Cache\InvalidArgumentException
-     */
-    public function testCacheWithInvalidKeyThrowsException()
-    {
-        $cache = $this->prepareFileCache();
-        $cache->set(new \stdClass(), 'bar');
-    }
-
-    /**
      * Simple Cache test for File adapter
      */
     public function testFileCache()

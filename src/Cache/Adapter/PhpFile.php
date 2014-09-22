@@ -90,7 +90,7 @@ class PhpFile extends FileBase
             $ttl = time() + $ttl;
         }
 
-        //if we have an array containing objects - we will have a problem.
+        // if we have an array containing objects - we will have a problem.
         if (is_object($data) && !method_exists($data, '__set_state')) {
             throw new InvalidArgumentException(
                 "Invalid argument given, PhpFileAdapter only allows objects that implement __set_state() " .

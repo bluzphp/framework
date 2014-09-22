@@ -11,7 +11,7 @@
  */
 namespace Bluz\Cache\Adapter;
 
-use Bluz\Cache\InvalidArgumentException;
+use Bluz\Config\ConfigException;
 
 /**
  * Base class for all filesystem-based cache adapters
@@ -39,21 +39,21 @@ abstract class FileBase extends AbstractAdapter
      * Check configuration and permissions
      *
      * @param array $settings
-     * @throws \Bluz\Cache\InvalidArgumentException
+     * @throws ConfigException
      */
     public function __construct($settings = array())
     {
         if (!isset($settings['cacheDir'])) {
-            throw new InvalidArgumentException("FileBase adapters is required 'cacheDir' option");
+            throw new ConfigException("FileBase adapters is required 'cacheDir' option");
         }
         $cacheDir = $settings['cacheDir'];
 
         if (!is_dir($cacheDir)) {
-            throw new InvalidArgumentException("'$cacheDir' is not directory");
+            throw new ConfigException("'$cacheDir' is not directory");
         }
 
         if (!is_writable($cacheDir)) {
-            throw new InvalidArgumentException("Directory '$cacheDir' is not writable");
+            throw new ConfigException("Directory '$cacheDir' is not writable");
         }
         // get rid of trailing slash
         $this->cacheDir = realpath($cacheDir);

@@ -48,6 +48,11 @@ class Cache implements CacheInterface, TagableInterface
     protected $adapter = null;
 
     /**
+     * @var string Cache prefix
+     */
+    protected $prefix = 'bluz:';
+
+    /**
      * Instance of tag adapter
      * @var CacheInterface
      */
@@ -57,7 +62,7 @@ class Cache implements CacheInterface, TagableInterface
      * Prefix for tags
      * @var string
      */
-    protected $tagPrefix = '@:';
+    protected $tagPrefix = 'bluz:@:';
 
     /**
      * Check Cache configuration
@@ -79,6 +84,40 @@ class Cache implements CacheInterface, TagableInterface
     }
 
     /**
+     * Prepare Id with prefix
+     *
+     * @param $id
+     * @throws InvalidArgumentException
+     * @return string
+     */
+    protected function prepareId($id)
+    {
+        return $this->prefix . $id;
+    }
+
+    /**
+     * Setup prefix for cache records
+     *
+     * @param string $prefix
+     * @return void
+     */
+    public function setPrefix($prefix)
+    {
+        $this->prefix = $prefix;
+    }
+
+    /**
+     * Setup prefix for cache records of tags
+     *
+     * @param string $prefix
+     * @return void
+     */
+    public function setTagPrefix($prefix)
+    {
+        $this->tagPrefix = $prefix;
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @param string $id
@@ -86,6 +125,7 @@ class Cache implements CacheInterface, TagableInterface
      */
     public function get($id)
     {
+        $id = $this->prepareId($id);
         return $this->getAdapter()->get($id);
     }
 
@@ -99,6 +139,7 @@ class Cache implements CacheInterface, TagableInterface
      */
     public function add($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
+        $id = $this->prepareId($id);
         return $this->getAdapter()->add($id, $data, $ttl);
     }
 
@@ -112,6 +153,7 @@ class Cache implements CacheInterface, TagableInterface
      */
     public function set($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
+        $id = $this->prepareId($id);
         return $this->getAdapter()->set($id, $data, $ttl);
     }
 
@@ -123,6 +165,7 @@ class Cache implements CacheInterface, TagableInterface
      */
     public function contains($id)
     {
+        $id = $this->prepareId($id);
         return $this->getAdapter()->contains($id);
     }
 
@@ -134,6 +177,7 @@ class Cache implements CacheInterface, TagableInterface
      */
     public function delete($id)
     {
+        $id = $this->prepareId($id);
         return $this->getAdapter()->delete($id);
     }
 
@@ -211,15 +255,16 @@ class Cache implements CacheInterface, TagableInterface
      */
     public function addTag($id, $tag)
     {
-        $identifiers = array();
         $tag = $this->tagPrefix . $tag;
 
         if ($this->getTagAdapter()->contains($tag)) {
             $identifiers = $this->getTagAdapter()->get($tag);
+        } else {
+            $identifiers = array();
         }
 
         // array may contain not unique values, but I can't see problem here
-        $identifiers[] = $id;
+        $identifiers[] = $this->prepareId($id);
 
         return $this->getTagAdapter()->set($tag, $identifiers);
     }

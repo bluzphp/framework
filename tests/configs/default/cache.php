@@ -8,6 +8,9 @@
 return array(
     "enabled" => false,
     "adapter" => "memcached",
+    "prefix" => "bluz:",
+    "tagAdapter" => "memcached",
+    "tagPrefix" => "bluz:@:",
     "settings" => array(
         "apc" => array(),
         /**

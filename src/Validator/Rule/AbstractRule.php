@@ -40,6 +40,17 @@ abstract class AbstractRule
     abstract public function validate($input);
 
     /**
+     * Invoke
+     *
+     * @param mixed $input
+     * @return bool
+     */
+    public function __invoke($input)
+    {
+        return $this->validate($input);
+    }
+
+    /**
      * Assert
      *
      * @param string $input

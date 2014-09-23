@@ -23,6 +23,7 @@ use Bluz\Validator\Rule\Required;
  *
  * @method static Validator alpha($additionalCharacters = '')
  * @method static Validator alphaNumeric($additionalCharacters = '')
+ * @method static Validator arrayInput($callback)
  * @method static Validator between($min, $max, $inclusive = false)
  * @method static Validator callback($callback)
  * @method static Validator condition($condition)
@@ -51,7 +52,7 @@ use Bluz\Validator\Rule\Required;
  * @method static Validator slug()
  * @method static Validator string()
  *
- * @see https://github.com/Respect/Validation
+ * @link https://github.com/Respect/Validation
  *
  * @author   Anton Shevchuk
  * @created  30.05.2014 10:03
@@ -287,8 +288,13 @@ class Validator
      */
     protected function prepareError($message)
     {
+        $input = $this->getInput();
+        if (is_array($input)) {
+            $input = join(', ', $input);
+        }
+
         $message = str_replace('{{name}}', $this->getName(), $message);
-        $message = str_replace('{{input}}', esc($this->getInput()), $message);
+        $message = str_replace('{{input}}', esc($input), $message);
 
         return $message;
     }

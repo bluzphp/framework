@@ -14,7 +14,7 @@ namespace Bluz\Validator\Rule;
 use Bluz\Validator\Exception\ComponentException;
 
 /**
- * Class ArrayRule
+ * Class ArrayInput
  * @package Bluz\Validator\Rule
  */
 class ArrayInput extends AbstractRule

@@ -115,14 +115,19 @@ trait Options
      * Get option by key
      *
      * @param string $key
+     * @param string|null $subKey
      * @return mixed
      */
-    public function getOption($key)
+    public function getOption($key, $subKey = null)
     {
         if (isset($this->options[$key])) {
-            return $this->options[$key];
+            if (!is_null($subKey)) {
+                return isset($this->options[$key][$subKey])?$this->options[$key][$subKey]:null;
+            } else {
+                return $this->options[$key];
+            }
         } else {
-            return false;
+            return null;
         }
     }
 

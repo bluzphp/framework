@@ -11,6 +11,7 @@ namespace Bluz\Tests\Validator;
 
 use Bluz\Tests;
 use Bluz\Validator\Exception\ValidatorException;
+use Bluz\Validator\Rule\Numeric;
 use Bluz\Validator\Validator;
 use Bluz\Validator\ValidatorBuilder;
 
@@ -40,6 +41,25 @@ class ValidatorBuilderTest extends Tests\TestCase
         }
     }
 
+    /**
+     * Setup simple builder for array
+     */
+    public function testValidatorBuilderForOneRuleForArray()
+    {
+        $validator = new ValidatorBuilder();
+        try {
+            $validator->add(
+                'some',
+                Validator::create()
+                    ->arrayInput(new Numeric())
+                    ->setError('"{{name}}" is not numeric, is equal "{{input}}"')
+            );
+            $validator->assert(['some' => ['something']]);
+        } catch (ValidatorException $e) {
+            $this->assertEquals('Invalid Arguments', $e->getMessage());
+            $this->assertArrayHasKey('some', $e->getErrors());
+        }
+    }
     /**
      * Setup multi builder
      */
@@ -111,7 +131,6 @@ class ValidatorBuilderTest extends Tests\TestCase
      */
     public function testValidatorBuilderForEmptySet()
     {
-
         $validator = new ValidatorBuilder();
         $validator->add(
             'foo',

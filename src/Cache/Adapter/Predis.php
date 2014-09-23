@@ -13,17 +13,19 @@ namespace Bluz\Cache\Adapter;
 
 use Bluz\Cache\Cache;
 use Bluz\Cache\CacheException;
+use Predis\Client;
 
 /**
- * Redis cache adapter
+ * Redis cache adapter over Predis library
  * @package Bluz\Cache\Adapter
- * @author  The-Who
+ * @link    https://github.com/nrk/predis/wiki
+ * @author  Anton Shevchuk
  */
-class Redis extends AbstractAdapter
+class Predis extends AbstractAdapter
 {
     /**
-     * Instance of Redis
-     * @var \Redis
+     * Instance of Redis client
+     * @var \Predis\Client
      */
     protected $handler = null;
 
@@ -36,9 +38,7 @@ class Redis extends AbstractAdapter
         'port' => '6379',
         'timeout' => 5.0,
         'connection_persistent' => false,
-        'options' => array(
-            \Redis::OPT_SERIALIZER => \Redis::SERIALIZER_PHP
-        )
+        'options' => array()
     );
 
     /**
@@ -50,18 +50,14 @@ class Redis extends AbstractAdapter
     public function __construct($settings = array())
     {
         // check Redis extension
-        if (!extension_loaded('redis')) {
-            throw new CacheException(
-                "Redis extension not installed/enabled.
-                Install and/or enable Redis extension [http://pecl.php.net/package/redis].
-                See phpinfo() for more information"
-            );
+        if (!class_exists('\\Predis\\Client')) {
+            throw new CacheException("Predis library is not installed");
         }
 
         // check Redis settings
         if (!is_array($settings) or empty($settings)) {
             throw new CacheException(
-                "Redis configuration is missed. Please check 'cache' configuration section"
+                "Predis configuration is missed. Please check 'cache' configuration section"
             );
         }
 
@@ -76,17 +72,7 @@ class Redis extends AbstractAdapter
     public function getHandler()
     {
         if (!$this->handler) {
-            $this->handler = new \Redis();
-            if ($this->settings['connection_persistent']) {
-                $this->handler->pconnect($this->settings['host'], $this->settings['port'], $this->settings['timeout']);
-            } else {
-                $this->handler->connect($this->settings['host'], $this->settings['port'], $this->settings['timeout']);
-            }
-            if (isset($this->settings['options'])) {
-                foreach ($this->settings['options'] as $key => $value) {
-                    $this->handler->setOption($key, $value);
-                }
-            }
+            $this->handler = new Client($this->settings, $this->settings['options']);
         }
         return $this->handler;
     }
@@ -99,7 +85,7 @@ class Redis extends AbstractAdapter
      */
     protected function doGet($id)
     {
-        return $this->getHandler()->get($id);
+        return unserialize($this->getHandler()->get($id));
     }
 
     /**
@@ -113,6 +99,7 @@ class Redis extends AbstractAdapter
     protected function doAdd($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
         if (!$this->doContains($id)) {
+            $data = serialize($data);
             $this->doSet($id, $data, $ttl);
         }
         return false;
@@ -128,6 +115,7 @@ class Redis extends AbstractAdapter
      */
     protected function doSet($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
+        $data = serialize($data);
         if (Cache::TTL_NO_EXPIRY == $ttl) {
             return $this->getHandler()->set($id, $data);
         } else {

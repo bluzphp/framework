@@ -40,7 +40,7 @@ class OptionsTest extends TestCase
     {
         parent::setUp();
         $this->class = new ConcreteOptions();
-        $this->options = ['foo' => 'bar', 'foo bar' => 'qux'];
+        $this->options = ['foo' => 'bar', 'foo bar' => 'qux', 'baz' => ['foo' => 'bar']];
     }
 
     /**
@@ -63,6 +63,7 @@ class OptionsTest extends TestCase
 
         $this->assertEquals($this->options, $this->class->getOptions());
         $this->assertEquals('bar', $this->class->getOption('foo'));
+        $this->assertEquals('bar', $this->class->getOption('baz', 'foo'));
     }
 
     /**
@@ -72,6 +73,7 @@ class OptionsTest extends TestCase
     {
         $this->class->setOptions($this->options);
 
-        $this->assertFalse($this->class->getOption('bar'));
+        $this->assertNull($this->class->getOption('bar'));
+        $this->assertNull($this->class->getOption('baz', 'bar'));
     }
 }

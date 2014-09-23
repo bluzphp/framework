@@ -18,7 +18,7 @@ use Bluz\Cache\CacheException;
  * APC cache adapter
  *
  * @package Bluz\Cache\Adapter
- * @author murzik
+ * @author  murzik
  */
 class Apc extends AbstractAdapter
 {

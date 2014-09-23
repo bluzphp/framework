@@ -29,7 +29,7 @@ if (!function_exists('debug')) {
     function debug()
     {
         // check definition
-        if (!defined('DEBUG') or !DEBUG) {
+        if (!getenv('BLUZ_DEBUG')) {
             return;
         }
 

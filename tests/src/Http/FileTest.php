@@ -39,7 +39,7 @@ class FileTest extends TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->path = $this->getApp()->getConfigData('tmp_name', 'image1');
+        $this->path = $this->getApp()->getConfigData('temp', 'image1');
         $file = array(
             'name' => 'test.jpeg',
             'size' => filesize($this->path),

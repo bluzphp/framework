@@ -9,5 +9,8 @@ define('PATH_ROOT', realpath(dirname(__FILE__). '/../'));
 define('PATH_APPLICATION', PATH_ROOT . '/tests');
 define('PATH_VENDOR', PATH_ROOT . '/vendor');
 
+// Emulate session
+$_COOKIE[session_name()] = uniqid();
+
 // init autoloader
 require_once PATH_ROOT . '/vendor/autoload.php';

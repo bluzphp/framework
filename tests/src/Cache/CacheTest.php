@@ -30,12 +30,10 @@ class CacheTest extends TestCase
     public function prepareFileCache()
     {
         $settings = [
+            "adapter" => "phpFile",
             "settings" => [
-                "cacheAdapter" => [
-                    "name" => "phpFile",
-                    "settings" => [
-                        "cacheDir" => PATH_APPLICATION .'/cache'
-                    ]
+                "phpFile" => [
+                    "cacheDir" => PATH_APPLICATION .'/cache'
                 ]
             ]
         ];
@@ -54,16 +52,6 @@ class CacheTest extends TestCase
     {
         $cache = new Cache();
         $cache->setOptions(array());
-    }
-
-    /**
-     * Cache Throws Exception for invalid key
-     * @expectedException \Bluz\Cache\InvalidArgumentException
-     */
-    public function testCacheWithInvalidKeyThrowsException()
-    {
-        $cache = $this->prepareFileCache();
-        $cache->set(new \stdClass(), 'bar');
     }
 
     /**

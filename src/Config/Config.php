@@ -32,17 +32,29 @@ class Config
     protected $config;
 
     /**
+     * Modules configuration data
+     * @var array
+     */
+    protected $modules;
+
+    /**
      * Path to configuration files
      * @var string
      */
     protected $path;
 
     /**
+     * Environment
+     * @var string
+     */
+    protected $environment;
+
+    /**
      * setup path to configuration files
      *
      * @param string $path
      * @throws ConfigException
-     * @return self
+     * @return void
      */
     public function setPath($path)
     {
@@ -53,33 +65,76 @@ class Config
     }
 
     /**
-     * load
+     * setEnvironment
      *
      * @param string $environment
+     * @return void
+     */
+    public function setEnvironment($environment)
+    {
+        $this->environment = $environment;
+    }
+
+    /**
+     * load
+     *
      * @throws ConfigException
      * @return void
      */
-    public function load($environment = null)
+    public function init()
     {
         if (!$this->path) {
             throw new ConfigException('Configuration directory is not setup');
         }
 
-        $configFile = $this->path . '/application.php';
+        $this->config = $this->loadFiles($this->path .'/configs/default');
 
-        if (!is_file($configFile) or !is_readable($configFile)) {
-            throw new ConfigException('Configuration file is not found');
+        if ($this->environment) {
+            $customConfig = $this->loadFiles($this->path . '/configs/' . $this->environment);
+            $this->config = array_replace_recursive($this->config, $customConfig);
+        }
+    }
+
+    /**
+     * Load configuration file
+     *
+     * @param string $path
+     * @throws ConfigException
+     * @return array
+     */
+    protected function loadFile($path)
+    {
+        if (!is_file($path) && !is_readable($path)) {
+            throw new ConfigException('Configuration file `'.$path.'` not found');
+        }
+        return include $path;
+    }
+
+    /**
+     * Load configuration files to array
+     *
+     * @param string $path
+     * @throws ConfigException
+     * @return array
+     */
+    protected function loadFiles($path)
+    {
+        $config = array();
+
+        if (!is_dir($path)) {
+            throw new ConfigException('Configuration directory `'.$path.'` not found');
         }
 
-        $this->config = require $configFile;
+        $iterator = new \GlobIterator(
+            $path .'/*.php',
+            \FilesystemIterator::KEY_AS_FILENAME | \FilesystemIterator::CURRENT_AS_PATHNAME
+        );
 
-        if (null !== $environment) {
-            $customConfig = $this->path . '/app.' . $environment . '.php';
-            if (is_file($customConfig) && is_readable($customConfig)) {
-                $customConfig = require $customConfig;
-                $this->config = array_replace_recursive($this->config, $customConfig);
-            }
+        foreach ($iterator as $name => $file) {
+            $name = substr($name, 0, -4);
+            $config[$name] = $this->loadFile($file);
         }
+        return $config;
     }
 
     /**
@@ -90,11 +145,7 @@ class Config
      */
     public function __get($key)
     {
-        if (isset($this->config[$key])) {
-            return $this->config[$key];
-        } else {
-            return null;
-        }
+        return $this->getData($key);
     }
 
     /**
@@ -122,32 +173,68 @@ class Config
     }
 
     /**
-     * return configuration as array
+     * Return configuration by key
      *
+     * @param string|null $key of config
      * @param string|null $section of config
-     * @param string|null $subsection of config
      * @throws ConfigException
      * @return array|mixed
      */
-    public function getData($section = null, $subsection = null)
+    public function getData($key = null, $section = null)
     {
         if (!$this->config) {
             throw new ConfigException('System configuration is missing');
         }
 
-        if (null !== $section && isset($this->config[$section])) {
-            if ($subsection
-                && isset($this->config[$section][$subsection])
+        if (!is_null($key) && isset($this->config[$key])) {
+            if ($section
+                && isset($this->config[$key][$section])
             ) {
-                return $this->config[$section][$subsection];
+                return $this->config[$key][$section];
             } else {
-                return $this->config[$section];
+                return $this->config[$key];
             }
-
-        } elseif (null !== $section) {
+        } elseif (!is_null($key)) {
             return null;
         } else {
             return $this->config;
+        }
+    }
+
+    /**
+     * Return module configuration by section
+     *
+     * @param string $module
+     * @param null $section
+     * @return mixed
+     */
+    public function getModuleData($module, $section = null)
+    {
+        if (!isset($this->modules[$module])) {
+            $this->modules[$module] = $this->loadFile(
+                $this->path .'/modules/'. $module .'/config.php'
+            );
+
+            if (!$this->config) {
+                $this->init();
+            }
+
+            if (isset($this->config['module.'. $module])) {
+                $this->modules[$module] = array_replace_recursive(
+                    $this->modules[$module],
+                    $this->config['module.'. $module]
+                );
+            }
+        }
+
+        if (!is_null($section)) {
+            if (isset($this->modules[$module][$section])) {
+                return $this->modules[$module][$section];
+            } else {
+                return null;
+            }
+        } else {
+            return $this->modules[$module];
         }
     }
 }

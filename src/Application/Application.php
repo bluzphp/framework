@@ -218,6 +218,14 @@ abstract class Application
             // first log message
             $this->log('app:init');
 
+            // initial php settings
+            if ($ini = $this->getConfigData('php')) {
+                foreach ($ini as $key => $value) {
+                    $result = ini_set($key, $value);
+                    $this->log('app:init:php:'.$key.':'.($result?:'---'));
+                }
+            }
+
             // initial session, start inside class
             $this->getSession();
 
@@ -254,8 +262,9 @@ abstract class Application
     {
         if (!$this->config) {
             $this->config = new Config();
-            $this->config->setPath($this->getPath() . '/configs');
-            $this->config->load($environment);
+            $this->config->setPath($this->getPath());
+            $this->config->setEnvironment($environment);
+            $this->config->init();
         }
         return $this->config;
     }
@@ -378,11 +387,10 @@ abstract class Application
     public function getLogger()
     {
         if (!$this->logger) {
-            $config = $this->getConfigData('logger');
-            if (!isset($config['enabled']) or !$config['enabled']) {
-                $this->logger = new Nil();
-            } else {
+            if ($this->getConfigData('logger')) {
                 $this->logger = new Logger();
+            } else {
+                $this->logger = new Nil();
             }
         }
         return $this->logger;
@@ -973,7 +981,7 @@ abstract class Application
      */
     public function widget($module, $widget, $params = array())
     {
-        $this->log(__METHOD__ . ": " . $module . '/' . $widget);
+        $this->log("app:widget: " . $module . '/' . $widget);
         $widgetFile = $this->getWidgetFile($module, $widget);
         $reflectionData = $this->reflection($widgetFile);
 
@@ -1038,7 +1046,7 @@ abstract class Application
      */
     public function api($module, $method)
     {
-        $this->log(__METHOD__ . ": " . $module . '/' . $method);
+        $this->log("app:api: " . $module . '/' . $method);
 
         $this->getEventManager()->trigger(
             'api',

@@ -57,6 +57,7 @@ _('{{name}} must be numeric');
 _('{{name}} must be positive');
 _('{{name}} must validate with regular expression rule');
 _('{{name}} is required');
+_('{{name}} must be a array');
 _('{{name}} must be a valid slug');
 _('{{name}} must be a string');
 _('{{name}} must be a version');

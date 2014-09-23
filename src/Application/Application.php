@@ -981,7 +981,7 @@ abstract class Application
      */
     public function widget($module, $widget, $params = array())
     {
-        $this->log(__METHOD__ . ": " . $module . '/' . $widget);
+        $this->log("app:widget: " . $module . '/' . $widget);
         $widgetFile = $this->getWidgetFile($module, $widget);
         $reflectionData = $this->reflection($widgetFile);
 
@@ -1046,7 +1046,7 @@ abstract class Application
      */
     public function api($module, $method)
     {
-        $this->log(__METHOD__ . ": " . $module . '/' . $method);
+        $this->log("app:api: " . $module . '/' . $method);
 
         $this->getEventManager()->trigger(
             'api',

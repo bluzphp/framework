@@ -167,7 +167,7 @@ class Db
                     $this->handler->setAttribute($attribute, $value);
                 }
 
-                $this->log("Connected");
+                $this->log("ok");
             } catch (\Exception $e) {
                 throw new DbException('Attempt connection to database is failed: '. $e->getMessage());
             }
@@ -261,8 +261,11 @@ class Db
                 isset($types[$key])?$types[$key]:\PDO::PARAM_STR
             );
         }
+
         $this->log($sql, $params);
         $stmt->execute($params);
+
+        $this->log("ok");
         return $stmt->rowCount();
     }
 
@@ -335,10 +338,12 @@ class Db
     public function fetchOne($sql, $params = array())
     {
         $stmt = $this->prepare($sql);
+
+        $this->log($sql, $params);
         $stmt->execute($params);
         $result = $stmt->fetch(\PDO::FETCH_COLUMN);
 
-        $this->log($sql, $params);
+        $this->log("ok");
         return $result;
     }
 
@@ -363,10 +368,12 @@ class Db
     public function fetchRow($sql, $params = array())
     {
         $stmt = $this->prepare($sql);
+
+        $this->log($sql, $params);
         $stmt->execute($params);
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-        $this->log($sql, $params);
+        $this->log("ok");
         return $result;
     }
 
@@ -387,10 +394,12 @@ class Db
     public function fetchAll($sql, $params = array())
     {
         $stmt = $this->prepare($sql);
+
+        $this->log($sql, $params);
         $stmt->execute($params);
         $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-        $this->log($sql, $params);
+        $this->log("ok");
         return $result;
     }
 
@@ -408,10 +417,12 @@ class Db
     public function fetchColumn($sql, $params = array())
     {
         $stmt = $this->prepare($sql);
+
+        $this->log($sql, $params);
         $stmt->execute($params);
         $result = $stmt->fetchAll(\PDO::FETCH_COLUMN);
 
-        $this->log($sql, $params);
+        $this->log("ok");
         return $result;
     }
 
@@ -430,10 +441,12 @@ class Db
     public function fetchGroup($sql, $params = array())
     {
         $stmt = $this->prepare($sql);
+
+        $this->log($sql, $params);
         $stmt->execute($params);
         $result = $stmt->fetchAll(\PDO::FETCH_ASSOC | \PDO::FETCH_GROUP);
 
-        $this->log($sql, $params);
+        $this->log("ok");
         return $result;
     }
 
@@ -451,10 +464,12 @@ class Db
     public function fetchColumnGroup($sql, $params = array())
     {
         $stmt = $this->prepare($sql);
+
+        $this->log($sql, $params);
         $stmt->execute($params);
         $result = $stmt->fetchAll(\PDO::FETCH_COLUMN | \PDO::FETCH_GROUP);
 
-        $this->log($sql, $params);
+        $this->log("ok");
         return $result;
     }
 
@@ -472,10 +487,12 @@ class Db
     public function fetchPairs($sql, $params = array())
     {
         $stmt = $this->prepare($sql);
+
+        $this->log($sql, $params);
         $stmt->execute($params);
         $result = $stmt->fetchAll(\PDO::FETCH_KEY_PAIR);
 
-        $this->log($sql, $params);
+        $this->log("ok");
         return $result;
     }
 
@@ -501,6 +518,8 @@ class Db
     public function fetchObject($sql, $params = array(), $object = "stdClass")
     {
         $stmt = $this->prepare($sql);
+
+        $this->log($sql, $params);
         $stmt->execute($params);
 
         if (is_string($object)) {
@@ -513,7 +532,7 @@ class Db
         }
 
         $stmt->closeCursor();
-        $this->log($sql, $params);
+        $this->log("ok");
         return $result;
     }
 
@@ -532,6 +551,8 @@ class Db
     public function fetchObjects($sql, $params = array(), $object = null)
     {
         $stmt = $this->prepare($sql);
+
+        $this->log($sql, $params);
         $stmt->execute($params);
 
         if (is_string($object)) {
@@ -543,7 +564,7 @@ class Db
         }
 
         $stmt->closeCursor();
-        $this->log($sql, $params);
+        $this->log("ok");
         return $result;
     }
 
@@ -564,6 +585,8 @@ class Db
     public function fetchRelations($sql, $params = array())
     {
         $stmt = $this->prepare($sql);
+
+        $this->log($sql, $params);
         $stmt->execute($params);
 
         $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -572,7 +595,7 @@ class Db
         $result = Relations::fetch($result);
 
         $stmt->closeCursor();
-        $this->log($sql, $params);
+        $this->log("ok");
         return $result;
     }
 
@@ -621,7 +644,7 @@ class Db
         // replace mask by data
         $sql = vsprintf($sql, $context);
 
-        app()->log("DB >> " . $sql);
+        app()->log("db: " . $sql);
     }
 
     /**

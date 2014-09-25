@@ -329,24 +329,6 @@ class Request extends AbstractRequest
     }
 
     /**
-     * Retrieve a member of the $_SERVER super global
-     *
-     * If no $key is passed, returns the entire $_SERVER array.
-     *
-     * @param string $key
-     * @param string $default Default value to use if key not found
-     * @return string Returns null if key does not exist
-     */
-    public function getServer($key = null, $default = null)
-    {
-        if (null === $key) {
-            return $_SERVER;
-        }
-
-        return (isset($_SERVER[$key])) ? $_SERVER[$key] : $default;
-    }
-
-    /**
      * setFileUpload
      *
      * @param FileUpload $fileUpload

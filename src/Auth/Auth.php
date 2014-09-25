@@ -26,35 +26,47 @@ class Auth
     use Options;
 
     /**
-     * setup identity
+     * Setup identity
      *
      * @param EntityInterface $identity
      * @return Auth
      */
     public function setIdentity(EntityInterface $identity)
     {
+        // save identity to session
         app()->getSession()->identity = $identity;
+        // save user agent to session
+        app()->getSession()->agent = app()->getRequest()->getServer('HTTP_USER_AGENT');
         return $this;
     }
 
     /**
-     * return identity
+     * Return identity if user agent is correct
      *
      * @return EntityInterface|null
      */
     public function getIdentity()
     {
-        return app()->getSession()->identity;
+        // check user agent
+        if (app()->getSession()->agent == app()->getRequest()->getServer('HTTP_USER_AGENT')) {
+            return app()->getSession()->identity;
+        } else {
+            $this->clearIdentity();
+            return null;
+        }
     }
 
     /**
-     * clear identity
+     * Clear identity and user agent information
      *
      * @return Auth
      */
     public function clearIdentity()
     {
-        app()->getSession()->identity = null;
+        unset(
+            app()->getSession()->identity,
+            app()->getSession()->agent
+        );
         return $this;
     }
 }

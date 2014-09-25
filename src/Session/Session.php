@@ -23,7 +23,8 @@ use Bluz\Config\ConfigException;
  * @created  11.07.11 19:19
  *
  * @property mixed MessagesStore
- * @property mixed identity
+ * @property \Bluz\Auth\EntityInterface identity Users\Row object
+ * @property string agent - user agent
  */
 class Session
 {

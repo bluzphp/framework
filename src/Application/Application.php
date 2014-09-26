@@ -12,19 +12,17 @@
 namespace Bluz\Application;
 
 use Bluz\Acl\Acl;
-use Bluz\Acl\AclException;
 use Bluz\Application\Exception\ApplicationException;
+use Bluz\Application\Exception\ForbiddenException;
 use Bluz\Application\Exception\RedirectException;
 use Bluz\Application\Exception\ReloadException;
 use Bluz\Auth\AbstractRowEntity;
 use Bluz\Auth\Auth;
 use Bluz\Cache\Cache;
-use Bluz\Common\Exception;
 use Bluz\Common\Helper;
 use Bluz\Common\Nil;
 use Bluz\Common\Singleton;
 use Bluz\Config\Config;
-use Bluz\Config\ConfigException;
 use Bluz\Db\Db;
 use Bluz\EventManager\EventManager;
 use Bluz\Http;
@@ -197,7 +195,7 @@ abstract class Application
      * init
      *
      * @param string $environment Array format only!
-     * @throws Exception
+     * @throws ApplicationException
      * @return Application
      */
     public function init($environment = 'production')
@@ -234,7 +232,7 @@ abstract class Application
 
             // initial DB configuration
             $this->getDb();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             throw new ApplicationException("Application can't be loaded: " . $e->getMessage());
         }
         return $this;
@@ -399,22 +397,13 @@ abstract class Application
     /**
      * Get Mailer instance
      *
-     * @throws ConfigException
      * @return Mailer
      */
     public function getMailer()
     {
         if (!$this->mailer) {
-            if ($config = $this->getConfigData('mailer')) {
-                $this->mailer = new Mailer();
-                $this->mailer->setOptions($config);
-            } else {
-                throw new ConfigException(
-                    "Missed `mailer` options in configuration file. <br/>\n" .
-                    "Read more: <a href='https://github.com/bluzphp/framework/wiki/Mailer'>".
-                    "https://github.com/bluzphp/framework/wiki/Mailer"."</a>"
-                );
-            }
+            $this->mailer = new Mailer();
+            $this->mailer->setOptions($this->getConfigData('mailer'));
         }
         return $this->mailer;
     }
@@ -758,8 +747,6 @@ abstract class Application
      * @param string $module
      * @param string $controller
      * @param array $params
-     *
-     * @throws Exception
      * @return void
      */
     protected function preDispatch($module, $controller, $params = array())
@@ -773,7 +760,7 @@ abstract class Application
      * @param string $module
      * @param string $controller
      * @param array $params
-     * @throws Exception
+     * @throws ApplicationException
      *
      * @return View
      */
@@ -877,8 +864,6 @@ abstract class Application
      * @param string $module
      * @param string $controller
      * @param array $params
-     * @throws Exception
-     *
      * @return void
      */
     protected function postDispatch($module, $controller, $params = array())
@@ -902,7 +887,7 @@ abstract class Application
      * @param string $module
      * @param string $controller
      * @param array $params
-     * @throws Exception
+     * @throws ApplicationException
      * @return View
      */
     public function dispatch($module, $controller, $params = array())
@@ -976,7 +961,7 @@ abstract class Application
      * @param string $module
      * @param string $widget
      * @param array $params
-     * @throws Exception
+     * @throws ApplicationException
      * @return \Closure
      */
     public function widget($module, $widget, $params = array())
@@ -999,7 +984,7 @@ abstract class Application
 
         // check acl
         if (!$this->isAllowed($module, $reflectionData)) {
-            throw new AclException("Not enough permissions for call widget '$module/$widget'");
+            throw new ForbiddenException("Not enough permissions for call widget '$module/$widget'");
         }
 
         /**
@@ -1041,7 +1026,7 @@ abstract class Application
      *
      * @param string $module
      * @param string $method
-     * @throws Exception
+     * @throws ApplicationException
      * @return \Closure
      */
     public function api($module, $method)
@@ -1085,7 +1070,7 @@ abstract class Application
      * Retrieve reflection for anonymous function
      *
      * @param string $file
-     * @throws Exception
+     * @throws ApplicationException
      * @return array
      */
     public function reflection($file)
@@ -1099,7 +1084,7 @@ abstract class Application
             $closure = include $file;
 
             if (!is_callable($closure)) {
-                throw new Exception("There is no closure in file $file");
+                throw new ApplicationException("There is no closure in file $file");
             }
 
             // init data
@@ -1261,7 +1246,7 @@ abstract class Application
      * @param  string $module
      * @param  string $controller
      * @return string
-     * @throws Exception
+     * @throws ApplicationException
      */
     public function getControllerFile($module, $controller)
     {
@@ -1281,7 +1266,7 @@ abstract class Application
      * @param  string $module
      * @param  string $widget
      * @return string
-     * @throws Exception
+     * @throws ApplicationException
      */
     protected function getWidgetFile($module, $widget)
     {
@@ -1301,7 +1286,7 @@ abstract class Application
      * @param  string $module
      * @param  string $method
      * @return string
-     * @throws Exception
+     * @throws ApplicationException
      */
     protected function getApiFile($module, $method)
     {

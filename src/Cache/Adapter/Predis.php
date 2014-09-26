@@ -12,7 +12,8 @@
 namespace Bluz\Cache\Adapter;
 
 use Bluz\Cache\Cache;
-use Bluz\Cache\CacheException;
+use Bluz\Common\Exception\ComponentException;
+use Bluz\Common\Exception\ConfigurationException;
 use Predis\Client;
 
 /**
@@ -45,18 +46,21 @@ class Predis extends AbstractAdapter
      * Check and setup Redis server
      *
      * @param array $settings
-     * @throws \Bluz\Cache\CacheException
+     * @throws ComponentException
+     * @throws ConfigurationException
      */
     public function __construct($settings = array())
     {
         // check Redis extension
         if (!class_exists('\\Predis\\Client')) {
-            throw new CacheException("Predis library is not installed");
+            throw new ComponentException(
+                "Predis library not found. Install Predis library [https://github.com/nrk/predis/wiki]"
+            );
         }
 
         // check Redis settings
         if (!is_array($settings) or empty($settings)) {
-            throw new CacheException(
+            throw new ConfigurationException(
                 "Predis configuration is missed. Please check 'cache' configuration section"
             );
         }

@@ -12,7 +12,7 @@
 namespace Bluz\Cache\Adapter;
 
 use Bluz\Cache\Cache;
-use Bluz\Cache\CacheException;
+use Bluz\Common\Exception\ComponentException;
 
 /**
  * APC cache adapter
@@ -26,14 +26,14 @@ class Apc extends AbstractAdapter
      * Check extension inside
      *
      * @param array $settings
-     * @throws \Bluz\Cache\CacheException
+     * @throws ComponentException
      */
     public function __construct($settings = array())
     {
         if (!extension_loaded('apc')) {
             $msg = "APC extension not installed/enabled.
                     Install and/or enable APC extension. See phpinfo() for more information";
-            throw new CacheException($msg);
+            throw new ComponentException($msg);
         }
     }
 

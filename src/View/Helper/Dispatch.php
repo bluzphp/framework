@@ -11,7 +11,7 @@
  */
 namespace Bluz\View\Helper;
 
-use Bluz\Acl\AclException;
+use Bluz\Application\Exception\ForbiddenException;
 use Bluz\View\View;
 
 return
@@ -30,8 +30,8 @@ return
     function ($module, $controller, $params = array()) {
     try {
         $view = app()->dispatch($module, $controller, $params);
-    } catch (AclException $e) {
-        // nothing for Acl exception
+    } catch (ForbiddenException $e) {
+        // nothing for ForbiddenException
         return null;
     } catch (\Exception $e) {
         return $this->exception($e);

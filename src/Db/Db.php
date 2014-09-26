@@ -11,6 +11,7 @@
  */
 namespace Bluz\Db;
 
+use Bluz\Common\Exception\ConfigurationException;
 use Bluz\Common\Options;
 use Bluz\Db\Query;
 use Bluz\Db\Exception\DbException;
@@ -78,7 +79,7 @@ class Db
     /**
      * getDefaultAdapter
      *
-     * @throws DbException
+     * @throws ConfigurationException
      * @return Db
      */
     public static function getDefaultAdapter()
@@ -87,7 +88,10 @@ class Db
         if (self::$adapter) {
             return self::$adapter;
         } else {
-            throw new DbException("Default database adapter is not configured");
+            throw new ConfigurationException(
+                "Default database adapter is not configured.
+                Please check 'db' configuration section"
+            );
         }
     }
 
@@ -118,7 +122,7 @@ class Db
     /**
      * Check connection options
      *
-     * @throws Exception\DbException
+     * @throws ConfigurationException
      * @return void
      */
     private function checkConnect()
@@ -128,7 +132,10 @@ class Db
             empty($this->connect['name']) or
             empty($this->connect['user'])
         ) {
-            throw new DbException('Db connection can\'t be initialized: required type, host, db name and user');
+            throw new ConfigurationException(
+                "Database adapter is not configured.
+                Please check 'db' configuration section: required type, host, db name and user"
+            );
         }
     }
 

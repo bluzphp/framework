@@ -11,7 +11,7 @@
  */
 namespace Bluz\Acl;
 
-use Bluz\Common\Exception;
+use Bluz\Common\Exception\CommonException;
 
 /**
  * Exception
@@ -21,7 +21,7 @@ use Bluz\Common\Exception;
  * @author   Anton Shevchuk
  * @created  06.03.12 15:53
  */
-class AclException extends Exception
+class AclException extends CommonException
 {
     /**
      * HTTP code

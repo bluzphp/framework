@@ -11,7 +11,7 @@
  */
 namespace Bluz\Application\Exception;
 
-use Bluz\Common\Exception;
+use Bluz\Common\Exception\CommonException;
 
 /**
  * Exception
@@ -20,6 +20,6 @@ use Bluz\Common\Exception;
  * @author   Anton Shevchuk
  * @created  17.12.12 16:46
  */
-class ApplicationException extends Exception
+class ApplicationException extends CommonException
 {
 }

@@ -12,7 +12,8 @@
 namespace Bluz\Cache\Adapter;
 
 use Bluz\Cache\Cache;
-use Bluz\Cache\CacheException;
+use Bluz\Common\Exception\ComponentException;
+use Bluz\Common\Exception\ConfigurationException;
 
 /**
  * Redis cache adapter
@@ -45,13 +46,14 @@ class Redis extends AbstractAdapter
      * Check and setup Redis server
      *
      * @param array $settings
-     * @throws \Bluz\Cache\CacheException
+     * @throws ComponentException
+     * @throws ConfigurationException
      */
     public function __construct($settings = array())
     {
         // check Redis extension
         if (!extension_loaded('redis')) {
-            throw new CacheException(
+            throw new ComponentException(
                 "Redis extension not installed/enabled.
                 Install and/or enable Redis extension [http://pecl.php.net/package/redis].
                 See phpinfo() for more information"
@@ -60,7 +62,7 @@ class Redis extends AbstractAdapter
 
         // check Redis settings
         if (!is_array($settings) or empty($settings)) {
-            throw new CacheException(
+            throw new ConfigurationException(
                 "Redis configuration is missed. Please check 'cache' configuration section"
             );
         }

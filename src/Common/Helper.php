@@ -70,7 +70,7 @@ trait Helper
      *
      * @param string $method
      * @param array $args
-     * @throws Exception
+     * @throws CommonException
      * @return mixed
      */
     public function __call($method, $args)
@@ -88,11 +88,11 @@ trait Helper
                 if (is_callable($helperInclude)) {
                     $this->helpers[$method] = $helperInclude;
                 } else {
-                    throw new Exception("Helper '$method' not found in file '$helperPath'");
+                    throw new CommonException("Helper '$method' not found in file '$helperPath'");
                 }
                 return $this->__call($method, $args);
             }
         }
-        throw new Exception("Helper '$method' not found for '" . __CLASS__ . "'");
+        throw new CommonException("Helper '$method' not found for '" . __CLASS__ . "'");
     }
 }

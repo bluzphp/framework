@@ -9,17 +9,14 @@
 /**
  * @namespace
  */
-namespace Bluz\Validator\Exception;
-
-use Bluz\Common\Exception\CommonException;
+namespace Bluz\Common\Exception;
 
 /**
- * Component Exception
+ * Exception throws by component for wrong requirements
  *
- * @package  Bluz\Validator\Exception
- *
+ * @package  Bluz\Common\Exception
  * @author   Anton Shevchuk
- * @created  30.05.2014 14:48
+ * @created  26.09.14 11:17
  */
 class ComponentException extends CommonException
 {

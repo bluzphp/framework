@@ -11,7 +11,7 @@
  */
 namespace Bluz\Mailer;
 
-use Bluz\Common\Exception;
+use Bluz\Common\Exception\CommonException;
 
 /**
  * Exception
@@ -21,6 +21,6 @@ use Bluz\Common\Exception;
  * @author   Pavel Machekhin
  * @created  27.12.12 16:24
  */
-class MailerException extends Exception
+class MailerException extends CommonException
 {
 }

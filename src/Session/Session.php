@@ -11,8 +11,8 @@
  */
 namespace Bluz\Session;
 
+use Bluz\Common\Exception\ComponentException;
 use Bluz\Common\Options;
-use Bluz\Config\ConfigException;
 
 /**
  * Session
@@ -263,7 +263,7 @@ class Session
      * Since ext/session is coupled to this particular session manager
      * register the save handler with ext/session.
      *
-     * @throws ConfigException
+     * @throws ComponentException
      * @return bool
      */
     protected function initAdapter()
@@ -277,7 +277,7 @@ class Session
         } elseif (is_string($this->adapter)) {
             $adapterClass = '\\Bluz\\Session\\Adapter\\'.ucfirst($this->adapter);
             if (!class_exists($adapterClass) or !is_subclass_of($adapterClass, '\SessionHandlerInterface')) {
-                throw new ConfigException("`$adapterClass` class is not exists or not initialized");
+                throw new ComponentException("Class for session adapter `{$this->adapter}` not found");
             }
             $settings = $this->getOption('settings', $this->adapter) ?: array();
 
@@ -333,8 +333,8 @@ class Session
     /**
      * Set session save path
      *
-     * @param string $savePath
-     * @throws ConfigException
+     * @param  string $savePath
+     * @throws ComponentException
      * @return Session
      */
     protected function setSavePath($savePath)
@@ -342,7 +342,7 @@ class Session
         if (!is_dir($savePath)
             or !is_writable($savePath)
         ) {
-            throw new ConfigException('Session path is not writable');
+            throw new ComponentException('Session path is not writable');
         }
         session_save_path($savePath);
         return $this;

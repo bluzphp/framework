@@ -11,13 +11,13 @@
  */
 namespace Bluz\Grid;
 
-use Bluz\Common\Exception;
+use Bluz\Common\Exception\CommonException;
 
 /**
  * Exception
  *
  * @package  Bluz\Grid
  */
-class GridException extends Exception
+class GridException extends CommonException
 {
 }

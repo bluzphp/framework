@@ -11,8 +11,9 @@
  */
 namespace Bluz\Mailer;
 
+use Bluz\Common\Exception\ComponentException;
+use Bluz\Common\Exception\ConfigurationException;
 use Bluz\Common\Options;
-use Bluz\Config\ConfigException;
 
 /**
  * Wrapper over PHPMailer
@@ -31,13 +32,13 @@ class Mailer
     /**
      * checkOptions
      *
-     * @throws ConfigException
+     * @throws ConfigurationException
      * @return bool
      */
     protected function checkOptions()
     {
         if (!$this->getOption('from', 'email')) {
-            throw new ConfigException(
+            throw new ConfigurationException(
                 "Missed `from.email` option in `mailer` configuration. <br/>\n" .
                 "Read more: <a href='https://github.com/bluzphp/framework/wiki/Mailer'>".
                 "https://github.com/bluzphp/framework/wiki/Mailer</a>"
@@ -49,14 +50,15 @@ class Mailer
     /**
      * Creates new instance of PHPMailer and set default options from config
      *
-     * @throws MailerException
+     * @throws ComponentException
+     * @throws \phpmailerException
      * @return \PHPMailer
      */
     public function create()
     {
         // can initial, can't use
         if (!class_exists('\PHPMailer')) {
-            throw new MailerException(
+            throw new ComponentException(
                 "PHPMailer library is required for `Bluz\\Mailer` package. <br/>\n" .
                 "Read more: <a href='https://github.com/bluzphp/framework/wiki/Mailer'>".
                 "https://github.com/bluzphp/framework/wiki/Mailer</a>"

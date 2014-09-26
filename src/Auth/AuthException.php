@@ -11,7 +11,7 @@
  */
 namespace Bluz\Auth;
 
-use Bluz\Common\Exception;
+use Bluz\Common\Exception\CommonException;
 
 /**
  * Exception
@@ -21,7 +21,7 @@ use Bluz\Common\Exception;
  * @author   Anton Shevchuk
  * @created  12.07.11 16:46
  */
-class AuthException extends Exception
+class AuthException extends CommonException
 {
     /**
      * HTTP code

@@ -56,7 +56,7 @@ class Table extends AbstractCrud
             $tableClass = substr($crudClass, 0, strrpos($crudClass, '\\', 1) + 1) . 'Table';
 
             // check class initialization
-            if (!class_exists($tableClass) or !is_subclass_of($tableClass, '\Bluz\Db\Table')) {
+            if (!class_exists($tableClass) or !is_subclass_of($tableClass, '\\Bluz\\Db\\Table')) {
                 throw new ApplicationException("`Table` class is not exists or not initialized");
             }
 

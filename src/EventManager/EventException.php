@@ -11,7 +11,7 @@
  */
 namespace Bluz\EventManager;
 
-use Bluz\Common\Exception;
+use Bluz\Common\Exception\CommonException;
 
 /**
  * Exception
@@ -21,6 +21,6 @@ use Bluz\Common\Exception;
  * @author   Anton Shevchuk
  * @created  16.03.12 13:05
  */
-class EventException extends Exception
+class EventException extends CommonException
 {
 }

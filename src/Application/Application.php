@@ -715,7 +715,7 @@ abstract class Application
                 $response->setHeader('Bluz-Reload', 'true');
             } else {
                 $response->setStatusCode($e->getCode());
-                $response->setHeader('Refresh', '15; url=' . $request->getRequestUri());
+                $response->setHeader('Refresh', '0; url=' . $request->getRequestUri());
             }
         } catch (\Exception $e) {
             $response->setException($e);

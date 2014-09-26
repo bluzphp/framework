@@ -17,19 +17,19 @@ namespace Bluz\Application\Exception;
  * @package  Bluz\Application\Exception
  *
  * @author   Anton Shevchuk
- * @created  23.01.13 17:40
+ * @created  26.09.14 12:18
  */
-class ReloadException extends ApplicationException
+class UnauthorizedException extends ApplicationException
 {
     /**
      * Exception message
      * @var string
      */
-    protected $message = "Application Reload";
+    protected $message = "Unauthorized";
 
     /**
-     * HTTP OK
+     * Unauthorized HTTP code
      * @var int
      */
-    protected $code = 200;
+    protected $code = 401;
 }

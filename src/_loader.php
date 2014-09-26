@@ -20,7 +20,7 @@
 set_include_path(dirname(__FILE__) . PATH_SEPARATOR . get_include_path());
 
 // exceptions
-require_once 'Common/Exception.php';
+require_once 'Common/Exception/CommonException.php';
 
 // traits
 require_once 'Common/Helper.php';

@@ -23,16 +23,16 @@ use Bluz\Tests\TestCase;
 class MailerTest extends TestCase
 {
     /**
-     * @expectedException \Bluz\Config\ConfigException
+     * @expectedException \Bluz\Common\Exception\ConfigurationException
      */
     public function testWrongConfigurationThrowException()
     {
         $mailer = new Mailer();
-        $mailer->setOptions(array());
+        $mailer->setOptions(null);
     }
 
     /**
-     * @expectedException \Bluz\Mailer\MailerException
+     * @expectedException \Bluz\Common\Exception\ComponentException
      */
     public function testWithoutPHPMailerThrowException()
     {

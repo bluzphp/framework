@@ -11,6 +11,8 @@
  */
 namespace Bluz\Common;
 
+use Bluz\Common\Exception\CommonException;
+
 /**
  * Helper trait
  *

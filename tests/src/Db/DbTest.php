@@ -62,7 +62,7 @@ class DbTest extends Bluz\Tests\TestCase
 
     /**
      * Initial Db with empty configuration
-     * @expectedException \Bluz\Db\Exception\DbException
+     * @expectedException \Bluz\Common\Exception\ConfigurationException
      */
     public function testCheckConnectException()
     {
@@ -72,7 +72,7 @@ class DbTest extends Bluz\Tests\TestCase
 
     /**
      * Disconnect
-     * @expectedException \Bluz\Db\Exception\DbException
+     * @expectedException \Bluz\Common\Exception\ConfigurationException
      */
     public function testCheckDisconnect()
     {

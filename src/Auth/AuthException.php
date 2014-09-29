@@ -11,7 +11,7 @@
  */
 namespace Bluz\Auth;
 
-use Bluz\Common\Exception\CommonException;
+use Bluz\Application\Exception\UnauthorizedException;
 
 /**
  * Exception
@@ -21,13 +21,6 @@ use Bluz\Common\Exception\CommonException;
  * @author   Anton Shevchuk
  * @created  12.07.11 16:46
  */
-class AuthException extends CommonException
+class AuthException extends UnauthorizedException
 {
-    /**
-     * HTTP code
-     * 401 Unauthorized
-     * 403 Forbidden
-     * @var int
-     */
-    protected $code = 401;
 }

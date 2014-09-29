@@ -11,7 +11,7 @@
  */
 namespace Bluz\Validator\Exception;
 
-use Bluz\Common\Exception\CommonException;
+use Bluz\Common\Exception;
 
 /**
  * Component Exception
@@ -21,6 +21,6 @@ use Bluz\Common\Exception\CommonException;
  * @author   Anton Shevchuk
  * @created  30.05.2014 14:48
  */
-class ComponentException extends CommonException
+class ComponentException extends Exception\ComponentException
 {
 }

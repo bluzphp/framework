@@ -17,6 +17,7 @@ use Bluz\Db\Query\Insert;
 use Bluz\Db\Query\Update;
 use Bluz\Db\Query\Delete;
 use Bluz\Tests\TestCase;
+use Bluz\Proxy;
 
 /**
  * Test class for Query Builder.
@@ -27,19 +28,11 @@ use Bluz\Tests\TestCase;
 class QueryTest extends TestCase
 {
     /**
-     * setUp
-     */
-    public function setUp()
-    {
-        $this->getApp()->getDb()->setDefaultAdapter();
-    }
-
-    /**
      * tearDown
      */
     public function tearDown()
     {
-        self::getApp()->getDb()->delete('test')->where('email = ?', 'example@domain.com')->execute();
+        Proxy\Db::delete('test')->where('email = ?', 'example@domain.com')->execute();
     }
 
     /**

@@ -12,6 +12,7 @@
 namespace Bluz\View\Helper;
 
 use Bluz\View\View;
+use Bluz\Proxy\Registry;
 
 return
     /**
@@ -24,11 +25,11 @@ return
     function ($style = null, $media = 'all') {
     if (app()->hasLayout()) {
         // it's stack for <head>
-        $headStyle = app()->getRegistry()->__get('layout:headStyle') ? : [];
+        $headStyle = Registry::get('layout:headStyle') ? : [];
 
         if (null === $style) {
             // clear system vars
-            app()->getRegistry()->__set('layout:headStyle', []);
+            Registry::set('layout:headStyle', []);
             array_walk(
                 $headStyle,
                 function (&$item, $key) {
@@ -38,7 +39,7 @@ return
             return join("\n", $headStyle);
         } else {
             $headStyle[$style] = $media;
-            app()->getRegistry()->__set('layout:headStyle', $headStyle);
+            Registry::set('layout:headStyle', $headStyle);
             return $this;
         }
     } else {

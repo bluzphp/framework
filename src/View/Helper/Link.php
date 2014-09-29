@@ -12,6 +12,7 @@
 namespace Bluz\View\Helper;
 
 use Bluz\View\View;
+use Bluz\Proxy\Registry;
 
 return
     /**
@@ -24,7 +25,7 @@ return
     function (array $link = null) {
     if (app()->hasLayout()) {
         // it's stack for <head>
-        $links = app()->getRegistry()->__get('layout:link') ? : [];
+        $links = Registry::get('layout:link') ? : [];
 
         if (null === $link) {
             // prepare to output
@@ -35,12 +36,12 @@ return
                 $links
             );
             // clear system vars
-            app()->getRegistry()->__set('layout:link', []);
+            Registry::set('layout:link', []);
             $links = array_unique($links);
             return join("\n", $links);
         } else {
             $links[] = $link;
-            app()->getRegistry()->__set('layout:link', $links);
+            Registry::set('layout:link', $links);
             return $this;
         }
     }

@@ -221,6 +221,7 @@ class Validator
      * Assert
      *
      * @param mixed $input
+     * @throws ValidatorException
      * @return bool
      */
     public function assert($input)
@@ -235,7 +236,6 @@ class Validator
      * Set error template for complex rule
      *
      * @param string $message
-     * @throws \Bluz\Common\CommonException
      * @return Validator
      */
     public function setError($message)

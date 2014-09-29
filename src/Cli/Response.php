@@ -54,7 +54,7 @@ class Response extends AbstractResponse
 
         // extract data from view
         if ($response instanceof View) {
-            $response = $response->getData();
+            $response = $response->toArray();
         }
 
         // output

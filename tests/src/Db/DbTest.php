@@ -11,6 +11,7 @@ namespace Bluz\Tests\Db;
 
 use Bluz;
 use Bluz\Db;
+use Bluz\Proxy;
 use Bluz\Tests;
 use Bluz\Tests\Db\Fixtures;
 
@@ -31,7 +32,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function setUp()
     {
         $this->db = new Db\Db();
-        $this->db->setOptions($this->getApp()->getConfigData('db'));
+        $this->db->setOptions(Proxy\Config::getData('db'));
     }
 
     /**
@@ -40,15 +41,6 @@ class DbTest extends Bluz\Tests\TestCase
     public function tearDown()
     {
         $this->db->disconnect();
-    }
-
-    /**
-     * Initial application with `testing` configuration
-     */
-    public function testGetDefaultAdapter()
-    {
-        $this->db->setDefaultAdapter();
-        $this->assertInstanceOf('\Bluz\Db\Db', $this->db->getDefaultAdapter());
     }
 
     /**
@@ -68,18 +60,6 @@ class DbTest extends Bluz\Tests\TestCase
     {
         $db = new Db\Db();
         $db->setConnect(array());
-    }
-
-    /**
-     * Disconnect
-     * @expectedException \Bluz\Common\Exception\ConfigurationException
-     */
-    public function testCheckDisconnect()
-    {
-        $this->db->setDefaultAdapter();
-        $this->db->connect();
-        $this->db->disconnect();
-        $this->db->getDefaultAdapter();
     }
 
     /**
@@ -237,7 +217,6 @@ class DbTest extends Bluz\Tests\TestCase
      */
     public function testInsert()
     {
-        $this->db->setDefaultAdapter();
         $query = $this->db->insert('test');
         $this->assertInstanceOf('\Bluz\Db\Query\Insert', $query);
     }
@@ -247,7 +226,6 @@ class DbTest extends Bluz\Tests\TestCase
      */
     public function testUpdate()
     {
-        $this->db->setDefaultAdapter();
         $query = $this->db->update('test');
         $this->assertInstanceOf('\Bluz\Db\Query\Update', $query);
     }
@@ -257,7 +235,6 @@ class DbTest extends Bluz\Tests\TestCase
      */
     public function testDelete()
     {
-        $this->db->setDefaultAdapter();
         $query = $this->db->delete('test');
         $this->assertInstanceOf('\Bluz\Db\Query\Delete', $query);
     }

@@ -55,7 +55,6 @@ class TestCase extends \PHPUnit_Framework_TestCase
     protected static function resetApp()
     {
         if (self::$app) {
-            self::$app->resetLayout();
             self::$app->getAuth()->clearIdentity();
             self::$app->setRequest(new Http\Request());
             self::$app->setResponse(new Http\Response());

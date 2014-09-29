@@ -468,7 +468,7 @@ abstract class Grid
         $params = $this->getParams($params);
 
         // retrieve URL
-        return app()->getRouter()->url(
+        return app()->getRouter()->getUrl(
             $this->getModule(),
             $this->getController(),
             $params

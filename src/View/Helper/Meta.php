@@ -12,6 +12,7 @@
 namespace Bluz\View\Helper;
 
 use Bluz\View\View;
+use Bluz\Proxy\Registry;
 
 return
     /**
@@ -25,15 +26,15 @@ return
     function ($name = null, $content = null) {
     if (app()->hasLayout()) {
         // it's stack for <head>
-        $meta = app()->getRegistry()->__get('layout:meta') ? : [];
+        $meta = Registry::get('layout:meta') ? : [];
 
         if ($name && $content) {
             $meta[] = ['name' => $name, 'content' => $content];
-            app()->getRegistry()->__set('layout:meta', $meta);
+            Registry::set('layout:meta', $meta);
             return $this;
         } elseif (is_array($name)) {
             $meta[] = $name;
-            app()->getRegistry()->__set('layout:meta', $meta);
+            Registry::set('layout:meta', $meta);
             return $this;
         } elseif (!$name && !$content) {
             if (sizeof($meta)) {
@@ -45,7 +46,7 @@ return
                     $meta
                 );
                 // clear system vars
-                app()->getRegistry()->__set('layout:meta', []);
+                Registry::set('layout:meta', []);
                 return join("\n", $meta);
             }
         }

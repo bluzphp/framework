@@ -12,6 +12,7 @@
 namespace Bluz\View\Helper;
 
 use Bluz\View\View;
+use Bluz\Proxy\Registry;
 
 return
     /**
@@ -28,9 +29,9 @@ return
     if (app()->hasLayout()) {
         // it's stack for <title> tag
         if (null === $title) {
-            return app()->getRegistry()->__get('layout:title');
+            return Registry::get('layout:title');
         } else {
-            $oldTitle = app()->getRegistry()->__get('layout:title');
+            $oldTitle = Registry::get('layout:title');
             // switch statement for $position
             switch ($position) {
                 case View::POS_PREPEND:
@@ -44,7 +45,7 @@ return
                     $result = $title;
                     break;
             }
-            app()->getRegistry()->__set('layout:title', $result);
+            Registry::set('layout:title', $result);
             return $this;
         }
     }

@@ -11,6 +11,7 @@
  */
 namespace Bluz\View\Helper;
 
+use Bluz\Proxy\Router;
 use Bluz\View\View;
 use Bluz\View\ViewException;
 
@@ -48,6 +49,5 @@ return
         $params = app()->getRequest()->getParams();
     }
 
-    return app()->getRouter()
-        ->url($module, $controller, $params);
+    return Router::getUrl($module, $controller, $params);
     };

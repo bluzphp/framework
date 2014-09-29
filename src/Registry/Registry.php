@@ -47,9 +47,9 @@ class Registry
      *
      * @param string $key
      * @param mixed $value
-     * @return mixed
+     * @return void
      */
-    public function __set($key, $value)
+    public function set($key, $value)
     {
         $this->data[$key] = $value;
     }
@@ -60,7 +60,7 @@ class Registry
      * @param string $key
      * @return mixed
      */
-    public function __get($key)
+    public function get($key)
     {
         if (isset($this->data[$key])) {
             return $this->data[$key];
@@ -75,7 +75,7 @@ class Registry
      * @param string $key
      * @return bool
      */
-    public function __isset($key)
+    public function contains($key)
     {
         return array_key_exists($key, $this->data);
     }
@@ -86,8 +86,57 @@ class Registry
      * @param string $key
      * @return void
      */
-    public function __unset($key)
+    public function delete($key)
     {
         unset($this->data[$key]);
+    }
+
+    /**
+     * Set key/value pair
+     *
+     * @deprecated since version 0.5.1
+     * @param string $key
+     * @param mixed $value
+     * @return void
+     */
+    public function __set($key, $value)
+    {
+        $this->set($key, $value);
+    }
+
+    /**
+     * Get value by key
+     *
+     * @deprecated since version 0.5.1
+     * @param string $key
+     * @return mixed
+     */
+    public function __get($key)
+    {
+        return $this->get($key);
+    }
+
+    /**
+     * Isset
+     *
+     * @deprecated since version 0.5.1
+     * @param string $key
+     * @return bool
+     */
+    public function __isset($key)
+    {
+        return $this->contains($key);
+    }
+
+    /**
+     * Unset
+     *
+     * @deprecated since version 0.5.1
+     * @param string $key
+     * @return void
+     */
+    public function __unset($key)
+    {
+        $this->delete($key);
     }
 }

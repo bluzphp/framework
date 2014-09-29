@@ -159,7 +159,7 @@ class Rest extends AbstractController
                 app()->getResponse()->setStatusCode(201);
                 app()->getResponse()->setHeader(
                     'Location',
-                    app()->getRouter()->url($request->getModule(), $request->getController()).'/'.$result
+                    app()->getRouter()->getUrl($request->getModule(), $request->getController()).'/'.$result
                 );
                 return false; // disable view
             case Request::METHOD_PATCH:

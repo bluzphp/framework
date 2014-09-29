@@ -11,7 +11,6 @@ namespace Bluz\Tests\Fixtures\Models\Auth;
 
 use Bluz\Application;
 use Bluz\Auth\AbstractTable;
-use Bluz\Auth\AuthException;
 
 /**
  * Auth Table
@@ -23,5 +22,4 @@ use Bluz\Auth\AuthException;
  */
 class Table extends AbstractTable
 {
-
 }

@@ -13,6 +13,8 @@ namespace Bluz\Db;
 
 use Bluz\Db\Exception\DbException;
 use Bluz\Db\Exception\InvalidPrimaryKeyException;
+use Bluz\Proxy\Cache;
+use Bluz\Proxy\Db as DbProxy;
 
 /**
  * Table
@@ -144,7 +146,7 @@ abstract class Table
     public function setAdapter($adapter = null)
     {
         if (null == $adapter) {
-            $this->adapter = Db::getDefaultAdapter();
+            $this->adapter = DbProxy::getInstance();
         } else {
             $this->adapter = $adapter;
         }
@@ -219,7 +221,7 @@ abstract class Table
     public function getColumns()
     {
         if (empty($this->columns)) {
-            $columns = app()->getCache()->get('table:columns:'. $this->table);
+            $columns = Cache::get('table:columns:'. $this->table);
             if (!$columns) {
                 $connect = $this->getAdapter()->getOption('connect');
 
@@ -231,8 +233,8 @@ abstract class Table
                       AND TABLE_NAME = ?',
                     [$connect['name'], $this->getName()]
                 );
-                app()->getCache()->set('table:columns:'. $this->table, $columns);
-                app()->getCache()->addTag('table:columns:'. $this->table, 'db');
+                Cache::set('table:columns:'. $this->table, $columns);
+                Cache::addTag('table:columns:'. $this->table, 'db');
             }
             $this->columns = $columns;
 
@@ -472,13 +474,15 @@ abstract class Table
     /**
      * Prepare array for WHERE or SET statements
      *
+     * @param $where
+     * @throws \Bluz\Common\Exception\ConfigurationException
      * @return array
      */
     private static function prepareStatement($where)
     {
         $keys = array_keys($where);
         foreach ($keys as &$key) {
-            $key = Db::getDefaultAdapter()->quoteIdentifier($key) . ' = ?';
+            $key = DbProxy::quoteIdentifier($key) . ' = ?';
         }
         return $keys;
     }
@@ -519,7 +523,7 @@ abstract class Table
             );
         }
 
-        $table = Db::getDefaultAdapter()->quoteIdentifier($self->table);
+        $table = DbProxy::quoteIdentifier($self->table);
 
         $sql = "INSERT INTO $table SET " . join(',', static::prepareStatement($data));
         $result = $self->getAdapter()->query($sql, array_values($data));
@@ -570,7 +574,7 @@ abstract class Table
             );
         }
 
-        $table = Db::getDefaultAdapter()->quoteIdentifier($self->table);
+        $table = DbProxy::quoteIdentifier($self->table);
 
         $sql = "UPDATE $table"
             . " SET " . join(',', static::prepareStatement($data))
@@ -607,7 +611,7 @@ abstract class Table
             );
         }
 
-        $table = Db::getDefaultAdapter()->quoteIdentifier($self->table);
+        $table = DbProxy::quoteIdentifier($self->table);
 
         $sql = "DELETE FROM $table"
             . " WHERE " . join(' AND ', static::prepareStatement($where));

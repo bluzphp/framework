@@ -60,42 +60,6 @@ class Db
     protected $handler;
 
     /**
-     * Himself instance
-     * @var Db
-     */
-    protected static $adapter;
-
-    /**
-     * setDefaultAdapter
-     *
-     * @return Db
-     */
-    public function setDefaultAdapter()
-    {
-        self::$adapter = $this;
-        return $this;
-    }
-
-    /**
-     * getDefaultAdapter
-     *
-     * @throws ConfigurationException
-     * @return Db
-     */
-    public static function getDefaultAdapter()
-    {
-        // check default adapter
-        if (self::$adapter) {
-            return self::$adapter;
-        } else {
-            throw new ConfigurationException(
-                "Default database adapter is not configured.
-                Please check 'db' configuration section"
-            );
-        }
-    }
-
-    /**
      * Setup connection
      *
      * Just init
@@ -396,7 +360,7 @@ class Db
      * @param array $params <p>
      *  array (':ip' => '127.0.0.1')
      * </p>
-     * @return array
+     * @return array[]
      */
     public function fetchAll($sql, $params = array())
     {
@@ -616,7 +580,7 @@ class Db
      *         $db->query("DELETE FROM `table` ...");
      *     })
      *
-     * @param \Closure $process
+     * @param  callable $process
      * @throws DbException
      * @return bool
      */
@@ -627,7 +591,7 @@ class Db
         }
         try {
             $this->handler()->beginTransaction();
-            $process();
+            call_user_func($process);
             $this->handler()->commit();
             return true;
         } catch (\PDOException $e) {
@@ -664,6 +628,5 @@ class Db
         if ($this->handler) {
             $this->handler = null;
         }
-        self::$adapter = null;
     }
 }

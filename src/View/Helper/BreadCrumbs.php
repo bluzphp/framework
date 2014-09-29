@@ -12,6 +12,7 @@
 namespace Bluz\View\Helper;
 
 use Bluz\View\View;
+use Bluz\Proxy\Registry;
 
 return
     /**
@@ -24,10 +25,10 @@ return
     function (array $data = []) {
     if (app()->hasLayout()) {
         if (sizeof($data)) {
-            app()->getRegistry()->__set('layout:breadcrumbs', $data);
+            Registry::set('layout:breadcrumbs', $data);
             return $this;
         } else {
-            return app()->getRegistry()->__get('layout:breadcrumbs');
+            return Registry::get('layout:breadcrumbs');
         }
     }
     return [];

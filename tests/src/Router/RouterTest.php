@@ -34,7 +34,7 @@ class RouterTest extends TestCase
      */
     public function testRouterUrl($url, $module, $controller, $params = array())
     {
-        $this->assertEquals($url, $this->getApp()->getRouter()->url($module, $controller, $params));
+        $this->assertEquals($url, $this->getApp()->getRouter()->getUrl($module, $controller, $params));
     }
 
     /**
@@ -48,17 +48,7 @@ class RouterTest extends TestCase
      */
     public function testRouterUrlWithCustomControllerRoute($url, $module, $controller, $params = array())
     {
-        $this->assertEquals($url, $this->getApp()->getRouter()->url($module, $controller, $params));
-    }
-
-    /**
-     * Test Router Url
-     */
-    public function testRouterBaseUrl()
-    {
-        $router = $this->getApp()->getRouter();
-
-        $this->assertEquals('/', $router->getBaseUrl());
+        $this->assertEquals($url, $this->getApp()->getRouter()->getUrl($module, $controller, $params));
     }
 
     /**

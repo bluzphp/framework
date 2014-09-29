@@ -12,7 +12,8 @@
 namespace Bluz\Messages;
 
 use Bluz\Common\Options;
-use Bluz\Translator\Translator;
+use Bluz\Proxy\Session;
+use Bluz\Proxy\Translator;
 
 /**
  * Realization of Flash Messages
@@ -162,7 +163,7 @@ class Messages
      */
     public function reset()
     {
-        app()->getSession()->MessagesStore = $this->createEmptyMessagesStore();
+        Session::set('messages:store', $this->createEmptyMessagesStore());
     }
 
     /**
@@ -172,7 +173,7 @@ class Messages
      */
     protected function getMessagesStore()
     {
-        return app()->getSession()->MessagesStore;
+        return Session::get('messages:store');
     }
 
     /**

@@ -154,12 +154,11 @@ class Session
      * native ID generation Can safely be called in the middle of a session.
      *
      * @param  bool $deleteOldSession
-     * @return Session
+     * @return bool
      */
     public function regenerateId($deleteOldSession = true)
     {
-        session_regenerate_id((bool) $deleteOldSession);
-        return $this;
+        return session_regenerate_id((bool) $deleteOldSession);
     }
 
     /**
@@ -355,7 +354,7 @@ class Session
      * @param  mixed $value
      * @return void
      */
-    public function __set($key, $value)
+    public function set($key, $value)
     {
         $this->start();
         $_SESSION[$this->namespace][$key] = $value;
@@ -367,9 +366,9 @@ class Session
      * @param  string $key
      * @return mixed
      */
-    public function __get($key)
+    public function get($key)
     {
-        if ($this->__isset($key)) {
+        if ($this->contains($key)) {
             return $_SESSION[$this->namespace][$key];
         } else {
             return null;
@@ -382,7 +381,7 @@ class Session
      * @param  string $key
      * @return bool
      */
-    public function __isset($key)
+    public function contains($key)
     {
         if ($this->cookieExists()) {
             $this->start();
@@ -398,11 +397,60 @@ class Session
      * @param  string $key
      * @return void
      */
-    public function __unset($key)
+    public function delete($key)
     {
         if ($this->cookieExists()) {
             $this->start();
             unset($_SESSION[$this->namespace][$key]);
         }
+    }
+
+    /**
+     * Set key/value pair
+     *
+     * @deprecated since version 0.5.1
+     * @param string $key
+     * @param mixed $value
+     * @return void
+     */
+    public function __set($key, $value)
+    {
+        $this->set($key, $value);
+    }
+
+    /**
+     * Get value by key
+     *
+     * @deprecated since version 0.5.1
+     * @param string $key
+     * @return mixed
+     */
+    public function __get($key)
+    {
+        return $this->get($key);
+    }
+
+    /**
+     * Isset
+     *
+     * @deprecated since version 0.5.1
+     * @param string $key
+     * @return bool
+     */
+    public function __isset($key)
+    {
+        return $this->contains($key);
+    }
+
+    /**
+     * Unset
+     *
+     * @deprecated since version 0.5.1
+     * @param string $key
+     * @return void
+     */
+    public function __unset($key)
+    {
+        $this->delete($key);
     }
 }

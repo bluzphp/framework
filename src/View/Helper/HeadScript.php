@@ -12,6 +12,7 @@
 namespace Bluz\View\Helper;
 
 use Bluz\View\View;
+use Bluz\Proxy\Registry;
 
 return
     /**
@@ -24,17 +25,17 @@ return
     function ($script = null) {
     if (app()->hasLayout()) {
         // it's stack for <head>
-        $headScripts = app()->getRegistry()->__get('layout:headScripts') ? : [];
+        $headScripts = Registry::get('layout:headScripts') ? : [];
 
         if (null === $script) {
             $headScripts = array_unique($headScripts);
             // clear system vars
-            app()->getRegistry()->__set('layout:headScripts', []);
+            Registry::set('layout:headScripts', []);
             $headScripts = array_map([$this, 'script'], $headScripts);
             return join("\n", $headScripts);
         } else {
             $headScripts[] = $script;
-            app()->getRegistry()->__set('layout:headScripts', $headScripts);
+            Registry::set('layout:headScripts', $headScripts);
             return $this;
         }
     } else {

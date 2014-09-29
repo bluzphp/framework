@@ -122,18 +122,6 @@ class Cache implements CacheInterface, TagableInterface
      * {@inheritdoc}
      *
      * @param string $id
-     * @return mixed
-     */
-    public function get($id)
-    {
-        $id = $this->prepareId($id);
-        return $this->getAdapter()->get($id);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @param string $id
      * @param mixed $data
      * @param int $ttl
      * @return bool
@@ -156,6 +144,18 @@ class Cache implements CacheInterface, TagableInterface
     {
         $id = $this->prepareId($id);
         return $this->getAdapter()->set($id, $data, $ttl);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @param string $id
+     * @return mixed
+     */
+    public function get($id)
+    {
+        $id = $this->prepareId($id);
+        return $this->getAdapter()->get($id);
     }
 
     /**
@@ -185,11 +185,12 @@ class Cache implements CacheInterface, TagableInterface
     /**
      * {@inheritdoc}
      *
-     * @return mixed
+     * @return void
      */
     public function flush()
     {
-        return $this->getAdapter()->flush();
+        $this->getAdapter()->flush();
+        $this->getTagAdapter()->flush();
     }
 
     /**

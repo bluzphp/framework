@@ -12,6 +12,7 @@
 namespace Bluz\View\Helper;
 
 use Bluz\View\View;
+use Bluz\Proxy\Registry;
 
 return
     /**
@@ -25,28 +26,28 @@ return
      */
     function ($title = null, $position = View::POS_REPLACE, $separator = ' :: ') {
 
-    if (app()->hasLayout()) {
-        // it's stack for <title> tag
-        if (null === $title) {
-            return app()->getRegistry()->__get('layout:title');
-        } else {
-            $oldTitle = app()->getRegistry()->__get('layout:title');
-            // switch statement for $position
-            switch ($position) {
-                case View::POS_PREPEND:
-                    $result = $title . (!$oldTitle ? : $separator . $oldTitle);
-                    break;
-                case View::POS_APPEND:
-                    $result = (!$oldTitle ? : $oldTitle . $separator) . $title;
-                    break;
-                case View::POS_REPLACE:
-                default:
-                    $result = $title;
-                    break;
+        if (app()->hasLayout()) {
+            // it's stack for <title> tag
+            if (null === $title) {
+                return Registry::get('layout:title');
+            } else {
+                $oldTitle = Registry::get('layout:title');
+                // switch statement for $position
+                switch ($position) {
+                    case View::POS_PREPEND:
+                        $result = $title . (!$oldTitle ? : $separator . $oldTitle);
+                        break;
+                    case View::POS_APPEND:
+                        $result = (!$oldTitle ? : $oldTitle . $separator) . $title;
+                        break;
+                    case View::POS_REPLACE:
+                    default:
+                        $result = $title;
+                        break;
+                }
+                Registry::set('layout:title', $result);
+                return $this;
             }
-            app()->getRegistry()->__set('layout:title', $result);
-            return $this;
         }
-    }
-    return '';
+        return '';
     };

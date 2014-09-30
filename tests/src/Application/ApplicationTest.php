@@ -10,7 +10,8 @@
 namespace Bluz\Tests\Application;
 
 use Bluz\Http\Request;
-use Bluz\Router\Router;
+use Bluz\Proxy;
+use Bluz\Proxy\Router;
 use Bluz\Tests\TestCase;
 
 /**
@@ -80,9 +81,9 @@ class ApplicationTest extends TestCase
         //  - configs/testing/
         // hardcoded numbers of configuration items
 
-        $this->assertEquals(13, sizeof($this->getApp()->getConfigData()));
-        $this->assertEquals(["foo" => "bar"], $this->getApp()->getConfigData("test"));
-        $this->assertEquals("bar", $this->getApp()->getConfigData("test", "foo"));
+        $this->assertEquals(13, sizeof(Proxy\Config::getData()));
+        $this->assertEquals(["foo" => "bar"], Proxy\Config::getData("test"));
+        $this->assertEquals("bar", Proxy\Config::getData("test", "foo"));
     }
 
     /**
@@ -90,9 +91,9 @@ class ApplicationTest extends TestCase
      */
     public function testRegistry()
     {
-        $this->assertEquals(["moo" => "baz"], $this->getApp()->getConfigData("registry"));
-        $this->assertEquals("baz", $this->getApp()->getConfigData("registry", "moo"));
-        $this->assertEquals("baz", $this->getApp()->getRegistry()->moo);
+        $this->assertEquals(["moo" => "baz"], Proxy\Config::getData("registry"));
+        $this->assertEquals("baz", Proxy\Config::getData("registry", "moo"));
+        $this->assertEquals("baz", Proxy\Registry::get('moo'));
     }
 
     /**
@@ -112,8 +113,8 @@ class ApplicationTest extends TestCase
         // run Application
         $this->getApp()->process();
 
-        $this->assertEquals(Router::DEFAULT_MODULE, $this->getApp()->getModule());
-        $this->assertEquals(Router::DEFAULT_CONTROLLER, $this->getApp()->getController());
+        $this->assertEquals(Router::getDefaultModule(), $this->getApp()->getModule());
+        $this->assertEquals(Router::getDefaultController(), $this->getApp()->getController());
     }
 
     /**
@@ -132,8 +133,8 @@ class ApplicationTest extends TestCase
 
         // run Application
         $this->getApp()->process();
-        $this->assertEquals(Router::ERROR_MODULE, $this->getApp()->getModule());
-        $this->assertEquals(Router::ERROR_CONTROLLER, $this->getApp()->getController());
+        $this->assertEquals(Router::getErrorModule(), $this->getApp()->getModule());
+        $this->assertEquals(Router::getErrorController(), $this->getApp()->getController());
     }
 
     /**
@@ -173,7 +174,7 @@ class ApplicationTest extends TestCase
      */
     public function testHelperRedirectTo()
     {
-        $this->getApp()->redirectTo(Router::DEFAULT_MODULE, Router::DEFAULT_CONTROLLER);
+        $this->getApp()->redirectTo(Router::getDefaultModule(), Router::getDefaultController());
     }
 
     /**

@@ -21,6 +21,6 @@ use Bluz\Common\Exception;
  * @author   Anton Shevchuk
  * @created  30.05.2014 14:48
  */
-class ComponentException extends Exception
+class ComponentException extends Exception\ComponentException
 {
 }

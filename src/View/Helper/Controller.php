@@ -23,10 +23,10 @@ return
      * @return string|bool
      */
     function ($controller = null) {
-    $request = app()->getRequest();
-    if (null == $controller) {
-        return $request->getController();
-    } else {
-        return $request->getController() == $controller;
-    }
+        $request = app()->getRequest();
+        if (null == $controller) {
+            return $request->getController();
+        } else {
+            return $request->getController() == $controller;
+        }
     };

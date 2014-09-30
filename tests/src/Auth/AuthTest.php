@@ -58,6 +58,25 @@ class AuthTest extends TestCase
     }
 
     /**
+     * Test Auth Identity clear
+     *
+     * @covers \Bluz\Auth\Auth::getIdentity
+     * @covers \Bluz\Auth\Auth::clearIdentity
+     */
+    public function testAuthClearIdentityWithWrongUserAgent()
+    {
+        $auth = $this->getApp()->getAuth();
+
+        $adminIdentity = new UserAdmin();
+
+        $auth->setIdentity($adminIdentity);
+
+        $_SERVER['HTTP_USER_AGENT'] = uniqid('agent:');
+
+        $this->assertNull($auth->getIdentity());
+    }
+
+    /**
      * Test get Auth\Row
      */
     public function testGetAuthRow()

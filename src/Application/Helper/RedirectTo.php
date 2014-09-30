@@ -24,6 +24,6 @@ return
      * @return void
      */
     function ($module = 'index', $controller = 'index', $params = array()) {
-        $url = $this->getRouter()->url($module, $controller, $params);
+        $url = $this->getRouter()->getUrl($module, $controller, $params);
         $this->redirect($url);
     };

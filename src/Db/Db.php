@@ -11,6 +11,7 @@
  */
 namespace Bluz\Db;
 
+use Bluz\Common\Exception\ConfigurationException;
 use Bluz\Common\Options;
 use Bluz\Db\Query;
 use Bluz\Db\Exception\DbException;
@@ -59,39 +60,6 @@ class Db
     protected $handler;
 
     /**
-     * Himself instance
-     * @var Db
-     */
-    protected static $adapter;
-
-    /**
-     * setDefaultAdapter
-     *
-     * @return Db
-     */
-    public function setDefaultAdapter()
-    {
-        self::$adapter = $this;
-        return $this;
-    }
-
-    /**
-     * getDefaultAdapter
-     *
-     * @throws DbException
-     * @return Db
-     */
-    public static function getDefaultAdapter()
-    {
-        // check default adapter
-        if (self::$adapter) {
-            return self::$adapter;
-        } else {
-            throw new DbException("Default database adapter is not configured");
-        }
-    }
-
-    /**
      * Setup connection
      *
      * Just init
@@ -118,7 +86,7 @@ class Db
     /**
      * Check connection options
      *
-     * @throws Exception\DbException
+     * @throws ConfigurationException
      * @return void
      */
     private function checkConnect()
@@ -128,7 +96,10 @@ class Db
             empty($this->connect['name']) or
             empty($this->connect['user'])
         ) {
-            throw new DbException('Db connection can\'t be initialized: required type, host, db name and user');
+            throw new ConfigurationException(
+                "Database adapter is not configured.
+                Please check 'db' configuration section: required type, host, db name and user"
+            );
         }
     }
 
@@ -389,7 +360,7 @@ class Db
      * @param array $params <p>
      *  array (':ip' => '127.0.0.1')
      * </p>
-     * @return array
+     * @return array[]
      */
     public function fetchAll($sql, $params = array())
     {
@@ -609,7 +580,7 @@ class Db
      *         $db->query("DELETE FROM `table` ...");
      *     })
      *
-     * @param \Closure $process
+     * @param  callable $process
      * @throws DbException
      * @return bool
      */
@@ -620,7 +591,7 @@ class Db
         }
         try {
             $this->handler()->beginTransaction();
-            $process();
+            call_user_func($process);
             $this->handler()->commit();
             return true;
         } catch (\PDOException $e) {
@@ -657,6 +628,5 @@ class Db
         if ($this->handler) {
             $this->handler = null;
         }
-        self::$adapter = null;
     }
 }

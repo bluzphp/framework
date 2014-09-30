@@ -12,6 +12,7 @@
 namespace Bluz\View;
 
 use Bluz\Auth\AbstractRowEntity;
+use Bluz\Common\Container;
 use Bluz\Common\Helper;
 use Bluz\Common\Options;
 
@@ -51,6 +52,7 @@ use Bluz\Common\Options;
  */
 class View implements ViewInterface, \JsonSerializable
 {
+    use Container;
     use Options;
     use Helper;
 
@@ -65,11 +67,6 @@ class View implements ViewInterface, \JsonSerializable
      * @var string base url
      */
     protected $baseUrl;
-
-    /**
-     * @var array of view variables
-     */
-    protected $data = array();
 
     /**
      * @var string path to template
@@ -104,100 +101,7 @@ class View implements ViewInterface, \JsonSerializable
      */
     public function __sleep()
     {
-        return ['baseUrl', 'data', 'path', 'template'];
-    }
-
-    /**
-     * Get a variable
-     *
-     * @param string $key
-     * @return mixed
-     */
-    public function __get($key)
-    {
-        if (isset($this->data[$key])) {
-            return $this->data[$key];
-        } else {
-            return null;
-        }
-    }
-
-
-    /**
-     * Is set a variable
-     *
-     * @param string $key
-     * @return bool
-     */
-    public function __isset($key)
-    {
-        return isset($this->data[$key]);
-    }
-
-    /**
-     * Assign a variable
-     *
-     * A $value of null will unset the $key if it exists
-     *
-     * @param string $key
-     * @param mixed $value
-     * @throws ViewException
-     * @return View
-     */
-    public function __set($key, $value)
-    {
-        if (!is_string($key)) {
-            throw new ViewException("You can't use `". gettype($key) . "` as identity of Views key");
-        }
-
-        $this->data[$key] = $value;
-
-        return $this;
-    }
-
-    /**
-     * Unset variable
-     *
-     * @param $key
-     * @return void
-     */
-    public function __unset($key)
-    {
-        unset($this->data[$key]);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @param array $data
-     * @return $this|ViewInterface
-     */
-    public function setData($data = array())
-    {
-        $this->data = array_merge($this->data, $data);
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @return array
-     */
-    public function getData()
-    {
-        return $this->data;
-    }
-
-    /**
-     * Merge data from array to internal storage
-     *
-     * @param array $data
-     * @return View
-     */
-    public function mergeData($data = array())
-    {
-        $this->data = array_replace_recursive($this->data, $data);
-        return $this;
+        return ['baseUrl', 'container', 'path', 'template'];
     }
 
     /**
@@ -218,16 +122,6 @@ class View implements ViewInterface, \JsonSerializable
     public function __toString()
     {
         return $this->render();
-    }
-
-    /**
-     * Implement JsonSerializable
-     *
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->data;
     }
 
     /**
@@ -280,7 +174,7 @@ class View implements ViewInterface, \JsonSerializable
                 or !is_file($this->path . '/' . $this->template)) {
                 throw new ViewException("Template '{$this->template}' not found");
             }
-            extract($this->data);
+            extract($this->container);
             require $this->path . '/' . $this->template;
         } catch (\Exception $e) {
             // clean output

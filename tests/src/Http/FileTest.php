@@ -11,6 +11,7 @@ namespace Bluz\Tests\Http;
 
 use Bluz;
 use Bluz\Http\File;
+use Bluz\Proxy;
 use Bluz\Tests\TestCase;
 
 /**
@@ -39,7 +40,7 @@ class FileTest extends TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->path = $this->getApp()->getConfigData('temp', 'image1');
+        $this->path = Proxy\Config::getData('temp', 'image1');
         $file = array(
             'name' => 'test.jpeg',
             'size' => filesize($this->path),

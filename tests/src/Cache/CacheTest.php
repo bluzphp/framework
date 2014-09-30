@@ -46,7 +46,7 @@ class CacheTest extends TestCase
 
     /**
      * Cache Throws Exception for invalid configuration
-     * @expectedException \Bluz\Config\ConfigException
+     * @expectedException \Bluz\Common\Exception\ConfigurationException
      */
     public function testCacheWithEmptyConfigurationThrowsException()
     {

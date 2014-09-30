@@ -29,7 +29,6 @@ trait Singleton
     /**
      * Get class instance
      *
-     * @throws Exception
      * @return static::$instance
      */
     final public static function getInstance()

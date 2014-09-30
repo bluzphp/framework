@@ -18,8 +18,8 @@ return
      * @return integer
      */
     function () {
-    /**
-     * @var Grid\Grid $this
-     */
-    return ceil($this->getData()->getTotal() / $this->getLimit());
+        /**
+         * @var Grid\Grid $this
+         */
+        return ceil($this->getData()->getTotal() / $this->getLimit());
     };

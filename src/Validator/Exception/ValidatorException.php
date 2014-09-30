@@ -11,6 +11,8 @@
  */
 namespace Bluz\Validator\Exception;
 
+use Bluz\Application\Exception\BadRequestException;
+
 /**
  * Validator Exception
  *
@@ -19,14 +21,8 @@ namespace Bluz\Validator\Exception;
  * @author   Anton Shevchuk
  * @created  30.05.2014 14:47
  */
-class ValidatorException extends \InvalidArgumentException
+class ValidatorException extends BadRequestException
 {
-    /**
-     * Bad Request HTTP Code
-     * @var int
-     */
-    protected $code = 400;
-
     /**
      * @var string
      */

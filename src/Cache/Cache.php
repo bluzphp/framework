@@ -12,8 +12,9 @@
 namespace Bluz\Cache;
 
 use Bluz\Cache\Adapter;
+use Bluz\Common\Exception\ComponentException;
+use Bluz\Common\Exception\ConfigurationException;
 use Bluz\Common\Options;
-use Bluz\Config\ConfigException;
 
 /**
  * Cache Frontend for Bluz\Cache system
@@ -67,14 +68,14 @@ class Cache implements CacheInterface, TagableInterface
     /**
      * Check Cache configuration
      *
-     * @throws \Bluz\Config\ConfigException
+     * @throws ConfigurationException
      * @return bool
      */
     protected function checkOptions()
     {
         // check cache Adapter instance and settings for initialize it
         if (!$this->getOption('adapter')) {
-            throw new ConfigException(
+            throw new ConfigurationException(
                 "Missed `adapter` option in cache `settings` configuration. <br/>\n" .
                 "Read more: <a href='https://github.com/bluzphp/framework/wiki/Cache'>".
                 "https://github.com/bluzphp/framework/wiki/Cache</a>"
@@ -121,18 +122,6 @@ class Cache implements CacheInterface, TagableInterface
      * {@inheritdoc}
      *
      * @param string $id
-     * @return mixed
-     */
-    public function get($id)
-    {
-        $id = $this->prepareId($id);
-        return $this->getAdapter()->get($id);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @param string $id
      * @param mixed $data
      * @param int $ttl
      * @return bool
@@ -155,6 +144,18 @@ class Cache implements CacheInterface, TagableInterface
     {
         $id = $this->prepareId($id);
         return $this->getAdapter()->set($id, $data, $ttl);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @param string $id
+     * @return mixed
+     */
+    public function get($id)
+    {
+        $id = $this->prepareId($id);
+        return $this->getAdapter()->get($id);
     }
 
     /**
@@ -184,15 +185,17 @@ class Cache implements CacheInterface, TagableInterface
     /**
      * {@inheritdoc}
      *
-     * @return mixed
+     * @return void
      */
     public function flush()
     {
-        return $this->getAdapter()->flush();
+        $this->getAdapter()->flush();
+        $this->getTagAdapter()->flush();
     }
 
     /**
      * Get underlying cache adapter
+     *
      * @return Adapter\AbstractAdapter
      */
     public function getAdapter()
@@ -206,8 +209,8 @@ class Cache implements CacheInterface, TagableInterface
 
     /**
      * Get underlying tag adapter
-     * @throws CacheException
-     * @throws ConfigException
+     *
+     * @throws ConfigurationException
      * @return Adapter\AbstractAdapter
      */
     public function getTagAdapter()
@@ -219,7 +222,7 @@ class Cache implements CacheInterface, TagableInterface
             } elseif ($adapter = $this->getAdapter()) {
                 $this->tagAdapter = $adapter;
             } else {
-                throw new ConfigException("Tag Adapter can't initialize. Configuration is missed");
+                throw new ConfigurationException("Tag Adapter can't initialize. Configuration is missed");
             }
         }
         return $this->tagAdapter;
@@ -229,17 +232,22 @@ class Cache implements CacheInterface, TagableInterface
      * Init adapter
      *
      * @param string $adapterName
-     * @throws CacheException
+     * @throws ComponentException
+     * @throws ConfigurationException
      * @return Adapter\AbstractAdapter
      */
     protected function initAdapter($adapterName)
     {
         if (!$adapterSettings = $this->getOption('settings', $adapterName)) {
-            throw new CacheException("Cache Adapter can't initialize. Configuration is missed");
+            throw new ConfigurationException("Cache Adapter can't initialize. Configuration is missed");
         }
 
         $adapterName = ucfirst($adapterName);
         $adapterClass = '\\Bluz\\Cache\\Adapter\\' . $adapterName;
+
+        if (!class_exists($adapterClass)) {
+            throw new ComponentException("Class for cache adapter `$adapterName` not found");
+        }
 
         $adapter = new $adapterClass($adapterSettings);
         return $adapter;

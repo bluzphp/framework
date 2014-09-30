@@ -424,7 +424,7 @@ class Row implements \JsonSerializable, \ArrayAccess
         }
 
         // check class initialization
-        if (!class_exists($tableClass) or !is_subclass_of($tableClass, '\Bluz\Db\Table')) {
+        if (!class_exists($tableClass) or !is_subclass_of($tableClass, '\\Bluz\\Db\\Table')) {
             throw new TableNotFoundException("`Table` class is not exists or not initialized");
         }
 

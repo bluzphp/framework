@@ -23,10 +23,10 @@ return
      * @return string|bool
      */
     function ($module = null) {
-    $request = app()->getRequest();
-    if (null == $module) {
-        return $request->getModule();
-    } else {
-        return $request->getModule() == $module;
-    }
+        $request = app()->getRequest();
+        if (null == $module) {
+            return $request->getModule();
+        } else {
+            return $request->getModule() == $module;
+        }
     };

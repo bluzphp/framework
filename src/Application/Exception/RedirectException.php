@@ -22,7 +22,7 @@ namespace Bluz\Application\Exception;
 class RedirectException extends ApplicationException
 {
     /**
-     * Exception message
+     * Exception message consist Location data
      * @var string
      */
     protected $message = "Application Redirect";
@@ -31,7 +31,8 @@ class RedirectException extends ApplicationException
      * Redirect HTTP code
      *
      * - 301 Moved Permanently
-     * - 302 Found
+     * - 302 Moved Temporarily
+     * - 307 Temporary Redirect
      *
      * @var int
      */

@@ -25,7 +25,7 @@ class TranslatorTest extends TestCase
     /**
      * Test Translator initialization
      *
-     * @expectedException \Bluz\Config\ConfigException
+     * @expectedException \Bluz\Common\Exception\ConfigurationException
      */
     public function testInvalidConfigurationThrowException()
     {

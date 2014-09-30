@@ -11,7 +11,7 @@
  */
 namespace Bluz\Request;
 
-use Bluz\Common\Exception;
+use Bluz\Common\Exception\CommonException;
 
 /**
  * RequestException
@@ -21,6 +21,6 @@ use Bluz\Common\Exception;
  * @author   Anton Shevchuk
  * @created  11.02.13 11:26
  */
-class RequestException extends Exception
+class RequestException extends CommonException
 {
 }

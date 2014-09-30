@@ -121,7 +121,7 @@ class Validator
         $ruleClass = '\\Bluz\\Validator\\Rule\\' . ucfirst($ruleName);
 
         if (!class_exists($ruleClass)) {
-            throw new ComponentException();
+            throw new ComponentException("Class for validator `$ruleName` not found");
         }
 
         if (sizeof($arguments)) {
@@ -221,6 +221,7 @@ class Validator
      * Assert
      *
      * @param mixed $input
+     * @throws ValidatorException
      * @return bool
      */
     public function assert($input)
@@ -235,7 +236,6 @@ class Validator
      * Set error template for complex rule
      *
      * @param string $message
-     * @throws \Bluz\Common\Exception
      * @return Validator
      */
     public function setError($message)

@@ -12,6 +12,7 @@
 namespace Bluz\Router;
 
 use Bluz\Common\Options;
+use Bluz\Proxy\Cache;
 
 /**
  * Router
@@ -34,6 +35,26 @@ class Router
     const ERROR_CONTROLLER = 'index';
 
     /**
+     * @var string
+     */
+    protected $defaultModule = self::DEFAULT_MODULE;
+
+    /**
+     * @var string
+     */
+    protected $defaultController = self::DEFAULT_CONTROLLER;
+
+    /**
+     * @var string
+     */
+    protected $errorModule = self::ERROR_MODULE;
+
+    /**
+     * @var string
+     */
+    protected $errorController = self::ERROR_CONTROLLER;
+
+    /**
      * Routers map
      * @var array
      */
@@ -46,20 +67,14 @@ class Router
     protected $reverse = array();
 
     /**
-     * Base URL of site
-     * @var string
-     */
-    protected $baseUrl;
-
-    /**
      * Constructor of Router
      *
      * @return self
      */
     public function __construct()
     {
-        $routers = app()->getCache()->get('router:routers');
-        $reverse = app()->getCache()->get('router:reverse');
+        $routers = Cache::get('router:routers');
+        $reverse = Cache::get('router:reverse');
 
         if (!$routers or !$reverse) {
             $routers = array();
@@ -121,8 +136,8 @@ class Router
                     }
                 }
             }
-            app()->getCache()->set('router:routers', $routers);
-            app()->getCache()->set('router:reverse', $reverse);
+            Cache::set('router:routers', $routers);
+            Cache::set('router:reverse', $reverse);
         }
 
         $this->routers = $routers;
@@ -130,18 +145,95 @@ class Router
     }
 
     /**
-     * getBaseUrl
-     * always return string with slash at end
      * @return string
      */
-    public function getBaseUrl()
+    public function getDefaultModule()
     {
-        if (!$this->baseUrl) {
-            $this->baseUrl = app()
-                ->getRequest()
-                ->getBaseUrl();
+        return $this->defaultModule;
+    }
+
+    /**
+     * @param string $defaultModule
+     */
+    public function setDefaultModule($defaultModule)
+    {
+        $this->defaultModule = $defaultModule;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultController()
+    {
+        return $this->defaultController;
+    }
+
+    /**
+     * @param string $defaultController
+     */
+    public function setDefaultController($defaultController)
+    {
+        $this->defaultController = $defaultController;
+    }
+
+    /**
+     * @return string
+     */
+    public function getErrorModule()
+    {
+        return $this->errorModule;
+    }
+
+    /**
+     * @param string $errorModule
+     */
+    public function setErrorModule($errorModule)
+    {
+        $this->errorModule = $errorModule;
+    }
+
+    /**
+     * @return string
+     */
+    public function getErrorController()
+    {
+        return $this->errorController;
+    }
+
+    /**
+     * @param string $errorController
+     */
+    public function setErrorController($errorController)
+    {
+        $this->errorController = $errorController;
+    }
+
+    /**
+     * Build URL to controller
+     *
+     * @param string $module
+     * @param string $controller
+     * @param array $params
+     * @return string
+     */
+    public function getUrl($module = self::DEFAULT_MODULE, $controller = self::DEFAULT_CONTROLLER, $params = array())
+    {
+        if (is_null($module)) {
+            $module = app()->getRequest()->getModule();
         }
-        return $this->baseUrl;
+
+        if (is_null($controller)) {
+            $controller = app()->getRequest()->getController();
+        }
+
+        if (empty($this->routers)) {
+            return $this->urlRoute($module, $controller, $params);
+        } else {
+            if (isset($this->reverse[$module], $this->reverse[$module][$controller])) {
+                return $this->urlCustom($module, $controller, $params);
+            }
+            return $this->urlRoute($module, $controller, $params);
+        }
     }
 
     /**
@@ -159,38 +251,9 @@ class Router
     ) {
         $scheme = app()->getRequest()->getScheme() . '://';
         $host = app()->getRequest()->getHttpHost();
-        $url = $this->url($module, $controller, $params);
+        $url = $this->getUrl($module, $controller, $params);
         return $scheme . $host . $url;
     }
-
-    /**
-     * Build URL to controller
-     *
-     * @param string $module
-     * @param string $controller
-     * @param array $params
-     * @return string
-     */
-    public function url($module = self::DEFAULT_MODULE, $controller = self::DEFAULT_CONTROLLER, $params = array())
-    {
-        if (null === $module) {
-            $module = app()->getRequest()->getModule();
-        }
-
-        if (null === $controller) {
-            $controller = app()->getRequest()->getController();
-        }
-
-        if (empty($this->routers)) {
-            return $this->urlRoute($module, $controller, $params);
-        } else {
-            if (isset($this->reverse[$module], $this->reverse[$module][$controller])) {
-                return $this->urlCustom($module, $controller, $params);
-            }
-            return $this->urlRoute($module, $controller, $params);
-        }
-    }
-
 
     /**
      * Build URL by custom route
@@ -200,7 +263,7 @@ class Router
      * @param array $params
      * @return string
      */
-    public function urlCustom($module, $controller, $params)
+    protected function urlCustom($module, $controller, $params)
     {
         $url = $this->reverse[$module][$controller]['route'];
 
@@ -227,7 +290,7 @@ class Router
         if (!empty($getParams)) {
             $url .= '?' . http_build_query($getParams);
         }
-        return $this->getBaseUrl() . ltrim($url, '/');
+        return app()->getRequest()->getBaseUrl() . ltrim($url, '/');
     }
 
     /**
@@ -238,9 +301,9 @@ class Router
      * @param array $params
      * @return string
      */
-    public function urlRoute($module, $controller, $params)
+    protected function urlRoute($module, $controller, $params)
     {
-        $url = $this->getBaseUrl();
+        $url = app()->getRequest()->getBaseUrl();
 
         if (empty($params)) {
             if ($controller == self::DEFAULT_CONTROLLER) {
@@ -300,7 +363,6 @@ class Router
         $uri = app()->getRequest()->getCleanUri();
         return empty($uri);
     }
-
 
     /**
      * Process custom router

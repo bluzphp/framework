@@ -11,32 +11,27 @@
  */
 namespace Bluz\Application;
 
-use Bluz\Acl\Acl;
-use Bluz\Acl\AclException;
 use Bluz\Application\Exception\ApplicationException;
+use Bluz\Application\Exception\ForbiddenException;
 use Bluz\Application\Exception\RedirectException;
 use Bluz\Application\Exception\ReloadException;
 use Bluz\Auth\AbstractRowEntity;
-use Bluz\Auth\Auth;
-use Bluz\Cache\Cache;
-use Bluz\Common\Exception;
-use Bluz\Common\Helper;
-use Bluz\Common\Nil;
-use Bluz\Common\Singleton;
-use Bluz\Config\Config;
-use Bluz\Config\ConfigException;
-use Bluz\Db\Db;
-use Bluz\EventManager\EventManager;
+use Bluz\Common;
 use Bluz\Http;
-use Bluz\Logger\Logger;
-use Bluz\Mailer\Mailer;
-use Bluz\Messages\Messages;
-use Bluz\Registry\Registry;
-use Bluz\Request;
-use Bluz\Response;
-use Bluz\Router\Router;
-use Bluz\Session\Session;
-use Bluz\Translator\Translator;
+use Bluz\Proxy;
+use Bluz\Proxy\Acl;
+use Bluz\Proxy\Auth;
+use Bluz\Proxy\Cache;
+use Bluz\Proxy\Config;
+use Bluz\Proxy\Db;
+use Bluz\Proxy\EventManager;
+use Bluz\Proxy\Logger;
+use Bluz\Proxy\Mailer;
+use Bluz\Proxy\Messages;
+use Bluz\Proxy\Registry;
+use Bluz\Proxy\Router;
+use Bluz\Proxy\Session;
+use Bluz\Proxy\Translator;
 use Bluz\View\Layout;
 use Bluz\View\View;
 
@@ -56,69 +51,13 @@ use Bluz\View\View;
  */
 abstract class Application
 {
-    use Singleton;
-    use Helper;
-
-    /**
-     * @var Acl instance
-     */
-    protected $acl;
-
-    /**
-     * @var Auth instance
-     */
-    protected $auth;
-
-    /**
-     * @var Cache instance
-     */
-    protected $cache;
-
-    /**
-     * @var Config instance
-     */
-    protected $config;
-
-    /**
-     * @var Db instance
-     */
-    protected $db;
-
-    /**
-     * @var EventManager instance
-     */
-    protected $eventManager;
+    use Common\Helper;
+    use Common\Singleton;
 
     /**
      * @var Layout instance
      */
     protected $layout;
-
-    /**
-     * @var Logger instance
-     */
-    protected $logger;
-
-    /**
-     * @var Mailer instance
-     */
-    protected $mailer;
-
-    /**
-     * @var Messages instance
-     */
-    protected $messages;
-
-    /**
-     * Application path
-     * @var string
-     */
-    protected $path;
-
-    /**
-     * @var Registry instance
-     */
-    protected $registry;
 
     /**
      * @var Http\Request instance
@@ -131,25 +70,21 @@ abstract class Application
     protected $response;
 
     /**
-     * @var Router instance
-     */
-    protected $router;
-
-    /**
      * @var Session instance
      */
     protected $session;
 
     /**
-     * @var Translator instance
+     * Application path
+     * @var string
      */
-    protected $translator;
+    protected $path;
 
     /**
      * Environment name
      * @var string
      */
-    protected $environment;
+    protected $environment = 'production';
 
     /**
      * Debug application flag
@@ -197,7 +132,7 @@ abstract class Application
      * init
      *
      * @param string $environment Array format only!
-     * @throws Exception
+     * @throws ApplicationException
      * @return Application
      */
     public function init($environment = 'production')
@@ -208,18 +143,16 @@ abstract class Application
             // initial default helper path
             $this->addHelperPath(dirname(__FILE__) . '/Helper/');
 
-            // setup configuration for current environment
-            $this->getConfig($environment);
-
-            if ($debug = $this->getConfigData('debug')) {
-                $this->debugFlag = (bool) $debug;
-            }
-
             // first log message
             $this->log('app:init');
 
+            // setup configuration for current environment
+            if ($debug = Config::getData('debug')) {
+                $this->debugFlag = (bool) $debug;
+            }
+
             // initial php settings
-            if ($ini = $this->getConfigData('php')) {
+            if ($ini = Config::getData('php')) {
                 foreach ($ini as $key => $value) {
                     $result = ini_set($key, $value);
                     $this->log('app:init:php:'.$key.':'.($result?:'---'));
@@ -227,14 +160,15 @@ abstract class Application
             }
 
             // initial session, start inside class
-            $this->getSession();
+            Session::getInstance();
+
+            // initial Messages
+            Messages::getInstance();
 
             // initial Translator
-            $this->getTranslator();
+            Translator::getInstance();
 
-            // initial DB configuration
-            $this->getDb();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             throw new ApplicationException("Application can't be loaded: " . $e->getMessage());
         }
         return $this;
@@ -249,109 +183,96 @@ abstract class Application
      */
     public function log($message, array $context = [])
     {
-        $this->getLogger()->info($message, $context);
+        Logger::info($message, $context);
     }
 
     /**
      * Load configuration file
      *
-     * @param string|null $environment
-     * @return Config
+     * @deprecated since version 0.5.1
+     * @return \Bluz\Config\Config
      */
-    public function getConfig($environment = null)
+    public function getConfig()
     {
-        if (!$this->config) {
-            $this->config = new Config();
-            $this->config->setPath($this->getPath());
-            $this->config->setEnvironment($environment);
-            $this->config->init();
-        }
-        return $this->config;
+        return Config::getInstance();
     }
 
     /**
      * Get configuration for same section and subsection
      *
+     * @deprecated since version 0.5.1
      * @param string|null $section of config
      * @param string|null $subsection of config
      * @return array|mixed
      */
     public function getConfigData($section = null, $subsection = null)
     {
-        return $this->getConfig()->getData($section, $subsection);
+        return Config::getData($section, $subsection);
     }
 
     /**
      * Get Acl instance
      *
+     * @deprecated since version 0.5.1
      * @return Acl
      */
     public function getAcl()
     {
-        if (!$this->acl) {
-            $this->acl = new Acl();
-        }
-        return $this->acl;
+        return Acl::getInstance();
     }
 
     /**
      * Get Auth instance
      *
+     * @deprecated since version 0.5.1
      * @return Auth
      */
     public function getAuth()
     {
-        if (!$this->auth && $config = $this->getConfigData('auth')) {
-            $this->auth = new Auth();
-            $this->auth->setOptions($config);
-        }
-        return $this->auth;
+        return Auth::getInstance();
     }
 
     /**
      * If enabled return configured Cache or Nil otherwise
      *
+     * @deprecated since version 0.5.1
      * @return Cache instance or Nil
      */
     public function getCache()
     {
-        if (!$this->cache) {
-            $config = $this->getConfigData('cache');
-            if (!isset($config['enabled']) or !$config['enabled']) {
-                $this->cache = new Nil();
-            } else {
-                $this->cache = new Cache();
-                $this->cache->setOptions($config);
-            }
-        }
-        return $this->cache;
+        return Cache::getInstance();
     }
 
     /**
      * Get Db Instance
      *
+     * @deprecated since version 0.5.1
      * @return Db
      */
     public function getDb()
     {
-        if (!$this->db) {
-            $this->db = new Db();
-            $this->db->setOptions($this->getConfigData('db'));
-        }
-        return $this->db;
+        return Db::getInstance();
+    }
+
+    /**
+     * Get application environment
+     *
+     * @return string
+     */
+    public function getEnvironment()
+    {
+        return $this->environment;
     }
 
     /**
      * Get EventManager instance
      *
+     * @deprecated since version 0.5.1
      * @return EventManager
      */
     public function getEventManager()
     {
-        if (!$this->eventManager) {
-            $this->eventManager = new EventManager();
-        }
-        return $this->eventManager;
+        return EventManager::getInstance();
     }
 
     /**
@@ -363,88 +284,53 @@ abstract class Application
     {
         if (!$this->layout) {
             $this->layout = new Layout();
-            $this->layout->setOptions($this->getConfigData('layout'));
+            $this->layout->setOptions(Config::getData('layout'));
         }
         return $this->layout;
     }
 
     /**
-     * Reset Layout, required for tests only
-     *
-     * @return Application
-     */
-    public function resetLayout()
-    {
-        $this->layout = null;
-        return $this;
-    }
-
-    /**
      * Get logger instance
      *
+     * @deprecated since version 0.5.1
      * @return Logger instance or Nil
      */
     public function getLogger()
     {
-        if (!$this->logger) {
-            if ($this->getConfigData('logger')) {
-                $this->logger = new Logger();
-            } else {
-                $this->logger = new Nil();
-            }
-        }
-        return $this->logger;
+        return Logger::getInstance();
     }
 
     /**
      * Get Mailer instance
      *
-     * @throws ConfigException
+     * @deprecated since version 0.5.1
      * @return Mailer
      */
     public function getMailer()
     {
-        if (!$this->mailer) {
-            if ($config = $this->getConfigData('mailer')) {
-                $this->mailer = new Mailer();
-                $this->mailer->setOptions($config);
-            } else {
-                throw new ConfigException(
-                    "Missed `mailer` options in configuration file. <br/>\n" .
-                    "Read more: <a href='https://github.com/bluzphp/framework/wiki/Mailer'>".
-                    "https://github.com/bluzphp/framework/wiki/Mailer"."</a>"
-                );
-            }
-        }
-        return $this->mailer;
-    }
-
-    /**
-     * Check Messages
-     *
-     * @return bool
-     */
-    public function hasMessages()
-    {
-        if ($this->messages != null) {
-            return ($this->messages->count() > 0);
-        } else {
-            return false;
-        }
+        return Mailer::getInstance();
     }
 
     /**
      * Get Messages instance
      *
+     * @deprecated since version 0.5.1
      * @return Messages
      */
     public function getMessages()
     {
-        if (!$this->messages) {
-            $this->messages = new Messages();
-            $this->messages->setOptions($this->getConfigData('messages'));
-        }
-        return $this->messages;
+        return Messages::getInstance();
+    }
+
+    /**
+     * Check Messages
+     *
+     * @deprecated since version 0.5.1
+     * @return bool
+     */
+    public function hasMessages()
+    {
+        return Messages::count();
     }
 
     /**
@@ -468,17 +354,12 @@ abstract class Application
     /**
      * Get Registry instance
      *
+     * @deprecated since version 0.5.1
      * @return Registry
      */
     public function getRegistry()
     {
-        if (!$this->registry) {
-            $this->registry = new Registry();
-            if ($data = $this->getConfigData('registry')) {
-                $this->registry->setData($data);
-            }
-        }
-        return $this->registry;
+        return Registry::getInstance();
     }
 
     /**
@@ -490,7 +371,7 @@ abstract class Application
     {
         if (!$this->request) {
             $this->request = new Http\Request();
-            $this->request->setOptions($this->getConfigData('request'));
+            $this->request->setOptions(Config::getData('request'));
 
             // disable layout for AJAX requests
             if ($this->request->isXmlHttpRequest()) {
@@ -532,7 +413,7 @@ abstract class Application
     {
         if (!$this->response) {
             $this->response = new Http\Response();
-            $this->response->setOptions($this->getConfigData('response'));
+            $this->response->setOptions(Config::getData('response'));
         }
         return $this->response;
     }
@@ -556,41 +437,29 @@ abstract class Application
      */
     public function getRouter()
     {
-        if (!$this->router) {
-            $this->router = new Router();
-            $this->router->process();
-        }
-        return $this->router;
+        return Router::getInstance();
     }
 
     /**
      * Get Session instance
      *
+     * @deprecated since version 0.5.1
      * @return Session
      */
     public function getSession()
     {
-        if (!$this->session) {
-            $this->session = new Session();
-            $this->session->setOptions($this->getConfigData('session'));
-
-            $this->getMessages();
-        }
-        return $this->session;
+        return Session::getInstance();
     }
 
     /**
      * Get Translator instance
      *
+     * @deprecated since version 0.5.1
      * @return Translator
      */
     public function getTranslator()
     {
-        if (!$this->translator) {
-            $this->translator = new Translator();
-            $this->translator->setOptions($this->getConfigData('translator'));
-        }
-        return $this->translator;
+        return Translator::getInstance();
     }
 
     /**
@@ -678,8 +547,6 @@ abstract class Application
      * - Why you don't use "X-" prefix?
      * - Because it deprecated
      * @link http://tools.ietf.org/html/rfc6648
-     *
-     * @return Response\AbstractResponse
      */
     public function process()
     {
@@ -689,7 +556,7 @@ abstract class Application
         $request = $this->getRequest();
 
         // init router
-        $this->getRouter();
+        Router::getInstance();
 
         // init response
         $response = $this->getResponse();
@@ -726,14 +593,14 @@ abstract class Application
                 $response->setHeader('Bluz-Reload', 'true');
             } else {
                 $response->setStatusCode($e->getCode());
-                $response->setHeader('Refresh', '15; url=' . $request->getRequestUri());
+                $response->setHeader('Refresh', '0; url=' . $request->getRequestUri());
             }
         } catch (\Exception $e) {
             $response->setException($e);
 
             $dispatchResult = $this->dispatch(
-                Router::ERROR_MODULE,
-                Router::ERROR_CONTROLLER,
+                Router::getErrorModule(),
+                Router::getErrorController(),
                 array(
                     'code' => $e->getCode(),
                     'message' => $e->getMessage()
@@ -758,8 +625,6 @@ abstract class Application
      * @param string $module
      * @param string $controller
      * @param array $params
-     *
-     * @throws Exception
      * @return void
      */
     protected function preDispatch($module, $controller, $params = array())
@@ -773,7 +638,7 @@ abstract class Application
      * @param string $module
      * @param string $controller
      * @param array $params
-     * @throws Exception
+     * @throws ApplicationException
      *
      * @return View
      */
@@ -798,7 +663,7 @@ abstract class Application
         // cache initialization
         if (isset($reflectionData['cache'])) {
             $cacheKey = $module . '/' . $controller . '/' . http_build_query($params);
-            if ($cachedView = $this->getCache()->get($cacheKey)) {
+            if ($cachedView = Cache::get($cacheKey)) {
                 return $cachedView;
             }
         }
@@ -858,14 +723,14 @@ abstract class Application
 
         // return array is equal to setup view
         if (is_array($result)) {
-            $view->setData($result);
+            $view->setFromArray($result);
         }
 
         if (isset($reflectionData['cache'], $cacheKey)) {
-            $this->getCache()->set($cacheKey, $view, intval($reflectionData['cache']) * 60);
-            $this->getCache()->addTag($cacheKey, 'view');
-            $this->getCache()->addTag($cacheKey, 'view:' . $module);
-            $this->getCache()->addTag($cacheKey, 'view:' . $module . ':' . $controller);
+            Cache::set($cacheKey, $view, intval($reflectionData['cache']) * 60);
+            Cache::addTag($cacheKey, 'view');
+            Cache::addTag($cacheKey, 'view:' . $module);
+            Cache::addTag($cacheKey, 'view:' . $module . ':' . $controller);
         }
 
         return $view;
@@ -877,8 +742,6 @@ abstract class Application
      * @param string $module
      * @param string $controller
      * @param array $params
-     * @throws Exception
-     *
      * @return void
      */
     protected function postDispatch($module, $controller, $params = array())
@@ -902,7 +765,7 @@ abstract class Application
      * @param string $module
      * @param string $controller
      * @param array $params
-     * @throws Exception
+     * @throws ApplicationException
      * @return View
      */
     public function dispatch($module, $controller, $params = array())
@@ -910,7 +773,7 @@ abstract class Application
         $this->log("app:dispatch: " . $module . '/' . $controller);
 
         // system trigger "dispatch"
-        $this->getEventManager()->trigger(
+        EventManager::trigger(
             'dispatch',
             $this,
             array(
@@ -941,8 +804,8 @@ abstract class Application
 
         if ($this->isJson()) {
             // setup messages
-            if ($this->hasMessages()) {
-                $this->getResponse()->setHeader('Bluz-Notify', json_encode(app()->getMessages()->popAll()));
+            if (Messages::count()) {
+                $this->getResponse()->setHeader('Bluz-Notify', json_encode(Messages::popAll()));
             }
 
             // prepare body
@@ -976,7 +839,7 @@ abstract class Application
      * @param string $module
      * @param string $widget
      * @param array $params
-     * @throws Exception
+     * @throws ApplicationException
      * @return \Closure
      */
     public function widget($module, $widget, $params = array())
@@ -986,7 +849,7 @@ abstract class Application
         $reflectionData = $this->reflection($widgetFile);
 
 
-        $this->getEventManager()->trigger(
+        EventManager::trigger(
             'widget',
             $this,
             array(
@@ -999,7 +862,7 @@ abstract class Application
 
         // check acl
         if (!$this->isAllowed($module, $reflectionData)) {
-            throw new AclException("Not enough permissions for call widget '$module/$widget'");
+            throw new ForbiddenException("Not enough permissions for call widget '$module/$widget'");
         }
 
         /**
@@ -1041,14 +904,14 @@ abstract class Application
      *
      * @param string $module
      * @param string $method
-     * @throws Exception
+     * @throws ApplicationException
      * @return \Closure
      */
     public function api($module, $method)
     {
         $this->log("app:api: " . $module . '/' . $method);
 
-        $this->getEventManager()->trigger(
+        EventManager::trigger(
             'api',
             $this,
             array(
@@ -1085,13 +948,13 @@ abstract class Application
      * Retrieve reflection for anonymous function
      *
      * @param string $file
-     * @throws Exception
+     * @throws ApplicationException
      * @return array
      */
     public function reflection($file)
     {
         // cache for reflection data
-        if (!$data = $this->getCache()->get('reflection:' . $file)) {
+        if (!$data = Cache::get('reflection:' . $file)) {
 
             // TODO: workaround for get reflection of closure function
             $bootstrap = $view = $module = $controller = null;
@@ -1099,7 +962,7 @@ abstract class Application
             $closure = include $file;
 
             if (!is_callable($closure)) {
-                throw new Exception("There is no closure in file $file");
+                throw new ApplicationException("There is no closure in file $file");
             }
 
             // init data
@@ -1188,8 +1051,8 @@ abstract class Application
             // clean unused data
             unset($data['return'], $data['param']);
 
-            $this->getCache()->set('reflection:' . $file, $data);
-            $this->getCache()->addTag('reflection:' . $file, 'reflection');
+            Cache::set('reflection:' . $file, $data);
+            Cache::addTag('reflection:' . $file, 'reflection');
         }
         return $data;
     }
@@ -1250,7 +1113,7 @@ abstract class Application
     public function isAllowed($module, $reflection)
     {
         if (isset($reflection['privilege'])) {
-            return $this->getAcl()->isAllowed($module, $reflection['privilege']);
+            return Acl::isAllowed($module, $reflection['privilege']);
         }
         return true;
     }
@@ -1261,7 +1124,7 @@ abstract class Application
      * @param  string $module
      * @param  string $controller
      * @return string
-     * @throws Exception
+     * @throws ApplicationException
      */
     public function getControllerFile($module, $controller)
     {
@@ -1281,7 +1144,7 @@ abstract class Application
      * @param  string $module
      * @param  string $widget
      * @return string
-     * @throws Exception
+     * @throws ApplicationException
      */
     protected function getWidgetFile($module, $widget)
     {
@@ -1301,7 +1164,7 @@ abstract class Application
      * @param  string $module
      * @param  string $method
      * @return string
-     * @throws Exception
+     * @throws ApplicationException
      */
     protected function getApiFile($module, $method)
     {

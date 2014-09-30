@@ -11,7 +11,8 @@
  */
 namespace Bluz\Session\Adapter;
 
-use Bluz\Config\ConfigException;
+use Bluz\Common\Exception\ComponentException;
+use Bluz\Common\Exception\ConfigurationException;
 
 /**
  * Redis session handler
@@ -50,13 +51,14 @@ class Redis implements \SessionHandlerInterface
      * Check and setup Redis server
      *
      * @param array $settings
-     * @throws ConfigException
+     * @throws ComponentException
+     * @throws ConfigurationException
      */
     public function __construct($settings = array())
     {
         // check Redis extension
         if (!extension_loaded('redis')) {
-            throw new ConfigException(
+            throw new ComponentException(
                 "Redis extension not installed/enabled.
                 Install and/or enable Redis extension [http://pecl.php.net/package/redis].
                 See phpinfo() for more information"
@@ -65,7 +67,7 @@ class Redis implements \SessionHandlerInterface
 
         // check Redis settings
         if (!is_array($settings) or empty($settings)) {
-            throw new ConfigException(
+            throw new ConfigurationException(
                 "Redis configuration is missed. Please check 'session' configuration section"
             );
         }

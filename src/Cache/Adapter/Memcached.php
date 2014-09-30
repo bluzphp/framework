@@ -12,7 +12,8 @@
 namespace Bluz\Cache\Adapter;
 
 use Bluz\Cache\Cache;
-use Bluz\Cache\CacheException;
+use Bluz\Common\Exception\ComponentException;
+use Bluz\Common\Exception\ConfigurationException;
 
 /**
  * Class Memcached
@@ -29,13 +30,14 @@ class Memcached extends AbstractAdapter
     /**
      * Check and setup memcached servers
      * @param array $settings
-     * @throws \Bluz\Cache\CacheException
+     * @throws ComponentException
+     * @throws ConfigurationException
      */
     public function __construct($settings = array())
     {
         // check Memcached extension
         if (!extension_loaded('memcached')) {
-            throw new CacheException(
+            throw new ComponentException(
                 "Memcached extension not installed/enabled.
                 Install and/or enable memcached extension. See phpinfo() for more information"
             );
@@ -43,9 +45,8 @@ class Memcached extends AbstractAdapter
 
         // check Memcached settings
         if (!is_array($settings) or empty($settings) or !isset($settings['servers'])) {
-            throw new CacheException(
-                "Memcached configuration is missed.
-                Please check 'cache' configuration section"
+            throw new ConfigurationException(
+                "Memcached configuration is missed. Please check 'cache' configuration section"
             );
         }
 

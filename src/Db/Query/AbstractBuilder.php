@@ -13,6 +13,7 @@ namespace Bluz\Db\Query;
 
 use Bluz\Db\Db;
 use Bluz\Db\Exception\DbException;
+use Bluz\Proxy;
 
 /**
  * Query Builders classes is responsible to dynamically create SQL queries
@@ -86,7 +87,7 @@ abstract class AbstractBuilder
     public function setAdapter($adapter = null)
     {
         if (null == $adapter) {
-            $this->adapter = Db::getDefaultAdapter();
+            $this->adapter = Proxy\Db::getInstance();
         }
         return $this;
     }

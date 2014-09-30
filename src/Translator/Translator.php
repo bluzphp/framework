@@ -11,8 +11,8 @@
  */
 namespace Bluz\Translator;
 
+use Bluz\Common\Exception\ConfigurationException;
 use Bluz\Common\Options;
-use Bluz\Config\ConfigException;
 
 /**
  * Translator
@@ -117,14 +117,14 @@ class Translator
      *
      * @param string $domain of text for gettext setup
      * @param string $path on filesystem
-     * @throws ConfigException
+     * @throws ConfigurationException
      * @return self
      */
     public function addTextDomain($domain, $path)
     {
         // check path
         if (!is_dir($path)) {
-            throw new ConfigException("Translator configuration path `$path` not found");
+            throw new ConfigurationException("Translator configuration path `$path` not found");
         }
 
         bindtextdomain($domain, $path);

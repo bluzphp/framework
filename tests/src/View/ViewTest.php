@@ -46,31 +46,20 @@ class ViewTest extends TestCase
     }
 
     /**
-     * @covers \Bluz\View\View::__set
-     * @expectedException \Bluz\View\ViewException
-     */
-    public function testSetInvalidThrowException()
-    {
-        $view = new View();
-        $view->__set([], []);
-    }
-
-    /**
      * Test Data
      *
-     * @covers \Bluz\View\View::setData
-     * @covers \Bluz\View\View::getData
-     * @covers \Bluz\View\View::mergeData
+     * @covers \Bluz\View\View::setFromArray
+     * @covers \Bluz\View\View::toArray
      */
     public function testData()
     {
         $view = new View();
-        $view->setData(['foo' => '---']);
-        $view->mergeData(['foo' => 'bar', 'baz' => 'qux']);
+        $view->setFromArray(['foo' => '---']);
+        $view->setFromArray(['foo' => 'bar', 'baz' => 'qux']);
 
         $this->assertEquals('bar', $view->foo);
         $this->assertEquals('qux', $view->baz);
-        $this->assertEqualsArray(['foo' => 'bar', 'baz' => 'qux'], $view->getData());
+        $this->assertEqualsArray(['foo' => 'bar', 'baz' => 'qux'], $view->toArray());
     }
 
     /**

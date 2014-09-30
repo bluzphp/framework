@@ -11,8 +11,8 @@
  */
 namespace Bluz\Session;
 
+use Bluz\Common\Exception\ComponentException;
 use Bluz\Common\Options;
-use Bluz\Config\ConfigException;
 
 /**
  * Session
@@ -23,7 +23,8 @@ use Bluz\Config\ConfigException;
  * @created  11.07.11 19:19
  *
  * @property mixed MessagesStore
- * @property mixed identity
+ * @property \Bluz\Auth\EntityInterface identity Users\Row object
+ * @property string agent - user agent
  */
 class Session
 {
@@ -153,12 +154,11 @@ class Session
      * native ID generation Can safely be called in the middle of a session.
      *
      * @param  bool $deleteOldSession
-     * @return Session
+     * @return bool
      */
     public function regenerateId($deleteOldSession = true)
     {
-        session_regenerate_id((bool) $deleteOldSession);
-        return $this;
+        return session_regenerate_id((bool) $deleteOldSession);
     }
 
     /**
@@ -262,7 +262,7 @@ class Session
      * Since ext/session is coupled to this particular session manager
      * register the save handler with ext/session.
      *
-     * @throws ConfigException
+     * @throws ComponentException
      * @return bool
      */
     protected function initAdapter()
@@ -276,7 +276,7 @@ class Session
         } elseif (is_string($this->adapter)) {
             $adapterClass = '\\Bluz\\Session\\Adapter\\'.ucfirst($this->adapter);
             if (!class_exists($adapterClass) or !is_subclass_of($adapterClass, '\SessionHandlerInterface')) {
-                throw new ConfigException("`$adapterClass` class is not exists or not initialized");
+                throw new ComponentException("Class for session adapter `{$this->adapter}` not found");
             }
             $settings = $this->getOption('settings', $this->adapter) ?: array();
 
@@ -332,8 +332,8 @@ class Session
     /**
      * Set session save path
      *
-     * @param string $savePath
-     * @throws ConfigException
+     * @param  string $savePath
+     * @throws ComponentException
      * @return Session
      */
     protected function setSavePath($savePath)
@@ -341,7 +341,7 @@ class Session
         if (!is_dir($savePath)
             or !is_writable($savePath)
         ) {
-            throw new ConfigException('Session path is not writable');
+            throw new ComponentException('Session path is not writable');
         }
         session_save_path($savePath);
         return $this;
@@ -354,7 +354,7 @@ class Session
      * @param  mixed $value
      * @return void
      */
-    public function __set($key, $value)
+    public function set($key, $value)
     {
         $this->start();
         $_SESSION[$this->namespace][$key] = $value;
@@ -366,9 +366,9 @@ class Session
      * @param  string $key
      * @return mixed
      */
-    public function __get($key)
+    public function get($key)
     {
-        if ($this->__isset($key)) {
+        if ($this->contains($key)) {
             return $_SESSION[$this->namespace][$key];
         } else {
             return null;
@@ -381,7 +381,7 @@ class Session
      * @param  string $key
      * @return bool
      */
-    public function __isset($key)
+    public function contains($key)
     {
         if ($this->cookieExists()) {
             $this->start();
@@ -397,11 +397,60 @@ class Session
      * @param  string $key
      * @return void
      */
-    public function __unset($key)
+    public function delete($key)
     {
         if ($this->cookieExists()) {
             $this->start();
             unset($_SESSION[$this->namespace][$key]);
         }
+    }
+
+    /**
+     * Set key/value pair
+     *
+     * @deprecated since version 0.5.1
+     * @param string $key
+     * @param mixed $value
+     * @return void
+     */
+    public function __set($key, $value)
+    {
+        $this->set($key, $value);
+    }
+
+    /**
+     * Get value by key
+     *
+     * @deprecated since version 0.5.1
+     * @param string $key
+     * @return mixed
+     */
+    public function __get($key)
+    {
+        return $this->get($key);
+    }
+
+    /**
+     * Isset
+     *
+     * @deprecated since version 0.5.1
+     * @param string $key
+     * @return bool
+     */
+    public function __isset($key)
+    {
+        return $this->contains($key);
+    }
+
+    /**
+     * Unset
+     *
+     * @deprecated since version 0.5.1
+     * @param string $key
+     * @return void
+     */
+    public function __unset($key)
+    {
+        $this->delete($key);
     }
 }

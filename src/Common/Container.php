@@ -78,7 +78,7 @@ trait Container
     public function setFromArray(array $data)
     {
         foreach ($data as $key => $value) {
-            $this->$key = $value;
+            $this->container[$key] = $value;
         }
         return $this;
     }

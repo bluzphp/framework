@@ -50,7 +50,7 @@ class HelperTest extends TestCase
 
     /**
      * Helper paths is not initialized, and helper file not found
-     * @expectedException \Bluz\Common\Exception
+     * @expectedException \Bluz\Common\Exception\CommonException
      */
     public function testInvalidHelperCall()
     {
@@ -59,7 +59,7 @@ class HelperTest extends TestCase
 
     /**
      * Helper path initialized, but file consists some stuff, it's not callable
-     * @expectedException \Bluz\Common\Exception
+     * @expectedException \Bluz\Common\Exception\CommonException
      */
     public function testInvalidHelperCall2()
     {

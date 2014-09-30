@@ -9,17 +9,16 @@
 /**
  * @namespace
  */
-namespace Bluz\Common;
+namespace Bluz\Common\Exception;
 
 /**
- * Exception
+ * Basic Exception for Bluz framework
  *
- * @package  Bluz\Common
- *
+ * @package  Bluz\Common\Exception
  * @author   Anton Shevchuk
  * @created  06.07.11 16:46
  */
-class Exception extends \Exception
+class CommonException extends \Exception
 {
     /**
      * Used as default HTTP code for exceptions

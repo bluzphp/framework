@@ -86,52 +86,15 @@ class RequestTest extends TestCase
     /**
      * Complex test for magic getter
      *
-     * @covers \Bluz\Http\Request::__get()
+     * @covers \Bluz\Http\Request::getParam()
      */
     public function testGet()
     {
-        $this->assertEquals('get', $this->getApp()->getRequest()->get);
-        $this->assertEquals('post', $this->getApp()->getRequest()->post);
-        $this->assertEquals('cookie', $this->getApp()->getRequest()->cookie);
-        $this->assertEquals('server', $this->getApp()->getRequest()->server);
-        $this->assertEquals('env', $this->getApp()->getRequest()->env);
-        $this->assertNull($this->getApp()->getRequest()->null);
-    }
-
-    /**
-     * Complex test for magic __isset
-     *
-     * @covers \Bluz\Http\Request::__isset()
-     */
-    public function testIsset()
-    {
-        $this->assertTrue(isset($this->getApp()->getRequest()->get));
-        $this->assertTrue(isset($this->getApp()->getRequest()->post));
-        $this->assertTrue(isset($this->getApp()->getRequest()->cookie));
-        $this->assertTrue(isset($this->getApp()->getRequest()->server));
-        $this->assertTrue(isset($this->getApp()->getRequest()->env));
-        $this->assertFalse(isset($this->getApp()->getRequest()->null));
-    }
-
-    /**
-     * Complex test for magic __unset
-     *
-     * @covers \Bluz\Http\Request::__unset()
-     */
-    public function testUnset()
-    {
-        unset(
-            $this->getApp()->getRequest()->get,
-            $this->getApp()->getRequest()->post,
-            $this->getApp()->getRequest()->cookie,
-            $this->getApp()->getRequest()->server,
-            $this->getApp()->getRequest()->env
-        );
-
-        $this->assertFalse(isset($this->getApp()->getRequest()->get));
-        $this->assertFalse(isset($this->getApp()->getRequest()->post));
-        $this->assertFalse(isset($this->getApp()->getRequest()->cookie));
-        $this->assertFalse(isset($this->getApp()->getRequest()->server));
-        $this->assertFalse(isset($this->getApp()->getRequest()->env));
+        $this->assertEquals('get', $this->getApp()->getRequest()->getParam('get'));
+        $this->assertEquals('post', $this->getApp()->getRequest()->getParam('post'));
+        $this->assertEquals('cookie', $this->getApp()->getRequest()->getParam('cookie'));
+        $this->assertEquals('server', $this->getApp()->getRequest()->getParam('server'));
+        $this->assertEquals('env', $this->getApp()->getRequest()->getParam('env'));
+        $this->assertNull($this->getApp()->getRequest()->getParam('some'));
     }
 }

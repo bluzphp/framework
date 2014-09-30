@@ -13,6 +13,7 @@ namespace Bluz\Router;
 
 use Bluz\Common\Options;
 use Bluz\Proxy\Cache;
+use Bluz\Proxy\Request;
 
 /**
  * Router
@@ -219,11 +220,11 @@ class Router
     public function getUrl($module = self::DEFAULT_MODULE, $controller = self::DEFAULT_CONTROLLER, $params = array())
     {
         if (is_null($module)) {
-            $module = app()->getRequest()->getModule();
+            $module = Request::getModule();
         }
 
         if (is_null($controller)) {
-            $controller = app()->getRequest()->getController();
+            $controller = Request::getController();
         }
 
         if (empty($this->routers)) {
@@ -249,8 +250,8 @@ class Router
         $controller = self::DEFAULT_CONTROLLER,
         $params = array()
     ) {
-        $scheme = app()->getRequest()->getScheme() . '://';
-        $host = app()->getRequest()->getHttpHost();
+        $scheme = Request::getScheme() . '://';
+        $host = Request::getHttpHost();
         $url = $this->getUrl($module, $controller, $params);
         return $scheme . $host . $url;
     }
@@ -290,7 +291,7 @@ class Router
         if (!empty($getParams)) {
             $url .= '?' . http_build_query($getParams);
         }
-        return app()->getRequest()->getBaseUrl() . ltrim($url, '/');
+        return Request::getBaseUrl() . ltrim($url, '/');
     }
 
     /**
@@ -303,7 +304,7 @@ class Router
      */
     protected function urlRoute($module, $controller, $params)
     {
-        $url = app()->getRequest()->getBaseUrl();
+        $url = Request::getBaseUrl();
 
         if (empty($params)) {
             if ($controller == self::DEFAULT_CONTROLLER) {
@@ -360,7 +361,7 @@ class Router
      */
     protected function processDefault()
     {
-        $uri = app()->getRequest()->getCleanUri();
+        $uri = Request::getCleanUri();
         return empty($uri);
     }
 
@@ -371,16 +372,15 @@ class Router
      */
     protected function processCustom()
     {
-        $request = app()->getRequest();
-        $uri = '/' . $request->getCleanUri();
+        $uri = '/' . Request::getCleanUri();
         foreach ($this->routers as $router) {
             if (preg_match($router['pattern'], $uri, $matches)) {
-                $request->setModule($router['module']);
-                $request->setController($router['controller']);
+                Request::setModule($router['module']);
+                Request::setController($router['controller']);
 
                 foreach ($router['params'] as $param => $type) {
                     if (isset($matches[$param])) {
-                        $request->{$param} = $matches[$param];
+                        Request::setParam($param, $matches[$param]); 
                     }
                 }
                 return true;
@@ -402,20 +402,19 @@ class Router
      */
     protected function processRoute()
     {
-        $request = app()->getRequest();
-        $uri = $request->getCleanUri();
+        $uri = Request::getCleanUri();
         $uri = trim($uri, '/');
         $params = explode('/', $uri);
 
         if (sizeof($params)) {
-            $request->setModule(array_shift($params));
+            Request::setModule(array_shift($params));
         }
         if (sizeof($params)) {
-            $request->setController(array_shift($params));
+            Request::setController(array_shift($params));
         }
         if ($size = sizeof($params)) {
             // save raw params
-            $request->setRawParams($params);
+            Request::setRawParams($params);
 
             // remove tail
             if ($size % 2 == 1) {
@@ -424,7 +423,7 @@ class Router
             }
             // or use array_chunk and run another loop?
             for ($i = 0; $i < $size; $i = $i + 2) {
-                $request->{$params[$i]} = $params[$i + 1];
+                Request::setParam($params[$i], $params[$i + 1]);
             }
         }
 

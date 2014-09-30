@@ -20,14 +20,6 @@ use Bluz\Tests\TestCase;
 class RequestTest extends TestCase
 {
     /**
-     * Reset Application
-     */
-    public static function tearDownAfterClass()
-    {
-        self::resetApp();
-    }
-
-    /**
      * Test `Is` Methods
      */
     public function testIsMethods()
@@ -41,33 +33,14 @@ class RequestTest extends TestCase
      */
     public function testParamManipulation()
     {
-        $this->getApp()->getRequest()->foo = 'bar';
+        $this->getApp()->getRequest()->setParam('foo', 'bar');
         $this->getApp()->getRequest()->setParam('baz', 'qux');
 
-        $this->assertTrue(isset($this->getApp()->getRequest()->foo));
-        $this->assertEquals('bar', $this->getApp()->getRequest()->foo);
         $this->assertEquals('bar', $this->getApp()->getRequest()->getParam('foo'));
-
-        $this->assertTrue(isset($this->getApp()->getRequest()->baz));
-        $this->assertEquals('qux', $this->getApp()->getRequest()->baz);
         $this->assertEquals('qux', $this->getApp()->getRequest()->getParam('baz'));
+        $this->assertEquals('moo', $this->getApp()->getRequest()->getParam('qux', 'moo'));
 
         $this->assertEqualsArray(['foo' => 'bar', 'baz' => 'qux'], $this->getApp()->getRequest()->getParams());
         $this->assertEqualsArray(['foo' => 'bar', 'baz' => 'qux'], $this->getApp()->getRequest()->getAllParams());
-    }
-
-    /**
-     * Test unset of params
-     */
-    public function testParamUnset()
-    {
-        $this->getApp()->getRequest()->foo = 'bar';
-        $this->getApp()->getRequest()->baz = 'qux';
-
-        unset($this->getApp()->getRequest()->foo);
-        $this->getApp()->getRequest()->setParam('baz', null);
-
-        $this->assertFalse(isset($this->getApp()->getRequest()->foo));
-        $this->assertFalse(isset($this->getApp()->getRequest()->baz));
     }
 }

@@ -37,7 +37,7 @@ return
             return '';
         }
 
-        if ($href == app()->getRequest()->getRequestUri()) {
+        if ($href == Request::getRequestUri()) {
             if (isset($attributes['class'])) {
                 $attributes['class'] .= ' on';
             } else {

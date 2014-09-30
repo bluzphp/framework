@@ -9,8 +9,10 @@
  */
 namespace Bluz\Tests\Application;
 
-use Bluz\Http\Request;
+use Bluz\Http\Request as HttpRequest;
 use Bluz\Proxy;
+use Bluz\Proxy\Request;
+use Bluz\Proxy\Response;
 use Bluz\Proxy\Router;
 use Bluz\Tests\TestCase;
 
@@ -22,14 +24,6 @@ use Bluz\Tests\TestCase;
  */
 class ApplicationTest extends TestCase
 {
-    /**
-     * Tear Down
-     */
-    protected function tearDown()
-    {
-        self::resetApp();
-    }
-
     /**
      * @covers \Bluz\Application\Application::reflection
      */
@@ -75,10 +69,9 @@ class ApplicationTest extends TestCase
     public function testIndexController()
     {
         // setup Request
-        $request = $this->getApp()->getRequest();
-        $request->setRequestUri('/');
-        $request->setMethod(Request::METHOD_GET);
-        $this->getApp()->setRequest($request);
+        Request::setRequestUri('/');
+        Request::setMethod(HttpRequest::METHOD_GET);
+
 
         // run Router
         Router::process();
@@ -96,10 +89,8 @@ class ApplicationTest extends TestCase
     public function testErrorController()
     {
         // setup Request
-        $request = $this->getApp()->getRequest();
-        $request->setRequestUri(uniqid('module'). '/'. uniqid('controller'));
-        $request->setMethod(Request::METHOD_GET);
-        $this->getApp()->setRequest($request);
+        Request::setRequestUri(uniqid('module'). '/'. uniqid('controller'));
+        Request::setMethod(HttpRequest::METHOD_GET);
 
         // run Router
         Router::process();
@@ -116,7 +107,7 @@ class ApplicationTest extends TestCase
     public function testRender()
     {
         $this->expectOutputString('foo');
-        $this->getApp()->getResponse()->setBody('foo');
+        Response::setBody('foo');
         $this->getApp()->render();
     }
 

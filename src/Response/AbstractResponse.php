@@ -77,12 +77,14 @@ abstract class AbstractResponse
      * Send data to client (console or browser)
      *
      * @access  public
+     * @return void
      */
     public function send()
     {
         $this->sendHeaders();
         $this->sendBody();
     }
+
     /**
      * Gets the HTTP protocol version as a string.
      *
@@ -96,17 +98,6 @@ abstract class AbstractResponse
     }
 
     /**
-     * Sets the status code of this response.
-     *
-     * @param int $code The 3-digit integer result code to set.
-     * @return void
-     */
-    public function setStatusCode($code)
-    {
-        $this->code = (int) $code;
-    }
-
-    /**
      * Gets the response Status-Code.
      *
      * The Status-Code is a 3-digit integer result code of the server's attempt
@@ -117,6 +108,17 @@ abstract class AbstractResponse
     public function getStatusCode()
     {
         return $this->code;
+    }
+
+    /**
+     * Sets the status code of this response.
+     *
+     * @param int $code The 3-digit integer result code to set.
+     * @return void
+     */
+    public function setStatusCode($code)
+    {
+        $this->code = (int) $code;
     }
 
     /**
@@ -145,38 +147,6 @@ abstract class AbstractResponse
     public function setReasonPhrase($phrase)
     {
         $this->phrase = $phrase;
-    }
-
-    /**
-     * Gets all message headers.
-     *
-     * The keys represent the header name as it will be sent over the wire, and
-     * each value is an array of strings associated with the header.
-     *
-     *     // Represent the headers as a string
-     *     foreach ($message->getHeaders() as $name => $values) {
-     *         echo $name . ": " . implode(", ", $values);
-     *     }
-     *
-     * @return array Returns an associative array of the message's headers.
-     */
-    public function getHeaders()
-    {
-        return $this->headers;
-    }
-
-    /**
-     * Checks if a header exists by the given case-insensitive name.
-     *
-     * @param string $header Case-insensitive header name.
-     *
-     * @return bool Returns true if any header names match the given header
-     *     name using a case-insensitive string comparison. Returns false if
-     *     no matching header name is found in the message.
-     */
-    public function hasHeader($header)
-    {
-        return isset($this->headers[$header]);
     }
 
     /**
@@ -216,6 +186,20 @@ abstract class AbstractResponse
     }
 
     /**
+     * Checks if a header exists by the given case-insensitive name.
+     *
+     * @param string $header Case-insensitive header name.
+     *
+     * @return bool Returns true if any header names match the given header
+     *     name using a case-insensitive string comparison. Returns false if
+     *     no matching header name is found in the message.
+     */
+    public function hasHeader($header)
+    {
+        return isset($this->headers[$header]);
+    }
+
+    /**
      * Sets a header, replacing any existing values of any headers with the
      * same case-insensitive name.
      *
@@ -230,21 +214,6 @@ abstract class AbstractResponse
     public function setHeader($header, $value)
     {
         $this->headers[$header] = (array) $value;
-    }
-
-    /**
-     * Sets headers, replacing any headers that have already been set on the message.
-     *
-     * The array keys MUST be a string. The array values must be either a
-     * string or an array of strings.
-     *
-     * @param array $headers Headers to set.
-     *
-     * @return void
-     */
-    public function setHeaders(array $headers)
-    {
-        $this->headers = $headers;
     }
 
     /**
@@ -268,6 +237,51 @@ abstract class AbstractResponse
     }
 
     /**
+     * Remove a specific header by case-insensitive name.
+     *
+     * @param string $header HTTP header to remove
+     *
+     * @return void
+     */
+    public function removeHeader($header)
+    {
+        unset($this->headers[$header]);
+    }
+
+    /**
+     * Gets all message headers.
+     *
+     * The keys represent the header name as it will be sent over the wire, and
+     * each value is an array of strings associated with the header.
+     *
+     *     // Represent the headers as a string
+     *     foreach ($message->getHeaders() as $name => $values) {
+     *         echo $name . ": " . implode(", ", $values);
+     *     }
+     *
+     * @return array Returns an associative array of the message's headers.
+     */
+    public function getHeaders()
+    {
+        return $this->headers;
+    }
+
+    /**
+     * Sets headers, replacing any headers that have already been set on the message.
+     *
+     * The array keys MUST be a string. The array values must be either a
+     * string or an array of strings.
+     *
+     * @param array $headers Headers to set.
+     *
+     * @return void
+     */
+    public function setHeaders(array $headers)
+    {
+        $this->headers = $headers;
+    }
+
+    /**
      * Merges in an associative array of headers.
      *
      * Each array key MUST be a string representing the case-insensitive name
@@ -283,18 +297,6 @@ abstract class AbstractResponse
     public function addHeaders(array $headers)
     {
         $this->headers = array_merge_recursive($this->headers, $headers);
-    }
-
-    /**
-     * Remove a specific header by case-insensitive name.
-     *
-     * @param string $header HTTP header to remove
-     *
-     * @return void
-     */
-    public function removeHeader($header)
-    {
-        unset($this->headers[$header]);
     }
 
     /**
@@ -342,14 +344,13 @@ abstract class AbstractResponse
      * setException
      *
      * @param \Exception $exception
-     * @return AbstractResponse
+     * @return void
      */
     public function setException($exception)
     {
         $this->removeHeaders();
         $this->clearBody();
         $this->exception = $exception;
-        return $this;
     }
 
     /**

@@ -25,6 +25,8 @@ use Bluz\Proxy\Config;
 use Bluz\Proxy\EventManager;
 use Bluz\Proxy\Logger;
 use Bluz\Proxy\Messages;
+use Bluz\Proxy\Request;
+use Bluz\Proxy\Response;
 use Bluz\Proxy\Router;
 use Bluz\Proxy\Session;
 use Bluz\Proxy\Translator;
@@ -159,74 +161,6 @@ class Application
             }
         }
         return $this->path;
-    }
-
-    /**
-     * Get Request instance
-     *
-     * @return Http\Request
-     */
-    public function getRequest()
-    {
-        if (!$this->request) {
-            $this->request = new Http\Request();
-            $this->request->setOptions(Config::getData('request'));
-
-            // disable layout for AJAX requests
-            if ($this->request->isXmlHttpRequest()) {
-                $this->useLayout(false);
-            }
-
-            // check header "accept" for catch JSON requests, and switch to JSON response
-            // for AJAX and REST requests
-            if ($accept = $this->getRequest()->getHeader('accept')) {
-                // MIME type can be "application/json", "application/json; charset=utf-8" etc.
-                $accept = str_replace(';', ',', $accept);
-                $accept = explode(',', $accept);
-                if (in_array("application/json", $accept)) {
-                    $this->useJson(true);
-                }
-            }
-        }
-        return $this->request;
-    }
-
-    /**
-     * Set Request instance
-     *
-     * @param Http\Request $request
-     * @return Application
-     */
-    public function setRequest($request)
-    {
-        $this->request = $request;
-        return $this;
-    }
-
-    /**
-     * Get Response instance
-     *
-     * @return Http\Response
-     */
-    public function getResponse()
-    {
-        if (!$this->response) {
-            $this->response = new Http\Response();
-            $this->response->setOptions(Config::getData('response'));
-        }
-        return $this->response;
-    }
-
-    /**
-     * Set Response instance
-     *
-     * @param Http\Response $response
-     * @return Application
-     */
-    public function setResponse($response)
-    {
-        $this->response = $response;
-        return $this;
     }
 
     /**
@@ -368,20 +302,20 @@ class Application
         Logger::info('app:process');
 
         // init request
-        $request = $this->getRequest();
+        $this->initRequest();
 
         // init router
         Router::getInstance();
 
         // init response
-        $response = $this->getResponse();
+        $this->initResponse();
 
         // try to dispatch controller
         try {
             $dispatchResult = $this->dispatch(
-                $request->getModule(),
-                $request->getController(),
-                $request->getAllParams()
+                Request::getModule(),
+                Request::getController(),
+                Request::getAllParams()
             );
 
             if ($this->hasLayout()) {
@@ -389,29 +323,29 @@ class Application
                 $dispatchResult = $this->getLayout();
             }
 
-            $response->setBody($dispatchResult);
+            Response::setBody($dispatchResult);
         } catch (RedirectException $e) {
-            $response->setException($e);
+            Response::setException($e);
 
-            if ($request->isXmlHttpRequest()) {
-                $response->setStatusCode(204);
-                $response->setHeader('Bluz-Redirect', $e->getMessage());
+            if (Request::isXmlHttpRequest()) {
+                Response::setStatusCode(204);
+                Response::setHeader('Bluz-Redirect', $e->getMessage());
             } else {
-                $response->setStatusCode($e->getCode());
-                $response->setHeader('Location', $e->getMessage());
+                Response::setStatusCode($e->getCode());
+                Response::setHeader('Location', $e->getMessage());
             }
         } catch (ReloadException $e) {
-            $response->setException($e);
+            Response::setException($e);
 
-            if ($request->isXmlHttpRequest()) {
-                $response->setStatusCode(204);
-                $response->setHeader('Bluz-Reload', 'true');
+            if (Request::isXmlHttpRequest()) {
+                Response::setStatusCode(204);
+                Response::setHeader('Bluz-Reload', 'true');
             } else {
-                $response->setStatusCode($e->getCode());
-                $response->setHeader('Refresh', '0; url=' . $request->getRequestUri());
+                Response::setStatusCode($e->getCode());
+                Response::setHeader('Refresh', '0; url=' . Request::getRequestUri());
             }
         } catch (\Exception $e) {
-            $response->setException($e);
+            Response::setException($e);
 
             $dispatchResult = $this->dispatch(
                 Router::getErrorModule(),
@@ -427,11 +361,54 @@ class Application
                 $dispatchResult = $this->getLayout();
             }
 
-            $response->setStatusCode($e->getCode());
-            $response->setBody($dispatchResult);
+            Response::setStatusCode($e->getCode());
+            Response::setBody($dispatchResult);
         }
 
-        return $this->getResponse();
+        return Response::getInstance();
+    }
+
+
+    /**
+     * Initial Request instance
+     *
+     * @return void
+     */
+    protected function initRequest()
+    {
+        $request = new Http\Request();
+        $request->setOptions(Config::getData('request'));
+
+        // disable layout for AJAX requests
+        if ($request->isXmlHttpRequest()) {
+            $this->useLayout(false);
+        }
+
+        // check header "accept" for catch JSON requests, and switch to JSON response
+        // for AJAX and REST requests
+        if ($accept = $request->getHeader('accept')) {
+            // MIME type can be "application/json", "application/json; charset=utf-8" etc.
+            $accept = str_replace(';', ',', $accept);
+            $accept = explode(',', $accept);
+            if (in_array("application/json", $accept)) {
+                $this->useJson(true);
+            }
+        }
+
+        Request::setInstance($request);
+    }
+
+    /**
+     * Initial Response instance
+     *
+     * @return void
+     */
+    protected function initResponse()
+    {
+        $response = new Http\Response();
+        $response->setOptions(Config::getData('response'));
+
+        Request::setInstance($response);
     }
 
     /**
@@ -470,7 +447,7 @@ class Application
 
         // check method(s)
         if (isset($reflectionData['method'])
-            && !in_array($this->getRequest()->getMethod(), $reflectionData['method'])
+            && !in_array(Request::getMethod(), $reflectionData['method'])
         ) {
             throw new ApplicationException(join(',', $reflectionData['method']), 405);
         }
@@ -620,22 +597,22 @@ class Application
         if ($this->isJson()) {
             // setup messages
             if (Messages::count()) {
-                $this->getResponse()->setHeader('Bluz-Notify', json_encode(Messages::popAll()));
+                Response::setHeader('Bluz-Notify', json_encode(Messages::popAll()));
             }
 
             // prepare body
-            if ($body = $this->getResponse()->getBody()) {
+            if ($body = Response::getBody()) {
                 $body = json_encode($body);
                 // prepare to JSON output
-                $this->getResponse()->setBody($body);
+                Response::setBody($body);
                 // override response code so javascript can process it
-                $this->getResponse()->setHeader('Content-Type', 'application/json');
+                Response::setHeader('Content-Type', 'application/json');
                 // setup content length
-                $this->getResponse()->setHeader('Content-Length', strlen($body));
+                Response::setHeader('Content-Length', strlen($body));
             }
         }
 
-        $this->getResponse()->send();
+        Response::send();
     }
 
     /**

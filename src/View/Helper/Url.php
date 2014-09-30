@@ -40,13 +40,13 @@ return
         }
 
         if (null === $module) {
-            $module = app()->getRequest()->getModule();
+            $module = Request::getModule();
         }
         if (null === $controller) {
-            $controller = app()->getRequest()->getController();
+            $controller = Request::getController();
         }
         if (null === $params) {
-            $params = app()->getRequest()->getParams();
+            $params = Request::getParams();
         }
 
         return Router::getUrl($module, $controller, $params);

@@ -11,7 +11,6 @@
  */
 namespace Bluz\Proxy;
 
-use Bluz\Application\Application;
 use Bluz\Common\Exception\ComponentException;
 
 /**
@@ -24,6 +23,11 @@ use Bluz\Common\Exception\ComponentException;
  */
 abstract class AbstractProxy
 {
+    /**
+     * @var AbstractProxy[]
+     */
+    static $instances = array();
+
     /**
      * Init class instance
      *
@@ -46,28 +50,25 @@ abstract class AbstractProxy
      */
     public static function getInstance()
     {
-        static $instance;
-        if (null === $instance) {
-            $instance = static::initInstance();
-            if (!$instance) {
-                throw new ComponentException("Proxy class `".get_called_class()."` is not initialized");
-            }
+        if (!isset(static::$instances[get_called_class()])) {
+            static::$instances[get_called_class()] = static::initInstance();
+//            if (!$instance) {
+//                throw new ComponentException("Proxy class `".get_called_class()."` is not initialized");
+//            }
         }
 
-        return $instance;
+        return static::$instances[get_called_class()];
     }
 
     /**
      * Set or replace instance
      *
      * @param  mixed $replace
-     * @return mixed
+     * @return void
      */
     public static function setInstance($replace)
     {
-        static $instance;
-        $instance = $replace;
-        return $instance;
+        static::$instances[get_called_class()] = $replace;
     }
 
     /**

@@ -14,7 +14,8 @@ namespace Bluz\Controller;
 use Bluz\Application\Exception\BadRequestException;
 use Bluz\Application\Exception\NotFoundException;
 use Bluz\Application\Exception\NotImplementedException;
-use Bluz\Http\Request;
+use Bluz\Http\Request as HttpRequest;
+use Bluz\Proxy\Request;
 use Bluz\Proxy\Router;
 use Bluz\Validator\Exception\ValidatorException;
 
@@ -59,9 +60,7 @@ class Rest extends AbstractController
     {
         parent::__construct();
 
-        $request = app()->getRequest();
-
-        $params = $request->getRawParams();
+        $params = Request::getRawParams();
 
         // %module% / %controller% / %id% / %relation% / %id%
         if (sizeof($params)) {
@@ -85,8 +84,6 @@ class Rest extends AbstractController
      */
     public function __invoke()
     {
-        $request = app()->getRequest();
-
         // everyone method can return:
         // >> 401 Unauthorized - if authorization is required
         // >> 403 Forbidden - if user don't have permissions
@@ -112,7 +109,7 @@ class Rest extends AbstractController
         // DELETE /module/rest/id -> 204 // item was deleted
         //                        -> 404 // not found
         switch ($this->method) {
-            case Request::METHOD_GET:
+            case HttpRequest::METHOD_GET:
                 if ($this->primary) {
                     // @throws NotFoundException
                     $result = $this->readOne($this->primary);
@@ -122,7 +119,7 @@ class Rest extends AbstractController
                     $offset = isset($this->params['offset'])?$this->params['offset']:0;
                     $limit = isset($this->params['limit'])?$this->params['limit']:10;
 
-                    if ($range = $request->getHeader('Range')) {
+                    if ($range = Request::getHeader('Range')) {
                         list(, $offset, $last) = preg_split('/[-=]/', $range);
                         // for better compatibility
                         $limit = $last - $offset;
@@ -131,7 +128,7 @@ class Rest extends AbstractController
                     return $this->readSet($offset, $limit, $this->params);
                 }
                 // break
-            case Request::METHOD_POST:
+            case HttpRequest::METHOD_POST:
                 if ($this->primary) {
                     // POST + ID is incorrect behaviour
                     throw new NotImplementedException();
@@ -153,18 +150,18 @@ class Rest extends AbstractController
                     }
 
                 } catch (ValidatorException $e) {
-                    app()->getResponse()->setStatusCode(400);
+                    Response::setStatusCode(400);
                     return ['errors' => $e->getErrors()];
                 }
 
-                app()->getResponse()->setStatusCode(201);
-                app()->getResponse()->setHeader(
+                Response::setStatusCode(201);
+                Response::setHeader(
                     'Location',
-                    Router::getUrl($request->getModule(), $request->getController()).'/'.$result
+                    Router::getUrl(Request::getModule(), Request::getController()).'/'.$result
                 );
                 return false; // disable view
-            case Request::METHOD_PATCH:
-            case Request::METHOD_PUT:
+            case HttpRequest::METHOD_PATCH:
+            case HttpRequest::METHOD_PUT:
                 if (!sizeof($this->data)) {
                     // data not found
                     throw new BadRequestException();
@@ -181,14 +178,14 @@ class Rest extends AbstractController
                     // if $result === 0 it's means a update is not apply
                     // or records not found
                     if (0 === $result) {
-                        app()->getResponse()->setStatusCode(304);
+                        Response::setStatusCode(304);
                     }
                 } catch (ValidatorException $e) {
-                    app()->getResponse()->setStatusCode(400);
+                    Response::setStatusCode(400);
                     return ['errors' => $e->getErrors()];
                 }
                 return false; // disable view
-            case Request::METHOD_DELETE:
+            case HttpRequest::METHOD_DELETE:
                 if ($this->primary) {
                     // delete one
                     // @throws NotFoundException
@@ -202,7 +199,7 @@ class Rest extends AbstractController
                     }
                     $this->deleteSet($this->data);
                 }
-                app()->getResponse()->setStatusCode(204);
+                Response::setStatusCode(204);
                 return false; // disable view
             default:
                 throw new NotImplementedException();

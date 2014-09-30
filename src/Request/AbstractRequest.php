@@ -107,12 +107,11 @@ class AbstractRequest
      * Retrieve the module name
      *
      * @param string $name
-     * @return self
+     * @return void
      */
     public function setModule($name)
     {
         $this->module = $name;
-        return $this;
     }
 
     /**
@@ -156,7 +155,7 @@ class AbstractRequest
      * @param mixed $value
      * @return void
      */
-    public function __set($key, $value)
+    public function setParam($key, $value)
     {
         $key = (string)$key;
 
@@ -168,52 +167,6 @@ class AbstractRequest
     }
 
     /**
-     * Access values
-     *
-     * @param string $key
-     * @return mixed
-     */
-    public function __get($key)
-    {
-        return (isset($this->params[$key]) ? $this->params[$key] : null);
-    }
-
-    /**
-     * Check to see if a property is set
-     *
-     * @param string $key
-     * @return bool
-     */
-    public function __isset($key)
-    {
-        return isset($this->params[$key]);
-    }
-
-    /**
-     * Unset custom param
-     *
-     * @param $key
-     */
-    public function __unset($key)
-    {
-        unset($this->params[$key]);
-    }
-
-    /**
-     * Set an action parameter
-     *
-     * A $value of null will unset the $key if it exists
-     *
-     * @param string $key
-     * @param mixed $value
-     * @return void
-     */
-    public function setParam($key, $value)
-    {
-        $this->__set($key, $value);
-    }
-
-    /**
      * Get an action parameter
      *
      * @param string $key
@@ -222,7 +175,7 @@ class AbstractRequest
      */
     public function getParam($key, $default = null)
     {
-        return $this->__get($key) ? : $default;
+        return isset($this->params[$key]) ? $this->params[$key] : $default;
     }
 
     /**

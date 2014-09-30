@@ -18,8 +18,14 @@ use Bluz\Mailer\Mailer as Instance;
  *
  * @package  Bluz\Proxy
  *
+ * @method   static Instance getInstance()
+ *
  * @method   static \PHPMailer create()
+ * @see      Bluz\Mailer\Mailer::create()
+ *
  * @method   static bool send(\PHPMailer $mail)
+ * @see      Bluz\Mailer\Mailer::send()
+ *
  *
  * @author   Anton Shevchuk
  * @created  29.09.2014 12:08

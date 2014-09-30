@@ -11,6 +11,7 @@
  */
 namespace Bluz\Proxy;
 
+use Bluz\Application\Application;
 use Bluz\Common\Exception\ComponentException;
 
 /**
@@ -41,7 +42,7 @@ abstract class AbstractProxy
      * Get class instance
      *
      * @throws ComponentException
-     * @return static
+     * @return mixed
      */
     public static function getInstance()
     {
@@ -53,6 +54,19 @@ abstract class AbstractProxy
             }
         }
 
+        return $instance;
+    }
+
+    /**
+     * Set or replace instance
+     *
+     * @param  mixed $replace
+     * @return mixed
+     */
+    public static function setInstance($replace)
+    {
+        static $instance;
+        $instance = $replace;
         return $instance;
     }
 

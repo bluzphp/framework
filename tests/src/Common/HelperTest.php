@@ -35,17 +35,7 @@ class HelperTest extends TestCase
      */
     protected function setUp()
     {
-        parent::setUp();
         $this->class = new ConcreteHelpers();
-    }
-
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-
     }
 
     /**

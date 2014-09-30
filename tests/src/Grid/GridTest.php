@@ -21,15 +21,6 @@ use Bluz\Tests\Grid\Fixtures\ArrayGrid;
 class GridTest extends TestCase
 {
     /**
-     * Setup Application
-     */
-    public function setUp()
-    {
-        parent::setUp();
-        self::getApp();
-    }
-
-    /**
      * Reset application
      */
     public function tearDown()

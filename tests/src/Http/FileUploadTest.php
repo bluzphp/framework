@@ -37,7 +37,6 @@ class FileUploadTest extends Bluz\Tests\TestCase
      */
     protected function setUp()
     {
-        parent::setUp();
         $this->path1 = Proxy\Config::getData('temp', 'image1');
         $this->path2 = Proxy\Config::getData('temp', 'image2');
         $_SERVER['REQUEST_METHOD'] = 'POST';
@@ -51,8 +50,7 @@ class FileUploadTest extends Bluz\Tests\TestCase
      */
     protected function tearDown()
     {
-        parent::tearDown();
-        $this->resetApp();
+        self::resetApp();
     }
 
     /**

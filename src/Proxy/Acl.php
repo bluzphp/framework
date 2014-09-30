@@ -21,6 +21,7 @@ use Bluz\Acl\Acl as Instance;
  * @method   static Instance getInstance()
  *
  * @method   static bool isAllowed($module, $privilege)
+ * @see      Bluz\Acl\Acl::isAllowed()
  *
  * @author   Anton Shevchuk
  * @created  26.09.2014 18:02

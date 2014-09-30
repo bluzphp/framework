@@ -12,6 +12,7 @@
 namespace Bluz\Application\Helper;
 
 use Bluz\Application\Application;
+use Bluz\Proxy\Router;
 
 return
     /**
@@ -24,6 +25,6 @@ return
      * @return void
      */
     function ($module = 'index', $controller = 'index', $params = array()) {
-        $url = $this->getRouter()->getUrl($module, $controller, $params);
+        $url = Router::getUrl($module, $controller, $params);
         $this->redirect($url);
     };

@@ -36,7 +36,6 @@ class ConfigTest extends TestCase
      */
     protected function setUp()
     {
-        parent::setUp();
         $this->config = new Bluz\Config\Config();
         $this->path = dirname(__FILE__) . '/Fixtures/';
         $this->emptyConfigsDir = dirname(__FILE__) . '/Fixtures/emptyConfigsDir';
@@ -110,56 +109,6 @@ class ConfigTest extends TestCase
         $this->config->setPath($this->path);
         $this->config->setEnvironment('not_existed_environment');
         $this->config->init();
-    }
-
-    /**
-     * @covers Bluz\Config\Config::__get
-     */
-    public function testGet()
-    {
-        $this->config->setPath($this->path);
-        $this->config->init();
-        $this->assertEquals('default', $this->config->getData('application', 'section1'));
-    }
-
-    /**
-     * @covers Bluz\Config\Config::__get
-     */
-    public function testGetByNotExistedKey()
-    {
-        $this->config->setPath($this->path);
-        $this->config->init();
-        $this->assertNull($this->config->section_doesnt_exist);
-    }
-
-    /**
-     * @covers Bluz\Config\Config::__isset
-     */
-    public function testIsset()
-    {
-        $this->config->setPath($this->path);
-        $this->config->init();
-        $this->assertTrue(isset($this->config->application));
-        $this->assertFalse(isset($this->config->section_doesnt_exist));
-    }
-
-    /**
-     * @covers Bluz\Config\Config::__isset
-     */
-    public function testIssetNotExistedKey()
-    {
-        $this->config->setPath($this->path);
-        $this->config->init();
-        $this->assertFalse(isset($this->config->section_doesnt_exist));
-    }
-
-    /**
-     * @covers Bluz\Config\Config::__set
-     * @expectedException \Bluz\Config\ConfigException
-     */
-    public function testSetReadOnly()
-    {
-        $this->config->newKey = 'NewValue';
     }
 
     /**

@@ -14,6 +14,8 @@ namespace Application;
 
 use Bluz;
 use Bluz\Request;
+use Bluz\Proxy\Logger;
+use Bluz\Proxy\Messages;
 
 return
 /**
@@ -26,7 +28,7 @@ function ($code, $message = '') use ($view) {
      * @var Bootstrap $this
      * @var \Bluz\View\View $view
      */
-    $this->getLogger()->error($message);
+    Logger::error($message);
 
     switch ($code) {
         case 400:
@@ -74,7 +76,7 @@ function ($code, $message = '') use ($view) {
 
         // simple AJAX call
         if ($this->isJson()) {
-            $this->getMessages()->addError($message);
+            Messages::addError($message);
             return $view;
         }
 

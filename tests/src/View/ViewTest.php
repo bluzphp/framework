@@ -97,11 +97,26 @@ class ViewTest extends TestCase
     }
 
     /**
+     * getView
+     * 
+     * @return View
+     */
+    protected function getView()
+    {
+        $view = new View();
+
+        // setup default partial path
+        $view->addPartialPath($this->getApp()->getPath() . '/layouts/partial');
+
+        return $view;
+    }
+    
+    /**
      * Helper Ahref
      */
     public function testHelperAhref()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $this->assertEmpty($view->ahref('text', null));
         $this->assertEquals('<a href="test/test" >text</a>', $view->ahref('text', 'test/test'));
@@ -121,7 +136,7 @@ class ViewTest extends TestCase
      */
     public function testHelperApi()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $this->assertEmpty($view->api('test', 'test'));
     }
@@ -131,7 +146,7 @@ class ViewTest extends TestCase
      */
     public function testHelperAttributes()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $this->assertEmpty($view->attributes([]));
 
@@ -145,7 +160,7 @@ class ViewTest extends TestCase
      */
     public function testHelperBaseUrl()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $this->assertEquals('/', $view->baseUrl());
         $this->assertEquals('/about.html', $view->baseUrl('/about.html'));
@@ -156,7 +171,7 @@ class ViewTest extends TestCase
      */
     public function testHelperBreadcrumbs()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $view->breadCrumbs(['foo' => 'bar']);
 
@@ -168,7 +183,7 @@ class ViewTest extends TestCase
      */
     public function testHelperCheckbox()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $result = $view->checkbox('test', 1, true, ['class' => 'foo']);
         $this->assertEquals('<input class="foo" checked="checked" value="1" name="test" type="checkbox"/>', $result);
@@ -182,7 +197,7 @@ class ViewTest extends TestCase
      */
     public function testHelperController()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $this->assertEquals(Router::DEFAULT_CONTROLLER, $view->controller());
         $this->assertTrue($view->controller(Router::DEFAULT_CONTROLLER));
@@ -194,7 +209,7 @@ class ViewTest extends TestCase
      */
     public function testHelperDispatch()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $this->assertEmpty($view->dispatch('test', 'test'));
     }
@@ -205,7 +220,7 @@ class ViewTest extends TestCase
      */
     public function testHelperException()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $this->assertEmpty($view->exception(new \Exception()));
     }
@@ -215,7 +230,7 @@ class ViewTest extends TestCase
      */
     public function testHelperHeadScript()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $view->headScript('foo.js');
         $view->headScript('bar.js');
@@ -235,7 +250,7 @@ class ViewTest extends TestCase
      */
     public function testHelperHeadStyle()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $view->headStyle('foo.css');
         $view->headStyle('bar.css');
@@ -255,7 +270,7 @@ class ViewTest extends TestCase
      */
     public function testHelperLink()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $view->link(['href'=>'foo.css', 'rel' => "stylesheet", 'media' => "all"]);
         $view->link(['href'=>'favicon.ico', 'rel' => 'shortcut icon']);
@@ -274,7 +289,7 @@ class ViewTest extends TestCase
      */
     public function testHelperMeta()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $view->meta('keywords', 'foo, bar, baz, qux');
         $view->meta('description', 'foo bar baz qux');
@@ -293,7 +308,7 @@ class ViewTest extends TestCase
      */
     public function testHelperMetaArray()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $view->meta(
             [
@@ -323,7 +338,7 @@ class ViewTest extends TestCase
      */
     public function testHelperModule()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $this->assertEquals(Router::DEFAULT_MODULE, $view->module());
         $this->assertTrue($view->module(Router::DEFAULT_MODULE));
@@ -334,7 +349,7 @@ class ViewTest extends TestCase
      */
     public function testHelperPartial()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
         $view->setPath($this->getApp()->getPath() . '/modules/index/views');
 
         $result = $view->partial('partial/partial.phtml', ['foo' => 'bar']);
@@ -348,7 +363,7 @@ class ViewTest extends TestCase
      */
     public function testHelperPartialNotFoundTrowsException()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $view->partial('file-not-exists.phtml');
     }
@@ -358,7 +373,7 @@ class ViewTest extends TestCase
      */
     public function testHelperPartialLoop()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
         $view->setPath($this->getApp()->getPath() . '/modules/index/views');
 
         $result = $view->partialLoop('partial/partial-loop.phtml', [1, 2, 3], ['foo' => 'bar']);
@@ -372,7 +387,7 @@ class ViewTest extends TestCase
      */
     public function testHelperPartialLoopInvalidArgumentsTrowsException()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $view->partialLoop('file-not-exists.phtml', null);
     }
@@ -384,7 +399,7 @@ class ViewTest extends TestCase
      */
     public function testHelperPartialLoopNotFoundTrowsException()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $view->partialLoop('file-not-exists.phtml', ['foo', 'bar']);
     }
@@ -394,7 +409,7 @@ class ViewTest extends TestCase
      */
     public function testHelperRadio()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $result = $view->radio('test', 1, true, ['class' => 'foo']);
 
@@ -406,7 +421,7 @@ class ViewTest extends TestCase
      */
     public function testHelperRedactor()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $view->redactor('#editor');
 
@@ -419,7 +434,7 @@ class ViewTest extends TestCase
      */
     public function testHelperScript()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $result = $view->script('foo.js');
 
@@ -431,7 +446,7 @@ class ViewTest extends TestCase
      */
     public function testHelperScriptPlain()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $result = $view->script('alert("foo=bar")');
         $result = str_replace(["\t", "\n", "\r"], '', $result);
@@ -444,7 +459,7 @@ class ViewTest extends TestCase
      */
     public function testHelperSelect()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $result = $view->select(
             "car",
@@ -486,7 +501,7 @@ class ViewTest extends TestCase
      */
     public function testHelperSelectWithSelectedElement()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $result = $view->select(
             "car",
@@ -518,7 +533,7 @@ class ViewTest extends TestCase
      */
     public function testHelperSelectMultiple()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $result = $view->select(
             "car",
@@ -552,7 +567,7 @@ class ViewTest extends TestCase
      */
     public function testHelperStyle()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $result = $view->style('foo.css');
 
@@ -564,7 +579,7 @@ class ViewTest extends TestCase
      */
     public function testHelperStylePlain()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $result = $view->style('#my{color:red}');
         $result = str_replace(["\t", "\n", "\r"], '', $result);
@@ -577,7 +592,7 @@ class ViewTest extends TestCase
      */
     public function testHelperTitle()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $view->title('foo');
         $view->title('bar', View::POS_APPEND);
@@ -593,7 +608,7 @@ class ViewTest extends TestCase
      */
     public function testHelperUrl()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $this->assertEquals('/test/test/foo/bar', $view->url('test', 'test', ['foo' => 'bar']));
         $this->assertEquals('/test/test', $view->url('test', 'test', null));
@@ -608,7 +623,7 @@ class ViewTest extends TestCase
      */
     public function testHelperUrlException()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $this->assertEquals('/test/test', $view->url('test', 'test', [], true));
     }
@@ -618,7 +633,7 @@ class ViewTest extends TestCase
      */
     public function testHelperUser()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $this->assertNull($view->user());
     }
@@ -629,7 +644,7 @@ class ViewTest extends TestCase
      */
     public function testHelperWidget()
     {
-        $view = $this->getApp()->getView();
+        $view = $this->getView();
 
         $this->expectOutputString('');
 

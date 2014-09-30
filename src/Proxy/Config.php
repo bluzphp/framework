@@ -22,7 +22,10 @@ use Bluz\Config\Config as Instance;
  * @method   static Instance getInstance()
  *
  * @method   static mixed getData($key = null, $section = null)
+ * @see      Bluz\Config\Config::getData()
+ *
  * @method   static mixed getModuleData($module, $section = null)
+ * @see      Bluz\Config\Config::getModuleData()
  *
  * @author   Anton Shevchuk
  * @created  26.09.2014 13:06

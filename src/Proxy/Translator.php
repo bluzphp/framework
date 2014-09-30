@@ -21,7 +21,10 @@ use Bluz\Translator\Translator as Instance;
  * @method   static Instance getInstance()
  *
  * @method   static string translate($message)
+ * @see      Bluz\Translator\Translator::translate()
+ *
  * @method   static string translatePlural($singular, $plural, $number)
+ * @see      Bluz\Translator\Translator::translatePlural()
  *
  * @author   Anton Shevchuk
  * @created  26.09.2014 16:32

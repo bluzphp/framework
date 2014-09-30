@@ -35,11 +35,18 @@ class FileTest extends TestCase
     protected $httpFile;
 
     /**
+     * Reset application
+     */
+    public static function tearDownAfterClass()
+    {
+        self::resetApp();
+    }
+
+    /**
      * SetUp
      */
     protected function setUp()
     {
-        parent::setUp();
         $this->path = Proxy\Config::getData('temp', 'image1');
         $file = array(
             'name' => 'test.jpeg',

@@ -9,6 +9,8 @@
  */
 namespace Bluz\Tests\Fixtures\Models\Test;
 
+use Bluz\Proxy\Db;
+
 /**
  * Crud based on Db\Table
  *
@@ -47,8 +49,7 @@ class Crud extends \Bluz\Crud\Table
      */
     public function readSet($offset = 0, $limit = 10, $params = array())
     {
-        $select = app()->getDb()
-            ->select('*')
+        $select = Db::select('*')
             ->from('test', 't');
 
         if ($limit) {
@@ -63,7 +64,7 @@ class Crud extends \Bluz\Crud\Table
         $result = $select->execute('\\Bluz\\Tests\\Fixtures\\Models\\Test\\Row');
 
         if ($limit) {
-            $total = app()->getDb()->fetchOne('SELECT FOUND_ROWS()');
+            $total = Db::fetchOne('SELECT FOUND_ROWS()');
         } else {
             $total = sizeof($result);
         }

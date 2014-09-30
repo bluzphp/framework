@@ -15,6 +15,7 @@ use Bluz\Common\Exception\ConfigurationException;
 use Bluz\Common\Options;
 use Bluz\Db\Query;
 use Bluz\Db\Exception\DbException;
+use Bluz\Proxy\Logger;
 
 /**
  * PDO wrapper
@@ -615,7 +616,7 @@ class Db
         // replace mask by data
         $sql = vsprintf($sql, $context);
 
-        app()->log("db: " . $sql);
+        Logger::info("db: " . $sql);
     }
 
     /**

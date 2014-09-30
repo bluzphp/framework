@@ -15,6 +15,7 @@ use Bluz\Application\Exception\BadRequestException;
 use Bluz\Application\Exception\NotFoundException;
 use Bluz\Application\Exception\NotImplementedException;
 use Bluz\Http\Request;
+use Bluz\Proxy\Router;
 use Bluz\Validator\Exception\ValidatorException;
 
 /**
@@ -159,7 +160,7 @@ class Rest extends AbstractController
                 app()->getResponse()->setStatusCode(201);
                 app()->getResponse()->setHeader(
                     'Location',
-                    app()->getRouter()->getUrl($request->getModule(), $request->getController()).'/'.$result
+                    Router::getUrl($request->getModule(), $request->getController()).'/'.$result
                 );
                 return false; // disable view
             case Request::METHOD_PATCH:

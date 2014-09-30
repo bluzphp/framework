@@ -11,8 +11,7 @@ namespace Bluz\Tests;
 
 use Bluz;
 use Bluz\Http;
-use Bluz\Request\AbstractRequest;
-use Bluz\Response\AbstractResponse;
+use Bluz\Proxy;
 
 /**
  * ControllerTestCase
@@ -30,7 +29,15 @@ class TestCase extends \PHPUnit_Framework_TestCase
      *
      * @var \Application\Tests\BootstrapTest
      */
-    static private $app;
+    static protected $app;
+
+    /**
+     * Tear Down
+     */
+    protected function tearDown()
+    {
+        self::resetApp();
+    }
 
     /**
      * Get Application instance
@@ -45,7 +52,6 @@ class TestCase extends \PHPUnit_Framework_TestCase
             self::$app = BootstrapTest::getInstance();
             self::$app->init($env);
         }
-
         return self::$app;
     }
 
@@ -55,12 +61,13 @@ class TestCase extends \PHPUnit_Framework_TestCase
     protected static function resetApp()
     {
         if (self::$app) {
-            self::$app->getAuth()->clearIdentity();
             self::$app->setRequest(new Http\Request());
             self::$app->setResponse(new Http\Response());
             self::$app->useJson(false);
             self::$app->useLayout(true);
-            self::$app->getMessages()->popAll();
+
+            Proxy\Auth::clearIdentity();
+            Proxy\Messages::popAll();
         }
     }
 

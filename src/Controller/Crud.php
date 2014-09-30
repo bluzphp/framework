@@ -15,6 +15,7 @@ use Bluz\Application\Exception\BadRequestException;
 use Bluz\Application\Exception\NotFoundException;
 use Bluz\Application\Exception\NotImplementedException;
 use Bluz\Http\Request;
+use Bluz\Proxy\Messages;
 use Bluz\Validator\Exception\ValidatorException;
 
 /**
@@ -129,7 +130,7 @@ class Crud extends AbstractController
     {
         $result = parent::createOne($data);
 
-        app()->getMessages()->addSuccess("Record was created");
+        Messages::addSuccess("Record was created");
 
         return $result;
     }
@@ -147,7 +148,7 @@ class Crud extends AbstractController
     {
         $result = parent::updateOne($id, $data);
 
-        app()->getMessages()->addSuccess("Record was updated");
+        Messages::addSuccess("Record was updated");
 
         return $result;
     }
@@ -164,7 +165,7 @@ class Crud extends AbstractController
     {
         $result = parent::deleteOne($primary);
 
-        app()->getMessages()->addSuccess("Record was deleted");
+        Messages::addSuccess("Record was deleted");
 
         return $result;
     }

@@ -22,15 +22,6 @@ use Bluz\Tests\Grid\Fixtures\SqlGrid;
 class GridTest extends TestCase
 {
     /**
-     * Setup Application
-     */
-    public function setUp()
-    {
-        parent::setUp();
-        $this->getApp();
-    }
-
-    /**
      * SQL Source
      */
     public function testSqlGrid()

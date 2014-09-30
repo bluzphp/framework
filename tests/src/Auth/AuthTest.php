@@ -9,9 +9,10 @@
  */
 namespace Bluz\Tests\Auth;
 
+use Bluz\Proxy\Auth;
 use Bluz\Tests\Fixtures\Models\Auth\Table;
-use Bluz\Tests\TestCase;
 use Bluz\Tests\Fixtures\Models\UserAdmin;
+use Bluz\Tests\TestCase;
 
 /**
  * AuthTest
@@ -31,13 +32,11 @@ class AuthTest extends TestCase
      */
     public function testAuthIdentity()
     {
-        $auth = $this->getApp()->getAuth();
-
         $adminIdentity = new UserAdmin();
 
-        $auth->setIdentity($adminIdentity);
+        Auth::setIdentity($adminIdentity);
 
-        $this->assertEquals($adminIdentity, $auth->getIdentity());
+        $this->assertEquals($adminIdentity, Auth::getIdentity());
     }
 
     /**
@@ -47,14 +46,12 @@ class AuthTest extends TestCase
      */
     public function testAuthClearIdentity()
     {
-        $auth = $this->getApp()->getAuth();
-
         $adminIdentity = new UserAdmin();
 
-        $auth->setIdentity($adminIdentity);
-        $auth->clearIdentity();
+        Auth::setIdentity($adminIdentity);
+        Auth::clearIdentity();
 
-        $this->assertNull($auth->getIdentity());
+        $this->assertNull(Auth::getIdentity());
     }
 
     /**
@@ -65,15 +62,13 @@ class AuthTest extends TestCase
      */
     public function testAuthClearIdentityWithWrongUserAgent()
     {
-        $auth = $this->getApp()->getAuth();
-
         $adminIdentity = new UserAdmin();
 
-        $auth->setIdentity($adminIdentity);
+        Auth::setIdentity($adminIdentity);
 
         $_SERVER['HTTP_USER_AGENT'] = uniqid('agent:');
 
-        $this->assertNull($auth->getIdentity());
+        $this->assertNull(Auth::getIdentity());
     }
 
     /**

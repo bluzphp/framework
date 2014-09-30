@@ -13,6 +13,7 @@ namespace Bluz\Grid;
 
 use Bluz\Common\Helper;
 use Bluz\Common\Options;
+use Bluz\Proxy\Router;
 
 /**
  * Grid
@@ -468,7 +469,7 @@ abstract class Grid
         $params = $this->getParams($params);
 
         // retrieve URL
-        return app()->getRouter()->getUrl(
+        return Router::getUrl(
             $this->getModule(),
             $this->getController(),
             $params

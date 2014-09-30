@@ -21,7 +21,10 @@ use Bluz\EventManager\EventManager as Instance;
  * @method   static Instance getInstance()
  *
  * @method   static Instance attach($eventName, $callback, $priority = 1)
+ * @see      Bluz\EventManager\EventManager::attach()
+ *
  * @method   static string|object trigger($event, $target = null, $params = null)
+ * @see      Bluz\EventManager\EventManager::trigger()
  *
  * @author   Anton Shevchuk
  * @created  26.09.2014 18:35

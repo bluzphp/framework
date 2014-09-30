@@ -23,8 +23,6 @@ use Bluz\Common\Options;
  */
 class Config
 {
-    use Options;
-
     /**
      * Configuration data
      * @var array
@@ -135,41 +133,6 @@ class Config
             $config[$name] = $this->loadFile($file);
         }
         return $config;
-    }
-
-    /**
-     * __get
-     *
-     * @param string $key
-     * @return mixed
-     */
-    public function __get($key)
-    {
-        return $this->getData($key);
-    }
-
-    /**
-     * __set
-     *
-     * @param string $key
-     * @param mixed $value
-     * @throws ConfigException
-     * @return void
-     */
-    public function __set($key, $value)
-    {
-        throw new ConfigException('Configuration is read only');
-    }
-
-    /**
-     * __isset
-     *
-     * @param string $key
-     * @return bool
-     */
-    public function __isset($key)
-    {
-        return isset($this->config[$key]);
     }
 
     /**

@@ -22,15 +22,6 @@ use Bluz\Tests\Grid\Fixtures\SelectGrid;
 class SelectSourceTest extends TestCase
 {
     /**
-     * Setup Application
-     */
-    public function setUp()
-    {
-        parent::setUp();
-        $this->getApp();
-    }
-
-    /**
      * Select Source
      */
     public function testSelectGrid()

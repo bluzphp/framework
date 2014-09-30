@@ -27,6 +27,6 @@ class RequestTest extends TestCase
      */
     public function testInitialRequestWithoutUriArgumentThrowException()
     {
-        $request = new Request();
+        new Request();
     }
 }

@@ -10,6 +10,7 @@
 namespace Bluz\Tests\Messages;
 
 use Bluz\Messages\Messages;
+use Bluz\Proxy;
 use Bluz\Tests\TestCase;
 
 /**
@@ -23,19 +24,30 @@ use Bluz\Tests\TestCase;
 class MessagesTest extends TestCase
 {
     /**
+     * setUp
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        // initialize application
+        self::getApp();
+    }
+
+    /**
      * Test Messages container
      */
     public function testMessages()
     {
-        $this->getApp()->getMessages()->addError('error');
-        $this->getApp()->getMessages()->addNotice('notice');
-        $this->getApp()->getMessages()->addSuccess('success');
+        Proxy\Messages::addError('error');
+        Proxy\Messages::addNotice('notice');
+        Proxy\Messages::addSuccess('success');
 
-        $this->assertEquals(3, $this->getApp()->getMessages()->count());
+        $this->assertEquals(3, Proxy\Messages::count());
 
-        $this->assertInstanceOf('\stdClass', $this->getApp()->getMessages()->pop(Messages::TYPE_ERROR));
-        $this->assertInstanceOf('\stdClass', $this->getApp()->getMessages()->pop(Messages::TYPE_NOTICE));
-        $this->assertInstanceOf('\stdClass', $this->getApp()->getMessages()->pop(Messages::TYPE_SUCCESS));
+        $this->assertInstanceOf('\stdClass', Proxy\Messages::pop(Messages::TYPE_ERROR));
+        $this->assertInstanceOf('\stdClass', Proxy\Messages::pop(Messages::TYPE_NOTICE));
+        $this->assertInstanceOf('\stdClass', Proxy\Messages::pop(Messages::TYPE_SUCCESS));
     }
 
     /**
@@ -43,10 +55,10 @@ class MessagesTest extends TestCase
      */
     public function testMessagesEmpty()
     {
-        $this->assertEquals(0, $this->getApp()->getMessages()->count());
-        $this->assertNull($this->getApp()->getMessages()->pop(Messages::TYPE_ERROR));
-        $this->assertNull($this->getApp()->getMessages()->pop(Messages::TYPE_NOTICE));
-        $this->assertNull($this->getApp()->getMessages()->pop(Messages::TYPE_SUCCESS));
+        $this->assertEquals(0, Proxy\Messages::count());
+        $this->assertNull(Proxy\Messages::pop(Messages::TYPE_ERROR));
+        $this->assertNull(Proxy\Messages::pop(Messages::TYPE_NOTICE));
+        $this->assertNull(Proxy\Messages::pop(Messages::TYPE_SUCCESS));
     }
 
     /**
@@ -54,12 +66,12 @@ class MessagesTest extends TestCase
      */
     public function testMessagesPop()
     {
-        $this->getApp()->getMessages()->addError('error');
-        $this->getApp()->getMessages()->addNotice('notice');
-        $this->getApp()->getMessages()->addSuccess('success');
+        Proxy\Messages::addError('error');
+        Proxy\Messages::addNotice('notice');
+        Proxy\Messages::addSuccess('success');
 
         $counter = 0;
-        while ($this->getApp()->getMessages()->pop()) {
+        while (Proxy\Messages::pop()) {
             $counter++;
         }
 
@@ -71,11 +83,11 @@ class MessagesTest extends TestCase
      */
     public function testMessagesPopAll()
     {
-        $this->getApp()->getMessages()->addError('error');
-        $this->getApp()->getMessages()->addNotice('notice');
-        $this->getApp()->getMessages()->addSuccess('success');
+        Proxy\Messages::addError('error');
+        Proxy\Messages::addNotice('notice');
+        Proxy\Messages::addSuccess('success');
 
-        $messages = $this->getApp()->getMessages()->popAll();
+        $messages = Proxy\Messages::popAll();
 
         $this->assertArrayHasKeyAndSize($messages, 'error', 1);
         $this->assertArrayHasKeyAndSize($messages, 'notice', 1);
@@ -87,7 +99,7 @@ class MessagesTest extends TestCase
      */
     public function testMessagesPopAllForEmpty()
     {
-        $messages = $this->getApp()->getMessages()->popAll();
+        $messages = Proxy\Messages::popAll();
 
         $this->assertArrayHasKey('error', $messages);
         $this->assertArrayHasKey('notice', $messages);

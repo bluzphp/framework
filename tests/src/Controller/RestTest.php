@@ -12,6 +12,7 @@ namespace Bluz\Tests\Controller;
 use Bluz\Http;
 use Bluz\Http\Request;
 use Bluz\Controller;
+use Bluz\Proxy\Db;
 use Bluz\Tests\Fixtures\Models\Test\Crud;
 use Bluz\Tests\TestCase;
 
@@ -27,7 +28,7 @@ class RestTest extends TestCase
      */
     public static function setUpBeforeClass()
     {
-        self::getApp()->getDb()->insert('test')->setArray(
+        Db::insert('test')->setArray(
             [
                 'id' => 1,
                 'name' => 'Donatello',
@@ -35,7 +36,7 @@ class RestTest extends TestCase
             ]
         )->execute();
 
-        self::getApp()->getDb()->insert('test')->setArray(
+        Db::insert('test')->setArray(
             [
                 'id' => 2,
                 'name' => 'Leonardo',
@@ -43,7 +44,7 @@ class RestTest extends TestCase
             ]
         )->execute();
 
-        self::getApp()->getDb()->insert('test')->setArray(
+        Db::insert('test')->setArray(
             [
                 'id' => 3,
                 'name' => 'Michelangelo',
@@ -51,7 +52,7 @@ class RestTest extends TestCase
             ]
         )->execute();
 
-        self::getApp()->getDb()->insert('test')->setArray(
+        Db::insert('test')->setArray(
             [
                 'id' => 4,
                 'name' => 'Raphael',
@@ -65,18 +66,10 @@ class RestTest extends TestCase
      */
     public static function tearDownAfterClass()
     {
-        self::getApp()->getDb()->delete('test')->where('id IN (?)', [1, 2, 3, 4])->execute();
-        self::getApp()->getDb()->delete('test')->where('email = ?', 'splinter@turtles.org')->execute();
+        Db::delete('test')->where('id IN (?)', [1, 2, 3, 4])->execute();
+        Db::delete('test')->where('email = ?', 'splinter@turtles.org')->execute();
 
         self::resetGlobals();
-    }
-
-    /**
-     * Tear Down
-     */
-    protected function tearDown()
-    {
-        parent::tearDown();
         self::resetApp();
     }
 
@@ -201,7 +194,7 @@ class RestTest extends TestCase
         $result = $this->processRest();
         $this->assertFalse($result);
 
-        $primary = $this->getApp()->getDb()->fetchOne(
+        $primary = Db::fetchOne(
             'SELECT id FROM test WHERE name = ?',
             ['Splinter']
         );
@@ -260,7 +253,7 @@ class RestTest extends TestCase
         $result = $this->processRest();
         $this->assertFalse($result);
 
-        $id = $this->getApp()->getDb()->fetchOne(
+        $id = Db::fetchOne(
             'SELECT id FROM test WHERE email = ?',
             ['leonardo@turtles.ua']
         );
@@ -355,7 +348,7 @@ class RestTest extends TestCase
         $result = $this->processRest();
         $this->assertFalse($result);
 
-        $count = $this->getApp()->getDb()->fetchOne(
+        $count = Db::fetchOne(
             'SELECT count(*) FROM test WHERE id = ?',
             [1]
         );

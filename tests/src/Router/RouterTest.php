@@ -9,7 +9,7 @@
  */
 namespace Bluz\Tests\Router;
 
-use Bluz\Router\Router;
+use Bluz\Proxy\Router;
 use Bluz\Tests\TestCase;
 
 /**
@@ -22,7 +22,6 @@ use Bluz\Tests\TestCase;
  */
 class RouterTest extends TestCase
 {
-
     /**
      * testRouterUrl
      *
@@ -34,7 +33,7 @@ class RouterTest extends TestCase
      */
     public function testRouterUrl($url, $module, $controller, $params = array())
     {
-        $this->assertEquals($url, $this->getApp()->getRouter()->getUrl($module, $controller, $params));
+        $this->assertEquals($url, Router::getUrl($module, $controller, $params));
     }
 
     /**
@@ -48,7 +47,7 @@ class RouterTest extends TestCase
      */
     public function testRouterUrlWithCustomControllerRoute($url, $module, $controller, $params = array())
     {
-        $this->assertEquals($url, $this->getApp()->getRouter()->getUrl($module, $controller, $params));
+        $this->assertEquals($url, Router::getUrl($module, $controller, $params));
     }
 
     /**
@@ -56,13 +55,11 @@ class RouterTest extends TestCase
      */
     public function testRouterFullUrl()
     {
-        $router = $this->getApp()->getRouter();
-
         if (!isset($_SERVER['SERVER_NAME'])) {
             $_SERVER['SERVER_NAME'] = 'localhost';
         }
 
-        $this->assertEquals('http://'.$_SERVER['SERVER_NAME'].'/', $router->getFullUrl());
+        $this->assertEquals('http://'.$_SERVER['SERVER_NAME'].'/', Router::getFullUrl());
     }
 
     /**
@@ -75,11 +72,11 @@ class RouterTest extends TestCase
             ['/test/test/foo/bar', 'test', 'test', ['foo'=>'bar']],
             ['/test/test?foo%5B0%5D=bar&foo%5B1%5D=baz', 'test', 'test', ['foo'=> ['bar', 'baz']]],
             ['/test', 'test', null, array()],
-            ['/test', 'test', Router::DEFAULT_CONTROLLER, array()],
-            ['/test/'.Router::DEFAULT_CONTROLLER.'/foo/bar', 'test', Router::DEFAULT_CONTROLLER, ['foo'=>'bar']],
-            ['/'.Router::DEFAULT_MODULE.'/test', null, 'test', array()],
-            ['/'.Router::DEFAULT_MODULE.'/test', Router::DEFAULT_MODULE, 'test', array()],
-            ['/'.Router::DEFAULT_MODULE.'/test/foo/bar', Router::DEFAULT_MODULE, 'test', ['foo'=>'bar']],
+            ['/test', 'test', 'index', array()],
+            ['/test/index/foo/bar', 'test', 'index', ['foo'=>'bar']],
+            ['/index/test', null, 'test', array()],
+            ['/index/test', 'index', 'test', array()],
+            ['/index/test/foo/bar', 'index', 'test', ['foo'=>'bar']],
         );
     }
     

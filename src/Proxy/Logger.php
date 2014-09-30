@@ -22,16 +22,35 @@ use Bluz\Common\Nil;
  * @method   static Instance getInstance()
  *
  * @method   static void alert($message, array $context = array())
+ * @see      Bluz\Logger\Logger::alert()
+ *
  * @method   static void critical($message, array $context = array())
+ * @see      Bluz\Logger\Logger::critical()
+ *
  * @method   static void debug($message, array $context = array())
+ * @see      Bluz\Logger\Logger::debug()
+ *
  * @method   static void emergency($message, array $context = array())
+ * @see      Bluz\Logger\Logger::emergency()
+ *
  * @method   static void error($message, array $context = array())
+ * @see      Bluz\Logger\Logger::error()
+ *
  * @method   static void info($message, array $context = array())
+ * @see      Bluz\Logger\Logger::info()
+ *
  * @method   static void notice($message, array $context = array())
+ * @see      Bluz\Logger\Logger::notice()
+ *
  * @method   static void warning($message, array $context = array())
+ * @see      Bluz\Logger\Logger::warning()
  *
  * @method   static void log($level, $message, array $context = array())
+ * @see      Bluz\Logger\Logger::log()
+ *
  * @method   static array get($level)
+ * @see      Bluz\Logger\Logger::get()
+ *
  *
  * @author   Anton Shevchuk
  * @created  26.09.2014 13:05

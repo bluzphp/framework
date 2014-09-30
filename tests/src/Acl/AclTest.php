@@ -9,6 +9,7 @@
  */
 namespace Bluz\Tests\Acl;
 
+use Bluz\Proxy;
 use Bluz\Tests\TestCase;
 use Bluz\Tests\Fixtures\Models\UserAdmin;
 use Bluz\Tests\Fixtures\Models\UserGuest;
@@ -28,15 +29,15 @@ class AclTest extends TestCase
      */
     public function testAllow()
     {
-        $this->getApp()->getAuth()->setIdentity(new UserAdmin());
-        $this->assertTrue($this->getApp()->getAcl()->isAllowed('any', 'any'));
+        Proxy\Auth::setIdentity(new UserAdmin());
+        $this->assertTrue(Proxy\Acl::isAllowed('any', 'any'));
     }
     /**
      * Test deny access
      */
     public function testDeny()
     {
-        $this->getApp()->getAuth()->setIdentity(new UserGuest());
-        $this->assertFalse($this->getApp()->getAcl()->isAllowed('any', 'any'));
+        Proxy\Auth::setIdentity(new UserGuest());
+        $this->assertFalse(Proxy\Acl::isAllowed('any', 'any'));
     }
 }

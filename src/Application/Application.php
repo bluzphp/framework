@@ -20,15 +20,11 @@ use Bluz\Common;
 use Bluz\Http;
 use Bluz\Proxy;
 use Bluz\Proxy\Acl;
-use Bluz\Proxy\Auth;
 use Bluz\Proxy\Cache;
 use Bluz\Proxy\Config;
-use Bluz\Proxy\Db;
 use Bluz\Proxy\EventManager;
 use Bluz\Proxy\Logger;
-use Bluz\Proxy\Mailer;
 use Bluz\Proxy\Messages;
-use Bluz\Proxy\Registry;
 use Bluz\Proxy\Router;
 use Bluz\Proxy\Session;
 use Bluz\Proxy\Translator;
@@ -49,7 +45,7 @@ use Bluz\View\View;
  * @author   Anton Shevchuk
  * @created  06.07.11 16:25
  */
-abstract class Application
+class Application
 {
     use Common\Helper;
     use Common\Singleton;
@@ -68,11 +64,6 @@ abstract class Application
      * @var Http\Response instance
      */
     protected $response;
-
-    /**
-     * @var Session instance
-     */
-    protected $session;
 
     /**
      * Application path
@@ -129,132 +120,6 @@ abstract class Application
     protected $dispatchController;
 
     /**
-     * init
-     *
-     * @param string $environment Array format only!
-     * @throws ApplicationException
-     * @return Application
-     */
-    public function init($environment = 'production')
-    {
-        $this->environment = $environment;
-
-        try {
-            // initial default helper path
-            $this->addHelperPath(dirname(__FILE__) . '/Helper/');
-
-            // first log message
-            $this->log('app:init');
-
-            // setup configuration for current environment
-            if ($debug = Config::getData('debug')) {
-                $this->debugFlag = (bool) $debug;
-            }
-
-            // initial php settings
-            if ($ini = Config::getData('php')) {
-                foreach ($ini as $key => $value) {
-                    $result = ini_set($key, $value);
-                    $this->log('app:init:php:'.$key.':'.($result?:'---'));
-                }
-            }
-
-            // initial session, start inside class
-            Session::getInstance();
-
-            // initial Messages
-            Messages::getInstance();
-
-            // initial Translator
-            Translator::getInstance();
-
-        } catch (\Exception $e) {
-            throw new ApplicationException("Application can't be loaded: " . $e->getMessage());
-        }
-        return $this;
-    }
-
-    /**
-     * Log message, working with logger
-     *
-     * @param string $message
-     * @param array $context
-     * @return void
-     */
-    public function log($message, array $context = [])
-    {
-        Logger::info($message, $context);
-    }
-
-    /**
-     * Load configuration file
-     *
-     * @deprecated since version 0.5.1
-     * @return \Bluz\Config\Config
-     */
-    public function getConfig()
-    {
-        return Config::getInstance();
-    }
-
-    /**
-     * Get configuration for same section and subsection
-     *
-     * @deprecated since version 0.5.1
-     * @param string|null $section of config
-     * @param string|null $subsection of config
-     * @return array|mixed
-     */
-    public function getConfigData($section = null, $subsection = null)
-    {
-        return Config::getData($section, $subsection);
-    }
-
-    /**
-     * Get Acl instance
-     *
-     * @deprecated since version 0.5.1
-     * @return Acl
-     */
-    public function getAcl()
-    {
-        return Acl::getInstance();
-    }
-
-    /**
-     * Get Auth instance
-     *
-     * @deprecated since version 0.5.1
-     * @return Auth
-     */
-    public function getAuth()
-    {
-        return Auth::getInstance();
-    }
-
-    /**
-     * If enabled return configured Cache or Nil otherwise
-     *
-     * @deprecated since version 0.5.1
-     * @return Cache instance or Nil
-     */
-    public function getCache()
-    {
-        return Cache::getInstance();
-    }
-
-    /**
-     * Get Db Instance
-     *
-     * @deprecated since version 0.5.1
-     * @return Db
-     */
-    public function getDb()
-    {
-        return Db::getInstance();
-    }
-
-    /**
      * Get application environment
      *
      * @return string
@@ -262,17 +127,6 @@ abstract class Application
     public function getEnvironment()
     {
         return $this->environment;
-    }
-
-    /**
-     * Get EventManager instance
-     *
-     * @deprecated since version 0.5.1
-     * @return EventManager
-     */
-    public function getEventManager()
-    {
-        return EventManager::getInstance();
     }
 
     /**
@@ -287,50 +141,6 @@ abstract class Application
             $this->layout->setOptions(Config::getData('layout'));
         }
         return $this->layout;
-    }
-
-    /**
-     * Get logger instance
-     *
-     * @deprecated since version 0.5.1
-     * @return Logger instance or Nil
-     */
-    public function getLogger()
-    {
-        return Logger::getInstance();
-    }
-
-    /**
-     * Get Mailer instance
-     *
-     * @deprecated since version 0.5.1
-     * @return Mailer
-     */
-    public function getMailer()
-    {
-        return Mailer::getInstance();
-    }
-
-    /**
-     * Get Messages instance
-     *
-     * @deprecated since version 0.5.1
-     * @return Messages
-     */
-    public function getMessages()
-    {
-        return Messages::getInstance();
-    }
-
-    /**
-     * Check Messages
-     *
-     * @deprecated since version 0.5.1
-     * @return bool
-     */
-    public function hasMessages()
-    {
-        return Messages::count();
     }
 
     /**
@@ -349,17 +159,6 @@ abstract class Application
             }
         }
         return $this->path;
-    }
-
-    /**
-     * Get Registry instance
-     *
-     * @deprecated since version 0.5.1
-     * @return Registry
-     */
-    public function getRegistry()
-    {
-        return Registry::getInstance();
     }
 
     /**
@@ -431,47 +230,18 @@ abstract class Application
     }
 
     /**
-     * Get Router instance
-     *
-     * @return Router
-     */
-    public function getRouter()
-    {
-        return Router::getInstance();
-    }
-
-    /**
-     * Get Session instance
-     *
-     * @deprecated since version 0.5.1
-     * @return Session
-     */
-    public function getSession()
-    {
-        return Session::getInstance();
-    }
-
-    /**
-     * Get Translator instance
-     *
-     * @deprecated since version 0.5.1
-     * @return Translator
-     */
-    public function getTranslator()
-    {
-        return Translator::getInstance();
-    }
-
-    /**
      * Create new instance of view and return it
      *
      * @return View
      */
-    public function getView()
+    protected function getView()
     {
         $view = new View();
 
-        // setup default partial path
+        // setup additional helper path
+        $view->addHelperPath($this->getPath() . '/layouts/helpers');
+
+        // setup additional partial path
         $view->addPartialPath($this->getPath() . '/layouts/partial');
 
         return $view;
@@ -541,6 +311,51 @@ abstract class Application
     }
 
     /**
+     * init
+     *
+     * @param string $environment Array format only!
+     * @throws ApplicationException
+     * @return void
+     */
+    public function init($environment = 'production')
+    {
+        $this->environment = $environment;
+
+        try {
+            // initial default helper path
+            $this->addHelperPath(dirname(__FILE__) . '/Helper/');
+
+            // first log message
+            Logger::info('app:init');
+
+            // setup configuration for current environment
+            if ($debug = Config::getData('debug')) {
+                $this->debugFlag = (bool) $debug;
+            }
+
+            // initial php settings
+            if ($ini = Config::getData('php')) {
+                foreach ($ini as $key => $value) {
+                    $result = ini_set($key, $value);
+                    Logger::info('app:init:php:'.$key.':'.($result?:'---'));
+                }
+            }
+
+            // initial session, start inside class
+            Session::getInstance();
+
+            // initial Messages
+            Messages::getInstance();
+
+            // initial Translator
+            Translator::getInstance();
+
+        } catch (\Exception $e) {
+            throw new ApplicationException("Application can't be loaded: " . $e->getMessage());
+        }
+    }
+
+    /**
      * Process application
      *
      * Note:
@@ -550,7 +365,7 @@ abstract class Application
      */
     public function process()
     {
-        $this->log('app:process');
+        Logger::info('app:process');
 
         // init request
         $request = $this->getRequest();
@@ -629,7 +444,7 @@ abstract class Application
      */
     protected function preDispatch($module, $controller, $params = array())
     {
-        $this->log("app:dispatch:pre: " . $module . '/' . $controller);
+        Logger::info("app:dispatch:pre: " . $module . '/' . $controller);
     }
 
     /**
@@ -644,7 +459,7 @@ abstract class Application
      */
     protected function doDispatch($module, $controller, $params = array())
     {
-        $this->log("app:dispatch:do: " . $module . '/' . $controller);
+        Logger::info("app:dispatch:do: " . $module . '/' . $controller);
         $controllerFile = $this->getControllerFile($module, $controller);
         $reflectionData = $this->reflection($controllerFile);
 
@@ -746,7 +561,7 @@ abstract class Application
      */
     protected function postDispatch($module, $controller, $params = array())
     {
-        $this->log("app:dispatch:post: " . $module . '/' . $controller);
+        Logger::info("app:dispatch:post: " . $module . '/' . $controller);
     }
 
     /**
@@ -770,7 +585,7 @@ abstract class Application
      */
     public function dispatch($module, $controller, $params = array())
     {
-        $this->log("app:dispatch: " . $module . '/' . $controller);
+        Logger::info("app:dispatch: " . $module . '/' . $controller);
 
         // system trigger "dispatch"
         EventManager::trigger(
@@ -800,7 +615,7 @@ abstract class Application
      */
     public function render()
     {
-        $this->log('app:render');
+        Logger::info('app:render');
 
         if ($this->isJson()) {
             // setup messages
@@ -844,7 +659,7 @@ abstract class Application
      */
     public function widget($module, $widget, $params = array())
     {
-        $this->log("app:widget: " . $module . '/' . $widget);
+        Logger::info("app:widget: " . $module . '/' . $widget);
         $widgetFile = $this->getWidgetFile($module, $widget);
         $reflectionData = $this->reflection($widgetFile);
 
@@ -909,7 +724,7 @@ abstract class Application
      */
     public function api($module, $method)
     {
-        $this->log("app:api: " . $module . '/' . $method);
+        Logger::info("app:api: " . $module . '/' . $method);
 
         EventManager::trigger(
             'api',
@@ -1185,7 +1000,7 @@ abstract class Application
      */
     public function finish()
     {
-        $this->log(__METHOD__);
+        Logger::info(__METHOD__);
         return $this;
     }
 }

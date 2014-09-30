@@ -23,27 +23,27 @@ return
      * @return string|View
      */
     function ($style = null, $media = 'all') {
-    if (app()->hasLayout()) {
-        // it's stack for <head>
-        $headStyle = Registry::get('layout:headStyle') ? : [];
+        if (app()->hasLayout()) {
+            // it's stack for <head>
+            $headStyle = Registry::get('layout:headStyle') ? : [];
 
-        if (null === $style) {
-            // clear system vars
-            Registry::set('layout:headStyle', []);
-            array_walk(
-                $headStyle,
-                function (&$item, $key) {
-                    $item = $this->style($key, $item);
-                }
-            );
-            return join("\n", $headStyle);
+            if (null === $style) {
+                // clear system vars
+                Registry::set('layout:headStyle', []);
+                array_walk(
+                    $headStyle,
+                    function (&$item, $key) {
+                        $item = $this->style($key, $item);
+                    }
+                );
+                return join("\n", $headStyle);
+            } else {
+                $headStyle[$style] = $media;
+                Registry::set('layout:headStyle', $headStyle);
+                return $this;
+            }
         } else {
-            $headStyle[$style] = $media;
-            Registry::set('layout:headStyle', $headStyle);
-            return $this;
+            // it's just alias to style() call
+            return $this->style($style);
         }
-    } else {
-        // it's just alias to style() call
-        return $this->style($style);
-    }
     };

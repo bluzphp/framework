@@ -43,25 +43,25 @@ return
      */
     function ($template, $data = array(), $params = array()) {
 
-    if (!is_array($data)
-        && !($data instanceof \Traversable)
-        && !(is_object($data) && method_exists($data, 'toArray'))
-    ) {
-        throw new \InvalidArgumentException('PartialLoop helper requires iterable data');
-    }
+        if (!is_array($data)
+            && !($data instanceof \Traversable)
+            && !(is_object($data) && method_exists($data, 'toArray'))
+        ) {
+            throw new \InvalidArgumentException('PartialLoop helper requires iterable data');
+        }
 
-    if (is_object($data)
-        && (!$data instanceof \Traversable)
-        && method_exists($data, 'toArray')
-    ) {
-        $data = $data->toArray();
-    }
+        if (is_object($data)
+            && (!$data instanceof \Traversable)
+            && method_exists($data, 'toArray')
+        ) {
+            $data = $data->toArray();
+        }
 
-    $result = array();
-    foreach ($data as $key => $value) {
-        $params['partialKey'] = $key;
-        $params['partialValue'] = $value;
-        $result[] = $this->partial($template, $params);
-    }
-    return join('', $result);
+        $result = array();
+        foreach ($data as $key => $value) {
+            $params['partialKey'] = $key;
+            $params['partialValue'] = $value;
+            $result[] = $this->partial($template, $params);
+        }
+        return join('', $result);
     };

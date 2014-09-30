@@ -63,7 +63,7 @@ abstract class AbstractProxy
      * @param  array $args
      * @return mixed
      */
-    static public function __callStatic($method, $args)
+    public static function __callStatic($method, $args)
     {
         $instance = static::getInstance();
 

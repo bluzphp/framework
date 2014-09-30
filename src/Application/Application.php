@@ -773,7 +773,7 @@ abstract class Application
         $this->log("app:dispatch: " . $module . '/' . $controller);
 
         // system trigger "dispatch"
-        $this->getEventManager()->trigger(
+        EventManager::trigger(
             'dispatch',
             $this,
             array(

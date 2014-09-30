@@ -23,13 +23,13 @@ return
      * @return array|View
      */
     function (array $data = []) {
-    if (app()->hasLayout()) {
-        if (sizeof($data)) {
-            Registry::set('layout:breadcrumbs', $data);
-            return $this;
-        } else {
-            return Registry::get('layout:breadcrumbs');
+        if (app()->hasLayout()) {
+            if (sizeof($data)) {
+                Registry::set('layout:breadcrumbs', $data);
+                return $this;
+            } else {
+                return Registry::get('layout:breadcrumbs');
+            }
         }
-    }
-    return [];
+        return [];
     };

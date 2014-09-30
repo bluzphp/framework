@@ -18,8 +18,8 @@ use Bluz\Router\Router as Instance;
  *
  * @package  Bluz\Proxy
  *
- * @method   static string getUrl($module = Instance::DEFAULT_MODULE, $controller = Instance::DEFAULT_CONTROLLER, $params = array())
- * @method   static string getFullUrl($module = Instance::DEFAULT_MODULE, $controller = Instance::DEFAULT_CONTROLLER, $params = array())
+ * @method   static string getUrl($module = 'index', $controller = 'index', $params = array())
+ * @method   static string getFullUrl($module = 'index', $controller = 'index', $params = array())
  *
  * @method   static void process()
  * @method   static string getDefaultModule()

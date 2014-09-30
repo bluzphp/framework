@@ -24,32 +24,32 @@ return
      * @return string|View
      */
     function ($name = null, $content = null) {
-    if (app()->hasLayout()) {
-        // it's stack for <head>
-        $meta = Registry::get('layout:meta') ? : [];
+        if (app()->hasLayout()) {
+            // it's stack for <head>
+            $meta = Registry::get('layout:meta') ? : [];
 
-        if ($name && $content) {
-            $meta[] = ['name' => $name, 'content' => $content];
-            Registry::set('layout:meta', $meta);
-            return $this;
-        } elseif (is_array($name)) {
-            $meta[] = $name;
-            Registry::set('layout:meta', $meta);
-            return $this;
-        } elseif (!$name && !$content) {
-            if (sizeof($meta)) {
-                // prepare to output
-                $meta = array_map(
-                    function ($attr) {
-                        return '<meta '. $this->attributes($attr) .'/>';
-                    },
-                    $meta
-                );
-                // clear system vars
-                Registry::set('layout:meta', []);
-                return join("\n", $meta);
+            if ($name && $content) {
+                $meta[] = ['name' => $name, 'content' => $content];
+                Registry::set('layout:meta', $meta);
+                return $this;
+            } elseif (is_array($name)) {
+                $meta[] = $name;
+                Registry::set('layout:meta', $meta);
+                return $this;
+            } elseif (!$name && !$content) {
+                if (sizeof($meta)) {
+                    // prepare to output
+                    $meta = array_map(
+                        function ($attr) {
+                            return '<meta '. $this->attributes($attr) .'/>';
+                        },
+                        $meta
+                    );
+                    // clear system vars
+                    Registry::set('layout:meta', []);
+                    return join("\n", $meta);
+                }
             }
         }
-    }
-    return '';
+        return '';
     };

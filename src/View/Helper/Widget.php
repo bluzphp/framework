@@ -28,12 +28,12 @@ return
      * @return void
      */
     function ($module, $widget, $params = array()) {
-    try {
-        $widgetClosure = app()->widget($module, $widget);
-        call_user_func_array($widgetClosure, $params);
-    } catch (ForbiddenException $e) {
-        // nothing for Acl exception
-    } catch (\Exception $e) {
-        echo $this->exception($e);
-    }
+        try {
+            $widgetClosure = app()->widget($module, $widget);
+            call_user_func_array($widgetClosure, $params);
+        } catch (ForbiddenException $e) {
+            // nothing for Acl exception
+        } catch (\Exception $e) {
+            echo $this->exception($e);
+        }
     };

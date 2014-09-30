@@ -18,12 +18,12 @@ return
      * @return string|null $url
      */
     function () {
-    /**
-     * @var Grid\Grid $this
-     */
-    if ($this->getPage() <= 1) {
-        return null;
-    }
+        /**
+         * @var Grid\Grid $this
+         */
+        if ($this->getPage() <= 1) {
+            return null;
+        }
 
-    return $this->getUrl(['page' => $this->getPage() - 1]);
+        return $this->getUrl(['page' => $this->getPage() - 1]);
     };

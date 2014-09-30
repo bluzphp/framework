@@ -12,6 +12,7 @@
 namespace Bluz\Application\Helper;
 
 use Bluz\Application\Application;
+use Bluz\Proxy\Auth;
 
 return
     /**
@@ -21,7 +22,5 @@ return
      * @return \Bluz\Auth\AbstractRowEntity|null
      */
     function () {
-        return $this->getAuth() ?
-            $this->getAuth()->getIdentity() :
-            null;
+        return Auth::getIdentity();
     };

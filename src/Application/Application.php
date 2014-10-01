@@ -58,16 +58,6 @@ class Application
     protected $layout;
 
     /**
-     * @var Http\Request instance
-     */
-    protected $request;
-
-    /**
-     * @var Http\Response instance
-     */
-    protected $response;
-
-    /**
      * Application path
      * @var string
      */
@@ -275,23 +265,23 @@ class Application
                 }
             }
 
-            // initial session, start inside class
+            // init session, start inside class
             Session::getInstance();
 
-            // initial Messages
+            // init Messages
             Messages::getInstance();
 
-            // initial Translator
+            // init Translator
             Translator::getInstance();
 
             // init request
             $this->initRequest();
 
-            // init router
-            Router::getInstance();
-
             // init response
             $this->initResponse();
+
+            // init router
+            Router::getInstance();
 
         } catch (\Exception $e) {
             throw new ApplicationException("Application can't be loaded: " . $e->getMessage());
@@ -309,6 +299,8 @@ class Application
     public function process()
     {
         Logger::info('app:process');
+
+        Router::process();
 
         // try to dispatch controller
         try {

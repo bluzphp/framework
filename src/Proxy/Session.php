@@ -18,6 +18,8 @@ use Bluz\Session\Session as Instance;
  *
  * @package  Bluz\Proxy
  *
+ * @method   static Instance getInstance()
+ *
  * @method   static void  start()
  * @method   static void  destroy()
  * @method   static void  set($key, $value)

@@ -55,7 +55,6 @@ class Router extends AbstractProxy
     {
         $instance = new Instance();
         $instance->setOptions(Config::getData('router'));
-        $instance->process();
         return $instance;
     }
 }

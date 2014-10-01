@@ -13,6 +13,7 @@ namespace Bluz\Session\Adapter;
 
 use Bluz\Common\Exception\ConfigurationException;
 use Bluz\Common\Nil;
+use Bluz\Proxy;
 
 /**
  * Cache session handler
@@ -44,31 +45,13 @@ class Cache implements \SessionHandlerInterface
      */
     public function __construct($settings = array())
     {
-        $this->handler = app()->getCache();
+        $this->handler = Proxy\Cache::getInstance();
 
-        if (!$this->handler) {
-            throw new ConfigurationException("Cache package not enabled.");
+        if ($this->handler instanceof Nil) {
+            throw new ConfigurationException(
+                "Cache configuration is missed or disabled. Please check 'cache' configuration section"
+            );
         }
-    }
-
-    /**
-     * Get Redis handler
-     *
-     * @throws ConfigurationException
-     * @return \Bluz\Cache\Cache
-     */
-    protected function getHandler()
-    {
-        if (!$this->handler) {
-            $this->handler = app()->getCache();
-
-            if ($this->handler instanceof Nil) {
-                throw new ConfigurationException(
-                    "Cache configuration is missed or disabled. Please check 'cache' configuration section"
-                );
-            }
-        }
-        return $this->handler;
     }
 
     /**
@@ -101,8 +84,8 @@ class Cache implements \SessionHandlerInterface
     public function read($id)
     {
         $id = $this->prefix . $id;
-        $data = $this->getHandler()->get($id);
-        $this->getHandler()->set($id, $data, $this->ttl);
+        $data =  $this->handler->get($id);
+        $this->handler->set($id, $data, $this->ttl);
         return $data;
     }
 
@@ -114,7 +97,7 @@ class Cache implements \SessionHandlerInterface
     public function write($id, $data)
     {
         $id = $this->prefix . $id;
-        $this->getHandler()->set($id, $data, $this->ttl);
+        $this->handler->set($id, $data, $this->ttl);
     }
 
     /**
@@ -123,7 +106,7 @@ class Cache implements \SessionHandlerInterface
      */
     public function destroy($id)
     {
-        $this->getHandler()->delete($this->prefix . $id);
+        $this->handler->delete($this->prefix . $id);
     }
 
     /**

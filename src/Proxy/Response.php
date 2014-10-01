@@ -13,6 +13,7 @@ namespace Bluz\Proxy;
 
 use Bluz\Common\Exception\ComponentException;
 use Bluz\Response\AbstractResponse as Instance;
+use Bluz\View\View;
 
 /**
  * Proxy to Request
@@ -61,9 +62,9 @@ use Bluz\Response\AbstractResponse as Instance;
  *
  * @method   static void  setBody($phrase)
  * @see      Bluz\Response\AbstractResponse::setBody()
- * @method   static string getBody()
+ * @method   static View  getBody()
  * @see      Bluz\Response\AbstractResponse::getBody()
- * @method   static void clearBody()
+ * @method   static void  clearBody()
  * @see      Bluz\Response\AbstractResponse::clearBody()
  *
  * @method   static void  setException($exception)

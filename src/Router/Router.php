@@ -380,7 +380,7 @@ class Router
 
                 foreach ($router['params'] as $param => $type) {
                     if (isset($matches[$param])) {
-                        Request::setParam($param, $matches[$param]); 
+                        Request::setParam($param, $matches[$param]);
                     }
                 }
                 return true;

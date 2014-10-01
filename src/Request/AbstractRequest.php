@@ -367,5 +367,4 @@ class AbstractRequest
     {
         $this->controller = $name;
     }
-
 }

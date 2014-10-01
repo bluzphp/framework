@@ -11,7 +11,7 @@ namespace Bluz\Tests\Http;
 
 use Bluz;
 use Bluz\Proxy;
-use Bluz\Proxy\Request; 
+use Bluz\Proxy\Request;
 
 /**
  * FileUploadTest

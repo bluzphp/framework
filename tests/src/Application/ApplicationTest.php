@@ -40,7 +40,7 @@ class ApplicationTest extends TestCase
     }
 
     /**
-     * @covers \Bluz\Application\Application::getConfigData
+     * Test Application Config
      */
     public function testGetConfigData()
     {

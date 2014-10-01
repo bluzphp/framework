@@ -26,7 +26,7 @@ abstract class AbstractProxy
     /**
      * @var AbstractProxy[]
      */
-    static $instances = array();
+    private static $instances = array();
 
     /**
      * Init class instance

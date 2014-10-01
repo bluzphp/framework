@@ -12,10 +12,10 @@
  */
 namespace Application;
 
-use Bluz;
-use Bluz\Request;
 use Bluz\Proxy\Logger;
 use Bluz\Proxy\Messages;
+use Bluz\Proxy\Response;
+use Bluz\Proxy\Request;
 
 return
 /**
@@ -50,7 +50,7 @@ function ($code, $message = '') use ($view) {
         case 405:
             $title = __("Method Not Allowed");
             $description = __("The server is not support method");
-            $this->getResponse()->setHeader('Allow', $message);
+            Response::setHeader('Allow', $message);
             break;
         case 500:
             $title = __("Internal Server Error");
@@ -63,7 +63,7 @@ function ($code, $message = '') use ($view) {
         case 503:
             $title = __("Service Unavailable");
             $description = __("The server is currently unable to handle the request due to a temporary overloading");
-            $this->getResponse()->setHeader('Retry-After', '600');
+            Response::setHeader('Retry-After', '600');
             break;
         default:
             $title = __("Internal Server Error");
@@ -72,7 +72,7 @@ function ($code, $message = '') use ($view) {
     }
 
     // check CLI or HTTP request
-    if ($this->getRequest()->isHttp()) {
+    if (Request::isHttp()) {
 
         // simple AJAX call
         if ($this->isJson()) {
@@ -81,7 +81,7 @@ function ($code, $message = '') use ($view) {
         }
 
         // dialog AJAX call
-        if (!$this->getRequest()->isXmlHttpRequest()) {
+        if (!Request::isXmlHttpRequest()) {
             $this->useLayout('small.phtml');
         }
     }

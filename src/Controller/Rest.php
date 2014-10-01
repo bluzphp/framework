@@ -15,6 +15,7 @@ use Bluz\Application\Exception\BadRequestException;
 use Bluz\Application\Exception\NotFoundException;
 use Bluz\Application\Exception\NotImplementedException;
 use Bluz\Http\Request as HttpRequest;
+use Bluz\Proxy\Response;
 use Bluz\Proxy\Request;
 use Bluz\Proxy\Router;
 use Bluz\Validator\Exception\ValidatorException;

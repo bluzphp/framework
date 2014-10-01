@@ -11,6 +11,7 @@
  */
 namespace Bluz\Proxy;
 
+use Bluz\Common\Exception\ComponentException;
 use Bluz\Response\AbstractResponse as Instance;
 
 /**
@@ -78,10 +79,11 @@ class Response extends AbstractProxy
     /**
      * Init instance
      *
+     * @throws ComponentException
      * @return Instance
      */
     protected static function initInstance()
     {
-        return null;
+        throw new ComponentException("Class `Proxy\\Request` required external initialization");
     }
 }

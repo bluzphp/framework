@@ -284,6 +284,15 @@ class Application
             // initial Translator
             Translator::getInstance();
 
+            // init request
+            $this->initRequest();
+
+            // init router
+            Router::getInstance();
+
+            // init response
+            $this->initResponse();
+
         } catch (\Exception $e) {
             throw new ApplicationException("Application can't be loaded: " . $e->getMessage());
         }
@@ -300,15 +309,6 @@ class Application
     public function process()
     {
         Logger::info('app:process');
-
-        // init request
-        $this->initRequest();
-
-        // init router
-        Router::getInstance();
-
-        // init response
-        $this->initResponse();
 
         // try to dispatch controller
         try {
@@ -408,7 +408,7 @@ class Application
         $response = new Http\Response();
         $response->setOptions(Config::getData('response'));
 
-        Request::setInstance($response);
+        Response::setInstance($response);
     }
 
     /**

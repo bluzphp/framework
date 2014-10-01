@@ -10,6 +10,7 @@
 namespace Bluz\Tests\Fixtures\Models\Test;
 
 use Bluz\Proxy\Db;
+use Bluz\Proxy\Response;
 
 /**
  * Crud based on Db\Table

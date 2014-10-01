@@ -52,9 +52,9 @@ abstract class AbstractProxy
     {
         if (!isset(static::$instances[get_called_class()])) {
             static::$instances[get_called_class()] = static::initInstance();
-//            if (!$instance) {
-//                throw new ComponentException("Proxy class `".get_called_class()."` is not initialized");
-//            }
+            if (!static::$instances[get_called_class()]) {
+                throw new ComponentException("Proxy class `".get_called_class()."` is not initialized");
+            }
         }
 
         return static::$instances[get_called_class()];
@@ -63,12 +63,12 @@ abstract class AbstractProxy
     /**
      * Set or replace instance
      *
-     * @param  mixed $replace
+     * @param  mixed $instance
      * @return void
      */
-    public static function setInstance($replace)
+    public static function setInstance($instance)
     {
-        static::$instances[get_called_class()] = $replace;
+        static::$instances[get_called_class()] = $instance;
     }
 
     /**

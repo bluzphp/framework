@@ -103,47 +103,121 @@ class AbstractRequest
      */
     protected $rawParams = array();
 
+
     /**
-     * Retrieve the module name
+     * Return HTTP method or CLI
      *
-     * @param string $name
+     * @return string
+     */
+    public function getMethod()
+    {
+        return $this->method;
+    }
+
+    /**
+     * setMethod
+     *
+     * Overwrite method
+     *
+     * @param $method
      * @return void
      */
-    public function setModule($name)
+    public function setMethod($method)
     {
-        $this->module = $name;
+        $this->method = $method;
     }
 
     /**
-     * Retrieve the module name
+     * Check CLI
+     *
+     * @return bool
+     */
+    public function isCli()
+    {
+        return $this->method == self::METHOD_CLI;
+    }
+
+    /**
+     * Check HTTP
+     *
+     * @return bool
+     */
+    public function isHttp()
+    {
+        return $this->method != self::METHOD_CLI;
+    }
+
+    /**
+     * Get the base URL.
      *
      * @return string
      */
-    public function getModule()
+    public function getBaseUrl()
     {
-        return $this->module;
+        return $this->baseUrl;
     }
 
     /**
-     * Retrieve the controller name
+     * Set the base URL.
      *
-     * @param string $name
-     * @return self
+     * @param  string $baseUrl
+     * @return void
      */
-    public function setController($name)
+    public function setBaseUrl($baseUrl)
     {
-        $this->controller = $name;
-        return $this;
+        $this->baseUrl = rtrim($baseUrl, '/') . '/';
     }
 
     /**
-     * Retrieve the controller name
+     * Get the request URI without baseUrl
      *
      * @return string
      */
-    public function getController()
+    public function getCleanUri()
     {
-        return $this->controller;
+        if ($this->cleanUri === null) {
+            $uri = parse_url($this->getRequestUri());
+            $uri = $uri['path'];
+
+            if ($this->getBaseUrl() && strpos($uri, $this->getBaseUrl()) === 0) {
+                $uri = substr($uri, strlen($this->getBaseUrl()));
+            }
+            $this->cleanUri = $uri;
+        }
+        return $this->cleanUri;
+    }
+
+    /**
+     * Get the request URI.
+     *
+     * @return string
+     */
+    public function getRequestUri()
+    {
+        return $this->requestUri;
+    }
+
+    /**
+     * Set the request URI.
+     *
+     * @param  string $requestUri
+     * @return void
+     */
+    public function setRequestUri($requestUri)
+    {
+        $this->requestUri = $requestUri;
+    }
+
+    /**
+     * Get an action parameter
+     *
+     * @param string $key
+     * @param mixed $default Default value to use if key not found
+     * @return mixed
+     */
+    public function getParam($key, $default = null)
+    {
+        return isset($this->params[$key]) ? $this->params[$key] : $default;
     }
 
     /**
@@ -167,30 +241,6 @@ class AbstractRequest
     }
 
     /**
-     * Get an action parameter
-     *
-     * @param string $key
-     * @param mixed $default Default value to use if key not found
-     * @return mixed
-     */
-    public function getParam($key, $default = null)
-    {
-        return isset($this->params[$key]) ? $this->params[$key] : $default;
-    }
-
-    /**
-     * Overwrite all parameters
-     *
-     * @param array $params
-     * @return AbstractRequest
-     */
-    public function setParams(array $params)
-    {
-        $this->params = $params;
-        return $this;
-    }
-
-    /**
      * Get parameters
      *
      * @return array
@@ -207,19 +257,18 @@ class AbstractRequest
      */
     public function getAllParams()
     {
-        return $this->params;
+        return $this->getParams();
     }
 
     /**
-     * Set raw params, w/out module and controller
+     * Overwrite all parameters
      *
      * @param array $params
-     * @return AbstractRequest
+     * @return void
      */
-    public function setRawParams(array $params)
+    public function setParams(array $params)
     {
-        $this->rawParams = $params;
-        return $this;
+        $this->params = $params;
     }
 
     /**
@@ -233,7 +282,18 @@ class AbstractRequest
     }
 
     /**
-     * Retrieve a member of the $_ENV superglobal
+     * Set raw params, w/out module and controller
+     *
+     * @param array $params
+     * @return void
+     */
+    public function setRawParams(array $params)
+    {
+        $this->rawParams = $params;
+    }
+
+    /**
+     * Retrieve a member of the $_ENV super global
      *
      * If no $key is passed, returns the entire $_ENV array.
      *
@@ -246,7 +306,6 @@ class AbstractRequest
         if (null === $key) {
             return $_ENV;
         }
-
         return (isset($_ENV[$key])) ? $_ENV[$key] : $default;
     }
 
@@ -264,85 +323,49 @@ class AbstractRequest
         if (null === $key) {
             return $_SERVER;
         }
-
         return (isset($_SERVER[$key])) ? $_SERVER[$key] : $default;
     }
 
     /**
-     * Return HTTP method or CLI
+     * Retrieve the module name
      *
      * @return string
      */
-    public function getMethod()
+    public function getModule()
     {
-        return $this->method;
+        return $this->module;
     }
 
     /**
-     * setMethod
+     * Retrieve the module name
      *
-     * Overwrite method
-     *
-     * @param $method
-     * @return AbstractRequest
+     * @param string $name
+     * @return void
      */
-    public function setMethod($method)
+    public function setModule($name)
     {
-        $this->method = $method;
-        return $this;
+        $this->module = $name;
     }
 
     /**
-     * check CLI
-     *
-     * @return bool
-     */
-    public function isCli()
-    {
-        return $this->method == self::METHOD_CLI;
-    }
-
-    /**
-     * check HTTP
-     *
-     * @return bool
-     */
-    public function isHttp()
-    {
-        return $this instanceof Http\Request;
-    }
-
-    /**
-     * Set the base URL.
-     *
-     * @param  string $baseUrl
-     * @return self
-     */
-    public function setBaseUrl($baseUrl)
-    {
-        $this->baseUrl = rtrim($baseUrl, '/') . '/';
-        return $this;
-    }
-
-    /**
-     * Set the request URI.
-     *
-     * @param  string $requestUri
-     * @return self
-     */
-    public function setRequestUri($requestUri)
-    {
-        $this->requestUri = $requestUri;
-        return $this;
-    }
-
-    /**
-     * Get the request URI.
+     * Retrieve the controller name
      *
      * @return string
      */
-    public function getRequestUri()
+    public function getController()
     {
-        return $this->requestUri;
+        return $this->controller;
     }
+
+    /**
+     * Retrieve the controller name
+     *
+     * @param string $name
+     * @return void
+     */
+    public function setController($name)
+    {
+        $this->controller = $name;
+    }
+
 }

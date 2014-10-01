@@ -11,6 +11,7 @@
  */
 namespace Bluz\View\Helper;
 
+use Bluz\Proxy\Request;
 use Bluz\View\View;
 
 return
@@ -23,10 +24,9 @@ return
      * @return string|bool
      */
     function ($controller = null) {
-        $request = app()->getRequest();
         if (null == $controller) {
-            return $request->getController();
+            return Request::getController();
         } else {
-            return $request->getController() == $controller;
+            return Request::getController() == $controller;
         }
     };

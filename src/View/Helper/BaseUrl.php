@@ -11,6 +11,7 @@
  */
 namespace Bluz\View\Helper;
 
+use Bluz\Proxy\Request;
 use Bluz\View\View;
 
 return

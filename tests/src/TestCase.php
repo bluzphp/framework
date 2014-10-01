@@ -63,12 +63,11 @@ class TestCase extends \PHPUnit_Framework_TestCase
         if (self::$app) {
             self::$app->useJson(false);
             self::$app->useLayout(true);
-
-            Proxy\Auth::clearIdentity();
-            Proxy\Messages::popAll();
-            Proxy\Request::setInstance(new Http\Request());
-            Proxy\Response::setInstance(new Http\Response());
         }
+        Proxy\Auth::clearIdentity();
+        Proxy\Messages::popAll();
+        Proxy\Request::setInstance(new Http\Request());
+        Proxy\Response::setInstance(new Http\Response());
     }
 
     /**

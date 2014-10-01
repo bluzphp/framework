@@ -12,7 +12,8 @@
 namespace Bluz\View\Helper;
 
 use Bluz\View\View;
-use Bluz\Translator\Translator;
+use Bluz\Proxy\Request;
+use Bluz\Proxy\Translator;
 
 return
     /**

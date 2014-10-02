@@ -9,7 +9,6 @@
  */
 namespace Bluz\Tests\Application;
 
-use Bluz\Http\Request as HttpRequest;
 use Bluz\Proxy;
 use Bluz\Proxy\Request;
 use Bluz\Proxy\Response;
@@ -70,7 +69,7 @@ class ApplicationTest extends TestCase
     {
         // setup Request
         Request::setRequestUri('/');
-        Request::setMethod(HttpRequest::METHOD_GET);
+        Request::setMethod(Request::METHOD_GET);
 
 
         // run Router
@@ -90,7 +89,7 @@ class ApplicationTest extends TestCase
     {
         // setup Request
         Request::setRequestUri(uniqid('module'). '/'. uniqid('controller'));
-        Request::setMethod(HttpRequest::METHOD_GET);
+        Request::setMethod(Request::METHOD_GET);
 
         // run Router
         Router::process();

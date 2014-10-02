@@ -51,7 +51,6 @@ use Bluz\Common\Nil;
  * @method   static array get($level)
  * @see      Bluz\Logger\Logger::get()
  *
- *
  * @author   Anton Shevchuk
  * @created  26.09.2014 13:05
  */

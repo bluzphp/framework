@@ -13,7 +13,6 @@ namespace Bluz\Controller;
 
 use Bluz\Application\Exception\ApplicationException;
 use Bluz\Crud\AbstractCrud;
-use Bluz\Http\Request as HttpRequest;
 use Bluz\Proxy\Request;
 
 /**
@@ -30,7 +29,7 @@ abstract class AbstractController
      * HTTP Method
      * @var string
      */
-    protected $method = HttpRequest::METHOD_GET;
+    protected $method = Request::METHOD_GET;
 
     /**
      * Params of query

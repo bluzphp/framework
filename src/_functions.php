@@ -6,7 +6,6 @@
  * @link https://github.com/bluzphp/framework
  */
 
-
 /**
  * Simple functions of framework
  * be careful with this way

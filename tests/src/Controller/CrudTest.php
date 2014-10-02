@@ -9,11 +9,8 @@
  */
 namespace Bluz\Tests\Controller;
 
-use Bluz\Http;
-use Bluz\Http\Request as HttpRequest;
 use Bluz\Controller;
 use Bluz\Proxy\Db;
-use Bluz\Proxy\Response;
 use Bluz\Proxy\Request;
 use Bluz\Tests\Fixtures\Models\Test\Crud;
 use Bluz\Tests\TestCase;
@@ -92,11 +89,11 @@ class CrudTest extends TestCase
      */
     public function testNewRecord()
     {
-        Request::setMethod(HttpRequest::METHOD_GET);
+        Request::setMethod(Request::METHOD_GET);
 
         $result = $this->processCrud();
 
-        $this->assertEquals(HttpRequest::METHOD_POST, $result['method']);
+        $this->assertEquals(Request::METHOD_POST, $result['method']);
         $this->assertInstanceOf('Bluz\Tests\Fixtures\Models\Test\Row', $result['row']);
         $this->assertNull($result['row']['id']);
     }
@@ -106,12 +103,12 @@ class CrudTest extends TestCase
      */
     public function testReadRecord()
     {
-        Request::setMethod(HttpRequest::METHOD_GET);
+        Request::setMethod(Request::METHOD_GET);
         Request::setParam('id', 1);
 
         $result = $this->processCrud();
 
-        $this->assertEquals(HttpRequest::METHOD_PUT, $result['method']);
+        $this->assertEquals(Request::METHOD_PUT, $result['method']);
         $this->assertInstanceOf('Bluz\Tests\Fixtures\Models\Test\Row', $result['row']);
         $this->assertEquals(1, $result['row']['id']);
     }
@@ -121,7 +118,7 @@ class CrudTest extends TestCase
      */
     public function testReadRecordError()
     {
-        Request::setMethod(HttpRequest::METHOD_GET);
+        Request::setMethod(Request::METHOD_GET);
         Request::setParam('id', 100042);
 
         $this->processCrud();
@@ -132,12 +129,12 @@ class CrudTest extends TestCase
      */
     public function testCreate()
     {
-        Request::setMethod(HttpRequest::METHOD_POST);
+        Request::setMethod(Request::METHOD_POST);
         Request::setParams(['name' => 'Splinter', 'email' => 'splinter@turtles.org']);
 
         $result = $this->processCrud();
 
-        $this->assertEquals(HttpRequest::METHOD_PUT, $result['method']);
+        $this->assertEquals(Request::METHOD_PUT, $result['method']);
         $this->assertInstanceOf('Bluz\Tests\Fixtures\Models\Test\Row', $result['row']);
         $this->assertNotNull($result['row']['id']);
     }
@@ -148,12 +145,12 @@ class CrudTest extends TestCase
      */
     public function testCreateValidationErrors()
     {
-        Request::setMethod(HttpRequest::METHOD_POST);
+        Request::setMethod(Request::METHOD_POST);
         Request::setParams(['name' => '', 'email' => '']);
 
         $result = $this->processCrud();
 
-        $this->assertEquals(HttpRequest::METHOD_POST, $result['method']);
+        $this->assertEquals(Request::METHOD_POST, $result['method']);
         $this->assertInstanceOf('Bluz\Tests\Fixtures\Models\Test\Row', $result['row']);
         $this->assertNull($result['row']['id']);
         $this->assertEquals(sizeof($result['errors']), 2);
@@ -164,12 +161,12 @@ class CrudTest extends TestCase
      */
     public function testUpdate()
     {
-        Request::setMethod(HttpRequest::METHOD_PUT);
+        Request::setMethod(Request::METHOD_PUT);
         Request::setParams(['id' => 2, 'name' => 'Leonardo', 'email' => 'leonardo@turtles.ua']);
 
         $result = $this->processCrud();
 
-        $this->assertEquals(HttpRequest::METHOD_PUT, $result['method']);
+        $this->assertEquals(Request::METHOD_PUT, $result['method']);
         $this->assertInstanceOf('Bluz\Tests\Fixtures\Models\Test\Row', $result['row']);
         $this->assertEquals(2, $result['row']['id']);
 
@@ -186,7 +183,7 @@ class CrudTest extends TestCase
      */
     public function testUpdateNotFoundError()
     {
-        Request::setMethod(HttpRequest::METHOD_PUT);
+        Request::setMethod(Request::METHOD_PUT);
         Request::setParams(['id' => 100042, 'name' => 'You Knows', 'email' => 'all@turtles.ua']);
 
         $this->processCrud();
@@ -197,13 +194,13 @@ class CrudTest extends TestCase
      */
     public function testUpdateValidationErrors()
     {
-        Request::setMethod(HttpRequest::METHOD_PUT);
+        Request::setMethod(Request::METHOD_PUT);
         Request::setParams(['id' => 2, 'name' => '123456', 'email' => 'leonardo[at]turtles.ua']);
 
 
         $result = $this->processCrud();
 
-        $this->assertEquals(HttpRequest::METHOD_PUT, $result['method']);
+        $this->assertEquals(Request::METHOD_PUT, $result['method']);
         $this->assertInstanceOf('Bluz\Tests\Fixtures\Models\Test\Row', $result['row']);
         $this->assertEquals(2, $result['row']['id']);
         $this->assertEquals(sizeof($result['errors']), 2);
@@ -214,7 +211,7 @@ class CrudTest extends TestCase
      */
     public function testDelete()
     {
-        Request::setMethod(HttpRequest::METHOD_DELETE);
+        Request::setMethod(Request::METHOD_DELETE);
         Request::setParams(['id' => 3]);
 
         $result = $this->processCrud();
@@ -230,7 +227,7 @@ class CrudTest extends TestCase
      */
     public function testDeleteError()
     {
-        Request::setMethod(HttpRequest::METHOD_DELETE);
+        Request::setMethod(Request::METHOD_DELETE);
         Request::setParams(['id' => 100042]);
 
         $this->processCrud();
@@ -242,7 +239,7 @@ class CrudTest extends TestCase
      */
     public function testNotImplementedException()
     {
-        Request::setMethod(HttpRequest::METHOD_HEAD);
+        Request::setMethod(Request::METHOD_HEAD);
 
         $this->processCrud();
     }

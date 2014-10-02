@@ -51,6 +51,11 @@ use Bluz\Common\Nil;
 class Cache extends AbstractProxy
 {
     /**
+     * No expiry TTL
+     */
+    const TTL_NO_EXPIRY = Instance::TTL_NO_EXPIRY;
+
+    /**
      * Init instance
      *
      * @return Instance

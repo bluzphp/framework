@@ -14,7 +14,6 @@ namespace Bluz\Controller;
 use Bluz\Application\Exception\BadRequestException;
 use Bluz\Application\Exception\NotFoundException;
 use Bluz\Application\Exception\NotImplementedException;
-use Bluz\Http\Request as HttpRequest;
 use Bluz\Proxy\Response;
 use Bluz\Proxy\Request;
 use Bluz\Proxy\Router;
@@ -110,7 +109,7 @@ class Rest extends AbstractController
         // DELETE /module/rest/id -> 204 // item was deleted
         //                        -> 404 // not found
         switch ($this->method) {
-            case HttpRequest::METHOD_GET:
+            case Request::METHOD_GET:
                 if ($this->primary) {
                     // @throws NotFoundException
                     $result = $this->readOne($this->primary);
@@ -129,7 +128,7 @@ class Rest extends AbstractController
                     return $this->readSet($offset, $limit, $this->params);
                 }
                 // break
-            case HttpRequest::METHOD_POST:
+            case Request::METHOD_POST:
                 if ($this->primary) {
                     // POST + ID is incorrect behaviour
                     throw new NotImplementedException();
@@ -161,8 +160,8 @@ class Rest extends AbstractController
                     Router::getUrl(Request::getModule(), Request::getController()).'/'.$result
                 );
                 return false; // disable view
-            case HttpRequest::METHOD_PATCH:
-            case HttpRequest::METHOD_PUT:
+            case Request::METHOD_PATCH:
+            case Request::METHOD_PUT:
                 if (!sizeof($this->data)) {
                     // data not found
                     throw new BadRequestException();
@@ -186,7 +185,7 @@ class Rest extends AbstractController
                     return ['errors' => $e->getErrors()];
                 }
                 return false; // disable view
-            case HttpRequest::METHOD_DELETE:
+            case Request::METHOD_DELETE:
                 if ($this->primary) {
                     // delete one
                     // @throws NotFoundException

@@ -9,7 +9,6 @@
  */
 namespace Bluz\Tests\Controller;
 
-use Bluz\Http\Request as HttpRequest;
 use Bluz\Controller;
 use Bluz\Proxy\Db;
 use Bluz\Proxy\Response;
@@ -91,7 +90,7 @@ class RestTest extends TestCase
      */
     public function testReadOne()
     {
-        Request::setMethod(HttpRequest::METHOD_GET);
+        Request::setMethod(Request::METHOD_GET);
         Request::setRawParams([1]);
 
         $result = $this->processRest();
@@ -108,7 +107,7 @@ class RestTest extends TestCase
      */
     public function testReadOneWithRelations()
     {
-        Request::setMethod(HttpRequest::METHOD_GET);
+        Request::setMethod(Request::METHOD_GET);
         Request::setRawParams([1, 'pages']);
 
         $result = $this->processRest();
@@ -125,7 +124,7 @@ class RestTest extends TestCase
      */
     public function testReadOneWithOneRelation()
     {
-        Request::setMethod(HttpRequest::METHOD_GET);
+        Request::setMethod(Request::METHOD_GET);
         Request::setRawParams([1, 'pages', 1]);
 
         $result = $this->processRest();
@@ -142,7 +141,7 @@ class RestTest extends TestCase
      */
     public function testReadOneError()
     {
-        Request::setMethod(HttpRequest::METHOD_GET);
+        Request::setMethod(Request::METHOD_GET);
         Request::setRawParams([100042]);
 
         $this->processRest();
@@ -153,7 +152,7 @@ class RestTest extends TestCase
      */
     public function testReadSet()
     {
-        Request::setMethod(HttpRequest::METHOD_GET);
+        Request::setMethod(Request::METHOD_GET);
 
         $_GET['offset'] = 0;
         $_GET['limit'] = 3;
@@ -168,7 +167,7 @@ class RestTest extends TestCase
      */
     public function testReadSetWithRange()
     {
-        Request::setMethod(HttpRequest::METHOD_GET);
+        Request::setMethod(Request::METHOD_GET);
 
         $_SERVER['HTTP_RANGE'] = 'test=0-3';
 
@@ -182,7 +181,7 @@ class RestTest extends TestCase
      */
     public function testCreate()
     {
-        Request::setMethod(HttpRequest::METHOD_POST);
+        Request::setMethod(Request::METHOD_POST);
         Request::setParams(['name' => 'Splinter', 'email' => 'splinter@turtles.org']);
 
         $result = $this->processRest();
@@ -202,7 +201,7 @@ class RestTest extends TestCase
      */
     public function testCreateWithPrimaryError()
     {
-        Request::setMethod(HttpRequest::METHOD_POST);
+        Request::setMethod(Request::METHOD_POST);
         Request::setRawParams([1]);
 
         $this->processRest();
@@ -214,7 +213,7 @@ class RestTest extends TestCase
      */
     public function testCreateWithoutDataError()
     {
-        Request::setMethod(HttpRequest::METHOD_POST);
+        Request::setMethod(Request::METHOD_POST);
 
         $this->processRest();
     }
@@ -224,7 +223,7 @@ class RestTest extends TestCase
      */
     public function testCreateValidationErrors()
     {
-        Request::setMethod(HttpRequest::METHOD_POST);
+        Request::setMethod(Request::METHOD_POST);
         Request::setParams(['name' => '', 'email' => '']);
 
         $result = $this->processRest();
@@ -236,7 +235,7 @@ class RestTest extends TestCase
      */
     public function testUpdate()
     {
-        Request::setMethod(HttpRequest::METHOD_PUT);
+        Request::setMethod(Request::METHOD_PUT);
         Request::setRawParams([2]);
         Request::setParams(['name' => 'Leonardo', 'email' => 'leonardo@turtles.ua']);
 
@@ -255,7 +254,7 @@ class RestTest extends TestCase
      */
     public function testUpdateWithSameDate()
     {
-        Request::setMethod(HttpRequest::METHOD_PUT);
+        Request::setMethod(Request::METHOD_PUT);
         Request::setRawParams([1]);
         Request::setParams(['name' => 'Donatello', 'email' => 'donatello@turtles.org']);
 
@@ -271,7 +270,7 @@ class RestTest extends TestCase
      */
     public function testUpdateNotFoundError()
     {
-        Request::setMethod(HttpRequest::METHOD_PUT);
+        Request::setMethod(Request::METHOD_PUT);
         Request::setRawParams([100042]);
         Request::setParams(['name' => 'Leonardo', 'email' => 'leonardo@turtles.ua']);
 
@@ -284,7 +283,7 @@ class RestTest extends TestCase
      */
     public function testUpdateNotDataError()
     {
-        Request::setMethod(HttpRequest::METHOD_PUT);
+        Request::setMethod(Request::METHOD_PUT);
         Request::setRawParams([100042]);
 
         $this->processRest();
@@ -295,7 +294,7 @@ class RestTest extends TestCase
      */
     public function testUpdateValidationErrors()
     {
-        Request::setMethod(HttpRequest::METHOD_PUT);
+        Request::setMethod(Request::METHOD_PUT);
         Request::setRawParams([2]);
         Request::setParams(['name' => '123456', 'email' => 'leonardo[at]turtles.ua']);
 
@@ -309,7 +308,7 @@ class RestTest extends TestCase
      */
     public function testUpdateSet()
     {
-        Request::setMethod(HttpRequest::METHOD_PUT);
+        Request::setMethod(Request::METHOD_PUT);
         Request::setParams(
             [
                 ['id' => 3, 'name' => 'Michelangelo', 'email' => 'michelangelo@turtles.org.ua'],
@@ -325,7 +324,7 @@ class RestTest extends TestCase
      */
     public function testDelete()
     {
-        Request::setMethod(HttpRequest::METHOD_DELETE);
+        Request::setMethod(Request::METHOD_DELETE);
         Request::setRawParams([1]);
 
         $result = $this->processRest();
@@ -344,7 +343,7 @@ class RestTest extends TestCase
      */
     public function testDeleteWithInvalidPrimary()
     {
-        Request::setMethod(HttpRequest::METHOD_DELETE);
+        Request::setMethod(Request::METHOD_DELETE);
         Request::setRawParams([100042]);
 
         $this->processRest();
@@ -356,7 +355,7 @@ class RestTest extends TestCase
      */
     public function testDeleteWithoutData()
     {
-        Request::setMethod(HttpRequest::METHOD_DELETE);
+        Request::setMethod(Request::METHOD_DELETE);
 
         $this->processRest();
     }
@@ -367,7 +366,7 @@ class RestTest extends TestCase
      */
     public function testDeleteSet()
     {
-        Request::setMethod(HttpRequest::METHOD_DELETE);
+        Request::setMethod(Request::METHOD_DELETE);
         Request::setParams(
             [
                 ['id' => 3],
@@ -384,7 +383,7 @@ class RestTest extends TestCase
      */
     public function testNotImplementedException()
     {
-        Request::setMethod(HttpRequest::METHOD_HEAD);
+        Request::setMethod(Request::METHOD_HEAD);
 
         $this->processRest();
     }

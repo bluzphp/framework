@@ -60,6 +60,14 @@ use Bluz\Request\AbstractRequest as Instance;
  * @see      Bluz\Request\AbstractRequest::isCli()
  * @method   static bool isHttp()
  * @see      Bluz\Request\AbstractRequest::isHttp()
+ * @method   static bool isGet()
+ * @see      Bluz\Request\AbstractRequest::isGet()
+ * @method   static bool isPost()
+ * @see      Bluz\Request\AbstractRequest::isPost()
+ * @method   static bool isPut()
+ * @see      Bluz\Request\AbstractRequest::isPut()
+ * @method   static bool isDelete()
+ * @see      Bluz\Request\AbstractRequest::isDelete()
  *
  * @method   static string getServer($key = null, $default = null)
  * @see      Bluz\Request\AbstractRequest::getServer()
@@ -91,15 +99,6 @@ use Bluz\Request\AbstractRequest as Instance;
  * @method   static void setFileUpload(FileUpload $fileUpload)
  * @see      Bluz\Http\Request::setFileUpload()
  *
- * @method   static bool isGet()
- * @see      Bluz\Http\Request::isGet()
- * @method   static bool isPost()
- * @see      Bluz\Http\Request::isPost()
- * @method   static bool isPut()
- * @see      Bluz\Http\Request::isPut()
- * @method   static bool isDelete()
- * @see      Bluz\Http\Request::isDelete()
- *
  * @method   static bool isXmlHttpRequest()
  * @see      Bluz\Http\Request::isXmlHttpRequest()
  * @method   static bool isFlashRequest()
@@ -110,6 +109,28 @@ use Bluz\Request\AbstractRequest as Instance;
  */
 class Request extends AbstractProxy
 {
+    /**
+     * @const string HTTP METHOD constant names
+     */
+    const METHOD_OPTIONS = Instance::METHOD_OPTIONS;
+    const METHOD_GET = Instance::METHOD_GET;
+    const METHOD_HEAD = Instance::METHOD_HEAD;
+    const METHOD_PATCH = Instance::METHOD_PATCH;
+    const METHOD_POST = Instance::METHOD_POST;
+    const METHOD_PUT = Instance::METHOD_PUT;
+    const METHOD_DELETE = Instance::METHOD_DELETE;
+    const METHOD_TRACE = Instance::METHOD_TRACE;
+    const METHOD_CONNECT = Instance::METHOD_CONNECT;
+    /**
+     * Command line request
+     */
+    const METHOD_CLI = Instance::METHOD_CLI;
+
+    /**
+     * HTTP Request
+     */
+    const METHOD_HTTP = Instance::METHOD_HTTP;
+    
     /**
      * Init instance
      *

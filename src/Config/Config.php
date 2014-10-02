@@ -11,8 +11,6 @@
  */
 namespace Bluz\Config;
 
-use Bluz\Common\Options;
-
 /**
  * Config
  *

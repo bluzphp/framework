@@ -24,19 +24,6 @@ use Bluz\Request\AbstractRequest;
 class Request extends AbstractRequest
 {
     /**
-     * @const string HTTP METHOD constant names
-     */
-    const METHOD_OPTIONS = 'OPTIONS';
-    const METHOD_GET = 'GET';
-    const METHOD_HEAD = 'HEAD';
-    const METHOD_PATCH = 'PATCH';
-    const METHOD_POST = 'POST';
-    const METHOD_PUT = 'PUT';
-    const METHOD_DELETE = 'DELETE';
-    const METHOD_TRACE = 'TRACE';
-    const METHOD_CONNECT = 'CONNECT';
-
-    /**
      * @const string HTTP SCHEME constant names
      */
     const SCHEME_HTTP = 'http';
@@ -121,46 +108,6 @@ class Request extends AbstractRequest
     public function getScheme()
     {
         return ($this->getServer('HTTPS') == 'on') ? self::SCHEME_HTTPS : self::SCHEME_HTTP;
-    }
-
-    /**
-     * Is this a GET method request?
-     *
-     * @return bool
-     */
-    public function isGet()
-    {
-        return ($this->getMethod() === self::METHOD_GET);
-    }
-
-    /**
-     * Is this a POST method request?
-     *
-     * @return bool
-     */
-    public function isPost()
-    {
-        return ($this->getMethod() === self::METHOD_POST);
-    }
-
-    /**
-     * Is this a PUT method request?
-     *
-     * @return bool
-     */
-    public function isPut()
-    {
-        return ($this->getMethod() === self::METHOD_PUT);
-    }
-
-    /**
-     * Is this a DELETE method request?
-     *
-     * @return bool
-     */
-    public function isDelete()
-    {
-        return ($this->getMethod() === self::METHOD_DELETE);
     }
 
     /**

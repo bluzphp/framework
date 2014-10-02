@@ -33,7 +33,7 @@ class ArraySource extends AbstractSource
     public function setSource($source)
     {
         if (!is_array($source) && !($source instanceof \ArrayAccess)) {
-            throw new Grid\GridException("Source of ArraySource should be array or implement ArrayAccess interface");
+            throw new Grid\GridException("Source of `ArraySource` should be array or implement ArrayAccess interface");
         }
 
         $this->source = $source;

@@ -167,18 +167,6 @@ class ViewTest extends TestCase
     }
 
     /**
-     * Helper Breadcrumbs
-     */
-    public function testHelperBreadcrumbs()
-    {
-        $view = $this->getView();
-
-        $view->breadCrumbs(['foo' => 'bar']);
-
-        $this->assertEqualsArray(['foo' => 'bar'], $view->breadCrumbs());
-    }
-
-    /**
      * Helper Checkbox
      */
     public function testHelperCheckbox()
@@ -265,73 +253,6 @@ class ViewTest extends TestCase
         );
     }
 
-    /**
-     * Helper Link
-     */
-    public function testHelperLink()
-    {
-        $view = $this->getView();
-
-        $view->link(['href'=>'foo.css', 'rel' => "stylesheet", 'media' => "all"]);
-        $view->link(['href'=>'favicon.ico', 'rel' => 'shortcut icon']);
-
-        $result = $view->link();
-
-        $this->assertEquals(
-            '<link href="foo.css" rel="stylesheet" media="all"/>'.
-            '<link href="favicon.ico" rel="shortcut icon"/>',
-            str_replace(["\t", "\n", "\r"], '', $result)
-        );
-    }
-
-    /**
-     * Helper Meta
-     */
-    public function testHelperMeta()
-    {
-        $view = $this->getView();
-
-        $view->meta('keywords', 'foo, bar, baz, qux');
-        $view->meta('description', 'foo bar baz qux');
-
-        $result = $view->meta();
-
-        $this->assertEquals(
-            '<meta name="keywords" content="foo, bar, baz, qux"/>'.
-            '<meta name="description" content="foo bar baz qux"/>',
-            str_replace(["\t", "\n", "\r"], '', $result)
-        );
-    }
-
-    /**
-     * Helper Meta with Array
-     */
-    public function testHelperMetaArray()
-    {
-        $view = $this->getView();
-
-        $view->meta(
-            [
-                'name' => 'keywords',
-                'content' => 'foo, bar, baz, qux'
-            ]
-        );
-
-        $view->meta(
-            [
-                'name' => 'description',
-                'content' => 'foo bar baz qux'
-            ]
-        );
-
-        $result = $view->meta();
-
-        $this->assertEquals(
-            '<meta name="keywords" content="foo, bar, baz, qux"/>'.
-            '<meta name="description" content="foo bar baz qux"/>',
-            str_replace(["\t", "\n", "\r"], '', $result)
-        );
-    }
 
     /**
      * Helper Module
@@ -585,22 +506,6 @@ class ViewTest extends TestCase
         $result = str_replace(["\t", "\n", "\r"], '', $result);
 
         $this->assertEquals('<style type="text/css" media="all">#my{color:red}</style>', $result);
-    }
-
-    /**
-     * Helper Title
-     */
-    public function testHelperTitle()
-    {
-        $view = $this->getView();
-
-        $view->title('foo');
-        $view->title('bar', View::POS_APPEND);
-        $view->title('baz', View::POS_PREPEND);
-
-        $result = $view->title();
-
-        $this->assertEquals('baz :: foo :: bar', $result);
     }
 
     /**

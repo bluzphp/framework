@@ -18,11 +18,11 @@ use Bluz\Application\Exception\ReloadException;
 use Bluz\Auth\AbstractRowEntity;
 use Bluz\Common;
 use Bluz\Http;
-use Bluz\Proxy;
 use Bluz\Proxy\Acl;
 use Bluz\Proxy\Cache;
 use Bluz\Proxy\Config;
 use Bluz\Proxy\EventManager;
+use Bluz\Proxy\Layout;
 use Bluz\Proxy\Logger;
 use Bluz\Proxy\Messages;
 use Bluz\Proxy\Request;
@@ -30,7 +30,6 @@ use Bluz\Proxy\Response;
 use Bluz\Proxy\Router;
 use Bluz\Proxy\Session;
 use Bluz\Proxy\Translator;
-use Bluz\View\Layout;
 use Bluz\View\View;
 
 /**
@@ -51,11 +50,6 @@ class Application
 {
     use Common\Helper;
     use Common\Singleton;
-
-    /**
-     * @var Layout instance
-     */
-    protected $layout;
 
     /**
      * Application path
@@ -122,20 +116,6 @@ class Application
     }
 
     /**
-     * Get Layout instance
-     *
-     * @return Layout
-     */
-    public function getLayout()
-    {
-        if (!$this->layout) {
-            $this->layout = new Layout();
-            $this->layout->setOptions(Config::getData('layout'));
-        }
-        return $this->layout;
-    }
-
-    /**
      * Get path to Application
      *
      * @return string
@@ -151,24 +131,6 @@ class Application
             }
         }
         return $this->path;
-    }
-
-    /**
-     * Create new instance of view and return it
-     *
-     * @return View
-     */
-    protected function getView()
-    {
-        $view = new View();
-
-        // setup additional helper path
-        $view->addHelperPath($this->getPath() . '/layouts/helpers');
-
-        // setup additional partial path
-        $view->addPartialPath($this->getPath() . '/layouts/partial');
-
-        return $view;
     }
 
     /**
@@ -210,7 +172,7 @@ class Application
     public function useLayout($flag = true)
     {
         if (is_string($flag)) {
-            $this->getLayout()->setTemplate($flag);
+            Layout::setTemplate($flag);
             $this->layoutFlag = true;
         } else {
             $this->layoutFlag = $flag;
@@ -311,8 +273,8 @@ class Application
             );
 
             if ($this->hasLayout()) {
-                $this->getLayout()->setContent($dispatchResult);
-                $dispatchResult = $this->getLayout();
+                Layout::setContent($dispatchResult);
+                $dispatchResult = Layout::getInstance();
             }
 
             Response::setBody($dispatchResult);
@@ -349,8 +311,8 @@ class Application
             );
 
             if ($this->hasLayout()) {
-                $this->getLayout()->setContent($dispatchResult);
-                $dispatchResult = $this->getLayout();
+                Layout::setContent($dispatchResult);
+                $dispatchResult = Layout::getInstance();
             }
 
             Response::setStatusCode($e->getCode());
@@ -445,8 +407,15 @@ class Application
         }
 
         // cache initialization
+        if (isset($reflectionData['cache-html'])) {
+            $htmlKey = 'html:' . $module . ':' . $controller . ':' . http_build_query($params);
+            if ($cachedHtml = Cache::get($htmlKey)) {
+                return $cachedHtml;
+            }
+        }
+
         if (isset($reflectionData['cache'])) {
-            $cacheKey = $module . '/' . $controller . '/' . http_build_query($params);
+            $cacheKey = 'view:' . $module . ':' . $controller . ':' . http_build_query($params);
             if ($cachedView = Cache::get($cacheKey)) {
                 return $cachedView;
             }
@@ -456,9 +425,17 @@ class Application
         $params = $this->params($reflectionData, $params);
 
         // $view for use in closure
-        $view = $this->getView();
+        $view = new View();
+
+        // setup additional helper path
+        $view->addHelperPath($this->getPath() . '/layouts/helpers');
+
+        // setup additional partial path
+        $view->addPartialPath($this->getPath() . '/layouts/partial');
+
         // setup default path
         $view->setPath($this->getPath() . '/modules/' . $module . '/views');
+
         // setup default template
         $view->setTemplate($controller . '.phtml');
 
@@ -512,9 +489,18 @@ class Application
 
         if (isset($reflectionData['cache'], $cacheKey)) {
             Cache::set($cacheKey, $view, intval($reflectionData['cache']) * 60);
+            Cache::addTag($cacheKey, $module);
             Cache::addTag($cacheKey, 'view');
             Cache::addTag($cacheKey, 'view:' . $module);
             Cache::addTag($cacheKey, 'view:' . $module . ':' . $controller);
+        }
+
+        if (isset($reflectionData['cache-html'], $htmlKey)) {
+            Cache::set($htmlKey, $view->render(), intval($reflectionData['cache-html']) * 60);
+            Cache::addTag($htmlKey, $module);
+            Cache::addTag($htmlKey, 'html');
+            Cache::addTag($htmlKey, 'html:' . $module);
+            Cache::addTag($htmlKey, 'html:' . $module . ':' . $controller);
         }
 
         return $view;
@@ -823,6 +809,26 @@ class Application
                     case 'min':
                     default:
                         $data['cache'] = (int)$num;
+                }
+            }
+
+            // prepare cache ttl settings
+            if (isset($data['cache-html'])) {
+                $cache = current($data['cache-html']);
+                $num = (int)$cache;
+                $time = substr($cache, strpos($cache, ' '));
+                switch ($time) {
+                    case 'day':
+                    case 'days':
+                        $data['cache-html'] = (int)$num * 60 * 24;
+                        break;
+                    case 'hour':
+                    case 'hours':
+                        $data['cache-html'] = (int)$num * 60;
+                        break;
+                    case 'min':
+                    default:
+                        $data['cache-html'] = (int)$num;
                 }
             }
 

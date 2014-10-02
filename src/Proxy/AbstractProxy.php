@@ -24,7 +24,7 @@ use Bluz\Common\Exception\ComponentException;
 abstract class AbstractProxy
 {
     /**
-     * @var AbstractProxy[]
+     * @var array
      */
     protected static $instances = array();
 

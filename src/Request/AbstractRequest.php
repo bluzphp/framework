@@ -12,7 +12,6 @@
 namespace Bluz\Request;
 
 use Bluz\Common\Options;
-use Bluz\Http;
 
 /**
  * Request
@@ -145,6 +144,46 @@ class AbstractRequest
     public function isHttp()
     {
         return $this->method != self::METHOD_CLI;
+    }
+
+    /**
+     * Is this a GET method request?
+     *
+     * @return bool
+     */
+    public function isGet()
+    {
+        return ($this->getMethod() === self::METHOD_GET);
+    }
+
+    /**
+     * Is this a POST method request?
+     *
+     * @return bool
+     */
+    public function isPost()
+    {
+        return ($this->getMethod() === self::METHOD_POST);
+    }
+
+    /**
+     * Is this a PUT method request?
+     *
+     * @return bool
+     */
+    public function isPut()
+    {
+        return ($this->getMethod() === self::METHOD_PUT);
+    }
+
+    /**
+     * Is this a DELETE method request?
+     *
+     * @return bool
+     */
+    public function isDelete()
+    {
+        return ($this->getMethod() === self::METHOD_DELETE);
     }
 
     /**

@@ -87,7 +87,7 @@ class Cache implements CacheInterface, TagableInterface
     /**
      * Prepare Id with prefix
      *
-     * @param $id
+     * @param  string $id
      * @throws InvalidArgumentException
      * @return string
      */

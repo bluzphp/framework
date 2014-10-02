@@ -12,6 +12,7 @@
  */
 namespace Application;
 
+use Bluz\Proxy\Layout;
 use Bluz\Proxy\Logger;
 use Bluz\Proxy\Messages;
 use Bluz\Proxy\Response;
@@ -89,6 +90,6 @@ function ($code, $message = '') use ($view) {
     $view->title = $title;
     $view->description = $description;
     $view->message = $message;
-    $this->getLayout()->title($title);
+    Layout::title($title);
     return $view;
 };

@@ -19,24 +19,8 @@ use Bluz\Proxy;
  * Cache session handler
  * @package Bluz\Session\Adapter
  */
-class Cache implements \SessionHandlerInterface
+class Cache extends AbstractAdapter implements \SessionHandlerInterface
 {
-    /**
-     * Instance of Redis
-     * @var \Bluz\Cache\Cache
-     */
-    protected $handler = null;
-
-    /**
-     * @var string
-     */
-    protected $prefix = 'PHPSESSID:';
-
-    /**
-     * @var int ttl of session
-     */
-    protected $ttl = 1800;
-
     /**
      * Check and setup Redis server
      *
@@ -52,29 +36,6 @@ class Cache implements \SessionHandlerInterface
                 "Cache configuration is missed or disabled. Please check 'cache' configuration section"
             );
         }
-    }
-
-    /**
-     * @param string $savePath
-     * @param string $sessionName
-     * @return bool|void
-     */
-    public function open($savePath, $sessionName)
-    {
-        $this->prefix = $sessionName . ':';
-        $this->ttl = ini_get('session.gc_maxlifetime');
-
-        // No more action necessary because connection is injected
-        // in constructor and arguments are not applicable.
-    }
-
-    /**
-     * @return bool|void
-     */
-    public function close()
-    {
-        $this->handler = null;
-        unset($this->handler);
     }
 
     /**
@@ -107,14 +68,5 @@ class Cache implements \SessionHandlerInterface
     public function destroy($id)
     {
         $this->handler->delete($this->prefix . $id);
-    }
-
-    /**
-     * @param int $maxLifetime
-     * @return bool|void
-     */
-    public function gc($maxLifetime)
-    {
-        // no action necessary because using EXPIRE
     }
 }

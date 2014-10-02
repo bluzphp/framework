@@ -21,14 +21,24 @@ use Bluz\Session\Session as Instance;
  * @method   static Instance getInstance()
  *
  * @method   static void  start()
+ * @see      Session::start()
  * @method   static void  destroy()
+ * @see      Session::destroy()
  * @method   static void  set($key, $value)
+ * @see      Session::set()
  * @method   static mixed get($key)
+ * @see      Session::get()
  * @method   static bool  contains($key)
+ * @see      Session::contains()
  * @method   static void  delete($key)
+ * @see      Session::delete()
  * @method   static string getId()
+ * @see      Session::getId()
  * @method   static bool  regenerateId($deleteOldSession = true)
+ * @see      Session::regenerateId()
  * @method   static void  setSessionCookieLifetime($ttl)
+ * @see      Session::setSessionCookieLifetime()
+ *
  * @method   static void  expireSessionCookie()
  *
  * @author   Anton Shevchuk

@@ -251,79 +251,6 @@ class Application
     }
 
     /**
-     * Process application
-     *
-     * Note:
-     * - Why you don't use "X-" prefix?
-     * - Because it deprecated
-     * @link http://tools.ietf.org/html/rfc6648
-     */
-    public function process()
-    {
-        Logger::info('app:process');
-
-        Router::process();
-
-        // try to dispatch controller
-        try {
-            $dispatchResult = $this->dispatch(
-                Request::getModule(),
-                Request::getController(),
-                Request::getAllParams()
-            );
-
-            if ($this->hasLayout()) {
-                Layout::setContent($dispatchResult);
-                $dispatchResult = Layout::getInstance();
-            }
-
-            Response::setBody($dispatchResult);
-        } catch (RedirectException $e) {
-            Response::setException($e);
-
-            if (Request::isXmlHttpRequest()) {
-                Response::setStatusCode(204);
-                Response::setHeader('Bluz-Redirect', $e->getMessage());
-            } else {
-                Response::setStatusCode($e->getCode());
-                Response::setHeader('Location', $e->getMessage());
-            }
-        } catch (ReloadException $e) {
-            Response::setException($e);
-
-            if (Request::isXmlHttpRequest()) {
-                Response::setStatusCode(204);
-                Response::setHeader('Bluz-Reload', 'true');
-            } else {
-                Response::setStatusCode($e->getCode());
-                Response::setHeader('Refresh', '0; url=' . Request::getRequestUri());
-            }
-        } catch (\Exception $e) {
-            Response::setException($e);
-
-            $dispatchResult = $this->dispatch(
-                Router::getErrorModule(),
-                Router::getErrorController(),
-                array(
-                    'code' => $e->getCode(),
-                    'message' => $e->getMessage()
-                )
-            );
-
-            if ($this->hasLayout()) {
-                Layout::setContent($dispatchResult);
-                $dispatchResult = Layout::getInstance();
-            }
-
-            Response::setStatusCode($e->getCode());
-            Response::setBody($dispatchResult);
-        }
-
-        return Response::getInstance();
-    }
-
-
-    /**
      * Initial Request instance
      *
      * @return void
@@ -366,6 +293,118 @@ class Application
     }
 
     /**
+     * Process application
+     *
+     * Note:
+     * - Why you don't use "X-" prefix for custom headers?
+     * - Because it deprecated
+     * @link http://tools.ietf.org/html/rfc6648
+     *
+     * @return void
+     */
+    public function process()
+    {
+        Logger::info('app:process');
+
+        Router::process();
+
+        // try to dispatch controller
+        try {
+            $dispatchResult = $this->dispatch(
+                Request::getModule(),
+                Request::getController(),
+                Request::getAllParams()
+            );
+        } catch (RedirectException $e) {
+            Response::setException($e);
+
+            if (Request::isXmlHttpRequest()) {
+                Response::setStatusCode(204);
+                Response::setHeader('Bluz-Redirect', $e->getMessage());
+            } else {
+                Response::setStatusCode($e->getCode());
+                Response::setHeader('Location', $e->getMessage());
+            }
+            return;
+        } catch (ReloadException $e) {
+            Response::setException($e);
+
+            if (Request::isXmlHttpRequest()) {
+                Response::setStatusCode(204);
+                Response::setHeader('Bluz-Reload', 'true');
+            } else {
+                Response::setStatusCode($e->getCode());
+                Response::setHeader('Refresh', '0; url=' . Request::getRequestUri());
+            }
+            return;
+        } catch (\Exception $e) {
+            Response::setException($e);
+            Response::setStatusCode($e->getCode());
+
+            $dispatchResult = $this->dispatch(
+                Router::getErrorModule(),
+                Router::getErrorController(),
+                array(
+                    'code' => $e->getCode(),
+                    'message' => $e->getMessage()
+                )
+            );
+
+        }
+
+        if ($this->hasLayout()) {
+            Layout::setContent($dispatchResult);
+            $dispatchResult = Layout::getInstance();
+        }
+
+        Response::setBody($dispatchResult);
+    }
+
+    /**
+     * Dispatch controller with params
+     *
+     * Call dispatch from any \Bluz\Package
+     *     app()->dispatch($module, $controller, array $params);
+     *
+     * Attach callback function to event "dispatch"
+     *     app()->getEventManager()->attach('dispatch', function($event) {
+     *         $eventParams = $event->getParams();
+     *         $app = $event->getTarget();
+     *         \Bluz\Profiler::log('bootstrap:dispatch: '.$eventParams['module'].'/'.$eventParams['controller']);
+     *     });
+     *
+     * @param string $module
+     * @param string $controller
+     * @param array $params
+     * @throws ApplicationException
+     * @return View|string
+     */
+    public function dispatch($module, $controller, $params = array())
+    {
+        Logger::info("app:dispatch: " . $module . '/' . $controller);
+
+        // system trigger "dispatch"
+        EventManager::trigger(
+            'dispatch',
+            $this,
+            array(
+                'module' => $module,
+                'controller' => $controller,
+                'params' => $params
+            )
+        );
+
+        $this->dispatchModule = $module;
+        $this->dispatchController = $controller;
+
+        $this->preDispatch($module, $controller, $params);
+        $result = $this->doDispatch($module, $controller, $params);
+        $this->postDispatch($module, $controller, $params);
+
+        return $result;
+    }
+
+    /**
      * Pre dispatch mount point
      *
      * @param string $module
@@ -386,7 +425,7 @@ class Application
      * @param array $params
      * @throws ApplicationException
      *
-     * @return View
+     * @return View|string
      */
     protected function doDispatch($module, $controller, $params = array())
     {
@@ -463,28 +502,25 @@ class Application
 
         $result = call_user_func_array($controllerClosure, $params);
 
-        // return false is equal to disable view and layout
-        if ($result === false) {
-            $this->useLayout(false);
-            return $result;
-        }
-
-        // return closure is replace logic of controller
-        // or return any class
-        if (is_callable($result) or
-            is_object($result)
-        ) {
-            return $result;
-        }
-
-        // return string is equal to change view template
-        if (is_string($result)) {
-            $view->setTemplate($result);
-        }
-
-        // return array is equal to setup view
-        if (is_array($result)) {
-            $view->setFromArray($result);
+        // switch statement for $result
+        switch (true) {
+            case ($result === false):
+                // return false is equal to disable view and layout
+                $this->useLayout(false);
+                return '';
+            case is_callable($result):
+            case is_object($result):
+                // return closure is replace logic of controller
+                // or return any class
+                return $result;
+            case is_string($result):
+                // return string is equal to change view template
+                $view->setTemplate($result);
+                break;
+            case is_array($result):
+                // return array is equal to setup view
+                $view->setFromArray($result);
+                break;
         }
 
         if (isset($reflectionData['cache'], $cacheKey)) {
@@ -517,50 +553,6 @@ class Application
     protected function postDispatch($module, $controller, $params = array())
     {
         Logger::info("app:dispatch:post: " . $module . '/' . $controller);
-    }
-
-    /**
-     * Dispatch controller with params
-     *
-     * Call dispatch from any \Bluz\Package
-     *     app()->dispatch($module, $controller, array $params);
-     *
-     * Attach callback function to event "dispatch"
-     *     app()->getEventManager()->attach('dispatch', function($event) {
-     *         $eventParams = $event->getParams();
-     *         $app = $event->getTarget();
-     *         \Bluz\Profiler::log('bootstrap:dispatch: '.$eventParams['module'].'/'.$eventParams['controller']);
-     *     });
-     *
-     * @param string $module
-     * @param string $controller
-     * @param array $params
-     * @throws ApplicationException
-     * @return View
-     */
-    public function dispatch($module, $controller, $params = array())
-    {
-        Logger::info("app:dispatch: " . $module . '/' . $controller);
-
-        // system trigger "dispatch"
-        EventManager::trigger(
-            'dispatch',
-            $this,
-            array(
-                'module' => $module,
-                'controller' => $controller,
-                'params' => $params
-            )
-        );
-
-        $this->dispatchModule = $module;
-        $this->dispatchController = $controller;
-
-        $this->preDispatch($module, $controller, $params);
-        $result = $this->doDispatch($module, $controller, $params);
-        $this->postDispatch($module, $controller, $params);
-
-        return $result;
     }
 
     /**

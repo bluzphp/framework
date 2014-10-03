@@ -22,8 +22,8 @@ use Bluz\Proxy;
 abstract class AbstractAdapter
 {
     /**
-     * Instance of Redis
-     * @var \Bluz\Cache\Cache
+     * Instance of Redis or Cache or some other
+     * @var mixed
      */
     protected $handler = null;
 

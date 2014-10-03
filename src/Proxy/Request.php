@@ -84,11 +84,11 @@ use Bluz\Request\AbstractRequest as Instance;
  * @method   static void   setController($name)
  * @see      Bluz\Request\AbstractRequest::setController()
  *
- * @method   static string getQuery($key = null, $default = null)
+ * @method   static string|array getQuery($key = null, $default = null)
  * @see      Bluz\Http\Request::getQuery()
- * @method   static string getPost($key = null, $default = null)
+ * @method   static string|array getPost($key = null, $default = null)
  * @see      Bluz\Http\Request::getPost()
- * @method   static string getCookie($key = null, $default = null)
+ * @method   static string|array getCookie($key = null, $default = null)
  * @see      Bluz\Http\Request::getCookie()
  *
  * @method   static string getHttpHost()

@@ -21,6 +21,7 @@ use Bluz\Http;
 use Bluz\Proxy\Acl;
 use Bluz\Proxy\Cache;
 use Bluz\Proxy\Config;
+use Bluz\Proxy\Db;
 use Bluz\Proxy\EventManager;
 use Bluz\Proxy\Layout;
 use Bluz\Proxy\Logger;
@@ -583,6 +584,56 @@ class Application
         }
 
         Response::send();
+    }
+
+    /**
+     * Get Db Instance
+     *
+     * @return \Bluz\Db\Db
+     */
+    public function getDb()
+    {
+        return Db::getInstance();
+    }
+
+    /**
+     * Get Layout instance
+     *
+     * @return \Bluz\Layout\Layout
+     */
+    public function getLayout()
+    {
+        return Layout::getInstance();
+    }
+
+    /**
+     * Get Response instance
+     *
+     * @return Http\Response
+     */
+    public function getResponse()
+    {
+        return Response::getInstance();
+    }
+
+    /**
+     * Get Request instance
+     *
+     * @return Http\Request
+     */
+    public function getRequest()
+    {
+        return Request::getInstance();
+    }
+
+    /**
+     * Get Router instance
+     *
+     * @return \Bluz\Router\Router
+     */
+    public function getRouter()
+    {
+        return Router::getInstance();
     }
 
     /**

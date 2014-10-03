@@ -38,6 +38,20 @@ class ApplicationTest extends TestCase
         $this->assertEquals($reflectionData, $controllerClosure('a', 'b', 'c'));
     }
 
+
+    /**
+     * Check all getters of Application
+     */
+    public function testGettersOfPackages()
+    {
+        // cache disabled for testing
+        $this->assertInstanceOf('\Bluz\Db\Db', $this->getApp()->getDb());
+        $this->assertInstanceOf('\Bluz\Layout\Layout', $this->getApp()->getLayout());
+        $this->assertInstanceOf('\Bluz\Http\Request', $this->getApp()->getRequest());
+        $this->assertInstanceOf('\Bluz\Http\Response', $this->getApp()->getResponse());
+        $this->assertInstanceOf('\Bluz\Router\Router', $this->getApp()->getRouter());
+    }
+
     /**
      * Test Application Config
      */

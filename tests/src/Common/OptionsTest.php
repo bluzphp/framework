@@ -38,7 +38,6 @@ class OptionsTest extends TestCase
      */
     protected function setUp()
     {
-        parent::setUp();
         $this->class = new ConcreteOptions();
         $this->options = ['foo' => 'bar', 'foo bar' => 'qux', 'baz' => ['foo' => 'bar']];
     }

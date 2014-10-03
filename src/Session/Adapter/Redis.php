@@ -18,24 +18,8 @@ use Bluz\Common\Exception\ConfigurationException;
  * Redis session handler
  * @package Bluz\Session\Adapter
  */
-class Redis implements \SessionHandlerInterface
+class Redis extends AbstractAdapter implements \SessionHandlerInterface
 {
-    /**
-     * Instance of Redis
-     * @var \Redis
-     */
-    protected $handler = null;
-
-    /**
-     * @var string
-     */
-    protected $prefix = 'PHPSESSID:';
-
-    /**
-     * @var int ttl of session
-     */
-    protected $ttl = 1800;
-
     /**
      * Default Redis settings
      * @var array
@@ -99,29 +83,6 @@ class Redis implements \SessionHandlerInterface
     }
 
     /**
-     * @param string $savePath
-     * @param string $sessionName
-     * @return bool|void
-     */
-    public function open($savePath, $sessionName)
-    {
-        $this->prefix = $sessionName . ':';
-        $this->ttl = ini_get('session.gc_maxlifetime');
-
-        // No more action necessary because connection is injected
-        // in constructor and arguments are not applicable.
-    }
-
-    /**
-     * @return bool|void
-     */
-    public function close()
-    {
-        $this->handler = null;
-        unset($this->handler);
-    }
-
-    /**
      * @param string $id
      * @return bool|string
      */
@@ -152,14 +113,5 @@ class Redis implements \SessionHandlerInterface
     public function destroy($id)
     {
         $this->getHandler()->del($this->prefix . $id);
-    }
-
-    /**
-     * @param int $maxLifetime
-     * @return bool|void
-     */
-    public function gc($maxLifetime)
-    {
-        // no action necessary because using EXPIRE
     }
 }

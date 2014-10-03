@@ -13,29 +13,14 @@ namespace Bluz\Session\Adapter;
 
 use Bluz\Common\Exception\ConfigurationException;
 use Bluz\Common\Nil;
+use Bluz\Proxy;
 
 /**
  * Cache session handler
  * @package Bluz\Session\Adapter
  */
-class Cache implements \SessionHandlerInterface
+class Cache extends AbstractAdapter implements \SessionHandlerInterface
 {
-    /**
-     * Instance of Redis
-     * @var \Bluz\Cache\Cache
-     */
-    protected $handler = null;
-
-    /**
-     * @var string
-     */
-    protected $prefix = 'PHPSESSID:';
-
-    /**
-     * @var int ttl of session
-     */
-    protected $ttl = 1800;
-
     /**
      * Check and setup Redis server
      *
@@ -44,54 +29,13 @@ class Cache implements \SessionHandlerInterface
      */
     public function __construct($settings = array())
     {
-        $this->handler = app()->getCache();
+        $this->handler = Proxy\Cache::getInstance();
 
-        if (!$this->handler) {
-            throw new ConfigurationException("Cache package not enabled.");
+        if ($this->handler instanceof Nil) {
+            throw new ConfigurationException(
+                "Cache configuration is missed or disabled. Please check 'cache' configuration section"
+            );
         }
-    }
-
-    /**
-     * Get Redis handler
-     *
-     * @throws ConfigurationException
-     * @return \Bluz\Cache\Cache
-     */
-    protected function getHandler()
-    {
-        if (!$this->handler) {
-            $this->handler = app()->getCache();
-
-            if ($this->handler instanceof Nil) {
-                throw new ConfigurationException(
-                    "Cache configuration is missed or disabled. Please check 'cache' configuration section"
-                );
-            }
-        }
-        return $this->handler;
-    }
-
-    /**
-     * @param string $savePath
-     * @param string $sessionName
-     * @return bool|void
-     */
-    public function open($savePath, $sessionName)
-    {
-        $this->prefix = $sessionName . ':';
-        $this->ttl = ini_get('session.gc_maxlifetime');
-
-        // No more action necessary because connection is injected
-        // in constructor and arguments are not applicable.
-    }
-
-    /**
-     * @return bool|void
-     */
-    public function close()
-    {
-        $this->handler = null;
-        unset($this->handler);
     }
 
     /**
@@ -101,8 +45,8 @@ class Cache implements \SessionHandlerInterface
     public function read($id)
     {
         $id = $this->prefix . $id;
-        $data = $this->getHandler()->get($id);
-        $this->getHandler()->set($id, $data, $this->ttl);
+        $data =  $this->handler->get($id);
+        $this->handler->set($id, $data, $this->ttl);
         return $data;
     }
 
@@ -114,7 +58,7 @@ class Cache implements \SessionHandlerInterface
     public function write($id, $data)
     {
         $id = $this->prefix . $id;
-        $this->getHandler()->set($id, $data, $this->ttl);
+        $this->handler->set($id, $data, $this->ttl);
     }
 
     /**
@@ -123,15 +67,6 @@ class Cache implements \SessionHandlerInterface
      */
     public function destroy($id)
     {
-        $this->getHandler()->delete($this->prefix . $id);
-    }
-
-    /**
-     * @param int $maxLifetime
-     * @return bool|void
-     */
-    public function gc($maxLifetime)
-    {
-        // no action necessary because using EXPIRE
+        $this->handler->delete($this->prefix . $id);
     }
 }

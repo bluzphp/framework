@@ -12,6 +12,7 @@
 namespace Bluz\Auth;
 
 use Bluz\Common\Options;
+use Bluz\Proxy\Request;
 use Bluz\Proxy\Session;
 
 /**
@@ -37,7 +38,7 @@ class Auth
         // save identity to session
         Session::set('auth:identity', $identity);
         // save user agent to session
-        Session::set('auth:agent', app()->getRequest()->getServer('HTTP_USER_AGENT'));
+        Session::set('auth:agent', Request::getServer('HTTP_USER_AGENT'));
     }
 
     /**
@@ -48,7 +49,7 @@ class Auth
     public function getIdentity()
     {
         // check user agent
-        if (Session::get('auth:agent') == app()->getRequest()->getServer('HTTP_USER_AGENT')) {
+        if (Session::get('auth:agent') == Request::getServer('HTTP_USER_AGENT')) {
             return Session::get('auth:identity');
         } else {
             $this->clearIdentity();

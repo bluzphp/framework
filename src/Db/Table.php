@@ -362,37 +362,6 @@ abstract class Table
     }
 
     /**
-     * Prepare Db\Query\Select for current table:
-     *  - predefine "select" section as "*" from current table
-     *  - predefine "from" section as current table name and first letter as alias
-     *  - predefine fetch type
-     *
-     *     // use default select "*"
-     *     $select = Users\Table::select();
-     *     $arrUsers = $select->where('u.id = ?', $id)
-     *         ->execute();
-     *
-     *     // setup custom select "u.id, u.login"
-     *     $select = Users\Table::select();
-     *     $arrUsers = $select->select('u.id, u.login')
-     *         ->where('u.id = ?', $id)
-     *         ->execute();
-     *
-     * @return Query\Select
-     */
-    public static function select()
-    {
-        $self = static::getInstance();
-
-        $select = new Query\Select();
-        $select->select($self->table.'.*')
-            ->from($self->table, $self->table)
-            ->setFetchType($self->rowClass);
-
-        return $select;
-    }
-
-    /**
      * Find rows by WHERE
      *     // WHERE alias = 'foo'
      *     Table::findWhere(['alias'=>'foo']);
@@ -485,6 +454,37 @@ abstract class Table
             $key = DbProxy::quoteIdentifier($key) . ' = ?';
         }
         return $keys;
+    }
+
+    /**
+     * Prepare Db\Query\Select for current table:
+     *  - predefine "select" section as "*" from current table
+     *  - predefine "from" section as current table name and first letter as alias
+     *  - predefine fetch type
+     *
+     *     // use default select "*"
+     *     $select = Users\Table::select();
+     *     $arrUsers = $select->where('u.id = ?', $id)
+     *         ->execute();
+     *
+     *     // setup custom select "u.id, u.login"
+     *     $select = Users\Table::select();
+     *     $arrUsers = $select->select('u.id, u.login')
+     *         ->where('u.id = ?', $id)
+     *         ->execute();
+     *
+     * @return Query\Select
+     */
+    public static function select()
+    {
+        $self = static::getInstance();
+
+        $select = new Query\Select();
+        $select->select($self->table.'.*')
+            ->from($self->table, $self->table)
+            ->setFetchType($self->rowClass);
+
+        return $select;
     }
 
     /**

@@ -12,7 +12,8 @@
 namespace Bluz\View\Helper;
 
 use Bluz\View\View;
-use Bluz\Translator\Translator;
+use Bluz\Proxy\Request;
+use Bluz\Proxy\Translator;
 
 return
     /**
@@ -37,7 +38,7 @@ return
             return '';
         }
 
-        if ($href == app()->getRequest()->getRequestUri()) {
+        if ($href == Request::getRequestUri()) {
             if (isset($attributes['class'])) {
                 $attributes['class'] .= ' on';
             } else {

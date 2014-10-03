@@ -24,19 +24,6 @@ use Bluz\Request\AbstractRequest;
 class Request extends AbstractRequest
 {
     /**
-     * @const string HTTP METHOD constant names
-     */
-    const METHOD_OPTIONS = 'OPTIONS';
-    const METHOD_GET = 'GET';
-    const METHOD_HEAD = 'HEAD';
-    const METHOD_PATCH = 'PATCH';
-    const METHOD_POST = 'POST';
-    const METHOD_PUT = 'PUT';
-    const METHOD_DELETE = 'DELETE';
-    const METHOD_TRACE = 'TRACE';
-    const METHOD_CONNECT = 'CONNECT';
-
-    /**
      * @const string HTTP SCHEME constant names
      */
     const SCHEME_HTTP = 'http';
@@ -80,13 +67,14 @@ class Request extends AbstractRequest
      *
      * @link http://msdn.microsoft.com/en-us/library/system.web.httprequest.item.aspx
      * @param string $key
+     * @param null $default
      * @return mixed
      */
-    public function __get($key)
+    public function getParam($key, $default = null)
     {
         switch (true) {
-            case parent::__isset($key):
-                return parent::__get($key);
+            case isset($this->params[$key]):
+                return parent::getParam($key);
             case isset($_GET[$key]):
                 return $_GET[$key];
             case isset($_POST[$key]):
@@ -98,59 +86,7 @@ class Request extends AbstractRequest
             case isset($_ENV[$key]):
                 return $_ENV[$key];
             default:
-                return null;
-        }
-    }
-
-    /**
-     * Check to see if a property is set
-     *
-     * @param string $key
-     * @return bool
-     */
-    public function __isset($key)
-    {
-        switch (true) {
-            case parent::__isset($key):
-                return true;
-            case isset($_GET[$key]):
-                return true;
-            case isset($_POST[$key]):
-                return true;
-            case isset($_COOKIE[$key]):
-                return true;
-            case isset($_SERVER[$key]):
-                return true;
-            case isset($_ENV[$key]):
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    /**
-     * Unset custom param
-     *
-     * @param $key
-     */
-    public function __unset($key)
-    {
-        parent::__unset($key);
-
-        if (isset($_GET[$key])) {
-            unset($_GET[$key]);
-        }
-        if (isset($_POST[$key])) {
-            unset($_POST[$key]);
-        }
-        if (isset($_COOKIE[$key])) {
-            unset($_COOKIE[$key]);
-        }
-        if (isset($_SERVER[$key])) {
-            unset($_SERVER[$key]);
-        }
-        if (isset($_ENV[$key])) {
-            unset($_ENV[$key]);
+                return $default;
         }
     }
 
@@ -172,46 +108,6 @@ class Request extends AbstractRequest
     public function getScheme()
     {
         return ($this->getServer('HTTPS') == 'on') ? self::SCHEME_HTTPS : self::SCHEME_HTTP;
-    }
-
-    /**
-     * Is this a GET method request?
-     *
-     * @return bool
-     */
-    public function isGet()
-    {
-        return ($this->getMethod() === self::METHOD_GET);
-    }
-
-    /**
-     * Is this a POST method request?
-     *
-     * @return bool
-     */
-    public function isPost()
-    {
-        return ($this->getMethod() === self::METHOD_POST);
-    }
-
-    /**
-     * Is this a PUT method request?
-     *
-     * @return bool
-     */
-    public function isPut()
-    {
-        return ($this->getMethod() === self::METHOD_PUT);
-    }
-
-    /**
-     * Is this a DELETE method request?
-     *
-     * @return bool
-     */
-    public function isDelete()
-    {
-        return ($this->getMethod() === self::METHOD_DELETE);
     }
 
     /**
@@ -410,26 +306,6 @@ class Request extends AbstractRequest
 
         return $this->baseUrl;
     }
-
-    /**
-     * Get the request URI without baseUrl
-     *
-     * @return string
-     */
-    public function getCleanUri()
-    {
-        if ($this->cleanUri === null) {
-            $uri = parse_url($this->getRequestUri());
-            $uri = $uri['path'];
-
-            if ($this->getBaseUrl() && strpos($uri, $this->getBaseUrl()) === 0) {
-                $uri = substr($uri, strlen($this->getBaseUrl()));
-            }
-            $this->cleanUri = $uri;
-        }
-        return $this->cleanUri;
-    }
-
 
     /**
      * Get the client's IP address

@@ -41,7 +41,7 @@ class Session
     protected $namespace = 'bluz';
 
     /**
-     * @var string|\SessionHandlerInterface
+     * @var \SessionHandlerInterface
      */
     protected $adapter;
 
@@ -237,7 +237,7 @@ class Session
     /**
      * Set session save handler object
      *
-     * @param  string|\SessionHandlerInterface $saveHandler
+     * @param  \SessionHandlerInterface $saveHandler
      * @return Session
      */
     public function setAdapter($saveHandler)

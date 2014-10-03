@@ -22,15 +22,6 @@ use Bluz\Tests\Grid\Fixtures\ArrayGrid;
 class ArraySourceTest extends TestCase
 {
     /**
-     * Setup Application
-     */
-    public function setUp()
-    {
-        parent::setUp();
-        $this->getApp();
-    }
-
-    /**
      * Array Source
      */
     public function testArrayGrid()

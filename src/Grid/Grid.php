@@ -13,6 +13,8 @@ namespace Bluz\Grid;
 
 use Bluz\Common\Helper;
 use Bluz\Common\Options;
+use Bluz\Proxy\Request;
+use Bluz\Proxy\Router;
 
 /**
  * Grid
@@ -290,26 +292,24 @@ abstract class Grid
      */
     public function processRequest()
     {
-        $request = app()->getRequest();
+        $this->module = Request::getModule();
+        $this->controller = Request::getController();
 
-        $this->module = $request->getModule();
-        $this->controller = $request->getController();
-
-        $page = $request->getParam($this->prefix . 'page', 1);
+        $page = Request::getParam($this->prefix . 'page', 1);
         $this->setPage($page);
 
-        $limit = $request->getParam($this->prefix . 'limit', $this->limit);
+        $limit = Request::getParam($this->prefix . 'limit', $this->limit);
         $this->setLimit($limit);
 
         foreach ($this->allowOrders as $column) {
-            $order = $request->getParam($this->prefix . 'order-' . $column);
+            $order = Request::getParam($this->prefix . 'order-' . $column);
             if ($order) {
                 $this->addOrder($column, $order);
             }
         }
 
         foreach ($this->allowFilters as $column) {
-            $filter = $request->getParam($this->prefix . 'filter-' . $column);
+            $filter = Request::getParam($this->prefix . 'filter-' . $column);
             if ($filter) {
                 if (strpos($filter, '-')) {
                     $filter = trim($filter, ' -');
@@ -468,7 +468,7 @@ abstract class Grid
         $params = $this->getParams($params);
 
         // retrieve URL
-        return app()->getRouter()->getUrl(
+        return Router::getUrl(
             $this->getModule(),
             $this->getController(),
             $params

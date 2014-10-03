@@ -33,8 +33,6 @@ class EventManagerTest extends Bluz\Tests\TestCase
      */
     public function setUp()
     {
-        parent::setUp();
-
         $this->eventManager = new EventManager();
     }
 

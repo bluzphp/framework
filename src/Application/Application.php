@@ -18,21 +18,19 @@ use Bluz\Application\Exception\ReloadException;
 use Bluz\Auth\AbstractRowEntity;
 use Bluz\Common;
 use Bluz\Http;
-use Bluz\Proxy;
 use Bluz\Proxy\Acl;
-use Bluz\Proxy\Auth;
 use Bluz\Proxy\Cache;
 use Bluz\Proxy\Config;
 use Bluz\Proxy\Db;
 use Bluz\Proxy\EventManager;
+use Bluz\Proxy\Layout;
 use Bluz\Proxy\Logger;
-use Bluz\Proxy\Mailer;
 use Bluz\Proxy\Messages;
-use Bluz\Proxy\Registry;
+use Bluz\Proxy\Request;
+use Bluz\Proxy\Response;
 use Bluz\Proxy\Router;
 use Bluz\Proxy\Session;
 use Bluz\Proxy\Translator;
-use Bluz\View\Layout;
 use Bluz\View\View;
 
 /**
@@ -49,30 +47,10 @@ use Bluz\View\View;
  * @author   Anton Shevchuk
  * @created  06.07.11 16:25
  */
-abstract class Application
+class Application
 {
     use Common\Helper;
     use Common\Singleton;
-
-    /**
-     * @var Layout instance
-     */
-    protected $layout;
-
-    /**
-     * @var Http\Request instance
-     */
-    protected $request;
-
-    /**
-     * @var Http\Response instance
-     */
-    protected $response;
-
-    /**
-     * @var Session instance
-     */
-    protected $session;
 
     /**
      * Application path
@@ -129,132 +107,6 @@ abstract class Application
     protected $dispatchController;
 
     /**
-     * init
-     *
-     * @param string $environment Array format only!
-     * @throws ApplicationException
-     * @return Application
-     */
-    public function init($environment = 'production')
-    {
-        $this->environment = $environment;
-
-        try {
-            // initial default helper path
-            $this->addHelperPath(dirname(__FILE__) . '/Helper/');
-
-            // first log message
-            $this->log('app:init');
-
-            // setup configuration for current environment
-            if ($debug = Config::getData('debug')) {
-                $this->debugFlag = (bool) $debug;
-            }
-
-            // initial php settings
-            if ($ini = Config::getData('php')) {
-                foreach ($ini as $key => $value) {
-                    $result = ini_set($key, $value);
-                    $this->log('app:init:php:'.$key.':'.($result?:'---'));
-                }
-            }
-
-            // initial session, start inside class
-            Session::getInstance();
-
-            // initial Messages
-            Messages::getInstance();
-
-            // initial Translator
-            Translator::getInstance();
-
-        } catch (\Exception $e) {
-            throw new ApplicationException("Application can't be loaded: " . $e->getMessage());
-        }
-        return $this;
-    }
-
-    /**
-     * Log message, working with logger
-     *
-     * @param string $message
-     * @param array $context
-     * @return void
-     */
-    public function log($message, array $context = [])
-    {
-        Logger::info($message, $context);
-    }
-
-    /**
-     * Load configuration file
-     *
-     * @deprecated since version 0.5.1
-     * @return \Bluz\Config\Config
-     */
-    public function getConfig()
-    {
-        return Config::getInstance();
-    }
-
-    /**
-     * Get configuration for same section and subsection
-     *
-     * @deprecated since version 0.5.1
-     * @param string|null $section of config
-     * @param string|null $subsection of config
-     * @return array|mixed
-     */
-    public function getConfigData($section = null, $subsection = null)
-    {
-        return Config::getData($section, $subsection);
-    }
-
-    /**
-     * Get Acl instance
-     *
-     * @deprecated since version 0.5.1
-     * @return Acl
-     */
-    public function getAcl()
-    {
-        return Acl::getInstance();
-    }
-
-    /**
-     * Get Auth instance
-     *
-     * @deprecated since version 0.5.1
-     * @return Auth
-     */
-    public function getAuth()
-    {
-        return Auth::getInstance();
-    }
-
-    /**
-     * If enabled return configured Cache or Nil otherwise
-     *
-     * @deprecated since version 0.5.1
-     * @return Cache instance or Nil
-     */
-    public function getCache()
-    {
-        return Cache::getInstance();
-    }
-
-    /**
-     * Get Db Instance
-     *
-     * @deprecated since version 0.5.1
-     * @return Db
-     */
-    public function getDb()
-    {
-        return Db::getInstance();
-    }
-
-    /**
      * Get application environment
      *
      * @return string
@@ -262,75 +114,6 @@ abstract class Application
     public function getEnvironment()
     {
         return $this->environment;
-    }
-
-    /**
-     * Get EventManager instance
-     *
-     * @deprecated since version 0.5.1
-     * @return EventManager
-     */
-    public function getEventManager()
-    {
-        return EventManager::getInstance();
-    }
-
-    /**
-     * Get Layout instance
-     *
-     * @return Layout
-     */
-    public function getLayout()
-    {
-        if (!$this->layout) {
-            $this->layout = new Layout();
-            $this->layout->setOptions(Config::getData('layout'));
-        }
-        return $this->layout;
-    }
-
-    /**
-     * Get logger instance
-     *
-     * @deprecated since version 0.5.1
-     * @return Logger instance or Nil
-     */
-    public function getLogger()
-    {
-        return Logger::getInstance();
-    }
-
-    /**
-     * Get Mailer instance
-     *
-     * @deprecated since version 0.5.1
-     * @return Mailer
-     */
-    public function getMailer()
-    {
-        return Mailer::getInstance();
-    }
-
-    /**
-     * Get Messages instance
-     *
-     * @deprecated since version 0.5.1
-     * @return Messages
-     */
-    public function getMessages()
-    {
-        return Messages::getInstance();
-    }
-
-    /**
-     * Check Messages
-     *
-     * @deprecated since version 0.5.1
-     * @return bool
-     */
-    public function hasMessages()
-    {
-        return Messages::count();
     }
 
     /**
@@ -349,132 +132,6 @@ abstract class Application
             }
         }
         return $this->path;
-    }
-
-    /**
-     * Get Registry instance
-     *
-     * @deprecated since version 0.5.1
-     * @return Registry
-     */
-    public function getRegistry()
-    {
-        return Registry::getInstance();
-    }
-
-    /**
-     * Get Request instance
-     *
-     * @return Http\Request
-     */
-    public function getRequest()
-    {
-        if (!$this->request) {
-            $this->request = new Http\Request();
-            $this->request->setOptions(Config::getData('request'));
-
-            // disable layout for AJAX requests
-            if ($this->request->isXmlHttpRequest()) {
-                $this->useLayout(false);
-            }
-
-            // check header "accept" for catch JSON requests, and switch to JSON response
-            // for AJAX and REST requests
-            if ($accept = $this->getRequest()->getHeader('accept')) {
-                // MIME type can be "application/json", "application/json; charset=utf-8" etc.
-                $accept = str_replace(';', ',', $accept);
-                $accept = explode(',', $accept);
-                if (in_array("application/json", $accept)) {
-                    $this->useJson(true);
-                }
-            }
-        }
-        return $this->request;
-    }
-
-    /**
-     * Set Request instance
-     *
-     * @param Http\Request $request
-     * @return Application
-     */
-    public function setRequest($request)
-    {
-        $this->request = $request;
-        return $this;
-    }
-
-    /**
-     * Get Response instance
-     *
-     * @return Http\Response
-     */
-    public function getResponse()
-    {
-        if (!$this->response) {
-            $this->response = new Http\Response();
-            $this->response->setOptions(Config::getData('response'));
-        }
-        return $this->response;
-    }
-
-    /**
-     * Set Response instance
-     *
-     * @param Http\Response $response
-     * @return Application
-     */
-    public function setResponse($response)
-    {
-        $this->response = $response;
-        return $this;
-    }
-
-    /**
-     * Get Router instance
-     *
-     * @return Router
-     */
-    public function getRouter()
-    {
-        return Router::getInstance();
-    }
-
-    /**
-     * Get Session instance
-     *
-     * @deprecated since version 0.5.1
-     * @return Session
-     */
-    public function getSession()
-    {
-        return Session::getInstance();
-    }
-
-    /**
-     * Get Translator instance
-     *
-     * @deprecated since version 0.5.1
-     * @return Translator
-     */
-    public function getTranslator()
-    {
-        return Translator::getInstance();
-    }
-
-    /**
-     * Create new instance of view and return it
-     *
-     * @return View
-     */
-    public function getView()
-    {
-        $view = new View();
-
-        // setup default partial path
-        $view->addPartialPath($this->getPath() . '/layouts/partial');
-
-        return $view;
     }
 
     /**
@@ -516,7 +173,7 @@ abstract class Application
     public function useLayout($flag = true)
     {
         if (is_string($flag)) {
-            $this->getLayout()->setTemplate($flag);
+            Layout::setTemplate($flag);
             $this->layoutFlag = true;
         } else {
             $this->layoutFlag = $flag;
@@ -541,62 +198,149 @@ abstract class Application
     }
 
     /**
+     * init
+     *
+     * @param string $environment Array format only!
+     * @throws ApplicationException
+     * @return void
+     */
+    public function init($environment = 'production')
+    {
+        $this->environment = $environment;
+
+        try {
+            // initial default helper path
+            $this->addHelperPath(dirname(__FILE__) . '/Helper/');
+
+            // first log message
+            Logger::info('app:init');
+
+            // setup configuration for current environment
+            if ($debug = Config::getData('debug')) {
+                $this->debugFlag = (bool) $debug;
+            }
+
+            // initial php settings
+            if ($ini = Config::getData('php')) {
+                foreach ($ini as $key => $value) {
+                    $result = ini_set($key, $value);
+                    Logger::info('app:init:php:'.$key.':'.($result?:'---'));
+                }
+            }
+
+            // init session, start inside class
+            Session::getInstance();
+
+            // init Messages
+            Messages::getInstance();
+
+            // init Translator
+            Translator::getInstance();
+
+            // init request
+            $this->initRequest();
+
+            // init response
+            $this->initResponse();
+
+            // init router
+            Router::getInstance();
+
+        } catch (\Exception $e) {
+            throw new ApplicationException("Application can't be loaded: " . $e->getMessage());
+        }
+    }
+
+    /**
+     * Initial Request instance
+     *
+     * @return void
+     */
+    protected function initRequest()
+    {
+        $request = new Http\Request();
+        $request->setOptions(Config::getData('request'));
+
+        // disable layout for AJAX requests
+        if ($request->isXmlHttpRequest()) {
+            $this->useLayout(false);
+        }
+
+        // check header "accept" for catch JSON requests, and switch to JSON response
+        // for AJAX and REST requests
+        if ($accept = $request->getHeader('accept')) {
+            // MIME type can be "application/json", "application/json; charset=utf-8" etc.
+            $accept = str_replace(';', ',', $accept);
+            $accept = explode(',', $accept);
+            if (in_array("application/json", $accept)) {
+                $this->useJson(true);
+            }
+        }
+
+        Request::setInstance($request);
+    }
+
+    /**
+     * Initial Response instance
+     *
+     * @return void
+     */
+    protected function initResponse()
+    {
+        $response = new Http\Response();
+        $response->setOptions(Config::getData('response'));
+
+        Response::setInstance($response);
+    }
+
+    /**
      * Process application
      *
      * Note:
-     * - Why you don't use "X-" prefix?
+     * - Why you don't use "X-" prefix for custom headers?
      * - Because it deprecated
      * @link http://tools.ietf.org/html/rfc6648
+     *
+     * @return void
      */
     public function process()
     {
-        $this->log('app:process');
+        Logger::info('app:process');
 
-        // init request
-        $request = $this->getRequest();
-
-        // init router
-        Router::getInstance();
-
-        // init response
-        $response = $this->getResponse();
+        Router::process();
 
         // try to dispatch controller
         try {
             $dispatchResult = $this->dispatch(
-                $request->getModule(),
-                $request->getController(),
-                $request->getAllParams()
+                Request::getModule(),
+                Request::getController(),
+                Request::getAllParams()
             );
-
-            if ($this->hasLayout()) {
-                $this->getLayout()->setContent($dispatchResult);
-                $dispatchResult = $this->getLayout();
-            }
-
-            $response->setBody($dispatchResult);
         } catch (RedirectException $e) {
-            $response->setException($e);
+            Response::setException($e);
 
-            if ($request->isXmlHttpRequest()) {
-                $response->setStatusCode(204);
-                $response->setHeader('Bluz-Redirect', $e->getMessage());
+            if (Request::isXmlHttpRequest()) {
+                Response::setStatusCode(204);
+                Response::setHeader('Bluz-Redirect', $e->getMessage());
             } else {
-                $response->setStatusCode($e->getCode());
-                $response->setHeader('Location', $e->getMessage());
+                Response::setStatusCode($e->getCode());
+                Response::setHeader('Location', $e->getMessage());
             }
+            return;
         } catch (ReloadException $e) {
-            $response->setException($e);
+            Response::setException($e);
 
-            if ($request->isXmlHttpRequest()) {
-                $response->setStatusCode(204);
-                $response->setHeader('Bluz-Reload', 'true');
+            if (Request::isXmlHttpRequest()) {
+                Response::setStatusCode(204);
+                Response::setHeader('Bluz-Reload', 'true');
             } else {
-                $response->setStatusCode($e->getCode());
-                $response->setHeader('Refresh', '0; url=' . $request->getRequestUri());
+                Response::setStatusCode($e->getCode());
+                Response::setHeader('Refresh', '0; url=' . Request::getRequestUri());
             }
+            return;
         } catch (\Exception $e) {
-            $response->setException($e);
+            Response::setException($e);
+            Response::setStatusCode($e->getCode());
 
             $dispatchResult = $this->dispatch(
                 Router::getErrorModule(),
@@ -607,16 +351,58 @@ abstract class Application
                 )
             );
 
-            if ($this->hasLayout()) {
-                $this->getLayout()->setContent($dispatchResult);
-                $dispatchResult = $this->getLayout();
-            }
-
-            $response->setStatusCode($e->getCode());
-            $response->setBody($dispatchResult);
         }
 
-        return $this->getResponse();
+        if ($this->hasLayout()) {
+            Layout::setContent($dispatchResult);
+            $dispatchResult = Layout::getInstance();
+        }
+
+        Response::setBody($dispatchResult);
+    }
+
+    /**
+     * Dispatch controller with params
+     *
+     * Call dispatch from any \Bluz\Package
+     *     app()->dispatch($module, $controller, array $params);
+     *
+     * Attach callback function to event "dispatch"
+     *     app()->getEventManager()->attach('dispatch', function($event) {
+     *         $eventParams = $event->getParams();
+     *         $app = $event->getTarget();
+     *         \Bluz\Profiler::log('bootstrap:dispatch: '.$eventParams['module'].'/'.$eventParams['controller']);
+     *     });
+     *
+     * @param string $module
+     * @param string $controller
+     * @param array $params
+     * @throws ApplicationException
+     * @return View|string
+     */
+    public function dispatch($module, $controller, $params = array())
+    {
+        Logger::info("app:dispatch: " . $module . '/' . $controller);
+
+        // system trigger "dispatch"
+        EventManager::trigger(
+            'dispatch',
+            $this,
+            array(
+                'module' => $module,
+                'controller' => $controller,
+                'params' => $params
+            )
+        );
+
+        $this->dispatchModule = $module;
+        $this->dispatchController = $controller;
+
+        $this->preDispatch($module, $controller, $params);
+        $result = $this->doDispatch($module, $controller, $params);
+        $this->postDispatch($module, $controller, $params);
+
+        return $result;
     }
 
     /**
@@ -629,7 +415,7 @@ abstract class Application
      */
     protected function preDispatch($module, $controller, $params = array())
     {
-        $this->log("app:dispatch:pre: " . $module . '/' . $controller);
+        Logger::info("app:dispatch:pre: " . $module . '/' . $controller);
     }
 
     /**
@@ -640,11 +426,11 @@ abstract class Application
      * @param array $params
      * @throws ApplicationException
      *
-     * @return View
+     * @return View|string
      */
     protected function doDispatch($module, $controller, $params = array())
     {
-        $this->log("app:dispatch:do: " . $module . '/' . $controller);
+        Logger::info("app:dispatch:do: " . $module . '/' . $controller);
         $controllerFile = $this->getControllerFile($module, $controller);
         $reflectionData = $this->reflection($controllerFile);
 
@@ -655,14 +441,21 @@ abstract class Application
 
         // check method(s)
         if (isset($reflectionData['method'])
-            && !in_array($this->getRequest()->getMethod(), $reflectionData['method'])
+            && !in_array(Request::getMethod(), $reflectionData['method'])
         ) {
             throw new ApplicationException(join(',', $reflectionData['method']), 405);
         }
 
         // cache initialization
+        if (isset($reflectionData['cache-html'])) {
+            $htmlKey = 'html:' . $module . ':' . $controller . ':' . http_build_query($params);
+            if ($cachedHtml = Cache::get($htmlKey)) {
+                return $cachedHtml;
+            }
+        }
+
         if (isset($reflectionData['cache'])) {
-            $cacheKey = $module . '/' . $controller . '/' . http_build_query($params);
+            $cacheKey = 'view:' . $module . ':' . $controller . ':' . http_build_query($params);
             if ($cachedView = Cache::get($cacheKey)) {
                 return $cachedView;
             }
@@ -672,9 +465,17 @@ abstract class Application
         $params = $this->params($reflectionData, $params);
 
         // $view for use in closure
-        $view = $this->getView();
+        $view = new View();
+
+        // setup additional helper path
+        $view->addHelperPath($this->getPath() . '/layouts/helpers');
+
+        // setup additional partial path
+        $view->addPartialPath($this->getPath() . '/layouts/partial');
+
         // setup default path
         $view->setPath($this->getPath() . '/modules/' . $module . '/views');
+
         // setup default template
         $view->setTemplate($controller . '.phtml');
 
@@ -702,35 +503,41 @@ abstract class Application
 
         $result = call_user_func_array($controllerClosure, $params);
 
-        // return false is equal to disable view and layout
-        if ($result === false) {
-            $this->useLayout(false);
-            return $result;
-        }
-
-        // return closure is replace logic of controller
-        // or return any class
-        if (is_callable($result) or
-            is_object($result)
-        ) {
-            return $result;
-        }
-
-        // return string is equal to change view template
-        if (is_string($result)) {
-            $view->setTemplate($result);
-        }
-
-        // return array is equal to setup view
-        if (is_array($result)) {
-            $view->setFromArray($result);
+        // switch statement for $result
+        switch (true) {
+            case ($result === false):
+                // return false is equal to disable view and layout
+                $this->useLayout(false);
+                return '';
+            case is_callable($result):
+            case is_object($result):
+                // return closure is replace logic of controller
+                // or return any class
+                return $result;
+            case is_string($result):
+                // return string is equal to change view template
+                $view->setTemplate($result);
+                break;
+            case is_array($result):
+                // return array is equal to setup view
+                $view->setFromArray($result);
+                break;
         }
 
         if (isset($reflectionData['cache'], $cacheKey)) {
             Cache::set($cacheKey, $view, intval($reflectionData['cache']) * 60);
+            Cache::addTag($cacheKey, $module);
             Cache::addTag($cacheKey, 'view');
             Cache::addTag($cacheKey, 'view:' . $module);
             Cache::addTag($cacheKey, 'view:' . $module . ':' . $controller);
+        }
+
+        if (isset($reflectionData['cache-html'], $htmlKey)) {
+            Cache::set($htmlKey, $view->render(), intval($reflectionData['cache-html']) * 60);
+            Cache::addTag($htmlKey, $module);
+            Cache::addTag($htmlKey, 'html');
+            Cache::addTag($htmlKey, 'html:' . $module);
+            Cache::addTag($htmlKey, 'html:' . $module . ':' . $controller);
         }
 
         return $view;
@@ -746,51 +553,7 @@ abstract class Application
      */
     protected function postDispatch($module, $controller, $params = array())
     {
-        $this->log("app:dispatch:post: " . $module . '/' . $controller);
-    }
-
-    /**
-     * Dispatch controller with params
-     *
-     * Call dispatch from any \Bluz\Package
-     *     app()->dispatch($module, $controller, array $params);
-     *
-     * Attach callback function to event "dispatch"
-     *     app()->getEventManager()->attach('dispatch', function($event) {
-     *         $eventParams = $event->getParams();
-     *         $app = $event->getTarget();
-     *         \Bluz\Profiler::log('bootstrap:dispatch: '.$eventParams['module'].'/'.$eventParams['controller']);
-     *     });
-     *
-     * @param string $module
-     * @param string $controller
-     * @param array $params
-     * @throws ApplicationException
-     * @return View
-     */
-    public function dispatch($module, $controller, $params = array())
-    {
-        $this->log("app:dispatch: " . $module . '/' . $controller);
-
-        // system trigger "dispatch"
-        EventManager::trigger(
-            'dispatch',
-            $this,
-            array(
-                'module' => $module,
-                'controller' => $controller,
-                'params' => $params
-            )
-        );
-
-        $this->dispatchModule = $module;
-        $this->dispatchController = $controller;
-
-        $this->preDispatch($module, $controller, $params);
-        $result = $this->doDispatch($module, $controller, $params);
-        $this->postDispatch($module, $controller, $params);
-
-        return $result;
+        Logger::info("app:dispatch:post: " . $module . '/' . $controller);
     }
 
     /**
@@ -800,27 +563,77 @@ abstract class Application
      */
     public function render()
     {
-        $this->log('app:render');
+        Logger::info('app:render');
 
         if ($this->isJson()) {
             // setup messages
             if (Messages::count()) {
-                $this->getResponse()->setHeader('Bluz-Notify', json_encode(Messages::popAll()));
+                Response::setHeader('Bluz-Notify', json_encode(Messages::popAll()));
             }
 
             // prepare body
-            if ($body = $this->getResponse()->getBody()) {
+            if ($body = Response::getBody()) {
                 $body = json_encode($body);
                 // prepare to JSON output
-                $this->getResponse()->setBody($body);
+                Response::setBody($body);
                 // override response code so javascript can process it
-                $this->getResponse()->setHeader('Content-Type', 'application/json');
+                Response::setHeader('Content-Type', 'application/json');
                 // setup content length
-                $this->getResponse()->setHeader('Content-Length', strlen($body));
+                Response::setHeader('Content-Length', strlen($body));
             }
         }
 
-        $this->getResponse()->send();
+        Response::send();
+    }
+
+    /**
+     * Get Db Instance
+     *
+     * @return \Bluz\Db\Db
+     */
+    public function getDb()
+    {
+        return Db::getInstance();
+    }
+
+    /**
+     * Get Layout instance
+     *
+     * @return \Bluz\Layout\Layout
+     */
+    public function getLayout()
+    {
+        return Layout::getInstance();
+    }
+
+    /**
+     * Get Response instance
+     *
+     * @return Http\Response
+     */
+    public function getResponse()
+    {
+        return Response::getInstance();
+    }
+
+    /**
+     * Get Request instance
+     *
+     * @return Http\Request
+     */
+    public function getRequest()
+    {
+        return Request::getInstance();
+    }
+
+    /**
+     * Get Router instance
+     *
+     * @return \Bluz\Router\Router
+     */
+    public function getRouter()
+    {
+        return Router::getInstance();
     }
 
     /**
@@ -844,7 +657,7 @@ abstract class Application
      */
     public function widget($module, $widget, $params = array())
     {
-        $this->log("app:widget: " . $module . '/' . $widget);
+        Logger::info("app:widget: " . $module . '/' . $widget);
         $widgetFile = $this->getWidgetFile($module, $widget);
         $reflectionData = $this->reflection($widgetFile);
 
@@ -909,7 +722,7 @@ abstract class Application
      */
     public function api($module, $method)
     {
-        $this->log("app:api: " . $module . '/' . $method);
+        Logger::info("app:api: " . $module . '/' . $method);
 
         EventManager::trigger(
             'api',
@@ -1039,6 +852,26 @@ abstract class Application
                     case 'min':
                     default:
                         $data['cache'] = (int)$num;
+                }
+            }
+
+            // prepare cache ttl settings
+            if (isset($data['cache-html'])) {
+                $cache = current($data['cache-html']);
+                $num = (int)$cache;
+                $time = substr($cache, strpos($cache, ' '));
+                switch ($time) {
+                    case 'day':
+                    case 'days':
+                        $data['cache-html'] = (int)$num * 60 * 24;
+                        break;
+                    case 'hour':
+                    case 'hours':
+                        $data['cache-html'] = (int)$num * 60;
+                        break;
+                    case 'min':
+                    default:
+                        $data['cache-html'] = (int)$num;
                 }
             }
 
@@ -1185,7 +1018,7 @@ abstract class Application
      */
     public function finish()
     {
-        $this->log(__METHOD__);
+        Logger::info(__METHOD__);
         return $this;
     }
 }

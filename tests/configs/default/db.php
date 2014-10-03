@@ -16,6 +16,5 @@ return array(
             \PDO::ATTR_PERSISTENT => true,
             \PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET utf8"
         )
-    ),
-    "defaultAdapter" => true
+    )
 );

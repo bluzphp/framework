@@ -11,7 +11,6 @@
  */
 namespace Bluz\Grid\Source;
 
-use Bluz\Application\Application;
 use Bluz\Db;
 use Bluz\Grid;
 use Bluz\Proxy;
@@ -41,7 +40,7 @@ class SelectSource extends AbstractSource
     public function setSource($source)
     {
         if (!$source instanceof Db\Query\Select) {
-            throw new Grid\GridException("Source of SelectSource should be Db\\Query\\Select object");
+            throw new Grid\GridException("Source of `SelectSource` should be `Db\\Query\\Select` object");
         }
         $this->source = $source;
 

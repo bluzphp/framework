@@ -32,6 +32,7 @@ class QueryTest extends TestCase
      */
     public function tearDown()
     {
+        parent::tearDown();
         Proxy\Db::delete('test')->where('email = ?', 'example@domain.com')->execute();
     }
 

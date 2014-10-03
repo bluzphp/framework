@@ -90,7 +90,7 @@ class Request extends AbstractRequest
     public function getBaseUrl()
     {
         if (null === $this->baseUrl) {
-            $this->setBaseUrl('');
+            $this->setBaseUrl('/');
         }
         return $this->baseUrl;
     }

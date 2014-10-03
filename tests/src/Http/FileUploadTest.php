@@ -11,6 +11,7 @@ namespace Bluz\Tests\Http;
 
 use Bluz;
 use Bluz\Proxy;
+use Bluz\Proxy\Request;
 
 /**
  * FileUploadTest
@@ -37,7 +38,6 @@ class FileUploadTest extends Bluz\Tests\TestCase
      */
     protected function setUp()
     {
-        parent::setUp();
         $this->path1 = Proxy\Config::getData('temp', 'image1');
         $this->path2 = Proxy\Config::getData('temp', 'image2');
         $_SERVER['REQUEST_METHOD'] = 'POST';
@@ -51,8 +51,7 @@ class FileUploadTest extends Bluz\Tests\TestCase
      */
     protected function tearDown()
     {
-        parent::tearDown();
-        $this->resetApp();
+        self::resetApp();
     }
 
     /**
@@ -70,8 +69,7 @@ class FileUploadTest extends Bluz\Tests\TestCase
             )
         );
 
-        $request = $this->getApp()->getRequest();
-        $result = $request->getFileUpload()->getFile('file');
+        $result = Request::getFileUpload()->getFile('file');
         $this->assertNotNull($result);
     }
 
@@ -105,8 +103,7 @@ class FileUploadTest extends Bluz\Tests\TestCase
             )
         );
 
-        $request = $this->getApp()->getRequest();
-        $result = $request->getFileUpload()->getFiles('file');
+        $result = Request::getFileUpload()->getFiles('file');
         $this->assertNotEmpty($result);
     }
 
@@ -135,8 +132,7 @@ class FileUploadTest extends Bluz\Tests\TestCase
             )
         );
 
-        $request = $this->getApp()->getRequest();
-        $result = $request->getFileUpload()->getFile('file[a]');
+        $result = Request::getFileUpload()->getFile('file[a]');
         $this->assertNotNull($result);
     }
 
@@ -175,8 +171,7 @@ class FileUploadTest extends Bluz\Tests\TestCase
             )
         );
 
-        $request = $this->getApp()->getRequest();
-        $result = $request->getFileUpload()->getFile('file[a][b]');
+        $result = Request::getFileUpload()->getFile('file[a][b]');
         $this->assertNotNull($result);
     }
 
@@ -230,8 +225,7 @@ class FileUploadTest extends Bluz\Tests\TestCase
             )
         );
 
-        $request = $this->getApp()->getRequest();
-        $result = $request->getFileUpload()->getFiles('file[a][b]');
+        $result = Request::getFileUpload()->getFiles('file[a][b]');
         $this->assertNotEmpty($result);
     }
 }

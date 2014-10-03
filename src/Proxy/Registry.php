@@ -21,9 +21,16 @@ use Bluz\Registry\Registry as Instance;
  * @method   static Instance getInstance()
  *
  * @method   static void  set($key, $value)
+ * @see      Bluz\Registry\Registry::set()
+ *
  * @method   static mixed get($key)
+ * @see      Bluz\Registry\Registry::get()
+ *
  * @method   static bool  contains($key)
+ * @see      Bluz\Registry\Registry::contains()
+ *
  * @method   static void  delete($key)
+ * @see      Bluz\Registry\Registry::delete()
  *
  * @author   Anton Shevchuk
  * @created  29.09.2014 11:32

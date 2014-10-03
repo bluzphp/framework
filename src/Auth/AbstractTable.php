@@ -17,7 +17,10 @@ use Bluz\Db\Table;
  * @package  Bluz\Auth
  *
  * @method   static AbstractRow findRow($primaryKey)
+ * @see      Bluz\Db\Table::findRow()
+ *
  * @method   static AbstractRow findRowWhere($whereList)
+ * @see      Bluz\Db\Table::findRowWhere()
  *
  * @author   Anton Shevchuk
  * @created  12.07.11 15:28

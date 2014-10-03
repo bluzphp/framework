@@ -25,16 +25,13 @@ use Bluz\Common\Options;
  * @method string api(string $module, string $method, $params = array())
  * @method string attributes(array $attributes = [])
  * @method string baseUrl(string $file = null)
- * @method array|null breadCrumbs(array $data = [])
  * @method string checkbox($name, $value = null, $checked = false, array $attributes = [])
  * @method string|bool controller(string $controller = null)
  * @method string|View dispatch($module, $controller, $params = array())
  * @method string exception(\Exception $exception)
  * @method string|null headScript(string $script = null)
  * @method string|null headStyle(string $style = null, $media = 'all')
- * @method string|View meta(string $name = null, string $content = null)
  * @method string|bool module(string $module = null)
- * @method string|View link(string $src = null, string $rel = 'stylesheet')
  * @method string partial($__template, $__params = array())
  * @method string partialLoop($template, $data = [], $params = [])
  * @method string radio($name, $value = null, $checked = false, array $attributes = [])
@@ -42,7 +39,6 @@ use Bluz\Common\Options;
  * @method string script(string $script)
  * @method string select($name, array $options = [], $selected = null, array $attributes = [])
  * @method string style(string $style, $media = 'all')
- * @method string|View title(string $title = null, $position = 'replace', $separator = ' :: ')
  * @method string|null url(string $module, string $controller, array $params = [], bool $checkAccess = false)
  * @method AbstractRowEntity|null user()
  * @method void widget($module, $widget, $params = [])
@@ -101,7 +97,7 @@ class View implements ViewInterface, \JsonSerializable
      */
     public function __sleep()
     {
-        return ['baseUrl', 'container', 'path', 'template'];
+        return ['baseUrl', 'container', 'helpersPath', 'path', 'partialPath', 'template'];
     }
 
     /**
@@ -128,24 +124,22 @@ class View implements ViewInterface, \JsonSerializable
      * {@inheritdoc}
      *
      * @param string $path
-     * @return $this|ViewInterface
+     * @return void
      */
     public function setPath($path)
     {
         $this->path = $path;
-        return $this;
     }
 
     /**
      * {@inheritdoc}
      *
      * @param string $file
-     * @return $this|ViewInterface
+     * @return void
      */
     public function setTemplate($file)
     {
         $this->template = $file;
-        return $this;
     }
 
     /**

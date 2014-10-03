@@ -9,9 +9,9 @@
  */
 namespace Bluz\Tests\Controller;
 
-use Bluz\Http;
-use Bluz\Http\Request;
 use Bluz\Controller;
+use Bluz\Proxy\Db;
+use Bluz\Proxy\Request;
 use Bluz\Tests\Fixtures\Models\Test\Crud;
 use Bluz\Tests\TestCase;
 
@@ -27,7 +27,7 @@ class CrudTest extends TestCase
      */
     public static function setUpBeforeClass()
     {
-        self::getApp()->getDb()->insert('test')->setArray(
+        Db::insert('test')->setArray(
             [
                 'id' => 1,
                 'name' => 'Donatello',
@@ -35,7 +35,7 @@ class CrudTest extends TestCase
             ]
         )->execute();
 
-        self::getApp()->getDb()->insert('test')->setArray(
+        Db::insert('test')->setArray(
             [
                 'id' => 2,
                 'name' => 'Leonardo',
@@ -43,7 +43,7 @@ class CrudTest extends TestCase
             ]
         )->execute();
 
-        self::getApp()->getDb()->insert('test')->setArray(
+        Db::insert('test')->setArray(
             [
                 'id' => 3,
                 'name' => 'Michelangelo',
@@ -51,7 +51,7 @@ class CrudTest extends TestCase
             ]
         )->execute();
 
-        self::getApp()->getDb()->insert('test')->setArray(
+        Db::insert('test')->setArray(
             [
                 'id' => 4,
                 'name' => 'Raphael',
@@ -65,18 +65,10 @@ class CrudTest extends TestCase
      */
     public static function tearDownAfterClass()
     {
-        self::getApp()->getDb()->delete('test')->where('id IN (?)', [1, 2, 3, 4])->execute();
-        self::getApp()->getDb()->delete('test')->where('email = ?', 'splinter@turtles.org')->execute();
+        Db::delete('test')->where('id IN (?)', [1, 2, 3, 4])->execute();
+        Db::delete('test')->where('email = ?', 'splinter@turtles.org')->execute();
 
         self::resetGlobals();
-    }
-
-    /**
-     * Tear Down
-     */
-    protected function tearDown()
-    {
-        parent::tearDown();
         self::resetApp();
     }
 
@@ -97,8 +89,7 @@ class CrudTest extends TestCase
      */
     public function testNewRecord()
     {
-        $request = $this->getApp()->getRequest();
-        $request->setMethod(Request::METHOD_GET);
+        Request::setMethod(Request::METHOD_GET);
 
         $result = $this->processCrud();
 
@@ -112,9 +103,8 @@ class CrudTest extends TestCase
      */
     public function testReadRecord()
     {
-        $request = $this->getApp()->getRequest();
-        $request->setMethod(Request::METHOD_GET);
-        $request->setParam('id', 1);
+        Request::setMethod(Request::METHOD_GET);
+        Request::setParam('id', 1);
 
         $result = $this->processCrud();
 
@@ -128,9 +118,8 @@ class CrudTest extends TestCase
      */
     public function testReadRecordError()
     {
-        $request = $this->getApp()->getRequest();
-        $request->setMethod(Request::METHOD_GET);
-        $request->setParam('id', 100042);
+        Request::setMethod(Request::METHOD_GET);
+        Request::setParam('id', 100042);
 
         $this->processCrud();
     }
@@ -140,9 +129,8 @@ class CrudTest extends TestCase
      */
     public function testCreate()
     {
-        $request = $this->getApp()->getRequest();
-        $request->setMethod(Request::METHOD_POST);
-        $request->setParams(['name' => 'Splinter', 'email' => 'splinter@turtles.org']);
+        Request::setMethod(Request::METHOD_POST);
+        Request::setParams(['name' => 'Splinter', 'email' => 'splinter@turtles.org']);
 
         $result = $this->processCrud();
 
@@ -157,9 +145,8 @@ class CrudTest extends TestCase
      */
     public function testCreateValidationErrors()
     {
-        $request = $this->getApp()->getRequest();
-        $request->setMethod(Request::METHOD_POST);
-        $request->setParams(['name' => '', 'email' => '']);
+        Request::setMethod(Request::METHOD_POST);
+        Request::setParams(['name' => '', 'email' => '']);
 
         $result = $this->processCrud();
 
@@ -174,9 +161,8 @@ class CrudTest extends TestCase
      */
     public function testUpdate()
     {
-        $request = $this->getApp()->getRequest();
-        $request->setMethod(Http\Request::METHOD_PUT);
-        $request->setParams(['id' => 2, 'name' => 'Leonardo', 'email' => 'leonardo@turtles.ua']);
+        Request::setMethod(Request::METHOD_PUT);
+        Request::setParams(['id' => 2, 'name' => 'Leonardo', 'email' => 'leonardo@turtles.ua']);
 
         $result = $this->processCrud();
 
@@ -184,7 +170,7 @@ class CrudTest extends TestCase
         $this->assertInstanceOf('Bluz\Tests\Fixtures\Models\Test\Row', $result['row']);
         $this->assertEquals(2, $result['row']['id']);
 
-        $id = $this->getApp()->getDb()->fetchOne(
+        $id = Db::fetchOne(
             'SELECT id FROM test WHERE email = ?',
             ['leonardo@turtles.ua']
         );
@@ -197,9 +183,8 @@ class CrudTest extends TestCase
      */
     public function testUpdateNotFoundError()
     {
-        $request = $this->getApp()->getRequest();
-        $request->setMethod(Http\Request::METHOD_PUT);
-        $request->setParams(['id' => 100042, 'name' => 'You Knows', 'email' => 'all@turtles.ua']);
+        Request::setMethod(Request::METHOD_PUT);
+        Request::setParams(['id' => 100042, 'name' => 'You Knows', 'email' => 'all@turtles.ua']);
 
         $this->processCrud();
     }
@@ -209,9 +194,8 @@ class CrudTest extends TestCase
      */
     public function testUpdateValidationErrors()
     {
-        $request = $this->getApp()->getRequest();
-        $request->setMethod(Http\Request::METHOD_PUT);
-        $request->setParams(['id' => 2, 'name' => '123456', 'email' => 'leonardo[at]turtles.ua']);
+        Request::setMethod(Request::METHOD_PUT);
+        Request::setParams(['id' => 2, 'name' => '123456', 'email' => 'leonardo[at]turtles.ua']);
 
 
         $result = $this->processCrud();
@@ -227,14 +211,13 @@ class CrudTest extends TestCase
      */
     public function testDelete()
     {
-        $request = $this->getApp()->getRequest();
-        $request->setMethod(Http\Request::METHOD_DELETE);
-        $request->setParams(['id' => 3]);
+        Request::setMethod(Request::METHOD_DELETE);
+        Request::setParams(['id' => 3]);
 
         $result = $this->processCrud();
         $this->assertEquals(1, $result);
 
-        $count = $this->getApp()->getDb()->fetchOne('SELECT count(*) FROM test WHERE id = ?', [3]);
+        $count = Db::fetchOne('SELECT count(*) FROM test WHERE id = ?', [3]);
         $this->assertEquals(0, $count);
     }
 
@@ -244,9 +227,8 @@ class CrudTest extends TestCase
      */
     public function testDeleteError()
     {
-        $request = $this->getApp()->getRequest();
-        $request->setMethod(Http\Request::METHOD_DELETE);
-        $request->setParams(['id' => 100042]);
+        Request::setMethod(Request::METHOD_DELETE);
+        Request::setParams(['id' => 100042]);
 
         $this->processCrud();
     }
@@ -257,8 +239,7 @@ class CrudTest extends TestCase
      */
     public function testNotImplementedException()
     {
-        $request = $this->getApp()->getRequest();
-        $request->setMethod(Http\Request::METHOD_HEAD);
+        Request::setMethod(Request::METHOD_HEAD);
 
         $this->processCrud();
     }

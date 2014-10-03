@@ -14,7 +14,9 @@ namespace Bluz\Controller;
 use Bluz\Application\Exception\BadRequestException;
 use Bluz\Application\Exception\NotFoundException;
 use Bluz\Application\Exception\NotImplementedException;
-use Bluz\Http\Request;
+use Bluz\Proxy\Response;
+use Bluz\Proxy\Request;
+use Bluz\Proxy\Router;
 use Bluz\Validator\Exception\ValidatorException;
 
 /**
@@ -58,9 +60,7 @@ class Rest extends AbstractController
     {
         parent::__construct();
 
-        $request = app()->getRequest();
-
-        $params = $request->getRawParams();
+        $params = Request::getRawParams();
 
         // %module% / %controller% / %id% / %relation% / %id%
         if (sizeof($params)) {
@@ -84,8 +84,6 @@ class Rest extends AbstractController
      */
     public function __invoke()
     {
-        $request = app()->getRequest();
-
         // everyone method can return:
         // >> 401 Unauthorized - if authorization is required
         // >> 403 Forbidden - if user don't have permissions
@@ -121,7 +119,7 @@ class Rest extends AbstractController
                     $offset = isset($this->params['offset'])?$this->params['offset']:0;
                     $limit = isset($this->params['limit'])?$this->params['limit']:10;
 
-                    if ($range = $request->getHeader('Range')) {
+                    if ($range = Request::getHeader('Range')) {
                         list(, $offset, $last) = preg_split('/[-=]/', $range);
                         // for better compatibility
                         $limit = $last - $offset;
@@ -152,14 +150,14 @@ class Rest extends AbstractController
                     }
 
                 } catch (ValidatorException $e) {
-                    app()->getResponse()->setStatusCode(400);
+                    Response::setStatusCode(400);
                     return ['errors' => $e->getErrors()];
                 }
 
-                app()->getResponse()->setStatusCode(201);
-                app()->getResponse()->setHeader(
+                Response::setStatusCode(201);
+                Response::setHeader(
                     'Location',
-                    app()->getRouter()->getUrl($request->getModule(), $request->getController()).'/'.$result
+                    Router::getUrl(Request::getModule(), Request::getController()).'/'.$result
                 );
                 return false; // disable view
             case Request::METHOD_PATCH:
@@ -180,10 +178,10 @@ class Rest extends AbstractController
                     // if $result === 0 it's means a update is not apply
                     // or records not found
                     if (0 === $result) {
-                        app()->getResponse()->setStatusCode(304);
+                        Response::setStatusCode(304);
                     }
                 } catch (ValidatorException $e) {
-                    app()->getResponse()->setStatusCode(400);
+                    Response::setStatusCode(400);
                     return ['errors' => $e->getErrors()];
                 }
                 return false; // disable view
@@ -201,7 +199,7 @@ class Rest extends AbstractController
                     }
                     $this->deleteSet($this->data);
                 }
-                app()->getResponse()->setStatusCode(204);
+                Response::setStatusCode(204);
                 return false; // disable view
             default:
                 throw new NotImplementedException();

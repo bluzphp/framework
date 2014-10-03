@@ -11,6 +11,7 @@
  */
 namespace Bluz\View\Helper;
 
+use Bluz\Proxy\Request;
 use Bluz\View\View;
 
 return
@@ -23,10 +24,9 @@ return
      * @return string|bool
      */
     function ($module = null) {
-        $request = app()->getRequest();
         if (null == $module) {
-            return $request->getModule();
+            return Request::getModule();
         } else {
-            return $request->getModule() == $module;
+            return Request::getModule() == $module;
         }
     };

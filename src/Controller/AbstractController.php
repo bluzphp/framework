@@ -13,7 +13,7 @@ namespace Bluz\Controller;
 
 use Bluz\Application\Exception\ApplicationException;
 use Bluz\Crud\AbstractCrud;
-use Bluz\Http\Request;
+use Bluz\Proxy\Request;
 
 /**
  * AbstractController
@@ -60,20 +60,18 @@ abstract class AbstractController
      */
     public function __construct()
     {
-        $request = app()->getRequest();
-
         // rewrite REST with "_method" param
         // this is workaround
-        $this->method = strtoupper($request->getParam('_method', $request->getMethod()));
+        $this->method = strtoupper(Request::getParam('_method', Request::getMethod()));
 
         // get all params
-        $query = $request->getQuery();
+        $query = Request::getQuery();
 
         unset($query['_method']);
 
         $this->params = $query;
 
-        $this->data = $request->getParams();
+        $this->data = Request::getParams();
     }
 
     /**

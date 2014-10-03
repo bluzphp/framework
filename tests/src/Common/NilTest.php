@@ -33,7 +33,6 @@ class NilTest extends TestCase
      */
     protected function setUp()
     {
-        parent::setUp();
         $this->class = new Nil();
     }
 

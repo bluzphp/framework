@@ -24,6 +24,11 @@ use Bluz\Common\Exception\ComponentException;
 abstract class AbstractProxy
 {
     /**
+     * @var array
+     */
+    protected static $instances = array();
+
+    /**
      * Init class instance
      *
      * @abstract
@@ -41,19 +46,29 @@ abstract class AbstractProxy
      * Get class instance
      *
      * @throws ComponentException
-     * @return static
+     * @return mixed
      */
     public static function getInstance()
     {
-        static $instance;
-        if (null === $instance) {
-            $instance = static::initInstance();
-            if (!$instance) {
+        if (!isset(static::$instances[get_called_class()])) {
+            static::$instances[get_called_class()] = static::initInstance();
+            if (!static::$instances[get_called_class()]) {
                 throw new ComponentException("Proxy class `".get_called_class()."` is not initialized");
             }
         }
 
-        return $instance;
+        return static::$instances[get_called_class()];
+    }
+
+    /**
+     * Set or replace instance
+     *
+     * @param  mixed $instance
+     * @return void
+     */
+    public static function setInstance($instance)
+    {
+        static::$instances[get_called_class()] = $instance;
     }
 
     /**

@@ -18,14 +18,28 @@ use Bluz\Router\Router as Instance;
  *
  * @package  Bluz\Proxy
  *
+ * @method   static Instance getInstance()
+ *
  * @method   static string getUrl($module = 'index', $controller = 'index', $params = array())
+ * @see      Bluz\Router\Router::getUrl()
+ *
  * @method   static string getFullUrl($module = 'index', $controller = 'index', $params = array())
+ * @see      Bluz\Router\Router::getFullUrl()
  *
  * @method   static void process()
+ * @see      Bluz\Router\Router::process()
+ *
  * @method   static string getDefaultModule()
+ * @see      Bluz\Router\Router::getDefaultModule()
+ *
  * @method   static string getDefaultController()
+ * @see      Bluz\Router\Router::getDefaultController()
+ *
  * @method   static string getErrorModule()
+ * @see      Bluz\Router\Router::getErrorModule()
+ *
  * @method   static string getErrorController()
+ * @see      Bluz\Router\Router::getErrorController()
  *
  * @author   Anton Shevchuk
  * @created  29.09.2014 12:15
@@ -41,7 +55,6 @@ class Router extends AbstractProxy
     {
         $instance = new Instance();
         $instance->setOptions(Config::getData('router'));
-        $instance->process();
         return $instance;
     }
 }

@@ -32,17 +32,7 @@ class RowTest extends Bluz\Tests\TestCase
      */
     protected function setUp()
     {
-        parent::setUp();
         $this->row = new Bluz\Tests\Db\Fixtures\ConcreteRow();
-    }
-
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-        
     }
 
     /**

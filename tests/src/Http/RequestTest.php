@@ -9,6 +9,7 @@
  */
 namespace Bluz\Tests\Http;
 
+use Bluz\Proxy\Request;
 use Bluz\Tests\TestCase;
 
 /**
@@ -52,12 +53,12 @@ class RequestTest extends TestCase
      */
     public function testIsMethods()
     {
-        $this->assertTrue($this->getApp()->getRequest()->isGet());
-        $this->assertFalse($this->getApp()->getRequest()->isPost());
-        $this->assertFalse($this->getApp()->getRequest()->isPut());
-        $this->assertFalse($this->getApp()->getRequest()->isDelete());
-        $this->assertFalse($this->getApp()->getRequest()->isFlashRequest());
-        $this->assertFalse($this->getApp()->getRequest()->isXmlHttpRequest());
+        $this->assertTrue(Request::isGet());
+        $this->assertFalse(Request::isPost());
+        $this->assertFalse(Request::isPut());
+        $this->assertFalse(Request::isDelete());
+        $this->assertFalse(Request::isFlashRequest());
+        $this->assertFalse(Request::isXmlHttpRequest());
     }
 
     /**
@@ -71,67 +72,30 @@ class RequestTest extends TestCase
      */
     public function testGetters()
     {
-        $this->assertEquals('get', $this->getApp()->getRequest()->getQuery('get'));
-        $this->assertEquals($_GET, $this->getApp()->getRequest()->getQuery());
-        $this->assertEquals('post', $this->getApp()->getRequest()->getPost('post'));
-        $this->assertEquals($_POST, $this->getApp()->getRequest()->getPost());
-        $this->assertEquals('cookie', $this->getApp()->getRequest()->getCookie('cookie'));
-        $this->assertEquals($_COOKIE, $this->getApp()->getRequest()->getCookie());
-        $this->assertEquals('server', $this->getApp()->getRequest()->getServer('server'));
-        $this->assertEquals($_SERVER, $this->getApp()->getRequest()->getServer());
-        $this->assertEquals('env', $this->getApp()->getRequest()->getEnv('env'));
-        $this->assertEquals($_ENV, $this->getApp()->getRequest()->getEnv());
+        $this->assertEquals('get', Request::getQuery('get'));
+        $this->assertEquals($_GET, Request::getQuery());
+        $this->assertEquals('post', Request::getPost('post'));
+        $this->assertEquals($_POST, Request::getPost());
+        $this->assertEquals('cookie', Request::getCookie('cookie'));
+        $this->assertEquals($_COOKIE, Request::getCookie());
+        $this->assertEquals('server', Request::getServer('server'));
+        $this->assertEquals($_SERVER, Request::getServer());
+        $this->assertEquals('env', Request::getEnv('env'));
+        $this->assertEquals($_ENV, Request::getEnv());
     }
 
     /**
      * Complex test for magic getter
      *
-     * @covers \Bluz\Http\Request::__get()
+     * @covers \Bluz\Http\Request::getParam()
      */
     public function testGet()
     {
-        $this->assertEquals('get', $this->getApp()->getRequest()->get);
-        $this->assertEquals('post', $this->getApp()->getRequest()->post);
-        $this->assertEquals('cookie', $this->getApp()->getRequest()->cookie);
-        $this->assertEquals('server', $this->getApp()->getRequest()->server);
-        $this->assertEquals('env', $this->getApp()->getRequest()->env);
-        $this->assertNull($this->getApp()->getRequest()->null);
-    }
-
-    /**
-     * Complex test for magic __isset
-     *
-     * @covers \Bluz\Http\Request::__isset()
-     */
-    public function testIsset()
-    {
-        $this->assertTrue(isset($this->getApp()->getRequest()->get));
-        $this->assertTrue(isset($this->getApp()->getRequest()->post));
-        $this->assertTrue(isset($this->getApp()->getRequest()->cookie));
-        $this->assertTrue(isset($this->getApp()->getRequest()->server));
-        $this->assertTrue(isset($this->getApp()->getRequest()->env));
-        $this->assertFalse(isset($this->getApp()->getRequest()->null));
-    }
-
-    /**
-     * Complex test for magic __unset
-     *
-     * @covers \Bluz\Http\Request::__unset()
-     */
-    public function testUnset()
-    {
-        unset(
-            $this->getApp()->getRequest()->get,
-            $this->getApp()->getRequest()->post,
-            $this->getApp()->getRequest()->cookie,
-            $this->getApp()->getRequest()->server,
-            $this->getApp()->getRequest()->env
-        );
-
-        $this->assertFalse(isset($this->getApp()->getRequest()->get));
-        $this->assertFalse(isset($this->getApp()->getRequest()->post));
-        $this->assertFalse(isset($this->getApp()->getRequest()->cookie));
-        $this->assertFalse(isset($this->getApp()->getRequest()->server));
-        $this->assertFalse(isset($this->getApp()->getRequest()->env));
+        $this->assertEquals('get', Request::getParam('get'));
+        $this->assertEquals('post', Request::getParam('post'));
+        $this->assertEquals('cookie', Request::getParam('cookie'));
+        $this->assertEquals('server', Request::getParam('server'));
+        $this->assertEquals('env', Request::getParam('env'));
+        $this->assertNull(Request::getParam('some'));
     }
 }

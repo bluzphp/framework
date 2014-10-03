@@ -10,6 +10,7 @@
 namespace Bluz\Tests\Grid;
 
 use Bluz\Grid\Grid;
+use Bluz\Proxy\Request;
 use Bluz\Tests\TestCase;
 use Bluz\Tests\Grid\Fixtures\ArrayGrid;
 
@@ -20,15 +21,6 @@ use Bluz\Tests\Grid\Fixtures\ArrayGrid;
  */
 class GridTest extends TestCase
 {
-    /**
-     * Setup Application
-     */
-    public function setUp()
-    {
-        parent::setUp();
-        self::getApp();
-    }
-
     /**
      * Reset application
      */
@@ -42,12 +34,11 @@ class GridTest extends TestCase
      */
     public function testProcessRequest()
     {
-        $request = $this->getApp()->getRequest();
-        $request->setParam('arr-page', 2);  // 2 page
-        $request->setParam('arr-limit', 2); // 2 rows per page
-        $request->setParam('arr-order-id', 'desc');
-        $request->setParam('arr-filter-name', 'ne-Smith');
-        $request->setParam('arr-filter-status', 'disable');
+        Request::setParam('arr-page', 2);  // 2 page
+        Request::setParam('arr-limit', 2); // 2 rows per page
+        Request::setParam('arr-order-id', 'desc');
+        Request::setParam('arr-filter-name', 'ne-Smith');
+        Request::setParam('arr-filter-status', 'disable');
 
         $grid = new ArrayGrid();
 

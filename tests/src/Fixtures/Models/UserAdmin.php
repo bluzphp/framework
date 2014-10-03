@@ -5,6 +5,7 @@
 namespace Bluz\Tests\Fixtures\Models;
 
 use Bluz\Auth\AbstractRowEntity;
+use Bluz\Proxy\Auth;
 
 /**
  * Row
@@ -23,7 +24,7 @@ class UserAdmin extends AbstractRowEntity
      */
     public function login()
     {
-        app()->getAuth()->setIdentity($this);
+        Auth::setIdentity($this);
     }
 
     /**

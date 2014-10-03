@@ -22,8 +22,13 @@ use Bluz\Auth\EntityInterface;
  * @method   static Instance getInstance()
  *
  * @method   static void setIdentity(EntityInterface $identity)
+ * @see      Bluz\Auth\Auth::setIdentity()
+ *
  * @method   static EntityInterface getIdentity()
+ * @see      Bluz\Auth\Auth::getIdentity()
+ *
  * @method   static void clearIdentity()
+ * @see      Bluz\Auth\Auth::clearIdentity()
  *
  * @author   Anton Shevchuk
  * @created  26.09.2014 18:02

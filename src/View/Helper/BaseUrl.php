@@ -11,6 +11,7 @@
  */
 namespace Bluz\View\Helper;
 
+use Bluz\Proxy\Request;
 use Bluz\View\View;
 
 return
@@ -25,7 +26,7 @@ return
     function ($file = null) {
         // setup baseUrl
         if (!$this->baseUrl) {
-            $this->baseUrl = app()->getRequest()->getBaseUrl();
+            $this->baseUrl = Request::getBaseUrl();
             // clean script name
             if (isset($_SERVER['SCRIPT_NAME'])
                 && ($pos = strripos($this->baseUrl, basename($_SERVER['SCRIPT_NAME']))) !== false

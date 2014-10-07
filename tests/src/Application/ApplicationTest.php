@@ -28,14 +28,11 @@ class ApplicationTest extends TestCase
      */
     public function testReflection()
     {
-        $controllerFile = dirname(__FILE__) .'/../Fixtures/Controllers/ConcreteWithData.php';
+        $file = dirname(__FILE__) .'/../Fixtures/Controllers/ConcreteWithData.php';
 
-        $reflectionData = $this->getApp()->reflection($controllerFile);
+        $reflection = $this->getApp()->reflection($file);
 
-        /** @var \closure $controllerClosure */
-        $controllerClosure = require $controllerFile;
-
-        $this->assertEquals($reflectionData, $controllerClosure('a', 'b', 'c'));
+        $this->assertInstanceOf('\\Bluz\\Controller\\Reflection', $reflection);
     }
 
 

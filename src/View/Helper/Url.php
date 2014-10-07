@@ -30,9 +30,7 @@ return
     function ($module, $controller, $params = [], $checkAccess = false) {
         try {
             if ($checkAccess) {
-                $controllerFile = app()->getControllerFile($module, $controller);
-                $reflectionData = app()->reflection($controllerFile);
-                if (!app()->isAllowed($module, $reflectionData)) {
+                if (!app()->isAllowed($module, $controller)) {
                     return null;
                 }
             }

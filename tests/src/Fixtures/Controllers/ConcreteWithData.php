@@ -11,8 +11,9 @@ namespace Bluz\Tests\Fixtures\Controllers;
 
 return
 /**
- *
  * @privilege Test
+ * @cache 5 min
+ * @cache-html 1 min
  * @method CLI
  * @method GET
  * @route /example/
@@ -26,15 +27,5 @@ function ($a, $b, $c = null) {
     /**
      * @var \Bluz\Application\Application $this
      */
-    return array(
-        'params' => array("a" => "int", "b" => "float", "c" => "string"),
-        'values' => array("c" => null),
-        'route'  => array(
-            '/example/',
-            '/example/{$a}/{$b}/{$c}'
-        ),
-        'privilege' => "Test",
-        'method' => array("CLI", "GET"),
-//        'return' => '\closure',
-    );
+    return array();
 };

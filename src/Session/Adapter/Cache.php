@@ -44,10 +44,7 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
      */
     public function read($id)
     {
-        $id = $this->prefix . $id;
-        $data =  $this->handler->get($id);
-        $this->handler->set($id, $data, $this->ttl);
-        return $data;
+        return $this->handler->get($this->prepareId($id));
     }
 
     /**
@@ -57,8 +54,7 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
      */
     public function write($id, $data)
     {
-        $id = $this->prefix . $id;
-        $this->handler->set($id, $data, $this->ttl);
+        $this->handler->set($this->prepareId($id), $data, $this->ttl);
     }
 
     /**
@@ -67,6 +63,6 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
      */
     public function destroy($id)
     {
-        $this->handler->delete($this->prefix . $id);
+        $this->handler->delete($this->prepareId($id));
     }
 }

@@ -57,29 +57,18 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
         }
 
         $this->settings = array_replace_recursive($this->settings, $settings);
-    }
 
-    /**
-     * Get Redis handler
-     *
-     * @return \Redis
-     */
-    protected function getHandler()
-    {
-        if (!$this->handler) {
-            $this->handler = new \Redis();
-            if ($this->settings['persistence']) {
-                $this->handler->pconnect($this->settings['host'], $this->settings['port'], $this->settings['timeout']);
-            } else {
-                $this->handler->connect($this->settings['host'], $this->settings['port'], $this->settings['timeout']);
-            }
-            if (isset($this->settings['options'])) {
-                foreach ($this->settings['options'] as $key => $value) {
-                    $this->handler->setOption($key, $value);
-                }
+        $this->handler = new \Redis();
+        if ($this->settings['persistence']) {
+            $this->handler->pconnect($this->settings['host'], $this->settings['port'], $this->settings['timeout']);
+        } else {
+            $this->handler->connect($this->settings['host'], $this->settings['port'], $this->settings['timeout']);
+        }
+        if (isset($this->settings['options'])) {
+            foreach ($this->settings['options'] as $key => $value) {
+                $this->handler->setOption($key, $value);
             }
         }
-        return $this->handler;
     }
 
     /**
@@ -88,10 +77,7 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
      */
     public function read($id)
     {
-        $id = $this->prefix . $id;
-        $data = $this->getHandler()->get($id);
-        $this->getHandler()->expire($id, $this->ttl);
-        return $data;
+        return $this->handler->get($this->prepareId($id));
     }
 
     /**
@@ -101,9 +87,7 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
      */
     public function write($id, $data)
     {
-        $id = $this->prefix . $id;
-        $this->getHandler()->set($id, $data);
-        $this->getHandler()->expire($id, $this->ttl);
+        $this->handler->set($this->prepareId($id), $data, $this->ttl);
     }
 
     /**
@@ -112,6 +96,6 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
      */
     public function destroy($id)
     {
-        $this->getHandler()->del($this->prefix . $id);
+        $this->handler->del($this->prepareId($id));
     }
 }

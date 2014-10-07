@@ -17,12 +17,12 @@ use Bluz\Application\Exception\RedirectException;
 use Bluz\Application\Exception\ReloadException;
 use Bluz\Auth\AbstractRowEntity;
 use Bluz\Common;
+use Bluz\Controller\Reflection;
 use Bluz\Http;
 use Bluz\Proxy\Acl;
 use Bluz\Proxy\Cache;
 use Bluz\Proxy\Config;
 use Bluz\Proxy\Db;
-use Bluz\Proxy\EventManager;
 use Bluz\Proxy\Layout;
 use Bluz\Proxy\Logger;
 use Bluz\Proxy\Messages;
@@ -384,17 +384,6 @@ class Application
     {
         Logger::info("app:dispatch: " . $module . '/' . $controller);
 
-        // system trigger "dispatch"
-        EventManager::trigger(
-            'dispatch',
-            $this,
-            array(
-                'module' => $module,
-                'controller' => $controller,
-                'params' => $params
-            )
-        );
-
         $this->dispatchModule = $module;
         $this->dispatchController = $controller;
 
@@ -416,6 +405,11 @@ class Application
     protected function preDispatch($module, $controller, $params = array())
     {
         Logger::info("app:dispatch:pre: " . $module . '/' . $controller);
+
+        // check privilege before run controller
+        if (!$this->isAllowed($module, $controller)) {
+            $this->denied();
+        }
     }
 
     /**
@@ -432,29 +426,22 @@ class Application
     {
         Logger::info("app:dispatch:do: " . $module . '/' . $controller);
         $controllerFile = $this->getControllerFile($module, $controller);
-        $reflectionData = $this->reflection($controllerFile);
-
-        // check acl
-        if (!$this->isAllowed($module, $reflectionData)) {
-            $this->denied();
-        }
+        $reflection = $this->reflection($controllerFile);
 
         // check method(s)
-        if (isset($reflectionData['method'])
-            && !in_array(Request::getMethod(), $reflectionData['method'])
-        ) {
-            throw new ApplicationException(join(',', $reflectionData['method']), 405);
+        if ($reflection->getMethod() && !in_array(Request::getMethod(), $reflection->getMethod())) {
+            throw new ApplicationException(join(',', $reflection->getMethod()), 405);
         }
 
         // cache initialization
-        if (isset($reflectionData['cache-html'])) {
+        if ($reflection->getCacheHtml()) {
             $htmlKey = 'html:' . $module . ':' . $controller . ':' . http_build_query($params);
             if ($cachedHtml = Cache::get($htmlKey)) {
                 return $cachedHtml;
             }
         }
 
-        if (isset($reflectionData['cache'])) {
+        if ($reflection->getCache()) {
             $cacheKey = 'view:' . $module . ':' . $controller . ':' . http_build_query($params);
             if ($cachedView = Cache::get($cacheKey)) {
                 return $cachedView;
@@ -462,7 +449,7 @@ class Application
         }
 
         // process params
-        $params = $this->params($reflectionData, $params);
+        $params = $reflection->params($params);
 
         // $view for use in closure
         $view = new View();
@@ -524,16 +511,16 @@ class Application
                 break;
         }
 
-        if (isset($reflectionData['cache'], $cacheKey)) {
-            Cache::set($cacheKey, $view, intval($reflectionData['cache']) * 60);
+        if (isset($cacheKey)) {
+            Cache::set($cacheKey, $view, $reflection->getCache());
             Cache::addTag($cacheKey, $module);
             Cache::addTag($cacheKey, 'view');
             Cache::addTag($cacheKey, 'view:' . $module);
             Cache::addTag($cacheKey, 'view:' . $module . ':' . $controller);
         }
 
-        if (isset($reflectionData['cache-html'], $htmlKey)) {
-            Cache::set($htmlKey, $view->render(), intval($reflectionData['cache-html']) * 60);
+        if (isset($htmlKey)) {
+            Cache::set($htmlKey, $view->render(), $reflection->getCacheHtml());
             Cache::addTag($htmlKey, $module);
             Cache::addTag($htmlKey, 'html');
             Cache::addTag($htmlKey, 'html:' . $module);
@@ -659,22 +646,10 @@ class Application
     {
         Logger::info("app:widget: " . $module . '/' . $widget);
         $widgetFile = $this->getWidgetFile($module, $widget);
-        $reflectionData = $this->reflection($widgetFile);
-
-
-        EventManager::trigger(
-            'widget',
-            $this,
-            array(
-                'module' => $module,
-                'widget' => $widget,
-                'params' => $params,
-                'reflection' => $reflectionData
-            )
-        );
+        $reflection = $this->reflection($widgetFile);
 
         // check acl
-        if (!$this->isAllowed($module, $reflectionData)) {
+        if (!Acl::isAllowed($module, $reflection->getPrivilege())) {
             throw new ForbiddenException("Not enough permissions for call widget '$module/$widget'");
         }
 
@@ -682,9 +657,7 @@ class Application
          * Cachable widgets
          * @var \Closure $widgetClosure
          */
-        if (isset($this->widgets[$module])
-            && isset($this->widgets[$module][$widget])
-        ) {
+        if (isset($this->widgets[$module], $this->widgets[$module][$widget])) {
             $widgetClosure = $this->widgets[$module][$widget];
         } else {
             $widgetClosure = include $widgetFile;
@@ -724,15 +697,6 @@ class Application
     {
         Logger::info("app:api: " . $module . '/' . $method);
 
-        EventManager::trigger(
-            'api',
-            $this,
-            array(
-                'module' => $module,
-                'method' => $method
-            )
-        );
-
         /**
          * Cachable APIs
          * @var \Closure $widgetClosure
@@ -762,191 +726,36 @@ class Application
      *
      * @param string $file
      * @throws ApplicationException
-     * @return array
+     * @return Reflection
      */
     public function reflection($file)
     {
         // cache for reflection data
-        if (!$data = Cache::get('reflection:' . $file)) {
+        if (!$reflection = Cache::get('reflection:' . $file)) {
+            $reflection = new Reflection($file);
+            $reflection->process();
 
-            // TODO: workaround for get reflection of closure function
-            $bootstrap = $view = $module = $controller = null;
-            /** @var \Closure|object $closure */
-            $closure = include $file;
-
-            if (!is_callable($closure)) {
-                throw new ApplicationException("There is no closure in file $file");
-            }
-
-            // init data
-            $data = array(
-                'params' => [],
-                'values' => [],
-            );
-
-            if ('Closure' == get_class($closure)) {
-                $reflection = new \ReflectionFunction($closure);
-            } else {
-                $reflection = new \ReflectionObject($closure);
-            }
-
-            // check and normalize params by doc comment
-            $docComment = $reflection->getDocComment();
-
-            // get all options by one regular expression
-            if (preg_match_all('/\s*\*\s*\@([a-z0-9-_]+)\s+(.*).*/i', $docComment, $matches)) {
-                foreach ($matches[1] as $i => $key) {
-                    $data[$key][] = trim($matches[2][$i]);
-                }
-            }
-
-            // parameters available for Closure only
-            if ($reflection instanceof \ReflectionFunction) {
-                // get params and convert it to simple array
-                $reflectionParams = $reflection->getParameters();
-
-                // prepare params data
-                // setup param types
-                $types = array();
-                if (isset($data['param'])) {
-                    foreach ($data['param'] as $param) {
-                        if (strpos($param, '$') === false) {
-                            continue;
-                        }
-                        list($type, $key) = preg_split('/\$/', $param);
-                        $type = trim($type);
-                        if (!empty($type)) {
-                            $types[$key] = $type;
-                        }
-                    }
-                }
-
-                // setup params and optional params
-                $params = array();
-                $values = array();
-                foreach ($reflectionParams as $param) {
-                    $name = $param->getName();
-                    $params[$name] = isset($types[$name]) ? $types[$name] : null;
-                    if ($param->isOptional()) {
-                        $values[$name] = $param->getDefaultValue();
-                    }
-                }
-                $data['params'] = $params;
-                $data['values'] = $values;
-            }
-
-            // prepare cache ttl settings
-            if (isset($data['cache'])) {
-                $cache = current($data['cache']);
-                $num = (int)$cache;
-                $time = substr($cache, strpos($cache, ' '));
-                switch ($time) {
-                    case 'day':
-                    case 'days':
-                        $data['cache'] = (int)$num * 60 * 24;
-                        break;
-                    case 'hour':
-                    case 'hours':
-                        $data['cache'] = (int)$num * 60;
-                        break;
-                    case 'min':
-                    default:
-                        $data['cache'] = (int)$num;
-                }
-            }
-
-            // prepare cache ttl settings
-            if (isset($data['cache-html'])) {
-                $cache = current($data['cache-html']);
-                $num = (int)$cache;
-                $time = substr($cache, strpos($cache, ' '));
-                switch ($time) {
-                    case 'day':
-                    case 'days':
-                        $data['cache-html'] = (int)$num * 60 * 24;
-                        break;
-                    case 'hour':
-                    case 'hours':
-                        $data['cache-html'] = (int)$num * 60;
-                        break;
-                    case 'min':
-                    default:
-                        $data['cache-html'] = (int)$num;
-                }
-            }
-
-            // prepare acl settings
-            // only one privilege
-            if (isset($data['privilege'])) {
-                $data['privilege'] = current($data['privilege']);
-            }
-
-            // clean unused data
-            unset($data['return'], $data['param']);
-
-            Cache::set('reflection:' . $file, $data);
+            Cache::set('reflection:' . $file, $reflection);
             Cache::addTag('reflection:' . $file, 'reflection');
         }
-        return $data;
-    }
-
-    /**
-     * Process params
-     *  - type conversion
-     *  - default values
-     *
-     * @param array $reflectionData
-     * @param array $rawData
-     * @return array
-     */
-    private function params($reflectionData, $rawData)
-    {
-        // need use new array for order params as described in controller
-        $params = array();
-        foreach ($reflectionData['params'] as $param => $type) {
-            if (isset($rawData[$param])) {
-                switch ($type) {
-                    case 'bool':
-                    case 'boolean':
-                        $params[] = (bool)$rawData[$param];
-                        break;
-                    case 'int':
-                    case 'integer':
-                        $params[] = (int)$rawData[$param];
-                        break;
-                    case 'float':
-                        $params[] = (float)$rawData[$param];
-                        break;
-                    case 'string':
-                        $params[] = (string)$rawData[$param];
-                        break;
-                    case 'array':
-                        $params[] = (array)$rawData[$param];
-                        break;
-                    default:
-                        $params[] = $rawData[$param];
-                        break;
-                }
-            } elseif (isset($reflectionData['values'][$param])) {
-                $params[] = $reflectionData['values'][$param];
-            } else {
-                $params[] = null;
-            }
-        }
-        return $params;
+        return $reflection;
     }
 
     /**
      * Is allowed controller/widget/etc
      *
      * @param string $module
-     * @param array $reflection
+     * @param string $controller
+     * @throws ApplicationException
      * @return bool
      */
-    public function isAllowed($module, $reflection)
+    public function isAllowed($module, $controller)
     {
-        if (isset($reflection['privilege'])) {
-            return Acl::isAllowed($module, $reflection['privilege']);
+        $file = $this->getControllerFile($module, $controller);
+        $reflection = $this->reflection($file);
+
+        if ($privilege = $reflection->getPrivilege()) {
+            return Acl::isAllowed($module, $privilege);
         }
         return true;
     }
@@ -959,13 +768,13 @@ class Application
      * @return string
      * @throws ApplicationException
      */
-    public function getControllerFile($module, $controller)
+    protected function getControllerFile($module, $controller)
     {
         $controllerPath = $this->getPath() . '/modules/' . $module
             . '/controllers/' . $controller . '.php';
 
         if (!file_exists($controllerPath)) {
-            throw new ApplicationException("Controller not found '$module/$controller'", 404);
+            throw new ApplicationException("Controller file not found '$module/$controller'", 404);
         }
 
         return $controllerPath;
@@ -985,7 +794,7 @@ class Application
             . '/widgets/' . $widget . '.php';
 
         if (!file_exists($widgetPath)) {
-            throw new ApplicationException("Widget not found '$module/$widget'");
+            throw new ApplicationException("Widget file not found '$module/$widget'");
         }
 
         return $widgetPath;
@@ -1005,7 +814,7 @@ class Application
             . '/api/' . $method . '.php';
 
         if (!file_exists($apiPath)) {
-            throw new ApplicationException("API not found '$module/$method'");
+            throw new ApplicationException("API file not found '$module/$method'");
         }
 
         return $apiPath;
@@ -1014,11 +823,10 @@ class Application
     /**
      * Finally method
      * 
-     * @return Application
+     * @return void
      */
     public function finish()
     {
         Logger::info(__METHOD__);
-        return $this;
     }
 }

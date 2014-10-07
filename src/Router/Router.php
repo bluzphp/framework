@@ -12,7 +12,6 @@
 namespace Bluz\Router;
 
 use Bluz\Common\Options;
-use Bluz\Controller\Reflection;
 use Bluz\Proxy\Cache;
 use Bluz\Proxy\Request;
 
@@ -83,9 +82,9 @@ class Router
             $reverse = array();
             foreach (new \GlobIterator(app()->getPath() . '/modules/*/controllers/*.php') as $file) {
                 /* @var \SplFileInfo $file */
-                $module = pathinfo(dirname(dirname($file->getPathname())), PATHINFO_FILENAME);
-                $controller = pathinfo($file->getPathname(), PATHINFO_FILENAME);
-                $reflection = app()->reflection($file->getPathname());
+                $module = $file->getPathInfo()->getPathInfo()->getBasename();
+                $controller = $file->getBasename('.php');
+                $reflection = app()->reflection($file->getRealPath());
                 if ($routes = $reflection->getRoute()) {
                     foreach ($routes as $route => $pattern) {
                         if (!isset($reverse[$module])) {

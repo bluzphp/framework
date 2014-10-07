@@ -146,7 +146,7 @@ trait Options
     /**
      * Normalize key name
      *
-     * @param  $key
+     * @param  string $key
      * @return string
      */
     private function normalizeKey($key)

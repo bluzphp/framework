@@ -44,7 +44,7 @@ class Reflection
     protected $cacheHtml = 0;
 
     /**
-     * @var string
+     * @var array
      */
     protected $method = array();
 
@@ -142,7 +142,7 @@ class Reflection
      */
     public function params($requestParams)
     {
-        // need use new array for order params as described in controller
+        // apply type and default value for request params
         $params = array();
         foreach ($this->params as $param => $type) {
             if (isset($requestParams[$param])) {

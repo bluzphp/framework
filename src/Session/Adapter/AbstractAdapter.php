@@ -38,16 +38,25 @@ abstract class AbstractAdapter
     protected $ttl = 1800;
 
     /**
+     * Prepare Id - add prefix
+     *
+     * @param string $id
+     * @return string
+     */
+    protected function prepareId($id)
+    {
+        return $this->prefix . $id;
+    }
+
+    /**
      * @param string $savePath
      * @param string $sessionName
      * @return bool|void
      */
     public function open($savePath, $sessionName)
     {
-        $params = session_get_cookie_params();
-
         $this->prefix = $sessionName . ':';
-        $this->ttl = $params['lifetime'];
+        $this->ttl = ini_get('session.gc_maxlifetime');
 
         // No more action necessary because connection is injected
         // in constructor and arguments are not applicable.

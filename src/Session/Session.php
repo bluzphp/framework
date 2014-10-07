@@ -207,11 +207,6 @@ class Session
         $this->initAdapter();
 
         session_start();
-
-        // check storage
-        if (!isset($_SESSION[$this->getNamespace()])) {
-            $_SESSION[$this->getNamespace()] = array();
-        }
     }
 
     /**
@@ -357,6 +352,10 @@ class Session
     public function set($key, $value)
     {
         $this->start();
+        // check storage
+        if (!isset($_SESSION[$this->getNamespace()])) {
+            $_SESSION[$this->getNamespace()] = array();
+        }
         $_SESSION[$this->namespace][$key] = $value;
     }
 

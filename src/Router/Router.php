@@ -12,6 +12,7 @@
 namespace Bluz\Router;
 
 use Bluz\Common\Options;
+use Bluz\Controller\Reflection;
 use Bluz\Proxy\Cache;
 use Bluz\Proxy\Request;
 
@@ -84,47 +85,21 @@ class Router
                 /* @var \SplFileInfo $file */
                 $module = pathinfo(dirname(dirname($file->getPathname())), PATHINFO_FILENAME);
                 $controller = pathinfo($file->getPathname(), PATHINFO_FILENAME);
-                $data = app()->reflection($file->getPathname());
-                if (isset($data['route'])) {
-                    foreach ((array)$data['route'] as $route) {
-                        $route = trim($route);
-
+                $reflection = app()->reflection($file->getPathname());
+                if ($routes = $reflection->getRoute()) {
+                    foreach ($routes as $route => $pattern) {
                         if (!isset($reverse[$module])) {
                             $reverse[$module] = array();
                         }
 
-                        $reverse[$module][$controller] = ['route' => $route, 'params' => $data['params']];
-
-                        $pattern = str_replace('/', '\/', $route);
-
-                        foreach ($data['params'] as $param => $type) {
-                            switch ($type) {
-                                case 'int':
-                                case 'integer':
-                                    $pattern = str_replace("{\$" . $param . "}", "(?P<$param>[0-9]+)", $pattern);
-                                    break;
-                                case 'float':
-                                    $pattern = str_replace("{\$" . $param . "}", "(?P<$param>[0-9.,]+)", $pattern);
-                                    break;
-                                case 'string':
-                                case 'module':
-                                case 'controller':
-                                    $pattern = str_replace(
-                                        "{\$" . $param . "}",
-                                        "(?P<$param>[a-zA-Z0-9-_.]+)",
-                                        $pattern
-                                    );
-                                    break;
-                            }
-                        }
-                        $pattern = '/^' . $pattern . '/i';
+                        $reverse[$module][$controller] = ['route' => $route, 'params' => $reflection->getParams()];
 
                         $rule = [
                             $route => [
                                 'pattern' => $pattern,
                                 'module' => $module,
                                 'controller' => $controller,
-                                'params' => $data['params']
+                                'params' => $reflection->getParams()
                             ]
                         ];
 

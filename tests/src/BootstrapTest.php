@@ -22,6 +22,18 @@ use Bluz\Application\Application;
 class BootstrapTest extends Application
 {
     /**
+     * Dispatched module name
+     * @var string
+     */
+    protected $dispatchModule;
+
+    /**
+     * Dispatched controller name
+     * @var string
+     */
+    protected $dispatchController;
+
+    /**
      * Get dispatched module name
      *
      * @return string
@@ -39,5 +51,19 @@ class BootstrapTest extends Application
     public function getController()
     {
         return $this->dispatchController;
+    }
+
+    /**
+     * @param string $module
+     * @param string $controller
+     * @param array $params
+     * @return \Bluz\View\View|string
+     */
+    public function dispatch($module, $controller, $params = array())
+    {
+        $this->dispatchModule = $module;
+        $this->dispatchController = $controller;
+
+        return parent::dispatch($module, $controller, $params);
     }
 }

@@ -95,18 +95,6 @@ class Application
     protected $api = array();
 
     /**
-     * Dispatched module name
-     * @var string
-     */
-    protected $dispatchModule;
-
-    /**
-     * Dispatched controller name
-     * @var string
-     */
-    protected $dispatchController;
-
-    /**
      * Get application environment
      *
      * @return string
@@ -384,9 +372,6 @@ class Application
     {
         Logger::info("app:dispatch: " . $module . '/' . $controller);
 
-        $this->dispatchModule = $module;
-        $this->dispatchController = $controller;
-
         $this->preDispatch($module, $controller, $params);
         $result = $this->doDispatch($module, $controller, $params);
         $this->postDispatch($module, $controller, $params);
@@ -576,6 +561,7 @@ class Application
     /**
      * Get Db Instance
      *
+     * @deprecated since 0.5.1
      * @return \Bluz\Db\Db
      */
     public function getDb()

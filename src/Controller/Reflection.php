@@ -125,6 +125,10 @@ class Reflection
             // setup params and optional params
             foreach ($reflectionParams as $param) {
                 $name = $param->getName();
+                // if some function params is missed in description
+                if (!isset($this->params[$name])) {
+                    $this->params[$name] = null;
+                }
                 if ($param->isOptional()) {
                     $this->values[$name] = $param->getDefaultValue();
                 }

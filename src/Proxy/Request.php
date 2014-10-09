@@ -93,6 +93,8 @@ use Bluz\Request\AbstractRequest as Instance;
  *
  * @method   static string getHttpHost()
  * @see      Bluz\Http\Request::getHttpHost()
+ * @method   static string getScheme()
+ * @see      Bluz\Http\Request::getScheme()
  *
  * @method   static FileUpload getFileUpload()
  * @see      Bluz\Http\Request::getFileUpload()

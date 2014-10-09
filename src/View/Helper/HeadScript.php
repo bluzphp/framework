@@ -11,6 +11,7 @@
  */
 namespace Bluz\View\Helper;
 
+use Bluz\Application\Application;
 use Bluz\Proxy\Layout;
 
 return
@@ -22,7 +23,7 @@ return
      * @return string|null
      */
     function ($script = null) {
-        if (app()->hasLayout()) {
+        if (Application::getInstance()->hasLayout()) {
             return Layout::headScript($script);
         } else {
             // it's just alias to script() call

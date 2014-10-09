@@ -11,6 +11,7 @@
  */
 namespace Bluz\View;
 
+use Bluz\Application\Application;
 use Bluz\Auth\AbstractRowEntity;
 use Bluz\Common\Container;
 use Bluz\Common\Helper;
@@ -174,7 +175,7 @@ class View implements ViewInterface, \JsonSerializable
             // clean output
             ob_end_clean();
             // @codeCoverageIgnoreStart
-            if (app()->isDebug()) {
+            if (Application::getInstance()->isDebug()) {
                 return $e->getMessage() ."\n<br/>". $e->getTraceAsString();
             }
             // @codeCoverageIgnoreEnd

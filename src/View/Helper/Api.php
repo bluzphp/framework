@@ -11,6 +11,7 @@
  */
 namespace Bluz\View\Helper;
 
+use Bluz\Application\Application;
 use Bluz\View\View;
 
 return
@@ -28,9 +29,8 @@ return
      * @return mixed
      */
     function ($module, $method, $params = array()) {
-        $application = app();
         try {
-            $apiClosure = $application->api($module, $method);
+            $apiClosure = Application::getInstance()->api($module, $method);
             return call_user_func_array($apiClosure, $params);
         } catch (\Exception $e) {
             return $this->exception($e);

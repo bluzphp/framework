@@ -11,6 +11,7 @@
  */
 namespace Bluz\View\Helper;
 
+use Bluz\Application\Application;
 use Bluz\View\View;
 
 return
@@ -22,7 +23,7 @@ return
      * @return string
      */
     function ($exception) {
-        if (app()->isDebug()) {
+        if (Application::getInstance()->isDebug()) {
             // @codeCoverageIgnoreStart
             // exception message for developers
             return

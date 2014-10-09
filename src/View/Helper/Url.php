@@ -11,6 +11,7 @@
  */
 namespace Bluz\View\Helper;
 
+use Bluz\Application\Application;
 use Bluz\Proxy\Request;
 use Bluz\Proxy\Router;
 use Bluz\View\View;
@@ -30,7 +31,7 @@ return
     function ($module, $controller, $params = [], $checkAccess = false) {
         try {
             if ($checkAccess) {
-                if (!app()->isAllowed($module, $controller)) {
+                if (!Application::getInstance()->isAllowed($module, $controller)) {
                     return null;
                 }
             }

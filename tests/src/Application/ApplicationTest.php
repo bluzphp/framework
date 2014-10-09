@@ -46,7 +46,6 @@ class ApplicationTest extends TestCase
         $this->assertInstanceOf('\Bluz\Layout\Layout', $this->getApp()->getLayout());
         $this->assertInstanceOf('\Bluz\Http\Request', $this->getApp()->getRequest());
         $this->assertInstanceOf('\Bluz\Http\Response', $this->getApp()->getResponse());
-        $this->assertInstanceOf('\Bluz\Router\Router', $this->getApp()->getRouter());
     }
 
     /**

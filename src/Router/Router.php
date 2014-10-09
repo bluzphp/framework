@@ -81,7 +81,8 @@ class Router
         if (!$routers or !$reverse) {
             $routers = array();
             $reverse = array();
-            foreach (new \GlobIterator(Application::getInstance()->getPath() . '/modules/*/controllers/*.php') as $file) {
+            $path = Application::getInstance()->getPath() . '/modules/*/controllers/*.php';
+            foreach (new \GlobIterator($path) as $file) {
                 /* @var \SplFileInfo $file */
                 $module = $file->getPathInfo()->getPathInfo()->getBasename();
                 $controller = $file->getBasename('.php');

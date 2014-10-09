@@ -96,7 +96,7 @@ if (!function_exists('__')) {
      *     // equal to sprintf(gettext('Message to %s'), 'Username')
      *     __('Message to %s', 'Username');
      *
-     * @internal param string $message,...
+     * @param string $message,...
      * @return string
      */
     function __()
@@ -118,9 +118,9 @@ if (!function_exists('_n')) {
      *     // equal to sprintf(ngettext('%d comment', '%d comments', 4), 4, 'Topic')
      *     _n('%d comment to %s', '%d comments to %s', 4, 'Topic')
      *
-     * @internal param string $singular
-     * @internal param string $plural
-     * @internal param integer $number,...
+     * @param string $singular
+     * @param string $plural
+     * @param integer $number,...
      * @return string
      */
     function _n()

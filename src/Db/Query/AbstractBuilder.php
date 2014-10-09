@@ -11,9 +11,7 @@
  */
 namespace Bluz\Db\Query;
 
-use Bluz\Db\Db;
-use Bluz\Db\Exception\DbException;
-use Bluz\Proxy;
+use Bluz\Proxy\Db;
 
 /**
  * Query Builders classes is responsible to dynamically create SQL queries
@@ -25,12 +23,6 @@ use Bluz\Proxy;
  */
 abstract class AbstractBuilder
 {
-    /**
-     * Instance of Db
-     * @var Db
-     */
-    protected $adapter = null;
-
     /**
      * Known table aliases
      * @var array
@@ -73,38 +65,9 @@ abstract class AbstractBuilder
      */
     public function execute()
     {
-        return $this->getAdapter()->query($this->getSQL(), $this->params, $this->paramTypes);
+        return Db::query($this->getSQL(), $this->params, $this->paramTypes);
     }
-
-    /**
-     * Sets a DB adapter.
-     *
-     * @param Db $adapter DB adapter for table to use
-     * @return self instance
-     * @throws DbException if default DB adapter not initiated
-     *                     on \Bluz\Db::$adapter.
-     */
-    public function setAdapter($adapter = null)
-    {
-        if (null == $adapter) {
-            $this->adapter = Proxy\Db::getInstance();
-        }
-        return $this;
-    }
-
-    /**
-     * Gets a DB adapter.
-     *
-     * @return Db
-     */
-    public function getAdapter()
-    {
-        if (!$this->adapter) {
-            $this->setAdapter();
-        }
-        return $this->adapter;
-    }
-
+    
     /**
      * Return the complete SQL string formed by the current specifications
      *
@@ -291,7 +254,7 @@ abstract class AbstractBuilder
      */
     protected function setFromQueryPart($table)
     {
-        $table = $this->getAdapter()->quoteIdentifier($table);
+        $table = Db::quoteIdentifier($table);
         return $this->addQueryPart('from', array('table' => $table), false);
     }
 
@@ -299,7 +262,6 @@ abstract class AbstractBuilder
      * Prepare condition
      *
      * @param array $args
-     * @internal param $condition
      * @return string
      */
     protected function prepareCondition($args = array())

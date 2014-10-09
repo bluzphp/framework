@@ -56,16 +56,16 @@ abstract class AbstractBuilder
     /**
      * @var array The parameter type map of this query
      */
-    protected $paramTypes = array();
+    protected $types = array();
 
     /**
      * Execute this query using the bound parameters and their types
      *
-     * @return integer
+     * @return mixed
      */
     public function execute()
     {
-        return Db::query($this->getSQL(), $this->params, $this->paramTypes);
+        return Db::query($this->getSQL(), $this->params, $this->types);
     }
     
     /**
@@ -129,7 +129,7 @@ abstract class AbstractBuilder
         }
 
         $this->params[$key] = $value;
-        $this->paramTypes[$key] = $type;
+        $this->types[$key] = $type;
 
         return $this;
     }
@@ -154,7 +154,7 @@ abstract class AbstractBuilder
      */
     public function setParameters(array $params, array $types = array())
     {
-        $this->paramTypes = $types;
+        $this->types = $types;
         $this->params = $params;
 
         return $this;

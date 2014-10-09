@@ -26,11 +26,11 @@ class Insert extends AbstractBuilder
      * {@inheritdoc}
      *
      * @param null $sequence
-     * @return int|mixed|string
+     * @return mixed
      */
     public function execute($sequence = null)
     {
-        $result = Db::query($this->getSQL(), $this->params, $this->paramTypes);
+        $result = Db::query($this->getSQL(), $this->params, $this->types);
         if ($result) {
             return Db::handler()->lastInsertId($sequence);
         }
@@ -44,7 +44,8 @@ class Insert extends AbstractBuilder
      */
     public function getSql()
     {
-        $query = "INSERT INTO " . $this->sqlParts['from']['table']
+        $query = "INSERT"
+            . " INTO " . $this->sqlParts['from']['table']
             . " SET " . join(", ", $this->sqlParts['set']);
 
         return $query;

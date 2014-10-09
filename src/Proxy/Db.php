@@ -45,34 +45,34 @@ use Bluz\Db\Query;
  * @method   static Query\Delete delete($table)
  * @see      Bluz\Db\Db::delete()
  *
- * @method   static string fetchOne($sql, $params = array())
+ * @method   static string fetchOne($sql, $params = [])
  * @see      Bluz\Db\Db::fetchOne()
  *
- * @method   static array fetchRow($sql, $params = array())
+ * @method   static array fetchRow($sql, $params = [])
  * @see      Bluz\Db\Db::fetchRow()
  *
- * @method   static array fetchAll($sql, $params = array())
+ * @method   static array fetchAll($sql, $params = [])
  * @see      Bluz\Db\Db::fetchAll()
  *
- * @method   static array fetchColumn($sql, $params = array())
+ * @method   static array fetchColumn($sql, $params = [])
  * @see      Bluz\Db\Db::fetchColumn()
  *
- * @method   static array fetchGroup($sql, $params = array())
+ * @method   static array fetchGroup($sql, $params = [])
  * @see      Bluz\Db\Db::fetchGroup()
  *
- * @method   static array fetchColumnGroup($sql, $params = array())
+ * @method   static array fetchColumnGroup($sql, $params = [])
  * @see      Bluz\Db\Db::fetchColumnGroup()
  *
- * @method   static array fetchPairs($sql, $params = array())
+ * @method   static array fetchPairs($sql, $params = [])
  * @see      Bluz\Db\Db::fetchPairs()
  *
- * @method   static array fetchObject($sql, $params = array(), $object = "stdClass")
+ * @method   static array fetchObject($sql, $params = [], $object = "stdClass")
  * @see      Bluz\Db\Db::fetchObject()
  *
- * @method   static array fetchObjects($sql, $params = array(), $object = null)
+ * @method   static array fetchObjects($sql, $params = [], $object = null)
  * @see      Bluz\Db\Db::fetchObjects()
  *
- * @method   static array fetchRelations($sql, $params = array())
+ * @method   static array fetchRelations($sql, $params = [])
  * @see      Bluz\Db\Db::fetchRelations()
  *
  * @method   static bool transaction($process)

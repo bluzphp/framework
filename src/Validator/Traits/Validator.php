@@ -39,11 +39,11 @@ trait Validator
     /**
      * Add Validator for field
      *
-     * @internal string $name
-     * @internal Validator $validator,...
+     * @param string $name
+     * @param Validator $validator,...
      * @return self
      */
-    protected function addValidator()
+    protected function addValidator($name, $validator)
     {
         call_user_func_array([$this->getValidatorBuilder(), 'add'], func_get_args());
         return $this;

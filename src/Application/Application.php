@@ -554,7 +554,7 @@ class Application
     /**
      * Get Db Instance
      *
-     * @deprecated since 0.5.1
+     * @deprecated since 0.6.0
      * @return \Bluz\Db\Db
      */
     public function getDb()

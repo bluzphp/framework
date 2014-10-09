@@ -45,7 +45,7 @@ trait Where
      *         ->where('u.id = ?', $id)
      *      ;
      *
-     * @internal param string $condition Optional the query restriction predicates
+     * @param string $condition optional the query restriction predicates
      * @return Select|Update|Delete
      */
     public function where()
@@ -67,7 +67,7 @@ trait Where
      *         ->where('u.username LIKE ?', '%Smith%')
      *         ->andWhere('u.is_active = ?', 1);
      *
-     * @internal param string $condition,.. Optional the query restriction predicates
+     * @param string $condition,.. Optional the query restriction predicates
      * @return Select|Update|Delete
      */
     public function andWhere()
@@ -96,7 +96,7 @@ trait Where
      *         ->where('u.id = 1')
      *         ->orWhere('u.id = ?', 2);
      *
-     * @internal param string $condition,.. Optional the query restriction predicates
+     * @param string $condition,.. Optional the query restriction predicates
      * @return Select|Update|Delete
      */
     public function orWhere()

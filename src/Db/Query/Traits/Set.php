@@ -11,9 +11,9 @@
  */
 namespace Bluz\Db\Query\Traits;
 
-use Bluz\Db\Db;
 use Bluz\Db\Query\Insert;
 use Bluz\Db\Query\Update;
+use Bluz\Proxy\Db;
 
 /**
  * Set Trait, required for:
@@ -24,7 +24,6 @@ use Bluz\Db\Query\Update;
  *
  * @method Insert|Update addQueryPart(string $sqlPartName, mixed $sqlPart, $append = false)
  * @method Insert|Update setParameter(string $key, mixed $value, $type = \PDO::PARAM_STR)
- * @method Db getAdapter()
  *
  * @author   Anton Shevchuk
  * @created  17.06.13 10:00
@@ -48,7 +47,7 @@ trait Set
     public function set($key, $value)
     {
         $this->setParameter(null, $value, \PDO::PARAM_STR);
-        $key = $this->getAdapter()->quoteIdentifier($key);
+        $key = Db::quoteIdentifier($key);
         return $this->addQueryPart('set', $key .' = ?', true);
     }
 

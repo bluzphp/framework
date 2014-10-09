@@ -11,6 +11,8 @@
  */
 namespace Bluz\Db\Query;
 
+use Bluz\Proxy\Db;
+
 /**
  * Builder of INSERT queries
  *
@@ -24,13 +26,13 @@ class Insert extends AbstractBuilder
      * {@inheritdoc}
      *
      * @param null $sequence
-     * @return int|mixed|string
+     * @return mixed
      */
     public function execute($sequence = null)
     {
-        $result = $this->getAdapter()->query($this->getSQL(), $this->params, $this->paramTypes);
+        $result = Db::query($this->getSQL(), $this->params, $this->types);
         if ($result) {
-            return $this->getAdapter()->handler()->lastInsertId($sequence);
+            return Db::handler()->lastInsertId($sequence);
         }
         return $result;
     }
@@ -42,7 +44,8 @@ class Insert extends AbstractBuilder
      */
     public function getSql()
     {
-        $query = "INSERT INTO " . $this->sqlParts['from']['table']
+        $query = "INSERT"
+            . " INTO " . $this->sqlParts['from']['table']
             . " SET " . join(", ", $this->sqlParts['set']);
 
         return $query;

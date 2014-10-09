@@ -12,6 +12,7 @@
 namespace Bluz\Db\Query;
 
 use Bluz\Db\Exception\DbException;
+use Bluz\Proxy\Db;
 
 /**
  * Builder of SELECT queries
@@ -37,7 +38,7 @@ class Select extends AbstractBuilder
      * {@inheritdoc}
      *
      * @param null $fetchType
-     * @return array|mixed
+     * @return mixed
      */
     public function execute($fetchType = null)
     {
@@ -47,12 +48,12 @@ class Select extends AbstractBuilder
 
         switch ($fetchType) {
             case (!is_int($fetchType)):
-                return $this->getAdapter()->fetchObjects($this->getSQL(), $this->params, $fetchType);
+                return Db::fetchObjects($this->getSQL(), $this->params, $fetchType);
             case \PDO::FETCH_CLASS:
-                return $this->getAdapter()->fetchObjects($this->getSQL(), $this->params);
+                return Db::fetchObjects($this->getSQL(), $this->params);
             case \PDO::FETCH_ASSOC:
             default:
-                return $this->getAdapter()->fetchAll($this->getSQL(), $this->params);
+                return Db::fetchAll($this->getSQL(), $this->params);
         }
     }
 
@@ -317,7 +318,7 @@ class Select extends AbstractBuilder
      * Specifies a restriction over the groups of the query.
      * Replaces any previous having restrictions, if any.
      *
-     * @internal param mixed $condition,... The query restriction predicates
+     * @param mixed $condition,... The query restriction predicates
      * @return Select
      */
     public function having()
@@ -330,7 +331,7 @@ class Select extends AbstractBuilder
      * Adds a restriction over the groups of the query, forming a logical
      * conjunction with any existing having restrictions
      *
-     * @internal param mixed $condition,... The query restriction predicates
+     * @param mixed $condition,... The query restriction predicates
      * @return Select
      */
     public function andHaving()
@@ -351,7 +352,7 @@ class Select extends AbstractBuilder
      * Adds a restriction over the groups of the query, forming a logical
      * disjunction with any existing having restrictions.
      *
-     * @internal param mixed $condition,... The query restriction predicates
+     * @param mixed $condition,... The query restriction predicates
      * @return Select
      */
     public function orHaving()

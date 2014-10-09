@@ -22,6 +22,9 @@ use Bluz\Db\Row;
  * @property string $token
  * @property string $tokenSecret
  * @property string $tokenType
+ * @property string $created
+ * @property string $updated
+ * @property string $expired
  *
  * @author   Anton Shevchuk
  * @created  24.10.12 11:57

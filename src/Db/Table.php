@@ -107,7 +107,7 @@ abstract class Table
         // setup default select query
         if (empty($this->select)) {
             $this->select = "SELECT * ".
-                "FROM " . $this->getAdapter()->quoteIdentifier($this->table);
+                "FROM " . DbProxy::quoteIdentifier($this->table);
         }
 
         $this->init();
@@ -156,6 +156,7 @@ abstract class Table
     /**
      * Gets a DB adapter.
      *
+     * @deprecated since 0.6.0
      * @return Db
      */
     public function getAdapter()
@@ -223,9 +224,9 @@ abstract class Table
         if (empty($this->columns)) {
             $columns = Cache::get('table:columns:'. $this->table);
             if (!$columns) {
-                $connect = $this->getAdapter()->getOption('connect');
+                $connect = DbProxy::getOption('connect');
 
-                $columns = $this->getAdapter()->fetchColumn(
+                $columns = DbProxy::fetchColumn(
                     '
                     SELECT COLUMN_NAME
                     FROM INFORMATION_SCHEMA.COLUMNS
@@ -264,7 +265,7 @@ abstract class Table
     public static function fetch($sql, $params = array())
     {
         $self = static::getInstance();
-        return $self->getAdapter()->fetchObjects($sql, $params, $self->rowClass);
+        return DbProxy::fetchObjects($sql, $params, $self->rowClass);
     }
 
     /**
@@ -276,7 +277,7 @@ abstract class Table
     public static function fetchAll()
     {
         $self = static::getInstance();
-        return $self->getAdapter()->fetchObjects($self->select, [], $self->rowClass);
+        return DbProxy::fetchObjects($self->select, [], $self->rowClass);
     }
 
     /**
@@ -304,7 +305,7 @@ abstract class Table
      * Multiple rows by compound primary key
      *     Table::find([123, 'abc'], [234, 'def'], [345, 'ghi'])
      *
-     * @internal param mixed $key The value(s) of the primary keys.
+     * @param mixed $key,.. The value(s) of the primary keys.
      * @throws InvalidPrimaryKeyException if wrong count of values passed
      * @return array
      */
@@ -395,7 +396,7 @@ abstract class Table
                     if (is_array($keyValue)) {
                         $keyValue = array_map(
                             function ($value) use ($self) {
-                                return $self->getAdapter()->quote($value);
+                                return DbProxy::quote($value);
                             },
                             $keyValue
                         );
@@ -526,7 +527,7 @@ abstract class Table
         $table = DbProxy::quoteIdentifier($self->table);
 
         $sql = "INSERT INTO $table SET " . join(',', static::prepareStatement($data));
-        $result = $self->getAdapter()->query($sql, array_values($data));
+        $result = DbProxy::query($sql, array_values($data));
         if (!$result) {
             return null;
         }
@@ -540,7 +541,7 @@ abstract class Table
          *
          * If the PDO driver does not support this capability, PDO::lastInsertId() triggers an IM001 SQLSTATE.
          */
-        return $self->getAdapter()->handler()->lastInsertId($self->sequence);
+        return DbProxy::handler()->lastInsertId($self->sequence);
     }
 
     /**
@@ -580,7 +581,7 @@ abstract class Table
             . " SET " . join(',', static::prepareStatement($data))
             . " WHERE " . join(' AND ', static::prepareStatement($where));
 
-        return $self->getAdapter()->query($sql, array_merge(array_values($data), array_values($where)));
+        return DbProxy::query($sql, array_merge(array_values($data), array_values($where)));
     }
 
     /**
@@ -615,6 +616,6 @@ abstract class Table
 
         $sql = "DELETE FROM $table"
             . " WHERE " . join(' AND ', static::prepareStatement($where));
-        return $self->getAdapter()->query($sql, array_values($where));
+        return DbProxy::query($sql, array_values($where));
     }
 }

@@ -30,19 +30,21 @@ abstract class AbstractTable extends Table
     /**
      * Types
      */
-    const TYPE_REQUEST = 'request';
     const TYPE_ACCESS = 'access';
+    const TYPE_REQUEST = 'request';
 
     /**
      * Providers
      *  - equals - login+password
-     *  - token - login+token
+     *  - token - token with ttl
+     *  - cookie - cookie token with ttl
      */
+    const PROVIDER_COOKIE = 'cookie';
     const PROVIDER_EQUALS = 'equals';
-    const PROVIDER_TOKEN = 'token';
-    const PROVIDER_LDAP = 'ldap';
-    const PROVIDER_TWITTER = 'twitter';
     const PROVIDER_FACEBOOK = 'facebook';
+    const PROVIDER_LDAP = 'ldap';
+    const PROVIDER_TOKEN = 'token';
+    const PROVIDER_TWITTER = 'twitter';
 
     /**
      * Table

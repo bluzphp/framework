@@ -11,6 +11,7 @@
  */
 namespace Bluz\View\Helper;
 
+use Bluz\Application\Application;
 use Bluz\Application\Exception\ForbiddenException;
 use Bluz\View\View;
 
@@ -29,7 +30,7 @@ return
      */
     function ($module, $controller, $params = array()) {
         try {
-            $view = app()->dispatch($module, $controller, $params);
+            $view = Application::getInstance()->dispatch($module, $controller, $params);
         } catch (ForbiddenException $e) {
             // nothing for ForbiddenException
             return null;

@@ -11,6 +11,7 @@
  */
 namespace Bluz\View\Helper;
 
+use Bluz\Application\Application;
 use Bluz\Application\Exception\ForbiddenException;
 use Bluz\View\View;
 
@@ -29,7 +30,7 @@ return
      */
     function ($module, $widget, $params = array()) {
         try {
-            $widgetClosure = app()->widget($module, $widget);
+            $widgetClosure = Application::getInstance()->widget($module, $widget);
             call_user_func_array($widgetClosure, $params);
         } catch (ForbiddenException $e) {
             // nothing for Acl exception

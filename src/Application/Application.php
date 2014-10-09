@@ -353,14 +353,7 @@ class Application
      * Dispatch controller with params
      *
      * Call dispatch from any \Bluz\Package
-     *     app()->dispatch($module, $controller, array $params);
-     *
-     * Attach callback function to event "dispatch"
-     *     app()->getEventManager()->attach('dispatch', function($event) {
-     *         $eventParams = $event->getParams();
-     *         $app = $event->getTarget();
-     *         \Bluz\Profiler::log('bootstrap:dispatch: '.$eventParams['module'].'/'.$eventParams['controller']);
-     *     });
+     *     Application::getInstance()->dispatch($module, $controller, array $params);
      *
      * @param string $module
      * @param string $controller
@@ -600,27 +593,10 @@ class Application
     }
 
     /**
-     * Get Router instance
-     *
-     * @return \Bluz\Router\Router
-     */
-    public function getRouter()
-    {
-        return Router::getInstance();
-    }
-
-    /**
      * Widget call
      *
      * Call widget from any \Bluz\Package
-     *     app()->widget($module, $widget, array $params);
-     *
-     * Attach callback function to event "widget"
-     *     app()->getEventManager()->attach('widget', function($event) {
-     *         $eventParams = $event->getParams();
-     *         $app = $event->getTarget();
-     *         \Bluz\Profiler::log('bootstrap:dispatch: '.$eventParams['module'].'/'.$eventParams['widget']);
-     *     });
+     *     Application::getInstance()->widget($module, $widget, array $params);
      *
      * @param string $module
      * @param string $widget
@@ -665,14 +641,7 @@ class Application
      * Api call
      *
      * Call API from any \Bluz\Package
-     *     app()->api($module, $widget, array $params);
-     *
-     * Attach callback function to event "api"
-     *     app()->getEventManager()->attach('api', function($event) {
-     *         $eventParams = $event->getParams();
-     *         $app = $event->getTarget();
-     *         \Bluz\Profiler::log('bootstrap:dispatch: '.$eventParams['module'].'/'.$eventParams['widget']);
-     *     });
+     *     Application::getInstance()->api($module, $widget, array $params);
      *
      * @param string $module
      * @param string $method

@@ -35,7 +35,6 @@ class ApplicationTest extends TestCase
         $this->assertInstanceOf('\\Bluz\\Controller\\Reflection', $reflection);
     }
 
-
     /**
      * Check all getters of Application
      */

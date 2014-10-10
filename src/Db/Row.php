@@ -106,6 +106,16 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
+     * __toString
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return get_called_class();
+    }
+
+    /**
      * Saves the properties to the database.
      *
      * This performs an intelligent insert/update, and reloads the

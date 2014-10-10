@@ -305,7 +305,7 @@ abstract class Table
      * Multiple rows by compound primary key
      *     Table::find([123, 'abc'], [234, 'def'], [345, 'ghi'])
      *
-     * @param mixed $key,.. The value(s) of the primary keys.
+     * @param mixed $key,... The value(s) of the primary keys.
      * @throws InvalidPrimaryKeyException if wrong count of values passed
      * @return array
      */

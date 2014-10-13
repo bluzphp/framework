@@ -41,12 +41,6 @@ class Response extends AbstractResponse
      */
     protected function sendBody()
     {
-        // return code 1 for invalid behaviour of application
-        if ($exception = $this->getException()) {
-            echo $exception->getMessage();
-            exit(1);
-        }
-
         $response = $this->body;
 
         // extract data from view
@@ -63,6 +57,5 @@ class Response extends AbstractResponse
         } else {
             echo $response;
         }
-        exit(0);
     }
 }

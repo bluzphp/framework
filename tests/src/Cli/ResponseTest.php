@@ -24,21 +24,6 @@ use Bluz\View\View;
 class ResponseTest extends TestCase
 {
     /**
-     * Test Response Header
-     */
-    public function testSendHeaders()
-    {
-        $this->expectOutputString("foo: bar, baz\n\n");
-
-        $response = new Response();
-        $response->setHeader('foo', 'bar');
-        $response->addHeader('foo', 'baz');
-        $response->setHeader('qux', []);
-
-        $response->send();
-    }
-
-    /**
      * Test Response Body
      */
     public function testSendBody()

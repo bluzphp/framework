@@ -55,7 +55,6 @@ class TableTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @covers Bluz\Db\Table::getAdapter
      * @expectedException Bluz\Db\Exception\InvalidPrimaryKeyException
      */
     public function testGetPrimaryKeyException()
@@ -65,7 +64,7 @@ class TableTest extends Bluz\Tests\TestCase
     }
 
     /**
-     * @covers Bluz\Db\Table::getAdapter
+     * Get Primary Key
      */
     public function testGetPrimaryKey()
     {

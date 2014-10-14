@@ -40,7 +40,7 @@ trait Validator
      * Add Validator for field
      *
      * @param string $name
-     * @param Validator $validator,...
+     * @param \Bluz\Validator\Validator $validator,...
      * @return self
      */
     protected function addValidator($name, $validator)

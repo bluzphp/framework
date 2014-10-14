@@ -565,6 +565,7 @@ class Application
     /**
      * Get Layout instance
      *
+     * @deprecated since 0.7.0
      * @return \Bluz\Layout\Layout
      */
     public function getLayout()
@@ -782,6 +783,6 @@ class Application
      */
     public function finish()
     {
-        Logger::info(__METHOD__);
+        Logger::info('app:finish');
     }
 }

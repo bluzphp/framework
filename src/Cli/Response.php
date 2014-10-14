@@ -31,16 +31,7 @@ class Response extends AbstractResponse
      */
     protected function sendHeaders()
     {
-        // output headers
-        foreach ($this->getHeaders() as $name => $value) {
-            if (!sizeof($value)) {
-                continue;
-            }
-            echo $name .": ". join(', ', $value) ."\n";
-        }
-        if (sizeof($this->headers)) {
-            echo "\n";
-        }
+        // no output headers
     }
 
     /**
@@ -61,12 +52,10 @@ class Response extends AbstractResponse
         if (is_array($response)) {
             // just print to console
             foreach ($response as $key => $value) {
-                echo $key . ": ";
-                print_r($value);
-                echo "\n";
+                echo "$key: $value\n";
             }
         } else {
-            print_r($response);
+            echo $response;
         }
     }
 }

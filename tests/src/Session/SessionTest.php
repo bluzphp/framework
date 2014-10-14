@@ -40,56 +40,43 @@ class SessionTest extends TestCase
     }
 
     /**
-     * Test Start and Destroy session
-     * @covers \Bluz\Session\Session::start()
-     * @covers \Bluz\Session\Session::destroy()
-     */
-    /*public function testDestroy()
-    {
-        $this->session->foo = 'bar';
-        $this->session->destroy();
-
-        $this->assertNull($this->session->foo);
-    }*/
-
-    /**
      * Complex test for setter/getter
      *
-     * @covers \Bluz\Session\Session::__set()
-     * @covers \Bluz\Session\Session::__get()
+     * @covers \Bluz\Session\Session::set()
+     * @covers \Bluz\Session\Session::get()
      */
     public function testSetGet()
     {
-        $this->assertNull($this->session->foo);
+        $this->assertNull($this->session->get('foo'));
 
-        $this->session->foo = 'baz';
+        $this->session->set('foo', 'baz');
 
-        $this->assertEquals('baz', $this->session->foo);
+        $this->assertEquals('baz', $this->session->get('foo'));
     }
 
     /**
      * Complex test for __isset
      *
-     * @covers \Bluz\Session\Session::__isset()
+     * @covers \Bluz\Session\Session::contains()
      */
     public function testIsset()
     {
-        $this->session->moo = 'maz';
+        $this->session->set('moo', 'maz');
 
-        $this->assertTrue(isset($this->session->moo));
-        $this->assertFalse(isset($this->session->boo));
+        $this->assertTrue($this->session->contains('moo'));
+        $this->assertFalse($this->session->contains('boo'));
     }
 
     /**
      * Complex test for __unset
      *
-     * @covers \Bluz\Session\Session::__unset()
+     * @covers \Bluz\Session\Session::delete()
      */
     public function testUnset()
     {
-        $this->session->moo = 'maz';
-        unset($this->session->moo);
+        $this->session->set('moo', 'maz');
+        $this->session->delete('moo');
 
-        $this->assertNull($this->session->moo);
+        $this->assertNull($this->session->get('moo'));
     }
 }

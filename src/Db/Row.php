@@ -44,7 +44,10 @@ use Bluz\Db\Exception\TableNotFoundException;
  */
 class Row implements \JsonSerializable, \ArrayAccess
 {
-    use Container;
+    use Container\Container;
+    use Container\ArrayAccess;
+    use Container\JsonSerialize;
+    use Container\MagicAccess;
 
     /**
      * Table class instance
@@ -103,6 +106,16 @@ class Row implements \JsonSerializable, \ArrayAccess
     public function __sleep()
     {
         return array('primary', 'container', 'clean');
+    }
+
+    /**
+     * __toString
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return get_called_class();
     }
 
     /**

@@ -21,7 +21,7 @@ use Bluz\View\View;
  *
  * @method   static Instance getInstance()
  *
- * @method   static View getContent($content)
+ * @method   static View getContent()
  * @see      Bluz\Layout\Layout::getContent()
  * @method   static void setContent($content)
  * @see      Bluz\Layout\Layout::setContent()

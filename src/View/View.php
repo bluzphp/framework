@@ -49,7 +49,9 @@ use Bluz\Common\Options;
  */
 class View implements ViewInterface, \JsonSerializable
 {
-    use Container;
+    use Container\Container;
+    use Container\JsonSerialize;
+    use Container\MagicAccess;
     use Options;
     use Helper;
 

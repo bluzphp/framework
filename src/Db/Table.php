@@ -136,38 +136,6 @@ abstract class Table
     }
 
     /**
-     * Sets a DB adapter.
-     *
-     * @param Db $adapter DB adapter for table to use
-     * @return Table
-     * @throws DbException if default DB adapter not initiated
-     *                     on \Bluz\Db::$adapter.
-     */
-    public function setAdapter($adapter = null)
-    {
-        if (null == $adapter) {
-            $this->adapter = DbProxy::getInstance();
-        } else {
-            $this->adapter = $adapter;
-        }
-        return $this;
-    }
-
-    /**
-     * Gets a DB adapter.
-     *
-     * @deprecated since 0.6.0
-     * @return Db
-     */
-    public function getAdapter()
-    {
-        if (!$this->adapter) {
-            $this->setAdapter();
-        }
-        return $this->adapter;
-    }
-
-    /**
      * Set select query
      *
      * @param $select

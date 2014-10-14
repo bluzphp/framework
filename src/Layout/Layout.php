@@ -11,12 +11,13 @@
  */
 namespace Bluz\Layout;
 
+use Bluz\Common\Container\RegularAccess;
 use Bluz\View\View;
 
 /**
- * View
+ * Layout
  *
- * @package  Bluz\View
+ * @package  Bluz\Layout
  *
  * @method   array|null breadCrumbs(array $data = [])
  * @method   string|null headScript(string $script = null)
@@ -27,11 +28,11 @@ use Bluz\View\View;
  *
  * @author   Anton Shevchuk
  * @created  08.07.11 11:49
- *
- * @property mixed content
  */
 class Layout extends View
 {
+    use RegularAccess;
+
     /**
      * Content container, usually is instance of View
      * @var mixed

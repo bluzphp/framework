@@ -9,7 +9,7 @@
 /**
  * @namespace
  */
-namespace Bluz\Common;
+namespace Bluz\Common\Container;
 
 /**
  * Container implements
@@ -29,42 +29,50 @@ trait Container
     protected $container = array();
 
     /**
-     * @param  string $key
-     * @param  mixed $value
+     * Set key/value pair
+     *
+     * @param string $key
+     * @param mixed $value
      * @return void
      */
-    public function __set($key, $value)
+    protected function doSetContainer($key, $value)
     {
         $this->container[$key] = $value;
     }
 
     /**
-     * @param  string $key
+     * Get value by key
+     *
+     * @param string $key
      * @return mixed
      */
-    public function __get($key)
+    protected function doGetContainer($key)
     {
-        if (isset($this->$key)) {
+        if ($this->doContainsContainer($key)) {
             return $this->container[$key];
         } else {
             return null;
         }
     }
-    
+
     /**
-     * @param  string $key
+     * Check contains key in container
+     *
+     * @param string $key
      * @return bool
      */
-    public function __isset($key)
+    protected function doContainsContainer($key)
     {
-        return isset($this->container[$key]);
+        return array_key_exists($key, $this->container);
     }
 
     /**
-     * @param  string $key
+     * Delete value by key
+     *
+     * @param string $key
      * @return void
      */
-    public function __unset($key)
+    protected function doDeleteContainer($key)
     {
         unset($this->container[$key]);
     }
@@ -104,55 +112,5 @@ trait Container
             $value = null;
         }
         return $this;
-    }
-
-    /**
-     * Implement JsonSerializable
-     *
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * @param mixed $offset
-     * @param mixed $value
-     * @throws \InvalidArgumentException
-     */
-    public function offsetSet($offset, $value)
-    {
-        if (is_null($offset)) {
-            throw new \InvalidArgumentException('Class `Common\Container` support only associative arrays');
-        } else {
-            $this->__set($offset, $value);
-        }
-    }
-
-    /**
-     * @param mixed $offset
-     * @return bool
-     */
-    public function offsetExists($offset)
-    {
-        return $this->__isset($offset);
-    }
-
-    /**
-     * @param mixed $offset
-     */
-    public function offsetUnset($offset)
-    {
-        $this->__unset($offset);
-    }
-
-    /**
-     * @param mixed $offset
-     * @return string
-     */
-    public function offsetGet($offset)
-    {
-        return $this->__get($offset);
     }
 }

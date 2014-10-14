@@ -45,7 +45,7 @@ class Registry extends AbstractProxy
     protected static function initInstance()
     {
         $instance = new Instance();
-        $instance->setData(Config::getData('registry'));
+        $instance->setFromArray(Config::getData('registry'));
         return $instance;
     }
 }

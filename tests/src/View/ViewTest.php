@@ -24,12 +24,7 @@ use Bluz\View\View;
 class ViewTest extends TestCase
 {
     /**
-     * Working with View container
-     *
-     * @covers \Bluz\View\View::__set
-     * @covers \Bluz\View\View::__get
-     * @covers \Bluz\View\View::__isset
-     * @covers \Bluz\View\View::__unset
+     * Working with View container over MagicAccess
      */
     public function testMagicMethods()
     {
@@ -46,10 +41,7 @@ class ViewTest extends TestCase
     }
 
     /**
-     * Test Data
-     *
-     * @covers \Bluz\View\View::setFromArray
-     * @covers \Bluz\View\View::toArray
+     * Set Data Test
      */
     public function testData()
     {
@@ -80,8 +72,6 @@ class ViewTest extends TestCase
 
     /**
      * Test JSON serialization
-     *
-     * @covers \Bluz\View\View::jsonSerialize
      */
     public function testJson()
     {

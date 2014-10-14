@@ -44,7 +44,10 @@ use Bluz\Db\Exception\TableNotFoundException;
  */
 class Row implements \JsonSerializable, \ArrayAccess
 {
-    use Container;
+    use Container\Container;
+    use Container\ArrayAccess;
+    use Container\JsonSerialize;
+    use Container\MagicAccess;
 
     /**
      * Table class instance

@@ -20,7 +20,9 @@
 set_include_path(dirname(__FILE__) . PATH_SEPARATOR . get_include_path());
 
 // traits
-require_once 'Common/Container.php';
+require_once 'Common/Container/Container.php';
+require_once 'Common/Container/JsonSerialize.php';
+require_once 'Common/Container/MagicAccess.php';
 require_once 'Common/Helper.php';
 require_once 'Common/Singleton.php';
 require_once 'Common/Options.php';

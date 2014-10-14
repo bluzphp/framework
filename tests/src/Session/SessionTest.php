@@ -70,7 +70,7 @@ class SessionTest extends TestCase
     /**
      * Complex test for __unset
      *
-     * @covers \Bluz\Session\Session::remove()
+     * @covers \Bluz\Session\Session::delete()
      */
     public function testUnset()
     {

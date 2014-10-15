@@ -30,6 +30,15 @@ use Bluz\View\View;
  * @method   static void setTemplate($file)
  * @see      Bluz\View\View::setTemplate()
  *
+ * @method   static void set($key, $value)
+ * @see      Bluz\Common\Container\RegularAccess::set()
+ * @method   static mixed get($key)
+ * @see      Bluz\Common\Container\RegularAccess::get()
+ * @method   static bool contains($key)
+ * @see      Bluz\Common\Container\RegularAccess::contains()
+ * @method   static void delete($key)
+ * @see      Bluz\Common\Container\RegularAccess::delete()
+ *
  * @method   static array|null breadCrumbs(array $data = [])
  * @method   static string|null headScript(string $script = null)
  * @method   static string|null headStyle(string $style = null, $media = 'all')

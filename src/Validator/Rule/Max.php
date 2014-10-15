@@ -18,11 +18,13 @@ namespace Bluz\Validator\Rule;
 class Max extends AbstractCompareRule
 {
     /**
-     * @var numeric
+     * @var numeric Maximum value
      */
     protected $maxValue;
 
     /**
+     * Setup validation rule
+     *
      * @param numeric $maxValue
      * @param bool $inclusive
      */
@@ -33,6 +35,8 @@ class Max extends AbstractCompareRule
     }
 
     /**
+     * Check input data
+     *
      * @param numeric $input
      * @return bool
      */

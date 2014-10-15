@@ -23,7 +23,7 @@ use Bluz\Common\Exception\ComponentException;
 class Apc extends AbstractAdapter
 {
     /**
-     * Check extension inside
+     * Check APC extension
      *
      * @param array $settings
      * @throws ComponentException

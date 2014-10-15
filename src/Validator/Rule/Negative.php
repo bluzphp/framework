@@ -18,11 +18,13 @@ namespace Bluz\Validator\Rule;
 class Negative extends AbstractRule
 {
     /**
-     * @var string
+     * @var string Error template
      */
     protected $template = '{{name}} must be negative';
 
     /**
+     * Check for negative number
+     *
      * @param string $input
      * @return bool
      */

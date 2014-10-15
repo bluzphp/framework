@@ -19,11 +19,13 @@ namespace Bluz\Validator\Rule;
 class Version extends AbstractRule
 {
     /**
-     * @var string
+     * @var string Error template
      */
     protected $template = '{{name}} must be a version';
 
     /**
+     * Check for version format
+     *
      * @param string $input
      * @return bool
      */

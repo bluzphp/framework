@@ -18,6 +18,8 @@ namespace Bluz\Validator\Rule;
 class Latin extends AbstractFilterRule
 {
     /**
+     * Check for latin character(s)
+     *
      * @param mixed $input
      * @return bool
      */

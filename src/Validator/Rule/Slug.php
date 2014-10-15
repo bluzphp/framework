@@ -18,11 +18,13 @@ namespace Bluz\Validator\Rule;
 class Slug extends AbstractRule
 {
     /**
-     * @var string
+     * @var string Error template
      */
     protected $template = '{{name}} must be a valid slug';
 
     /**
+     * Check input data
+     *
      * @param string $input
      * @return bool
      */

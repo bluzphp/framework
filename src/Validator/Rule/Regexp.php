@@ -18,12 +18,12 @@ namespace Bluz\Validator\Rule;
 class Regexp extends AbstractRule
 {
     /**
-     * @var string
+     * @var string Error template
      */
     protected $template = '{{name}} must validate with regular expression rule';
 
     /**
-     * @var string
+     * @var string Regular expression for check string
      */
     protected $regexp;
 
@@ -37,6 +37,8 @@ class Regexp extends AbstractRule
     }
 
     /**
+     * Check string by regular expression
+     *
      * @param mixed $input
      * @return bool
      */

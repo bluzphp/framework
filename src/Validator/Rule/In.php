@@ -18,16 +18,18 @@ namespace Bluz\Validator\Rule;
 class In extends AbstractRule
 {
     /**
-     * @var string|array
+     * @var string|array Haystack for search, can be array or string
      */
     protected $haystack;
 
     /**
-     * @var bool
+     * @var bool Strong comparison
      */
     protected $identical;
 
     /**
+     * Setup validation rule
+     *
      * @param string|array $haystack
      * @param bool $identical
      */
@@ -38,6 +40,8 @@ class In extends AbstractRule
     }
 
     /**
+     * Check input data
+     *
      * @param string $input
      * @return bool
      */

@@ -68,17 +68,17 @@ class View implements ViewInterface, \JsonSerializable
     protected $baseUrl;
 
     /**
-     * @var string path to template
+     * @var string Path to template
      */
     protected $path;
 
     /**
-     * @var array paths to partial
+     * @var array Paths to partial
      */
     protected $partialPath = [];
 
     /**
-     * @var string template name
+     * @var string Template name
      */
     protected $template;
 

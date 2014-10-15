@@ -18,16 +18,18 @@ namespace Bluz\Validator\Rule;
 class Domain extends AbstractRule
 {
     /**
-     * @var string
+     * @var string Error template
      */
     protected $template = '{{name}} must be a valid domain';
 
     /**
-     * @var bool
+     * @var bool Check DNS record
      */
     protected $checkDns;
 
     /**
+     * Setup validation rule
+     *
      * @param bool $checkDns
      */
     public function __construct($checkDns = false)
@@ -36,6 +38,8 @@ class Domain extends AbstractRule
     }
 
     /**
+     * Check input data
+     *
      * @param string $input
      * @return bool
      */

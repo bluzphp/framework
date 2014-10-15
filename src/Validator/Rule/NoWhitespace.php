@@ -18,11 +18,13 @@ namespace Bluz\Validator\Rule;
 class NoWhitespace extends AbstractRule
 {
     /**
-     * @var string
+     * @var string Error template
      */
     protected $template = '{{name}} must not contain whitespace';
 
     /**
+     * Check input data
+     *
      * @param string $input
      * @return bool
      */

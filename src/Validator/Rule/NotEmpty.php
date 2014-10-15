@@ -18,11 +18,13 @@ namespace Bluz\Validator\Rule;
 class NotEmpty extends AbstractRule
 {
     /**
-     * @var string
+     * @var string Error template
      */
     protected $template = '{{name}} must not be empty';
 
     /**
+     * Check input data
+     *
      * @param mixed $input
      * @return bool
      */

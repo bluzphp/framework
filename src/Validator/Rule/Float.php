@@ -18,11 +18,13 @@ namespace Bluz\Validator\Rule;
 class Float extends AbstractRule
 {
     /**
-     * @var string
+     * @var string Error template
      */
     protected $template = '{{name}} must be a float number';
 
     /**
+     * Check input data
+     *
      * @param string $input
      * @return bool
      */

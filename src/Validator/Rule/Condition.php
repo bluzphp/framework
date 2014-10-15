@@ -18,11 +18,13 @@ namespace Bluz\Validator\Rule;
 class Condition extends AbstractRule
 {
     /**
-     * @var bool
+     * @var bool Condition rule
      */
     protected $condition;
 
     /**
+     * Setup validation rule
+     *
      * @param bool $condition
      */
     public function __construct($condition)
@@ -31,6 +33,8 @@ class Condition extends AbstractRule
     }
 
     /**
+     * Check input data
+     *
      * @param mixed $input
      * @return bool
      */

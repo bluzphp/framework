@@ -25,7 +25,7 @@ use Bluz\Translator\Translator;
 abstract class AbstractRule
 {
     /**
-     * Template for output
+     * Template for error output
      *   - {{name}} - name of field
      *   - {{input}} - input value
      *
@@ -34,6 +34,8 @@ abstract class AbstractRule
     protected $template = '{{name}} has invalid value {{input}}';
 
     /**
+     * Check input data
+     *
      * @param mixed $input
      * @return bool
      */
@@ -54,6 +56,7 @@ abstract class AbstractRule
      * Assert
      *
      * @param string $input
+     * @throws ValidatorException
      * @return bool
      */
     public function assert($input)
@@ -65,7 +68,7 @@ abstract class AbstractRule
     }
 
     /**
-     * Get template
+     * Get error template
      *
      * @return string
      */
@@ -75,7 +78,7 @@ abstract class AbstractRule
     }
 
     /**
-     * __toString
+     * Cast to string
      *
      * @return string
      */

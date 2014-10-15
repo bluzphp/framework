@@ -18,11 +18,13 @@ namespace Bluz\Validator\Rule;
 class String extends AbstractRule
 {
     /**
-     * @var string
+     * @var string Error template
      */
     protected $template = '{{name}} must be a string';
 
     /**
+     * Check input data
+     *
      * @param mixed $input
      * @return bool
      */

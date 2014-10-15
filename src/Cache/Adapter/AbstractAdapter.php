@@ -30,6 +30,7 @@ abstract class AbstractAdapter implements CacheInterface
 
     /**
      * Setup adapter settings
+     *
      * @param array $settings setup adapter
      */
     public function __construct($settings = array())

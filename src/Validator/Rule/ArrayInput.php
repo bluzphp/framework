@@ -20,16 +20,18 @@ use Bluz\Validator\Exception\ComponentException;
 class ArrayInput extends AbstractRule
 {
     /**
-     * @var string
+     * @var string Error template
      */
     protected $template = '{{name}} must be a array';
 
     /**
-     * @var callable
+     * @var callable Callback for check input array
      */
     protected $callback;
 
     /**
+     * Setup validation rule
+     *
      * @param callable $callback
      * @throws ComponentException
      */
@@ -45,6 +47,8 @@ class ArrayInput extends AbstractRule
     }
 
     /**
+     * Check input data
+     *
      * @param string $input
      * @return bool
      */

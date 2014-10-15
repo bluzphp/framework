@@ -28,6 +28,8 @@ class Equals extends AbstractRule
     protected $identical = false;
 
     /**
+     * Setup validation rule
+     *
      * @param string $compareTo
      * @param bool $identical
      */
@@ -38,6 +40,8 @@ class Equals extends AbstractRule
     }
 
     /**
+     * Check input data
+     *
      * @param string $input
      * @return bool
      */

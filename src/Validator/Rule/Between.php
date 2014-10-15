@@ -13,19 +13,25 @@ namespace Bluz\Validator\Rule;
 
 use Bluz\Validator\Exception\ComponentException;
 
+/**
+ * Class Between
+ * @package Bluz\Validator\Rule
+ */
 class Between extends AbstractCompareRule
 {
     /**
-     * @var mixed
+     * @var mixed Minimum value
      */
     protected $minValue;
 
     /**
-     * @var mixed
+     * @var mixed Maximum value
      */
     protected $maxValue;
 
     /**
+     * Setup validation rule
+     *
      * @param mixed $min
      * @param mixed $max
      * @param bool $inclusive
@@ -47,6 +53,8 @@ class Between extends AbstractCompareRule
     }
 
     /**
+     * Check input data
+     *
      * @param numeric $input
      * @return bool
      */
@@ -57,7 +65,7 @@ class Between extends AbstractCompareRule
     }
 
     /**
-     * GetTemplate
+     * Get error template
      *
      * @return string
      */

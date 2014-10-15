@@ -18,11 +18,13 @@ namespace Bluz\Validator\Rule;
 class Integer extends AbstractRule
 {
     /**
-     * @var string
+     * @var string Error template
      */
     protected $template = '{{name}} must be an integer number';
 
     /**
+     * Check input data
+     *
      * @param mixed $input
      * @return bool
      */

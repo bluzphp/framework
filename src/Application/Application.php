@@ -398,7 +398,7 @@ class Application
      * @param array $params
      * @throws ApplicationException
      *
-     * @return View|string
+     * @return View|string|callable
      */
     protected function doDispatch($module, $controller, $params = array())
     {

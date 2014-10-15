@@ -42,7 +42,7 @@ class ValidatorBuilder
      * add
      *
      * @param string $name
-     * @internal Validator $validator,...
+     * @param Validator $validator,...
      * @return ValidatorBuilder
      */
     public function add($name)
@@ -145,6 +145,7 @@ class ValidatorBuilder
      * Assert
      *
      * @param mixed $input
+     * @throws ValidatorException
      * @return bool
      */
     public function assert($input)

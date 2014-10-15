@@ -18,6 +18,8 @@ namespace Bluz\Validator\Rule;
 class AlphaNumeric extends AbstractCtypeRule
 {
     /**
+     * Check for alphanumeric character(s)
+     * 
      * @param string $input
      * @return bool
      */

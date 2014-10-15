@@ -18,7 +18,7 @@ namespace Bluz\Validator\Rule;
 abstract class AbstractCompareRule extends AbstractRule
 {
     /**
-     * @var bool
+     * @var bool Compare inclusive or not
      */
     protected $inclusive;
 

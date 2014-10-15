@@ -37,22 +37,22 @@ class Router
     const ERROR_CONTROLLER = 'index';
 
     /**
-     * @var string
+     * @var string Default module
      */
     protected $defaultModule = self::DEFAULT_MODULE;
 
     /**
-     * @var string
+     * @var string Default Controller
      */
     protected $defaultController = self::DEFAULT_CONTROLLER;
 
     /**
-     * @var string
+     * @var string Error module
      */
     protected $errorModule = self::ERROR_MODULE;
 
     /**
-     * @var string
+     * @var string Error Controller
      */
     protected $errorController = self::ERROR_CONTROLLER;
 
@@ -70,8 +70,6 @@ class Router
 
     /**
      * Constructor of Router
-     *
-     * @return self
      */
     public function __construct()
     {
@@ -122,6 +120,7 @@ class Router
     }
 
     /**
+     * Get default module
      * @return string
      */
     public function getDefaultModule()
@@ -130,7 +129,9 @@ class Router
     }
 
     /**
+     * Set default module
      * @param string $defaultModule
+     * @return void
      */
     public function setDefaultModule($defaultModule)
     {
@@ -138,6 +139,7 @@ class Router
     }
 
     /**
+     * Get default controller
      * @return string
      */
     public function getDefaultController()
@@ -146,7 +148,9 @@ class Router
     }
 
     /**
+     * Set default controller
      * @param string $defaultController
+     * @return void
      */
     public function setDefaultController($defaultController)
     {
@@ -154,6 +158,7 @@ class Router
     }
 
     /**
+     * Get error module
      * @return string
      */
     public function getErrorModule()
@@ -162,7 +167,9 @@ class Router
     }
 
     /**
+     * Set error module
      * @param string $errorModule
+     * @return void
      */
     public function setErrorModule($errorModule)
     {
@@ -170,6 +177,7 @@ class Router
     }
 
     /**
+     * Get error controller
      * @return string
      */
     public function getErrorController()
@@ -178,7 +186,9 @@ class Router
     }
 
     /**
+     * Set error controller
      * @param string $errorController
+     * @return void
      */
     public function setErrorController($errorController)
     {
@@ -309,7 +319,7 @@ class Router
     }
 
     /**
-     * process
+     * Process routing
      *
      * @return \Bluz\Router\Router
      */

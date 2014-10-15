@@ -20,7 +20,7 @@ use Bluz\Validator\Exception\ComponentException;
 abstract class AbstractFilterRule extends AbstractRule
 {
     /**
-     * @var string
+     * @var string Additional chars
      */
     protected $additionalChars = "";
 
@@ -31,6 +31,8 @@ abstract class AbstractFilterRule extends AbstractRule
     abstract protected function validateClean($input);
 
     /**
+     * Setup validation rule
+     *
      * @param string $additionalChars
      * @throws \Bluz\Validator\Exception\ComponentException
      */
@@ -43,6 +45,8 @@ abstract class AbstractFilterRule extends AbstractRule
     }
 
     /**
+     * Filter input data
+     *
      * @param string $input
      * @return string
      */
@@ -52,6 +56,8 @@ abstract class AbstractFilterRule extends AbstractRule
     }
 
     /**
+     * Check input data
+     *
      * @param mixed $input
      * @return bool
      */

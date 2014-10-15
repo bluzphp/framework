@@ -29,6 +29,7 @@ class Memcached extends AbstractAdapter
 
     /**
      * Check and setup memcached servers
+     *
      * @param array $settings
      * @throws ComponentException
      * @throws ConfigurationException

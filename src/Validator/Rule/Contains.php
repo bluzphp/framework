@@ -18,16 +18,18 @@ namespace Bluz\Validator\Rule;
 class Contains extends AbstractRule
 {
     /**
-     * @var string
+     * @var string Needle for search inside input data (haystack)
      */
     protected $containsValue;
 
     /**
-     * @var bool
+     * @var bool Strong comparison
      */
     protected $identical;
 
     /**
+     * Setup validation rule
+     *
      * @param $containsValue
      * @param bool $identical
      */
@@ -38,6 +40,8 @@ class Contains extends AbstractRule
     }
 
     /**
+     * Check input data
+     *
      * @param string|array $input
      * @return bool
      */

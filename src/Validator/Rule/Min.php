@@ -18,11 +18,13 @@ namespace Bluz\Validator\Rule;
 class Min extends AbstractCompareRule
 {
     /**
-     * @var numeric
+     * @var numeric Minimum value
      */
     protected $minValue;
 
     /**
+     * Setup validation rule
+     *
      * @param numeric $minValue
      * @param bool $inclusive
      */
@@ -33,6 +35,8 @@ class Min extends AbstractCompareRule
     }
 
     /**
+     * Check input data
+     *
      * @param numeric $input
      * @return bool
      */

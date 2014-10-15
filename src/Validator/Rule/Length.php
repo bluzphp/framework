@@ -21,16 +21,18 @@ use Bluz\Validator\Exception\ComponentException;
 class Length extends AbstractCompareRule
 {
     /**
-     * @var integer
+     * @var integer Minimum value
      */
     protected $minValue;
 
     /**
-     * @var integer
+     * @var integer Maximum value
      */
     protected $maxValue;
 
     /**
+     * Setup validation rule
+     *
      * @param integer|null $min
      * @param integer|null $max
      * @param bool $inclusive
@@ -62,6 +64,8 @@ class Length extends AbstractCompareRule
     }
 
     /**
+     * Check input data
+     *
      * @param string $input
      * @return bool
      */

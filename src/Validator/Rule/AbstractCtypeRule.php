@@ -18,6 +18,8 @@ namespace Bluz\Validator\Rule;
 abstract class AbstractCtypeRule extends AbstractFilterRule
 {
     /**
+     * Filter input data
+     *
      * @param string $input
      * @return string
      */

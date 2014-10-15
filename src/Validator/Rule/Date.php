@@ -25,6 +25,8 @@ class Date extends AbstractRule
     protected $format = null;
 
     /**
+     * Setup validation rule
+     *
      * @param null $format
      */
     public function __construct($format = null)
@@ -33,6 +35,8 @@ class Date extends AbstractRule
     }
 
     /**
+     * Check input data
+     *
      * @param mixed $input
      * @return bool
      */

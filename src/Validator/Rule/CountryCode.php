@@ -18,7 +18,7 @@ namespace Bluz\Validator\Rule;
 class CountryCode extends AbstractRule
 {
     /**
-     * @var string
+     * @var string Error template
      */
     protected $template = '{{name}} must be a valid country code';
 
@@ -47,6 +47,8 @@ class CountryCode extends AbstractRule
     );
 
     /**
+     * Check for country code
+     *
      * @param string $input
      * @return bool
      */

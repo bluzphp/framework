@@ -18,24 +18,22 @@ namespace Bluz\Session\Adapter;
 abstract class AbstractAdapter
 {
     /**
-     * Instance of Redis or Cache or some other
-     * @var mixed
+     * @var mixed Instance of Redis or Cache or some other
      */
     protected $handler = null;
 
     /**
-     * @var string
+     * @var string Prefix for session store
      */
     protected $prefix = 'PHPSESSID:';
 
     /**
-     * @var int ttl of session
+     * @var int Ttl of session
      */
     protected $ttl = 1800;
 
     /**
      * Prepare Id - add prefix
-     *
      * @param string $id
      * @return string
      */
@@ -45,6 +43,7 @@ abstract class AbstractAdapter
     }
 
     /**
+     * Initialize session
      * @param string $savePath
      * @param string $sessionName
      * @return bool|void
@@ -59,6 +58,7 @@ abstract class AbstractAdapter
     }
 
     /**
+     * Close the session
      * @return bool|void
      */
     public function close()
@@ -68,6 +68,7 @@ abstract class AbstractAdapter
     }
 
     /**
+     * Cleanup old sessions
      * @param int $maxLifetime
      * @return bool|void
      */

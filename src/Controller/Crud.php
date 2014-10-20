@@ -19,7 +19,7 @@ use Bluz\Proxy\Request;
 use Bluz\Validator\Exception\ValidatorException;
 
 /**
- * Crud
+ * Crud controller
  *
  * @package  Bluz\Controller
  *
@@ -106,7 +106,6 @@ class Crud extends AbstractController
 
     /**
      * Return primary key
-     *
      * @return array
      */
     public function getPrimaryKey()

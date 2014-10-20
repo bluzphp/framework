@@ -17,7 +17,7 @@ use Bluz\Db;
 use Bluz\Db\Row;
 
 /**
- * Crud
+ * Crud Table
  *
  * @package  Bluz\Crud
  *
@@ -27,13 +27,12 @@ use Bluz\Db\Row;
 class Table extends AbstractCrud
 {
     /**
-     * @var \Bluz\Db\Table instance
+     * @var \Bluz\Db\Table Instance of Db\Table
      */
     protected $table;
 
     /**
      * Setup Table instance
-     *
      * @param Db\Table $table
      * @return self
      */
@@ -45,7 +44,6 @@ class Table extends AbstractCrud
 
     /**
      * Return table instance for manipulation
-     *
      * @throws ApplicationException
      * @return Db\Table
      */
@@ -72,7 +70,6 @@ class Table extends AbstractCrud
 
     /**
      * Get primary key
-     *
      * @return array
      */
     public function getPrimaryKey()
@@ -86,7 +83,6 @@ class Table extends AbstractCrud
 
     /**
      * Get record from Db or create new
-     *
      * @param mixed $primary
      * @throws NotFoundException
      * @return Row
@@ -106,8 +102,7 @@ class Table extends AbstractCrud
     }
 
     /**
-     * createOne
-     *
+     * Create item
      * @param array $data
      * @return integer
      */
@@ -119,8 +114,7 @@ class Table extends AbstractCrud
     }
 
     /**
-     * Update Record
-     *
+     * Update item
      * @param mixed $primary
      * @param array $data
      * @throws NotFoundException
@@ -139,8 +133,7 @@ class Table extends AbstractCrud
     }
 
     /**
-     * Delete Record
-     *
+     * Delete item
      * @param mixed $primary
      * @throws NotFoundException
      * @return integer

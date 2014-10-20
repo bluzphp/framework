@@ -42,14 +42,12 @@ namespace Bluz\Common;
 trait Options
 {
     /**
-     * Options store
-     * @var array
+     * @var array Options store
      */
     protected $options;
 
     /**
      * Get option by key
-     *
      * @param string $key
      * @param string|null $subKey
      * @return mixed
@@ -69,7 +67,6 @@ trait Options
 
     /**
      * Set option by key over setter
-     *
      * @param string $key
      * @param string $value
      * @return void
@@ -84,7 +81,6 @@ trait Options
 
     /**
      * Get all options
-     *
      * @return array
      */
     public function getOptions()
@@ -122,8 +118,7 @@ trait Options
     }
 
     /**
-     * Validation
-     *
+     * Check options in package
      * @throws \Bluz\Config\ConfigException
      * @return bool
      */
@@ -133,8 +128,7 @@ trait Options
     }
 
     /**
-     * Initialization
-     *
+     * Initialization for options
      * @throws \Bluz\Config\ConfigException
      * @return void
      */
@@ -145,7 +139,6 @@ trait Options
 
     /**
      * Normalize key name
-     *
      * @param  string $key
      * @return string
      */

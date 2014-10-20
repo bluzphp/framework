@@ -28,6 +28,7 @@ class Regexp extends AbstractRule
     protected $regexp;
 
     /**
+     * Check string by regular expression
      * @param string $regexp
      * @return self
      */
@@ -38,7 +39,6 @@ class Regexp extends AbstractRule
 
     /**
      * Check string by regular expression
-     *
      * @param mixed $input
      * @return bool
      */

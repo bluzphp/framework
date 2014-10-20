@@ -43,31 +43,27 @@ class Cache implements CacheInterface, TagableInterface
     const TTL_NO_EXPIRY = 0;
 
     /**
-     * Instance of cache adapter
-     * @var CacheInterface
+     * @var CacheInterface Instance of cache adapter
      */
     protected $adapter = null;
 
     /**
-     * @var string Cache prefix
+     * @var string Prefix for cache keys
      */
     protected $prefix = 'bluz:';
 
     /**
-     * Instance of tag adapter
-     * @var CacheInterface
+     * @var CacheInterface Instance of tag adapter
      */
     protected $tagAdapter = null;
 
     /**
-     * Prefix for tags
-     * @var string
+     * @var string Prefix for tags
      */
     protected $tagPrefix = 'bluz:@:';
 
     /**
      * Check Cache configuration
-     *
      * @throws ConfigurationException
      * @return bool
      */
@@ -86,7 +82,6 @@ class Cache implements CacheInterface, TagableInterface
 
     /**
      * Prepare Id with prefix
-     *
      * @param  string $id
      * @throws InvalidArgumentException
      * @return string
@@ -98,7 +93,6 @@ class Cache implements CacheInterface, TagableInterface
 
     /**
      * Setup prefix for cache records
-     *
      * @param string $prefix
      * @return void
      */
@@ -109,7 +103,6 @@ class Cache implements CacheInterface, TagableInterface
 
     /**
      * Setup prefix for cache records of tags
-     *
      * @param string $prefix
      * @return void
      */
@@ -195,7 +188,6 @@ class Cache implements CacheInterface, TagableInterface
 
     /**
      * Get underlying cache adapter
-     *
      * @return Adapter\AbstractAdapter
      */
     public function getAdapter()
@@ -209,7 +201,6 @@ class Cache implements CacheInterface, TagableInterface
 
     /**
      * Get underlying tag adapter
-     *
      * @throws ConfigurationException
      * @return Adapter\AbstractAdapter
      */
@@ -229,8 +220,8 @@ class Cache implements CacheInterface, TagableInterface
     }
 
     /**
-     * Init adapter
-     *
+     * Initialize adapter
+     * @internal
      * @param string $adapterName
      * @throws ComponentException
      * @throws ConfigurationException

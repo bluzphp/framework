@@ -23,22 +23,19 @@ abstract class AbstractRowEntity extends Row implements EntityInterface
 {
     /**
      * Can entity login
-     *
      * @throws AuthException
      * @return bool
      */
     abstract public function login();
 
     /**
-     * Get roles
-     *
+     * Get privileges
      * @return array
      */
     abstract public function getPrivileges();
 
     /**
      * Has role a privilege
-     *
      * @param string $module
      * @param string $privilege
      * @return bool

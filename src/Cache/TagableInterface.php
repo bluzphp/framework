@@ -14,8 +14,6 @@ namespace Bluz\Cache;
 /**
  * Interface for Tagable classes
  *
- * @todo public function getByTag?
- *
  * @package Bluz\Cache
  * @author murzik
  */

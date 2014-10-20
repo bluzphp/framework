@@ -53,50 +53,42 @@ class Application
     use Common\Singleton;
 
     /**
-     * Application path
-     * @var string
+     * @var string Application path
      */
     protected $path;
 
     /**
-     * Environment name
-     * @var string
+     * @var string Environment name
      */
     protected $environment = 'production';
 
     /**
-     * Debug application flag
-     * @var bool
+     * @var bool Debug application flag
      */
     protected $debugFlag = false;
 
     /**
-     * Layout flag
-     * @var bool
+     * @var bool Layout flag
      */
     protected $layoutFlag = true;
 
     /**
-     * JSON response flag
-     * @var bool
+     * @var bool JSON response flag
      */
     protected $jsonFlag = false;
 
     /**
-     * Stack of widgets closures
-     * @var array
+     * @var array Stack of widgets closures
      */
     protected $widgets = array();
 
     /**
-     * Stack of API closures
-     * @var array
+     * @var array Stack of API closures
      */
     protected $api = array();
 
     /**
      * Get application environment
-     *
      * @return string
      */
     public function getEnvironment()
@@ -106,7 +98,6 @@ class Application
 
     /**
      * Get path to Application
-     *
      * @return string
      */
     public function getPath()
@@ -124,7 +115,6 @@ class Application
 
     /**
      * Check debug flag
-     *
      * @return bool
      */
     public function isDebug()
@@ -134,7 +124,6 @@ class Application
 
     /**
      * Check Json flag
-     *
      * @return bool
      */
     public function isJson()
@@ -144,7 +133,6 @@ class Application
 
     /**
      * Check Layout flag
-     *
      * @return bool
      */
     public function hasLayout()
@@ -154,7 +142,6 @@ class Application
 
     /**
      * Set Layout template and/or flag
-     *
      * @param bool|string $flag
      * @return Application
      */
@@ -171,7 +158,6 @@ class Application
 
     /**
      * Set Json flag
-     *
      * @param bool $flag
      * @return Application
      */
@@ -186,8 +172,7 @@ class Application
     }
 
     /**
-     * init
-     *
+     * Initialize process
      * @param string $environment Array format only!
      * @throws ApplicationException
      * @return void
@@ -241,7 +226,6 @@ class Application
 
     /**
      * Initial Request instance
-     *
      * @return void
      */
     protected function initRequest()
@@ -270,7 +254,6 @@ class Application
 
     /**
      * Initial Response instance
-     *
      * @return void
      */
     protected function initResponse()
@@ -374,7 +357,6 @@ class Application
 
     /**
      * Pre dispatch mount point
-     *
      * @param string $module
      * @param string $controller
      * @param array $params
@@ -392,7 +374,6 @@ class Application
 
     /**
      * Do dispatch
-     *
      * @param string $module
      * @param string $controller
      * @param array $params
@@ -510,7 +491,6 @@ class Application
 
     /**
      * Post dispatch mount point
-     *
      * @param string $module
      * @param string $controller
      * @param array $params
@@ -523,7 +503,6 @@ class Application
 
     /**
      * Render, is send Response
-     *
      * @return void
      */
     public function render()
@@ -553,7 +532,6 @@ class Application
 
     /**
      * Get Db Instance
-     *
      * @deprecated since 0.6.0
      * @return \Bluz\Db\Db
      */
@@ -564,7 +542,6 @@ class Application
 
     /**
      * Get Layout instance
-     *
      * @deprecated since 0.7.0
      * @return \Bluz\Layout\Layout
      */
@@ -575,7 +552,6 @@ class Application
 
     /**
      * Get Response instance
-     *
      * @return Http\Response
      */
     public function getResponse()
@@ -585,7 +561,6 @@ class Application
 
     /**
      * Get Request instance
-     *
      * @return Http\Request
      */
     public function getRequest()
@@ -679,7 +654,6 @@ class Application
 
     /**
      * Retrieve reflection for anonymous function
-     *
      * @param string $file
      * @throws ApplicationException
      * @return Reflection
@@ -699,7 +673,6 @@ class Application
 
     /**
      * Is allowed controller/widget/etc
-     *
      * @param string $module
      * @param string $controller
      * @throws ApplicationException
@@ -718,7 +691,6 @@ class Application
 
     /**
      * Get controller file
-     *
      * @param  string $module
      * @param  string $controller
      * @return string
@@ -738,7 +710,6 @@ class Application
 
     /**
      * Get widget file
-     *
      * @param  string $module
      * @param  string $widget
      * @return string
@@ -758,7 +729,6 @@ class Application
 
     /**
      * Get API file
-     *
      * @param  string $module
      * @param  string $method
      * @return string
@@ -778,7 +748,6 @@ class Application
     
     /**
      * Finally method
-     * 
      * @return void
      */
     public function finish()

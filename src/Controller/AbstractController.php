@@ -26,32 +26,27 @@ use Bluz\Proxy\Request;
 abstract class AbstractController
 {
     /**
-     * HTTP Method
-     * @var string
+     * @var string HTTP Method
      */
     protected $method = Request::METHOD_GET;
 
     /**
-     * Params of query
-     * @var array
+     * @var array Params of query
      */
     protected $params = array();
 
     /**
-     * Identifier
-     * @var array
+     * @var array Identifier
      */
     protected $primary;
 
     /**
-     * Query data
-     * @var array
+     * @var array Query data
      */
     protected $data = array();
 
     /**
-     * Instance of CRUD
-     * @var AbstractCrud
+     * @var AbstractCrud Instance of CRUD
      */
     protected $crud;
 
@@ -76,7 +71,6 @@ abstract class AbstractController
 
     /**
      * Controller should be executable
-     *
      * @return mixed
      */
     abstract public function __invoke();
@@ -84,7 +78,6 @@ abstract class AbstractController
     /**
      * Return HTTP request method
      * Can be rewrite by '_method' parameter
-     *
      * @return string
      */
     public function getMethod()
@@ -93,8 +86,7 @@ abstract class AbstractController
     }
 
     /**
-     * getData
-     *
+     * Get Data
      * @param string $field
      * @return array
      */
@@ -113,7 +105,6 @@ abstract class AbstractController
 
     /**
      * Setup Crud instance
-     *
      * @param AbstractCrud $crud
      * @return self
      */
@@ -125,7 +116,6 @@ abstract class AbstractController
 
     /**
      * Get crud instance
-     *
      * @throws \Bluz\Application\Exception\ApplicationException
      * @return AbstractCrud
      */
@@ -152,7 +142,6 @@ abstract class AbstractController
 
     /**
      * Get item by primary key(s)
-     *
      * @param mixed $primary
      * @return mixed
      */
@@ -163,7 +152,6 @@ abstract class AbstractController
 
     /**
      * List of items
-     *
      * @param int $offset
      * @param int $limit
      * @param array $params
@@ -176,7 +164,6 @@ abstract class AbstractController
 
     /**
      * Create new item
-     *
      * @param array $data
      * @return mixed
      */
@@ -187,7 +174,6 @@ abstract class AbstractController
 
     /**
      * Create items
-     *
      * @param array $data
      * @return mixed
      */
@@ -198,7 +184,6 @@ abstract class AbstractController
 
     /**
      * Update item
-     *
      * @param mixed $id
      * @param array $data
      * @return integer
@@ -210,7 +195,6 @@ abstract class AbstractController
 
     /**
      * Update items
-     *
      * @param array $data
      * @return integer
      */
@@ -221,7 +205,6 @@ abstract class AbstractController
 
     /**
      * Delete item
-     *
      * @param mixed $primary
      * @return integer
      */
@@ -232,7 +215,6 @@ abstract class AbstractController
 
     /**
      * Delete items
-     *
      * @param array $data
      * @return integer
      */

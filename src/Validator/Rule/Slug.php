@@ -24,7 +24,6 @@ class Slug extends AbstractRule
 
     /**
      * Check input data
-     *
      * @param string $input
      * @return bool
      */

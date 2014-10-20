@@ -12,7 +12,7 @@
 namespace Bluz\Application\Exception;
 
 /**
- * Exception
+ * BadRequest Exception
  *
  * @package  Bluz\Application\Exception
  *

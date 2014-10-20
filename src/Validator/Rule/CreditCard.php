@@ -24,7 +24,6 @@ class CreditCard extends AbstractRule
 
     /**
      * Check input data
-     *
      * @param string $input
      * @return bool
      */
@@ -41,7 +40,6 @@ class CreditCard extends AbstractRule
 
     /**
      * Verify by Mod10
-     *
      * @link https://en.wikipedia.org/wiki/Luhn_algorithm
      * @param string $input
      * @return bool

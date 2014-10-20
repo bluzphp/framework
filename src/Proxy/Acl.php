@@ -16,6 +16,14 @@ use Bluz\Acl\Acl as Instance;
 /**
  * Proxy to Acl
  *
+ * Example of usage
+ *     use Bluz\Acl;
+ *     use Bluz\Proxy\Acl;
+ *
+ *     if (!Acl::isAllowed('users', 'profile')) {
+ *          throw new AclException('You do not have permission to access user profiles');
+ *     }
+ *
  * @package  Bluz\Proxy
  *
  * @method   static Instance getInstance()

@@ -14,7 +14,7 @@ namespace Bluz\Config;
 use Bluz\Common\Exception\CommonException;
 
 /**
- * Exception
+ * Config Exception
  *
  * @package  Bluz\Config
  *

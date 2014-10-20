@@ -19,7 +19,6 @@ class Latin extends AbstractFilterRule
 {
     /**
      * Check for latin character(s)
-     *
      * @param mixed $input
      * @return bool
      */
@@ -30,7 +29,6 @@ class Latin extends AbstractFilterRule
 
     /**
      * Get error template
-     *
      * @return string
      */
     public function getTemplate()

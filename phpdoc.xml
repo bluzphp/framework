@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+    <title>Bluz</title>
+    <parser>
+        <target>docs</target>
+        <encoding>utf8</encoding>
+        <markers>
+            <item>TODO</item>
+            <item>FIXME</item>
+        </markers>
+        <extensions>
+            <extension>php</extension>
+            <extension>phtml</extension>
+        </extensions>
+        <default-package-name>Bluz</default-package-name>
+    </parser>
+    <transformer>
+        <target>docs</target>
+    </transformer>
+    <transformations>
+        <template name="responsive" />
+        <template name="checkstyle" />
+        <template name="clean" />
+    </transformations>
+    <files>
+        <directory>src</directory>
+    </files>
+</phpdoc>

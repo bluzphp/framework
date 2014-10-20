@@ -29,7 +29,6 @@ class Contains extends AbstractRule
 
     /**
      * Setup validation rule
-     *
      * @param $containsValue
      * @param bool $identical
      */
@@ -41,7 +40,6 @@ class Contains extends AbstractRule
 
     /**
      * Check input data
-     *
      * @param string|array $input
      * @return bool
      */
@@ -62,7 +60,6 @@ class Contains extends AbstractRule
 
     /**
      * Get error template
-     *
      * @return string
      */
     public function getTemplate()

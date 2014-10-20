@@ -27,8 +27,7 @@ class Acl
     use Options;
 
     /**
-     * Is allowed
-     *
+     * Check user access by pair module-privilege
      * @param string $module
      * @param string $privilege
      * @return bool

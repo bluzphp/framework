@@ -30,26 +30,22 @@ use Bluz\Validator\Exception\ValidatorException;
 class Rest extends AbstractController
 {
     /**
-     * Relation list
-     * @var string
+     * @var string Relation list
      */
     protected $relation;
 
     /**
-     * Relation Id
-     * @var string
+     * @var string Relation Id
      */
     protected $relationId;
 
     /**
-     * Params of query
-     * @var array
+     * @var array Params of query
      */
     protected $params = array();
 
     /**
-     * Query data
-     * @var array
+     * @var array Query data
      */
     protected $data = array();
 

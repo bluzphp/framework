@@ -25,7 +25,6 @@ class Version extends AbstractRule
 
     /**
      * Check for version format
-     *
      * @param string $input
      * @return bool
      */

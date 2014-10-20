@@ -24,7 +24,6 @@ class Positive extends AbstractRule
 
     /**
      * Check for positive number
-     *
      * @param string $input
      * @return bool
      */

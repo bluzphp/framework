@@ -50,20 +50,17 @@ class Row implements \JsonSerializable, \ArrayAccess
     use Container\MagicAccess;
 
     /**
-     * Table class instance
-     * @var Table
+     * @var Table Table class instance
      */
     protected $table;
 
     /**
-     * Table class name
-     * @var string
+     * @var string Table class name
      */
     protected $tableClass;
 
     /**
-     * Primary row key(s)
-     * @var array
+     * @var array Primary row key(s)
      */
     protected $primary;
 
@@ -77,12 +74,12 @@ class Row implements \JsonSerializable, \ArrayAccess
     protected $clean = array();
 
     /**
-     * Relations rows
-     * @var array
+     * @var array Relations rows
      */
     protected $relations = array();
 
     /**
+     * Create Row instance
      * @param array $data
      * @return Row
      */
@@ -99,8 +96,7 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
-     * Sleep
-     *
+     * List of required for serialization properties
      * @return string[]
      */
     public function __sleep()
@@ -109,8 +105,7 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
-     * __toString
-     *
+     * Cast to string as class name
      * @return string
      */
     public function __toString()
@@ -148,7 +143,6 @@ class Row implements \JsonSerializable, \ArrayAccess
 
     /**
      * Insert row to Db
-     *
      * @return mixed The primary key value(s), as an associative array if the
      *     key is compound, or a scalar if the key is single-column.
      */
@@ -205,7 +199,6 @@ class Row implements \JsonSerializable, \ArrayAccess
 
     /**
      * Update row
-     *
      * @return integer The number of rows updated
      */
     protected function doUpdate()
@@ -266,7 +259,6 @@ class Row implements \JsonSerializable, \ArrayAccess
 
     /**
      * Delete existing row
-     *
      * @return integer The number of deleted rows
      */
     public function delete()
@@ -299,7 +291,6 @@ class Row implements \JsonSerializable, \ArrayAccess
 
     /**
      * Retrieves an associative array of primary keys, if it exists
-     *
      * @throws InvalidPrimaryKeyException
      * @return array
      */
@@ -314,7 +305,6 @@ class Row implements \JsonSerializable, \ArrayAccess
 
     /**
      * Refreshes properties from the database
-     *
      * @return void
      */
     public function refresh()
@@ -332,7 +322,8 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
-     * Before Insert/Update
+     * Allows pre-insert and pre-update logic to be applied to row.
+     * Subclasses may override this method.
      * @return void
      */
     protected function beforeSave()
@@ -340,7 +331,8 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
-     * After Insert/Update
+     * Allows post-insert and post-update logic to be applied to row.
+     * Subclasses may override this method.
      * @return void
      */
     protected function afterSave()
@@ -348,7 +340,8 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
-     * Pre insert hook
+     * Allows pre-insert logic to be applied to row.
+     * Subclasses may override this method.
      * @return void
      */
     protected function beforeInsert()
@@ -358,7 +351,6 @@ class Row implements \JsonSerializable, \ArrayAccess
     /**
      * Allows post-insert logic to be applied to row.
      * Subclasses may override this method.
-     *
      * @return void
      */
     protected function afterInsert()
@@ -366,7 +358,8 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
-     * Pre update hook
+     * Allows pre-update logic to be applied to row.
+     * Subclasses may override this method.
      * @return void
      */
     protected function beforeUpdate()
@@ -376,7 +369,6 @@ class Row implements \JsonSerializable, \ArrayAccess
     /**
      * Allows post-update logic to be applied to row.
      * Subclasses may override this method.
-     *
      * @return void
      */
     protected function afterUpdate()
@@ -384,7 +376,8 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
-     * Pre delete hook
+     * Allows pre-delete logic to be applied to row.
+     * Subclasses may override this method.
      * @return void
      */
     protected function beforeDelete()
@@ -394,7 +387,6 @@ class Row implements \JsonSerializable, \ArrayAccess
     /**
      * Allows post-delete logic to be applied to row.
      * Subclasses may override this method.
-     *
      * @return void
      */
     protected function afterDelete()
@@ -403,7 +395,6 @@ class Row implements \JsonSerializable, \ArrayAccess
 
     /**
      * Setup Table instance
-     *
      * @param Table $table
      * @return self
      */
@@ -415,7 +406,6 @@ class Row implements \JsonSerializable, \ArrayAccess
 
     /**
      * Returns the table object, or null if this is disconnected row
-     *
      * @throws TableNotFoundException
      * @return Table
      */
@@ -453,7 +443,6 @@ class Row implements \JsonSerializable, \ArrayAccess
 
     /**
      * Set relation
-     *
      * @param Row $row
      * @return Row
      */
@@ -466,7 +455,6 @@ class Row implements \JsonSerializable, \ArrayAccess
 
     /**
      * Get relation by name
-     *
      * @param string $tableName
      * @throws RelationNotFoundException
      * @return Row

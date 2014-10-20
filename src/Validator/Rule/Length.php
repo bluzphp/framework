@@ -32,7 +32,6 @@ class Length extends AbstractCompareRule
 
     /**
      * Setup validation rule
-     *
      * @param integer|null $min
      * @param integer|null $max
      * @param bool $inclusive
@@ -65,7 +64,6 @@ class Length extends AbstractCompareRule
 
     /**
      * Check input data
-     *
      * @param string $input
      * @return bool
      */
@@ -80,6 +78,7 @@ class Length extends AbstractCompareRule
     }
 
     /**
+     * Extract length
      * @param string $input
      * @return integer
      */
@@ -98,7 +97,6 @@ class Length extends AbstractCompareRule
 
     /**
      * Get error template
-     *
      * @return string
      */
     public function getTemplate()

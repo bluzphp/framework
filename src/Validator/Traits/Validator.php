@@ -1,5 +1,12 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
+ * @copyright Bluz PHP Team
+ * @link https://github.com/bluzphp/framework
+ */
+
+/**
  * @namespace
  */
 namespace Bluz\Validator\Traits;
@@ -7,11 +14,24 @@ namespace Bluz\Validator\Traits;
 use Bluz\Validator\ValidatorBuilder;
 
 /**
- * Row
+ * Validator trait
+ *
+ * Example of usage
+ *    use Bluz\Validator\Traits\Validator;
+ *    use Bluz\Validator\Validator as v;
+ *
+ *    class Row extends Db\Row {
+ *        use Validator;
+ *        function beforeSave()
+ *        {
+ *             $this->addValidator(
+ *                 'login',
+ *                 v::required()->latin()->length(3, 255)
+ *             );
+ *        }
+ *    }
  *
  * @package  Bluz\Validator\Traits
- *
- * @method   array toArray()
  *
  * @author   Anton Shevchuk
  * @created  04.07.2014 10:14
@@ -19,7 +39,7 @@ use Bluz\Validator\ValidatorBuilder;
 trait Validator
 {
     /**
-     * @var ValidatorBuilder
+     * @var ValidatorBuilder Instance of ValidatorBuilder
      */
     protected $validatorBuilder;
 

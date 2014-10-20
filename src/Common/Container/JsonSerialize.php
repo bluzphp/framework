@@ -12,8 +12,8 @@
 namespace Bluz\Common\Container;
 
 /**
- * Container implements
- *  - \JsonSerializable
+ * Container implements JsonSerializable interface
+ * @see JsonSerializable
  *
  * @package  Bluz\Common
  *
@@ -25,8 +25,7 @@ namespace Bluz\Common\Container;
 trait JsonSerialize
 {
     /**
-     * Implement JsonSerializable
-     *
+     * Specify data which should be serialized to JSON
      * @return array
      */
     public function jsonSerialize()

@@ -31,7 +31,6 @@ class Ip extends AbstractRule
 
     /**
      * Setup validation rule
-     *
      * @param null $options
      * @throws \Bluz\Validator\Exception\ComponentException
      */
@@ -47,7 +46,6 @@ class Ip extends AbstractRule
 
     /**
      * Parse IP range
-     *
      * @param string $input
      * @return array
      * @throws \Bluz\Validator\Exception\ComponentException
@@ -84,7 +82,6 @@ class Ip extends AbstractRule
 
     /**
      * Fill address
-     *
      * @param string $input
      * @param string $char
      */
@@ -97,7 +94,6 @@ class Ip extends AbstractRule
 
     /**
      * Parse range using wildcards
-     *
      * @param string $input
      * @param array $range
      */
@@ -111,7 +107,6 @@ class Ip extends AbstractRule
 
     /**
      * Parse range using Classless Inter-Domain Routing (CIDR)
-     *
      * @link http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing
      * @param string $input
      * @param array $range
@@ -140,7 +135,6 @@ class Ip extends AbstractRule
 
     /**
      * Check input data
-     *
      * @param string $input
      * @return bool
      */
@@ -151,7 +145,6 @@ class Ip extends AbstractRule
 
     /**
      * Verify IP address
-     *
      * @param string $address
      * @return bool
      */
@@ -168,7 +161,6 @@ class Ip extends AbstractRule
 
     /**
      * Verify Network by mask
-     *
      * @param string $input
      * @return bool
      */
@@ -192,7 +184,6 @@ class Ip extends AbstractRule
 
     /**
      * Check subnet
-     *
      * @param string $input
      * @return bool
      */
@@ -207,7 +198,6 @@ class Ip extends AbstractRule
 
     /**
      * Get error template
-     *
      * @return string
      */
     public function getTemplate()

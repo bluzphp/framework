@@ -29,7 +29,6 @@ class In extends AbstractRule
 
     /**
      * Setup validation rule
-     *
      * @param string|array $haystack
      * @param bool $identical
      */
@@ -41,7 +40,6 @@ class In extends AbstractRule
 
     /**
      * Check input data
-     *
      * @param string $input
      * @return bool
      */
@@ -70,7 +68,6 @@ class In extends AbstractRule
 
     /**
      * Get error template
-     *
      * @return string
      */
     public function getTemplate()

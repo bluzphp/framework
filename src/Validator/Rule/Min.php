@@ -24,7 +24,6 @@ class Min extends AbstractCompareRule
 
     /**
      * Setup validation rule
-     *
      * @param numeric $minValue
      * @param bool $inclusive
      */
@@ -36,7 +35,6 @@ class Min extends AbstractCompareRule
 
     /**
      * Check input data
-     *
      * @param numeric $input
      * @return bool
      */
@@ -47,7 +45,6 @@ class Min extends AbstractCompareRule
 
     /**
      * Get error template
-     *
      * @return string
      */
     public function getTemplate()

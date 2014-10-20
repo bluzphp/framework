@@ -1,7 +1,9 @@
 <?php
 /**
+ * Bluz Framework Component
+ *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/skeleton
+ * @link https://github.com/bluzphp/framework
  */
 
 /**
@@ -47,21 +49,17 @@ abstract class AbstractTable extends Table
     const PROVIDER_TWITTER = 'twitter';
 
     /**
-     * Table
-     *
-     * @var string
+     * @var string Table
      */
     protected $table = 'auth';
 
     /**
-     * Primary key(s)
-     * @var array
+     * @var array Primary key(s)
      */
     protected $primary = array('provider', 'foreignKey');
 
     /**
-     * getAuthRow
-     *
+     * Get AuthRow
      * @param string $provider
      * @param string $foreignKey
      * @return AbstractRow
@@ -73,7 +71,6 @@ abstract class AbstractTable extends Table
 
     /**
      * Generate Secret token
-     *
      * @param int $id
      * @return string
      */

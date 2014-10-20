@@ -29,7 +29,6 @@ class Domain extends AbstractRule
 
     /**
      * Setup validation rule
-     *
      * @param bool $checkDns
      */
     public function __construct($checkDns = false)
@@ -39,7 +38,6 @@ class Domain extends AbstractRule
 
     /**
      * Check input data
-     *
      * @param string $input
      * @return bool
      */

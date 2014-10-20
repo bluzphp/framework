@@ -22,31 +22,27 @@ namespace Bluz\Config;
 class Config
 {
     /**
-     * Configuration data
-     * @var array
+     * @var array Configuration data
      */
     protected $config;
 
     /**
-     * Modules configuration data
-     * @var array
+     * @var array Modules configuration data
      */
     protected $modules;
 
     /**
-     * Path to configuration files
-     * @var string
+     * @var string Path to configuration files
      */
     protected $path;
 
     /**
-     * Environment
-     * @var string
+     * @var string Environment
      */
     protected $environment;
 
     /**
-     * setup path to configuration files
+     * Set path to configuration files
      *
      * @param string $path
      * @throws ConfigException
@@ -61,7 +57,7 @@ class Config
     }
 
     /**
-     * setEnvironment
+     * Set application environment
      *
      * @param string $environment
      * @return void
@@ -72,8 +68,7 @@ class Config
     }
 
     /**
-     * load
-     *
+     * Load configuration
      * @throws ConfigException
      * @return void
      */
@@ -93,7 +88,6 @@ class Config
 
     /**
      * Load configuration file
-     *
      * @param string $path
      * @throws ConfigException
      * @return array
@@ -108,7 +102,6 @@ class Config
 
     /**
      * Load configuration files to array
-     *
      * @param string $path
      * @throws ConfigException
      * @return array
@@ -135,7 +128,6 @@ class Config
 
     /**
      * Return configuration by key
-     *
      * @param string|null $key of config
      * @param string|null $section of config
      * @throws ConfigException
@@ -164,7 +156,6 @@ class Config
 
     /**
      * Return module configuration by section
-     *
      * @param string $module
      * @param null $section
      * @return mixed

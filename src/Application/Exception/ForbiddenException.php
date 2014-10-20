@@ -12,7 +12,7 @@
 namespace Bluz\Application\Exception;
 
 /**
- * Exception
+ * Forbidden Exception
  *
  * @package  Bluz\Application\Exception
  *

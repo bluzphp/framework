@@ -24,18 +24,17 @@ use Bluz\Application\Exception\BadRequestException;
 class ValidatorException extends BadRequestException
 {
     /**
-     * @var string
+     * @var string Exception message
      */
     protected $message = "Invalid Arguments";
 
     /**
-     * @var array of error messages
+     * @var array Set of error messages
      */
     protected $errors = array();
 
     /**
-     * throwException
-     *
+     * Create and throw Exception
      * @param $key
      * @param $error
      * @return self
@@ -49,7 +48,6 @@ class ValidatorException extends BadRequestException
 
     /**
      * Set error by Key
-     *
      * @param string $key
      * @param string $error
      * @return void
@@ -61,7 +59,6 @@ class ValidatorException extends BadRequestException
 
     /**
      * Set errors
-     *
      * @param array $errors
      * @return void
      */
@@ -72,7 +69,6 @@ class ValidatorException extends BadRequestException
 
     /**
      * Get errors
-     *
      * @return array
      */
     public function getErrors()

@@ -12,8 +12,7 @@
 namespace Bluz\Common\Container;
 
 /**
- * Container implements
- *  - Regular access
+ * Implements regular access to container
  *
  * @package  Bluz\Common
  *
@@ -29,7 +28,6 @@ trait RegularAccess
 {
     /**
      * Set key/value pair
-     *
      * @param string $key
      * @param mixed $value
      * @return void
@@ -41,7 +39,6 @@ trait RegularAccess
 
     /**
      * Get value by key
-     *
      * @param string $key
      * @return mixed
      */
@@ -52,7 +49,6 @@ trait RegularAccess
 
     /**
      * Check contains key in container
-     *
      * @param string $key
      * @return bool
      */
@@ -63,7 +59,6 @@ trait RegularAccess
 
     /**
      * Delete value by key
-     *
      * @param string $key
      * @return void
      */

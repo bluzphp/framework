@@ -60,8 +60,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * Get the request URI.
-     *
+     * Get the request URI
      * @return string
      */
     public function getRequestUri()
@@ -73,8 +72,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * Get the request URI.
-     *
+     * Get the request URI
      * @return string
      */
     public function getCleanUri()
@@ -83,8 +81,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * Get the base URL.
-     *
+     * Get the base URL
      * @return string
      */
     public function getBaseUrl()
@@ -97,7 +94,6 @@ class Request extends AbstractRequest
 
     /**
      * Get the client's IP address
-     *
      * @return string
      */
     public function getClientIp()

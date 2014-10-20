@@ -24,7 +24,6 @@ class Condition extends AbstractRule
 
     /**
      * Setup validation rule
-     *
      * @param bool $condition
      */
     public function __construct($condition)
@@ -34,7 +33,6 @@ class Condition extends AbstractRule
 
     /**
      * Check input data
-     *
      * @param mixed $input
      * @return bool
      */

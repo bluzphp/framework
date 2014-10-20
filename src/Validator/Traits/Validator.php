@@ -63,7 +63,7 @@ trait Validator
      * @param \Bluz\Validator\Validator $validator,...
      * @return self
      */
-    protected function addValidator($name, $validator)
+    protected function addValidator($name)
     {
         call_user_func_array([$this->getValidatorBuilder(), 'add'], func_get_args());
         return $this;

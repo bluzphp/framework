@@ -295,7 +295,6 @@ abstract class Table
 
     /**
      * Find row by primary key
-     * @todo add LIMIT 1 for retrieve only one row
      * @param mixed $primaryKey
      * @return Row
      */
@@ -376,7 +375,6 @@ abstract class Table
 
     /**
      * Find row by where condition
-     * @todo add LIMIT 1 for retrieve only one row
      * @param array $whereList
      * @return Row
      */

@@ -110,6 +110,7 @@ class Select extends AbstractBuilder
      *         ->from('users', 'u')
      *         ->leftJoin('u', 'phonenumbers', 'p', 'u.id = p.user_id');
      *
+     * @param mixed $select The selection expressions.
      * @param mixed $select,... The selection expressions.
      * @return Select instance
      */
@@ -131,6 +132,7 @@ class Select extends AbstractBuilder
      *         ->from('users', 'u')
      *         ->leftJoin('u', 'phonenumbers', 'u.id = p.user_id');
      *
+     * @param mixed $select The selection expression.
      * @param mixed $select,... The selection expression.
      * @return Select instance
      */
@@ -275,7 +277,8 @@ class Select extends AbstractBuilder
      *         ->from('users', 'u')
      *         ->groupBy('u.id');
      *
-     * @param array $groupBy,... The grouping expression.
+     * @param array $groupBy The grouping expression
+     * @param array $groupBy,... The grouping expression
      * @return Select instance
      */
     public function groupBy($groupBy)
@@ -300,7 +303,8 @@ class Select extends AbstractBuilder
      *         ->groupBy('u.lastLogin');
      *         ->addGroupBy('u.createdAt')
      *
-     * @param mixed $groupBy,... The grouping expression.
+     * @param mixed $groupBy The grouping expression
+     * @param mixed $groupBy,... The grouping expression
      * @return Select instance
      */
     public function addGroupBy($groupBy)
@@ -388,7 +392,7 @@ class Select extends AbstractBuilder
     /**
      * Generate SQL string for JOINs
      *
-     * @param $fromAlias,...
+     * @param string $fromAlias,... Alias of table
      * @return string
      */
     protected function getSQLForJoins($fromAlias)

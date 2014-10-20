@@ -18,8 +18,8 @@
         <target>docs</target>
     </transformer>
     <transformations>
-        <template name="responsive" />
-        <template name="checkstyle" />
+        <!--<template name="responsive" />-->
+        <!--<template name="checkstyle" />-->
         <template name="clean" />
     </transformations>
     <files>

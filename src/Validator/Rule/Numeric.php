@@ -23,8 +23,7 @@ class Numeric extends AbstractRule
     protected $template = '{{name}} must be numeric';
 
     /**
-     * Check input data
-     *
+     * Check for numeric
      * @param mixed $input
      * @return bool
      */

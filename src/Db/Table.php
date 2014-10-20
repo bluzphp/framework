@@ -40,49 +40,37 @@ use Bluz\Proxy\Db as DbProxy;
 abstract class Table
 {
     /**
-     * The table name
-     * @var string
+     * @var string The table name
      */
     protected $table;
 
     /**
-     * Table columns
-     * @var array
+     * @var array Table columns
      */
     protected $columns = [];
 
     /**
-     * Default SQL query for select
-     * @var string
+     * @var string Default SQL query for select
      */
     protected $select = "";
 
     /**
-     * The primary key column or columns.
-     * Should be declared as an array
-     * @var array
+     * @var array The primary key column or columns (only as array).
      */
     protected $primary;
 
     /**
-     * The sequence name, required for PostgreSQL
-     * @var string
+     * @var string The sequence name, required for PostgreSQL
      */
     protected $sequence;
 
     /**
-     * Db default adapter
-     * @var Db
-     */
-    protected $adapter = null;
-
-    /**
-     * Class name
-     * @var string
+     * @var string Row class name
      */
     protected $rowClass;
 
     /**
+     * Create and initialize Table instance
      * @return Table
      */
     private function __construct()
@@ -114,7 +102,8 @@ abstract class Table
     }
 
     /**
-     * Initialization hook
+     * Initialization hook.
+     * Subclasses may override this method.
      */
     public function init()
     {
@@ -122,7 +111,6 @@ abstract class Table
 
     /**
      * Get Table instance
-     *
      * @return static
      */
     public static function getInstance()
@@ -137,7 +125,6 @@ abstract class Table
 
     /**
      * Set select query
-     *
      * @param $select
      * @return Table
      */
@@ -149,7 +136,6 @@ abstract class Table
 
     /**
      * Get select query
-     *
      * @return string
      */
     public function getSelectQuery()
@@ -159,9 +145,7 @@ abstract class Table
 
     /**
      * Get primary key(s)
-     *
-     * @throws InvalidPrimaryKeyException if primary key was not set or has
-     *                                    wrong format
+     * @throws InvalidPrimaryKeyException if primary key was not set or has wrong format
      * @return array
      */
     public function getPrimaryKey()
@@ -174,7 +158,6 @@ abstract class Table
 
     /**
      * Get table name
-     *
      * @return string
      */
     public function getName()
@@ -184,7 +167,6 @@ abstract class Table
 
     /**
      * Return information about tables columns
-     *
      * @return array
      */
     public function getColumns()
@@ -213,7 +195,6 @@ abstract class Table
 
     /**
      * Filter columns for insert/update queries by table columns definition
-     *
      * @param $data
      * @return array
      */
@@ -225,7 +206,6 @@ abstract class Table
 
     /**
      * Fetching rows by SQL query
-     *
      * @param  string $sql query options.
      * @param  array $params
      * @return array of rows results in FETCH_CLASS mode
@@ -314,9 +294,7 @@ abstract class Table
     }
 
     /**
-     * Find row
-     *
-     * @todo add LIMIT 1 for retrieve only one row
+     * Find row by primary key
      * @param mixed $primaryKey
      * @return Row
      */
@@ -397,8 +375,6 @@ abstract class Table
 
     /**
      * Find row by where condition
-     *
-     * @todo add LIMIT 1 for retrieve only one row
      * @param array $whereList
      * @return Row
      */
@@ -411,7 +387,6 @@ abstract class Table
 
     /**
      * Prepare array for WHERE or SET statements
-     *
      * @param $where
      * @throws \Bluz\Common\Exception\ConfigurationException
      * @return array
@@ -458,7 +433,6 @@ abstract class Table
 
     /**
      * Create Row instance
-     *
      * @param array $data
      * @return Row
      */

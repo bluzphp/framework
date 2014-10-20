@@ -14,7 +14,7 @@ namespace Bluz\Auth;
 use Bluz\Application\Exception\UnauthorizedException;
 
 /**
- * Exception
+ * Auth Exception
  *
  * @package Bluz\Auth
  *

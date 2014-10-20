@@ -23,8 +23,7 @@ class Json extends AbstractRule
     protected $template = '{{name}} must be a valid JSON string';
 
     /**
-     * Check input data
-     *
+     * Check for valid JSON string
      * @param string $input
      * @return bool
      */

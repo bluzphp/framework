@@ -247,7 +247,7 @@ class Db
      * @param string $select,... The selection expressions
      * @return Query\Select
      */
-    public function select($select)
+    public function select()
     {
         $query = new Query\Select();
         $query->select(func_get_args());

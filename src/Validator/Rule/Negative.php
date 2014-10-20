@@ -24,7 +24,6 @@ class Negative extends AbstractRule
 
     /**
      * Check for negative number
-     *
      * @param string $input
      * @return bool
      */

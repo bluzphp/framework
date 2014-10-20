@@ -24,7 +24,7 @@ use Bluz\Common\Exception\ComponentException;
 abstract class AbstractProxy
 {
     /**
-     * @var array
+     * @var array Instances of classes
      */
     protected static $instances = array();
 
@@ -32,6 +32,7 @@ abstract class AbstractProxy
      * Init class instance
      *
      * @abstract
+     * @internal
      * @throws ComponentException
      * @return mixed
      */
@@ -74,6 +75,7 @@ abstract class AbstractProxy
     /**
      * Handle dynamic, static calls to the object.
      *
+     * @internal
      * @param  string $method
      * @param  array $args
      * @return mixed

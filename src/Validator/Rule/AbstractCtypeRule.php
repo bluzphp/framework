@@ -19,7 +19,6 @@ abstract class AbstractCtypeRule extends AbstractFilterRule
 {
     /**
      * Filter input data
-     *
      * @param string $input
      * @return string
      */

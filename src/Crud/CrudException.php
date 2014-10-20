@@ -14,7 +14,7 @@ namespace Bluz\Crud;
 use Bluz\Common\Exception\CommonException;
 
 /**
- * Exception
+ * CRUD Exception
  *
  * @package  Bluz\Crud
  */

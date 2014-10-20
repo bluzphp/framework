@@ -27,55 +27,49 @@ class Reflection
     use Options;
 
     /**
-     * @var string
+     * @var string Full path to file
      */
     protected $file;
 
     /**
-     * Cache TTL
-     * @var int
+     * @var int Cache TTL
      */
     protected $cache = 0;
 
     /**
-     * Cache TTL for HTML content
-     * @var int
+     * @var int Cache TTL for HTML content
      */
     protected $cacheHtml = 0;
 
     /**
-     * @var array
+     * @var array HTTP Methods
      */
     protected $method = array();
 
     /**
-     * Described params
-     * @var array
+     *
+     * @var array Described params
      */
     protected $params = array();
 
     /**
-     * @var string
+     * @var string Privilege
      */
     protected $privilege;
 
     /**
-     * @var array
+     * @var array Routers
      */
     protected $route = array();
 
     /**
-     * Default values of params
-     * @var array
+     * @var array Default values of params
      */
     protected $values = array();
 
     /**
      * Constructor of Reflection
-     *
-     * @access  public
      * @param string $file
-     * @throws ComponentException
      */
     public function __construct($file)
     {
@@ -83,8 +77,7 @@ class Reflection
     }
 
     /**
-     * Process
-     *
+     * Process to get reflection from file
      * @throws ComponentException
      * @return void
      */
@@ -183,7 +176,6 @@ class Reflection
 
     /**
      * Get Cache TTL
-     *
      * @return int
      */
     public function getCache()
@@ -193,7 +185,6 @@ class Reflection
 
     /**
      * Set Cache TTL
-     *
      * @param string $ttl
      * @return void
      */
@@ -204,7 +195,6 @@ class Reflection
 
     /**
      * Get HTML Cache TTL
-     *
      * @return int
      */
     public function getCacheHtml()
@@ -214,7 +204,6 @@ class Reflection
 
     /**
      * Set HTML Cache TTL
-     *
      * @param string $ttl
      * @return void
      */
@@ -225,7 +214,6 @@ class Reflection
 
     /**
      * Prepare Cache
-     *
      * @param string $cache
      * @return int
      */
@@ -248,7 +236,6 @@ class Reflection
 
     /**
      * Get HTTP Method
-     *
      * @return array|null
      */
     public function getMethod()
@@ -258,7 +245,6 @@ class Reflection
 
     /**
      * Set HTTP Method
-     *
      * @param string $method
      * @return void
      */
@@ -269,7 +255,6 @@ class Reflection
 
     /**
      * Get all params
-     *
      * @return array
      */
     public function getParams()
@@ -278,9 +263,7 @@ class Reflection
     }
 
     /**
-     * Prepare params data
-     * set param types
-     *
+     * Set param types
      * @param string $param
      * @return void
      */
@@ -298,7 +281,6 @@ class Reflection
 
     /**
      * Get Privilege fo ACL
-     *
      * @return string
      */
     public function getPrivilege()
@@ -307,9 +289,7 @@ class Reflection
     }
 
     /**
-     * Set Privilege fo ACL
-     * allow only one privilege
-     *
+     * Set Privilege fo ACL allow only one privilege
      * @param string $privilege
      * @return void
      */
@@ -319,8 +299,7 @@ class Reflection
     }
 
     /**
-     * Set Route
-     *
+     * Get Route
      * @return array|null
      */
     public function getRoute()
@@ -330,7 +309,6 @@ class Reflection
 
     /**
      * Set Route
-     *
      * @param string $route
      * @return void
      */
@@ -340,8 +318,7 @@ class Reflection
     }
 
     /**
-     * initRoute
-     *
+     * Init Route
      * @return void
      */
     protected function initRoute()
@@ -353,7 +330,6 @@ class Reflection
 
     /**
      * Prepare Route pattern
-     *
      * @param string $route
      * @return string
      */

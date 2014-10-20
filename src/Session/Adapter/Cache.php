@@ -23,7 +23,6 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
 {
     /**
      * Check and setup Redis server
-     *
      * @param array $settings
      * @throws ConfigurationException
      */
@@ -39,6 +38,7 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
     }
 
     /**
+     * Read session data
      * @param string $id
      * @return bool|string
      */
@@ -48,6 +48,7 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
     }
 
     /**
+     * Write session data
      * @param string $id
      * @param string $data
      * @return bool|void
@@ -58,6 +59,7 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
     }
 
     /**
+     * Destroy a session
      * @param int $id
      * @return bool|void
      */

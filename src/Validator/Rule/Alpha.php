@@ -19,7 +19,6 @@ class Alpha extends AbstractCtypeRule
 {
     /**
      * Check for alphabetic character(s)
-     *
      * @param string $input
      * @return bool
      */
@@ -30,7 +29,6 @@ class Alpha extends AbstractCtypeRule
 
     /**
      * Get error template
-     *
      * @return string
      */
     public function getTemplate()

@@ -41,7 +41,7 @@ class Session
     protected $namespace = 'bluz';
 
     /**
-     * @var \SessionHandlerInterface
+     * @var \SessionHandlerInterface Session save handler
      */
     protected $adapter;
 

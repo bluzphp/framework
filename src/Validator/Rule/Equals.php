@@ -18,18 +18,17 @@ namespace Bluz\Validator\Rule;
 class Equals extends AbstractRule
 {
     /**
-     * @var string
+     * @var string String for compare
      */
     protected $compareTo;
 
     /**
-     * @var bool
+     * @var bool Strong comparison
      */
     protected $identical = false;
 
     /**
      * Setup validation rule
-     *
      * @param string $compareTo
      * @param bool $identical
      */
@@ -41,7 +40,6 @@ class Equals extends AbstractRule
 
     /**
      * Check input data
-     *
      * @param string $input
      * @return bool
      */
@@ -56,7 +54,6 @@ class Equals extends AbstractRule
 
     /**
      * Get error template
-     *
      * @return string
      */
     public function getTemplate()

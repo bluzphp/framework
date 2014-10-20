@@ -29,7 +29,6 @@ class Email extends AbstractRule
 
     /**
      * Setup validation rule
-     *
      * @param bool $checkDns
      */
     public function __construct($checkDns = false)
@@ -39,7 +38,6 @@ class Email extends AbstractRule
 
     /**
      * Check input data
-     *
      * @param mixed $input
      * @return bool
      */

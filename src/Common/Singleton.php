@@ -22,13 +22,12 @@ namespace Bluz\Common;
 trait Singleton
 {
     /**
-     * @var static instance
+     * @var static Singleton instance
      */
     protected static $instance;
 
     /**
-     * Get class instance
-     *
+     * Get instance
      * @return static::$instance
      */
     final public static function getInstance()

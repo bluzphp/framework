@@ -12,7 +12,7 @@
 namespace Bluz\Cli;
 
 /**
- * Colorize
+ * Colorize text for CLI
  *
  * @package  Bluz\Cli
  *
@@ -51,7 +51,6 @@ class Colorize
 
     /**
      * Return string colorized for Linux console
-     *
      * @param string $text
      * @param string $foreground
      * @param string $background

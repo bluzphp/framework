@@ -12,9 +12,7 @@
 namespace Bluz\Common\Container;
 
 /**
- * Container implements
- *  - \JsonSerializable
- *  - \ArrayAccess
+ * Container of data for object
  *
  * @package  Bluz\Common
  *
@@ -24,7 +22,7 @@ namespace Bluz\Common\Container;
 trait Container
 {
     /**
-     * @var array
+     * @var array Container of elements
      */
     protected $container = array();
 
@@ -42,7 +40,6 @@ trait Container
 
     /**
      * Get value by key
-     *
      * @param string $key
      * @return mixed
      */
@@ -57,7 +54,6 @@ trait Container
 
     /**
      * Check contains key in container
-     *
      * @param string $key
      * @return bool
      */
@@ -68,7 +64,6 @@ trait Container
 
     /**
      * Delete value by key
-     *
      * @param string $key
      * @return void
      */
@@ -79,7 +74,6 @@ trait Container
 
     /**
      * Sets all data in the row from an array
-     *
      * @param  array $data
      * @return self
      */
@@ -92,8 +86,7 @@ trait Container
     }
 
     /**
-     * Returns the column/value data as an array.
-     *
+     * Returns the column/value data as an array
      * @return array
      */
     public function toArray()
@@ -103,7 +96,6 @@ trait Container
 
     /**
      * Reset container array
-     *
      * @return self
      */
     public function resetArray()

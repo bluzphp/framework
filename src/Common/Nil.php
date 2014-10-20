@@ -26,7 +26,6 @@ class Nil
 {
     /**
      * Magic call
-     *
      * @param string $method
      * @param array $args
      * @return null
@@ -38,7 +37,6 @@ class Nil
 
     /**
      * Magic call for static
-     *
      * @param string $method
      * @param array $args
      * @return null
@@ -49,8 +47,7 @@ class Nil
     }
 
     /**
-     * __get
-     *
+     * Magic __get
      * @param string $key
      * @return null
      */
@@ -60,8 +57,7 @@ class Nil
     }
 
     /**
-     * __set
-     *
+     * Magic __set
      * @param string $key
      * @param mixed $value
      * @return null
@@ -72,8 +68,7 @@ class Nil
     }
 
     /**
-     * __toString
-     *
+     * Cast to empty string
      * @return string
      */
     public function __toString()

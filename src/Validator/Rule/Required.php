@@ -24,7 +24,6 @@ class Required extends AbstractRule
 
     /**
      * Check input data
-     *
      * @param mixed $input
      * @return bool
      */

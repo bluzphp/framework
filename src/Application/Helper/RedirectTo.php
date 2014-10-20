@@ -16,8 +16,7 @@ use Bluz\Proxy\Router;
 
 return
     /**
-     * redirect to controller
-     *
+     * Redirect to controller
      * @var Application $this
      * @param string $module
      * @param string $controller

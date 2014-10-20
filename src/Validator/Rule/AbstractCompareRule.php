@@ -23,8 +23,7 @@ abstract class AbstractCompareRule extends AbstractRule
     protected $inclusive;
 
     /**
-     * $what less $than
-     *
+     * Check $what less $than or not
      * @param mixed $what
      * @param mixed $than
      * @return bool

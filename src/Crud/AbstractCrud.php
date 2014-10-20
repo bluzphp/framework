@@ -29,8 +29,7 @@ abstract class AbstractCrud
     const DEFAULT_LIMIT = 10;
 
     /**
-     * getInstance
-     *
+     * Get CRUD Instance
      * @return static
      */
     public static function getInstance()
@@ -45,14 +44,12 @@ abstract class AbstractCrud
 
     /**
      * Return primary key signature
-     *
      * @return array
      */
     abstract public function getPrimaryKey();
 
     /**
-     * get item by primary key(s)
-     *
+     * Get item by primary key(s)
      * @param mixed $primary
      * @throws NotImplementedException
      * @return mixed
@@ -64,7 +61,6 @@ abstract class AbstractCrud
 
     /**
      * list of items
-     *
      * @param int $offset
      * @param int $limit
      * @param array $params
@@ -77,8 +73,7 @@ abstract class AbstractCrud
     }
 
     /**
-     * create new item
-     *
+     * Create new item
      * @param array $data
      * @throws NotImplementedException
      * @return mixed
@@ -89,8 +84,7 @@ abstract class AbstractCrud
     }
 
     /**
-     * create items
-     *
+     * Create items
      * @param array $data
      * @throws NotImplementedException
      * @return mixed
@@ -101,8 +95,7 @@ abstract class AbstractCrud
     }
 
     /**
-     * update item
-     *
+     * Update item
      * @param mixed $primary
      * @param array $data
      * @throws NotImplementedException
@@ -114,8 +107,7 @@ abstract class AbstractCrud
     }
 
     /**
-     * update items
-     *
+     * Update items
      * @param array $data
      * @throws NotImplementedException
      * @return integer
@@ -126,8 +118,7 @@ abstract class AbstractCrud
     }
 
     /**
-     * delete item
-     *
+     * Delete item
      * @param mixed $primary
      * @throws NotImplementedException
      * @return integer
@@ -138,8 +129,7 @@ abstract class AbstractCrud
     }
 
     /**
-     * delete items
-     *
+     * Delete items
      * @param array $data
      * @throws NotImplementedException
      * @return integer

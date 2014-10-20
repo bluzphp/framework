@@ -23,7 +23,7 @@ class CountryCode extends AbstractRule
     protected $template = '{{name}} must be a valid country code';
 
     /**
-     * @var array
+     * @var array Stack of valid country codes
      */
     protected $countryCodeList = array(
         'AD', 'AE', 'AF', 'AG', 'AI', 'AL', 'AM', 'AO', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AW',
@@ -48,7 +48,6 @@ class CountryCode extends AbstractRule
 
     /**
      * Check for country code
-     *
      * @param string $input
      * @return bool
      */

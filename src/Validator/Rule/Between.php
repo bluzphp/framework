@@ -31,7 +31,6 @@ class Between extends AbstractCompareRule
 
     /**
      * Setup validation rule
-     *
      * @param mixed $min
      * @param mixed $max
      * @param bool $inclusive
@@ -54,7 +53,6 @@ class Between extends AbstractCompareRule
 
     /**
      * Check input data
-     *
      * @param numeric $input
      * @return bool
      */
@@ -66,7 +64,6 @@ class Between extends AbstractCompareRule
 
     /**
      * Get error template
-     *
      * @return string
      */
     public function getTemplate()

@@ -12,7 +12,7 @@
 namespace Bluz\Application\Exception;
 
 /**
- * Exception
+ * Reload Exception
  *
  * @package  Bluz\Application\Exception
  *

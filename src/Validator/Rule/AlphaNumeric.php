@@ -19,7 +19,6 @@ class AlphaNumeric extends AbstractCtypeRule
 {
     /**
      * Check for alphanumeric character(s)
-     * 
      * @param string $input
      * @return bool
      */
@@ -30,7 +29,6 @@ class AlphaNumeric extends AbstractCtypeRule
 
     /**
      * Get error template
-     *
      * @return string
      */
     public function getTemplate()

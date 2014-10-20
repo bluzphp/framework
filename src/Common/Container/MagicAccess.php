@@ -12,8 +12,7 @@
 namespace Bluz\Common\Container;
 
 /**
- * Container implements
- *  - Magic access
+ * Implements magic access to container
  *
  * @package  Bluz\Common
  *
@@ -29,7 +28,6 @@ trait MagicAccess
 {
     /**
      * Magic alias for set() regular method
-     *
      * @param  string $key
      * @param  mixed $value
      * @return void
@@ -41,7 +39,6 @@ trait MagicAccess
 
     /**
      * Magic alias for get() regular method
-     *
      * @param  string $key
      * @return mixed
      */
@@ -52,7 +49,6 @@ trait MagicAccess
 
     /**
      * Magic alias for contains() regular method
-     *
      * @param  string $key
      * @return bool
      */
@@ -63,7 +59,6 @@ trait MagicAccess
 
     /**
      * Magic alias for delete() regular method
-     *
      * @param  string $key
      * @return void
      */

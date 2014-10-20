@@ -14,7 +14,7 @@ namespace Bluz\Application\Exception;
 use Bluz\Common\Exception\CommonException;
 
 /**
- * Exception
+ * Application Exception
  *
  * @package  Bluz\Application\Exception
  * @author   Anton Shevchuk

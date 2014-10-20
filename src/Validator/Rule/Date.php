@@ -20,13 +20,12 @@ use DateTime;
 class Date extends AbstractRule
 {
     /**
-     * @var null
+     * @var null Date format
      */
     protected $format = null;
 
     /**
      * Setup validation rule
-     *
      * @param null $format
      */
     public function __construct($format = null)
@@ -36,7 +35,6 @@ class Date extends AbstractRule
 
     /**
      * Check input data
-     *
      * @param mixed $input
      * @return bool
      */
@@ -58,7 +56,6 @@ class Date extends AbstractRule
 
     /**
      * Get error template
-     *
      * @return string
      */
     public function getTemplate()

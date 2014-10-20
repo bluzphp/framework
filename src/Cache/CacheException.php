@@ -14,7 +14,7 @@ namespace Bluz\Cache;
 use Bluz\Common\Exception\CommonException;
 
 /**
- * Exception
+ * Cache Exception
  *
  * @package Bluz\Cache
  *

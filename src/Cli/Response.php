@@ -26,7 +26,6 @@ class Response extends AbstractResponse
 {
     /**
      * Send headers
-     *
      * @return void
      */
     protected function sendHeaders()
@@ -36,7 +35,6 @@ class Response extends AbstractResponse
 
     /**
      * Send headers
-     *
      * @return void
      */
     protected function sendBody()

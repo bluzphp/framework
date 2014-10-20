@@ -28,14 +28,12 @@ abstract class AbstractRule
      * Template for error output
      *   - {{name}} - name of field
      *   - {{input}} - input value
-     *
      * @var string
      */
     protected $template = '{{name}} has invalid value {{input}}';
 
     /**
      * Check input data
-     *
      * @param mixed $input
      * @return bool
      */
@@ -43,7 +41,6 @@ abstract class AbstractRule
 
     /**
      * Invoke
-     *
      * @param mixed $input
      * @return bool
      */
@@ -54,7 +51,6 @@ abstract class AbstractRule
 
     /**
      * Assert
-     *
      * @param string $input
      * @throws ValidatorException
      * @return bool
@@ -69,7 +65,6 @@ abstract class AbstractRule
 
     /**
      * Get error template
-     *
      * @return string
      */
     public function getTemplate()
@@ -79,7 +74,6 @@ abstract class AbstractRule
 
     /**
      * Cast to string
-     *
      * @return string
      */
     public function __toString()

@@ -14,7 +14,7 @@ namespace Bluz\Acl;
 use Bluz\Application\Exception\ForbiddenException;
 
 /**
- * Exception
+ * Acl Exception
  *
  * @package  Bluz\Acl
  *

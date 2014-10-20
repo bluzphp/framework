@@ -34,13 +34,12 @@ class ValidatorBuilder
     protected $validators = array();
 
     /**
-     * @var array
+     * @var array Stack of validation errors
      */
     protected $errors = array();
 
     /**
-     * add
-     *
+     * Add validator to builder
      * @param string $name
      * @param Validator $validator,...
      * @return ValidatorBuilder
@@ -62,7 +61,6 @@ class ValidatorBuilder
 
     /**
      * Validate chain of rules
-     *
      * @param array|object $input
      * @return bool
      */
@@ -81,7 +79,6 @@ class ValidatorBuilder
 
     /**
      * Validate chain of rules for single item
-     *
      * @param string $key
      * @param array|object $input
      * @return bool
@@ -143,7 +140,6 @@ class ValidatorBuilder
 
     /**
      * Assert
-     *
      * @param mixed $input
      * @throws ValidatorException
      * @return bool
@@ -160,7 +156,6 @@ class ValidatorBuilder
 
     /**
      * Get errors
-     *
      * @return array
      */
     public function getErrors()

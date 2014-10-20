@@ -27,37 +27,32 @@ abstract class AbstractResponse
     use Options;
 
     /**
-     * HTTP protocol version
-     * @var string
+     * @var string HTTP protocol version
      */
     protected $protocol = '1.1';
 
     /**
-     * Response code equal to HTTP status codes
-     * @var int
+     * @var int Response code equal to HTTP status codes
      */
     protected $code = 200;
 
     /**
-     * @var string|null
+     * @var string|null HTTP Phrase
      */
     protected $phrase;
 
     /**
-     * Stack of headers
-     * @var array
+     * @var array Stack of headers
      */
     protected $headers = array();
 
     /**
-     * Result can be View|object|function
-     * @var View
+     * @var View Result can be View|object|function
      */
     protected $body;
 
     /**
-     * Catches exception
-     * @var \Exception
+     * @var \Exception Catches exception
      */
     protected $exception;
 
@@ -75,7 +70,6 @@ abstract class AbstractResponse
 
     /**
      * Send data to client (console or browser)
-     *
      * @access  public
      * @return void
      */
@@ -112,7 +106,6 @@ abstract class AbstractResponse
 
     /**
      * Sets the status code of this response.
-     *
      * @param int $code The 3-digit integer result code to set.
      * @return void
      */
@@ -157,7 +150,6 @@ abstract class AbstractResponse
      * a comma.
      *
      * @param string $header Case-insensitive header name.
-     *
      * @return string
      */
     public function getHeader($header)
@@ -170,10 +162,9 @@ abstract class AbstractResponse
     }
 
     /**
-     * Retrieves a header by the given case-insensitive name as an array of strings.
+     * Retrieves a header by the given case-insensitive name as an array of strings
      *
      * @param string $header Case-insensitive header name.
-     *
      * @return string[]
      */
     public function getHeaderAsArray($header)
@@ -189,7 +180,6 @@ abstract class AbstractResponse
      * Checks if a header exists by the given case-insensitive name.
      *
      * @param string $header Case-insensitive header name.
-     *
      * @return bool Returns true if any header names match the given header
      *     name using a case-insensitive string comparison. Returns false if
      *     no matching header name is found in the message.
@@ -208,7 +198,6 @@ abstract class AbstractResponse
      *
      * @param string $header Header name
      * @param string|string[] $value  Header value(s)
-     *
      * @return void
      */
     public function setHeader($header, $value)
@@ -224,7 +213,6 @@ abstract class AbstractResponse
      *
      * @param string $header Header name to add
      * @param string $value  Value of the header
-     *
      * @return void
      */
     public function addHeader($header, $value)
@@ -240,7 +228,6 @@ abstract class AbstractResponse
      * Remove a specific header by case-insensitive name.
      *
      * @param string $header HTTP header to remove
-     *
      * @return void
      */
     public function removeHeader($header)
@@ -273,7 +260,6 @@ abstract class AbstractResponse
      * string or an array of strings.
      *
      * @param array $headers Headers to set.
-     *
      * @return void
      */
     public function setHeaders(array $headers)
@@ -291,7 +277,6 @@ abstract class AbstractResponse
      * header is added.
      *
      * @param array $headers Associative array of headers to add to the message
-     *
      * @return void
      */
     public function addHeaders(array $headers)
@@ -301,7 +286,6 @@ abstract class AbstractResponse
 
     /**
      * Remove all headers
-     *
      * @return void
      */
     public function removeHeaders()
@@ -311,7 +295,6 @@ abstract class AbstractResponse
 
     /**
      * Set response body
-     *
      * @param View|string $body
      * @return void
      */
@@ -322,7 +305,6 @@ abstract class AbstractResponse
 
     /**
      * Get response body
-     *
      * @return View
      */
     public function getBody()
@@ -332,7 +314,6 @@ abstract class AbstractResponse
 
     /**
      * Clear response body
-     *
      * @return void
      */
     public function clearBody()
@@ -341,8 +322,7 @@ abstract class AbstractResponse
     }
 
     /**
-     * setException
-     *
+     * Set Exception
      * @param \Exception $exception
      * @return void
      */
@@ -354,8 +334,7 @@ abstract class AbstractResponse
     }
 
     /**
-     * getException
-     *
+     * Get Exception
      * @return \Exception
      */
     public function getException()

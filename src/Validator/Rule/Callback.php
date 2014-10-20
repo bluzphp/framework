@@ -26,7 +26,6 @@ class Callback extends AbstractRule
 
     /**
      * Setup validation rule
-     *
      * @param callable $callback
      * @throws \Bluz\Validator\Exception\ComponentException
      */
@@ -41,7 +40,6 @@ class Callback extends AbstractRule
 
     /**
      * Check input data
-     *
      * @param mixed $input
      * @return bool
      */

@@ -31,7 +31,6 @@ class ArrayInput extends AbstractRule
 
     /**
      * Setup validation rule
-     *
      * @param callable $callback
      * @throws ComponentException
      */
@@ -48,7 +47,6 @@ class ArrayInput extends AbstractRule
 
     /**
      * Check input data
-     *
      * @param string $input
      * @return bool
      */

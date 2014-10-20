@@ -60,33 +60,32 @@ use Bluz\Validator\Rule\Required;
 class Validator
 {
     /**
-     * @var AbstractRule[]
+     * @var AbstractRule[] Stack of validation rules
      */
     protected $rules = array();
 
     /**
-     * @var AbstractRule[]
+     * @var AbstractRule[] Stack of invalid rules
      */
     protected $invalid = array();
 
     /**
-     * @var string of field name
+     * @var string Field name
      */
     protected $name;
 
     /**
-     * @var string of input data
+     * @var string Input data
      */
     protected $input;
 
     /**
-     * @var string rule as text
+     * @var string Error text
      */
     protected $error;
 
     /**
      * Create new instance if Validator
-     *
      * @return Validator
      */
     public static function create()
@@ -96,7 +95,6 @@ class Validator
 
     /**
      * Magic static call for create instance of Validator
-     *
      * @param string $ruleName
      * @param array $arguments
      * @return Validator
@@ -110,7 +108,6 @@ class Validator
 
     /**
      * Magic call for create new rule
-     *
      * @param string $ruleName
      * @param array $arguments
      * @throws Exception\ComponentException
@@ -138,7 +135,6 @@ class Validator
 
     /**
      * Get required flag
-     *
      * @return bool
      */
     public function isRequired()
@@ -153,7 +149,6 @@ class Validator
 
     /**
      * Set field Title
-     *
      * @param string $name
      * @return Validator
      */
@@ -165,7 +160,6 @@ class Validator
 
     /**
      * Get field Title
-     *
      * @return string
      */
     public function getName()
@@ -175,7 +169,6 @@ class Validator
 
     /**
      * Get input data
-     *
      * @return string
      */
     public function getInput()
@@ -185,7 +178,6 @@ class Validator
 
     /**
      * Callable
-     *
      * @param mixed $input
      * @return bool
      */
@@ -196,7 +188,6 @@ class Validator
 
     /**
      * Validate chain of rules
-     *
      * @param mixed $input
      * @param bool $all
      * @return bool
@@ -219,7 +210,6 @@ class Validator
 
     /**
      * Assert
-     *
      * @param mixed $input
      * @throws ValidatorException
      * @return bool
@@ -234,7 +224,6 @@ class Validator
 
     /**
      * Set error template for complex rule
-     *
      * @param string $message
      * @return Validator
      */
@@ -246,7 +235,6 @@ class Validator
 
     /**
      * Get error message
-     *
      * @return false|string
      */
     public function getError()
@@ -268,7 +256,6 @@ class Validator
 
     /**
      * getErrors
-     *
      * @return string[]
      */
     public function getErrors()
@@ -282,7 +269,6 @@ class Validator
 
     /**
      * Prepare error message for output
-     *
      * @param string $message
      * @return string
      */
@@ -300,8 +286,7 @@ class Validator
     }
 
     /**
-     * __toString
-     *
+     * Cast to string
      * @return string
      */
     public function __toString()

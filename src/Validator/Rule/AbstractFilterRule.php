@@ -25,6 +25,7 @@ abstract class AbstractFilterRule extends AbstractRule
     protected $additionalChars = "";
 
     /**
+     * Check input string
      * @param string $input
      * @return bool
      */
@@ -32,7 +33,6 @@ abstract class AbstractFilterRule extends AbstractRule
 
     /**
      * Setup validation rule
-     *
      * @param string $additionalChars
      * @throws \Bluz\Validator\Exception\ComponentException
      */
@@ -46,7 +46,6 @@ abstract class AbstractFilterRule extends AbstractRule
 
     /**
      * Filter input data
-     *
      * @param string $input
      * @return string
      */
@@ -57,7 +56,6 @@ abstract class AbstractFilterRule extends AbstractRule
 
     /**
      * Check input data
-     *
      * @param mixed $input
      * @return bool
      */

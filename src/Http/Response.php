@@ -39,15 +39,14 @@ class Response extends AbstractResponse
         // setup response code
         http_response_code($this->code);
 
-        // Send stored headers
+        // send stored headers
         foreach ($this->headers as $key => $value) {
             header($key .': '. join(', ', $value));
         }
     }
 
     /**
-     * Send headers
-     *
+     * Send body
      * @return void
      */
     protected function sendBody()

@@ -41,25 +41,7 @@ class Messages
     );
 
     /**
-     * get size of messages container
-     *
-     * @return integer
-     */
-    public function count()
-    {
-        $size = 0;
-        if (!$store = $this->getMessagesStore()) {
-            return $size;
-        }
-        foreach ($store as $messages) {
-            $size += sizeof($messages);
-        }
-        return $size;
-    }
-
-    /**
-     * init
-     *
+     * Initialize Messages container
      * @return Messages
      */
     protected function init()
@@ -71,52 +53,51 @@ class Messages
     }
 
     /**
-     * add notice
-     *
+     * Add notice
      * @param string $text
-     * @return Messages
+     * @return void
      */
     public function addNotice($text)
     {
-        $this->init();
-
-        $this->getMessagesStore()[self::TYPE_NOTICE][] = Translator::translate($text);
-        return $this;
+        $this->add(self::TYPE_NOTICE, $text);
     }
 
     /**
-     * add success
-     *
+     * Add success
      * @param string $text
-     * @return Messages
+     * @return void
      */
     public function addSuccess($text)
     {
-        $this->init();
-
-        $this->getMessagesStore()[self::TYPE_SUCCESS][] = Translator::translate($text);
-        return $this;
+        $this->add(self::TYPE_SUCCESS, $text);
     }
 
     /**
-     * add error
-     *
+     * Add error
      * @param string $text
-     * @return Messages
+     * @return void
      */
     public function addError($text)
     {
-        $this->init();
+        $this->add(self::TYPE_ERROR, $text);
+    }
 
-        $this->getMessagesStore()[self::TYPE_ERROR][] = Translator::translate($text);
-        return $this;
+    /**
+     * Add message to container
+     * @param string $type One of error, notice or success
+     * @param string $text
+     * @return void
+     */
+    protected function add($type, $text)
+    {
+        $this->init();
+        $this->getMessagesStore()[$type][] = Translator::translate($text);
     }
 
     /**
      * Pop a message
-     *
      * @param string $type
-     * @return \stdClass
+     * @return \stdClass|null
      */
     public function pop($type = null)
     {
@@ -144,7 +125,6 @@ class Messages
 
     /**
      * Pop all messages
-     *
      * @return \ArrayObject
      */
     public function popAll()
@@ -159,7 +139,24 @@ class Messages
     }
 
     /**
+     * Get size of messages container
+     * @return integer
+     */
+    public function count()
+    {
+        $size = 0;
+        if (!$store = $this->getMessagesStore()) {
+            return $size;
+        }
+        foreach ($store as $messages) {
+            $size += sizeof($messages);
+        }
+        return $size;
+    }
+
+    /**
      * Reset messages
+     * @return void
      */
     public function reset()
     {
@@ -167,8 +164,7 @@ class Messages
     }
 
     /**
-     * Returns current messages store.
-     *
+     * Returns current messages store
      * @return \ArrayObject|null Returns null if store not exists yet
      */
     protected function getMessagesStore()
@@ -177,8 +173,7 @@ class Messages
     }
 
     /**
-     * Creates a new empty store for messages.
-     *
+     * Creates a new empty store for messages
      * @return \ArrayObject
      */
     protected function createEmptyMessagesStore()

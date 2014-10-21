@@ -76,6 +76,8 @@ trait Options
         $method = 'set' . $this->normalizeKey($key);
         if (method_exists($this, $method)) {
             $this->$method($value);
+        } else {
+            $this->options[$key] = $value;
         }
     }
 

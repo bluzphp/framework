@@ -107,7 +107,8 @@ class Application
                 $this->path = PATH_APPLICATION;
             } else {
                 $reflection = new \ReflectionClass($this);
-                $this->path = dirname($reflection->getFileName());
+                // 3 level up
+                $this->path = dirname(dirname(dirname($reflection->getFileName())));
             }
         }
         return $this->path;
@@ -291,6 +292,7 @@ class Application
             Response::setException($e);
 
             if (Request::isXmlHttpRequest()) {
+                // 204 - No Content
                 Response::setStatusCode(204);
                 Response::setHeader('Bluz-Redirect', $e->getMessage());
             } else {
@@ -302,6 +304,7 @@ class Application
             Response::setException($e);
 
             if (Request::isXmlHttpRequest()) {
+                // 204 - No Content
                 Response::setStatusCode(204);
                 Response::setHeader('Bluz-Reload', 'true');
             } else {
@@ -311,7 +314,11 @@ class Application
             return;
         } catch (\Exception $e) {
             Response::setException($e);
-            Response::setStatusCode($e->getCode());
+
+            // cast to valid HTTP error code
+            // 500 - Internal Server Error
+            $statusCode = (100 <= $e->getCode() && $e->getCode() <= 505) ? $e->getCode() : 500;
+            Response::setStatusCode($statusCode);
 
             $dispatchResult = $this->dispatch(
                 Router::getErrorModule(),

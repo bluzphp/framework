@@ -74,7 +74,6 @@ function ($code, $message = '') use ($view) {
 
     // check CLI or HTTP request
     if (Request::isHttp()) {
-
         // simple AJAX call
         if ($this->isJson()) {
             Messages::addError($message);

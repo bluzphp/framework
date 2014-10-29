@@ -18,8 +18,7 @@
         <target>docs</target>
     </transformer>
     <transformations>
-        <!--<template name="responsive" />-->
-        <!--<template name="checkstyle" />-->
+        <!-- Possible templates: responsive, checkstyle, clean, zend, new-black -->
         <template name="clean" />
     </transformations>
     <files>

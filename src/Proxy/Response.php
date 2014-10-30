@@ -16,7 +16,13 @@ use Bluz\Response\AbstractResponse as Instance;
 use Bluz\View\View;
 
 /**
- * Proxy to Request
+ * Proxy to Response
+ *
+ * Example of usage
+ *     use Bluz\Proxy\Response;
+ *
+ *     Response::setStatusCode(304);
+ *     Response::setHeader('Location', '/index/index');
  *
  * @package  Bluz\Proxy
  *

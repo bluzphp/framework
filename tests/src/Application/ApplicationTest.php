@@ -41,8 +41,6 @@ class ApplicationTest extends TestCase
     public function testGettersOfPackages()
     {
         // cache disabled for testing
-        $this->assertInstanceOf('\Bluz\Db\Db', $this->getApp()->getDb());
-        $this->assertInstanceOf('\Bluz\Layout\Layout', $this->getApp()->getLayout());
         $this->assertInstanceOf('\Bluz\Http\Request', $this->getApp()->getRequest());
         $this->assertInstanceOf('\Bluz\Http\Response', $this->getApp()->getResponse());
     }
@@ -79,7 +77,6 @@ class ApplicationTest extends TestCase
         // setup Request
         Request::setRequestUri('/');
         Request::setMethod(Request::METHOD_GET);
-
 
         // run Router
         Router::process();

@@ -16,6 +16,12 @@ use Bluz\Registry\Registry as Instance;
 /**
  * Proxy to Registry
  *
+ * Example of usage
+ *     use Bluz\Proxy\Registry;
+ *
+ *     Registry::set('key', 'value');
+ *     Registry::get('key');
+ *
  * @package  Bluz\Proxy
  *
  * @method   static Instance getInstance()

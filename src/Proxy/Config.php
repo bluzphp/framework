@@ -17,6 +17,13 @@ use Bluz\Config\Config as Instance;
 /**
  * Proxy to Config
  *
+ * Example of usage
+ *     use Bluz\Proxy\Config;
+ *
+ *     if (!Config::getData('db')) {
+ *          throw new Exception('Configuration for `db` is missed');
+ *     }
+ *
  * @package  Bluz\Proxy
  *
  * @method   static Instance getInstance()

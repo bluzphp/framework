@@ -16,6 +16,11 @@ use Bluz\Messages\Messages as Instance;
 /**
  * Proxy to Messages
  *
+ * Example of usage
+ *     use Bluz\Proxy\Messages;
+ *
+ *     Messages::addSuccess('All Ok!');
+ *
  * @package  Bluz\Proxy
  *
  * @method   static Instance getInstance()

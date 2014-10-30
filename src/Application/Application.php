@@ -538,26 +538,6 @@ class Application
     }
 
     /**
-     * Get Db Instance
-     * @deprecated since 0.6.0
-     * @return \Bluz\Db\Db
-     */
-    public function getDb()
-    {
-        return Db::getInstance();
-    }
-
-    /**
-     * Get Layout instance
-     * @deprecated since 0.7.0
-     * @return \Bluz\Layout\Layout
-     */
-    public function getLayout()
-    {
-        return Layout::getInstance();
-    }
-
-    /**
      * Get Response instance
      * @return Http\Response
      */

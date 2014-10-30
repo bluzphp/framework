@@ -16,6 +16,15 @@ use Bluz\EventManager\EventManager as Instance;
 /**
  * Proxy to EventManager
  *
+ * Example of usage
+ *     use Bluz\Proxy\EventManager;
+ *
+ *     EvenManager::attach('event name', function() {
+ *         // ... some logic
+ *     });
+ *
+ *     EventManager::trigger('event name');
+ *
  * @package  Bluz\Proxy
  *
  * @method   static Instance getInstance()

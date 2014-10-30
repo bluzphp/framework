@@ -44,6 +44,7 @@ abstract class AbstractTable extends Table
     const PROVIDER_COOKIE = 'cookie';
     const PROVIDER_EQUALS = 'equals';
     const PROVIDER_FACEBOOK = 'facebook';
+    const PROVIDER_GOOGLE = 'google';
     const PROVIDER_LDAP = 'ldap';
     const PROVIDER_TOKEN = 'token';
     const PROVIDER_TWITTER = 'twitter';

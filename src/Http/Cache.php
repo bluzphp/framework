@@ -30,5 +30,8 @@ namespace Bluz\Http;
  */
 class Cache
 {
-
+    /**
+     * @var Response
+     */
+    protected $response;
 }

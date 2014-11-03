@@ -17,6 +17,14 @@ use Bluz\Common\Nil;
 /**
  * Proxy to Cache
  *
+ * Example of usage
+ *     use Bluz\Proxy\Cache;
+ *
+ *     if (!$result = Cache::get('some unique id')) {
+ *          $result = 2*2;
+ *          Cache::set('some unique id', $result);
+ *     }
+ *
  * @package  Bluz\Proxy
  *
  * @method   static Instance getInstance()

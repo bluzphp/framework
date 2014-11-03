@@ -16,6 +16,11 @@ use Bluz\Translator\Translator as Instance;
 /**
  * Proxy to Translator
  *
+ * Example of usage
+ *     use Bluz\Proxy\Translator;
+ *
+ *     echo Translator::translate('message id');
+ *
  * @package  Bluz\Proxy
  *
  * @method   static Instance getInstance()

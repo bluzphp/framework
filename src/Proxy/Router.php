@@ -16,6 +16,11 @@ use Bluz\Router\Router as Instance;
 /**
  * Proxy to Router
  *
+ * Example of usage
+ *     use Bluz\Proxy\Router;
+ *
+ *     Router::getUrl('pages', 'index', ['alias' => 'about']); // for skeleton application is `/about.html`
+ *
  * @package  Bluz\Proxy
  *
  * @method   static Instance getInstance()

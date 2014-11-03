@@ -18,6 +18,11 @@ use Bluz\Request\AbstractRequest as Instance;
 /**
  * Proxy to Request
  *
+ * Example of usage
+ *     use Bluz\Proxy\Request;
+ *
+ *     Request::getParam('foo');
+ *
  * @package  Bluz\Proxy
  *
  * @method   static Instance getInstance()

@@ -16,6 +16,13 @@ use Bluz\Session\Session as Instance;
 /**
  * Proxy to Session
  *
+ * Example of usage
+ *     use Bluz\Proxy\Session;
+ *
+ *     // lazy session loading
+ *     Session::set('some key in session', 'value example');
+ *     Session::get('some key in session');
+ *
  * @package  Bluz\Proxy
  *
  * @method   static Instance getInstance()

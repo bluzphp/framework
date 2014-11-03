@@ -20,12 +20,13 @@ use Bluz\Common\Options;
  * Cache Frontend for Bluz\Cache system
  *
  * Configuration
- *     'enabled' => Boolean,optional, true by default
- *     'cacheAdapter' => 'redis'   // Required if option 'enabled' set to true
- *     'tagAdapter' => 'memcached' // Optional
- *     'settings' =>
- *         'redis' => []           // Settings for setup Instance of Bluz\Cache\CacheInterface.
- *         'memcached' => []       // Settings for another cache adapter
+ *     'enabled' => true,           // Boolean,optional, true by default
+ *     'cacheAdapter' => 'redis',   // Required if option 'enabled' set to true
+ *     'tagAdapter' => 'memcached', // Optional
+ *     'settings' => [
+ *         'redis' => [],           // Settings for setup Instance of Bluz\Cache\CacheInterface.
+ *         'memcached' => [],       // Settings for another cache adapter
+ *     ]
  *
  * @package Bluz\Cache
  *

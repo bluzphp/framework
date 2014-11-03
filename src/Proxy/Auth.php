@@ -17,6 +17,11 @@ use Bluz\Auth\EntityInterface;
 /**
  * Proxy to Auth
  *
+ * Example of usage
+ *     use Bluz\Proxy\Auth;
+ *
+ *     $user = Auth::getIdentity();
+ *
  * @package  Bluz\Proxy
  *
  * @method   static Instance getInstance()

@@ -23,12 +23,12 @@ use Bluz\Common\Options;
  * @package  Bluz\View
  *
  * @method string ahref(string $text, mixed $href, array $attributes = [])
- * @method string api(string $module, string $method, $params = array())
+ * @method string api(string $module, string $method, $params = [])
  * @method string attributes(array $attributes = [])
  * @method string baseUrl(string $file = null)
  * @method string checkbox($name, $value = null, $checked = false, array $attributes = [])
  * @method string|bool controller(string $controller = null)
- * @method string|View dispatch($module, $controller, $params = array())
+ * @method string|View dispatch($module, $controller, $params = [])
  * @method string exception(\Exception $exception)
  * @method string|null headScript(string $script = null)
  * @method string|null headStyle(string $style = null, $media = 'all')

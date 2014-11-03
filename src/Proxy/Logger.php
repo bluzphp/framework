@@ -15,7 +15,12 @@ use Bluz\Logger\Logger as Instance;
 use Bluz\Common\Nil;
 
 /**
- * Proxy to Cache
+ * Proxy to Logger
+ *
+ * Example of usage
+ *     use Bluz\Proxy\Logger;
+ *
+ *     Logger::error('Configuration not found');
  *
  * @package  Bluz\Proxy
  *

@@ -17,6 +17,12 @@ use Bluz\View\View;
 /**
  * Proxy to Layout
  *
+ * Example of usage
+ *     use Bluz\Proxy\Layout;
+ *
+ *     Layout::title('Homepage');
+ *     Layout::set('description', 'some page description');
+ *
  * @package  Bluz\Proxy
  *
  * @method   static Instance getInstance()

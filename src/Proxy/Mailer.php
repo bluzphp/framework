@@ -16,6 +16,15 @@ use Bluz\Mailer\Mailer as Instance;
 /**
  * Proxy to Mailer
  *
+ * Example of usage
+ *     use Bluz\Proxy\Mailer;
+ *
+ *     $mail = Mailer::create();
+ *     $mail->From = 'from@example.com';
+ *     $mail->Subject = 'Here is the subject';
+ *     // ...
+ *     Mailer::send($mail);
+ *
  * @package  Bluz\Proxy
  *
  * @method   static Instance getInstance()

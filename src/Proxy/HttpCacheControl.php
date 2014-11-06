@@ -64,13 +64,13 @@ use Bluz\Common\Nil;
  * @method   static \DateTime getExpires()
  * @see      Bluz\Http\CacheControl::getExpires()
  *
- * @method   static void setExpires(\DateTime $date)
+ * @method   static void setExpires($date)
  * @see      Bluz\Http\CacheControl::setExpires()
  *
  * @method   static \DateTime|null getLastModified()
  * @see      Bluz\Http\CacheControl::getLastModified()
  *
- * @method   static void setLastModified(\DateTime $date)
+ * @method   static void setLastModified($date)
  * @see      Bluz\Http\CacheControl::setLastModified()
  *
  * @author   Anton Shevchuk

@@ -21,7 +21,8 @@ The best way is setup the [skeleton][1] application
 
 ## Usage
 
-In our [wiki][2] you can found description of every package
+In our [wiki][2] you can find description of every package.
+Auto-generating documentation is available at the http://bluzphp.github.io/
 
 ## License
 

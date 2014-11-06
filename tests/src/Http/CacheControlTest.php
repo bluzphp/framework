@@ -118,9 +118,9 @@ class CacheControlTest extends TestCase
      */
     public function testExpiresAsString()
     {
-        $this->cacheControl->setExpires('2012-12-12 12:12:12');
-        $this->assertEquals('Wed, 12 Dec 2012 10:12:12 GMT', $this->cacheControl->getExpires());
-        $this->assertEquals('Wed, 12 Dec 2012 10:12:12 GMT', $this->response->getHeader('Expires'));
+        $this->cacheControl->setExpires('2012-12-12T12:12:12+00:00');
+        $this->assertEquals('Wed, 12 Dec 2012 12:12:12 GMT', $this->cacheControl->getExpires());
+        $this->assertEquals('Wed, 12 Dec 2012 12:12:12 GMT', $this->response->getHeader('Expires'));
     }
 
     /**
@@ -128,10 +128,10 @@ class CacheControlTest extends TestCase
      */
     public function testExpiresAsDate()
     {
-        $date = new \DateTime('2012-12-12 12:12:12');
+        $date = new \DateTime('2012-12-12T12:12:12+00:00');
         $this->cacheControl->setExpires($date);
-        $this->assertEquals('Wed, 12 Dec 2012 10:12:12 GMT', $this->cacheControl->getExpires());
-        $this->assertEquals('Wed, 12 Dec 2012 10:12:12 GMT', $this->response->getHeader('Expires'));
+        $this->assertEquals('Wed, 12 Dec 2012 12:12:12 GMT', $this->cacheControl->getExpires());
+        $this->assertEquals('Wed, 12 Dec 2012 12:12:12 GMT', $this->response->getHeader('Expires'));
     }
 
     /**
@@ -139,9 +139,9 @@ class CacheControlTest extends TestCase
      */
     public function testLastModifiedAsString()
     {
-        $this->cacheControl->setLastModified('2012-12-12 12:12:12');
-        $this->assertEquals('Wed, 12 Dec 2012 10:12:12 GMT', $this->cacheControl->getLastModified());
-        $this->assertEquals('Wed, 12 Dec 2012 10:12:12 GMT', $this->response->getHeader('Last-Modified'));
+        $this->cacheControl->setLastModified('2012-12-12T12:12:12+00:00');
+        $this->assertEquals('Wed, 12 Dec 2012 12:12:12 GMT', $this->cacheControl->getLastModified());
+        $this->assertEquals('Wed, 12 Dec 2012 12:12:12 GMT', $this->response->getHeader('Last-Modified'));
     }
 
     /**
@@ -149,10 +149,10 @@ class CacheControlTest extends TestCase
      */
     public function testLastModifiedAsDate()
     {
-        $date = new \DateTime('2012-12-12 12:12:12');
+        $date = new \DateTime('2012-12-12T12:12:12+00:00');
         $this->cacheControl->setLastModified($date);
-        $this->assertEquals('Wed, 12 Dec 2012 10:12:12 GMT', $this->cacheControl->getLastModified());
-        $this->assertEquals('Wed, 12 Dec 2012 10:12:12 GMT', $this->response->getHeader('Last-Modified'));
+        $this->assertEquals('Wed, 12 Dec 2012 12:12:12 GMT', $this->cacheControl->getLastModified());
+        $this->assertEquals('Wed, 12 Dec 2012 12:12:12 GMT', $this->response->getHeader('Last-Modified'));
     }
 
     /**

@@ -116,6 +116,7 @@ class Application
 
     /**
      * Check debug flag
+     * @api
      * @return bool
      */
     public function isDebug()
@@ -125,6 +126,7 @@ class Application
 
     /**
      * Check Json flag
+     * @api
      * @return bool
      */
     public function isJson()
@@ -134,6 +136,7 @@ class Application
 
     /**
      * Check Layout flag
+     * @api
      * @return bool
      */
     public function hasLayout()
@@ -143,6 +146,7 @@ class Application
 
     /**
      * Set Layout template and/or flag
+     * @api
      * @param bool|string $flag
      * @return Application
      */
@@ -159,6 +163,7 @@ class Application
 
     /**
      * Set Json flag
+     * @api
      * @param bool $flag
      * @return Application
      */
@@ -345,6 +350,7 @@ class Application
      * Call dispatch from any \Bluz\Package
      *     Application::getInstance()->dispatch($module, $controller, array $params);
      *
+     * @api
      * @param string $module
      * @param string $controller
      * @param array $params
@@ -539,6 +545,8 @@ class Application
 
     /**
      * Get Response instance
+     *
+     * @api
      * @return Http\Response
      */
     public function getResponse()
@@ -548,6 +556,8 @@ class Application
 
     /**
      * Get Request instance
+     *
+     * @api
      * @return Http\Request
      */
     public function getRequest()
@@ -561,6 +571,7 @@ class Application
      * Call widget from any \Bluz\Package
      *     Application::getInstance()->widget($module, $widget, array $params);
      *
+     * @api
      * @param string $module
      * @param string $widget
      * @param array $params
@@ -606,6 +617,7 @@ class Application
      * Call API from any \Bluz\Package
      *     Application::getInstance()->api($module, $widget, array $params);
      *
+     * @api
      * @param string $module
      * @param string $method
      * @throws ApplicationException

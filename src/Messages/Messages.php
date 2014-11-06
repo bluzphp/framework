@@ -54,6 +54,7 @@ class Messages
 
     /**
      * Add notice
+     * @api
      * @param string $text
      * @return void
      */
@@ -64,6 +65,7 @@ class Messages
 
     /**
      * Add success
+     * @api
      * @param string $text
      * @return void
      */
@@ -74,6 +76,7 @@ class Messages
 
     /**
      * Add error
+     * @api
      * @param string $text
      * @return void
      */

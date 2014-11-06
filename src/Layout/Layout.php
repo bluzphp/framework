@@ -54,8 +54,8 @@ class Layout extends View
     }
 
     /**
-     * Set content
-     *
+     * Get content
+     * @api
      * @return View
      */
     public function getContent()
@@ -65,7 +65,7 @@ class Layout extends View
 
     /**
      * Set content
-     *
+     * @api
      * @param View|callable $content
      * @return void
      */

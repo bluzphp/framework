@@ -26,7 +26,7 @@ class EventManager
 
     /**
      * Attach callback to event
-     *
+     * @api
      * @param string $eventName
      * @param callable $callback
      * @param int $priority
@@ -46,7 +46,7 @@ class EventManager
 
     /**
      * Trigger event
-     *
+     * @api
      * @param string $event
      * @param string|object $target
      * @param array|object $params

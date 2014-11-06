@@ -118,7 +118,7 @@ class Db
 
     /**
      * Connect to Db
-     *
+     * @api
      * @throws DbException
      * @return Db
      */
@@ -149,7 +149,7 @@ class Db
 
     /**
      * Return PDO handler
-     *
+     * @api
      * @return \PDO
      */
     public function handler()
@@ -162,7 +162,7 @@ class Db
 
     /**
      * Prepare SQL query and return PDO Statement
-     *
+     * @api
      * @param string $sql
      * @return \PDOStatement
      */
@@ -177,6 +177,7 @@ class Db
      * Example of usage
      *     $db->quote($_GET['id'])
      *
+     * @api
      * @param string $value
      * @return string
      */
@@ -187,7 +188,7 @@ class Db
 
     /**
      * Quote a string so it can be safely used as a table or column name
-     *
+     * @api
      * @param string $identifier
      * @return string
      */
@@ -212,6 +213,7 @@ class Db
      * Example of usage
      *     $db->query("SET NAMES 'utf8'");
      *
+     * @api
      * @param string $sql <p>
      *  "UPDATE users SET name = :name WHERE id = :id"
      *  </p>
@@ -243,7 +245,7 @@ class Db
 
     /**
      * Create new query select builder
-     *
+     * @api
      * @param string $select,... The selection expressions
      * @return Query\Select
      */
@@ -256,7 +258,7 @@ class Db
 
     /**
      * Create new query insert builder
-     *
+     * @api
      * @param string $table
      * @return Query\Insert
      */
@@ -269,7 +271,7 @@ class Db
 
     /**
      * Create new query update builder
-     *
+     * @api
      * @param string $table
      * @return Query\Update
      */
@@ -282,7 +284,7 @@ class Db
 
     /**
      * Create new query update builder
-     *
+     * @api
      * @param string $table
      * @return Query\Delete
      */
@@ -299,6 +301,7 @@ class Db
      * Example of usage
      *     $db->fetchOne("SELECT COUNT(*) FROM users");
      *
+     * @api
      * @param string $sql <p>
      *  "SELECT id FROM users WHERE name = :name AND pass = :pass"
      *  </p>
@@ -327,6 +330,7 @@ class Db
      *     $db->fetchRow("SELECT name, email FROM users WHERE id = ?", array($id));
      *     $db->fetchRow("SELECT name, email FROM users WHERE id = :id", array(':id'=>$id));
      *
+     * @api
      * @param string $sql <p>
      *  "SELECT * FROM users WHERE name = :name AND pass = :pass"
      *  </p>
@@ -355,6 +359,7 @@ class Db
      * Example of usage
      *     $db->fetchAll("SELECT * FROM users WHERE ip = ?", array('192.168.1.1'));
      *
+     * @api
      * @param string $sql <p>
      *  "SELECT * FROM users WHERE ip = :ip"
      *  </p>
@@ -378,6 +383,7 @@ class Db
     /**
      * Returns an array containing one column from the result set rows
      *
+     * @api
      * @param string $sql <p>
      *  "SELECT id FROM users WHERE ip = :ip"
      *  </p>
@@ -404,6 +410,7 @@ class Db
      * Group by first column
      *     $db->fetchGroup("SELECT ip, COUNT(id) FROM users GROUP BY ip", array());
      *
+     * @api
      * @param string $sql <p>
      *  "SELECT ip, id FROM users"
      *  </p>
@@ -427,6 +434,7 @@ class Db
      *
      * Group by first column
      *
+     * @api
      * @param string $sql <p>
      *  "SELECT ip, id FROM users"
      *  </p>
@@ -448,6 +456,7 @@ class Db
     /**
      * Returns a key-value array
      *
+     * @api
      * @param string $sql <p>
      *  "SELECT id, username FROM users WHERE ip = :ip"
      *  </p>
@@ -478,6 +487,7 @@ class Db
      * Fetch object to exists instance of Some object
      *     $someClass = $db->fetchObject('SELECT * FROM some_table WHERE id = ?', array($id), $someClass);
      *
+     * @api
      * @param string $sql <p>
      *  "SELECT * FROM users WHERE name = :name AND pass = :pass"
      *  </p>
@@ -511,6 +521,7 @@ class Db
     /**
      * Returns an array of objects containing the result set
      *
+     * @api
      * @param string $sql <p>
      *  "SELECT * FROM users WHERE name = :name AND pass = :pass"
      *  </p>
@@ -543,6 +554,7 @@ class Db
     /**
      * Returns an array of linked objects containing the result set
      *
+     * @api
      * @param string $sql <p>
      *  "SELECT '__users', u.*, '__users_profile', up.*
      *   FROM users u
@@ -581,6 +593,7 @@ class Db
      *         $db->query("DELETE FROM `table` ...");
      *     })
      *
+     * @api
      * @param  callable $process
      * @throws DbException
      * @return bool
@@ -621,7 +634,7 @@ class Db
 
     /**
      * Disconnect PDO and clean default adapter
-     *
+     * @api
      * @return void
      */
     public function disconnect()

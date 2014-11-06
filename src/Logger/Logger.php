@@ -30,46 +30,55 @@ class Logger extends AbstractLogger
      * @var float
      */
     protected $start;
+
     /**
      * Part time
      * @var float
      */
     protected $timer;
+
     /**
      * Stack of alerts
      * @var array
      */
     protected $alert = array();
+
     /**
      * Stack of alerts
      * @var array
      */
     protected $critical = array();
+
     /**
      * Stack of alerts
      * @var array
      */
     protected $debug = array();
+
     /**
      * Stack of alerts
      * @var array
      */
     protected $emergency = array();
+
     /**
      * Stack of alerts
      * @var array
      */
     protected $error = array();
+
     /**
      * Stack of alerts
      * @var array
      */
     protected $info = array();
+
     /**
      * Stack of alerts
      * @var array
      */
     protected $notice = array();
+
     /**
      * Stack of alerts
      * @var array
@@ -96,7 +105,7 @@ class Logger extends AbstractLogger
     }
 
     /**
-     * log
+     * Log info message
      *
      * @param string $message
      * @param array $context
@@ -128,7 +137,7 @@ class Logger extends AbstractLogger
     }
 
     /**
-     * Logs with an arbitrary level.
+     * Logs with an arbitrary level
      *
      * @param mixed $level
      * @param string $message

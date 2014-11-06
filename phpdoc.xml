@@ -2,7 +2,7 @@
 <phpdoc>
     <title>Bluz</title>
     <parser>
-        <target>../bluzphp.github.io</target>
+        <target>../phpdoc</target>
         <encoding>utf8</encoding>
         <markers>
             <item>TODO</item>
@@ -15,7 +15,7 @@
         <default-package-name>Bluz</default-package-name>
     </parser>
     <transformer>
-        <target>../bluzphp.github.io</target>
+        <target>../phpdoc</target>
     </transformer>
     <transformations>
         <!-- Possible templates: responsive, responsive-twig, checkstyle, clean, zend, new-black -->

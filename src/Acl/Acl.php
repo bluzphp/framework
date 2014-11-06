@@ -28,6 +28,7 @@ class Acl
 
     /**
      * Check user access by pair module-privilege
+     * @api
      * @param string $module
      * @param string $privilege
      * @return bool

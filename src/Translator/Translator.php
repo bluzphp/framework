@@ -146,6 +146,7 @@ class Translator
      * equal to <code>sprintf(gettext('Message to %s'), 'Username')</code>
      *     Translator::translate('Message to %s', 'Username');
      *
+     * @api
      * @param string $message
      * @return string
      */
@@ -174,6 +175,7 @@ class Translator
      * equal to <code>sprintf(ngettext('%d comment', '%d comments', 4), 4, 'Topic')</code>
      *     Translator::translatePlural('%d comment to %s', '%d comments to %s', 4, 'Topic')
      *
+     * @api
      * @link http://docs.translatehouse.org/projects/localization-guide/en/latest/l10n/pluralforms.html
      * @param string $singular
      * @param string $plural

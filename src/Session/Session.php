@@ -173,7 +173,7 @@ class Session
 
     /**
      * Does a session started and is it currently active?
-     *
+     * @api
      * @return bool
      */
     public function sessionExists()
@@ -195,6 +195,7 @@ class Session
      * {@link isValid()} once session_start() is called, and raises an
      * exception if validation fails.
      *
+     * @api
      * @return void
      * @throws SessionException
      */
@@ -211,7 +212,7 @@ class Session
 
     /**
      * Destroy/end a session
-     *
+     * @api
      * @return void
      */
     public function destroy()
@@ -231,7 +232,6 @@ class Session
 
     /**
      * Set session save handler object
-     *
      * @param  \SessionHandlerInterface $saveHandler
      * @return Session
      */
@@ -243,7 +243,6 @@ class Session
 
     /**
      * Get SaveHandler Object
-     *
      * @return \SessionHandlerInterface
      */
     public function getAdapter()
@@ -344,7 +343,7 @@ class Session
 
     /**
      * Set key/value pair
-     *
+     * @api
      * @param  string $key
      * @param  mixed $value
      * @return void
@@ -361,7 +360,7 @@ class Session
 
     /**
      * Get value by key
-     *
+     * @api
      * @param  string $key
      * @return mixed
      */
@@ -376,7 +375,7 @@ class Session
 
     /**
      * Isset
-     *
+     * @api
      * @param  string $key
      * @return bool
      */
@@ -392,7 +391,7 @@ class Session
 
     /**
      * Unset
-     *
+     * @api
      * @param  string $key
      * @return void
      */

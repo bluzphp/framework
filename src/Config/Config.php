@@ -128,6 +128,7 @@ class Config
 
     /**
      * Return configuration by key
+     * @api
      * @param string|null $key of config
      * @param string|null $section of config
      * @throws ConfigException
@@ -156,6 +157,7 @@ class Config
 
     /**
      * Return module configuration by section
+     * @api
      * @param string $module
      * @param null $section
      * @return mixed

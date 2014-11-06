@@ -49,7 +49,7 @@ class Mailer
 
     /**
      * Creates new instance of PHPMailer and set default options from config
-     *
+     * @api
      * @throws ComponentException
      * @throws \phpmailerException
      * @return \PHPMailer
@@ -93,12 +93,11 @@ class Mailer
 
     /**
      * Send email
-     *
-     * @todo Add mail to queue
-     *
+     * @api
      * @param \PHPMailer $mail
      * @return bool
      * @throws MailerException
+     * @todo Add mail to queue
      */
     public function send(\PHPMailer $mail)
     {

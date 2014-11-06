@@ -29,6 +29,7 @@ class Auth
 
     /**
      * Setup identity
+     * @api
      * @param EntityInterface $identity
      * @return void
      */
@@ -42,6 +43,7 @@ class Auth
 
     /**
      * Return identity if user agent is correct
+     * @api
      * @return EntityInterface|null
      */
     public function getIdentity()
@@ -57,6 +59,7 @@ class Auth
 
     /**
      * Clear identity and user agent information
+     * @api
      * @return void
      */
     public function clearIdentity()

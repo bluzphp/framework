@@ -115,6 +115,7 @@ class Cache implements CacheInterface, TagableInterface
     /**
      * {@inheritdoc}
      *
+     * @api
      * @param string $id
      * @param mixed $data
      * @param int $ttl
@@ -129,6 +130,7 @@ class Cache implements CacheInterface, TagableInterface
     /**
      * {@inheritdoc}
      *
+     * @api
      * @param string $id
      * @param mixed $data
      * @param int $ttl
@@ -143,6 +145,7 @@ class Cache implements CacheInterface, TagableInterface
     /**
      * {@inheritdoc}
      *
+     * @api
      * @param string $id
      * @return mixed
      */
@@ -155,6 +158,7 @@ class Cache implements CacheInterface, TagableInterface
     /**
      * {@inheritdoc}
      *
+     * @api
      * @param string $id
      * @return bool
      */
@@ -167,6 +171,7 @@ class Cache implements CacheInterface, TagableInterface
     /**
      * {@inheritdoc}
      *
+     * @api
      * @param string $id
      * @return mixed
      */
@@ -179,6 +184,7 @@ class Cache implements CacheInterface, TagableInterface
     /**
      * {@inheritdoc}
      *
+     * @api
      * @return void
      */
     public function flush()
@@ -248,6 +254,7 @@ class Cache implements CacheInterface, TagableInterface
     /**
      * {@inheritdoc}
      *
+     * @api
      * @param string $id
      * @param string $tag
      * @return bool
@@ -272,6 +279,7 @@ class Cache implements CacheInterface, TagableInterface
     /**
      * {@inheritdoc}
      *
+     * @api
      * @param string $tag
      * @return bool
      * @throws CacheException

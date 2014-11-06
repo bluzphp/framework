@@ -109,16 +109,17 @@ class CacheControl
      */
     public function getMaxAge()
     {
-        if ($this->doContainsContainer('s-max-age')) {
-            return (int) $this->doGetContainer('s-max-age');
+        if ($this->doContainsContainer('s-maxage')) {
+            return (int) $this->doGetContainer('s-maxage');
         }
 
         if ($this->doContainsContainer('max-age')) {
             return (int) $this->doGetContainer('max-age');
         }
 
-        if (null !== $this->getExpires()) {
-            return $this->getExpires()->format('U') - date('U');
+        if ($expires = $this->getExpires()) {
+            $expires = \DateTime::createFromFormat(DATE_RFC2822, $expires);
+            return $expires->format('U') - date('U');
         }
 
         return null;
@@ -149,7 +150,7 @@ class CacheControl
     public function setSharedMaxAge($value)
     {
         $this->setPublic();
-        $this->doSetContainer('s-max-age', $value);
+        $this->doSetContainer('s-maxage', $value);
         $this->updateCacheControlHeader();
     }
 
@@ -164,7 +165,7 @@ class CacheControl
      */
     public function getTtl()
     {
-        if (null !== $maxAge = $this->getMaxAge()) {
+        if ($maxAge = $this->getMaxAge()) {
             return $maxAge - $this->getAge();
         }
         return null;
@@ -225,7 +226,7 @@ class CacheControl
      */
     public function getAge()
     {
-        if (null !== $age = $this->response->getHeader('Age')) {
+        if ($age = $this->response->getHeader('Age')) {
             return (int) $age;
         }
         return max(time() - date('U'), 0);
@@ -243,39 +244,37 @@ class CacheControl
     }
 
     /**
-     * Returns the value of the Expires header as a DateTime instance.
+     * Returns the value of the Expires header as a DateTime instance
      *
-     * @return \DateTime A DateTime instance or null if the header does not exist
+     * @return string|null A string or null if the header does not exist
      */
     public function getExpires()
     {
-        if ($this->response->hasHeader('Expires')) {
-            return $this->response->getHeader('Expires');
-        } else {
-            // according to RFC 2616 invalid date formats (e.g. "0" and "-1") must be treated as in the past
-            return \DateTime::createFromFormat(DATE_RFC2822, 'Sat, 01 Jan 00 00:00:00 +0000');
-        }
+        return $this->response->getHeader('Expires');
     }
 
     /**
-     * Sets the Expires HTTP header with a DateTime instance.
+     * Sets the Expires HTTP header with a DateTime instance
      *
-     * Passing null as value will remove the header.
-     *
-     * @param \DateTime $date A \DateTime instance
+     * @param \DateTime|string $date A \DateTime instance or date as string
      * @return void
      */
-    public function setExpires(\DateTime $date)
+    public function setExpires($date)
     {
-        $date = clone $date;
+        if ($date instanceof \DateTime) {
+            $date = clone $date;
+        } else {
+            $date = new \DateTime($date);
+        }
+
         $date->setTimezone(new \DateTimeZone('UTC'));
         $this->response->setHeader('Expires', $date->format('D, d M Y H:i:s').' GMT');
     }
 
     /**
-     * Returns the Last-Modified HTTP header as a DateTime instance.
+     * Returns the Last-Modified HTTP header as a string
      *
-     * @return \DateTime|null A DateTime instance or null if the header does not exist
+     * @return string|null A string or null if the header does not exist
      */
     public function getLastModified()
     {
@@ -283,22 +282,25 @@ class CacheControl
     }
 
     /**
-     * Sets the Last-Modified HTTP header with a DateTime instance.
+     * Sets the Last-Modified HTTP header with a DateTime instance or string
      *
-     * Passing null as value will remove the header.
-     *
-     * @param \DateTime $date A \DateTime instance
+     * @param \DateTime|string $date A \DateTime instance or date as string
      * @return void
      */
-    public function setLastModified(\DateTime $date)
+    public function setLastModified($date)
     {
-        $date = clone $date;
+        if ($date instanceof \DateTime) {
+            $date = clone $date;
+        } else {
+            $date = new \DateTime($date);
+        }
+
         $date->setTimezone(new \DateTimeZone('UTC'));
         $this->response->setHeader('Last-Modified', $date->format('D, d M Y H:i:s').' GMT');
     }
 
     /**
-     * Marks the response stale by setting the Age header to be equal to the maximum age of the response.
+     * Marks the response stale by setting the Age header to be equal to the maximum age of the response
      *
      * @return void
      */

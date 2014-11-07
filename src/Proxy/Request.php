@@ -101,6 +101,9 @@ use Bluz\Request\AbstractRequest as Instance;
  * @method   static string getScheme()
  * @see      Bluz\Http\Request::getScheme()
  *
+ * @method   static string getHeader($header)
+ * @see      Bluz\Http\Request::getHeader()
+ *
  * @method   static FileUpload getFileUpload()
  * @see      Bluz\Http\Request::getFileUpload()
  * @method   static void setFileUpload(FileUpload $fileUpload)

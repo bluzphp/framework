@@ -43,6 +43,7 @@ class TranslatorTest extends TestCase
         $translator->setLocale('uk_UA');
         $translator->setPath(PATH_APPLICATION .'/locale');
 
+        $this->assertEquals('', $translator->translate(''));
         $this->assertEquals('message', $translator->translate('message'));
     }
 
@@ -56,6 +57,7 @@ class TranslatorTest extends TestCase
         $translator->setLocale('uk_UA');
         $translator->setPath(PATH_APPLICATION .'/locale');
 
+        $this->assertEquals('', $translator->translatePlural('', '', 2));
         $this->assertEquals('messages', $translator->translatePlural('message', 'messages', 2));
     }
 

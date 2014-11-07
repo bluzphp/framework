@@ -60,7 +60,7 @@ class Rest extends AbstractController
 
         // %module% / %controller% / %id% / %relation% / %id%
         if (sizeof($params)) {
-            $this->primary = array_shift($params);
+            $this->primary = explode('-', array_shift($params));
         }
         if (sizeof($params)) {
             $this->relation = array_shift($params);
@@ -198,7 +198,7 @@ class Rest extends AbstractController
                 Response::setStatusCode(204);
                 return false; // disable view
             case Request::METHOD_OPTIONS:
-                $allow = $this->getMethods($this->primary);
+                $allow = $this->getMethods(sizeof($this->primary));
                 Response::setHeader('Allow', join(',', $allow));
                 return null; // no body
             default:
@@ -208,10 +208,10 @@ class Rest extends AbstractController
 
     /**
      * Get allowed methods by CRUD
-     * @param null $primary
+     * @param bool $primary
      * @return array
      */
-    protected function getMethods($primary = null)
+    protected function getMethods($primary = false)
     {
         $methods = $this->getCrud()->getMethods();
 

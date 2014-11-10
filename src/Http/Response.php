@@ -11,6 +11,7 @@
  */
 namespace Bluz\Http;
 
+use Bluz\Proxy\Request as ProxyRequest;
 use Bluz\Response\AbstractResponse;
 
 /**
@@ -51,6 +52,11 @@ class Response extends AbstractResponse
      */
     protected function sendBody()
     {
+        // Nobody for HEAD and OPTIONS
+        if (Request::METHOD_HEAD == ProxyRequest::getMethod()
+            || Request::METHOD_OPTIONS == ProxyRequest::getMethod()) {
+            return;
+        }
         echo $this->body;
     }
 }

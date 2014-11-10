@@ -60,7 +60,7 @@ class Rest extends AbstractController
 
         // %module% / %controller% / %id% / %relation% / %id%
         if (sizeof($params)) {
-            $this->primary = array_shift($params);
+            $this->primary = explode('-', array_shift($params));
         }
         if (sizeof($params)) {
             $this->relation = array_shift($params);
@@ -85,6 +85,10 @@ class Rest extends AbstractController
         // >> 403 Forbidden - if user don't have permissions
         // >> 501 Not Implemented - if something not exists
 
+
+        // HEAD   /module/rest/   -> 200 // return overview of collection
+        // HEAD   /module/rest/id -> 200 // return overview of item
+        //                        -> 404 // not found
         // GET    /module/rest/   -> 200 // return collection or
         //                        -> 206 // return part of collection
         // GET    /module/rest/id -> 200 // return one item or
@@ -105,6 +109,7 @@ class Rest extends AbstractController
         // DELETE /module/rest/id -> 204 // item was deleted
         //                        -> 404 // not found
         switch ($this->method) {
+            case Request::METHOD_HEAD:
             case Request::METHOD_GET:
                 if ($this->primary) {
                     // @throws NotFoundException
@@ -120,7 +125,6 @@ class Rest extends AbstractController
                         // for better compatibility
                         $limit = $last - $offset;
                     }
-
                     return $this->readSet($offset, $limit, $this->params);
                 }
                 // break
@@ -128,10 +132,6 @@ class Rest extends AbstractController
                 if ($this->primary) {
                     // POST + ID is incorrect behaviour
                     throw new NotImplementedException();
-                }
-                if (!sizeof($this->data)) {
-                    // can't create empty entity
-                    throw new BadRequestException();
                 }
 
                 try {
@@ -197,8 +197,52 @@ class Rest extends AbstractController
                 }
                 Response::setStatusCode(204);
                 return false; // disable view
+            case Request::METHOD_OPTIONS:
+                $allow = $this->getMethods(sizeof($this->primary));
+                Response::setHeader('Allow', join(',', $allow));
+                return null; // no body
             default:
                 throw new NotImplementedException();
         }
+    }
+
+    /**
+     * Get allowed methods by CRUD
+     * @param bool $primary
+     * @return array
+     */
+    protected function getMethods($primary = false)
+    {
+        $methods = $this->getCrud()->getMethods();
+
+        $allow = [Request::METHOD_HEAD, Request::METHOD_OPTIONS];
+
+        if ($primary) {
+            if (in_array('readOne', $methods)) {
+                $allow[] = Request::METHOD_GET;
+            }
+            if (in_array('updateOne', $methods)) {
+                $allow[] = Request::METHOD_PATCH;
+                $allow[] = Request::METHOD_PUT;
+            }
+            if (in_array('deleteOne', $methods)) {
+                $allow[] = Request::METHOD_DELETE;
+            }
+        } else {
+            if (in_array('readSet', $methods)) {
+                $allow[] = Request::METHOD_GET;
+            }
+            if (in_array('createSet', $methods)) {
+                $allow[] = Request::METHOD_POST;
+            }
+            if (in_array('updateSet', $methods)) {
+                $allow[] = Request::METHOD_PATCH;
+                $allow[] = Request::METHOD_PUT;
+            }
+            if (in_array('deleteSet', $methods)) {
+                $allow[] = Request::METHOD_DELETE;
+            }
+        }
+        return $allow;
     }
 }

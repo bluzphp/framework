@@ -86,6 +86,37 @@ class RestTest extends TestCase
     }
 
     /**
+     * HEAD with PRIMARY should return just headers
+     */
+    public function testOverviewOne()
+    {
+        Request::setMethod(Request::METHOD_HEAD);
+        Request::setRawParams([1]);
+
+        $result = $this->processRest();
+
+        $row = current($result);
+
+        $this->assertInstanceOf('Bluz\Tests\Fixtures\Models\Test\Row', $row);
+        $this->assertEquals(1, $row['id']);
+    }
+
+    /**
+     * HEAD with PRIMARY should return just headers
+     */
+    public function testOverviewSet()
+    {
+        Request::setMethod(Request::METHOD_HEAD);
+
+        $_GET['offset'] = 0;
+        $_GET['limit'] = 3;
+
+        $result = $this->processRest();
+
+        $this->assertEquals(sizeof($result), 3);
+    }
+
+    /**
      * GET with PRIMARY should return RECORD
      */
     public function testReadOne()
@@ -208,14 +239,15 @@ class RestTest extends TestCase
     }
 
     /**
-     * POST request without DATA should return ERROR
-     * @expectedException \Bluz\Application\Exception\BadRequestException
+     * POST request without DATA should return ERROR and information
      */
     public function testCreateWithoutDataError()
     {
         Request::setMethod(Request::METHOD_POST);
 
         $this->processRest();
+        $result = $this->processRest();
+        $this->assertEquals(sizeof($result['errors']), 2);
     }
 
     /**
@@ -378,12 +410,37 @@ class RestTest extends TestCase
     }
 
     /**
+     * OPTIONS request should set Allow header
+     */
+    public function testOptionsOne()
+    {
+        Request::setMethod(Request::METHOD_OPTIONS);
+        Request::setRawParams([100042]);
+
+        $this->processRest();
+
+        $this->assertEquals('HEAD,OPTIONS,GET,PATCH,PUT,DELETE', Response::getHeader('Allow'));
+    }
+
+    /**
+     * OPTIONS request should set Allow header
+     */
+    public function testOptionsSet()
+    {
+        Request::setMethod(Request::METHOD_OPTIONS);
+
+        $this->processRest();
+
+        $this->assertEquals('HEAD,OPTIONS,GET', Response::getHeader('Allow'));
+    }
+
+    /**
      * HEAD should return EXCEPTION
      * @expectedException \Bluz\Application\Exception\NotImplementedException
      */
     public function testNotImplementedException()
     {
-        Request::setMethod(Request::METHOD_HEAD);
+        Request::setMethod(Request::METHOD_TRACE);
 
         $this->processRest();
     }

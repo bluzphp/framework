@@ -152,6 +152,10 @@ class Translator
      */
     public static function translate($message)
     {
+        if (empty($message)) {
+            return $message;
+        }
+
         if (function_exists('gettext')) {
             $message = gettext($message);
         }

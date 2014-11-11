@@ -18,6 +18,7 @@ use Bluz\Proxy\Auth;
  * Acl
  *
  * @package  Bluz\Acl
+ * @link     https://github.com/bluzphp/framework/wiki/Acl
  *
  * @author   Anton Shevchuk
  * @created  11.07.11 15:09

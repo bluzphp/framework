@@ -34,6 +34,8 @@ use Bluz\Proxy\Db as DbProxy;
  *     }
  *
  * @package  Bluz\Db
+ * @link     https://github.com/bluzphp/framework/wiki/Db-Table
+ *
  * @author   Anton Shevchuk
  * @created  08.07.11 17:32
  */

@@ -18,6 +18,7 @@ use Psr\Log\AbstractLogger;
  * Logger
  *
  * @package  Bluz\Logger
+ * @link     https://github.com/bluzphp/framework/wiki/Logger
  *
  * @author   Taras Omelianenko <mail@taras.pro>
  */

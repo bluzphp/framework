@@ -21,8 +21,7 @@ use Bluz\Proxy\Logger;
  * PDO wrapper
  *
  * @package  Bluz\Db
- *
- * @link     https://github.com/AntonShevchuk/Bluz/wiki/Db
+ * @link     https://github.com/bluzphp/framework/wiki/Db
  *
  * @author   Anton Shevchuk
  * @created  07.07.11 15:36

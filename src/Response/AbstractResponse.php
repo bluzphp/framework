@@ -19,6 +19,7 @@ use Bluz\View\View;
  * AbstractResponse
  *
  * @package  Bluz\Response
+ * @link     https://github.com/bluzphp/framework/wiki/Response
  *
  * @author   Anton Shevchuk
  * @created  18.02.14 11:11

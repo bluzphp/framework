@@ -22,6 +22,7 @@ use Bluz\Validator\Exception\ValidatorException;
  * Crud controller
  *
  * @package  Bluz\Controller
+ * @link     https://github.com/bluzphp/framework/wiki/Controller-Crud
  *
  * @author   Anton Shevchuk
  * @created  15.08.12 15:37

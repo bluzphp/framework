@@ -18,8 +18,8 @@ use Bluz\Proxy\Db;
  * Based on Doctrine QueryBuilder code
  *
  * @package Bluz\Db\Query
- *
- * @link https://github.com/doctrine/dbal/blob/master/lib/Doctrine/DBAL/Query/QueryBuilder.php
+ * @link    https://github.com/bluzphp/framework/wiki/Db-Query
+ * @link    https://github.com/doctrine/dbal/blob/master/lib/Doctrine/DBAL/Query/QueryBuilder.php
  */
 abstract class AbstractBuilder
 {

@@ -19,6 +19,7 @@ use Bluz\Proxy\Session;
  * Auth class
  *
  * @package  Bluz\Auth
+ * @link     https://github.com/bluzphp/framework/wiki/Auth
  *
  * @author   Anton Shevchuk
  * @created  11.07.11 19:10

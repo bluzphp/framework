@@ -29,10 +29,9 @@ use Bluz\Common\Options;
  *     ]
  *
  * @package Bluz\Cache
+ * @link    https://github.com/bluzphp/framework/wiki/Cache
  *
- * @link https://github.com/bluzphp/framework/wiki/Cache
- *
- * @author murzik
+ * @author  murzik
  */
 class Cache implements CacheInterface, TagableInterface
 {

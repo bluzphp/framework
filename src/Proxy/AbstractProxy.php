@@ -17,6 +17,7 @@ use Bluz\Common\Exception\ComponentException;
  * Abstract Proxy
  *
  * @package  Bluz\Proxy
+ * @link     https://github.com/bluzphp/framework/wiki/Proxy
  *
  * @author   Anton Shevchuk
  * @created  26.09.2014 10:51

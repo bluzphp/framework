@@ -20,6 +20,7 @@ use Bluz\Proxy\Request;
  * Router
  *
  * @package  Bluz\Router
+ * @link     https://github.com/bluzphp/framework/wiki/Router
  *
  * @author   Anton Shevchuk
  * @created  06.07.11 18:16

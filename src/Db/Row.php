@@ -39,6 +39,8 @@ use Bluz\Db\Exception\TableNotFoundException;
  *     $userRow -> save();
  *
  * @package  Bluz\Db
+ * @link     https://github.com/bluzphp/framework/wiki/Db-Row
+ *
  * @author   Anton Shevchuk
  * @created  07.07.11 19:47
  */

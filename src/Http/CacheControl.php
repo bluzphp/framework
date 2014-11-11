@@ -24,7 +24,6 @@ use Bluz\Common\Container\Container;
  *     - Age
  *
  * @package  Bluz\Http
- *
  * @link     http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html
  * @link     http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9
  *

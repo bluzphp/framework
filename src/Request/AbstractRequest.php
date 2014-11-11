@@ -17,6 +17,7 @@ use Bluz\Common\Options;
  * Request
  *
  * @package  Bluz\Request
+ * @link     https://github.com/bluzphp/framework/wiki/Request
  *
  * @author   Anton Shevchuk
  * @created  06.07.11 16:59

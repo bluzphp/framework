@@ -37,6 +37,7 @@ use Bluz\View\View;
  * Application
  *
  * @package  Bluz\Application
+ * @link     https://github.com/bluzphp/framework/wiki/Application
  *
  * @method void denied()
  * @method void redirect(string $url)

@@ -20,6 +20,7 @@ use Bluz\Db\Row;
  * Crud Table
  *
  * @package  Bluz\Crud
+ * @link     https://github.com/bluzphp/framework/wiki/Crud-Table
  *
  * @author   AntonShevchuk
  * @created  15.08.12 15:37

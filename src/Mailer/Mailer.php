@@ -19,7 +19,6 @@ use Bluz\Common\Options;
  * Wrapper over PHPMailer
  *
  * @package  Bluz\Mailer
- *
  * @link     https://github.com/bluzphp/framework/wiki/Mailer
  *
  * @author   Pavel Machekhin

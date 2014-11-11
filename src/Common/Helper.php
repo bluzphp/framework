@@ -17,6 +17,7 @@ use Bluz\Common\Exception\CommonException;
  * Helper trait
  *
  * @package  Bluz\Common
+ * @link     https://github.com/bluzphp/framework/wiki/Trait-Helper
  *
  * @author   Anton Shevchuk
  * @created  18.07.12 14:46

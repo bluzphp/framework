@@ -15,6 +15,7 @@ namespace Bluz\Config;
  * Config
  *
  * @package  Bluz\Config
+ * @link     https://github.com/bluzphp/framework/wiki/Config
  *
  * @author   Anton Shevchuk
  * @created  03.03.12 14:03

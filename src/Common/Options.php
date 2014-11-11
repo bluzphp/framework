@@ -14,7 +14,7 @@ namespace Bluz\Common;
 /**
  * Options Trait
  *
- * Example
+ * Example of usage
  *     class Foo
  *     {
  *       use \Bluz\Common\Options;
@@ -36,6 +36,8 @@ namespace Bluz\Common;
  *     $Foo = new Foo(array('bar'=>123, 'baz'=>456));
  *
  * @package  Bluz\Common
+ * @link     https://github.com/bluzphp/framework/wiki/Trait-Options
+ *
  * @author   Anton Shevchuk
  * @created  12.07.11 16:15
  */

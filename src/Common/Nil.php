@@ -15,6 +15,7 @@ namespace Bluz\Common;
  * It's just null class
  *
  * @package  Bluz\Common
+ * @link     https://github.com/bluzphp/framework/wiki/Trait-Nil
  *
  * @method null get($key)
  * @method null set($key, $value)

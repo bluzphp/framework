@@ -18,6 +18,7 @@ use Bluz\View\View;
  * Layout
  *
  * @package  Bluz\Layout
+ * @link     https://github.com/bluzphp/framework/wiki/Layout
  *
  * @method   array|null breadCrumbs(array $data = [])
  * @method   string|null headScript(string $script = null)

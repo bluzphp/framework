@@ -23,6 +23,7 @@ use Bluz\Validator\Exception\ValidatorException;
  * Controller
  *
  * @package  Bluz\Controller
+ * @link     https://github.com/bluzphp/framework/wiki/Controller-Rest
  *
  * @author   Anton Shevchuk
  * @created  27.09.13 15:32

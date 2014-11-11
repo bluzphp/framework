@@ -12,7 +12,7 @@
 namespace Bluz\Db\Query;
 
 /**
- * Class Expression
+ * Class Expression Builder
  * @package Bluz\Db\Query
  */
 class CompositeBuilder implements \Countable

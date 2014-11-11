@@ -20,6 +20,7 @@ use Bluz\Proxy\Router;
  * Grid
  *
  * @package  Bluz\Grid
+ * @link     https://github.com/bluzphp/framework/wiki/Grid
  *
  * @method string filter($column, $filter, $value, $reset = true)
  * @method string first()

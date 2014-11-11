@@ -17,6 +17,7 @@ use Bluz\Application\Exception\NotImplementedException;
  * Crud
  *
  * @package  Bluz\Crud
+ * @link     https://github.com/bluzphp/framework/wiki/Crud
  *
  * @author   Anton Shevchuk
  * @created  23.09.13 15:33

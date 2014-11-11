@@ -19,6 +19,7 @@ use Bluz\Proxy\Translator;
  * Realization of Flash Messages
  *
  * @package  Bluz\Messages
+ * @link     https://github.com/bluzphp/framework/wiki/Messages
  *
  * @author   Anton Shevchuk
  */

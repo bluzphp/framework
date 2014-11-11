@@ -15,6 +15,7 @@ namespace Bluz\Common\Container;
  * Container of data for object
  *
  * @package  Bluz\Common
+ * @link     https://github.com/bluzphp/framework/wiki/Trait-Container
  *
  * @author   Anton Shevchuk
  * @created  17.09.2014 16:03

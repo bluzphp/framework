@@ -15,6 +15,7 @@ namespace Bluz\EventManager;
  * Event manager
  *
  * @package  Bluz\EventManager
+ * @link     https://github.com/bluzphp/framework/wiki/EventManager
  */
 class EventManager
 {

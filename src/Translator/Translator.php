@@ -15,10 +15,10 @@ use Bluz\Common\Exception\ConfigurationException;
 use Bluz\Common\Options;
 
 /**
- * Translator
- * based on gettext library
+ * Translator based on gettext library
  *
  * @package  Bluz\Translator
+ * @link     https://github.com/bluzphp/framework/wiki/Translator
  *
  * @author   Anton Shevchuk
  * @created  23.04.13 16:37

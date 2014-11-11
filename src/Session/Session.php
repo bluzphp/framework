@@ -18,13 +18,10 @@ use Bluz\Common\Options;
  * Session
  *
  * @package  Bluz\Session
+ * @link     https://github.com/bluzphp/framework/wiki/Session
  *
  * @author   Anton Shevchuk
  * @created  11.07.11 19:19
- *
- * @property mixed MessagesStore
- * @property \Bluz\Auth\EntityInterface identity Users\Row object
- * @property string agent - user agent
  */
 class Session
 {

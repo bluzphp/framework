@@ -18,9 +18,10 @@ use Bluz\Common\Helper;
 use Bluz\Common\Options;
 
 /**
- * View
+ * View - simple template engine with native PHP syntax
  *
  * @package  Bluz\View
+ * @link     https://github.com/bluzphp/framework/wiki/View
  *
  * @method string ahref(string $text, mixed $href, array $attributes = [])
  * @method string api(string $module, string $method, $params = [])
@@ -83,8 +84,7 @@ class View implements ViewInterface, \JsonSerializable
     protected $template;
 
     /**
-     * __construct
-     *
+     * Create view instance, initial default helper path
      * @return self
      */
     public function __construct()
@@ -94,8 +94,7 @@ class View implements ViewInterface, \JsonSerializable
     }
 
     /**
-     * __sleep
-     *
+     * List of packed properties
      * @return string[]
      */
     public function __sleep()
@@ -104,8 +103,7 @@ class View implements ViewInterface, \JsonSerializable
     }
 
     /**
-     * Is callable
-     *
+     * View should be callable
      * @return string
      */
     public function __invoke()
@@ -115,7 +113,6 @@ class View implements ViewInterface, \JsonSerializable
 
     /**
      * Render like string
-     *
      * @return string
      */
     public function __toString()
@@ -125,7 +122,6 @@ class View implements ViewInterface, \JsonSerializable
 
     /**
      * {@inheritdoc}
-     *
      * @param string $path
      * @return void
      */
@@ -136,7 +132,6 @@ class View implements ViewInterface, \JsonSerializable
 
     /**
      * {@inheritdoc}
-     *
      * @param string $file
      * @return void
      */
@@ -147,7 +142,6 @@ class View implements ViewInterface, \JsonSerializable
 
     /**
      * Add partial path for use inside partial and partialLoop helpers
-     *
      * @param string $path
      * @return View
      */
@@ -159,7 +153,6 @@ class View implements ViewInterface, \JsonSerializable
 
     /**
      * Render
-     *
      * @throws ViewException
      * @return string
      */

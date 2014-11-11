@@ -41,7 +41,7 @@ class Cli extends AbstractPresentation
                 // just print to console as key-value pair
                 $output = array();
 
-                array_walk_recursive($body, function($value, $key) use (&$output) {
+                array_walk_recursive($body, function ($value, $key) use (&$output) {
                     $output[] = $key .': '. $value;
                 });
 

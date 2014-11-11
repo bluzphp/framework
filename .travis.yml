@@ -7,17 +7,23 @@ php:
 matrix:
   allow_failures:
     - php: hhvm
-before_script:
+mysql:
+  # This will create the database
+  database: bluz
+  username: root
+  encoding: utf8
+install:
   # Composer
   - COMPOSER_ROOT_VERSION=dev-master composer --prefer-source --dev install
   - composer self-update
   - composer update --prefer-source
+before_script:
   # Database
-  - mysql -e 'CREATE DATABASE bluz;'
   - mysql -uroot bluz < tests/dump.sql
-script:
+  # Directories
   - mkdir .reports
   - chmod a+w ./tests/cache
+script:
   # Code style
   - php vendor/bin/phpcs ./src --standard=PSR1 --encoding=utf-8
   - php vendor/bin/phpcs ./src --standard=PSR2 --encoding=utf-8

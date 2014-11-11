@@ -393,7 +393,7 @@ class Application
      * @param string $controller
      * @param array $params
      * @throws ApplicationException
-     * @return View|string
+     * @return View|callable
      */
     public function dispatch($module, $controller, $params = array())
     {
@@ -430,7 +430,7 @@ class Application
      * @param array $params
      * @throws ApplicationException
      *
-     * @return View|string|callable
+     * @return View|callable
      */
     protected function doDispatch($module, $controller, $params = array())
     {
@@ -505,7 +505,9 @@ class Application
             case ($result === false):
                 // return false is equal to disable view and layout
                 $this->useLayout(false);
-                return '';
+                return function () {
+                    // just empty closure
+                };
             case is_callable($result):
             case is_object($result):
                 // return closure is replace logic of controller

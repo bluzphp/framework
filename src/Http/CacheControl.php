@@ -35,7 +35,7 @@ class CacheControl
     use Container;
 
     /**
-     * @var Response
+     * @var Response Instance
      */
     protected $response;
 

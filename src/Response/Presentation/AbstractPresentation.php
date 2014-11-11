@@ -24,7 +24,7 @@ use Bluz\Response\AbstractResponse;
 abstract class AbstractPresentation
 {
     /**
-     * @var AbstractResponse
+     * @var AbstractResponse Instance
      */
     protected $response;
 

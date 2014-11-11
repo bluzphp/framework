@@ -281,7 +281,11 @@ class Application
             // MIME type can be "application/json", "application/json; charset=utf-8" etc.
             $accept = str_replace(';', ',', $accept);
             $accept = explode(',', $accept);
-            if (in_array("application/json", $accept)) {
+
+            // TODO: implement priority
+            if (in_array("text/html", $accept)) {
+                // default behaviour
+            } elseif (in_array("application/json", $accept)) {
                 $this->useJson(true);
             } elseif (in_array("application/xml", $accept)) {
                 $this->useXml(true);

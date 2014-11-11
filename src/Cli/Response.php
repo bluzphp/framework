@@ -12,7 +12,7 @@
 namespace Bluz\Cli;
 
 use Bluz\Response\AbstractResponse;
-use Bluz\View\View;
+use Bluz\Response\Presentation\AbstractPresentation;
 
 /**
  * Response
@@ -24,6 +24,11 @@ use Bluz\View\View;
  */
 class Response extends AbstractResponse
 {
+    /**
+     * @var string|AbstractPresentation Support JSON, XML, CLI
+     */
+    protected $presentation = 'cli';
+
     /**
      * Send headers
      * @return void
@@ -39,21 +44,6 @@ class Response extends AbstractResponse
      */
     protected function sendBody()
     {
-        $response = $this->body;
-
-        // extract data from view
-        if ($response instanceof View) {
-            $response = $response->toArray();
-        }
-
-        // output
-        if (is_array($response)) {
-            // just print to console
-            foreach ($response as $key => $value) {
-                echo "$key: $value\n";
-            }
-        } else {
-            echo $response;
-        }
+        echo $this->body;
     }
 }

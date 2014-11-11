@@ -28,7 +28,7 @@ class ResponseTest extends TestCase
      */
     public function testSendBody()
     {
-        $this->expectOutputString("foo");
+        $this->expectOutputString("foo\n");
 
         $response = new Response();
         $response->setBody('foo');

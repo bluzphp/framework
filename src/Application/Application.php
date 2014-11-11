@@ -78,6 +78,11 @@ class Application
     protected $jsonFlag = false;
 
     /**
+     * @var bool XML response flag
+     */
+    protected $xmlFlag = false;
+
+    /**
      * @var array Stack of widgets closures
      */
     protected $widgets = array();
@@ -135,6 +140,16 @@ class Application
     }
 
     /**
+     * Check XML flag
+     * @api
+     * @return bool
+     */
+    public function isXml()
+    {
+        return $this->xmlFlag;
+    }
+
+    /**
      * Check Layout flag
      * @api
      * @return bool
@@ -174,6 +189,22 @@ class Application
             $this->useLayout(false);
         }
         $this->jsonFlag = $flag;
+        return $this;
+    }
+
+    /**
+     * Set XML flag
+     * @api
+     * @param bool $flag
+     * @return Application
+     */
+    public function useXml($flag = true)
+    {
+        if ($flag) {
+            // disable view and layout for JSON output
+            $this->useLayout(false);
+        }
+        $this->xmlFlag = $flag;
         return $this;
     }
 
@@ -252,6 +283,8 @@ class Application
             $accept = explode(',', $accept);
             if (in_array("application/json", $accept)) {
                 $this->useJson(true);
+            } elseif (in_array("application/xml", $accept)) {
+                $this->useXml(true);
             }
         }
 
@@ -523,21 +556,9 @@ class Application
         Logger::info('app:render');
 
         if ($this->isJson()) {
-            // setup messages
-            if (Messages::count()) {
-                Response::setHeader('Bluz-Notify', json_encode(Messages::popAll()));
-            }
-
-            // prepare body
-            if ($body = Response::getBody()) {
-                $body = json_encode($body);
-                // prepare to JSON output
-                Response::setBody($body);
-                // override response code so javascript can process it
-                Response::setHeader('Content-Type', 'application/json');
-                // setup content length
-                Response::setHeader('Content-Length', strlen($body));
-            }
+            Response::setPresentation('json');
+        } elseif ($this->isXml()) {
+            Response::setPresentation('xml');
         }
 
         Response::send();

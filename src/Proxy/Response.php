@@ -78,6 +78,11 @@ use Bluz\View\View;
  * @method   static \Exception getException()
  * @see      Bluz\Response\AbstractResponse::getException()
  *
+ * @method   static void  setPresentation($presentation)
+ * @see      Bluz\Response\AbstractResponse::setPresentation()
+ * @method   static \Exception getPresentation()
+ * @see      Bluz\Response\AbstractResponse::getPresentation()
+ *
  * @author   Anton Shevchuk
  * @created  29.09.2014 12:15
  */

@@ -12,6 +12,7 @@
 namespace Bluz\Response;
 
 use Bluz\Common\Options;
+use Bluz\Response\Presentation\AbstractPresentation;
 use Bluz\View\View;
 
 /**
@@ -57,6 +58,11 @@ abstract class AbstractResponse
     protected $exception;
 
     /**
+     * @var string|AbstractPresentation Support JSON, XML, CLI
+     */
+    protected $presentation;
+
+    /**
      * Send messages to client
      * @return mixed
      */
@@ -75,6 +81,15 @@ abstract class AbstractResponse
      */
     public function send()
     {
+        if ($this->presentation) {
+            if (is_string($this->presentation)) {
+                $presentationClass = '\\Bluz\\Response\\Presentation\\'.ucfirst(strtolower($this->presentation));
+                $this->presentation = new $presentationClass($this);
+            }
+
+            $this->presentation->process();
+        }
+
         $this->sendHeaders();
         $this->sendBody();
     }
@@ -340,5 +355,24 @@ abstract class AbstractResponse
     public function getException()
     {
         return $this->exception;
+    }
+
+    /**
+     * Set Presentation
+     * @param $presentation
+     * @return void
+     */
+    public function setPresentation($presentation)
+    {
+        $this->presentation = $presentation;
+    }
+
+    /**
+     * Get Presentation
+     * @return string
+     */
+    public function getPresentation()
+    {
+        return $this->presentation;
     }
 }

@@ -74,6 +74,35 @@ class Rest extends AbstractController
     /**
      * {@inheritdoc}
      *
+     * Everyone method can return:
+     *    401 Unauthorized - if authorization is required
+     *    403 Forbidden - if user don't have permissions
+     *    501 Not Implemented - if something not exists
+     * 
+     * Methods can return:
+     *    HEAD   /module/rest/   -> 200 // return overview of collection
+     *    HEAD   /module/rest/id -> 200 // return overview of item
+     *                           -> 404 // not found
+     *    GET    /module/rest/   -> 200 // return collection or
+     *                           -> 206 // return part of collection
+     *    GET    /module/rest/id -> 200 // return one item or
+     *                           -> 404 // not found
+     *    POST   /module/rest/   -> 201 // item created or
+     *                           -> 400 // bad request, validation error
+     *    POST   /module/rest/id -> 501 // error, not used in REST
+     *    PATCH  /module/rest/
+     *    PUT    /module/rest/   -> 200 // all items was updated or
+     *                           -> 207 // multi-status ?
+     *    PATCH  /module/rest/id
+     *    PUT    /module/rest/id -> 200 // item was updated or
+     *                           -> 304 // item not modified or
+     *                           -> 400 // bad request, validation error or
+     *                           -> 404 // not found
+     *    DELETE /module/rest/   -> 204 // all items was deleted or
+     *                           -> 207 // multi-status ?
+     *    DELETE /module/rest/id -> 204 // item was deleted
+     *                           -> 404 // not found
+     * 
      * @throws NotImplementedException
      * @throws NotFoundException
      * @throws BadRequestException
@@ -81,123 +110,21 @@ class Rest extends AbstractController
      */
     public function __invoke()
     {
-        // everyone method can return:
-        // >> 401 Unauthorized - if authorization is required
-        // >> 403 Forbidden - if user don't have permissions
-        // >> 501 Not Implemented - if something not exists
-
-
-        // HEAD   /module/rest/   -> 200 // return overview of collection
-        // HEAD   /module/rest/id -> 200 // return overview of item
-        //                        -> 404 // not found
-        // GET    /module/rest/   -> 200 // return collection or
-        //                        -> 206 // return part of collection
-        // GET    /module/rest/id -> 200 // return one item or
-        //                        -> 404 // not found
-        // POST   /module/rest/   -> 201 // item created or
-        //                        -> 400 // bad request, validation error
-        // POST   /module/rest/id -> 501 // error, not used in REST
-        // PATCH  /module/rest/
-        // PUT    /module/rest/   -> 200 // all items was updated or
-        //                        -> 207 // multi-status ?
-        // PATCH  /module/rest/id
-        // PUT    /module/rest/id -> 200 // item was updated or
-        //                        -> 304 // item not modified or
-        //                        -> 400 // bad request, validation error or
-        //                        -> 404 // not found
-        // DELETE /module/rest/   -> 204 // all items was deleted or
-        //                        -> 207 // multi-status ?
-        // DELETE /module/rest/id -> 204 // item was deleted
-        //                        -> 404 // not found
         switch ($this->method) {
             case Request::METHOD_HEAD:
             case Request::METHOD_GET:
-                if ($this->primary) {
-                    // @throws NotFoundException
-                    $result = $this->readOne($this->primary);
-                    return [$result];
-                } else {
-                    // setup default offset and limit - safe way
-                    $offset = isset($this->params['offset'])?$this->params['offset']:0;
-                    $limit = isset($this->params['limit'])?$this->params['limit']:10;
-
-                    if ($range = Request::getHeader('Range')) {
-                        list(, $offset, $last) = preg_split('/[-=]/', $range);
-                        // for better compatibility
-                        $limit = $last - $offset;
-                    }
-                    return $this->readSet($offset, $limit, $this->params);
-                }
+                return $this->methodGet();
                 // break
             case Request::METHOD_POST:
-                if ($this->primary) {
-                    // POST + ID is incorrect behaviour
-                    throw new NotImplementedException();
-                }
-
-                try {
-                    $result = $this->createOne($this->data);
-                    if (!$result) {
-                        // system can't create record with this data
-                        throw new BadRequestException();
-                    }
-
-                    if (is_array($result)) {
-                        $result = join('-', array_values($result));
-                    }
-
-                } catch (ValidatorException $e) {
-                    Response::setStatusCode(400);
-                    return ['errors' => $e->getErrors()];
-                }
-
-                Response::setStatusCode(201);
-                Response::setHeader(
-                    'Location',
-                    Router::getUrl(Request::getModule(), Request::getController()).'/'.$result
-                );
-                return false; // disable view
+                return $this->methodPost();
+                // break
             case Request::METHOD_PATCH:
             case Request::METHOD_PUT:
-                if (!sizeof($this->data)) {
-                    // data not found
-                    throw new BadRequestException();
-                }
-
-                try {
-                    if ($this->primary) {
-                        // update one item
-                        $result = $this->updateOne($this->primary, $this->data);
-                    } else {
-                        // update collection
-                        $result = $this->updateSet($this->data);
-                    }
-                    // if $result === 0 it's means a update is not apply
-                    // or records not found
-                    if (0 === $result) {
-                        Response::setStatusCode(304);
-                    }
-                } catch (ValidatorException $e) {
-                    Response::setStatusCode(400);
-                    return ['errors' => $e->getErrors()];
-                }
-                return false; // disable view
+                return $this->methodPut();
+                // break
             case Request::METHOD_DELETE:
-                if ($this->primary) {
-                    // delete one
-                    // @throws NotFoundException
-                    $this->deleteOne($this->primary);
-                } else {
-                    // delete collection
-                    // @throws NotFoundException
-                    if (!sizeof($this->data)) {
-                        // data not exist
-                        throw new BadRequestException();
-                    }
-                    $this->deleteSet($this->data);
-                }
-                Response::setStatusCode(204);
-                return false; // disable view
+                return $this->methodDelete();
+                // break
             case Request::METHOD_OPTIONS:
                 $allow = $this->getMethods(sizeof($this->primary));
                 Response::setHeader('Allow', join(',', $allow));
@@ -205,6 +132,123 @@ class Rest extends AbstractController
             default:
                 throw new NotImplementedException();
         }
+    }
+
+    /**
+     * Method HEAD and GET
+     * @return mixed
+     */
+    protected function methodGet()
+    {
+        if ($this->primary) {
+            // @throws NotFoundException
+            $result = $this->readOne($this->primary);
+            return [$result];
+        } else {
+            // setup default offset and limit - safe way
+            $offset = isset($this->params['offset'])?$this->params['offset']:0;
+            $limit = isset($this->params['limit'])?$this->params['limit']:10;
+
+            if ($range = Request::getHeader('Range')) {
+                list(, $offset, $last) = preg_split('/[-=]/', $range);
+                // for better compatibility
+                $limit = $last - $offset;
+            }
+            return $this->readSet($offset, $limit, $this->params);
+        }
+    }
+
+    /**
+     * Method POST
+     * @throws BadRequestException
+     * @throws NotImplementedException
+     * @return array|false
+     */
+    protected function methodPost()
+    {
+        if ($this->primary) {
+            // POST + ID is incorrect behaviour
+            throw new NotImplementedException();
+        }
+
+        try {
+            $result = $this->createOne($this->data);
+            if (!$result) {
+                // system can't create record with this data
+                throw new BadRequestException();
+            }
+
+            if (is_array($result)) {
+                $result = join('-', array_values($result));
+            }
+
+        } catch (ValidatorException $e) {
+            Response::setStatusCode(400);
+            return ['errors' => $e->getErrors()];
+        }
+
+        Response::setStatusCode(201);
+        Response::setHeader(
+            'Location',
+            Router::getUrl(Request::getModule(), Request::getController()).'/'.$result
+        );
+        return false; // disable view
+    }
+
+    /**
+     * Method PUT
+     * @throws BadRequestException
+     * @return array|false
+     */
+    protected function methodPut()
+    {
+        if (!sizeof($this->data)) {
+            // data not found
+            throw new BadRequestException();
+        }
+
+        try {
+            if ($this->primary) {
+                // update one item
+                $result = $this->updateOne($this->primary, $this->data);
+            } else {
+                // update collection
+                $result = $this->updateSet($this->data);
+            }
+            // if $result === 0 it's means a update is not apply
+            // or records not found
+            if (0 === $result) {
+                Response::setStatusCode(304);
+            }
+        } catch (ValidatorException $e) {
+            Response::setStatusCode(400);
+            return ['errors' => $e->getErrors()];
+        }
+        return false; // disable view
+    }
+
+    /**
+     * Method DELETE
+     * @throws BadRequestException
+     * @return false
+     */
+    protected function methodDelete()
+    {
+        if ($this->primary) {
+            // delete one
+            // @throws NotFoundException
+            $this->deleteOne($this->primary);
+        } else {
+            // delete collection
+            // @throws NotFoundException
+            if (!sizeof($this->data)) {
+                // data not exist
+                throw new BadRequestException();
+            }
+            $this->deleteSet($this->data);
+        }
+        Response::setStatusCode(204);
+        return false; // disable view
     }
 
     /**

@@ -88,7 +88,7 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
      */
     public function write($id, $data)
     {
-        $this->handler->set($this->prepareId($id), $data, $this->ttl);
+        $this->handler->set($this->prepareId($id), $data, (int) $this->ttl);
     }
 
     /**

@@ -133,6 +133,7 @@ class Application
     /**
      * Check Json flag
      * @api
+     * @deprecated since 0.9
      * @return bool
      */
     public function isJson()
@@ -143,6 +144,7 @@ class Application
     /**
      * Check XML flag
      * @api
+     * @deprecated since 0.9
      * @return bool
      */
     public function isXml()
@@ -164,7 +166,7 @@ class Application
      * Set Layout template and/or flag
      * @api
      * @param bool|string $flag
-     * @return Application
+     * @return void
      */
     public function useLayout($flag = true)
     {
@@ -174,39 +176,30 @@ class Application
         } else {
             $this->layoutFlag = $flag;
         }
-        return $this;
     }
 
     /**
-     * Set Json flag
+     * Set JSON presentation
      * @api
-     * @param bool $flag
-     * @return Application
+     * @return void
      */
-    public function useJson($flag = true)
+    public function useJson()
     {
-        if ($flag) {
-            // disable view and layout for JSON output
-            $this->useLayout(false);
-        }
-        $this->jsonFlag = $flag;
-        return $this;
+        // disable view and layout for JSON output
+        $this->useLayout(false);
+        $this->getResponse()->setPresentation('json');
     }
 
     /**
-     * Set XML flag
+     * Set XML presentation
      * @api
-     * @param bool $flag
-     * @return Application
+     * @return void
      */
-    public function useXml($flag = true)
+    public function useXml()
     {
-        if ($flag) {
-            // disable view and layout for JSON output
-            $this->useLayout(false);
-        }
-        $this->xmlFlag = $flag;
-        return $this;
+        // disable view and layout for JSON output
+        $this->useLayout(false);
+        $this->getResponse()->setPresentation('xml');
     }
 
     /**
@@ -271,28 +264,6 @@ class Application
         $request = new Http\Request();
         $request->setOptions(Config::getData('request'));
 
-        // disable layout for AJAX requests
-        if ($request->isXmlHttpRequest()) {
-            $this->useLayout(false);
-        }
-
-        // check header "accept" for catch JSON requests, and switch to JSON response
-        // for AJAX and REST requests
-        if ($accept = $request->getHeader('accept')) {
-            // MIME type can be "application/json", "application/json; charset=utf-8" etc.
-            $accept = str_replace(';', ',', $accept);
-            $accept = explode(',', $accept);
-
-            // TODO: implement priority
-            if (in_array("text/html", $accept)) {
-                // default behaviour
-            } elseif (in_array("application/json", $accept)) {
-                $this->useJson(true);
-            } elseif (in_array("application/xml", $accept)) {
-                $this->useXml(true);
-            }
-        }
-
         Request::setInstance($request);
     }
 
@@ -322,7 +293,54 @@ class Application
     {
         Logger::info('app:process');
 
+        $this->preProcess();
+        $this->doProcess();
+        $this->postProcess();
+    }
+
+    /**
+     * Pre process
+     * @return void
+     */
+    protected function preProcess()
+    {
+        Logger::info("app:process:pre");
+
         Router::process();
+
+        // disable layout for AJAX requests
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            $this->useLayout(false);
+        }
+
+        // check header "accept" for catch JSON(P) requests, and switch to JSON response
+        // for AJAX and REST requests
+        if ($accept = $this->getRequest()->getHeader('accept')) {
+            // MIME type can be "application/json", "application/json; charset=utf-8" etc.
+            $accept = str_replace(';', ',', $accept);
+            $accept = explode(',', $accept);
+
+            // TODO: implement priority
+            if (in_array("text/html", $accept)) {
+                // default behaviour
+            } elseif (in_array("application/json", $accept)) {
+                $this->useJson();
+            } elseif (in_array("application/javascript", $accept)) {
+                $this->useLayout(false);
+                $this->getResponse()->setPresentation('jsonp');
+            } elseif (in_array("application/xml", $accept)) {
+                $this->useXml();
+            }
+        }
+    }
+
+    /**
+     * Do process
+     * @return void
+     */
+    protected function doProcess()
+    {
+        Logger::info("app:process:do");
 
         // try to dispatch controller
         try {
@@ -342,7 +360,7 @@ class Application
                 Response::setStatusCode($e->getCode());
                 Response::setHeader('Location', $e->getMessage());
             }
-            return;
+            return null;
         } catch (ReloadException $e) {
             Response::setException($e);
 
@@ -354,7 +372,7 @@ class Application
                 Response::setStatusCode($e->getCode());
                 Response::setHeader('Refresh', '0; url=' . Request::getRequestUri());
             }
-            return;
+            return null;
         } catch (\Exception $e) {
             Response::setException($e);
 
@@ -371,7 +389,6 @@ class Application
                     'message' => $e->getMessage()
                 )
             );
-
         }
 
         if ($this->hasLayout()) {
@@ -380,6 +397,15 @@ class Application
         }
 
         Response::setBody($dispatchResult);
+    }
+
+    /**
+     * Post process
+     * @return void
+     */
+    protected function postProcess()
+    {
+        Logger::info("app:process:post");
     }
 
     /**
@@ -415,7 +441,7 @@ class Application
      */
     protected function preDispatch($module, $controller, $params = array())
     {
-        Logger::info("app:dispatch:pre: " . $module . '/' . $controller);
+        Logger::info("---:dispatch:pre: " . $module . '/' . $controller);
 
         // check privilege before run controller
         if (!$this->isAllowed($module, $controller)) {
@@ -434,7 +460,7 @@ class Application
      */
     protected function doDispatch($module, $controller, $params = array())
     {
-        Logger::info("app:dispatch:do: " . $module . '/' . $controller);
+        Logger::info("---:dispatch:do: " . $module . '/' . $controller);
         $controllerFile = $this->getControllerFile($module, $controller);
         $reflection = $this->reflection($controllerFile);
 
@@ -551,7 +577,7 @@ class Application
      */
     protected function postDispatch($module, $controller, $params = array())
     {
-        Logger::info("app:dispatch:post: " . $module . '/' . $controller);
+        Logger::info("---:dispatch:post: " . $module . '/' . $controller);
     }
 
     /**
@@ -561,13 +587,6 @@ class Application
     public function render()
     {
         Logger::info('app:render');
-
-        if ($this->isJson()) {
-            Response::setPresentation('json');
-        } elseif ($this->isXml()) {
-            Response::setPresentation('xml');
-        }
-
         Response::send();
     }
 

@@ -277,7 +277,8 @@ class Rest extends AbstractController
             if (in_array('readSet', $methods)) {
                 $allow[] = Request::METHOD_GET;
             }
-            if (in_array('createSet', $methods)) {
+            if (in_array('createOne', $methods)
+                or in_array('createSet', $methods)) {
                 $allow[] = Request::METHOD_POST;
             }
             if (in_array('updateSet', $methods)) {

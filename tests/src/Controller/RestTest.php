@@ -431,7 +431,7 @@ class RestTest extends TestCase
 
         $this->processRest();
 
-        $this->assertEquals('HEAD,OPTIONS,GET', Response::getHeader('Allow'));
+        $this->assertEquals('HEAD,OPTIONS,GET,POST', Response::getHeader('Allow'));
     }
 
     /**

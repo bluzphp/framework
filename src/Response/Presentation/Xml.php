@@ -59,7 +59,6 @@ class Xml extends AbstractPresentation
     {
         // loop through the data passed in
         foreach ($data as $key => $value) {
-
             // no numeric keys in our xml
             if (is_numeric($key)) {
                 // just hardcoded `item`
@@ -79,7 +78,6 @@ class Xml extends AbstractPresentation
                 $value = htmlentities($value);
                 $xml->addChild($key, $value);
             }
-
         }
         return $xml->asXML();
     }

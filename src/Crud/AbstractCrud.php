@@ -153,6 +153,8 @@ abstract class AbstractCrud
         $allow = [
             'readOne',
             'readSet',
+            'createOne',
+            'createSet',
             'updateOne',
             'updateSet',
             'deleteOne',

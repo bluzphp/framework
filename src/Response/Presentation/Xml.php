@@ -11,8 +11,6 @@
  */
 namespace Bluz\Response\Presentation;
 
-use Bluz\Proxy\Messages;
-
 /**
  * Xml
  *

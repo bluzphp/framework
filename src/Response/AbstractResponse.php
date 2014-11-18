@@ -49,7 +49,7 @@ abstract class AbstractResponse
     protected $headers = array();
 
     /**
-     * @var View Result can be View|object|function
+     * @var mixed Result can be View|object|function
      */
     protected $body;
 
@@ -311,7 +311,7 @@ abstract class AbstractResponse
 
     /**
      * Set response body
-     * @param View|string $body
+     * @param mixed $body
      * @return void
      */
     public function setBody($body)
@@ -360,7 +360,7 @@ abstract class AbstractResponse
 
     /**
      * Set Presentation
-     * @param $presentation
+     * @param string $presentation
      * @return void
      */
     public function setPresentation($presentation)

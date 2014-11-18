@@ -104,7 +104,7 @@ class CacheControl
      * First, it checks for a s-maxage directive, then a max-age directive, and then it falls
      * back on an expires header. It returns null when no maximum age can be established.
      *
-     * @return int|null     Number of seconds
+     * @return integer Number of seconds
      */
     public function getMaxAge()
     {
@@ -198,7 +198,7 @@ class CacheControl
     /**
      * Returns the literal value of the ETag HTTP header
      *
-     * @return string|null The ETag HTTP header or null if it does not exist
+     * @return string The ETag HTTP header or null if it does not exist
      */
     public function getEtag()
     {
@@ -245,7 +245,7 @@ class CacheControl
     /**
      * Returns the value of the Expires header as a DateTime instance
      *
-     * @return string|null A string or null if the header does not exist
+     * @return string A string or null if the header does not exist
      */
     public function getExpires()
     {
@@ -273,7 +273,7 @@ class CacheControl
     /**
      * Returns the Last-Modified HTTP header as a string
      *
-     * @return string|null A string or null if the header does not exist
+     * @return string A string or null if the header does not exist
      */
     public function getLastModified()
     {

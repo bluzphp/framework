@@ -22,7 +22,6 @@ use Bluz\Http;
 use Bluz\Proxy\Acl;
 use Bluz\Proxy\Cache;
 use Bluz\Proxy\Config;
-use Bluz\Proxy\Db;
 use Bluz\Proxy\Layout;
 use Bluz\Proxy\Logger;
 use Bluz\Proxy\Messages;

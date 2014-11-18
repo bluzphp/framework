@@ -11,7 +11,6 @@
  */
 namespace Bluz\Response\Presentation;
 
-use Bluz\Proxy\Messages;
 use Bluz\View\View;
 
 /**

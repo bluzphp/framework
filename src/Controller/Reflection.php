@@ -275,7 +275,8 @@ class Reflection
             return;
         }
 
-        list($type, $key) = preg_split('/\$/', $param);
+        list($type, $key) = preg_split('/[ $]+/', $param);
+
         $this->params[$key] = trim($type);
     }
 

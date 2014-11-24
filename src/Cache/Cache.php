@@ -43,9 +43,9 @@ class Cache implements CacheInterface, TagableInterface
     const TTL_NO_EXPIRY = 0;
 
     /**
-     * @var CacheInterface Instance of cache adapter
+     * @var CacheInterface[] Instance of cache adapter
      */
-    protected $adapter = null;
+    protected $adapter = array();
 
     /**
      * @var string Prefix for cache keys
@@ -194,15 +194,22 @@ class Cache implements CacheInterface, TagableInterface
 
     /**
      * Get underlying cache adapter
+     * @param string $adapterName
+     * @throws ComponentException
+     * @throws ConfigurationException
      * @return Adapter\AbstractAdapter
      */
-    public function getAdapter()
+    public function getAdapter($adapterName = null)
     {
-        if (!$this->adapter) {
-            $this->adapter = $this->initAdapter($this->getOption('adapter'));
+        if (!$adapterName) {
+            $adapterName = $this->getOption('adapter');
         }
 
-        return $this->adapter;
+        if (!isset($this->adapter[$adapterName])) {
+            $this->adapter[$adapterName] = $this->initAdapter($adapterName);
+        }
+
+        return $this->adapter[$adapterName];
     }
 
     /**

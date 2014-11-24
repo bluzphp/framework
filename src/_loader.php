@@ -23,9 +23,11 @@ set_include_path(dirname(__FILE__) . PATH_SEPARATOR . get_include_path());
 require_once 'Common/Container/Container.php';
 require_once 'Common/Container/JsonSerialize.php';
 require_once 'Common/Container/MagicAccess.php';
+require_once 'Common/Container/RegularAccess.php';
 require_once 'Common/Helper.php';
-require_once 'Common/Singleton.php';
+require_once 'Common/Nil.php';
 require_once 'Common/Options.php';
+require_once 'Common/Singleton.php';
 
 // application
 require_once 'Application/Application.php';
@@ -43,6 +45,9 @@ require_once 'Proxy/Session.php';
 require_once 'Proxy/Translator.php';
 
 // packages and support
+require_once 'Cache/CacheInterface.php';
+require_once 'Cache/TagableInterface.php';
+require_once 'Cache/Cache.php';
 require_once 'Config/Config.php';
 require_once 'Controller/Reflection.php';
 require_once 'Messages/Messages.php';
@@ -53,5 +58,6 @@ require_once 'Session/Session.php';
 require_once 'Translator/Translator.php';
 require_once 'View/ViewInterface.php';
 require_once 'View/View.php';
+require_once 'Layout/Layout.php';
 
 // @codeCoverageIgnoreEnd

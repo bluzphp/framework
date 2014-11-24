@@ -47,7 +47,6 @@ class Reflection
     protected $method = array();
 
     /**
-     *
      * @var array Described params
      */
     protected $params = array();
@@ -74,6 +73,20 @@ class Reflection
     public function __construct($file)
     {
         $this->file = $file;
+    }
+
+    /**
+     * Set state required for working with var_export (used inside PHP File cache)
+     * @param $array
+     * @return Reflection
+     */
+    public static function __set_state($array)
+    {
+        $instance = new Reflection($array['file']);
+        foreach ($array as $key => $value) {
+            $instance->{$key} = $value;
+        }
+        return $instance;
     }
 
     /**
@@ -275,7 +288,8 @@ class Reflection
             return;
         }
 
-        list($type, $key) = preg_split('/\$/', $param);
+        list($type, $key) = preg_split('/[ $]+/', $param);
+
         $this->params[$key] = trim($type);
     }
 

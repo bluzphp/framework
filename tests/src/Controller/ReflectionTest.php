@@ -45,6 +45,21 @@ class ReflectionTest extends TestCase
     }
 
     /**
+     * Test all reflection options and export it
+     */
+    public function testExportReflectionWithData()
+    {
+        $controllerFile = dirname(__FILE__) .'/../Fixtures/Controllers/ConcreteWithData.php';
+
+        $reflection = new Reflection($controllerFile);
+        $reflection->process();
+
+        $data = var_export($reflection, true);
+
+        $this->assertStringStartsWith('Bluz\Controller\Reflection::__set_state', $data);
+    }
+
+    /**
      * Test all reflection options for class
      *  - methods
      *  - cache

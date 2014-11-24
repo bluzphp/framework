@@ -33,7 +33,7 @@ abstract class FileBase extends AbstractAdapter
      * Extension of cache files
      * @var string
      */
-    protected $extension = ".bluzcache";
+    protected $extension = ".cache";
 
     /**
      * Check configuration and permissions
@@ -82,6 +82,17 @@ abstract class FileBase extends AbstractAdapter
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @param string $id
+     * @return bool|mixed
+     */
+    protected function doDelete($id)
+    {
+        return @unlink($this->getFilename($id));
+    }
+
+    /**
      * Generate path to cache file based on cache entry id
      *
      * @param string $id cache entry id
@@ -95,16 +106,5 @@ abstract class FileBase extends AbstractAdapter
         $path = $this->cacheDir . DIRECTORY_SEPARATOR . $path;
 
         return $path . $this->extension;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @param string $id
-     * @return bool|mixed
-     */
-    protected function doDelete($id)
-    {
-        return @unlink($this->getFilename($id));
     }
 }

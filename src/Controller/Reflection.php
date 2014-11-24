@@ -76,13 +76,16 @@ class Reflection
     }
 
     /**
+     * Set state required for working with var_export (used inside PHP File cache)
      * @param $array
      * @return Reflection
      */
     public static function __set_state($array)
     {
         $instance = new Reflection($array['file']);
-        $instance->setOptions($array);
+        foreach ($array as $key => $value) {
+            $instance->{$key} = $value;
+        }
         return $instance;
     }
 

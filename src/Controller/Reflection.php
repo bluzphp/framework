@@ -47,7 +47,6 @@ class Reflection
     protected $method = array();
 
     /**
-     *
      * @var array Described params
      */
     protected $params = array();
@@ -74,6 +73,17 @@ class Reflection
     public function __construct($file)
     {
         $this->file = $file;
+    }
+
+    /**
+     * @param $array
+     * @return Reflection
+     */
+    public static function __set_state($array)
+    {
+        $instance = new Reflection($array['file']);
+        $instance->setOptions($array);
+        return $instance;
     }
 
     /**

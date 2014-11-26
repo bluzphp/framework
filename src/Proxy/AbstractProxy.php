@@ -52,14 +52,15 @@ abstract class AbstractProxy
      */
     public static function getInstance()
     {
-        if (!isset(static::$instances[get_called_class()])) {
-            static::$instances[get_called_class()] = static::initInstance();
-            if (!static::$instances[get_called_class()]) {
-                throw new ComponentException("Proxy class `".get_called_class()."` is not initialized");
+        $class = get_called_class();
+        if (!isset(static::$instances[$class])) {
+            static::$instances[$class] = static::initInstance();
+            if (!static::$instances[$class]) {
+                throw new ComponentException("Proxy class `$class` is not initialized");
             }
         }
 
-        return static::$instances[get_called_class()];
+        return static::$instances[$class];
     }
 
     /**

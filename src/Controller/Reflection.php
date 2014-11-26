@@ -42,6 +42,11 @@ class Reflection
     protected $cacheHtml = 0;
 
     /**
+     * @var array Accept
+     */
+    protected $accept = array();
+
+    /**
      * @var array HTTP Methods
      */
     protected $method = array();
@@ -188,6 +193,16 @@ class Reflection
     }
 
     /**
+     * Get path to file
+     *
+     * @return string
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
      * Get Cache TTL
      * @return int
      */
@@ -248,6 +263,25 @@ class Reflection
     }
 
     /**
+     * Get accepted type
+     * @return array|null
+     */
+    public function getAccept()
+    {
+        return sizeof($this->accept)?$this->accept:null;
+    }
+
+    /**
+     * Set accepted types
+     * @param string $accept
+     * @return void
+     */
+    public function setAccept($accept)
+    {
+        $this->accept[] = strtoupper($accept);
+    }
+
+    /**
      * Get HTTP Method
      * @return array|null
      */
@@ -263,7 +297,7 @@ class Reflection
      */
     public function setMethod($method)
     {
-        $this->method[] = $method;
+        $this->method[] = strtoupper($method);
     }
 
     /**

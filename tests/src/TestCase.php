@@ -14,10 +14,9 @@ use Bluz\Http;
 use Bluz\Proxy;
 
 /**
- * ControllerTestCase
+ * Bluz TestCase
  *
- * @category Bluz
- * @package  Tests
+ * @package  Bluz\Tests
  *
  * @author   Anton Shevchuk
  * @created  04.08.11 20:01
@@ -30,6 +29,13 @@ class TestCase extends \PHPUnit_Framework_TestCase
      * @var \Application\Tests\BootstrapTest
      */
     static protected $app;
+
+    /**
+     * Setup TestCase
+     */
+    protected function setUp()
+    {
+    }
 
     /**
      * Tear Down
@@ -61,13 +67,14 @@ class TestCase extends \PHPUnit_Framework_TestCase
     protected static function resetApp()
     {
         if (self::$app) {
-            self::$app->useJson(false);
             self::$app->useLayout(true);
         }
+
         Proxy\Auth::clearIdentity();
         Proxy\Messages::popAll();
         Proxy\Request::setInstance(new Http\Request());
         Proxy\Response::setInstance(new Http\Response());
+        Proxy\Response::setPresentation(null);
     }
 
     /**
@@ -76,6 +83,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     protected static function resetGlobals()
     {
         $_GET = $_POST = array();
+        unset($_SERVER['HTTP_X_REQUESTED_WITH'], $_SERVER['HTTP_ACCEPT']);
     }
 
     /**

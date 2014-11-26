@@ -12,8 +12,11 @@ namespace Bluz\Tests;
 use Bluz\Cli\Colorize;
 
 /**
- * @category Bluz
- * @package  Tests
+ * Test Listener for format output
+ *
+ * @package  Bluz\Tests
+ *
+ * @author   Anton Shevchuk
  */
 class TestListener implements \PHPUnit_Framework_TestListener
 {

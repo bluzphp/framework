@@ -59,7 +59,7 @@ abstract class AbstractResponse
     protected $exception;
 
     /**
-     * @var string|AbstractPresentation Support JSON, XML, CLI
+     * @var string|AbstractPresentation Support JSON, JSONP, XML, CLI
      */
     protected $presentation;
 

@@ -432,6 +432,7 @@ class Application
         }
 
         if (isset($htmlKey, $reflection)) {
+            // @TODO: Added ETag header
             Cache::set($htmlKey, $dispatchResult(), $reflection->getCacheHtml());
             Cache::addTag($htmlKey, $module);
             Cache::addTag($htmlKey, 'html');

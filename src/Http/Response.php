@@ -40,6 +40,11 @@ class Response extends AbstractResponse
         // setup response code
         http_response_code($this->code);
 
+        // send stored cookies
+        foreach ($this->cookies as $cookie) {
+            call_user_func_array('setcookie', $cookie);
+        }
+
         // send stored headers
         foreach ($this->headers as $key => $value) {
             header($key .': '. join(', ', $value));

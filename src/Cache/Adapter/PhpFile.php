@@ -12,7 +12,7 @@
 namespace Bluz\Cache\Adapter;
 
 use Bluz\Cache\Cache;
-use Bluz\Cache\InvalidArgumentException;
+use Bluz\Cache\CacheException;
 
 /**
  * Adapter that caches data into php array.
@@ -82,7 +82,7 @@ class PhpFile extends FileBase
      * @param mixed $data
      * @param int $ttl
      * @return integer The number of bytes that were written to the file, or false on failure.
-     * @throws InvalidArgumentException
+     * @throws CacheException
      */
     protected function doSet($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
@@ -92,7 +92,7 @@ class PhpFile extends FileBase
 
         // if we have an array containing objects - we will have a problem.
         if (is_object($data) && !method_exists($data, '__set_state')) {
-            throw new InvalidArgumentException(
+            throw new CacheException(
                 "Invalid argument given, PhpFileAdapter only allows objects that implement __set_state() " .
                 "and fully support var_export()."
             );
@@ -123,7 +123,7 @@ class PhpFile extends FileBase
      * @param mixed $data
      * @param int $ttl
      * @return bool|int
-     * @throws InvalidArgumentException
+     * @throws CacheException
      */
     protected function doAdd($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {

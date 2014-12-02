@@ -29,6 +29,11 @@ class Auth
     use Options;
 
     /**
+     * @var EntityInterface
+     */
+    protected $identity;
+
+    /**
      * Setup identity
      * @api
      * @param EntityInterface $identity
@@ -36,6 +41,8 @@ class Auth
      */
     public function setIdentity(EntityInterface $identity)
     {
+        // save identity to Auth
+        $this->identity = $identity;
         // save identity to session
         Session::set('auth:identity', $identity);
         // save user agent to session
@@ -49,13 +56,15 @@ class Auth
      */
     public function getIdentity()
     {
-        // check user agent
-        if (Session::get('auth:agent') == Request::getServer('HTTP_USER_AGENT')) {
-            return Session::get('auth:identity');
-        } else {
-            $this->clearIdentity();
-            return null;
+        if (!$this->identity) {
+            // check user agent
+            if (Session::get('auth:agent') == Request::getServer('HTTP_USER_AGENT')) {
+                $this->identity = Session::get('auth:identity');
+            } else {
+                $this->clearIdentity();
+            }
         }
+        return $this->identity;
     }
 
     /**
@@ -65,6 +74,7 @@ class Auth
      */
     public function clearIdentity()
     {
+        $this->identity = null;
         Session::delete('auth:identity');
         Session::delete('auth:agent');
     }

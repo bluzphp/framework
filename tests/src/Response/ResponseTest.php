@@ -119,4 +119,51 @@ class ResponseTest extends TestCase
         $this->assertFalse($this->response->hasHeader('foo'));
         $this->assertFalse($this->response->hasHeader('baz'));
     }
+
+    /**
+     * @covers \Bluz\Response\AbstractResponse::setCookie
+     * @covers \Bluz\Response\AbstractResponse::getCookie
+     */
+    public function testSetGetCookies()
+    {
+        $this->response->setCookie('foo', 'bar');
+        $this->assertEqualsArray(['foo', 'bar', 0, '/', null, false, true], $this->response->getCookie('foo'));
+    }
+
+    /**
+     * Set cookie expire time as DateTime object
+     */
+    public function testSetCookiesWithDatetime()
+    {
+        $dateTime = new \DateTime('now');
+        $this->response->setCookie('foo', 'bar', $dateTime);
+        $this->assertEqualsArray(
+            ['foo', 'bar', $dateTime->format('U'), '/', null, false, true],
+            $this->response->getCookie('foo')
+        );
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testSetCookieWithWrongCookieNameThrowException()
+    {
+        $this->response->setCookie('foo=', 'bar');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testSetCookieWithEmptyCookieNameThrowException()
+    {
+        $this->response->setCookie('', 'bar');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testSetCookieWithWrongDateNameThrowException()
+    {
+        $this->response->setCookie('foo', 'bar', 'the day before sunday');
+    }
 }

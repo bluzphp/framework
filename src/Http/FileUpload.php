@@ -151,7 +151,7 @@ class FileUpload
     }
 
     /**
-     * parseArray
+     * Parse array
      *
      * @param array|string $paramArr
      * @param array|null $argList

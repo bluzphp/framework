@@ -49,6 +49,11 @@ abstract class AbstractResponse
     protected $headers = array();
 
     /**
+     * @var array Stack of cookies
+     */
+    protected $cookies = array();
+
+    /**
      * @var mixed Result can be View|object|function
      */
     protected $body;
@@ -335,6 +340,67 @@ abstract class AbstractResponse
     public function clearBody()
     {
         $this->body = null;
+    }
+
+    /**
+     * Set Cookie
+     *
+     * @param string $name
+     * @param string $value
+     * @param int|string|\DateTime $expire
+     * @param string $path
+     * @param string $domain
+     * @param bool $secure
+     * @param bool $httpOnly
+     * @return void
+     */
+    public function setCookie(
+        $name,
+        $value = null,
+        $expire = 0,
+        $path = '/',
+        $domain = null,
+        $secure = false,
+        $httpOnly = true
+    ) {
+        // from PHP source code
+        if (preg_match("/[=,; \t\r\n\013\014]/", $name)) {
+            throw new \InvalidArgumentException('The cookie name contains invalid characters.');
+        }
+
+        if (empty($name)) {
+            throw new \InvalidArgumentException('The cookie name cannot be empty.');
+        }
+
+        // convert expiration time to a Unix timestamp
+        if ($expire instanceof \DateTime) {
+            $expire = $expire->format('U');
+        } elseif (!is_numeric($expire)) {
+            $expire = strtotime($expire);
+            if (false === $expire || -1 === $expire) {
+                throw new \InvalidArgumentException('The cookie expiration time is not valid.');
+            }
+        }
+
+        $this->cookies[$name] = [
+            'name' => $name,
+            'value' => $value,
+            'expire' => $expire,
+            'path' => empty($path) ? '/' : $path,
+            'domain' => $domain,
+            'secure' => (bool) $secure,
+            'httpOnly' => (bool) $httpOnly
+        ];
+    }
+
+    /**
+     * Get Cookie by name
+     *
+     * @return array|null
+     */
+    public function getCookie($name)
+    {
+        return isset($this->cookies[$name])?$this->cookies[$name]:null;
     }
 
     /**

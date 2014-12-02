@@ -12,6 +12,7 @@
 namespace Bluz\Cache\Adapter;
 
 use Bluz\Cache\Cache;
+use Bluz\Cache\CacheException;
 use Bluz\Cache\CacheInterface;
 
 /**
@@ -43,7 +44,7 @@ abstract class AbstractAdapter implements CacheInterface
      *
      * @param string $id
      * @return mixed
-     * @throws \Bluz\Cache\InvalidArgumentException
+     * @throws CacheException
      */
     public function get($id)
     {
@@ -55,7 +56,7 @@ abstract class AbstractAdapter implements CacheInterface
      *
      * @param string $id
      * @return bool
-     * @throws \Bluz\Cache\InvalidArgumentException
+     * @throws CacheException
      */
     public function contains($id)
     {
@@ -69,7 +70,7 @@ abstract class AbstractAdapter implements CacheInterface
      * @param mixed $data
      * @param int $ttl
      * @return bool
-     * @throws \Bluz\Cache\InvalidArgumentException
+     * @throws CacheException
      */
     public function add($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
@@ -83,7 +84,7 @@ abstract class AbstractAdapter implements CacheInterface
      * @param mixed $data
      * @param int $ttl
      * @return bool
-     * @throws \Bluz\Cache\InvalidArgumentException
+     * @throws CacheException
      */
     public function set($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
     {
@@ -95,7 +96,7 @@ abstract class AbstractAdapter implements CacheInterface
      *
      * @param string $id
      * @return mixed
-     * @throws \Bluz\Cache\InvalidArgumentException
+     * @throws CacheException
      */
     public function delete($id)
     {

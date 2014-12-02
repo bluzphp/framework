@@ -354,7 +354,9 @@ abstract class AbstractResponse
      * @param bool $httpOnly
      * @return void
      */
-    public function setCookie($name, $value = null, $expire = 0, $path = '/', $domain = null, $secure = false, $httpOnly = true)
+    public function setCookie(
+        $name, $value = null, $expire = 0, $path = '/', $domain = null, $secure = false, $httpOnly = true
+    )
     {
         // from PHP source code
         if (preg_match("/[=,; \t\r\n\013\014]/", $name)) {

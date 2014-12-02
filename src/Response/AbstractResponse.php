@@ -362,8 +362,7 @@ abstract class AbstractResponse
         $domain = null,
         $secure = false,
         $httpOnly = true
-    )
-    {
+    ) {
         // from PHP source code
         if (preg_match("/[=,; \t\r\n\013\014]/", $name)) {
             throw new \InvalidArgumentException('The cookie name contains invalid characters.');

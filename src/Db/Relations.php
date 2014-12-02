@@ -85,7 +85,7 @@ class Relations
      *
      * @param string $tableOne
      * @param string $tableTwo
-     * @return array
+     * @return array|false
      */
     public static function getRelations($tableOne, $tableTwo)
     {

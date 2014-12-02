@@ -355,7 +355,13 @@ abstract class AbstractResponse
      * @return void
      */
     public function setCookie(
-        $name, $value = null, $expire = 0, $path = '/', $domain = null, $secure = false, $httpOnly = true
+        $name,
+        $value = null,
+        $expire = 0,
+        $path = '/',
+        $domain = null,
+        $secure = false,
+        $httpOnly = true
     )
     {
         // from PHP source code

@@ -10,6 +10,7 @@
 namespace Bluz\Tests\Auth;
 
 use Bluz\Proxy\Auth;
+use Bluz\Proxy\Session;
 use Bluz\Tests\Fixtures\Models\Auth\Table;
 use Bluz\Tests\Fixtures\Models\UserAdmin;
 use Bluz\Tests\TestCase;
@@ -64,9 +65,10 @@ class AuthTest extends TestCase
     {
         $adminIdentity = new UserAdmin();
 
-        Auth::setIdentity($adminIdentity);
+        Session::set('auth:agent', 'agent:php');
+        Session::set('auth:identity', $adminIdentity);
 
-        $_SERVER['HTTP_USER_AGENT'] = uniqid('agent:');
+        $_SERVER['HTTP_USER_AGENT'] = 'agent:cli';
 
         $this->assertNull(Auth::getIdentity());
     }

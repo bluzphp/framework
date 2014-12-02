@@ -42,7 +42,7 @@ class Response extends AbstractResponse
 
         // send stored cookies
         foreach ($this->cookies as $cookie) {
-            call_user_func_array('setcookie', $cookie);
+            call_user_func_array('setcookie', array_values($cookie));
         }
 
         // send stored headers

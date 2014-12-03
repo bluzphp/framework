@@ -396,6 +396,7 @@ abstract class AbstractResponse
     /**
      * Get Cookie by name
      *
+     * @param string $name
      * @return array|null
      */
     public function getCookie($name)

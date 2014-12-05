@@ -100,4 +100,15 @@ class Request extends AbstractRequest
     {
         return '127.0.0.1';
     }
+
+    /**
+     * Return false for CLI
+     *
+     * @param string $header HTTP header name
+     * @return false HTTP header not found
+     */
+    public function getHeader($header)
+    {
+        return false;
+    }
 }

@@ -85,10 +85,12 @@ class SqlSource extends AbstractSource
 
         // prepare query
         $connect = Proxy\Config::getData('db', 'connect');
-        if (strtolower($connect['type']) == 'mysql') { // MySQL
+        if (strtolower($connect['type']) == 'mysql') {
+            // MySQL
             $dataSql = preg_replace('/SELECT\s(.*?)\sFROM/is', 'SELECT SQL_CALC_FOUND_ROWS $1 FROM', $this->source, 1);
             $countSql = 'SELECT FOUND_ROWS()';
-        } else { // other
+        } else {
+            // other
             $dataSql = $this->source;
             $countSql = preg_replace('/SELECT\s(.*?)\sFROM/is', 'SELECT COUNT(*) FROM', $this->source, 1);
             if (sizeof($where)) {

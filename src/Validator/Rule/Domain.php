@@ -47,7 +47,6 @@ class Domain extends AbstractRule
         if (preg_match("/^([a-z\d](-*[a-z\d])*)(\.([a-z\d](-*[a-z\d])*))*$/i", $input)
             && preg_match("/^.{1,253}$/", $input)
             && preg_match("/^[^\.]{1,63}(\.[^\.]{1,63})*$/", $input)) {
-
             // check by DNS record
             if ($this->checkDns) {
                 return checkdnsrr($input, "A");

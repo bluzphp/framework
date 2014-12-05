@@ -84,7 +84,6 @@ class ValidatorBuilderTest extends Tests\TestCase
             );
             $validator->assert(['foo' => 'something']);
         } catch (ValidatorException $e) {
-
             $this->assertEquals('Invalid Arguments', $e->getMessage());
 
             $errors = $validator->getErrors();

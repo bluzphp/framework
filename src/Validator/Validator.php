@@ -197,7 +197,6 @@ class Validator
         $this->input = $input;
         $this->invalid = array(); // clean
         foreach ($this->rules as $rule) {
-
             if (!$rule->validate($this->input)) {
                 $this->invalid[] = $rule;
                 if (!$all) {

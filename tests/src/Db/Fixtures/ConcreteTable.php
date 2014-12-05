@@ -17,7 +17,7 @@ use Bluz\Db;
  *
  * @category Tests
  * @package  Bluz\Db
- * 
+ *
  * @author Eugene Zabolotniy <realbaziak@gmail.com>
  */
 class ConcreteTable extends Bluz\Db\Table

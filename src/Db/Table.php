@@ -532,7 +532,7 @@ abstract class Table
      * Deletes existing rows
      *
      *     Table::delete(['login' => 'Man'])
-     * 
+     *
      * @param  array $where An array of SQL WHERE clause(s)
      * @throws Exception\DbException
      * @return integer The number of rows deleted

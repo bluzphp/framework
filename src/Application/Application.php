@@ -350,7 +350,6 @@ class Application
             // it's some magic for AJAX and REST requests
             if ($produces = $reflection->getAccept()
                 and $accept = $this->getRequest()->getHeader('accept')) {
-
                 // MIME type can be "application/json", "application/json; charset=utf-8" etc.
                 if (in_array("HTML", $produces) && strpos($accept, "text/html") !== false) {
                     // with layout

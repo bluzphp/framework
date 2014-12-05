@@ -81,7 +81,8 @@ class SelectSource extends AbstractSource
 
         // prepare query
         $connect = Proxy\Config::getData('db', 'connect');
-        if (strtolower($connect['type']) == 'mysql') { // MySQL
+        if (strtolower($connect['type']) == 'mysql') {
+            // MySQL
             $select = $this->source->getQueryPart('select');
             $select[0] = 'SQL_CALC_FOUND_ROWS ' . current($select);
             $this->source->select($select);
@@ -89,7 +90,8 @@ class SelectSource extends AbstractSource
             // run queries
             $data = $this->source->execute();
             $total = Proxy\Db::fetchOne('SELECT FOUND_ROWS()');
-        } else { // other
+        } else {
+            // other
             $totalSource = clone $this->source;
             $totalSource->select('COUNT(*)');
 

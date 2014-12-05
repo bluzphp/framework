@@ -87,8 +87,8 @@ class ViewTest extends TestCase
     }
 
     /**
-     * getView
-     * 
+     * Get new View instance
+     *
      * @return View
      */
     protected function getView()

@@ -27,8 +27,7 @@ class SelectGrid extends Grid
     protected $uid = 'sql';
 
     /**
-     * init
-     * 
+     * Init SelectSource
      * @return self
      */
     public function init()

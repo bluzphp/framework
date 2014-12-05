@@ -17,7 +17,7 @@ use Bluz\Db;
  *
  * @category Tests
  * @package  Bluz\Db
- * 
+ *
  * @author Dmitriy Savchenko <login.was.here@gmail.com>
  */
 class ConcreteRowWithInvalidTable extends Bluz\Db\Row

@@ -26,8 +26,7 @@ class SqlGrid extends Grid
     protected $uid = 'sql';
 
     /**
-     * init
-     * 
+     * Init SqlSource
      * @return self
      */
     public function init()

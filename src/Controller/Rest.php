@@ -78,7 +78,7 @@ class Rest extends AbstractController
      *    401 Unauthorized - if authorization is required
      *    403 Forbidden - if user don't have permissions
      *    501 Not Implemented - if something not exists
-     * 
+     *
      * Methods can return:
      *    HEAD   /module/rest/   -> 200 // return overview of collection
      *    HEAD   /module/rest/id -> 200 // return overview of item
@@ -102,7 +102,7 @@ class Rest extends AbstractController
      *                           -> 207 // multi-status ?
      *    DELETE /module/rest/id -> 204 // item was deleted
      *                           -> 404 // not found
-     * 
+     *
      * @throws NotImplementedException
      * @throws NotFoundException
      * @throws BadRequestException

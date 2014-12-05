@@ -26,8 +26,7 @@ class ArrayGrid extends Grid
     protected $uid = 'arr';
 
     /**
-     * init
-     * 
+     * Init ArraySource
      * @return self
      */
     public function init()

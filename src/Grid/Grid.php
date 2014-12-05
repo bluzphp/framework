@@ -316,7 +316,6 @@ abstract class Grid
                     $filter = trim($filter, ' -');
 
                     while ($pos = strpos($filter, '-')) {
-
                         $filterType = substr($filter, 0, $pos);
                         $filter = substr($filter, $pos + 1);
 

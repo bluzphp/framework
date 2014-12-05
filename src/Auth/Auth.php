@@ -29,7 +29,7 @@ class Auth
     use Options;
 
     /**
-     * @var EntityInterface
+     * @var EntityInterface Instance of EntityInterface
      */
     protected $identity;
 

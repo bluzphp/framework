@@ -110,7 +110,7 @@ class Reflection
             throw new ComponentException("There is no callable structure in file `{$this->file}`");
         }
 
-        if ('Closure' == get_class($closure)) {
+        if ($closure instanceof \Closure) {
             $reflection = new \ReflectionFunction($closure);
         } else {
             $reflection = new \ReflectionObject($closure);

@@ -33,9 +33,9 @@ class CommonException extends \Exception
      *
      * @param string    $message  [optional] The Exception message to throw.
      * @param int       $code     [optional] The Exception code.
-     * @param Exception $previous [optional] The previous exception used for the exception chaining. Since 5.3.0
+     * @param \Exception $previous [optional] The previous exception used for the exception chaining. Since 5.3.0
      */
-    public function __construct($message = "", $code = 0, Exception $previous = null)
+    public function __construct($message = "", $code = 0, \Exception $previous = null)
     {
         $numAgs = func_num_args();
         if ($numAgs >= 1) {
@@ -46,8 +46,6 @@ class CommonException extends \Exception
             $this->code = $code;
         }
 
-        if ($numAgs >= 3) {
-            $this->previous = $previous;
-        }
+        parent::__construct($this->message, $this->code, $previous);
     }
 }

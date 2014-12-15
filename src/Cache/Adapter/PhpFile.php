@@ -66,7 +66,12 @@ class PhpFile extends FileBase
             return false;
         }
 
-        $cacheEntry = include $filename;
+        if (defined('HHVM_VERSION')) {
+            // XXX: workaround for https://github.com/facebook/hhvm/issues/1447
+            $cacheEntry = eval(str_replace('<?php', '', file_get_contents($filename)));
+        } else {
+            $cacheEntry = include $filename;
+        }
 
         if ($cacheEntry['ttl'] !== Cache::TTL_NO_EXPIRY && $cacheEntry['ttl'] < time()) {
             return false;

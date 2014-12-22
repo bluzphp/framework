@@ -380,10 +380,10 @@ class Session
     {
         if ($this->cookieExists()) {
             $this->start();
-            return isset($_SESSION[$this->namespace][$key]);
-        } else {
+        } elseif (!$this->sessionExists()) {
             return false;
         }
+        return isset($_SESSION[$this->namespace][$key]);
     }
 
     /**
@@ -394,8 +394,7 @@ class Session
      */
     public function delete($key)
     {
-        if ($this->cookieExists()) {
-            $this->start();
+        if ($this->contains($key)) {
             unset($_SESSION[$this->namespace][$key]);
         }
     }

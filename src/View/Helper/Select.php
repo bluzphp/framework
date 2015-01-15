@@ -86,23 +86,24 @@ return
 
 
         $result = [];
-        foreach ($options as $value => $text) {
-            if (is_array($text)) {
-                // optgroup support
-                // create a list of sub-options
-                $subOptions = array();
-                foreach ($text as $subValue => $subText) {
-                    $subOptions[] = $buildOption($subValue, $subText);
-                }
-                // build string from array
-                $subOptions = "\n" . join("\n", $subOptions) . "\n";
-
-                $result[] = '<optgroup ' . $this->attributes(['label' => $value]) . '>' . $subOptions . '</optgroup>';
-
-            } else {
-                $result[] = $buildOption($value, $text);
+    foreach ($options as $value => $text) {
+        if (is_array($text)) {
+            // optgroup support
+            // create a list of sub-options
+            $subOptions = array();
+            foreach ($text as $subValue => $subText) {
+                $subOptions[] = $buildOption($subValue, $subText);
             }
+            // build string from array
+            $subOptions = "\n" . join("\n", $subOptions) . "\n";
+
+            $result[] = '<optgroup ' . $this->attributes(['label' => $value]) . '>' . $subOptions . '</optgroup>';
+
+        } else {
+            $result[] = $buildOption($value, $text);
         }
+    }
+
         $result = "\n" . join("\n", $result) . "\n";
         return '<select ' . $this->attributes($attributes) . '>' . $result . '</select>';
     };

@@ -28,8 +28,7 @@ Auto-generating documentation is available at the http://bluzphp.github.io/
 
 ## License
 
-The project developed by Bluz PHP Team of [NIX Solutions][3].
-The project distributed under [MIT LICENSE][4]
+The project is developed by [NIX Solutions][3] PHP team and distributed under [MIT LICENSE][4]
 
 [1]: https://github.com/bluzphp/skeleton
 [2]: https://github.com/bluzphp/framework/wiki

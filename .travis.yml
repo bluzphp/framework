@@ -9,9 +9,8 @@ matrix:
     - php: hhvm
 install:
   # Composer
-  - COMPOSER_ROOT_VERSION=dev-master composer --prefer-source --dev install
   - composer self-update
-  - composer update --prefer-source
+  - COMPOSER_ROOT_VERSION=dev-master composer --dev install
   # Database
   - mysql -e 'CREATE DATABASE bluz;'
 before_script:

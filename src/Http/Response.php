@@ -61,7 +61,14 @@ class Response extends AbstractResponse
         if (Request::METHOD_HEAD == ProxyRequest::getMethod()
             || Request::METHOD_OPTIONS == ProxyRequest::getMethod()) {
             return;
+        };
+
+        // Body can be Closures
+        $content = $this->body;
+        if ($content instanceof \Closure) {
+            $content();
+        } else {
+            echo $content;
         }
-        echo $this->body;
     }
 }

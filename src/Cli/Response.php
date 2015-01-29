@@ -44,6 +44,12 @@ class Response extends AbstractResponse
      */
     protected function sendBody()
     {
-        echo $this->body;
+        // Body can be Closure
+        $content = $this->body;
+        if ($content instanceof \Closure) {
+            $content();
+        } else {
+            echo $content;
+        }
     }
 }

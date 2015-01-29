@@ -87,6 +87,7 @@ abstract class AbstractResponse
      */
     public function send()
     {
+        // Apply presentation metamorphosis
         if ($this->presentation) {
             if (is_string($this->presentation)) {
                 $presentationClass = '\\Bluz\\Response\\Presentation\\'.ucfirst(strtolower($this->presentation));
@@ -95,7 +96,6 @@ abstract class AbstractResponse
 
             $this->presentation->process();
         }
-
         $this->sendHeaders();
         $this->sendBody();
     }

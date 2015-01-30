@@ -481,7 +481,7 @@ class Request extends AbstractRequest
                     $this->accept = self::ACCEPT_JSONP;
                     break;
                 case (strpos($header, "application/xml") !== false):
-                    $this->accept = self::ACCEPT_XML;;
+                    $this->accept = self::ACCEPT_XML;
                     break;
             }
         }

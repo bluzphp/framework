@@ -350,7 +350,6 @@ class Application
             // it's some magic for AJAX and REST requests
             if ($produces = $reflection->getAccept()
                 and $accept = $this->getRequest()->getAccept()) {
-
                 // switch statement for $accept
                 switch ($accept) {
                     case Request::ACCEPT_HTML:

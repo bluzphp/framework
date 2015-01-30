@@ -101,6 +101,8 @@ use Bluz\Request\AbstractRequest as Instance;
  * @method   static string getScheme()
  * @see      Bluz\Http\Request::getScheme()
  *
+ * @method   static string getAccept()
+ * @see      Bluz\Http\Request::getAccept()
  * @method   static string getHeader($header)
  * @see      Bluz\Http\Request::getHeader()
  *
@@ -131,6 +133,7 @@ class Request extends AbstractProxy
     const METHOD_DELETE = Instance::METHOD_DELETE;
     const METHOD_TRACE = Instance::METHOD_TRACE;
     const METHOD_CONNECT = Instance::METHOD_CONNECT;
+
     /**
      * Command line request
      */
@@ -140,6 +143,15 @@ class Request extends AbstractProxy
      * HTTP Request
      */
     const METHOD_HTTP = Instance::METHOD_HTTP;
+
+    /**
+     * @const string HTTP ACCEPT MIME types
+     */
+    const ACCEPT_CLI = Instance::ACCEPT_CLI;
+    const ACCEPT_HTML = Instance::ACCEPT_HTML;
+    const ACCEPT_JSON = Instance::ACCEPT_JSON;
+    const ACCEPT_JSONP = Instance::ACCEPT_JSONP;
+    const ACCEPT_XML = Instance::ACCEPT_XML;
     
     /**
      * Init instance

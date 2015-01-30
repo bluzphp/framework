@@ -349,20 +349,26 @@ class Application
             // check header "accept" for catch JSON(P) or XML requests, and switch presentation
             // it's some magic for AJAX and REST requests
             if ($produces = $reflection->getAccept()
-                and $accept = $this->getRequest()->getHeader('accept')) {
-                // MIME type can be "application/json", "application/json; charset=utf-8" etc.
-                if (in_array("HTML", $produces) && strpos($accept, "text/html") !== false) {
-                    // with layout
-                    // without additional presentation
-                } elseif (in_array("JSON", $produces) && strpos($accept, "application/json") !== false) {
-                    $this->useJson();
-                } elseif (in_array("JSONP", $produces) && strpos($accept, "application/javascript") !== false) {
-                    $this->useJsonp();
-                } elseif (in_array("XML", $produces) && strpos($accept, "application/xml") !== false) {
-                    $this->useXml();
-                } else {
-                    // not acceptable MIME type
-                    throw new NotAcceptableException();
+                and $accept = $this->getRequest()->getAccept()) {
+                // switch statement for $accept
+                switch ($accept) {
+                    case Request::ACCEPT_HTML:
+                        // with layout
+                        // without additional presentation
+                        break;
+                    case Request::ACCEPT_JSON:
+                        $this->useJson();
+                        break;
+                    case Request::ACCEPT_JSONP:
+                        $this->useJsonp();
+                        break;
+                    case Request::ACCEPT_XML:
+                        $this->useXml();
+                        break;
+                    default:
+                        // not acceptable MIME type
+                        throw new NotAcceptableException();
+                        break;
                 }
             }
 

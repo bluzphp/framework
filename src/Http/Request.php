@@ -459,4 +459,32 @@ class Request extends AbstractRequest
 
         return $baseUrl;
     }
+
+    /**
+     * Get Accept MIME Type
+     * @return string
+     */
+    public function getAccept()
+    {
+        if (!$this->accept) {
+            $header = $this->getHeader('accept');
+
+            // switch statement for $header
+            switch (true) {
+                case (strpos($header, "text/html") !== false):
+                    $this->accept = self::ACCEPT_HTML;
+                    break;
+                case (strpos($header, "application/json") !== false):
+                    $this->accept = self::ACCEPT_JSON;
+                    break;
+                case (strpos($header, "application/javascript") !== false):
+                    $this->accept = self::ACCEPT_JSONP;
+                    break;
+                case (strpos($header, "application/xml") !== false):
+                    $this->accept = self::ACCEPT_XML;
+                    break;
+            }
+        }
+        return $this->accept;
+    }
 }

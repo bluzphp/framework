@@ -118,7 +118,7 @@ class PhpFile extends FileBase
         $cacheEntry = var_export($cacheEntry, true);
         $code = sprintf('<?php return %s;', $cacheEntry);
 
-        return file_put_contents($fileName, $code);
+        return $this->writeFile($fileName, $code);
     }
 
     /**

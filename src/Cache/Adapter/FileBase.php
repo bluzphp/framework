@@ -107,4 +107,25 @@ abstract class FileBase extends AbstractAdapter
 
         return $path . $this->extension;
     }
+
+    /**
+     * Write string to the file in an atomic way
+     *
+     * @param string $fileName
+     * @param string $content
+     * @return bool|int The number of bytes that were written to the file, or false on failure
+     */
+    protected function writeFile($fileName, $content)
+    {
+        $tempFileName = $fileName . uniqid('', true) . '.temp';
+        $bytes = file_put_contents($tempFileName, $content);
+        if ($bytes !== false) {
+            if (rename($tempFileName, $fileName)) {
+                return $bytes;
+            }
+            @unlink($tempFileName);
+        }
+
+        return false;
+    }
 }

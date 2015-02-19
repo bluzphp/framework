@@ -126,9 +126,8 @@ class Rest extends AbstractController
                 return $this->methodDelete();
                 // break
             case Request::METHOD_OPTIONS:
-                $allow = $this->getMethods(sizeof($this->primary));
-                Response::setHeader('Allow', join(',', $allow));
-                return null; // no body
+                return $this->methodOptions();
+                // break
             default:
                 throw new NotImplementedException();
         }
@@ -138,7 +137,7 @@ class Rest extends AbstractController
      * Method HEAD and GET
      * @return mixed
      */
-    protected function methodGet()
+    public function methodGet()
     {
         if ($this->primary) {
             // @throws NotFoundException
@@ -164,7 +163,7 @@ class Rest extends AbstractController
      * @throws NotImplementedException
      * @return array|false
      */
-    protected function methodPost()
+    public function methodPost()
     {
         if ($this->primary) {
             // POST + ID is incorrect behaviour
@@ -200,7 +199,7 @@ class Rest extends AbstractController
      * @throws BadRequestException
      * @return array|false
      */
-    protected function methodPut()
+    public function methodPut()
     {
         if (!sizeof($this->data)) {
             // data not found
@@ -232,7 +231,7 @@ class Rest extends AbstractController
      * @throws BadRequestException
      * @return false
      */
-    protected function methodDelete()
+    public function methodDelete()
     {
         if ($this->primary) {
             // delete one
@@ -249,6 +248,17 @@ class Rest extends AbstractController
         }
         Response::setStatusCode(204);
         return false; // disable view
+    }
+
+    /**
+     * Method OPTIONS
+     * @return false
+     */
+    public function methodOptions()
+    {
+        $allow = $this->getMethods(sizeof($this->primary));
+        Response::setHeader('Allow', join(',', $allow));
+        return null; // no body
     }
 
     /**

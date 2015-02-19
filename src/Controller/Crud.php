@@ -111,7 +111,7 @@ class Crud extends AbstractController
      */
     public function getPrimaryKey()
     {
-        if (!$this->primary) {
+        if (is_null($this->primary)) {
             $primary = $this->getCrud()->getPrimaryKey();
             $this->primary = array_intersect_key($this->data, array_flip($primary));
         }

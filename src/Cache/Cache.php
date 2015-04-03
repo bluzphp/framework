@@ -201,7 +201,7 @@ class Cache implements CacheInterface, TagableInterface
      */
     public function getAdapter($adapterName = null)
     {
-        if (!$adapterName) {
+        if (is_null($adapterName)) {
             $adapterName = $this->getOption('adapter');
         }
 
@@ -219,7 +219,7 @@ class Cache implements CacheInterface, TagableInterface
      */
     public function getTagAdapter()
     {
-        if (!$this->tagAdapter) {
+        if (is_null($this->tagAdapter)) {
             // create instance of new adapter
             if ($tagAdapter = $this->getOption('tagAdapter')) {
                 $this->tagAdapter = $this->initAdapter($tagAdapter);

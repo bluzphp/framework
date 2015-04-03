@@ -38,7 +38,7 @@ class Select extends AbstractBuilder
      * {@inheritdoc}
      *
      * @param null $fetchType
-     * @return mixed
+     * @return integer|string|array
      */
     public function execute($fetchType = null)
     {

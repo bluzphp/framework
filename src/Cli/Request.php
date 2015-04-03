@@ -52,7 +52,7 @@ class Request extends AbstractRequest
 
         $this->setRequestUri($uri);
 
-        if ($query) {
+        if (!empty($query)) {
             parse_str($query, $params);
             if (is_array($params)) {
                 $this->setParams($params);

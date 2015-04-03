@@ -47,7 +47,7 @@ class Crud extends AbstractController
                 $row = $this->readOne($primary);
 
                 $result = ['row' => $row];
-                if ($primary) {
+                if (!empty($primary)) {
                     // update form
                     $result['method'] = Request::METHOD_PUT;
                 } else {

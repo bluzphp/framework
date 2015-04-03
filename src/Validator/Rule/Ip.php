@@ -202,7 +202,7 @@ class Ip extends AbstractRule
      */
     public function getTemplate()
     {
-        if ($this->networkRange) {
+        if (!empty($this->networkRange)) {
             $message = $this->networkRange['min'];
             if (isset($this->networkRange['max'])) {
                 $message .= '-' . $this->networkRange['max'];

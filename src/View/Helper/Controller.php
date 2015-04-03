@@ -24,7 +24,7 @@ return
      * @return string|bool
      */
     function ($controller = null) {
-        if (null == $controller) {
+        if (is_null($controller)) {
             return Request::getController();
         } else {
             return Request::getController() == $controller;

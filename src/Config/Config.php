@@ -176,7 +176,7 @@ class Config
                 $this->path .'/modules/'. $module .'/config.php'
             );
 
-            if (!$this->config) {
+            if (is_null($this->config)) {
                 $this->init();
             }
 

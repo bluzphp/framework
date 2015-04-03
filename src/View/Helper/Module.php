@@ -24,7 +24,7 @@ return
      * @return string|bool
      */
     function ($module = null) {
-        if (null == $module) {
+        if (is_null($module)) {
             return Request::getModule();
         } else {
             return Request::getModule() == $module;

@@ -26,7 +26,7 @@ class Insert extends AbstractBuilder
      * {@inheritdoc}
      *
      * @param null $sequence
-     * @return mixed
+     * @return integer|string|array
      */
     public function execute($sequence = null)
     {

@@ -27,7 +27,7 @@ return
         // it's stack for <head>
         $meta = Registry::get('layout:meta') ? : [];
 
-        if ($name && $content) {
+        if ($name !== null && $content !== null) {
             $meta[] = ['name' => $name, 'content' => $content];
             Registry::set('layout:meta', $meta);
             return null;
@@ -35,7 +35,7 @@ return
             $meta[] = $name;
             Registry::set('layout:meta', $meta);
             return null;
-        } elseif (!$name && !$content) {
+        } elseif (is_null($name) && is_null($content)) {
             if (sizeof($meta)) {
                 // prepare to output
                 $meta = array_map(
@@ -50,5 +50,8 @@ return
             } else {
                 return '';
             }
+        } else {
+            // if exists only $name or $content
+            return null;
         }
     };

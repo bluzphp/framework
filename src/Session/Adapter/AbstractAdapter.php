@@ -51,7 +51,7 @@ abstract class AbstractAdapter
     public function open($savePath, $sessionName)
     {
         $this->prefix = $sessionName . ':';
-        $this->ttl = ini_get('session.gc_maxlifetime');
+        $this->ttl = (int) ini_get('session.gc_maxlifetime');
 
         // No more action necessary because connection is injected
         // in constructor and arguments are not applicable.

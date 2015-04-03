@@ -45,7 +45,7 @@ class Request extends AbstractRequest
         $contentType = $this->getHeader('Content-Type');
 
         // support header like "application/json" and "application/json; charset=utf-8"
-        if ($contentType && stristr($contentType, 'application/json')) {
+        if ($contentType !== false && stristr($contentType, 'application/json')) {
             $data = (array) json_decode($request);
         } else {
             switch ($this->method) {

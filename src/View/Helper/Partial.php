@@ -39,7 +39,7 @@ return
             }
         }
 
-        if (!$__file) {
+        if (is_null($__file)) {
             throw new ViewException("Template '{$__template}' not found");
         }
 

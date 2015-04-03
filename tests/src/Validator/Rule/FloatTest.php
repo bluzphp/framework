@@ -10,7 +10,7 @@
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
-use Bluz\Validator\Rule\Float;
+use Bluz\Validator\Rule\FloatRule;
 
 /**
  * Class FloatTest
@@ -19,7 +19,7 @@ use Bluz\Validator\Rule\Float;
 class FloatTest extends Tests\TestCase
 {
     /**
-     * @var \Bluz\Validator\Rule\Float
+     * @var \Bluz\Validator\Rule\FloatRule
      */
     protected $validator;
 
@@ -29,7 +29,7 @@ class FloatTest extends Tests\TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->validator = new Float();
+        $this->validator = new FloatRule();
     }
 
     /**

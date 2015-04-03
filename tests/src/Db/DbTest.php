@@ -213,6 +213,15 @@ class DbTest extends Bluz\Tests\TestCase
     }
 
     /**
+     * Select Query Builder
+     */
+    public function testSelect()
+    {
+        $query = $this->db->select('test');
+        $this->assertInstanceOf('\Bluz\Db\Query\Select', $query);
+    }
+
+    /**
      * Insert Query Builder
      */
     public function testInsert()

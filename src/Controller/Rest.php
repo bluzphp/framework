@@ -139,7 +139,7 @@ class Rest extends AbstractController
      */
     public function methodGet()
     {
-        if ($this->primary) {
+        if (!empty($this->primary)) {
             // @throws NotFoundException
             $result = $this->readOne($this->primary);
             return [$result];
@@ -165,7 +165,7 @@ class Rest extends AbstractController
      */
     public function methodPost()
     {
-        if ($this->primary) {
+        if (!empty($this->primary)) {
             // POST + ID is incorrect behaviour
             throw new NotImplementedException();
         }
@@ -207,7 +207,7 @@ class Rest extends AbstractController
         }
 
         try {
-            if ($this->primary) {
+            if (!empty($this->primary)) {
                 // update one item
                 $result = $this->updateOne($this->primary, $this->data);
             } else {
@@ -233,7 +233,7 @@ class Rest extends AbstractController
      */
     public function methodDelete()
     {
-        if ($this->primary) {
+        if (!empty($this->primary)) {
             // delete one
             // @throws NotFoundException
             $this->deleteOne($this->primary);

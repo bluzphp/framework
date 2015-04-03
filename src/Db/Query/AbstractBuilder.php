@@ -61,7 +61,7 @@ abstract class AbstractBuilder
     /**
      * Execute this query using the bound parameters and their types
      *
-     * @return mixed
+     * @return integer|string|array
      */
     public function execute()
     {

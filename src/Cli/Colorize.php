@@ -70,10 +70,10 @@ class Colorize
             $colored .= '4;';
         }
 
-        if ($foreground && isset(self::$colors[$foreground])) {
+        if ($foreground !== null && isset(self::$colors[$foreground])) {
             $colored .= self::$colors[$foreground] . ";";
         }
-        if ($background && isset(self::$background[$background])) {
+        if ($background !== null && isset(self::$background[$background])) {
             $colored .= self::$background[$background] . ";";
         }
 

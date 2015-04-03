@@ -109,7 +109,7 @@ class Messages
             return null;
         }
 
-        if ($type) {
+        if ($type !== null) {
             $text = array_shift($this->getMessagesStore()[$type]);
             if ($text) {
                 $message = new \stdClass();

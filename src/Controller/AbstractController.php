@@ -62,9 +62,10 @@ abstract class AbstractController
         // get all params
         $query = Request::getQuery();
 
-        unset($query['_method']);
-
-        $this->params = $query;
+        if (is_array($query) && !empty($query)) {
+            unset($query['_method']);
+            $this->params = $query;
+        }
 
         $this->data = Request::getParams();
     }

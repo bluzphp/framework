@@ -12,23 +12,23 @@
 namespace Bluz\Validator\Rule;
 
 /**
- * Class Float
+ * Class String
  * @package Bluz\Validator\Rule
  */
-class Float extends AbstractRule
+class StringRule extends AbstractRule
 {
     /**
      * @var string Error template
      */
-    protected $template = '{{name}} must be a float number';
+    protected $template = '{{name}} must be a string';
 
     /**
      * Check input data
-     * @param string $input
+     * @param mixed $input
      * @return bool
      */
     public function validate($input)
     {
-        return is_float(filter_var($input, FILTER_VALIDATE_FLOAT));
+        return is_string($input);
     }
 }

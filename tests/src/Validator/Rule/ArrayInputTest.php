@@ -19,7 +19,7 @@ use Bluz\Validator\Rule\ArrayInput;
 class ArrayInputTest extends Tests\TestCase
 {
     /**
-     * @var \Bluz\Validator\Rule\String
+     * @var \Bluz\Validator\Rule\StringRule
      */
     protected $validator;
 

@@ -10,7 +10,7 @@
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
-use Bluz\Validator\Rule\String as StringValidator;
+use Bluz\Validator\Rule\StringRule as StringValidator;
 
 /**
  * Class StringTest
@@ -19,7 +19,7 @@ use Bluz\Validator\Rule\String as StringValidator;
 class StringTest extends Tests\TestCase
 {
     /**
-     * @var \Bluz\Validator\Rule\String
+     * @var \Bluz\Validator\Rule\StringRule
      */
     protected $validator;
 

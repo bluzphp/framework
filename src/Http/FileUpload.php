@@ -86,7 +86,7 @@ class FileUpload
     */
 
     /**
-     * process file information from array
+     * Process file information from array
      *
      * @param $key
      * @param $fileInfo
@@ -113,25 +113,19 @@ class FileUpload
     }
 
     /**
-     * createFile
+     * Create File
      *
      * @param array $fileInfo
      * @param string $fileKey
-     * @param string $subKey
-     * @param string $subSubKey
-     * @param string $subSubSubKey
+     * @param string ...$keys
      *
      * @return File instance
      */
-    public function createFile($fileInfo, $fileKey, $subKey = null, $subSubKey = null, $subSubSubKey = null)
+    public function createFile($fileInfo, $fileKey, ...$keys)
     {
-        $argList = func_get_args();
-        $fileInfo = array_shift($argList);
-        $fileKey = array_shift($argList);
-
         $result = array();
         foreach ($fileInfo as $key => $value) {
-            $parsedArr = $this->parseArray($value, $argList);
+            $parsedArr = $this->parseArray($value, $keys);
             if (!is_array($parsedArr)) {
                 $result[0][$key] = $parsedArr;
             } else {
@@ -141,8 +135,8 @@ class FileUpload
             }
         }
 
-        if (count($argList)) {
-            $fileKey .= '[' . implode("][", $argList) . ']';
+        if (count($keys)) {
+            $fileKey .= '[' . implode("][", $keys) . ']';
         }
 
         foreach ($result as $file) {

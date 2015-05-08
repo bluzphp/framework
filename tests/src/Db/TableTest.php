@@ -79,7 +79,7 @@ class TableTest extends Bluz\Tests\TestCase
      */
     public function testFindException($keyValues)
     {
-        call_user_func_array(array($this->table, 'find'), $keyValues);
+        $this->table->find(...$keyValues);
     }
 
     /**

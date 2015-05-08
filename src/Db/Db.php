@@ -245,13 +245,13 @@ class Db
     /**
      * Create new query select builder
      * @api
-     * @param string $select,... The selection expressions
+     * @param string ...$select The selection expressions
      * @return Query\Select
      */
-    public function select()
+    public function select(...$select)
     {
         $query = new Query\Select();
-        $query->select(func_get_args());
+        $query->select(...$select);
         return $query;
     }
 

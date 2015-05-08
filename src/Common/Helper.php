@@ -80,7 +80,7 @@ trait Helper
 
         // Call helper function (or class)
         if (isset($this->helpers[$key]) && is_callable($this->helpers[$key])) {
-            return call_user_func_array($this->helpers[$key], $args);
+            return $this->helpers[$key](...$args);
         }
 
         // Try to find helper file
@@ -90,7 +90,7 @@ trait Helper
                 $helperInclude = include $helperPath;
                 if (is_callable($helperInclude)) {
                     $this->helpers[$key] = $helperInclude;
-                    return call_user_func_array($this->helpers[$key], $args);
+                    return $this->helpers[$key](...$args);
                 } else {
                     throw new CommonException("Helper '$method' not found in file '$helperPath'");
                 }

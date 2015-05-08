@@ -87,6 +87,6 @@ abstract class AbstractProxy
         $instance = static::getInstance();
 
         // not need to check method exists, because we can use Nil class or magic methods
-        return call_user_func_array(array($instance, $method), $args);
+        return $instance->$method(...$args);
     }
 }

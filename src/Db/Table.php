@@ -255,18 +255,17 @@ abstract class Table
      * Multiple rows by compound primary key
      *     Table::find([123, 'abc'], [234, 'def'], [345, 'ghi'])
      *
-     * @param mixed $key,... The value(s) of the primary keys.
+     * @param mixed ...$keys The value(s) of the primary keys.
      * @throws InvalidPrimaryKeyException if wrong count of values passed
      * @return array
      */
-    public static function find()
+    public static function find(...$keys)
     {
         $self = static::getInstance();
 
-        $args = func_get_args();
         $keyNames = array_values((array)$self->primary);
         $whereList = array();
-        foreach ($args as $keyValues) {
+        foreach ($keys as $keyValues) {
             $keyValues = (array)$keyValues;
             if (count($keyValues) < count($keyNames)) {
                 throw new InvalidPrimaryKeyException(
@@ -292,7 +291,7 @@ abstract class Table
                 $whereList[] = $keyValues;
             }
         }
-        return call_user_func_array(array($self, 'findWhere'), $whereList);
+        return $self::findWhere(...$whereList);
     }
 
     /**
@@ -321,24 +320,24 @@ abstract class Table
      *     // WHERE alias IN ('foo', 'bar')
      *     Table::findWhere(['alias'=> ['foo', 'bar']]);
      *
+     * @param  mixed ...$where
      * @throws \InvalidArgumentException
      * @throws Exception\DbException
      * @return array
      */
-    public static function findWhere()
+    public static function findWhere(...$where)
     {
         $self = static::getInstance();
-        $whereList = func_get_args();
 
         $whereClause = null;
         $whereParams = array();
 
-        if (sizeof($whereList) == 2 && is_string($whereList[0])) {
-            $whereClause = $whereList[0];
-            $whereParams = (array)$whereList[1];
-        } elseif (sizeof($whereList)) {
+        if (sizeof($where) == 2 && is_string($where[0])) {
+            $whereClause = $where[0];
+            $whereParams = (array)$where[1];
+        } elseif (sizeof($where)) {
             $whereOrTerms = array();
-            foreach ($whereList as $keyValueSets) {
+            foreach ($where as $keyValueSets) {
                 $whereAndTerms = array();
                 foreach ($keyValueSets as $keyName => $keyValue) {
                     if (is_array($keyValue)) {
@@ -366,7 +365,7 @@ abstract class Table
                 $whereOrTerms[] = '(' . implode(' AND ', $whereAndTerms) . ')';
             }
             $whereClause = '(' . implode(' OR ', $whereOrTerms) . ')';
-        } elseif (!sizeof($whereList)) {
+        } elseif (!sizeof($where)) {
             throw new DbException(
                 "Method `Table::findWhere()` can't return all records from table,\n".
                 "please use `Table::fetchAll()` instead"

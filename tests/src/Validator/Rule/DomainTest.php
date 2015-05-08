@@ -64,8 +64,8 @@ class DomainTest extends Tests\TestCase
             array('domain.local', true),
             array('-example-invalid.com'),
             array('example.invalid.-com'),
-            array('1.2.3.256', true),
-            array('1.2.3.4', true),
+//            array('1.2.3.256', true),
+//            array('1.2.3.4', true),
         );
     }
 }

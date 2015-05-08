@@ -560,7 +560,7 @@ class Application
             throw new ApplicationException("Controller is not callable '$module/$controller'");
         }
 
-        $result = call_user_func_array($controllerClosure, $params);
+        $result = $controllerClosure(...$params);
 
         // switch statement for $result
         switch (true) {

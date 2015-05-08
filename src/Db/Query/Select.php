@@ -322,12 +322,12 @@ class Select extends AbstractBuilder
      * Specifies a restriction over the groups of the query.
      * Replaces any previous having restrictions, if any.
      *
-     * @param mixed $condition,... The query restriction predicates
+     * @param mixed ...$condition The query restriction predicates
      * @return Select
      */
-    public function having()
+    public function having(...$condition)
     {
-        $condition = $this->prepareCondition(func_get_args());
+        $condition = $this->prepareCondition($condition);
         return $this->addQueryPart('having', $condition, false);
     }
 
@@ -335,12 +335,12 @@ class Select extends AbstractBuilder
      * Adds a restriction over the groups of the query, forming a logical
      * conjunction with any existing having restrictions
      *
-     * @param mixed $condition,... The query restriction predicates
+     * @param mixed ...$condition The query restriction predicates
      * @return Select
      */
-    public function andHaving()
+    public function andHaving(...$condition)
     {
-        $condition = $this->prepareCondition(func_get_args());
+        $condition = $this->prepareCondition($condition);
         $having = $this->getQueryPart('having');
 
         if ($having instanceof CompositeBuilder && $having->getType() == 'AND') {
@@ -356,12 +356,12 @@ class Select extends AbstractBuilder
      * Adds a restriction over the groups of the query, forming a logical
      * disjunction with any existing having restrictions.
      *
-     * @param mixed $condition,... The query restriction predicates
+     * @param mixed ...$condition The query restriction predicates
      * @return Select
      */
-    public function orHaving()
+    public function orHaving(...$condition)
     {
-        $condition = $this->prepareCondition(func_get_args());
+        $condition = $this->prepareCondition($condition);
         $having = $this->getQueryPart('having');
 
         if ($having instanceof CompositeBuilder && $having->getType() == 'OR') {

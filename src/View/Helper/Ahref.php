@@ -30,7 +30,7 @@ return
     function ($text, $href, array $attributes = []) {
         // if href is settings for url helper
         if (is_array($href)) {
-            $href = call_user_func_array(array($this, 'url'), $href);
+            $href = $this->url(...$href);
         }
 
         // href can be null, if access is denied

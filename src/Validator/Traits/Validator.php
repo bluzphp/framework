@@ -60,12 +60,12 @@ trait Validator
      * Add Validator for field
      *
      * @param string $name
-     * @param \Bluz\Validator\Validator $validator,...
-     * @return self
+     * @param Validator $validators
+     * @return Validator
      */
-    protected function addValidator($name)
+    protected function addValidator($name, ...$validators)
     {
-        call_user_func_array([$this->getValidatorBuilder(), 'add'], func_get_args());
+        $this->getValidatorBuilder()->add($name, ...$validators);
         return $this;
     }
 

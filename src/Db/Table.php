@@ -77,7 +77,7 @@ abstract class Table
      */
     private function __construct()
     {
-        $tableClass = get_called_class();
+        $tableClass = static::class;
 
         // autodetect row class
         if (!$this->rowClass) {
@@ -270,7 +270,7 @@ abstract class Table
             if (count($keyValues) < count($keyNames)) {
                 throw new InvalidPrimaryKeyException(
                     "Too few columns for the primary key.\n" .
-                    "Please check " . get_called_class() . " initialization or usage.\n" .
+                    "Please check " . static::class . " initialization or usage.\n" .
                     "Settings described at https://github.com/bluzphp/framework/wiki/Db-Table"
                 );
             }
@@ -278,7 +278,7 @@ abstract class Table
             if (count($keyValues) > count($keyNames)) {
                 throw new InvalidPrimaryKeyException(
                     "Too many columns for the primary key.\n" .
-                    "Please check " . get_called_class() . " initialization or usage.\n" .
+                    "Please check " . static::class . " initialization or usage.\n" .
                     "Settings described at https://github.com/bluzphp/framework/wiki/Db-Table"
                 );
             }

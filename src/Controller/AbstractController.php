@@ -123,7 +123,7 @@ abstract class AbstractController
     public function getCrud()
     {
         if (!$this->crud) {
-            $controllerClass = get_called_class();
+            $controllerClass = static::class;
             $crudClass = substr($controllerClass, 0, strrpos($controllerClass, '\\', 1) + 1) . 'Crud';
 
             // check class initialization

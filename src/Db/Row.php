@@ -112,7 +112,7 @@ class Row implements \JsonSerializable, \ArrayAccess
      */
     public function __toString()
     {
-        return get_called_class();
+        return static::class;
     }
 
     /**

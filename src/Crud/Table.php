@@ -51,7 +51,7 @@ class Table extends AbstractCrud
     public function getTable()
     {
         if (!$this->table) {
-            $crudClass = get_called_class();
+            $crudClass = static::class;
             $tableClass = substr($crudClass, 0, strrpos($crudClass, '\\', 1) + 1) . 'Table';
 
             // check class initialization

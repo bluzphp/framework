@@ -40,7 +40,7 @@ abstract class AbstractProxy
     protected static function initInstance()
     {
         throw new ComponentException(
-            "Realization of method `initInstance()` is required for class `".get_called_class()."`"
+            "Realization of method `initInstance()` is required for class `". static::class ."`"
         );
     }
 
@@ -52,7 +52,7 @@ abstract class AbstractProxy
      */
     public static function getInstance()
     {
-        $class = get_called_class();
+        $class = static::class;
         if (!isset(static::$instances[$class])) {
             static::$instances[$class] = static::initInstance();
             if (!static::$instances[$class]) {
@@ -71,7 +71,7 @@ abstract class AbstractProxy
      */
     public static function setInstance($instance)
     {
-        static::$instances[get_called_class()] = $instance;
+        static::$instances[static::class] = $instance;
     }
 
     /**

@@ -110,15 +110,12 @@ class Select extends AbstractBuilder
      *         ->from('users', 'u')
      *         ->leftJoin('u', 'phonenumbers', 'p', 'u.id = p.user_id');
      *
-     * @param mixed $select The selection expressions.
-     * @param mixed $select,... The selection expressions.
+     * @param mixed ...$select The selection expressions
      * @return Select instance
      */
-    public function select($select)
+    public function select(...$select)
     {
-        $selects = is_array($select) ? $select : func_get_args();
-
-        return $this->addQueryPart('select', $selects, false);
+        return $this->addQueryPart('select', $select, false);
     }
 
     /**
@@ -132,15 +129,12 @@ class Select extends AbstractBuilder
      *         ->from('users', 'u')
      *         ->leftJoin('u', 'phonenumbers', 'u.id = p.user_id');
      *
-     * @param mixed $select The selection expression.
-     * @param mixed $select,... The selection expression.
+     * @param mixed ...$select The selection expression
      * @return Select instance
      */
     public function addSelect($select)
     {
-        $selects = is_array($select) ? $select : func_get_args();
-
-        return $this->addQueryPart('select', $selects, true);
+        return $this->addQueryPart('select', $select, true);
     }
 
     /**
@@ -277,17 +271,14 @@ class Select extends AbstractBuilder
      *         ->from('users', 'u')
      *         ->groupBy('u.id');
      *
-     * @param array $groupBy The grouping expression
-     * @param array $groupBy,... The grouping expression
+     * @param array ...$groupBy The grouping expression
      * @return Select instance
      */
-    public function groupBy($groupBy)
+    public function groupBy(...$groupBy)
     {
         if (empty($groupBy)) {
             return $this;
         }
-
-        $groupBy = is_array($groupBy) ? $groupBy : func_get_args();
 
         return $this->addQueryPart('groupBy', $groupBy, false);
     }
@@ -303,17 +294,14 @@ class Select extends AbstractBuilder
      *         ->groupBy('u.lastLogin');
      *         ->addGroupBy('u.createdAt')
      *
-     * @param mixed $groupBy The grouping expression
-     * @param mixed $groupBy,... The grouping expression
+     * @param mixed ...$groupBy The grouping expression
      * @return Select instance
      */
-    public function addGroupBy($groupBy)
+    public function addGroupBy(...$groupBy)
     {
         if (empty($groupBy)) {
             return $this;
         }
-
-        $groupBy = is_array($groupBy) ? $groupBy : func_get_args();
 
         return $this->addQueryPart('groupBy', $groupBy, true);
     }

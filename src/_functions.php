@@ -5,6 +5,7 @@
  * @copyright Bluz PHP Team
  * @link https://github.com/bluzphp/framework
  */
+
 use Bluz\Translator\Translator;
 
 /**

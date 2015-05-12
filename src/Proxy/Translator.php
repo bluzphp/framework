@@ -25,10 +25,10 @@ use Bluz\Translator\Translator as Instance;
  *
  * @method   static Instance getInstance()
  *
- * @method   static string translate($message)
+ * @method   static string translate($message, ...$text)
  * @see      Bluz\Translator\Translator::translate()
  *
- * @method   static string translatePlural($singular, $plural, $number)
+ * @method   static string translatePlural($singular, $plural, $number, ...$text)
  * @see      Bluz\Translator\Translator::translatePlural()
  *
  * @author   Anton Shevchuk

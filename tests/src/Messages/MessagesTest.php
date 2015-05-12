@@ -51,6 +51,26 @@ class MessagesTest extends TestCase
     }
 
     /**
+     * Test Messages container
+     */
+    public function testMessagesWithDirectives()
+    {
+        Proxy\Messages::addError('error %d %d %d', 1, 2, 3);
+        Proxy\Messages::addNotice('notice %1$s %2$s %1$s', 'a', 'b');
+        Proxy\Messages::addSuccess('success %01.2f', 1.020304);
+
+        $error = Proxy\Messages::pop(Messages::TYPE_ERROR);
+        $this->assertEquals('error 1 2 3', $error->text);
+
+        $notice = Proxy\Messages::pop(Messages::TYPE_NOTICE);
+        $this->assertEquals('notice a b a', $notice->text);
+
+        $success = Proxy\Messages::pop(Messages::TYPE_SUCCESS);
+        $this->assertEquals('success 1.02', $success->text);
+
+    }
+
+    /**
      * Test Messages with empty container
      */
     public function testMessagesEmpty()

@@ -56,6 +56,7 @@ class Messages
     /**
      * Add notice
      * @api
+     * @since 1.0.0 added $text
      * @param string $message
      * @param string $text
      * @return void
@@ -68,6 +69,7 @@ class Messages
     /**
      * Add success
      * @api
+     * @since 1.0.0 added $text
      * @param string $message
      * @param string $text
      * @return void
@@ -80,6 +82,7 @@ class Messages
     /**
      * Add error
      * @api
+     * @since 1.0.0 added $text
      * @param string $message
      * @param string $text
      * @return void

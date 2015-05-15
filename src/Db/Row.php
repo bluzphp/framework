@@ -113,7 +113,8 @@ class Row implements \JsonSerializable, \ArrayAccess
     /**
      * @return array
      */
-    public function __debugInfo() {
+    public function __debugInfo()
+    {
         return [
             'TABLE' => $this->getTable()->getName(),
             'DATA::CLEAN' => $this->clean,

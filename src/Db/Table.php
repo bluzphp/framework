@@ -47,6 +47,11 @@ abstract class Table
     protected $table;
 
     /**
+     * @var string The model name
+     */
+    protected $model;
+
+    /**
      * @var array Table columns
      */
     protected $columns = [];
@@ -79,19 +84,23 @@ abstract class Table
     {
         $tableClass = static::class;
 
-        // autodetect row class
-        if (!$this->rowClass) {
-            $rowClass = substr($tableClass, 0, strrpos($tableClass, '\\', 1) + 1);
-            $this->rowClass = $rowClass . 'Row';
+        // autodetect model name
+        if (!$this->model) {
+            $model = substr($tableClass, strpos($tableClass, '\\') + 1);
+            $model = substr($model, 0, strpos($model, '\\', 2));
+            $this->model = $model;
         }
 
         // autodetect table name - camelCase to uppercase
         if (!$this->table) {
-            $tableClass = substr($tableClass, strpos($tableClass, '\\') + 1);
-            $tableClass = substr($tableClass, 0, strpos($tableClass, '\\', 2));
-
-            $table = preg_replace('/(?<=\\w)(?=[A-Z])/', "_$1", $tableClass);
+            $table = preg_replace('/(?<=\\w)(?=[A-Z])/', "_$1", $this->model);
             $this->table = strtolower($table);
+        }
+
+        // autodetect row class
+        if (!$this->rowClass) {
+            $rowClass = substr($tableClass, 0, strrpos($tableClass, '\\', 1) + 1);
+            $this->rowClass = $rowClass . 'Row';
         }
 
         // setup default select query
@@ -99,6 +108,8 @@ abstract class Table
             $this->select = "SELECT * ".
                 "FROM " . DbProxy::quoteIdentifier($this->table);
         }
+
+        Relations::addClassMap($this->model, $tableClass);
 
         $this->init();
     }
@@ -165,6 +176,15 @@ abstract class Table
     public function getName()
     {
         return $this->table;
+    }
+
+    /**
+     * Get model name
+     * @return string
+     */
+    public function getModel()
+    {
+        return $this->model;
     }
 
     /**
@@ -560,5 +580,31 @@ abstract class Table
         $sql = "DELETE FROM $table"
             . " WHERE " . join(' AND ', self::prepareStatement($where));
         return DbProxy::query($sql, array_values($where));
+    }
+
+    /**
+     * Setup relation "one to one" or "one to many"
+     *
+     * @param string $key
+     * @param string $model
+     * @param string $foreign
+     * @return void
+     */
+    public function linkTo($key, $model, $foreign)
+    {
+        Relations::setRelation($this->model, $key, $model, $foreign);
+    }
+
+    /**
+     * Setup relation "many to many"
+     * [table1-key] [table1_key-table2-table3_key] [table3-key]
+     *
+     * @param string $model
+     * @param string $link
+     * @return void
+     */
+    public function linkToMany($model, $link)
+    {
+        Relations::setRelations($this->model, $model, [$link]);
     }
 }

@@ -32,7 +32,9 @@ class ValidatorTest extends Tests\TestCase
      */
     public function testStaticCallsShouldReturnNewValidator()
     {
-        $this->assertInstanceOf('Bluz\Validator\Validator', Validator::arrayInput());
+        $this->assertInstanceOf('Bluz\Validator\Validator', Validator::arrayInput(function () {
+            return true;
+        }));
         $this->assertInstanceOf('Bluz\Validator\Validator', Validator::string());
         $this->assertInstanceOf('Bluz\Validator\Validator', Validator::notEmpty());
     }

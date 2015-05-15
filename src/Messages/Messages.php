@@ -58,7 +58,7 @@ class Messages
      * @api
      * @since 1.0.0 added $text
      * @param string $message
-     * @param string $text
+     * @param string[] $text
      * @return void
      */
     public function addNotice($message, ...$text)
@@ -71,7 +71,7 @@ class Messages
      * @api
      * @since 1.0.0 added $text
      * @param string $message
-     * @param string $text
+     * @param string[] $text
      * @return void
      */
     public function addSuccess($message, ...$text)
@@ -84,7 +84,7 @@ class Messages
      * @api
      * @since 1.0.0 added $text
      * @param string $message
-     * @param string $text
+     * @param string[] $text
      * @return void
      */
     public function addError($message, ...$text)
@@ -96,7 +96,7 @@ class Messages
      * Add message to container
      * @param string $type One of error, notice or success
      * @param string $message
-     * @param string $text
+     * @param string[] $text
      * @return void
      */
     protected function add($type, $message, ...$text)
@@ -136,7 +136,7 @@ class Messages
 
     /**
      * Pop all messages
-     * @return \ArrayObject
+     * @return array
      */
     public function popAll()
     {

@@ -60,7 +60,7 @@ trait Validator
      * Add Validator for field
      *
      * @param string $name
-     * @param Validator $validators
+     * @param Validator[] $validators
      * @return Validator
      */
     protected function addValidator($name, ...$validators)

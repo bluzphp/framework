@@ -31,7 +31,7 @@ return
     function ($module, $widget, $params = array()) {
         try {
             $widgetClosure = Application::getInstance()->widget($module, $widget);
-            call_user_func_array($widgetClosure, $params);
+            $widgetClosure(...$params);
         } catch (ForbiddenException $e) {
             // nothing for Acl exception
         } catch (\Exception $e) {

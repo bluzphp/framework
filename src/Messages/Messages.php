@@ -56,46 +56,53 @@ class Messages
     /**
      * Add notice
      * @api
+     * @since 1.0.0 added $text
+     * @param string $message
      * @param string $text
      * @return void
      */
-    public function addNotice($text)
+    public function addNotice($message, ...$text)
     {
-        $this->add(self::TYPE_NOTICE, $text);
+        $this->add(self::TYPE_NOTICE, $message, ...$text);
     }
 
     /**
      * Add success
      * @api
+     * @since 1.0.0 added $text
+     * @param string $message
      * @param string $text
      * @return void
      */
-    public function addSuccess($text)
+    public function addSuccess($message, ...$text)
     {
-        $this->add(self::TYPE_SUCCESS, $text);
+        $this->add(self::TYPE_SUCCESS, $message, ...$text);
     }
 
     /**
      * Add error
      * @api
+     * @since 1.0.0 added $text
+     * @param string $message
      * @param string $text
      * @return void
      */
-    public function addError($text)
+    public function addError($message, ...$text)
     {
-        $this->add(self::TYPE_ERROR, $text);
+        $this->add(self::TYPE_ERROR, $message, ...$text);
     }
 
     /**
      * Add message to container
      * @param string $type One of error, notice or success
+     * @param string $message
      * @param string $text
      * @return void
      */
-    protected function add($type, $text)
+    protected function add($type, $message, ...$text)
     {
         $this->init();
-        $this->getMessagesStore()[$type][] = Translator::translate($text);
+        $this->getMessagesStore()[$type][] = Translator::translate($message, ...$text);
     }
 
     /**

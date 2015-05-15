@@ -31,7 +31,7 @@ return
     function ($module, $method, $params = array()) {
         try {
             $apiClosure = Application::getInstance()->api($module, $method);
-            return call_user_func_array($apiClosure, $params);
+            return $apiClosure(...$params);
         } catch (\Exception $e) {
             return $this->exception($e);
         }

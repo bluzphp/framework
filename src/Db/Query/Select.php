@@ -110,15 +110,12 @@ class Select extends AbstractBuilder
      *         ->from('users', 'u')
      *         ->leftJoin('u', 'phonenumbers', 'p', 'u.id = p.user_id');
      *
-     * @param mixed $select The selection expressions.
-     * @param mixed $select,... The selection expressions.
+     * @param mixed ...$select The selection expressions
      * @return Select instance
      */
-    public function select($select)
+    public function select(...$select)
     {
-        $selects = is_array($select) ? $select : func_get_args();
-
-        return $this->addQueryPart('select', $selects, false);
+        return $this->addQueryPart('select', $select, false);
     }
 
     /**
@@ -132,15 +129,12 @@ class Select extends AbstractBuilder
      *         ->from('users', 'u')
      *         ->leftJoin('u', 'phonenumbers', 'u.id = p.user_id');
      *
-     * @param mixed $select The selection expression.
-     * @param mixed $select,... The selection expression.
+     * @param mixed ...$select The selection expression
      * @return Select instance
      */
     public function addSelect($select)
     {
-        $selects = is_array($select) ? $select : func_get_args();
-
-        return $this->addQueryPart('select', $selects, true);
+        return $this->addQueryPart('select', $select, true);
     }
 
     /**
@@ -277,17 +271,14 @@ class Select extends AbstractBuilder
      *         ->from('users', 'u')
      *         ->groupBy('u.id');
      *
-     * @param array $groupBy The grouping expression
-     * @param array $groupBy,... The grouping expression
+     * @param array ...$groupBy The grouping expression
      * @return Select instance
      */
-    public function groupBy($groupBy)
+    public function groupBy(...$groupBy)
     {
         if (empty($groupBy)) {
             return $this;
         }
-
-        $groupBy = is_array($groupBy) ? $groupBy : func_get_args();
 
         return $this->addQueryPart('groupBy', $groupBy, false);
     }
@@ -303,17 +294,14 @@ class Select extends AbstractBuilder
      *         ->groupBy('u.lastLogin');
      *         ->addGroupBy('u.createdAt')
      *
-     * @param mixed $groupBy The grouping expression
-     * @param mixed $groupBy,... The grouping expression
+     * @param mixed ...$groupBy The grouping expression
      * @return Select instance
      */
-    public function addGroupBy($groupBy)
+    public function addGroupBy(...$groupBy)
     {
         if (empty($groupBy)) {
             return $this;
         }
-
-        $groupBy = is_array($groupBy) ? $groupBy : func_get_args();
 
         return $this->addQueryPart('groupBy', $groupBy, true);
     }
@@ -322,12 +310,12 @@ class Select extends AbstractBuilder
      * Specifies a restriction over the groups of the query.
      * Replaces any previous having restrictions, if any.
      *
-     * @param mixed $condition,... The query restriction predicates
+     * @param mixed ...$condition The query restriction predicates
      * @return Select
      */
-    public function having()
+    public function having(...$condition)
     {
-        $condition = $this->prepareCondition(func_get_args());
+        $condition = $this->prepareCondition($condition);
         return $this->addQueryPart('having', $condition, false);
     }
 
@@ -335,12 +323,12 @@ class Select extends AbstractBuilder
      * Adds a restriction over the groups of the query, forming a logical
      * conjunction with any existing having restrictions
      *
-     * @param mixed $condition,... The query restriction predicates
+     * @param mixed ...$condition The query restriction predicates
      * @return Select
      */
-    public function andHaving()
+    public function andHaving(...$condition)
     {
-        $condition = $this->prepareCondition(func_get_args());
+        $condition = $this->prepareCondition($condition);
         $having = $this->getQueryPart('having');
 
         if ($having instanceof CompositeBuilder && $having->getType() == 'AND') {
@@ -356,12 +344,12 @@ class Select extends AbstractBuilder
      * Adds a restriction over the groups of the query, forming a logical
      * disjunction with any existing having restrictions.
      *
-     * @param mixed $condition,... The query restriction predicates
+     * @param mixed ...$condition The query restriction predicates
      * @return Select
      */
-    public function orHaving()
+    public function orHaving(...$condition)
     {
-        $condition = $this->prepareCondition(func_get_args());
+        $condition = $this->prepareCondition($condition);
         $having = $this->getQueryPart('having');
 
         if ($having instanceof CompositeBuilder && $having->getType() == 'OR') {

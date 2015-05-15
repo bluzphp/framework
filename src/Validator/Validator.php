@@ -115,8 +115,8 @@ class Validator
      */
     public function __call($ruleName, $arguments)
     {
-        if (in_array($ruleName, ['float', 'string'])) {
-            $ruleName .= 'Rule';
+        if (in_array($ruleName, ['array', 'float', 'string'])) {
+            $ruleName .= 'Input';
         }
 
         $ruleClass = '\\Bluz\\Validator\\Rule\\' . ucfirst($ruleName);

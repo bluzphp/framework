@@ -127,7 +127,7 @@ class ArraySource extends AbstractSource
 
             // Sort the data with volume descending, edition ascending
             // Add $data as the last parameter, to sort by the common key
-            call_user_func_array('array_multisort', $funcArgs);
+            array_multisort(...$funcArgs);
         }
 
         $total = sizeof($data);

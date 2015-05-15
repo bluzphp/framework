@@ -45,12 +45,12 @@ trait Where
      *         ->where('u.id = ?', $id)
      *      ;
      *
-     * @param string $condition optional the query restriction predicates
+     * @param string ...$condition optional the query restriction predicates
      * @return Select|Update|Delete
      */
-    public function where()
+    public function where(...$condition)
     {
-        $condition = $this->prepareCondition(func_get_args());
+        $condition = $this->prepareCondition($condition);
 
         return $this->addQueryPart('where', $condition, false);
     }
@@ -67,12 +67,12 @@ trait Where
      *         ->where('u.username LIKE ?', '%Smith%')
      *         ->andWhere('u.is_active = ?', 1);
      *
-     * @param string $condition,... Optional the query restriction predicates
+     * @param string ...$condition Optional the query restriction predicates
      * @return Select|Update|Delete
      */
-    public function andWhere()
+    public function andWhere(...$condition)
     {
-        $condition = $this->prepareCondition(func_get_args());
+        $condition = $this->prepareCondition($condition);
 
         $where = $this->getQueryPart('where');
 
@@ -96,12 +96,12 @@ trait Where
      *         ->where('u.id = 1')
      *         ->orWhere('u.id = ?', 2);
      *
-     * @param string $condition,... Optional the query restriction predicates
+     * @param string ...$condition Optional the query restriction predicates
      * @return Select|Update|Delete
      */
-    public function orWhere()
+    public function orWhere(...$condition)
     {
-        $condition = $this->prepareCondition(func_get_args());
+        $condition = $this->prepareCondition($condition);
 
         $where = $this->getQueryPart('where');
 

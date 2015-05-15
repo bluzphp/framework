@@ -15,7 +15,7 @@ namespace Bluz\Validator\Rule;
  * Class String
  * @package Bluz\Validator\Rule
  */
-class StringRule extends AbstractRule
+class StringInput extends AbstractRule
 {
     /**
      * @var string Error template

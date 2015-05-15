@@ -14,6 +14,7 @@ namespace Bluz\Mailer;
 use Bluz\Common\Exception\ComponentException;
 use Bluz\Common\Exception\ConfigurationException;
 use Bluz\Common\Options;
+use Bluz\Proxy\Translator;
 
 /**
  * Wrapper over PHPMailer
@@ -101,7 +102,8 @@ class Mailer
     public function send(\PHPMailer $mail)
     {
         if ($template = $this->getOption('subjectTemplate')) {
-            $mail->Subject = sprintf($template, $mail->Subject);
+            /** @var string $template */
+            $mail->Subject = Translator::translate($template, $mail->Subject);
         }
 
         if (!$mail->Send()) {

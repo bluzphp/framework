@@ -26,11 +26,11 @@ class Relations
     /**
      * Relation stack, i.e.
      *     array(
-     *         'table1:table2' => ['table1'=>'foreignKey', 'table2'=>'primaryKey'],
-     *         'pages:users' => ['pages'=>'userId', 'users'=>'id'],
-     *         'pages_tags:pages' => ['pages_tags'=>'pageId', 'pages'=>'id'],
-     *         'pages_tags:tags' => ['pages_tags'=>'tagId', 'tags'=>'id'],
-     *         'pages:tags' => ['pages_tags'],
+     *         'Model1:Model2' => ['Model1'=>'foreignKey', 'Model2'=>'primaryKey'],
+     *         'Pages:Users' => ['Pages'=>'userId', 'Users'=>'id'],
+     *         'PagesTags:Pages' => ['PagesTags'=>'pageId', 'Pages'=>'id'],
+     *         'PagesTags:Tags' => ['PagesTags'=>'tagId', 'Tags'=>'id'],
+     *         'Pages:Tags' => ['PagesTags'],
      *     )
      *
      * @var array
@@ -40,40 +40,40 @@ class Relations
     /**
      * Class map, i.e.
      *     array(
-     *         'table_name' => '\Application\TableName\Table',
-     *         'users' => '\Application\Users\Table',
+     *         'Pages' => '\Application\Pages\Table',
+     *         'Users' => '\Application\Users\Table',
      *     )
      *
      * @var array
      */
-    protected static $tableClassMap;
+    protected static $modelClassMap;
 
     /**
-     * Setup relation between two tables
+     * Setup relation between two models
      *
-     * @param string $tableOne
+     * @param string $modelOne
      * @param string $keyOne
-     * @param string $tableTwo
+     * @param string $modelTwo
      * @param string $keyTwo
      * @return void
      */
-    public static function setRelation($tableOne, $keyOne, $tableTwo, $keyTwo)
+    public static function setRelation($modelOne, $keyOne, $modelTwo, $keyTwo)
     {
-        $relations = [$tableOne => $keyOne, $tableTwo => $keyTwo];
-        self::setRelations($tableOne, $tableTwo, $relations);
+        $relations = [$modelOne => $keyOne, $modelTwo => $keyTwo];
+        self::setRelations($modelOne, $modelTwo, $relations);
     }
 
     /**
-     * setMultiRelations
+     * Setup multi relations
      *
-     * @param string $tableOne
-     * @param string $tableTwo
+     * @param string $modelOne
+     * @param string $modelTwo
      * @param array $relations
      * @return void
      */
-    public static function setRelations($tableOne, $tableTwo, $relations)
+    public static function setRelations($modelOne, $modelTwo, $relations)
     {
-        $name = [$tableOne, $tableTwo];
+        $name = [$modelOne, $modelTwo];
         sort($name);
         $name = join(':', $name);
         // create record in static variable
@@ -81,15 +81,15 @@ class Relations
     }
 
     /**
-     * getRelations
+     * Get relations
      *
-     * @param string $tableOne
-     * @param string $tableTwo
+     * @param string $modelOne
+     * @param string $modelTwo
      * @return array|false
      */
-    public static function getRelations($tableOne, $tableTwo)
+    public static function getRelations($modelOne, $modelTwo)
     {
-        $name = [$tableOne, $tableTwo];
+        $name = [$modelOne, $modelTwo];
         sort($name);
         $name = join(':', $name);
 
@@ -104,134 +104,152 @@ class Relations
      * findRelation
      *
      * @param Row $row
-     * @param string $tableRelation
+     * @param string $relation
      * @throws Exception\RelationNotFoundException
      * @return array
      */
-    public static function findRelation($row, $tableRelation)
+    public static function findRelation($row, $relation)
     {
-        $tableRow = $row->getTable()->getName();
+        $model = $row->getTable()->getModel();
 
-        if (!$relations = Relations::getRelations($tableRow, $tableRelation)) {
+        /** @var \Bluz\Db\Table $relationTable */
+        $relationTable = Relations::getModelClass($relation);
+        $relationTable::getInstance();
+
+        if (!$relations = Relations::getRelations($model, $relation)) {
             throw new RelationNotFoundException(
-                "Relations between table `$tableRow` and `$tableRelation` is not defined"
+                "Relations between model `$model` and `$relation` is not defined"
             );
         }
 
         // check many-to-many relations
         if (sizeof($relations) == 1) {
-            $relations = Relations::getRelations($tableRow, current($relations));
+            $relations = Relations::getRelations($model, current($relations));
         }
 
-        $field = $relations[$tableRow];
+        $field = $relations[$model];
         $key = $row->{$field};
 
-        return Relations::findRelations($tableRow, $tableRelation, [$key]);
+        return Relations::findRelations($model, $relation, [$key]);
     }
 
     /**
      * Find Relations between two tables
      *
-     * @param string $tableOne
-     * @param string $tableTwo target table
+     * @param string $modelOne
+     * @param string $modelTwo target table
      * @param array $keys from first table
      * @throws Exception\RelationNotFoundException
      * @return array
      */
-    public static function findRelations($tableOne, $tableTwo, $keys)
+    public static function findRelations($modelOne, $modelTwo, $keys)
     {
         $keys = (array) $keys;
-        if (!$relations = self::getRelations($tableOne, $tableTwo)) {
-            throw new RelationNotFoundException("Relations between table `$tableOne` and `$tableTwo` is not defined");
+        if (!$relations = self::getRelations($modelOne, $modelTwo)) {
+            throw new RelationNotFoundException("Relations between model `$modelOne` and `$modelTwo` is not defined");
         }
 
+        /* @var Table $tableOneClass name */
+        $tableOneClass = self::getModelClass($modelOne);
+
+        /* @var string $tableOneName */
+        $tableOneName = $tableOneClass::getInstance()->getName();
+
         /* @var Table $tableTwoClass name */
-        $tableTwoClass = self::getTableClass($tableTwo);
+        $tableTwoClass = self::getModelClass($modelTwo);
+
+        /* @var string $tableTwoName */
+        $tableTwoName = $tableTwoClass::getInstance()->getName();
+
         /* @var Query\Select $tableTwoSelect */
         $tableTwoSelect = $tableTwoClass::getInstance()->select();
 
         // check many to many relation
         if (is_int(array_keys($relations)[0])) {
             // many to many relation over third table
-            $tableThree = $relations[0];
+            $modelThree = $relations[0];
 
             // relations between target table and third table
-            $relations = self::getRelations($tableTwo, $tableThree);
+            $relations = self::getRelations($modelTwo, $modelThree);
+
+            /* @var Table $tableThreeClass name */
+            $tableThreeClass = self::getModelClass($modelThree);
+
+            /* @var string $tableTwoName */
+            $tableThreeName = $tableThreeClass::getInstance()->getName();
 
             // join it to query
             $tableTwoSelect->join(
-                $tableTwo,
-                $tableThree,
-                $tableThree,
-                $tableTwo.'.'.$relations[$tableTwo].'='.$tableThree.'.'.$relations[$tableThree]
+                $tableTwoName,
+                $tableThreeName,
+                $tableThreeName,
+                $tableTwoName.'.'.$relations[$modelTwo].'='.$tableThreeName.'.'.$relations[$modelThree]
             );
 
             // relations between source table and third table
-            $relations = self::getRelations($tableOne, $tableThree);
+            $relations = self::getRelations($modelOne, $modelThree);
 
             // join it to query
             $tableTwoSelect->join(
-                $tableThree,
-                $tableOne,
-                $tableOne,
-                $tableThree.'.'.$relations[$tableThree].'='.$tableOne.'.'.$relations[$tableOne]
+                $tableThreeName,
+                $tableOneName,
+                $tableOneName,
+                $tableThreeName.'.'.$relations[$modelThree].'='.$tableOneName.'.'.$relations[$modelOne]
             );
 
             // set source keys
-            $tableTwoSelect->where($tableOne.'.'. $relations[$tableOne] .' IN (?)', $keys);
+            $tableTwoSelect->where($tableOneName.'.'. $relations[$modelOne] .' IN (?)', $keys);
         } else {
             // set source keys
-            $tableTwoSelect->where($relations[$tableTwo] .' IN (?)', $keys);
+            $tableTwoSelect->where($relations[$modelTwo] .' IN (?)', $keys);
         }
         return $tableTwoSelect->execute();
     }
 
     /**
-     * Add information about Table classes
+     * Add information about model's classes
      *
-     * @param string $tableName
+     * @param string $model
      * @param string $className
      * @return void
      */
-    public static function addClassMap($tableName, $className)
+    public static function addClassMap($model, $className)
     {
-        self::$tableClassMap[$tableName] = $className;
+        self::$modelClassMap[$model] = $className;
     }
 
     /**
-     * Get information about Table classes
+     * Get information about Model classes
      *
-     * @param string $tableName
+     * @param string $model
      * @throws Exception\RelationNotFoundException
      * @return string
      */
-    public static function getTableClass($tableName)
+    public static function getModelClass($model)
     {
-        if (!isset(self::$tableClassMap[$tableName])) {
+        if (!isset(self::$modelClassMap[$model])) {
             // try to detect
-            $modelName = ucwords(str_replace(['-', '_'], ' ', $tableName));
-            $modelName = str_replace(' ', '', $modelName);
-            $className = '\\Application\\'.$modelName.'\\Table';
+            $className = '\\Application\\'.$model.'\\Table';
 
             if (!class_exists($className)) {
-                throw new RelationNotFoundException("Related class for table `$tableName` not found");
+                throw new RelationNotFoundException("Related class for model `$model` not found");
             }
-            self::$tableClassMap[$tableName] = $className;
+            self::$modelClassMap[$model] = $className;
         }
-        return self::$tableClassMap[$tableName];
+        return self::$modelClassMap[$model];
     }
 
     /**
      * Get information about Table classes
      *
-     * @param string $tableName
+     * @param string $modelName
      * @param array $data
      * @throws Exception\RelationNotFoundException
      * @return Row
      */
-    public static function createRow($tableName, $data)
+    public static function createRow($modelName, $data)
     {
-        $tableClass = self::getTableClass($tableName);
+        $tableClass = self::getModelClass($modelName);
 
         /* @var Table $tableClass name */
         return $tableClass::getInstance()->create($data);
@@ -249,16 +267,16 @@ class Relations
         $output = array();
         $map = array();
         foreach ($input as $i => $row) {
-            $table = '';
+            $model = '';
             foreach ($row as $key => $value) {
                 if (strpos($key, '__') === 0) {
-                    $table = substr($key, 2);
+                    $model = substr($key, 2);
                     continue;
                 }
-                $map[$i][$table][$key] = $value;
+                $map[$i][$model][$key] = $value;
             }
-            foreach ($map[$i] as $table => &$data) {
-                $data = self::createRow($table, $data);
+            foreach ($map[$i] as $model => &$data) {
+                $data = self::createRow($model, $data);
             }
             $output[] = $map;
         }

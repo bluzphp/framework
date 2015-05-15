@@ -25,13 +25,13 @@ use Bluz\Messages\Messages as Instance;
  *
  * @method   static Instance getInstance()
  *
- * @method   static Messages addNotice($text)
+ * @method   static Messages addNotice($message, ...$text)
  * @see      Bluz\Messages\Messages::addNotice()
  *
- * @method   static Messages addSuccess($text)
+ * @method   static Messages addSuccess($message, ...$text)
  * @see      Bluz\Messages\Messages::addSuccess()
  *
- * @method   static Messages addError($text)
+ * @method   static Messages addError($message, ...$text)
  * @see      Bluz\Messages\Messages::addError()
  *
  * @method   static integer count()

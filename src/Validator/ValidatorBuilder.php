@@ -41,16 +41,11 @@ class ValidatorBuilder
     /**
      * Add validator to builder
      * @param string $name
-     * @param Validator $validator,...
+     * @param Validator ...$validators
      * @return ValidatorBuilder
      */
-    public function add($name)
+    public function add($name, ...$validators)
     {
-        $validators = func_get_args();
-
-        // extract name, not used
-        array_shift($validators);
-
         if (isset($this->validators[$name])) {
             $this->validators[$name] = array_merge($this->validators[$name], $validators);
         } else {

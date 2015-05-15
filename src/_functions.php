@@ -6,6 +6,8 @@
  * @link https://github.com/bluzphp/framework
  */
 
+use Bluz\Translator\Translator;
+
 /**
  * Simple functions of framework
  * be careful with this way
@@ -23,9 +25,10 @@ if (!function_exists('debug')) {
      *     debug($_GET, $_POST, $_FILES);
      *
      * @codeCoverageIgnore
-     * @return void
+     *
+     * @param $params
      */
-    function debug()
+    function debug(...$params)
     {
         // check definition
         if (!getenv('BLUZ_DEBUG')) {
@@ -42,11 +45,11 @@ if (!function_exists('debug')) {
             } else {
                 debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
             }
-            var_dump(func_get_args());
+            var_dump($params);
         } else {
             echo '<div class="textleft clear"><pre>';
             debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
-            var_dump(func_get_args());
+            var_dump($params);
             echo '</pre></div>';
         }
     }
@@ -96,12 +99,13 @@ if (!function_exists('__')) {
      *     // equal to sprintf(gettext('Message to %s'), 'Username')
      *     __('Message to %s', 'Username');
      *
-     * @param string $message,...
+     * @param string $message
+     * @param string ...$text [optional]
      * @return string
      */
-    function __()
+    function __($message, ...$text)
     {
-        return call_user_func_array(['\Bluz\Translator\Translator', 'translate'], func_get_args());
+        return Translator::translate($message, ...$text);
     }
 }
 
@@ -120,12 +124,13 @@ if (!function_exists('_n')) {
      *
      * @param string $singular
      * @param string $plural
-     * @param integer $number,...
+     * @param integer $number
+     * @param string ...$text
      * @return string
      */
-    function _n()
+    function _n($singular, $plural, $number, ...$text)
     {
-        return call_user_func_array(['\Bluz\Translator\Translator', 'translatePlural'], func_get_args());
+        return Translator::translatePlural($singular, $plural, $number, ...$text);
     }
 }
 // @codingStandardsIgnoreEnd

@@ -47,6 +47,11 @@ abstract class Table
     protected $table;
 
     /**
+     * @var string The model name
+     */
+    protected $model;
+
+    /**
      * @var array Table columns
      */
     protected $columns = [];
@@ -77,7 +82,20 @@ abstract class Table
      */
     private function __construct()
     {
-        $tableClass = get_called_class();
+        $tableClass = static::class;
+
+        // autodetect model name
+        if (!$this->model) {
+            $model = substr($tableClass, strpos($tableClass, '\\') + 1);
+            $model = substr($model, 0, strpos($model, '\\', 2));
+            $this->model = $model;
+        }
+
+        // autodetect table name - camelCase to uppercase
+        if (!$this->table) {
+            $table = preg_replace('/(?<=\\w)(?=[A-Z])/', "_$1", $this->model);
+            $this->table = strtolower($table);
+        }
 
         // autodetect row class
         if (!$this->rowClass) {
@@ -85,20 +103,13 @@ abstract class Table
             $this->rowClass = $rowClass . 'Row';
         }
 
-        // autodetect table name - camelCase to uppercase
-        if (!$this->table) {
-            $tableClass = substr($tableClass, strpos($tableClass, '\\') + 1);
-            $tableClass = substr($tableClass, 0, strpos($tableClass, '\\', 2));
-
-            $table = preg_replace('/(?<=\\w)(?=[A-Z])/', "_$1", $tableClass);
-            $this->table = strtolower($table);
-        }
-
         // setup default select query
         if (empty($this->select)) {
             $this->select = "SELECT * ".
                 "FROM " . DbProxy::quoteIdentifier($this->table);
         }
+
+        Relations::addClassMap($this->model, $tableClass);
 
         $this->init();
     }
@@ -165,6 +176,15 @@ abstract class Table
     public function getName()
     {
         return $this->table;
+    }
+
+    /**
+     * Get model name
+     * @return string
+     */
+    public function getModel()
+    {
+        return $this->model;
     }
 
     /**
@@ -255,23 +275,22 @@ abstract class Table
      * Multiple rows by compound primary key
      *     Table::find([123, 'abc'], [234, 'def'], [345, 'ghi'])
      *
-     * @param mixed $key,... The value(s) of the primary keys.
+     * @param mixed ...$keys The value(s) of the primary keys.
      * @throws InvalidPrimaryKeyException if wrong count of values passed
      * @return array
      */
-    public static function find()
+    public static function find(...$keys)
     {
         $self = static::getInstance();
 
-        $args = func_get_args();
         $keyNames = array_values((array)$self->primary);
         $whereList = array();
-        foreach ($args as $keyValues) {
+        foreach ($keys as $keyValues) {
             $keyValues = (array)$keyValues;
             if (count($keyValues) < count($keyNames)) {
                 throw new InvalidPrimaryKeyException(
                     "Too few columns for the primary key.\n" .
-                    "Please check " . get_called_class() . " initialization or usage.\n" .
+                    "Please check " . static::class . " initialization or usage.\n" .
                     "Settings described at https://github.com/bluzphp/framework/wiki/Db-Table"
                 );
             }
@@ -279,7 +298,7 @@ abstract class Table
             if (count($keyValues) > count($keyNames)) {
                 throw new InvalidPrimaryKeyException(
                     "Too many columns for the primary key.\n" .
-                    "Please check " . get_called_class() . " initialization or usage.\n" .
+                    "Please check " . static::class . " initialization or usage.\n" .
                     "Settings described at https://github.com/bluzphp/framework/wiki/Db-Table"
                 );
             }
@@ -292,7 +311,7 @@ abstract class Table
                 $whereList[] = $keyValues;
             }
         }
-        return call_user_func_array(array($self, 'findWhere'), $whereList);
+        return $self::findWhere(...$whereList);
     }
 
     /**
@@ -321,24 +340,24 @@ abstract class Table
      *     // WHERE alias IN ('foo', 'bar')
      *     Table::findWhere(['alias'=> ['foo', 'bar']]);
      *
+     * @param  mixed ...$where
      * @throws \InvalidArgumentException
      * @throws Exception\DbException
      * @return array
      */
-    public static function findWhere()
+    public static function findWhere(...$where)
     {
         $self = static::getInstance();
-        $whereList = func_get_args();
 
         $whereClause = null;
         $whereParams = array();
 
-        if (sizeof($whereList) == 2 && is_string($whereList[0])) {
-            $whereClause = $whereList[0];
-            $whereParams = (array)$whereList[1];
-        } elseif (sizeof($whereList)) {
+        if (sizeof($where) == 2 && is_string($where[0])) {
+            $whereClause = $where[0];
+            $whereParams = (array)$where[1];
+        } elseif (sizeof($where)) {
             $whereOrTerms = array();
-            foreach ($whereList as $keyValueSets) {
+            foreach ($where as $keyValueSets) {
                 $whereAndTerms = array();
                 foreach ($keyValueSets as $keyName => $keyValue) {
                     if (is_array($keyValue)) {
@@ -366,7 +385,7 @@ abstract class Table
                 $whereOrTerms[] = '(' . implode(' AND ', $whereAndTerms) . ')';
             }
             $whereClause = '(' . implode(' OR ', $whereOrTerms) . ')';
-        } elseif (!sizeof($whereList)) {
+        } elseif (!sizeof($where)) {
             throw new DbException(
                 "Method `Table::findWhere()` can't return all records from table,\n".
                 "please use `Table::fetchAll()` instead"
@@ -561,5 +580,31 @@ abstract class Table
         $sql = "DELETE FROM $table"
             . " WHERE " . join(' AND ', self::prepareStatement($where));
         return DbProxy::query($sql, array_values($where));
+    }
+
+    /**
+     * Setup relation "one to one" or "one to many"
+     *
+     * @param string $key
+     * @param string $model
+     * @param string $foreign
+     * @return void
+     */
+    public function linkTo($key, $model, $foreign)
+    {
+        Relations::setRelation($this->model, $key, $model, $foreign);
+    }
+
+    /**
+     * Setup relation "many to many"
+     * [table1-key] [table1_key-table2-table3_key] [table3-key]
+     *
+     * @param string $model
+     * @param string $link
+     * @return void
+     */
+    public function linkToMany($model, $link)
+    {
+        Relations::setRelations($this->model, $model, [$link]);
     }
 }

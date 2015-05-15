@@ -62,11 +62,6 @@ class Row implements \JsonSerializable, \ArrayAccess
     protected $tableClass;
 
     /**
-     * @var array Primary row key(s)
-     */
-    protected $primary;
-
-    /**
      * This is set to a copy of $data when the data is fetched from
      * a database, specified as a new tuple in the constructor, or
      * when dirty data is posted to the database with save().
@@ -112,7 +107,20 @@ class Row implements \JsonSerializable, \ArrayAccess
      */
     public function __toString()
     {
-        return get_called_class();
+        return static::class;
+    }
+
+    /**
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return [
+            'TABLE' => $this->getTable()->getName(),
+            'DATA::CLEAN' => $this->clean,
+            'DATA::RAW' => $this->container,
+            'RELATIONS' => $this->relations
+        ];
     }
 
     /**
@@ -450,30 +458,46 @@ class Row implements \JsonSerializable, \ArrayAccess
      */
     public function setRelation(Row $row)
     {
-        $tableName = $row->getTable()->getName();
-        $this->relations[$tableName] = [$row];
+        $modelName = $row->getTable()->getModel();
+        $this->relations[$modelName] = [$row];
         return $this;
     }
 
     /**
      * Get relation by name
-     * @param string $tableName
+     * @param string $modelName
      * @throws RelationNotFoundException
-     * @return Row
+     * @return Row|false
      */
-    public function getRelation($tableName)
+    public function getRelation($modelName)
     {
-        if (!isset($this->relations[$tableName])) {
-            $relation = Relations::findRelation($this, $tableName);
+        $relations = $this->getRelations($modelName);
+        if (!empty($relations)) {
+            return current($relations);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Get relation by name
+     * @param string $modelName
+     * @throws RelationNotFoundException
+     * @return array
+     */
+    public function getRelations($modelName)
+    {
+        if (!isset($this->relations[$modelName])) {
+            $relation = Relations::findRelation($this, $modelName);
             if (empty($relation)) {
                 throw new RelationNotFoundException(
-                    'Can\'t found relation data for model "' . $tableName . '"'
+                    'Can\'t found relation data for model "' . $modelName . '"'
                 );
             } else {
-                $this->relations[$tableName] = $relation;
+                $this->relations[$modelName] = $relation;
             }
         }
 
-        return $this->relations[$tableName];
+        return $this->relations[$modelName];
     }
 }

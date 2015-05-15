@@ -148,9 +148,10 @@ class Translator
      *
      * @api
      * @param string $message
+     * @param string ...$text
      * @return string
      */
-    public static function translate($message)
+    public static function translate($message, ...$text)
     {
         if (empty($message)) {
             return $message;
@@ -161,8 +162,7 @@ class Translator
         }
 
         if (func_num_args() > 1) {
-            $args = array_slice(func_get_args(), 1);
-            $message = vsprintf($message, $args);
+            $message = vsprintf($message, $text);
         }
 
         return $message;
@@ -184,9 +184,10 @@ class Translator
      * @param string $singular
      * @param string $plural
      * @param integer $number
+     * @param string ...$text
      * @return string
      */
-    public static function translatePlural($singular, $plural, $number)
+    public static function translatePlural($singular, $plural, $number, ...$text)
     {
         if (function_exists('ngettext')) {
             $message = ngettext($singular, $plural, $number);
@@ -195,8 +196,9 @@ class Translator
         }
 
         if (func_num_args() > 3) {
-            $args = array_slice(func_get_args(), 3);
-            $message = vsprintf($message, $args);
+            // first element is number
+            array_unshift($text, $number);
+            $message = vsprintf($message, $text);
         }
 
         return $message;

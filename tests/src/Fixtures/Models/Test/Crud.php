@@ -55,7 +55,7 @@ class Crud extends \Bluz\Crud\Table
 
         if ($limit) {
             $selectPart = $select->getQueryPart('select');
-            $selectPart[0] = 'SQL_CALC_FOUND_ROWS ' . current($selectPart);
+            $selectPart = 'SQL_CALC_FOUND_ROWS ' . current($selectPart);
             $select->select($selectPart);
 
             $select->setLimit($limit);

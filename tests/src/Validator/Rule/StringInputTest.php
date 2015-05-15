@@ -10,45 +10,38 @@
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
-use Bluz\Validator\Rule\FloatRule;
+use Bluz\Validator\Rule\StringInput;
 
 /**
- * Class FloatTest
+ * Class StringTest
  * @package Bluz\Tests\Validator\Rule
  */
-class FloatTest extends Tests\TestCase
+class StringInputTest extends Tests\TestCase
 {
     /**
-     * @var \Bluz\Validator\Rule\FloatRule
+     * @var \Bluz\Validator\Rule\StringInput
      */
     protected $validator;
 
-    /**
-     * Setup validator instance
-     */
     protected function setUp()
     {
-        parent::setUp();
-        $this->validator = new FloatRule();
+        $this->validator = new StringInput;
     }
 
     /**
      * @dataProvider providerForPass
      */
-    public function testFloatNumbersShouldPass($input)
+    public function testString($input)
     {
         $this->assertTrue($this->validator->validate($input));
-        $this->assertTrue($this->validator->assert($input));
     }
 
     /**
      * @dataProvider providerForFail
-     * @expectedException \Bluz\Validator\Exception\ValidatorException
      */
-    public function testNotFloatNumbersShouldFail($input)
+    public function testNotString($input)
     {
         $this->assertFalse($this->validator->validate($input));
-        $this->assertFalse($this->validator->assert($input));
     }
 
     /**
@@ -57,15 +50,8 @@ class FloatTest extends Tests\TestCase
     public function providerForPass()
     {
         return array(
-            array(165),
-            array(1),
-            array(0),
-            array(0.0),
-            array('1'),
-            array('19347e12'),
-            array(165.0),
+            array(''),
             array('165.7'),
-            array(1e12),
         );
     }
 
@@ -76,10 +62,9 @@ class FloatTest extends Tests\TestCase
     {
         return array(
             array(null),
-            array(''),
-            array('a'),
-            array(' '),
-            array('Foo'),
+            array(array()),
+            array(new \stdClass),
+            array(150)
         );
     }
 }

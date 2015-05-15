@@ -15,7 +15,7 @@ namespace Bluz\Validator\Rule;
  * Class Float
  * @package Bluz\Validator\Rule
  */
-class FloatRule extends AbstractRule
+class FloatInput extends AbstractRule
 {
     /**
      * @var string Error template

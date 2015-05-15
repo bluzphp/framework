@@ -100,7 +100,7 @@ if (!function_exists('__')) {
      *     __('Message to %s', 'Username');
      *
      * @param string $message
-     * @param string ...$text [optional]
+     * @param string[] $text [optional]
      * @return string
      */
     function __($message, ...$text)
@@ -125,7 +125,7 @@ if (!function_exists('_n')) {
      * @param string $singular
      * @param string $plural
      * @param integer $number
-     * @param string ...$text
+     * @param string[] $text [optional]
      * @return string
      */
     function _n($singular, $plural, $number, ...$text)

@@ -117,7 +117,7 @@ class FileUpload
      *
      * @param array $fileInfo
      * @param string $fileKey
-     * @param string ...$keys
+     * @param string[] $keys
      *
      * @return File instance
      */
@@ -148,7 +148,7 @@ class FileUpload
      * Parse array
      *
      * @param array|string $paramArr
-     * @param array|null $argList
+     * @param string[] $argList
      *
      * @return string|array
      */

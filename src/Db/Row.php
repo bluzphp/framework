@@ -98,7 +98,7 @@ class Row implements \JsonSerializable, \ArrayAccess
      */
     public function __sleep()
     {
-        return array('primary', 'container', 'clean');
+        return array('container', 'clean');
     }
 
     /**

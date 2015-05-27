@@ -155,7 +155,11 @@ class Session
      */
     public function regenerateId($deleteOldSession = true)
     {
-        return session_regenerate_id((bool) $deleteOldSession);
+        if ($this->sessionExists()) {
+            return session_regenerate_id((bool) $deleteOldSession);
+        } else {
+            return false;
+        }
     }
 
     /**

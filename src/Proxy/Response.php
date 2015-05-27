@@ -73,7 +73,7 @@ use Bluz\View\View;
  * @method   static void  clearBody()
  * @see      Bluz\Response\AbstractResponse::clearBody()
  *
- * @method   static void  setCookie()
+ * @method   static void setCookie($name, $value = null, $expire = 0, $path = '/', $domain = null, $s = null, $h = null)
  * @see      Bluz\Response\AbstractResponse::setCookie($name, $value = null, $expire = 0, $path = '/', $domain = null,
  *              $secure = null, $httpOnly = null)
  * @method   static array getCookie()

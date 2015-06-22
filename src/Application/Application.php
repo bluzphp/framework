@@ -217,7 +217,7 @@ class Application
 
     /**
      * Initialize process
-     * @param string $environment Array format only!
+     * @param string $environment
      * @throws ApplicationException
      * @return void
      */

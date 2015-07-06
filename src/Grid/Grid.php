@@ -234,7 +234,7 @@ abstract class Grid
     /**
      * Set module
      *
-     * @param $module
+     * @param string $module
      * @return void
      */
     public function setModule($module)
@@ -255,7 +255,7 @@ abstract class Grid
     /**
      * Set controller
      *
-     * @param $controller
+     * @param string $controller
      * @return void
      */
     public function setController($controller)
@@ -478,7 +478,7 @@ abstract class Grid
     /**
      * Set allow orders
      *
-     * @param array $orders
+     * @param string[] $orders
      * @return void
      */
     public function setAllowOrders(array $orders = [])
@@ -581,7 +581,7 @@ abstract class Grid
     /**
      * Set allowed filters
      *
-     * @param array $filters
+     * @param string[] $filters
      * @return void
      */
     public function setAllowFilters(array $filters = array())

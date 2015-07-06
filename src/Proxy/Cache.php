@@ -71,7 +71,7 @@ class Cache extends AbstractProxy
     protected static function initInstance()
     {
         $config = Config::getData('cache');
-        if (!$config or !isset($config['enabled']) or !$config['enabled']) {
+        if (!$config || !isset($config['enabled']) || !$config['enabled']) {
             return new Nil();
         } else {
             $instance = new Instance();

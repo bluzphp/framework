@@ -73,8 +73,8 @@ class Length extends AbstractCompareRule
             return false;
         }
 
-        return (is_null($this->minValue) or $this->less($this->minValue, $length))
-            && (is_null($this->maxValue) or $this->less($length, $this->maxValue));
+        return (is_null($this->minValue) || $this->less($this->minValue, $length))
+            && (is_null($this->maxValue) || $this->less($length, $this->maxValue));
     }
 
     /**

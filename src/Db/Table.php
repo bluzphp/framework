@@ -532,7 +532,7 @@ abstract class Table
 
         $where = $self->filterColumns($where);
 
-        if (!sizeof($data) or !sizeof($where)) {
+        if (!sizeof($data) || !sizeof($where)) {
             throw new DbException(
                 "Invalid field names of table `{$self->table}`. Please check use of `update()` method"
             );

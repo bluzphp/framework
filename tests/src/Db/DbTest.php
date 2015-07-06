@@ -13,7 +13,6 @@ use Bluz;
 use Bluz\Db;
 use Bluz\Proxy;
 use Bluz\Tests;
-use Bluz\Tests\Db\Fixtures;
 
 /**
  * Test class for Db.

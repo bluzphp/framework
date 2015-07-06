@@ -46,7 +46,7 @@ class Email extends AbstractRule
         if (is_string($input) && filter_var($input, FILTER_VALIDATE_EMAIL)) {
             list(, $domain) = explode("@", $input, 2);
             if ($this->checkDns) {
-                return checkdnsrr($domain, "MX") or checkdnsrr($domain, "A");
+                return checkdnsrr($domain, "MX") || checkdnsrr($domain, "A");
             } else {
                 return true;
             }

@@ -161,7 +161,7 @@ class View implements ViewInterface, \JsonSerializable
         ob_start();
         try {
             if (!file_exists($this->path . '/' . $this->template)
-                or !is_file($this->path . '/' . $this->template)) {
+                || !is_file($this->path . '/' . $this->template)) {
                 throw new ViewException("Template '{$this->template}' not found");
             }
             extract($this->container);

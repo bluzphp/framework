@@ -37,15 +37,11 @@ class Select extends AbstractBuilder
     /**
      * {@inheritdoc}
      *
-     * @param null $fetchType
+     * @param integer|string|object $fetchType
      * @return integer|string|array
      */
-    public function execute($fetchType = null)
+    public function execute($fetchType = \PDO::FETCH_ASSOC)
     {
-        if (!$fetchType) {
-            $fetchType = $this->fetchType;
-        }
-
         switch ($fetchType) {
             case (!is_int($fetchType)):
                 return Db::fetchObjects($this->getSQL(), $this->params, $fetchType);
@@ -110,7 +106,7 @@ class Select extends AbstractBuilder
      *         ->from('users', 'u')
      *         ->leftJoin('u', 'phonenumbers', 'p', 'u.id = p.user_id');
      *
-     * @param mixed ...$select The selection expressions
+     * @param string $select The selection expressions
      * @return Select instance
      */
     public function select(...$select)
@@ -129,7 +125,7 @@ class Select extends AbstractBuilder
      *         ->from('users', 'u')
      *         ->leftJoin('u', 'phonenumbers', 'u.id = p.user_id');
      *
-     * @param mixed ...$select The selection expression
+     * @param string $select The selection expression
      * @return Select instance
      */
     public function addSelect($select)
@@ -271,7 +267,7 @@ class Select extends AbstractBuilder
      *         ->from('users', 'u')
      *         ->groupBy('u.id');
      *
-     * @param array ...$groupBy The grouping expression
+     * @param string $groupBy The grouping expression
      * @return Select instance
      */
     public function groupBy(...$groupBy)
@@ -294,7 +290,7 @@ class Select extends AbstractBuilder
      *         ->groupBy('u.lastLogin');
      *         ->addGroupBy('u.createdAt')
      *
-     * @param mixed ...$groupBy The grouping expression
+     * @param string $groupBy The grouping expression
      * @return Select instance
      */
     public function addGroupBy(...$groupBy)
@@ -310,7 +306,7 @@ class Select extends AbstractBuilder
      * Specifies a restriction over the groups of the query.
      * Replaces any previous having restrictions, if any.
      *
-     * @param mixed ...$condition The query restriction predicates
+     * @param string $condition The query restriction predicates
      * @return Select
      */
     public function having(...$condition)
@@ -323,7 +319,7 @@ class Select extends AbstractBuilder
      * Adds a restriction over the groups of the query, forming a logical
      * conjunction with any existing having restrictions
      *
-     * @param mixed ...$condition The query restriction predicates
+     * @param string $condition The query restriction predicates
      * @return Select
      */
     public function andHaving(...$condition)
@@ -344,7 +340,7 @@ class Select extends AbstractBuilder
      * Adds a restriction over the groups of the query, forming a logical
      * disjunction with any existing having restrictions.
      *
-     * @param mixed ...$condition The query restriction predicates
+     * @param string $condition The query restriction predicates
      * @return Select
      */
     public function orHaving(...$condition)

@@ -49,7 +49,7 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
         }
 
         // check Redis settings
-        if (!is_array($settings) or empty($settings)) {
+        if (!is_array($settings) || empty($settings)) {
             throw new ConfigurationException(
                 "Redis configuration is missed. Please check 'session' configuration section"
             );

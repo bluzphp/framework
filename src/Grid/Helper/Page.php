@@ -21,7 +21,7 @@ return
         /**
          * @var Grid\Grid $this
          */
-        if ($page < 1 or $page > $this->pages()) {
+        if ($page < 1 || $page > $this->pages()) {
             return null;
         }
 

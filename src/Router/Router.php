@@ -77,7 +77,7 @@ class Router
         $routers = Cache::get('router:routers');
         $reverse = Cache::get('router:reverse');
 
-        if (!$routers or !$reverse) {
+        if (!$routers || !$reverse) {
             $routers = array();
             $reverse = array();
             $path = Application::getInstance()->getPath() . '/modules/*/controllers/*.php';

@@ -218,7 +218,7 @@ class Session
      */
     public function destroy()
     {
-        if (!$this->cookieExists() or !$this->sessionExists()) {
+        if (!$this->cookieExists() || !$this->sessionExists()) {
             return;
         }
 
@@ -262,7 +262,7 @@ class Session
      */
     protected function initAdapter()
     {
-        if (is_null($this->adapter) or $this->adapter === 'files') {
+        if (is_null($this->adapter) || $this->adapter === 'files') {
             // try to apply settings
             if ($settings = $this->getOption('settings', 'files')) {
                 $this->setSavePath($settings['save_path']);
@@ -270,7 +270,7 @@ class Session
             return true;
         } elseif (is_string($this->adapter)) {
             $adapterClass = '\\Bluz\\Session\\Adapter\\'.ucfirst($this->adapter);
-            if (!class_exists($adapterClass) or !is_subclass_of($adapterClass, '\SessionHandlerInterface')) {
+            if (!class_exists($adapterClass) || !is_subclass_of($adapterClass, '\SessionHandlerInterface')) {
                 throw new ComponentException("Class for session adapter `{$this->adapter}` not found");
             }
             $settings = $this->getOption('settings', $this->adapter) ?: array();
@@ -334,7 +334,7 @@ class Session
     protected function setSavePath($savePath)
     {
         if (!is_dir($savePath)
-            or !is_writable($savePath)
+            || !is_writable($savePath)
         ) {
             throw new ComponentException('Session path is not writable');
         }

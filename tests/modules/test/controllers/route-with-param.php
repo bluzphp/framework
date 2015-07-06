@@ -7,8 +7,6 @@
  */
 namespace Application;
 
-use Bluz;
-
 return
 /**
  * @route /test/param/$

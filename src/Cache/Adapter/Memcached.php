@@ -45,7 +45,7 @@ class Memcached extends AbstractAdapter
         }
 
         // check Memcached settings
-        if (!is_array($settings) or empty($settings) or !isset($settings['servers'])) {
+        if (!is_array($settings) || empty($settings) || !isset($settings['servers'])) {
             throw new ConfigurationException(
                 "Memcached configuration is missed. Please check 'cache' configuration section"
             );

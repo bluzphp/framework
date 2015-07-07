@@ -30,12 +30,11 @@ class Mailer
     use Options;
 
     /**
-     * checkOptions
-     *
+     * Check Mailer configuration
      * @throws ConfigurationException
-     * @return bool
+     * @return void
      */
-    protected function checkOptions()
+    protected function initOptions()
     {
         if (!$this->getOption('from', 'email')) {
             throw new ConfigurationException(
@@ -44,7 +43,6 @@ class Mailer
                 "https://github.com/bluzphp/framework/wiki/Mailer</a>"
             );
         }
-        return true;
     }
 
     /**

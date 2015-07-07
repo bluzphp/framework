@@ -85,7 +85,6 @@ class View implements ViewInterface, \JsonSerializable
 
     /**
      * Create view instance, initial default helper path
-     * @return self
      */
     public function __construct()
     {

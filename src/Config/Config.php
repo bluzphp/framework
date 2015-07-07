@@ -150,10 +150,8 @@ class Config
         // return part of configuration
         if (isset($this->config[$key])) {
             // return section of configuration
-            if (!is_null($section)
-                && isset($this->config[$key][$section])
-            ) {
-                return $this->config[$key][$section];
+            if (!is_null($section)) {
+                return isset($this->config[$key][$section])?$this->config[$key][$section]:null;
             } else {
                 return $this->config[$key];
             }

@@ -377,7 +377,7 @@ class Select extends AbstractBuilder
      * Generate SQL string for JOINs
      *
      * @internal
-     * @param string $fromAlias,... Alias of table
+     * @param string $fromAlias Alias of table
      * @return string
      */
     protected function getSQLForJoins($fromAlias)

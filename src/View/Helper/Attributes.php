@@ -30,13 +30,15 @@ return
         $result = [];
         foreach ($attributes as $key => $value) {
             if (null === $value) {
-                // skip null values
-                // ['value'=>null] => ''
+                // skip empty values
+                //  input: ['value'=>null]
+                //  output: ''
                 continue;
             }
             if (is_int($key)) {
                 // allow non-associative keys
-                // ['checked'] => 'checked="checked"'
+                //  input: ['checked']
+                //  output: 'checked="checked"'
                 $key = $value;
             }
             $result[] = $key . '="' . htmlspecialchars((string)$value, ENT_QUOTES) . '"';

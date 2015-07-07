@@ -41,9 +41,9 @@ class Layout extends View
     protected $content;
 
     /**
-     * __construct
-     *
-     * @return self
+     * Layout constructor
+     *  - init Layout helpers
+     *  - call parent View constructor
      */
     public function __construct()
     {

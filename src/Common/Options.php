@@ -51,14 +51,14 @@ trait Options
     /**
      * Get option by key
      * @param string $key
-     * @param string|null $subKey
+     * @param string|null $section
      * @return mixed
      */
-    public function getOption($key, $subKey = null)
+    public function getOption($key, $section = null)
     {
         if (isset($this->options[$key])) {
-            if (!is_null($subKey)) {
-                return isset($this->options[$key][$subKey])?$this->options[$key][$subKey]:null;
+            if (!is_null($section)) {
+                return isset($this->options[$key][$section])?$this->options[$key][$section]:null;
             } else {
                 return $this->options[$key];
             }
@@ -112,27 +112,14 @@ trait Options
             $this->setOption($key, $value);
         }
 
-        // check options
-        if ($this->checkOptions()) {
-            // initialization
-            $this->initOptions();
-        }
+        // check and initialize options
+        $this->initOptions();
 
         return $this;
     }
 
     /**
-     * Check options in package
-     * @throws \Bluz\Config\ConfigException
-     * @return bool
-     */
-    protected function checkOptions()
-    {
-        return true;
-    }
-
-    /**
-     * Initialization for options
+     * Check and initialize options in package
      * @throws \Bluz\Config\ConfigException
      * @return void
      */

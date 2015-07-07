@@ -37,10 +37,8 @@ class ArraySource extends AbstractSource
         }
 
         $this->source = $source;
-
         return $this;
     }
-
 
     /**
      * process
@@ -58,7 +56,7 @@ class ArraySource extends AbstractSource
                 function ($row) use ($settings) {
                     foreach ($settings['filters'] as $column => $filters) {
                         foreach ($filters as $filter => $value) {
-                            // switch statement for $filter
+                            // switch statement for filter
                             switch ($filter) {
                                 case Grid\Grid::FILTER_EQ:
                                     if ($row[$column] != $value) {

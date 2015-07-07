@@ -78,7 +78,6 @@ abstract class Table
 
     /**
      * Create and initialize Table instance
-     * @return Table
      */
     private function __construct()
     {

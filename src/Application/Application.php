@@ -348,9 +348,8 @@ class Application
 
             // check header "accept" for catch JSON(P) or XML requests, and switch presentation
             // it's some magic for AJAX and REST requests
-            if ($produces = $reflection->getAccept()
-                && $accept = $this->getRequest()->getAccept()) {
-                // switch statement for $accept
+            if ($reflection->getAccept() && $accept = $this->getRequest()->getAccept()) {
+                // switch statement for Accept header
                 switch ($accept) {
                     case Request::ACCEPT_HTML:
                         // with layout
@@ -368,7 +367,6 @@ class Application
                     default:
                         // not acceptable MIME type
                         throw new NotAcceptableException();
-                        break;
                 }
             }
 
@@ -562,25 +560,25 @@ class Application
 
         $result = $controllerClosure(...$params);
 
-        // switch statement for $result
+        // switch statement for result of Closure run
         switch (true) {
             case ($result === false):
-                // return false is equal to disable view and layout
+                // return "false" is equal to disable view and layout
                 $this->useLayout(false);
                 return function () {
                     // just empty closure
                 };
             case is_callable($result):
             case is_object($result):
-                // return closure is replace logic of controller
+                // return callable structure (closure or object) for replace logic of controller
                 // or return any class
                 return $result;
             case is_string($result):
-                // return string is equal to change view template
+                // return string variable is equal to change view template
                 $view->setTemplate($result);
                 break;
             case is_array($result):
-                // return array is equal to setup view
+                // return associative array is equal to setup view data
                 $view->setFromArray($result);
                 break;
         }

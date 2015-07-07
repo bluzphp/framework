@@ -163,11 +163,17 @@ class Db
      * Prepare SQL query and return PDO Statement
      * @api
      * @param string $sql
+     * @param array $params
      * @return \PDOStatement
      */
-    protected function prepare($sql)
+    protected function prepare($sql, $params)
     {
-        return $this->handler()->prepare($sql);
+        $stmt = $this->handler()->prepare($sql);
+        $stmt->execute($params);
+
+        $this->log($sql, $params);
+
+        return $stmt;
     }
 
     /**
@@ -197,12 +203,10 @@ class Db
         switch ($this->connect['type']) {
             case 'mysql':
                 return '`' . str_replace('`', '``', $identifier) . '`';
-                break;
             case 'postgresql':
             case 'sqlite':
             default:
                 return '"' . str_replace('"', '\\' . '"', $identifier) . '"';
-                break;
         }
     }
 
@@ -226,7 +230,7 @@ class Db
      */
     public function query($sql, $params = array(), $types = array())
     {
-        $stmt = $this->prepare($sql);
+        $stmt = $this->handler()->prepare($sql);
         foreach ($params as $key => &$param) {
             $stmt->bindParam(
                 (is_int($key)?$key+1:":".$key),
@@ -234,10 +238,8 @@ class Db
                 isset($types[$key])?$types[$key]:\PDO::PARAM_STR
             );
         }
-
         $this->log($sql, $params);
         $stmt->execute($params);
-
         $this->log("ok");
         return $stmt->rowCount();
     }
@@ -245,7 +247,7 @@ class Db
     /**
      * Create new query select builder
      * @api
-     * @param string[] $select The selection expressions
+     * @param string $select The selection expressions
      * @return Query\Select
      */
     public function select(...$select)
@@ -311,10 +313,7 @@ class Db
      */
     public function fetchOne($sql, $params = array())
     {
-        $stmt = $this->prepare($sql);
-
-        $this->log($sql, $params);
-        $stmt->execute($params);
+        $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetch(\PDO::FETCH_COLUMN);
 
         $this->log("ok");
@@ -342,10 +341,7 @@ class Db
      */
     public function fetchRow($sql, $params = array())
     {
-        $stmt = $this->prepare($sql);
-
-        $this->log($sql, $params);
-        $stmt->execute($params);
+        $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         $this->log("ok");
@@ -369,10 +365,7 @@ class Db
      */
     public function fetchAll($sql, $params = array())
     {
-        $stmt = $this->prepare($sql);
-
-        $this->log($sql, $params);
-        $stmt->execute($params);
+        $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         $this->log("ok");
@@ -393,10 +386,7 @@ class Db
      */
     public function fetchColumn($sql, $params = array())
     {
-        $stmt = $this->prepare($sql);
-
-        $this->log($sql, $params);
-        $stmt->execute($params);
+        $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetchAll(\PDO::FETCH_COLUMN);
 
         $this->log("ok");
@@ -418,10 +408,7 @@ class Db
      */
     public function fetchGroup($sql, $params = array())
     {
-        $stmt = $this->prepare($sql);
-
-        $this->log($sql, $params);
-        $stmt->execute($params);
+        $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetchAll(\PDO::FETCH_ASSOC | \PDO::FETCH_GROUP);
 
         $this->log("ok");
@@ -442,10 +429,7 @@ class Db
      */
     public function fetchColumnGroup($sql, $params = array())
     {
-        $stmt = $this->prepare($sql);
-
-        $this->log($sql, $params);
-        $stmt->execute($params);
+        $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetchAll(\PDO::FETCH_COLUMN | \PDO::FETCH_GROUP);
 
         $this->log("ok");
@@ -466,10 +450,7 @@ class Db
      */
     public function fetchPairs($sql, $params = array())
     {
-        $stmt = $this->prepare($sql);
-
-        $this->log($sql, $params);
-        $stmt->execute($params);
+        $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetchAll(\PDO::FETCH_KEY_PAIR);
 
         $this->log("ok");
@@ -498,10 +479,7 @@ class Db
      */
     public function fetchObject($sql, $params = array(), $object = "stdClass")
     {
-        $stmt = $this->prepare($sql);
-
-        $this->log($sql, $params);
-        $stmt->execute($params);
+        $stmt = $this->prepare($sql, $params);
 
         if (is_string($object)) {
             // some class name
@@ -532,16 +510,13 @@ class Db
      */
     public function fetchObjects($sql, $params = array(), $object = null)
     {
-        $stmt = $this->prepare($sql);
-
-        $this->log($sql, $params);
-        $stmt->execute($params);
+        $stmt = $this->prepare($sql, $params);
 
         if (is_string($object)) {
-            // some class name
+            // fetch to some class by name
             $result = $stmt->fetchAll(\PDO::FETCH_CLASS, $object);
         } else {
-            // StdClass
+            // fetch to StdClass
             $result = $stmt->fetchAll(\PDO::FETCH_OBJ);
         }
 
@@ -567,10 +542,7 @@ class Db
      */
     public function fetchRelations($sql, $params = array())
     {
-        $stmt = $this->prepare($sql);
-
-        $this->log($sql, $params);
-        $stmt->execute($params);
+        $stmt = $this->prepare($sql, $params);
 
         $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 

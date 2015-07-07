@@ -235,9 +235,7 @@ class File
      */
     public function moveTo($path)
     {
-        if (!$this->tmp or
-            !file_exists($this->tmp)
-        ) {
+        if (!$this->tmp || !file_exists($this->tmp)) {
             throw new RequestException("Temporary file is not exists, maybe you already moved it");
         }
 

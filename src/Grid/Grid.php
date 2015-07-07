@@ -155,10 +155,9 @@ abstract class Grid
     protected $allowFilters = array();
 
     /**
-     * __construct
+     * Grid constructor
      *
      * @param array $options
-     * @return Grid
      */
     public function __construct($options = null)
     {
@@ -180,7 +179,7 @@ abstract class Grid
     }
 
     /**
-     * init
+     * Initialize Grid
      *
      * @return Grid
      */
@@ -607,14 +606,14 @@ abstract class Grid
      */
     public function checkFilter($filter)
     {
-        if ($filter == self::FILTER_EQ or
-            $filter == self::FILTER_NE or
-            $filter == self::FILTER_GT or
-            $filter == self::FILTER_GE or
-            $filter == self::FILTER_LT or
-            $filter == self::FILTER_LE or
-            $filter == self::FILTER_ENUM or
-            $filter == self::FILTER_NUM or
+        if ($filter == self::FILTER_EQ ||
+            $filter == self::FILTER_NE ||
+            $filter == self::FILTER_GT ||
+            $filter == self::FILTER_GE ||
+            $filter == self::FILTER_LT ||
+            $filter == self::FILTER_LE ||
+            $filter == self::FILTER_NUM ||
+            $filter == self::FILTER_ENUM ||
             $filter == self::FILTER_LIKE
         ) {
             return true;

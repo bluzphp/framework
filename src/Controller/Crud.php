@@ -44,24 +44,18 @@ class Crud extends AbstractController
         // switch by method
         switch ($this->method) {
             case Request::METHOD_GET:
-                $row = $this->readOne($primary);
-
-                $result = ['row' => $row];
-                if (!empty($primary)) {
-                    // update form
-                    $result['method'] = Request::METHOD_PUT;
-                } else {
-                    // create form
-                    $result['method'] = Request::METHOD_POST;
-                }
+                $result = [
+                    'row' => $this->readOne($primary),
+                    'method' => empty($primary)?Request::METHOD_POST:Request::METHOD_PUT
+                ];
                 break;
             case Request::METHOD_POST:
                 try {
+                    // Result is Primary Key(s)
                     $result = $this->createOne($this->data);
                     if (!Request::isXmlHttpRequest()) {
-                        $row = $this->readOne($result);
                         $result = [
-                            'row'    => $row,
+                            'row'    => $this->readOne($result),
                             'method' => Request::METHOD_PUT
                         ];
                     }
@@ -78,11 +72,11 @@ class Crud extends AbstractController
             case Request::METHOD_PATCH:
             case Request::METHOD_PUT:
                 try {
+                    // Result is numbers of affected rows
                     $result = $this->updateOne($primary, $this->data);
                     if (!Request::isXmlHttpRequest()) {
-                        $row = $this->readOne($primary);
                         $result = [
-                            'row'    => $row,
+                            'row'    => $this->readOne($primary),
                             'method' => $this->getMethod()
                         ];
                     }
@@ -97,6 +91,7 @@ class Crud extends AbstractController
                 }
                 break;
             case Request::METHOD_DELETE:
+                // Result is numbers of affected rows
                 $result = $this->deleteOne($primary);
                 break;
             default:

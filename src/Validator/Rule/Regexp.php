@@ -30,7 +30,6 @@ class Regexp extends AbstractRule
     /**
      * Check string by regular expression
      * @param string $regexp
-     * @return self
      */
     public function __construct($regexp)
     {

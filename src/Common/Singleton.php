@@ -29,7 +29,7 @@ trait Singleton
 
     /**
      * Get instance
-     * @return static::$instance
+     * @return static
      */
     final public static function getInstance()
     {

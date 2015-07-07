@@ -78,7 +78,6 @@ class Row implements \JsonSerializable, \ArrayAccess
     /**
      * Create Row instance
      * @param array $data
-     * @return Row
      */
     public function __construct($data = array())
     {

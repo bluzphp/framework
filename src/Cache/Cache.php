@@ -65,9 +65,9 @@ class Cache implements CacheInterface, TagableInterface
     /**
      * Check Cache configuration
      * @throws ConfigurationException
-     * @return bool
+     * @return void
      */
-    protected function checkOptions()
+    protected function initOptions()
     {
         // check cache Adapter instance and settings for initialize it
         if (!$this->getOption('adapter')) {
@@ -77,7 +77,6 @@ class Cache implements CacheInterface, TagableInterface
                 "https://github.com/bluzphp/framework/wiki/Cache</a>"
             );
         }
-        return true;
     }
 
     /**

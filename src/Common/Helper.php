@@ -78,7 +78,7 @@ trait Helper
         // Setup key
         $key = static::class .':'. $method;
 
-        // Call helper function (or class)
+        // Call callable helper structure (function or class)
         if (isset($this->helpers[$key]) && is_callable($this->helpers[$key])) {
             return $this->helpers[$key](...$args);
         }

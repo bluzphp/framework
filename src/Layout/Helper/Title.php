@@ -30,7 +30,7 @@ return
             return Registry::get('layout:title');
         } else {
             $oldTitle = Registry::get('layout:title');
-            // switch statement for $position
+            // switch statement for text position
             switch ($position) {
                 case Layout::POS_PREPEND:
                     $result = $title . (!$oldTitle ? : $separator . $oldTitle);

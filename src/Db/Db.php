@@ -60,6 +60,12 @@ class Db
     protected $handler;
 
     /**
+     * Part time
+     * @var float
+     */
+    protected $timer;
+
+    /**
      * Setup connection
      *
      * Just init
@@ -138,7 +144,7 @@ class Db
                     $this->handler->setAttribute($attribute, $value);
                 }
 
-                $this->log("ok");
+                $this->ok();
             } catch (\Exception $e) {
                 throw new DbException('Attempt connection to database is failed: '. $e->getMessage());
             }
@@ -240,7 +246,7 @@ class Db
         }
         $this->log($sql, $params);
         $stmt->execute($params);
-        $this->log("ok");
+        $this->ok();
         return $stmt->rowCount();
     }
 
@@ -316,7 +322,7 @@ class Db
         $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetch(\PDO::FETCH_COLUMN);
 
-        $this->log("ok");
+        $this->ok();
         return $result;
     }
 
@@ -344,7 +350,7 @@ class Db
         $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-        $this->log("ok");
+        $this->ok();
         return $result;
     }
 
@@ -368,7 +374,7 @@ class Db
         $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-        $this->log("ok");
+        $this->ok();
         return $result;
     }
 
@@ -389,7 +395,7 @@ class Db
         $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetchAll(\PDO::FETCH_COLUMN);
 
-        $this->log("ok");
+        $this->ok();
         return $result;
     }
 
@@ -411,7 +417,7 @@ class Db
         $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetchAll(\PDO::FETCH_ASSOC | \PDO::FETCH_GROUP);
 
-        $this->log("ok");
+        $this->ok();
         return $result;
     }
 
@@ -432,7 +438,7 @@ class Db
         $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetchAll(\PDO::FETCH_COLUMN | \PDO::FETCH_GROUP);
 
-        $this->log("ok");
+        $this->ok();
         return $result;
     }
 
@@ -453,7 +459,7 @@ class Db
         $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetchAll(\PDO::FETCH_KEY_PAIR);
 
-        $this->log("ok");
+        $this->ok();
         return $result;
     }
 
@@ -491,7 +497,7 @@ class Db
         }
 
         $stmt->closeCursor();
-        $this->log("ok");
+        $this->ok();
         return $result;
     }
 
@@ -521,7 +527,7 @@ class Db
         }
 
         $stmt->closeCursor();
-        $this->log("ok");
+        $this->ok();
         return $result;
     }
 
@@ -550,7 +556,7 @@ class Db
         $result = Relations::fetch($result);
 
         $stmt->closeCursor();
-        $this->log("ok");
+        $this->ok();
         return $result;
     }
 
@@ -586,6 +592,17 @@ class Db
     }
 
     /**
+     * Setup timer
+     *
+     * @return void
+     */
+    protected function ok()
+    {
+        $log = sprintf("--: %f", microtime(true) - $this->timer);
+        Logger::info($log);
+    }
+
+    /**
      * Log queries by Application
      *
      * @param string $sql
@@ -594,13 +611,15 @@ class Db
      */
     protected function log($sql, array $context = [])
     {
+        $this->timer = microtime(true);
+
         $sql = str_replace('%', '%%', $sql);
         $sql = preg_replace('/\?/', '"%s"', $sql, sizeof($context));
 
         // replace mask by data
-        $sql = vsprintf($sql, $context);
+        $log = vsprintf("db: ". $sql, $context);
 
-        Logger::info("db: " . $sql);
+        Logger::info($log);
     }
 
     /**

@@ -31,13 +31,13 @@ return
         foreach ($attributes as $key => $value) {
             if (null === $value) {
                 // skip empty values
-                //  input: ['value'=>null]
+                //  input: [attribute=>null]
                 //  output: ''
                 continue;
             }
             if (is_int($key)) {
                 // allow non-associative keys
-                //  input: ['checked']
+                //  input: [checked]
                 //  output: 'checked="checked"'
                 $key = $value;
             }

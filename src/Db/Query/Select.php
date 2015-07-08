@@ -40,8 +40,12 @@ class Select extends AbstractBuilder
      * @param integer|string|object $fetchType
      * @return integer|string|array
      */
-    public function execute($fetchType = \PDO::FETCH_ASSOC)
+    public function execute($fetchType = null)
     {
+        if (!$fetchType) {
+            $fetchType = $this->fetchType;
+        }
+
         switch ($fetchType) {
             case (!is_int($fetchType)):
                 return Db::fetchObjects($this->getSQL(), $this->params, $fetchType);

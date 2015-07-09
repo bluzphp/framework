@@ -10,9 +10,9 @@
         "psr/log": "1.*"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.6",
+        "phpunit/phpunit": "~4.7",
         "satooshi/php-coveralls": "~0.6",
-        "squizlabs/php_codesniffer": "~2.0"
+        "squizlabs/php_codesniffer": "~2.3"
     },
     "suggest": {
         "ext-gettext": "required by Bluz\\Translator (https://github.com/bluzphp/framework/wiki/Translator)",

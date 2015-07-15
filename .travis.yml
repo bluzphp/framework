@@ -6,6 +6,9 @@ php:
 matrix:
   allow_failures:
     - php: hhvm
+env:
+  global:
+  - secure: "fSb1v3ZctOLrfd2JkeSQurAEban9y1cmusKuuXgxedpcX7J9YjuY96nBvlycasQB3J+DnFJeBmJrEpWWbmB+1bbd/AfehjVsem0ylpOT6xCvxNJ4PKIOuS+zC81IL/QaHFcJDQAT9TAfFk3DjLWd2ODhmhmZwH8W9yHX4eQuNmc="
 install:
   # Composer
   - composer self-update
@@ -24,6 +27,8 @@ script:
   - php vendor/bin/phpcs ./tests/src --standard=PSR1,PSR2 --encoding=utf-8 --ignore=./tests/src/Common/Fixtures,./tests/src/Fixtures
   # PHPUnit tests
   - php vendor/bin/phpunit --configuration ./phpunit.xml.dist --coverage-clover=.reports/clover.xml
+  # PHPDocumentor
+  - php vendor/bin/phpdoc
   # Duplicate code
   #- php vendor/bin/phpcpd --log-pmd .reports/pmd-cpd.xml src
   # Lines of code
@@ -34,9 +39,13 @@ script:
   # Mess detection
   #- php vendor/bin/phpmd ./src text codesize,unusedcode,naming
 after_script:
+  # Coveralls
   - php vendor/bin/coveralls -v
+  # Scrutinizer
   - wget https://scrutinizer-ci.com/ocular.phar
   - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php ocular.phar code-coverage:upload --format=php-clover .reports/clover.xml; fi;'
+  # PHPDocumentor
+  - bash .travis.sh
 notifications:
   email: false
   webhooks:

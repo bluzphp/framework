@@ -17,7 +17,7 @@ if [ "$TRAVIS_REPO_SLUG" == "bluzphp/framework" ] && [ "$TRAVIS_PHP_VERSION" == 
   git config --global user.email "travis@travis-ci.org"
   git config --global user.name "travis-ci"
   git config --global push.default simple
-  git clone --quiet https://${GITHUB_TOKEN}@github.com/bluzphp/bluzphp.github.io > /dev/null
+  git clone --quiet https://$GITHUB_TOKEN@github.com/bluzphp/bluzphp.github.io > /dev/null
 
   cd bluzphp.github.io
   echo "-- Clean"

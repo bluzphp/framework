@@ -28,7 +28,7 @@ script:
   # PHPUnit tests
   - php vendor/bin/phpunit --configuration ./phpunit.xml.dist --coverage-clover=.reports/clover.xml
   # PHPDocumentor
-  - php vendor/bin/phpdoc
+  - php vendor/bin/phpdoc --quiet
   # Duplicate code
   #- php vendor/bin/phpcpd --log-pmd .reports/pmd-cpd.xml src
   # Lines of code

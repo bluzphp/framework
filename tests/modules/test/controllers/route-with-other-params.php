@@ -1,6 +1,6 @@
 <?php
 /**
- * 
+ * Example route with params
  *
  * @category Application
  *

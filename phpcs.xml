@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<ruleset name="Bluz">
+    <description>The coding standard for Bluz project</description>
+
+    <file>./src</file>
+    <file>./tests/src</file>
+
+    <exclude-pattern>./tests/src/Fixtures</exclude-pattern>
+    <exclude-pattern>./tests/src/Common/Fixtures</exclude-pattern>
+
+    <rule ref="PSR1"/>
+    <rule ref="PSR2"/>
+</ruleset>

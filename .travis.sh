@@ -9,11 +9,13 @@ echo "-- PULL Request: $TRAVIS_PULL_REQUEST"
 if [ "$TRAVIS_REPO_SLUG" == "bluzphp/framework" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_PHP_VERSION" == "7.0" ]; then
 
   echo "Generate PHPDoc"
-  php vendor/bin/phpdoc --quiet
+  # php vendor/bin/phpdoc --quiet
+  wget http://phpdox.de/releases/phpdox.phar
+  php phpdox.phar
 
   echo "Publishing PHPDoc..."
   # move docs to `home` directory
-  cp -R docs $HOME/docs-latest
+  cp -R docs/html $HOME/docs-latest
 
   cd $HOME
   git config --global user.email "travis@travis-ci.org"

@@ -1,6 +1,6 @@
 <?php
 /**
- * Example of static route
+ * Example of route with one param
  *
  * @author   Anton Shevchuk
  * @created  12.06.12 13:08

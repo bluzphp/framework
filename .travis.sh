@@ -6,8 +6,7 @@ echo "-- PHP Version: $TRAVIS_PHP_VERSION"
 echo "-- PULL Request: $TRAVIS_PULL_REQUEST"
 printenv
 
-#if [ "$TRAVIS_REPO_SLUG" == "bluzphp/framework" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_PHP_VERSION" == "5.6" ]; then
-if [ "$TRAVIS_REPO_SLUG" == "bluzphp/framework" ] && [ "$TRAVIS_PHP_VERSION" == "5.6" ]; then
+if [ "$TRAVIS_REPO_SLUG" == "bluzphp/framework" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_PHP_VERSION" == "5.6" ]; then
 
   echo -e "Publishing PHPDoc..."
 

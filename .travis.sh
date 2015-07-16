@@ -2,13 +2,16 @@
 
 echo "After Script"
 echo "-- Repo Slug: $TRAVIS_REPO_SLUG"
+echo "-- Repo Tag: $TRAVIS_TAG"
 echo "-- PHP Version: $TRAVIS_PHP_VERSION"
 echo "-- PULL Request: $TRAVIS_PULL_REQUEST"
 
 if [ "$TRAVIS_REPO_SLUG" == "bluzphp/framework" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_PHP_VERSION" == "7.0" ]; then
 
-  echo -e "Publishing PHPDoc..."
+  echo "Generate PHPDoc"
+  php vendor/bin/phpdoc --quiet
 
+  echo "Publishing PHPDoc..."
   # move docs to `home` directory
   cp -R docs $HOME/docs-latest
 

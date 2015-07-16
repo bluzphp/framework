@@ -27,8 +27,6 @@ script:
   - php vendor/bin/phpcs ./tests/src --standard=PSR1,PSR2 --encoding=utf-8 --ignore=./tests/src/Common/Fixtures,./tests/src/Fixtures
   # PHPUnit tests
   - php vendor/bin/phpunit --configuration ./phpunit.xml.dist --coverage-clover=.reports/clover.xml
-  # PHPDocumentor
-  - php vendor/bin/phpdoc --quiet
   # Duplicate code
   #- php vendor/bin/phpcpd --log-pmd .reports/pmd-cpd.xml src
   # Lines of code

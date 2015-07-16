@@ -8,7 +8,7 @@ matrix:
     - php: hhvm
 env:
   global:
-    - secure: "fSb1v3ZctOLrfd2JkeSQurAEban9y1cmusKuuXgxedpcX7J9YjuY96nBvlycasQB3J+DnFJeBmJrEpWWbmB+1bbd/AfehjVsem0ylpOT6xCvxNJ4PKIOuS+zC81IL/QaHFcJDQAT9TAfFk3DjLWd2ODhmhmZwH8W9yHX4eQuNmc="
+    - secure: "LSWfL27AYq+cY7NjOBXqLztHUgdGkLTF0EHoYSfXmQBDcWPE/Y1lUB+4SyP8dAPX7OcnokyqkxfS0pNv4SBImYJL7zuOwqRFj0kIdb1nBitBiuW8aK7Azu8grZT25etp8WaREjUen2tH/8E23EWxoIoIZb+qDNWoFsumda1Ra2s="
 install:
   # Composer
   - composer self-update

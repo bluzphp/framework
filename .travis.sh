@@ -9,7 +9,7 @@ printenv
 #if [ "$TRAVIS_REPO_SLUG" == "bluzphp/framework" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_PHP_VERSION" == "5.6" ]; then
 if [ "$TRAVIS_REPO_SLUG" == "bluzphp/framework" ] && [ "$TRAVIS_PHP_VERSION" == "5.6" ]; then
 
-  echo -e "Publishing PHPDoc...\n"
+  echo -e "Publishing PHPDoc..."
 
   # move docs to `home` directory
   cp -R docs $HOME/docs-latest

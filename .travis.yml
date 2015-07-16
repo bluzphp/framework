@@ -12,6 +12,8 @@ env:
     - secure: "LSWfL27AYq+cY7NjOBXqLztHUgdGkLTF0EHoYSfXmQBDcWPE/Y1lUB+4SyP8dAPX7OcnokyqkxfS0pNv4SBImYJL7zuOwqRFj0kIdb1nBitBiuW8aK7Azu8grZT25etp8WaREjUen2tH/8E23EWxoIoIZb+qDNWoFsumda1Ra2s="
     # AntonShevchuk/bluz-framework
     - secure: "inEKwWucDjICoBzLTzt1D6bgZETzOEt0kL9LZE9C1HXaTM5WHARmJfvCXHCrisMPABwjoXGz+W9gixGlUAHlYjhuMKzsHd2G/EsrD2+6AC32g0F/9HGDk7s+/o95KW25SC9PYy0QHNaTvoUCBH0P2B3l5/Yvlm+AE3AemDcvMH8="
+    # bluzphp/framework
+    - secure: "j4ecD0iulpiUrRfhSFgFV6v99mgrYbiWFjvCouCzdtHHDYYpf/3/JOdYIn0EzPtjMUaI5FVtjisNpLmcMo+IAEuQAZqB1RAywxBXH41Eh3uuSYEbUFGs0r8d2NsCYWi/h+hGMZozw3ckpch78cniyNc1huMZ5kkbrv3cpMl80m4="
 install:
   # Composer
   - composer self-update

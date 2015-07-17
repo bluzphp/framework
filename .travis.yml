@@ -12,7 +12,7 @@ env:
 install:
   # Composer
   - composer self-update
-  - COMPOSER_ROOT_VERSION=dev-master composer --dev install
+  - composer install -n --prefer-source
   # Database
   - mysql -e 'CREATE DATABASE bluz;'
 before_script:

@@ -8,12 +8,11 @@ echo "-- PULL Request: $TRAVIS_PULL_REQUEST"
 
 if [ "$TRAVIS_REPO_SLUG" == "bluzphp/framework" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_PHP_VERSION" == "7.0" ]; then
 
-  echo "Generate PHPDoc"
-  # php vendor/bin/phpdoc --quiet
+  echo "Generate"
   wget http://phpdox.de/releases/phpdox.phar
   php phpdox.phar
 
-  echo "Publishing PHPDoc..."
+  echo "Publishing"
   # move docs to `home` directory
   cp -R docs/html $HOME/docs-latest
 
@@ -32,9 +31,9 @@ if [ "$TRAVIS_REPO_SLUG" == "bluzphp/framework" ] && [ "$TRAVIS_PULL_REQUEST" ==
 
   echo "-- Push"
   git add -f .
-  git commit -m "PHPDocumentor (Travis Build : $TRAVIS_BUILD_NUMBER  - Branch : $TRAVIS_BRANCH)"
+  git commit -m "PHPDocumentor (Travis Build: $TRAVIS_BUILD_NUMBER@$TRAVIS_TAG)"
   git push -fq origin > /dev/null
 
-  echo -e "Published PHPDoc to github.io\n"
+  echo -e "Published to github.io\n"
 
 fi

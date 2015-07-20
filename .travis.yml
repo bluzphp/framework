@@ -25,7 +25,7 @@ before_script:
   - chmod a+w ./tests/cache
 script:
   # PHPUnit tests
-  - phpunit --configuration ./phpunit.xml.dist --coverage-clover=.reports/clover.xml --coverage-xml=.reports/coverage
+  - php vendor/bin/phpunit --configuration ./phpunit.xml.dist --coverage-clover=.reports/clover.xml --coverage-xml=.reports/coverage
   # Code style
   - php vendor/bin/phpcs --report=xml --report-file=.reports/phpcs.xml
   # Lines of code

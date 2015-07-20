@@ -9,10 +9,12 @@ matrix:
 env:
   global:
     - secure: "j4ecD0iulpiUrRfhSFgFV6v99mgrYbiWFjvCouCzdtHHDYYpf/3/JOdYIn0EzPtjMUaI5FVtjisNpLmcMo+IAEuQAZqB1RAywxBXH41Eh3uuSYEbUFGs0r8d2NsCYWi/h+hGMZozw3ckpch78cniyNc1huMZ5kkbrv3cpMl80m4="
+before_install:
+  - sudo sh -c "echo 'precedence ::ffff:0:0/96 100' >> /etc/gai.conf"
 install:
   # Composer
   - composer self-update
-  - COMPOSER_ROOT_VERSION=dev-master composer --dev install
+  - composer install -n --prefer-source
   # Database
   - mysql -e 'CREATE DATABASE bluz;'
 before_script:

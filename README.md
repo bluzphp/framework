@@ -32,9 +32,9 @@ The project is developed by [NIX Solutions][3] PHP team and distributed under [M
 
 ## Thanks
 
-Thanks to [Jet Brains][5] company for opensource license of PHPStorm
+Thanks to [Jet Brains][5] for opensource license of PHPStorm
 
-https://www.jetbrains.com/phpstorm/documentation/docs/logo_phpstorm.png
+![PHPStorm](https://www.jetbrains.com/phpstorm/documentation/docs/logo_phpstorm.png)
 
 [1]: https://github.com/bluzphp/skeleton
 [2]: https://github.com/bluzphp/framework/wiki

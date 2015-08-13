@@ -32,7 +32,7 @@ The project is developed by [NIX Solutions][3] PHP team and distributed under [M
 
 ## Thanks
 
-Thanks to [Jet Brains][5] for opensource license of PHPStorm
+Thanks to [JetBrains][5] for license of PHPStorm
 
 ![PHPStorm](https://www.jetbrains.com/phpstorm/documentation/docs/logo_phpstorm.png)
 

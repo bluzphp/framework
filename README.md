@@ -30,7 +30,14 @@ Auto-generating documentation is available at the http://bluzphp.github.io/
 
 The project is developed by [NIX Solutions][3] PHP team and distributed under [MIT LICENSE][4]
 
+## Thanks
+
+Thanks to [JetBrains][5] for license of PHPStorm
+
+![PHPStorm](https://www.jetbrains.com/phpstorm/documentation/docs/logo_phpstorm.png)
+
 [1]: https://github.com/bluzphp/skeleton
 [2]: https://github.com/bluzphp/framework/wiki
 [3]: http://nixsolutions.com
 [4]: https://raw.github.com/bluzphp/framework/master/LICENSE.md
+[5]: https://www.jetbrains.com/

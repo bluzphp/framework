@@ -278,6 +278,26 @@ class Application
         Response::setInstance($response);
     }
 
+    protected function initView($module, $controller)
+    {
+        // $view for use in closure
+        $view = new View();
+
+        // setup additional helper path
+        $view->addHelperPath($this->getPath() . '/layouts/helpers');
+
+        // setup additional partial path
+        $view->addPartialPath($this->getPath() . '/layouts/partial');
+
+        // setup default path
+        $view->setPath($this->getPath() . '/modules/' . $module . '/views');
+
+        // setup default template
+        $view->setTemplate($controller . '.phtml');
+
+        return $view;
+    }
+
     /**
      * Process application
      *
@@ -486,20 +506,7 @@ class Application
         // process params
         $params = $reflection->params($params);
 
-        // $view for use in closure
-        $view = new View();
-
-        // setup additional helper path
-        $view->addHelperPath($this->getPath() . '/layouts/helpers');
-
-        // setup additional partial path
-        $view->addPartialPath($this->getPath() . '/layouts/partial');
-
-        // setup default path
-        $view->setPath($this->getPath() . '/modules/' . $module . '/views');
-
-        // setup default template
-        $view->setTemplate($controller . '.phtml');
+        $view = $this->initView($module, $controller);
 
         $bootstrapPath = $this->getPath() . '/modules/' . $module . '/bootstrap.php';
 

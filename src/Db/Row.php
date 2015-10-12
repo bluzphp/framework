@@ -487,14 +487,7 @@ class Row implements \JsonSerializable, \ArrayAccess
     public function getRelations($modelName)
     {
         if (!isset($this->relations[$modelName])) {
-            $relation = Relations::findRelation($this, $modelName);
-            if (empty($relation)) {
-                throw new RelationNotFoundException(
-                    'Can\'t found relation data for model "' . $modelName . '"'
-                );
-            } else {
-                $this->relations[$modelName] = $relation;
-            }
+            $this->relations[$modelName] = Relations::findRelation($this, $modelName);
         }
 
         return $this->relations[$modelName];

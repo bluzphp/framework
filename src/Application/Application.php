@@ -292,6 +292,12 @@ class Application
         Response::setInstance($response);
     }
 
+    /**
+     * Initial controller view
+     * @param $module
+     * @param $controller
+     * @return View
+     */
     protected function initView($module, $controller)
     {
         // $view for use in closure

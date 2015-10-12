@@ -54,12 +54,8 @@ trait Helper
      * @param string|array $helpersPath
      * @return self
      */
-    public function setHelpersPath($helpersPath, $reset = false)
+    public function setHelpersPath($helpersPath)
     {
-        if ($reset) {
-            $this->helpersPath = [];
-        }
-
         if (is_array($helpersPath)) {
             foreach ($helpersPath as $path) {
                 $this->addHelperPath((string)$path);
@@ -67,6 +63,16 @@ trait Helper
         } else {
             $this->addHelperPath((string)$helpersPath);
         }
+        return $this;
+    }
+
+    /**
+     * Reset helpers path
+     * @return self
+     */
+    public function resetHelpersPath()
+    {
+        $this->helpersPath = [];
         return $this;
     }
 

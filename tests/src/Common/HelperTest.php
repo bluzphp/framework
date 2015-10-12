@@ -108,4 +108,19 @@ class HelperTest extends TestCase
             self::MAGIC_NUMBER
         );
     }
+
+    /**
+     * test Reset Helper Path
+     * @expectedException \Bluz\Common\Exception\CommonException
+     */
+    public function testResetHelperPath()
+    {
+        $this->class->setHelpersPath(dirname(__FILE__) .'/Fixtures/Helper');
+        $this->class->resetHelpersPath();
+
+        $this->assertEquals(
+            $this->class->helperFunction(self::MAGIC_NUMBER),
+            self::MAGIC_NUMBER
+        );
+    }
 }

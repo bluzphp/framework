@@ -30,7 +30,7 @@ class TestListener implements \PHPUnit_Framework_TestListener
     /**
      * @param \PHPUnit_Framework_Test $test
      * @param \Exception $e
-     * @param $time
+     * @param float $time
      * @return void
      */
     public function addError(\PHPUnit_Framework_Test $test, \Exception $e, $time)
@@ -41,9 +41,24 @@ class TestListener implements \PHPUnit_Framework_TestListener
     }
 
     /**
+     * A warning occurred.
+     *
+     * @param \PHPUnit_Framework_Test  $test
+     * @param \PHPUnit_Framework_Warning $e
+     * @param float $time
+     * @return void
+     */
+    public function addWarning(\PHPUnit_Framework_Test $test, \PHPUnit_Framework_Warning $e, $time)
+    {
+        echo "\t[";
+        echo Colorize::text($e->getMessage(), "red", null, true);
+        echo "] ";
+    }
+
+    /**
      * @param \PHPUnit_Framework_Test $test
      * @param \PHPUnit_Framework_AssertionFailedError $e
-     * @param $time
+     * @param float $time
      * @return void
      */
     public function addFailure(\PHPUnit_Framework_Test $test, \PHPUnit_Framework_AssertionFailedError $e, $time)
@@ -56,7 +71,7 @@ class TestListener implements \PHPUnit_Framework_TestListener
     /**
      * @param \PHPUnit_Framework_Test $test
      * @param \Exception $e
-     * @param $time
+     * @param float $time
      * @return void
      */
     public function addIncompleteTest(\PHPUnit_Framework_Test $test, \Exception $e, $time)
@@ -67,7 +82,7 @@ class TestListener implements \PHPUnit_Framework_TestListener
     /**
      * @param \PHPUnit_Framework_Test $test
      * @param \Exception $e
-     * @param $time
+     * @param float $time
      * @return void
      */
     public function addRiskyTest(\PHPUnit_Framework_Test $test, \Exception $e, $time)
@@ -80,7 +95,7 @@ class TestListener implements \PHPUnit_Framework_TestListener
     /**
      * @param \PHPUnit_Framework_Test $test
      * @param \Exception $e
-     * @param $time
+     * @param float $time
      * @return void
      */
     public function addSkippedTest(\PHPUnit_Framework_Test $test, \Exception $e, $time)
@@ -104,7 +119,7 @@ class TestListener implements \PHPUnit_Framework_TestListener
 
     /**
      * @param \PHPUnit_Framework_Test $test
-     * @param $time
+     * @param float $time
      * @return void
      */
     public function endTest(\PHPUnit_Framework_Test $test, $time)

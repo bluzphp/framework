@@ -12,23 +12,25 @@
 namespace Bluz\Validator\Rule;
 
 /**
- * Class In
+ * Check for value in set
+ *
  * @package Bluz\Validator\Rule
  */
 class In extends AbstractRule
 {
     /**
-     * @var string|array Haystack for search, can be array or string
+     * @var string|array haystack for search, can be array or string
      */
     protected $haystack;
 
     /**
-     * @var bool Strong comparison
+     * @var bool strong comparison
      */
     protected $identical;
 
     /**
      * Setup validation rule
+     *
      * @param string|array $haystack
      * @param bool $identical
      */
@@ -40,7 +42,8 @@ class In extends AbstractRule
 
     /**
      * Check input data
-     * @param string $input
+     *
+     * @param  string $input
      * @return bool
      */
     public function validate($input)
@@ -68,6 +71,7 @@ class In extends AbstractRule
 
     /**
      * Get error template
+     *
      * @return string
      */
     public function getTemplate()

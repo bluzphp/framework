@@ -19,8 +19,8 @@ return
     /**
      * Get baseUrl
      *
-     * @var View $this
-     * @param string $file
+     * @var    View   $this
+     * @param  string $file
      * @return string
      */
     function ($file = null) {

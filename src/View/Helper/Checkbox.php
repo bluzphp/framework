@@ -19,11 +19,11 @@ return
      *
      * @author The-Who
      *
-     * @var View $this
-     * @param string $name
-     * @param string|null $value
-     * @param bool $checked
-     * @param array $attributes
+     * @var    View        $this
+     * @param  string      $name
+     * @param  string|null $value
+     * @param  bool        $checked
+     * @param  array       $attributes
      * @return string
      */
     function ($name, $value = null, $checked = false, array $attributes = []) {

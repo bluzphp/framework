@@ -17,9 +17,8 @@ use Bluz\Common\Container;
  * Registry
  *
  * @package  Bluz\Registry
- * @link     https://github.com/bluzphp/framework/wiki/Registry
- *
  * @author   Anton Shevchuk
+ * @link     https://github.com/bluzphp/framework/wiki/Registry
  */
 class Registry
 {

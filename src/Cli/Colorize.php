@@ -15,14 +15,12 @@ namespace Bluz\Cli;
  * Colorize text for CLI
  *
  * @package  Bluz\Cli
- *
  * @author   Anton Shevchuk
- * @created  08.05.2014 13:13
  */
 class Colorize
 {
     /**
-     * @var array of text colors
+     * @var array list of text colors
      */
     protected static $colors = array(
         'black' => '30',
@@ -36,7 +34,7 @@ class Colorize
     );
 
     /**
-     * @var array of background colors
+     * @var array list of background colors
      */
     protected static $background = array(
         'black' => '40',
@@ -51,11 +49,12 @@ class Colorize
 
     /**
      * Return string colorized for Linux console
-     * @param string $text
-     * @param string $foreground
-     * @param string $background
-     * @param bool $bold
-     * @param bool $underline
+     *
+     * @param  string $text
+     * @param  string $foreground
+     * @param  string $background
+     * @param  bool   $bold
+     * @param  bool   $underline
      * @return string
      */
     public static function text($text, $foreground = null, $background = null, $bold = false, $underline = false)

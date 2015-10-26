@@ -18,10 +18,8 @@ use Bluz\Common\Options;
  * Session
  *
  * @package  Bluz\Session
- * @link     https://github.com/bluzphp/framework/wiki/Session
- *
  * @author   Anton Shevchuk
- * @created  11.07.11 19:19
+ * @link     https://github.com/bluzphp/framework/wiki/Session
  */
 class Session
 {
@@ -93,7 +91,7 @@ class Session
     /**
      * Set Namespace
      *
-     * @param string $namespace
+     * @param  string $namespace
      * @return Session
      */
     public function setNamespace($namespace)
@@ -118,8 +116,8 @@ class Session
      * Can safely be called in the middle of a session.
      *
      * @param  string $id
-     * @throws SessionException
      * @return Session
+     * @throws SessionException
      */
     public function setId($id)
     {
@@ -174,7 +172,7 @@ class Session
 
     /**
      * Does a session started and is it currently active?
-     * @api
+     *
      * @return bool
      */
     public function sessionExists()
@@ -196,7 +194,6 @@ class Session
      * {@link isValid()} once session_start() is called, and raises an
      * exception if validation fails.
      *
-     * @api
      * @return void
      * @throws SessionException
      */
@@ -213,7 +210,7 @@ class Session
 
     /**
      * Destroy/end a session
-     * @api
+     *
      * @return void
      */
     public function destroy()
@@ -233,6 +230,7 @@ class Session
 
     /**
      * Set session save handler object
+     *
      * @param  \SessionHandlerInterface $saveHandler
      * @return Session
      */
@@ -244,6 +242,7 @@ class Session
 
     /**
      * Get SaveHandler Object
+     *
      * @return \SessionHandlerInterface
      */
     public function getAdapter()
@@ -257,8 +256,8 @@ class Session
      * Since ext/session is coupled to this particular session manager
      * register the save handler with ext/session.
      *
-     * @throws ComponentException
      * @return bool
+     * @throws ComponentException
      */
     protected function initAdapter()
     {
@@ -287,7 +286,7 @@ class Session
      * If a session already exists, destroys it (without sending an expiration
      * cookie), regenerates the session ID, and restarts the session.
      *
-     * @param  int $ttl in seconds
+     * @param  integer $ttl TTL in seconds
      * @return void
      */
     public function setSessionCookieLifetime($ttl)
@@ -328,8 +327,8 @@ class Session
      * Set session save path
      *
      * @param  string $savePath
-     * @throws ComponentException
      * @return Session
+     * @throws ComponentException
      */
     protected function setSavePath($savePath)
     {
@@ -344,9 +343,9 @@ class Session
 
     /**
      * Set key/value pair
-     * @api
+     *
      * @param  string $key
-     * @param  mixed $value
+     * @param  mixed  $value
      * @return void
      */
     public function set($key, $value)
@@ -361,7 +360,7 @@ class Session
 
     /**
      * Get value by key
-     * @api
+     *
      * @param  string $key
      * @return mixed
      */
@@ -376,7 +375,7 @@ class Session
 
     /**
      * Isset
-     * @api
+     *
      * @param  string $key
      * @return bool
      */
@@ -392,7 +391,7 @@ class Session
 
     /**
      * Unset
-     * @api
+     *
      * @param  string $key
      * @return void
      */

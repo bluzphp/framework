@@ -12,20 +12,22 @@
 namespace Bluz\Validator\Rule;
 
 /**
- * Class Min
+ * Check for minimum
+ *
  * @package Bluz\Validator\Rule
  */
 class Min extends AbstractCompareRule
 {
     /**
-     * @var numeric Minimum value
+     * @var numeric minimum value
      */
     protected $minValue;
 
     /**
      * Setup validation rule
+     *
      * @param numeric $minValue
-     * @param bool $inclusive
+     * @param bool    $inclusive
      */
     public function __construct($minValue, $inclusive = false)
     {
@@ -35,7 +37,8 @@ class Min extends AbstractCompareRule
 
     /**
      * Check input data
-     * @param numeric $input
+     *
+     * @param  numeric $input
      * @return bool
      */
     public function validate($input)
@@ -45,6 +48,7 @@ class Min extends AbstractCompareRule
 
     /**
      * Get error template
+     *
      * @return string
      */
     public function getTemplate()

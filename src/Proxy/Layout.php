@@ -18,12 +18,15 @@ use Bluz\View\View;
  * Proxy to Layout
  *
  * Example of usage
+ * <code>
  *     use Bluz\Proxy\Layout;
  *
  *     Layout::title('Homepage');
  *     Layout::set('description', 'some page description');
+ * </code>
  *
  * @package  Bluz\Proxy
+ * @author   Anton Shevchuk
  *
  * @method   static Instance getInstance()
  *
@@ -51,9 +54,6 @@ use Bluz\View\View;
  * @method   static string|null link(string $src = null, string $rel = 'stylesheet')
  * @method   static string|null meta(string $name = null, string $content = null)
  * @method   static string|null title(string $title = null, $position = 'replace', $separator = ' :: ')
- *
- * @author   Anton Shevchuk
- * @created  02.10.2014 10:45
  */
 class Layout extends AbstractProxy
 {

@@ -20,6 +20,7 @@ use Bluz\Proxy\Db as DbProxy;
  * Table
  *
  * Example of Users\Table
+ * <code>
  *     namespace Application\Users;
  *     class Table extends \Bluz\Db\Table
  *     {
@@ -32,47 +33,46 @@ use Bluz\Proxy\Db as DbProxy;
  *        $userRow -> description = 'In first 5';
  *        $userRow -> save();
  *     }
+ * </code>
  *
  * @package  Bluz\Db
- * @link     https://github.com/bluzphp/framework/wiki/Db-Table
- *
  * @author   Anton Shevchuk
- * @created  08.07.11 17:32
+ * @link     https://github.com/bluzphp/framework/wiki/Db-Table
  */
 abstract class Table
 {
     /**
-     * @var string The table name
+     * @var string the table name
      */
     protected $table;
 
     /**
-     * @var string The model name
+     * @var string the model name
      */
     protected $model;
 
     /**
-     * @var array Table columns
+     * @var array table columns
      */
     protected $columns = [];
 
     /**
-     * @var string Default SQL query for select
+     * @var string default SQL query for select
      */
     protected $select = "";
 
     /**
-     * @var array The primary key column or columns (only as array).
+     * @var array the primary key column or columns (only as array).
      */
     protected $primary;
 
     /**
-     * @var string The sequence name, required for PostgreSQL
+     * @var string the sequence name, required for PostgreSQL
      */
     protected $sequence;
 
     /**
-     * @var string Row class name
+     * @var string row class name
      */
     protected $rowClass;
 
@@ -115,7 +115,7 @@ abstract class Table
 
     /**
      * Initialization hook.
-     * Subclasses may override this method.
+     * Subclasses may override this method
      */
     public function init()
     {
@@ -123,6 +123,7 @@ abstract class Table
 
     /**
      * Get Table instance
+     *
      * @return static
      */
     public static function getInstance()
@@ -137,7 +138,8 @@ abstract class Table
 
     /**
      * Set select query
-     * @param $select
+     *
+     * @param  string $select SQL query
      * @return Table
      */
     public function setSelectQuery($select)
@@ -148,6 +150,7 @@ abstract class Table
 
     /**
      * Get select query
+     *
      * @return string
      */
     public function getSelectQuery()
@@ -157,8 +160,9 @@ abstract class Table
 
     /**
      * Get primary key(s)
-     * @throws InvalidPrimaryKeyException if primary key was not set or has wrong format
+     *
      * @return array
+     * @throws InvalidPrimaryKeyException if primary key was not set or has wrong format
      */
     public function getPrimaryKey()
     {
@@ -170,6 +174,7 @@ abstract class Table
 
     /**
      * Get table name
+     *
      * @return string
      */
     public function getName()
@@ -179,6 +184,7 @@ abstract class Table
 
     /**
      * Get model name
+     *
      * @return string
      */
     public function getModel()
@@ -188,6 +194,7 @@ abstract class Table
 
     /**
      * Return information about tables columns
+     *
      * @return array
      */
     public function getColumns()
@@ -216,7 +223,8 @@ abstract class Table
 
     /**
      * Filter columns for insert/update queries by table columns definition
-     * @param $data
+     *
+     * @param  array $data
      * @return array
      */
     public static function filterColumns($data)
@@ -227,8 +235,9 @@ abstract class Table
 
     /**
      * Fetching rows by SQL query
-     * @param  string $sql query options.
-     * @param  array $params
+     *
+     * @param  string $sql    SQL query with placeholders
+     * @param  array  $params Params for query placeholders
      * @return array of rows results in FETCH_CLASS mode
      */
     public static function fetch($sql, $params = array())
@@ -274,9 +283,9 @@ abstract class Table
      * Multiple rows by compound primary key
      *     Table::find([123, 'abc'], [234, 'def'], [345, 'ghi'])
      *
-     * @param mixed ...$keys The value(s) of the primary keys.
-     * @throws InvalidPrimaryKeyException if wrong count of values passed
+     * @param  mixed ...$keys The value(s) of the primary keys.
      * @return array
+     * @throws InvalidPrimaryKeyException if wrong count of values passed
      */
     public static function find(...$keys)
     {
@@ -315,7 +324,8 @@ abstract class Table
 
     /**
      * Find row by primary key
-     * @param mixed $primaryKey
+     *
+     * @param  mixed $primaryKey
      * @return Row
      */
     public static function findRow($primaryKey)
@@ -340,9 +350,9 @@ abstract class Table
      *     Table::findWhere(['alias'=> ['foo', 'bar']]);
      *
      * @param  mixed ...$where
+     * @return array
      * @throws \InvalidArgumentException
      * @throws Exception\DbException
-     * @return array
      */
     public static function findWhere(...$where)
     {
@@ -395,7 +405,8 @@ abstract class Table
 
     /**
      * Find row by where condition
-     * @param array $whereList
+     *
+     * @param  array $whereList
      * @return Row
      */
     public static function findRowWhere($whereList)
@@ -407,9 +418,10 @@ abstract class Table
 
     /**
      * Prepare array for WHERE or SET statements
-     * @param $where
-     * @throws \Bluz\Common\Exception\ConfigurationException
+     *
+     * @param  array $where
      * @return array
+     * @throws \Bluz\Common\Exception\ConfigurationException
      */
     private static function prepareStatement($where)
     {
@@ -426,6 +438,7 @@ abstract class Table
      *  - predefine "from" section as current table name and first letter as alias
      *  - predefine fetch type
      *
+     * <code>
      *     // use default select "*"
      *     $select = Users\Table::select();
      *     $arrUsers = $select->where('u.id = ?', $id)
@@ -436,6 +449,7 @@ abstract class Table
      *     $arrUsers = $select->select('u.id, u.login')
      *         ->where('u.id = ?', $id)
      *         ->execute();
+     * </code>
      *
      * @return Query\Select
      */
@@ -453,7 +467,8 @@ abstract class Table
 
     /**
      * Create Row instance
-     * @param array $data
+     *
+     * @param  array $data
      * @return Row
      */
     public static function create(array $data = [])
@@ -468,11 +483,13 @@ abstract class Table
     /**
      * Insert new record to table and return last insert Id
      *
+     * <code>
      *     Table::insert(['login' => 'Man', 'email' => 'man@example.com'])
+     * </code>
      *
      * @param  array $data Column-value pairs
-     * @throws Exception\DbException
      * @return string|null Primary key or null
+     * @throws Exception\DbException
      */
     public static function insert(array $data)
     {
@@ -509,12 +526,14 @@ abstract class Table
     /**
      * Updates existing rows
      *
+     * <code>
      *     Table::insert(['login' => 'Man', 'email' => 'man@domain.com'], ['id' => 42])
+     * </code>
      *
-     * @param  array $data Column-value pairs.
+     * @param  array $data  Column-value pairs.
      * @param  array $where An array of SQL WHERE clause(s)
-     * @throws Exception\DbException
      * @return integer The number of rows updated
+     * @throws Exception\DbException
      */
     public static function update(array $data, array $where)
     {
@@ -549,11 +568,13 @@ abstract class Table
     /**
      * Deletes existing rows
      *
+     * <code>
      *     Table::delete(['login' => 'Man'])
+     * </code>
      *
      * @param  array $where An array of SQL WHERE clause(s)
-     * @throws Exception\DbException
      * @return integer The number of rows deleted
+     * @throws Exception\DbException
      */
     public static function delete(array $where)
     {
@@ -584,9 +605,9 @@ abstract class Table
     /**
      * Setup relation "one to one" or "one to many"
      *
-     * @param string $key
-     * @param string $model
-     * @param string $foreign
+     * @param  string $key
+     * @param  string $model
+     * @param  string $foreign
      * @return void
      */
     public function linkTo($key, $model, $foreign)
@@ -598,8 +619,8 @@ abstract class Table
      * Setup relation "many to many"
      * [table1-key] [table1_key-table2-table3_key] [table3-key]
      *
-     * @param string $model
-     * @param string $link
+     * @param  string $model
+     * @param  string $link
      * @return void
      */
     public function linkToMany($model, $link)

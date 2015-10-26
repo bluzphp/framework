@@ -17,19 +17,19 @@ use Bluz\Db\Query\Select;
 use Bluz\Db\Query\Update;
 
 /**
- * Order Trait, required for:
+ * Order Trait
+ *
+ * Required for:
  *  - Select Builder
  *  - Update Builder
  *  - Delete Builder
  *
- * @package Bluz\Db\Query\Traits
- *
- * @method Select|Update|Delete addQueryPart(string $sqlPartName, mixed $sqlPart, $append = 'true')
- * @method mixed getQueryPart(string $queryPartName)
- * @method string prepareCondition($args = array())
- *
+ * @package  Bluz\Db\Query\Traits
  * @author   Anton Shevchuk
- * @created  17.06.13 10:38
+ *
+ * @method   Select|Update|Delete addQueryPart(string $sqlPartName, mixed $sqlPart, $append = 'true')
+ * @method   mixed getQueryPart(string $queryPartName)
+ * @method   string prepareCondition($args = array())
  */
 trait Where
 {
@@ -38,14 +38,16 @@ trait Where
      *
      * Specifies one or more restrictions to the query result
      * Replaces any previously specified restrictions, if any
+     * <code>
      *     $sb = new SelectBuilder();
      *     $sb
      *         ->select('u.name')
      *         ->from('users', 'u')
      *         ->where('u.id = ?', $id)
      *      ;
+     * </code>
      *
-     * @param string ...$condition optional the query restriction predicates
+     * @param  string ...$condition optional the query restriction predicates
      * @return Select|Update|Delete
      */
     public function where(...$condition)
@@ -60,14 +62,16 @@ trait Where
      *
      * Adds one or more restrictions to the query results, forming a logical
      * conjunction with any previously specified restrictions.
+     * <code>
      *     $sb = new SelectBuilder();
      *     $sb
      *         ->select('u')
      *         ->from('users', 'u')
      *         ->where('u.username LIKE ?', '%Smith%')
      *         ->andWhere('u.is_active = ?', 1);
+     * </code>
      *
-     * @param string ...$condition Optional the query restriction predicates
+     * @param  string ...$condition Optional the query restriction predicates
      * @return Select|Update|Delete
      */
     public function andWhere(...$condition)
@@ -89,14 +93,16 @@ trait Where
      *
      * Adds one or more restrictions to the query results, forming a logical
      * disjunction with any previously specified restrictions.
+     * <code>
      *     $sb = new SelectBuilder();
      *     $sb
      *         ->select('u.name')
      *         ->from('users', 'u')
      *         ->where('u.id = 1')
      *         ->orWhere('u.id = ?', 2);
+     * </code>
      *
-     * @param string ...$condition Optional the query restriction predicates
+     * @param  string ...$condition Optional the query restriction predicates
      * @return Select|Update|Delete
      */
     public function orWhere(...$condition)

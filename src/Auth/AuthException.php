@@ -17,9 +17,7 @@ use Bluz\Application\Exception\UnauthorizedException;
  * Auth Exception
  *
  * @package Bluz\Auth
- *
- * @author   Anton Shevchuk
- * @created  12.07.11 16:46
+ * @author  Anton Shevchuk
  */
 class AuthException extends UnauthorizedException
 {

@@ -19,17 +19,17 @@ namespace Bluz\EventManager;
 class Event
 {
     /**
-     * @var string Event name
+     * @var string event name
      */
     protected $name;
 
     /**
-     * @var string|object The event target
+     * @var string|object the event target
      */
     protected $target;
 
     /**
-     * @var array|object The event parameters
+     * @var array|object the event parameters
      */
     protected $params = array();
 
@@ -38,9 +38,9 @@ class Event
      *
      * Accept a target and its parameters.
      *
-     * @param  string $name Event name
+     * @param  string        $name Event name
      * @param  string|object $target
-     * @param  array|object $params
+     * @param  array|object  $params
      */
     public function __construct($name, $target = null, $params = null)
     {
@@ -81,8 +81,8 @@ class Event
      * Overwrites parameters
      *
      * @param  array|object $params
-     * @throws EventException
      * @return Event
+     * @throws EventException
      */
     public function setParams($params)
     {
@@ -115,7 +115,7 @@ class Event
      * If the parameter does not exist, the $default value will be returned.
      *
      * @param  string|int $name
-     * @param  mixed $default
+     * @param  mixed      $default
      * @return mixed
      */
     public function getParam($name, $default = null)
@@ -163,7 +163,7 @@ class Event
      * Set an individual parameter to a value
      *
      * @param  string|int $name
-     * @param  mixed $value
+     * @param  mixed      $value
      * @return Event
      */
     public function setParam($name, $value)

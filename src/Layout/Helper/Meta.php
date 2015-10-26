@@ -18,12 +18,14 @@ return
     /**
      * Set or generate <meta> code for <head>
      *
-     * @var Layout $this
-     * @param string|array|null $name
-     * @param string|null $content
+     * @param  string|array|null $name
+     * @param  string|null       $content
      * @return string|null
      */
     function ($name = null, $content = null) {
+        /**
+         * @var Layout $this
+         */
         // it's stack for <head>
         $meta = Registry::get('layout:meta') ? : [];
 

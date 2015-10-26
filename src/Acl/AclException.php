@@ -17,9 +17,7 @@ use Bluz\Application\Exception\ForbiddenException;
  * Acl Exception
  *
  * @package  Bluz\Acl
- *
  * @author   Anton Shevchuk
- * @created  06.03.12 15:53
  */
 class AclException extends ForbiddenException
 {

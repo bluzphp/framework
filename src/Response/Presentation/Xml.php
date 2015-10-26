@@ -15,9 +15,7 @@ namespace Bluz\Response\Presentation;
  * Xml
  *
  * @package  Bluz\Response\Presentation
- *
  * @author   Anton Shevchuk
- * @created  10.11.2014 18:03
  */
 class Xml extends AbstractPresentation
 {
@@ -49,8 +47,8 @@ class Xml extends AbstractPresentation
     /**
      * Array to XML format converter, recursively
      *
-     * @param array $data
-     * @param \SimpleXMLElement $xml
+     * @param  array             $data
+     * @param  \SimpleXMLElement $xml
      * @return string
      */
     protected function toXml($data, $xml)

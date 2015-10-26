@@ -15,21 +15,18 @@ namespace Bluz\Application\Exception;
  * Unauthorized Exception
  *
  * @package  Bluz\Application\Exception
- *
  * @author   Anton Shevchuk
- * @created  26.09.14 12:18
  */
 class UnauthorizedException extends ApplicationException
 {
     /**
-     * Exception message
-     * @var string
+     * @var string exception message
      */
     protected $message = "Unauthorized";
 
     /**
-     * Unauthorized HTTP code
-     * @var int
+     *
+     * @var integer HTTP code for "Unauthorized"
      */
     protected $code = 401;
 }

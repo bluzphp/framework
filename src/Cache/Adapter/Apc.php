@@ -18,6 +18,7 @@ use Bluz\Common\Exception\ComponentException;
  * APC cache adapter
  *
  * @package Bluz\Cache\Adapter
+ *
  * @author  murzik
  */
 class Apc extends AbstractAdapter
@@ -25,7 +26,7 @@ class Apc extends AbstractAdapter
     /**
      * Check APC extension
      *
-     * @param array $settings
+     * @param  array $settings
      * @throws ComponentException
      */
     public function __construct($settings = array())
@@ -40,7 +41,7 @@ class Apc extends AbstractAdapter
     /**
      * {@inheritdoc}
      *
-     * @param string $id
+     * @param  string $id
      * @return mixed
      */
     protected function doGet($id)
@@ -51,9 +52,9 @@ class Apc extends AbstractAdapter
     /**
      * {@inheritdoc}
      *
-     * @param string $id
-     * @param mixed $data
-     * @param int $ttl
+     * @param  string  $id
+     * @param  mixed   $data
+     * @param  integer $ttl
      * @return bool
      */
     protected function doAdd($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
@@ -64,9 +65,9 @@ class Apc extends AbstractAdapter
     /**
      * {@inheritdoc}
      *
-     * @param string $id
-     * @param mixed $data
-     * @param int $ttl
+     * @param  string  $id
+     * @param  mixed   $data
+     * @param  integer $ttl
      * @return bool
      */
     protected function doSet($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
@@ -77,7 +78,7 @@ class Apc extends AbstractAdapter
     /**
      * {@inheritdoc}
      *
-     * @param string $id
+     * @param  string $id
      * @return bool|string[]
      */
     protected function doContains($id)
@@ -88,7 +89,7 @@ class Apc extends AbstractAdapter
     /**
      * {@inheritdoc}
      *
-     * @param string $id
+     * @param  string $id
      * @return bool|string[]
      */
     protected function doDelete($id)

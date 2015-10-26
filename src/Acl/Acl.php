@@ -18,10 +18,8 @@ use Bluz\Proxy\Auth;
  * Acl
  *
  * @package  Bluz\Acl
- * @link     https://github.com/bluzphp/framework/wiki/Acl
- *
  * @author   Anton Shevchuk
- * @created  11.07.11 15:09
+ * @link     https://github.com/bluzphp/framework/wiki/Acl
  */
 class Acl
 {
@@ -29,9 +27,10 @@ class Acl
 
     /**
      * Check user access by pair module-privilege
-     * @api
-     * @param string $module
-     * @param string $privilege
+     *
+     * @param  string $module
+     * @param  string $privilege
+     *
      * @return bool
      */
     public function isAllowed($module, $privilege)

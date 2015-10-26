@@ -17,6 +17,7 @@ use Bluz\Validator\ValidatorBuilder;
  * Validator trait
  *
  * Example of usage
+ * <code>
  *    use Bluz\Validator\Traits\Validator;
  *    use Bluz\Validator\Validator as v;
  *
@@ -30,16 +31,15 @@ use Bluz\Validator\ValidatorBuilder;
  *             );
  *        }
  *    }
+ * </code>
  *
  * @package  Bluz\Validator\Traits
- *
  * @author   Anton Shevchuk
- * @created  04.07.2014 10:14
  */
 trait Validator
 {
     /**
-     * @var ValidatorBuilder Instance of ValidatorBuilder
+     * @var ValidatorBuilder instance of ValidatorBuilder
      */
     protected $validatorBuilder;
 
@@ -59,8 +59,8 @@ trait Validator
     /**
      * Add Validator for field
      *
-     * @param string $name
-     * @param \Bluz\Validator\Validator[] $validators
+     * @param  string $name
+     * @param  \Bluz\Validator\Validator[] $validators
      * @return Validator
      */
     protected function addValidator($name, ...$validators)
@@ -72,7 +72,7 @@ trait Validator
     /**
      * Validate input data
      *
-     * @param array|object $input
+     * @param  array|object $input
      * @return boolean
      */
     public function validate($input)
@@ -83,7 +83,7 @@ trait Validator
     /**
      * Assert input data
      *
-     * @param array|object $input
+     * @param  array|object $input
      * @return boolean
      */
     public function assert($input)

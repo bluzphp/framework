@@ -12,19 +12,21 @@
 namespace Bluz\Validator\Rule;
 
 /**
- * Class Positive
+ * Check for positive number
+ *
  * @package Bluz\Validator\Rule
  */
 class Positive extends AbstractRule
 {
     /**
-     * @var string Error template
+     * @var string error template
      */
     protected $template = '{{name}} must be positive';
 
     /**
      * Check for positive number
-     * @param string $input
+     *
+     * @param  string $input
      * @return bool
      */
     public function validate($input)

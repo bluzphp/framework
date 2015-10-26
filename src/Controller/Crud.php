@@ -22,20 +22,18 @@ use Bluz\Validator\Exception\ValidatorException;
  * Crud controller
  *
  * @package  Bluz\Controller
- * @link     https://github.com/bluzphp/framework/wiki/Controller-Crud
- *
  * @author   Anton Shevchuk
- * @created  15.08.12 15:37
+ * @link     https://github.com/bluzphp/framework/wiki/Controller-Crud
  */
 class Crud extends AbstractController
 {
     /**
      * {@inheritdoc}
      *
+     * @return mixed
      * @throws NotImplementedException
      * @throws NotFoundException
      * @throws BadRequestException
-     * @return mixed
      */
     public function __invoke()
     {
@@ -102,6 +100,7 @@ class Crud extends AbstractController
 
     /**
      * Return primary key
+     *
      * @return array
      */
     public function getPrimaryKey()
@@ -116,7 +115,7 @@ class Crud extends AbstractController
     /**
      * {@inheritdoc}
      *
-     * @param array $data
+     * @param  array $data
      * @return mixed
      * @throws \Bluz\Application\Exception\ApplicationException
      * @throws \Bluz\Application\Exception\NotImplementedException
@@ -133,9 +132,9 @@ class Crud extends AbstractController
     /**
      * {@inheritdoc}
      *
-     * @param mixed $id
-     * @param array $data
-     * @return int
+     * @param  mixed $id
+     * @param  array $data
+     * @return integer
      * @throws \Bluz\Application\Exception\ApplicationException
      * @throws \Bluz\Application\Exception\NotImplementedException
      */
@@ -151,8 +150,8 @@ class Crud extends AbstractController
     /**
      * {@inheritdoc}
      *
-     * @param mixed $primary
-     * @return int
+     * @param  mixed $primary
+     * @return integer
      * @throws \Bluz\Application\Exception\ApplicationException
      * @throws \Bluz\Application\Exception\NotImplementedException
      */

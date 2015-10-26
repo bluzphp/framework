@@ -18,7 +18,6 @@ return
     /**
      * Get current user
      *
-     * @var View $this
      * @return \Bluz\Auth\AbstractRowEntity|null
      */
     function () {

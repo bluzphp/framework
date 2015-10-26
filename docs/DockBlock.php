@@ -96,15 +96,20 @@ class DockBlock
      * Short summary for property is optional, but recommended
      *
      * Syntax and order of tags:
+     * @.var  ["Type"] [$element_name] [<description>]
      * @.link [URI] [<description>]
      * @.see  [URI | FQSEN] [<description>]
-     * @.var  ["Type"] [$element_name] [<description>]
      *
+     * @var  string contain a description
      * @link https://github.com/bluzphp/framework
      * @see  DockBlock
-     * @var  string Should contain a description
      */
     protected $foo = 'bar';
+
+    /**
+     * @var string simple property description
+     */
+    protected $bar;
 
     /**
      * Registers the status of foo's universe

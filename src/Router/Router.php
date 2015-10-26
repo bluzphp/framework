@@ -20,10 +20,8 @@ use Bluz\Proxy\Request;
  * Router
  *
  * @package  Bluz\Router
- * @link     https://github.com/bluzphp/framework/wiki/Router
- *
  * @author   Anton Shevchuk
- * @created  06.07.11 18:16
+ * @link     https://github.com/bluzphp/framework/wiki/Router
  */
 class Router
 {
@@ -38,34 +36,32 @@ class Router
     const ERROR_CONTROLLER = 'index';
 
     /**
-     * @var string Default module
+     * @var string default module
      */
     protected $defaultModule = self::DEFAULT_MODULE;
 
     /**
-     * @var string Default Controller
+     * @var string default Controller
      */
     protected $defaultController = self::DEFAULT_CONTROLLER;
 
     /**
-     * @var string Error module
+     * @var string error module
      */
     protected $errorModule = self::ERROR_MODULE;
 
     /**
-     * @var string Error Controller
+     * @var string error Controller
      */
     protected $errorController = self::ERROR_CONTROLLER;
 
     /**
-     * Routers map
-     * @var array
+     * @var array routers map
      */
     protected $routers = array();
 
     /**
-     * Reverse map
-     * @var array
+     * @var array reverse map
      */
     protected $reverse = array();
 
@@ -122,6 +118,7 @@ class Router
 
     /**
      * Get default module
+     *
      * @return string
      */
     public function getDefaultModule()
@@ -131,7 +128,8 @@ class Router
 
     /**
      * Set default module
-     * @param string $defaultModule
+     *
+     * @param  string $defaultModule
      * @return void
      */
     public function setDefaultModule($defaultModule)
@@ -141,6 +139,7 @@ class Router
 
     /**
      * Get default controller
+     *
      * @return string
      */
     public function getDefaultController()
@@ -150,7 +149,8 @@ class Router
 
     /**
      * Set default controller
-     * @param string $defaultController
+     *
+     * @param  string $defaultController
      * @return void
      */
     public function setDefaultController($defaultController)
@@ -160,6 +160,7 @@ class Router
 
     /**
      * Get error module
+     *
      * @return string
      */
     public function getErrorModule()
@@ -169,7 +170,8 @@ class Router
 
     /**
      * Set error module
-     * @param string $errorModule
+     *
+     * @param  string $errorModule
      * @return void
      */
     public function setErrorModule($errorModule)
@@ -179,6 +181,7 @@ class Router
 
     /**
      * Get error controller
+     *
      * @return string
      */
     public function getErrorController()
@@ -188,7 +191,8 @@ class Router
 
     /**
      * Set error controller
-     * @param string $errorController
+     *
+     * @param  string $errorController
      * @return void
      */
     public function setErrorController($errorController)
@@ -199,9 +203,9 @@ class Router
     /**
      * Build URL to controller
      *
-     * @param string $module
-     * @param string $controller
-     * @param array $params
+     * @param  string $module
+     * @param  string $controller
+     * @param  array  $params
      * @return string
      */
     public function getUrl($module = self::DEFAULT_MODULE, $controller = self::DEFAULT_CONTROLLER, $params = array())
@@ -227,9 +231,9 @@ class Router
     /**
      * Build full URL to controller
      *
-     * @param string $module
-     * @param string $controller
-     * @param array $params
+     * @param  string $module
+     * @param  string $controller
+     * @param  array  $params
      * @return string
      */
     public function getFullUrl(
@@ -246,9 +250,9 @@ class Router
     /**
      * Build URL by custom route
      *
-     * @param string $module
-     * @param string $controller
-     * @param array $params
+     * @param  string $module
+     * @param  string $controller
+     * @param  array  $params
      * @return string
      */
     protected function urlCustom($module, $controller, $params)
@@ -284,9 +288,9 @@ class Router
     /**
      * Build URL by default route
      *
-     * @param string $module
-     * @param string $controller
-     * @param array $params
+     * @param  string $module
+     * @param  string $controller
+     * @param  array  $params
      * @return string
      */
     protected function urlRoute($module, $controller, $params)

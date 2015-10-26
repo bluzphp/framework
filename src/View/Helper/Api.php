@@ -22,10 +22,10 @@ return
      * For render information use Widgets!
      *     $this->api($module, $method, array $params);
      *
-     * @var View $this
-     * @param string $module
-     * @param string $method
-     * @param array $params
+     * @var    View   $this
+     * @param  string $module
+     * @param  string $method
+     * @param  array  $params
      * @return mixed
      */
     function ($module, $method, $params = array()) {

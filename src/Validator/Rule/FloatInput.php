@@ -12,19 +12,21 @@
 namespace Bluz\Validator\Rule;
 
 /**
- * Class Float
+ * Check float
+ *
  * @package Bluz\Validator\Rule
  */
 class FloatInput extends AbstractRule
 {
     /**
-     * @var string Error template
+     * @var string error template
      */
     protected $template = '{{name}} must be a float number';
 
     /**
      * Check input data
-     * @param string $input
+     *
+     * @param  string $input
      * @return bool
      */
     public function validate($input)

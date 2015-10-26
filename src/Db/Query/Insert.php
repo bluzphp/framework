@@ -25,7 +25,7 @@ class Insert extends AbstractBuilder
     /**
      * {@inheritdoc}
      *
-     * @param null $sequence
+     * @param  null $sequence
      * @return integer|string|array
      */
     public function execute($sequence = null)
@@ -56,13 +56,15 @@ class Insert extends AbstractBuilder
      * a certain table
      *
      * Example
+     * <code>
      *     $ib = new InsertBuilder();
      *     $ib
      *         ->insert('users')
      *         ->set('name', 'username')
      *         ->set('password', md5('password'));
+     * </code>
      *
-     * @param string $table The table into which the rows should be inserted
+     * @param  string $table The table into which the rows should be inserted
      * @return Insert instance
      */
     public function insert($table)

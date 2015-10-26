@@ -17,10 +17,8 @@ use Bluz\Common\Options;
  * Request
  *
  * @package  Bluz\Request
- * @link     https://github.com/bluzphp/framework/wiki/Request
- *
  * @author   Anton Shevchuk
- * @created  06.07.11 16:59
+ * @link     https://github.com/bluzphp/framework/wiki/Request
  */
 class AbstractRequest
 {
@@ -59,62 +57,53 @@ class AbstractRequest
     const ACCEPT_XML = 'XML';
 
     /**
-     * REQUEST_URI
-     * @var string;
+     * @var string REQUEST_URI
      */
     protected $requestUri;
 
     /**
-     * REQUEST_URI minus Base URL
-     * @var string;
+     * @var string REQUEST_URI minus Base URL
      */
     protected $cleanUri;
 
     /**
-     * Base URL
-     * @var string;
+     *
+     * @var string base URL
      */
     protected $baseUrl;
 
     /**
-     * Base Path
-     * @var string;
+     * @var string base path
      */
     protected $basePath;
 
     /**
-     * HTTP Accept Mime Type or CLI
-     * @var string
+     * @var string HTTP Accept Mime Type or CLI
      */
     protected $accept;
 
     /**
-     * HTTP Method or CLI
-     * @var string
+     * @var string HTTP Method or CLI
      */
     protected $method;
 
     /**
-     * Module
-     * @var string
+     * @var string module name
      */
     protected $module = 'index';
 
     /**
-     * Controller
-     * @var string
+     * @var string controller name
      */
     protected $controller = 'index';
 
     /**
-     * Instance parameters
-     * @var array
+     * @var array instance parameters
      */
     protected $params = array();
 
     /**
-     * Instance raw parameters
-     * @var array
+     * @var array instance raw parameters
      */
     protected $rawParams = array();
 
@@ -130,11 +119,9 @@ class AbstractRequest
     }
 
     /**
-     * setMethod
+     * Overwrite request method
      *
-     * Overwrite method
-     *
-     * @param $method
+     * @param  string $method
      * @return void
      */
     public function setMethod($method)
@@ -266,8 +253,8 @@ class AbstractRequest
     /**
      * Get an action parameter
      *
-     * @param string $key
-     * @param mixed $default Default value to use if key not found
+     * @param  string $key
+     * @param  mixed  $default Default value to use if key not found
      * @return mixed
      */
     public function getParam($key, $default = null)
@@ -280,8 +267,8 @@ class AbstractRequest
      *
      * A $value of null will unset the $key if it exists
      *
-     * @param string $key
-     * @param mixed $value
+     * @param  string $key
+     * @param  mixed  $value
      * @return void
      */
     public function setParam($key, $value)
@@ -318,7 +305,7 @@ class AbstractRequest
     /**
      * Overwrite all parameters
      *
-     * @param array $params
+     * @param  array $params
      * @return void
      */
     public function setParams(array $params)
@@ -339,7 +326,7 @@ class AbstractRequest
     /**
      * Set raw params, w/out module and controller
      *
-     * @param array $params
+     * @param  array $params
      * @return void
      */
     public function setRawParams(array $params)
@@ -352,9 +339,9 @@ class AbstractRequest
      *
      * If no $key is passed, returns the entire $_ENV array.
      *
-     * @param string $key
-     * @param mixed $default Default value to use if key not found
-     * @return mixed Returns null if key does not exist
+     * @param  string $key
+     * @param  mixed  $default Default value to use if key not found
+     * @return mixed  Returns null if key does not exist
      */
     public function getEnv($key = null, $default = null)
     {
@@ -369,8 +356,8 @@ class AbstractRequest
      *
      * If no $key is passed, returns the entire $_SERVER array.
      *
-     * @param string $key
-     * @param string $default Default value to use if key not found
+     * @param  string $key
+     * @param  string $default Default value to use if key not found
      * @return string Returns null if key does not exist
      */
     public function getServer($key = null, $default = null)
@@ -394,7 +381,7 @@ class AbstractRequest
     /**
      * Retrieve the module name
      *
-     * @param string $name
+     * @param  string $name
      * @return void
      */
     public function setModule($name)
@@ -415,7 +402,7 @@ class AbstractRequest
     /**
      * Retrieve the controller name
      *
-     * @param string $name
+     * @param  string $name
      * @return void
      */
     public function setController($name)

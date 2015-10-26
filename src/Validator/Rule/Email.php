@@ -12,23 +12,25 @@
 namespace Bluz\Validator\Rule;
 
 /**
- * Class Email
+ * Check for email
+ *
  * @package Bluz\Validator\Rule
  */
 class Email extends AbstractRule
 {
     /**
-     * @var string Error template
+     * @var string error template
      */
     protected $template = '{{name}} must be a valid email address';
 
     /**
-     * @var bool Check DNS record
+     * @var bool check DNS record flag
      */
     protected $checkDns;
 
     /**
      * Setup validation rule
+     *
      * @param bool $checkDns
      */
     public function __construct($checkDns = false)
@@ -38,7 +40,8 @@ class Email extends AbstractRule
 
     /**
      * Check input data
-     * @param mixed $input
+     *
+     * @param  mixed $input
      * @return bool
      */
     public function validate($input)

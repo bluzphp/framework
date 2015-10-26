@@ -21,10 +21,8 @@ use Bluz\Proxy\Logger;
  * PDO wrapper
  *
  * @package  Bluz\Db
- * @link     https://github.com/bluzphp/framework/wiki/Db
- *
  * @author   Anton Shevchuk
- * @created  07.07.11 15:36
+ * @link     https://github.com/bluzphp/framework/wiki/Db
  */
 class Db
 {
@@ -32,8 +30,8 @@ class Db
 
     /**
      * PDO connection settings
+     * @var  array
      * @link http://php.net/manual/en/pdo.construct.php
-     * @var array
      */
     protected $connect = array(
         "type" => "mysql",
@@ -46,30 +44,28 @@ class Db
 
     /**
      * PDO connection flags
+     * @var  array
      * @link http://php.net/manual/en/pdo.setattribute.php
-     * @var array
      */
     protected $attributes = array(
         \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
     );
 
     /**
-     * PDO instance
-     * @var \PDO
+     * @var \PDO PDO instance
      */
     protected $handler;
 
     /**
-     * Part time
-     * @var float
+     * @var float part time
      */
     protected $timer;
 
     /**
      * Setup connection
      *
-     * Just init
-     *
+     * Just save connection settings
+     * <code>
      *     $db->setConnect(array(
      *         'type' => 'mysql',
      *         'host' => 'localhost',
@@ -77,10 +73,11 @@ class Db
      *         'user' => 'root',
      *         'pass' => ''
      *     ));
+     * </code>
      *
-     * @param array $connect options
-     * @throws DbException
+     * @param  array $connect options
      * @return Db
+     * @throws DbException
      */
     public function setConnect(array $connect)
     {
@@ -92,8 +89,8 @@ class Db
     /**
      * Check connection options
      *
-     * @throws ConfigurationException
      * @return void
+     * @throws ConfigurationException
      */
     private function checkConnect()
     {
@@ -112,7 +109,7 @@ class Db
     /**
      * Setup attributes for PDO connect
      *
-     * @param array $attributes
+     * @param  array $attributes
      * @return Db
      */
     public function setAttributes(array $attributes)
@@ -123,9 +120,9 @@ class Db
 
     /**
      * Connect to Db
-     * @api
-     * @throws DbException
+     *
      * @return Db
+     * @throws DbException
      */
     public function connect()
     {
@@ -154,7 +151,7 @@ class Db
 
     /**
      * Return PDO handler
-     * @api
+     *
      * @return \PDO
      */
     public function handler()
@@ -167,9 +164,9 @@ class Db
 
     /**
      * Prepare SQL query and return PDO Statement
-     * @api
-     * @param string $sql
-     * @param array $params
+     *
+     * @param  string $sql    SQL query with placeholders
+     * @param  array  $params params for query placeholders
      * @return \PDOStatement
      */
     protected function prepare($sql, $params)
@@ -186,10 +183,11 @@ class Db
      * Quotes a string for use in a query
      *
      * Example of usage
+     * <code>
      *     $db->quote($_GET['id'])
+     * </code>
      *
-     * @api
-     * @param string $value
+     * @param  string $value
      * @return string
      */
     public function quote($value)
@@ -199,8 +197,8 @@ class Db
 
     /**
      * Quote a string so it can be safely used as a table or column name
-     * @api
-     * @param string $identifier
+     *
+     * @param  string $identifier
      * @return string
      */
     public function quoteIdentifier($identifier)
@@ -220,18 +218,16 @@ class Db
      * Execute SQL query
      *
      * Example of usage
+     * <code>
      *     $db->query("SET NAMES 'utf8'");
+     * </code>
      *
-     * @api
-     * @param string $sql <p>
-     *  "UPDATE users SET name = :name WHERE id = :id"
-     *  </p>
-     * @param array $params <p>
-     *  array (':name' => 'John', ':id' => '123')
-     * </p>
-     * @param array $types <p>
-     *  array (':name' => \PDO::PARAM_STR, ':id' => \PDO::PARAM_INT)
-     * </p>
+     * @param  string $sql    SQL query with placeholders
+     *                        "UPDATE users SET name = :name WHERE id = :id"
+     * @param  array  $params params for query placeholders (optional)
+     *                        array (':name' => 'John', ':id' => '123')
+     * @param  array  $types  Types of params (optional)
+     *                        array (':name' => \PDO::PARAM_STR, ':id' => \PDO::PARAM_INT)
      * @return integer the number of rows
      */
     public function query($sql, $params = array(), $types = array())
@@ -252,8 +248,8 @@ class Db
 
     /**
      * Create new query select builder
-     * @api
-     * @param string $select The selection expressions
+     *
+     * @param  string $select The selection expressions
      * @return Query\Select
      */
     public function select(...$select)
@@ -265,8 +261,8 @@ class Db
 
     /**
      * Create new query insert builder
-     * @api
-     * @param string $table
+     *
+     * @param  string $table
      * @return Query\Insert
      */
     public function insert($table)
@@ -278,8 +274,8 @@ class Db
 
     /**
      * Create new query update builder
-     * @api
-     * @param string $table
+     *
+     * @param  string $table
      * @return Query\Update
      */
     public function update($table)
@@ -291,8 +287,8 @@ class Db
 
     /**
      * Create new query update builder
-     * @api
-     * @param string $table
+     *
+     * @param  string $table
      * @return Query\Delete
      */
     public function delete($table)
@@ -306,15 +302,14 @@ class Db
      * Return first field from first element from the result set
      *
      * Example of usage
+     * <code>
      *     $db->fetchOne("SELECT COUNT(*) FROM users");
+     * </code>
      *
-     * @api
-     * @param string $sql <p>
-     *  "SELECT id FROM users WHERE name = :name AND pass = :pass"
-     *  </p>
-     * @param array $params <p>
-     *  array (':name' => 'John', ':pass' => '123456')
-     * </p>
+     * @param  string $sql     SQL query with placeholders
+     *                         "SELECT * FROM users WHERE name = :name AND pass = :pass"
+     * @param  array  $params  params for query placeholders (optional)
+     *                         array (':name' => 'John', ':pass' => '123456')
      * @return string
      */
     public function fetchOne($sql, $params = array())
@@ -330,20 +325,17 @@ class Db
      * Returns an array containing first row from the result set
      *
      * Example of usage
+     * <code>
      *     $db->fetchRow("SELECT name, email FROM users WHERE id = ". $db->quote($id));
      *     $db->fetchRow("SELECT name, email FROM users WHERE id = ?", array($id));
      *     $db->fetchRow("SELECT name, email FROM users WHERE id = :id", array(':id'=>$id));
+     * </code>
      *
-     * @api
-     * @param string $sql <p>
-     *  "SELECT * FROM users WHERE name = :name AND pass = :pass"
-     *  </p>
-     * @param array $params <p>
-     *  array (':name' => 'John', ':pass' => '123456')
-     * </p>
-     * @return array <pre>
-     *  array ('name' => 'John', 'email' => 'john@smith.com')
-     * </pre>
+     * @param  string $sql     SQL query with placeholders
+     *                         "SELECT * FROM users WHERE name = :name AND pass = :pass"
+     * @param  array  $params  params for query placeholders (optional)
+     *                         array (':name' => 'John', ':pass' => '123456')
+     * @return array           array ('name' => 'John', 'email' => 'john@smith.com')
      */
     public function fetchRow($sql, $params = array())
     {
@@ -358,15 +350,14 @@ class Db
      * Returns an array containing all of the result set rows
      *
      * Example of usage
+     * <code>
      *     $db->fetchAll("SELECT * FROM users WHERE ip = ?", array('192.168.1.1'));
+     * </code>
      *
-     * @api
-     * @param string $sql <p>
-     *  "SELECT * FROM users WHERE ip = :ip"
-     *  </p>
-     * @param array $params <p>
-     *  array (':ip' => '127.0.0.1')
-     * </p>
+     * @param  string $sql    SQL query with placeholders
+     *                        "SELECT * FROM users WHERE ip = :ip"
+     * @param  array  $params params for query placeholders (optional)
+     *                        array (':ip' => '127.0.0.1')
      * @return array[]
      */
     public function fetchAll($sql, $params = array())
@@ -381,13 +372,10 @@ class Db
     /**
      * Returns an array containing one column from the result set rows
      *
-     * @api
-     * @param string $sql <p>
-     *  "SELECT id FROM users WHERE ip = :ip"
-     *  </p>
-     * @param array $params <p>
-     *  array (':ip' => '127.0.0.1')
-     * </p>
+     * @param  string $sql    SQL query with placeholders
+     *                        "SELECT id FROM users WHERE ip = :ip"
+     * @param  array  $params params for query placeholders (optional)
+     *                        array (':ip' => '127.0.0.1')
      * @return array
      */
     public function fetchColumn($sql, $params = array())
@@ -403,13 +391,13 @@ class Db
      * Returns an array containing all of the result set rows
      *
      * Group by first column
+     * <code>
      *     $db->fetchGroup("SELECT ip, COUNT(id) FROM users GROUP BY ip", array());
+     * </code>
      *
-     * @api
-     * @param string $sql <p>
-     *  "SELECT ip, id FROM users"
-     *  </p>
-     * @param array $params
+     * @param  string $sql    SQL query with placeholders
+     *                        "SELECT ip, id FROM users"
+     * @param  array  $params params for query placeholders (optional)
      * @return array
      */
     public function fetchGroup($sql, $params = array())
@@ -426,11 +414,9 @@ class Db
      *
      * Group by first column
      *
-     * @api
-     * @param string $sql <p>
-     *  "SELECT ip, id FROM users"
-     *  </p>
-     * @param array $params
+     * @param  string $sql    SQL query with placeholders
+     *                        "SELECT ip, id FROM users"
+     * @param  array  $params params for query placeholders (optional)
      * @return array
      */
     public function fetchColumnGroup($sql, $params = array())
@@ -445,13 +431,10 @@ class Db
     /**
      * Returns a key-value array
      *
-     * @api
-     * @param string $sql <p>
-     *  "SELECT id, username FROM users WHERE ip = :ip"
-     *  </p>
-     * @param array $params <p>
-     *  array (':ip' => '127.0.0.1')
-     * </p>
+     * @param  string $sql    SQL query with placeholders
+     *                        "SELECT id, username FROM users WHERE ip = :ip"
+     * @param  array  $params params for query placeholders (optional)
+     *                        array (':ip' => '127.0.0.1')
      * @return array
      */
     public function fetchPairs($sql, $params = array())
@@ -466,21 +449,21 @@ class Db
     /**
      * Returns an object containing first row from the result set
      *
-     * Fetch object to stdClass
+     * Example of usage
+     * <code>
+     *     // Fetch object to stdClass
      *     $stdClass = $db->fetchObject('SELECT * FROM some_table WHERE id = ?', array($id));
-     * Fetch object to new Some object
+     *     // Fetch object to new Some object
      *     $someClass = $db->fetchObject('SELECT * FROM some_table WHERE id = ?', array($id), 'Some');
-     * Fetch object to exists instance of Some object
+     *     // Fetch object to exists instance of Some object
      *     $someClass = $db->fetchObject('SELECT * FROM some_table WHERE id = ?', array($id), $someClass);
+     * </code>
      *
-     * @api
-     * @param string $sql <p>
-     *  "SELECT * FROM users WHERE name = :name AND pass = :pass"
-     *  </p>
-     * @param array $params <p>
-     *  array (':name' => 'John', ':pass' => '123456')
-     * </p>
-     * @param mixed $object
+     * @param  string $sql    SQL query with placeholders
+     *                        "SELECT * FROM users WHERE name = :name AND pass = :pass"
+     * @param  array  $params params for query placeholders (optional)
+     *                        array (':name' => 'John', ':pass' => '123456')
+     * @param  mixed  $object
      * @return array
      */
     public function fetchObject($sql, $params = array(), $object = "stdClass")
@@ -504,14 +487,11 @@ class Db
     /**
      * Returns an array of objects containing the result set
      *
-     * @api
-     * @param string $sql <p>
-     *  "SELECT * FROM users WHERE name = :name AND pass = :pass"
-     *  </p>
-     * @param array $params <p>
-     *  array (':name' => 'John', ':pass' => '123456')
-     * </p>
-     * @param mixed $object
+     * @param  string $sql    SQL query with placeholders
+     *                        "SELECT * FROM users WHERE name = :name AND pass = :pass"
+     * @param  array  $params params for query placeholders (optional)
+     *                        array (':name' => 'John', ':pass' => '123456')
+     * @param  mixed  $object Class name or instance
      * @return array
      */
     public function fetchObjects($sql, $params = array(), $object = null)
@@ -534,16 +514,13 @@ class Db
     /**
      * Returns an array of linked objects containing the result set
      *
-     * @api
-     * @param string $sql <p>
-     *  "SELECT '__users', u.*, '__users_profile', up.*
-     *   FROM users u
-     *   LEFT JOIN users_profile up ON up.userId = u.id"
-     *   WHERE u.name = :name
-     *  </p>
-     * @param array $params <p>
-     *  array (':name' => 'John')
-     * </p>
+     * @param  string $sql    SQL query with placeholders
+     *                        "SELECT '__users', u.*, '__users_profile', up.*
+     *                        FROM users u
+     *                        LEFT JOIN users_profile up ON up.userId = u.id
+     *                        WHERE u.name = :name"
+     * @param  array  $params params for query placeholders (optional)
+     *                        array (':name' => 'John')
      * @return array
      */
     public function fetchRelations($sql, $params = array())
@@ -564,16 +541,17 @@ class Db
      * Transaction wrapper
      *
      * Example of usage
+     * <code>
      *     $db->transaction(function() use ($db) {
      *         $db->query("INSERT INTO `table` ...");
      *         $db->query("UPDATE `table` ...");
      *         $db->query("DELETE FROM `table` ...");
      *     })
+     * </code>
      *
-     * @api
-     * @param  callable $process
-     * @throws DbException
+     * @param  callable $process callable structure - closure function or class with __invoke() method
      * @return bool
+     * @throws DbException
      */
     public function transaction($process)
     {
@@ -605,8 +583,8 @@ class Db
     /**
      * Log queries by Application
      *
-     * @param string $sql
-     * @param array $context
+     * @param  string $sql     SQL query for logs
+     * @param  array  $context
      * @return void
      */
     protected function log($sql, array $context = [])
@@ -624,7 +602,7 @@ class Db
 
     /**
      * Disconnect PDO and clean default adapter
-     * @api
+     *
      * @return void
      */
     public function disconnect()

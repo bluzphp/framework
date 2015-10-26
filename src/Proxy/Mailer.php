@@ -17,6 +17,7 @@ use Bluz\Mailer\Mailer as Instance;
  * Proxy to Mailer
  *
  * Example of usage
+ * <code>
  *     use Bluz\Proxy\Mailer;
  *
  *     $mail = Mailer::create();
@@ -24,8 +25,10 @@ use Bluz\Mailer\Mailer as Instance;
  *     $mail->Subject = 'Here is the subject';
  *     // ...
  *     Mailer::send($mail);
+ * </code>
  *
  * @package  Bluz\Proxy
+ * @author   Anton Shevchuk
  *
  * @method   static Instance getInstance()
  *
@@ -34,10 +37,6 @@ use Bluz\Mailer\Mailer as Instance;
  *
  * @method   static bool send(\PHPMailer $mail)
  * @see      Bluz\Mailer\Mailer::send()
- *
- *
- * @author   Anton Shevchuk
- * @created  29.09.2014 12:08
  */
 class Mailer extends AbstractProxy
 {

@@ -18,7 +18,6 @@ use Bluz\Common\Exception\CommonException;
  *
  * @package  Bluz\Db\Exception
  * @author   Anton Shevchuk
- * @created  07.07.11 16:46
  */
 class DbException extends CommonException
 {

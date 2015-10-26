@@ -17,9 +17,7 @@ use Bluz\Proxy\Messages;
  * Json
  *
  * @package  Bluz\Response\Presentation
- *
  * @author   Anton Shevchuk
- * @created  10.11.2014 18:03
  */
 class Json extends AbstractPresentation
 {

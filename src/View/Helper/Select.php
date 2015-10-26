@@ -18,6 +18,7 @@ return
      * Generate HTML for <select> element
      *
      * Example of usage:
+     * <code>
      *     $this->select("car", [
      *     "none" => "No Car",
      *     "class-A" => [
@@ -41,16 +42,18 @@ return
      *         <option value="citroen-c3">Citroen C3</option>
      *       </optgroup>
      *     </select>
+     * </code>
      *
-     * @author The-Who
-     * @var View $this
-     * @param string $name
-     * @param array $options
-     * @param array|string $selected
-     * @param array $attributes
+     * @param  string       $name
+     * @param  array        $options
+     * @param  array|string $selected
+     * @param  array        $attributes
      * @return string
      */
     function ($name, array $options = [], $selected = null, array $attributes = []) {
+        /**
+         * @var View $this
+         */
         $attributes['name'] = $name;
 
         if (!is_array($selected)) {
@@ -66,8 +69,8 @@ return
         }
 
         /**
-         * @param $value
-         * @param $text
+         * @param  $value
+         * @param  $text
          * @return string
          */
         $buildOption = function ($value, $text) use ($selected) {

@@ -17,9 +17,7 @@ use Bluz\Request\AbstractRequest;
  * HTTP Request
  *
  * @package  Bluz\Http
- *
  * @author   Anton Shevchuk
- * @created  06.07.11 16:59
  */
 class Request extends AbstractRequest
 {
@@ -30,8 +28,7 @@ class Request extends AbstractRequest
     const SCHEME_HTTPS = 'https';
 
     /**
-     * File upload instance
-     * @var FileUpload
+     * @var FileUpload instance of FileUpload
      */
     protected $fileUpload;
 
@@ -65,10 +62,10 @@ class Request extends AbstractRequest
      * Access values contained in the superglobals as public members
      * Order of precedence: 1. GET, 2. POST, 3. COOKIE, 4. SERVER, 5. ENV
      *
-     * @link http://msdn.microsoft.com/en-us/library/system.web.httprequest.item.aspx
-     * @param string $key
-     * @param null $default
+     * @param  string $key
+     * @param  null   $default
      * @return mixed
+     * @link http://msdn.microsoft.com/en-us/library/system.web.httprequest.item.aspx
      */
     public function getParam($key, $default = null)
     {
@@ -141,7 +138,7 @@ class Request extends AbstractRequest
      * plain, HTTP-specified header name. Ex.: Ask for 'Accept' to get the
      * Accept header, 'Accept-Encoding' to get the Accept-Encoding header.
      *
-     * @param string $header HTTP header name
+     * @param  string $header HTTP header name
      * @return string|false HTTP header value, or false if not found
      */
     public function getHeader($header)
@@ -174,8 +171,8 @@ class Request extends AbstractRequest
      *
      * If no $key is passed, returns the entire $_GET array.
      *
-     * @param string $key
-     * @param string|array $default Default value to use if key not found
+     * @param  string       $key
+     * @param  string|array $default Default value to use if key not found
      * @return string|array Returns null if key does not exist
      */
     public function getQuery($key = null, $default = null)
@@ -192,8 +189,8 @@ class Request extends AbstractRequest
      *
      * If no $key is passed, returns the entire $_POST array.
      *
-     * @param string $key
-     * @param string|array $default Default value to use if key not found
+     * @param  string       $key
+     * @param  string|array $default Default value to use if key not found
      * @return string|array Returns null if key does not exist
      */
     public function getPost($key = null, $default = null)
@@ -211,8 +208,9 @@ class Request extends AbstractRequest
      * If no $key is passed, returns the entire $_COOKIE array.
      *
      * @todo How to retrieve from nested arrays
-     * @param string $key
-     * @param string $default Default value to use if key not found
+     *
+     * @param  string $key
+     * @param  string $default Default value to use if key not found
      * @return string|array Returns null if key does not exist
      */
     public function getCookie($key = null, $default = null)
@@ -225,10 +223,9 @@ class Request extends AbstractRequest
     }
 
     /**
-     * setFileUpload
+     * Setup FileUpload
      *
-     * @param FileUpload $fileUpload
-     *
+     * @param  FileUpload $fileUpload
      * @return void
      */
     public function setFileUpload(FileUpload $fileUpload)
@@ -237,7 +234,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * getFileUpload
+     * Get FileUpload
      *
      * @return FileUpload
      */

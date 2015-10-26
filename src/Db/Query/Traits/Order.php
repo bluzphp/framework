@@ -16,17 +16,17 @@ use Bluz\Db\Query\Select;
 use Bluz\Db\Query\Update;
 
 /**
- * Order Trait, required for:
+ * Order Trait
+ *
+ * Required for:
  *  - Select Builder
  *  - Update Builder
  *  - Delete Builder
  *
- * @package Bluz\Db\Query\Traits
- *
- * @method Select|Update|Delete addQueryPart(string $sqlPartName, mixed $sqlPart, $append = false)
- *
+ * @package  Bluz\Db\Query\Traits
  * @author   Anton Shevchuk
- * @created  17.06.13 10:00
+ *
+ * @method   Select|Update|Delete addQueryPart(string $sqlPartName, mixed $sqlPart, $append = false)
  */
 trait Order
 {
@@ -34,8 +34,8 @@ trait Order
      * Specifies an ordering for the query results
      * Replaces any previously specified orderings, if any
      *
-     * @param string $sort expression
-     * @param string $order direction
+     * @param  string $sort  Sort expression
+     * @param  string $order Sort direction (ASC or DESC)
      * @return Select|Update|Delete
      */
     public function orderBy($sort, $order = 'ASC')
@@ -47,8 +47,8 @@ trait Order
     /**
      * Adds an ordering to the query results
      *
-     * @param string $sort expression
-     * @param string $order direction
+     * @param  string $sort  Sort expression
+     * @param  string $order Sort direction (ASC or DESC)
      * @return Select|Update|Delete
      */
     public function addOrderBy($sort, $order = 'ASC')

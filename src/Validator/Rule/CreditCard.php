@@ -12,19 +12,22 @@
 namespace Bluz\Validator\Rule;
 
 /**
- * Class CreditCard
+ * Check credit card number by Mod10 algorithm
+ *
  * @package Bluz\Validator\Rule
+ * @link    https://en.wikipedia.org/wiki/Luhn_algorithm
  */
 class CreditCard extends AbstractRule
 {
     /**
-     * @var string Error template
+     * @var string error template
      */
     protected $template = '{{name}} must be a valid Credit Card number';
 
     /**
      * Check input data
-     * @param string $input
+     *
+     * @param  string $input
      * @return bool
      */
     public function validate($input)
@@ -40,8 +43,8 @@ class CreditCard extends AbstractRule
 
     /**
      * Verify by Mod10
-     * @link https://en.wikipedia.org/wiki/Luhn_algorithm
-     * @param string $input
+     *
+     * @param  string $input
      * @return bool
      */
     private function verifyMod10($input)

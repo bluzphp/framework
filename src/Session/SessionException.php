@@ -17,9 +17,7 @@ use Bluz\Common\Exception\CommonException;
  * Exception
  *
  * @package  Bluz\Session
- *
  * @author   Anton Shevchuk
- * @created  26.01.12 19:06
  */
 class SessionException extends CommonException
 {

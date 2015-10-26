@@ -12,19 +12,21 @@
 namespace Bluz\Validator\Rule;
 
 /**
- * Class Numeric
+ * Check for numeric
+ *
  * @package Bluz\Validator\Rule
  */
 class Numeric extends AbstractRule
 {
     /**
-     * @var string Error template
+     * @var string error template
      */
     protected $template = '{{name}} must be numeric';
 
     /**
      * Check for numeric
-     * @param mixed $input
+     *
+     * @param  mixed $input
      * @return bool
      */
     public function validate($input)

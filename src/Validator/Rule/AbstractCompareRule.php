@@ -12,20 +12,22 @@
 namespace Bluz\Validator\Rule;
 
 /**
- * Class AbstractFilterRule
+ * Abstract rule of compare
+ *
  * @package Bluz\Validator\Rule
  */
 abstract class AbstractCompareRule extends AbstractRule
 {
     /**
-     * @var bool Compare inclusive or not
+     * @var bool compare inclusive or not
      */
     protected $inclusive;
 
     /**
      * Check $what less $than or not
-     * @param mixed $what
-     * @param mixed $than
+     *
+     * @param  mixed $what
+     * @param  mixed $than
      * @return bool
      */
     protected function less($what, $than)

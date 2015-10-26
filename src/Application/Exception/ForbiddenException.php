@@ -15,21 +15,17 @@ namespace Bluz\Application\Exception;
  * Forbidden Exception
  *
  * @package  Bluz\Application\Exception
- *
  * @author   Anton Shevchuk
- * @created  13.08.13 14:01
  */
 class ForbiddenException extends ApplicationException
 {
     /**
-     * Exception message
-     * @var string
+     * @var string exception message
      */
     protected $message = "Forbidden";
 
     /**
-     * Forbidden HTTP code
-     * @var int
+     * @var integer HTTP Code for "Forbidden"
      */
     protected $code = 403;
 }

@@ -15,12 +15,10 @@ use Bluz\Validator\Exception\ValidatorException;
 use Bluz\Translator\Translator;
 
 /**
- * AbstractRule
+ * Abstract validation rule
  *
  * @package  Bluz\Validator\Rule
- *
  * @author   Anton Shevchuk
- * @created  30.05.2014 10:10
  */
 abstract class AbstractRule
 {
@@ -28,20 +26,23 @@ abstract class AbstractRule
      * Template for error output
      *   - {{name}} - name of field
      *   - {{input}} - input value
+     *
      * @var string
      */
     protected $template = '{{name}} has invalid value {{input}}';
 
     /**
      * Check input data
-     * @param mixed $input
+     *
+     * @param  mixed $input
      * @return bool
      */
     abstract public function validate($input);
 
     /**
      * Invoke
-     * @param mixed $input
+     *
+     * @param  mixed $input
      * @return bool
      */
     public function __invoke($input)
@@ -51,9 +52,10 @@ abstract class AbstractRule
 
     /**
      * Assert
-     * @param string $input
-     * @throws ValidatorException
+     *
+     * @param  string $input
      * @return bool
+     * @throws ValidatorException
      */
     public function assert($input)
     {
@@ -65,6 +67,7 @@ abstract class AbstractRule
 
     /**
      * Get error template
+     *
      * @return string
      */
     public function getTemplate()
@@ -74,6 +77,7 @@ abstract class AbstractRule
 
     /**
      * Cast to string
+     *
      * @return string
      */
     public function __toString()

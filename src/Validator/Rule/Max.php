@@ -12,20 +12,22 @@
 namespace Bluz\Validator\Rule;
 
 /**
- * Class Max
+ * Check for maximum
+ *
  * @package Bluz\Validator\Rule
  */
 class Max extends AbstractCompareRule
 {
     /**
-     * @var numeric Maximum value
+     * @var numeric maximum value
      */
     protected $maxValue;
 
     /**
      * Setup validation rule
+     *
      * @param numeric $maxValue
-     * @param bool $inclusive
+     * @param bool    $inclusive
      */
     public function __construct($maxValue, $inclusive = false)
     {
@@ -35,7 +37,8 @@ class Max extends AbstractCompareRule
 
     /**
      * Check input data
-     * @param numeric $input
+     *
+     * @param  numeric $input
      * @return bool
      */
     public function validate($input)
@@ -45,6 +48,7 @@ class Max extends AbstractCompareRule
 
     /**
      * Get error template
+     *
      * @return string
      */
     public function getTemplate()

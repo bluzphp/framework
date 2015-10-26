@@ -16,8 +16,9 @@ use Bluz\Application\Exception\ReloadException;
 return
     /**
      * Reload current page please, be careful to avoid loop of reload
-     * @throws ReloadException
+     *
      * @return void
+     * @throws ReloadException
      */
     function () {
         throw new ReloadException();

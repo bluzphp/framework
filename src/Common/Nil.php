@@ -15,20 +15,19 @@ namespace Bluz\Common;
  * It's just null class
  *
  * @package  Bluz\Common
+ * @author   Anton Shevchuk
  * @link     https://github.com/bluzphp/framework/wiki/Trait-Nil
  *
- * @method null get($key)
- * @method null set($key, $value)
- *
- * @author   Anton Shevchuk
- * @created  15.01.13 09:50
+ * @method   null get($key)
+ * @method   null set($key, $value)
  */
 class Nil
 {
     /**
      * Magic call
-     * @param string $method
-     * @param array $args
+     *
+     * @param  string $method
+     * @param  array  $args
      * @return null
      */
     public function __call($method, $args)
@@ -38,8 +37,9 @@ class Nil
 
     /**
      * Magic call for static
-     * @param string $method
-     * @param array $args
+     *
+     * @param  string $method
+     * @param  array  $args
      * @return null
      */
     public static function __callStatic($method, $args)
@@ -49,7 +49,8 @@ class Nil
 
     /**
      * Magic __get
-     * @param string $key
+     *
+     * @param  string $key
      * @return null
      */
     public function __get($key)
@@ -59,8 +60,9 @@ class Nil
 
     /**
      * Magic __set
-     * @param string $key
-     * @param mixed $value
+     *
+     * @param  string $key
+     * @param  mixed  $value
      * @return null
      */
     public function __set($key, $value)
@@ -70,6 +72,7 @@ class Nil
 
     /**
      * Cast to empty string
+     *
      * @return string
      */
     public function __toString()

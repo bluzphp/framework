@@ -17,21 +17,17 @@ use Bluz\Grid\Grid;
  * Adapter
  *
  * @package  Bluz\Grid
- *
  * @author   Anton Shevchuk
- * @created  15.08.12 11:52
  */
 abstract class AbstractSource
 {
     /**
-     * Source for build grid
-     * @var mixed
+     * @var mixed source for build grid
      */
     protected $source;
 
     /**
-     * Available filters
-     * @var array
+     * @var array available filters
      */
     protected $filters = [
         Grid::FILTER_EQ => '=',
@@ -46,7 +42,7 @@ abstract class AbstractSource
     /**
      * Setup adapter source
      *
-     * @param mixed $source
+     * @param  mixed $source
      * @return self
      */
     abstract public function setSource($source);
@@ -54,7 +50,7 @@ abstract class AbstractSource
     /**
      * Process source
      *
-     * @param array $settings
+     * @param  array $settings
      * @return \Bluz\Grid\Data
      */
     abstract public function process(array $settings = []);

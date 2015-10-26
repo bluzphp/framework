@@ -18,12 +18,14 @@ return
     /**
      * Set or generate <style> code for <head>
      *
-     * @var Layout $this
-     * @param string $style
-     * @param string $media
+     * @param  string $style
+     * @param  string $media
      * @return string|null
      */
     function ($style = null, $media = 'all') {
+        /**
+         * @var Layout $this
+         */
         if (Application::getInstance()->hasLayout()) {
             return Layout::headStyle($style, $media);
         } else {

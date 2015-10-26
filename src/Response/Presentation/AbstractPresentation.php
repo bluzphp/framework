@@ -17,19 +17,18 @@ use Bluz\Response\AbstractResponse;
  * AbstractPresentation
  *
  * @package  Bluz\Response\Presentation
- *
  * @author   Anton Shevchuk
- * @created  10.11.2014 17:46
  */
 abstract class AbstractPresentation
 {
     /**
-     * @var AbstractResponse Instance
+     * @var AbstractResponse instance of Response
      */
     protected $response;
 
     /**
      * Create instance
+     *
      * @param AbstractResponse $response
      */
     public function __construct($response)

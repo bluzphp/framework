@@ -15,26 +15,28 @@ use Countable;
 use Bluz\Validator\Exception\ComponentException;
 
 /**
- * Class Length
+ * Check for length in range between minimum and maximum values
+ *
  * @package Bluz\Validator\Rule
  */
 class Length extends AbstractCompareRule
 {
     /**
-     * @var integer Minimum value
+     * @var integer minimum value
      */
     protected $minValue;
 
     /**
-     * @var integer Maximum value
+     * @var integer maximum value
      */
     protected $maxValue;
 
     /**
      * Setup validation rule
-     * @param integer|null $min
-     * @param integer|null $max
-     * @param bool $inclusive
+     *
+     * @param  integer|null $min
+     * @param  integer|null $max
+     * @param  bool         $inclusive
      * @throws \Bluz\Validator\Exception\ComponentException
      */
     public function __construct($min = null, $max = null, $inclusive = true)
@@ -64,7 +66,8 @@ class Length extends AbstractCompareRule
 
     /**
      * Check input data
-     * @param string $input
+     *
+     * @param  string $input
      * @return bool
      */
     public function validate($input)
@@ -79,7 +82,8 @@ class Length extends AbstractCompareRule
 
     /**
      * Extract length
-     * @param string $input
+     *
+     * @param  string $input
      * @return integer|false
      */
     protected function extractLength($input)
@@ -97,6 +101,7 @@ class Length extends AbstractCompareRule
 
     /**
      * Get error template
+     *
      * @return string
      */
     public function getTemplate()

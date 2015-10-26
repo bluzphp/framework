@@ -12,12 +12,10 @@
 namespace Bluz\View;
 
 /**
- * ViewInterface
+ * View Interface
  *
  * @package  Bluz\View
- *
  * @author   Anton Shevchuk
- * @created  19.02.13 15:25
  */
 interface ViewInterface
 {
@@ -27,7 +25,7 @@ interface ViewInterface
      * Example of usage
      *     $view->setPath('/modules/users/views');
      *
-     * @param string $path
+     * @param  string $path
      * @return ViewInterface
      */
     public function setPath($path);
@@ -38,7 +36,7 @@ interface ViewInterface
      * Example of usage
      *     $view->setTemplate('index.phtml');
      *
-     * @param string $file
+     * @param  string $file
      * @return ViewInterface
      */
     public function setTemplate($file);
@@ -46,7 +44,7 @@ interface ViewInterface
     /**
      * Merge data from array
      *
-     * @param array $data
+     * @param  array $data
      * @return ViewInterface
      */
     public function setFromArray(array $data);

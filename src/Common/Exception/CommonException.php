@@ -16,12 +16,11 @@ namespace Bluz\Common\Exception;
  *
  * @package  Bluz\Common\Exception
  * @author   Anton Shevchuk
- * @created  06.07.11 16:46
  */
 class CommonException extends \Exception
 {
     /**
-     * @var int Used as default HTTP code for exceptions
+     * @var integer Used as default HTTP code for exceptions
      */
     protected $code = 500;
 
@@ -31,8 +30,8 @@ class CommonException extends \Exception
      * @link http://php.net/manual/en/exception.construct.php
      * Fix for https://github.com/facebook/hhvm/blob/HHVM-3.4.0/hphp/system/php/lang/Exception.php#L55
      *
-     * @param string    $message  [optional] The Exception message to throw.
-     * @param int       $code     [optional] The Exception code.
+     * @param string     $message  [optional] The Exception message to throw.
+     * @param integer    $code     [optional] The Exception code.
      * @param \Exception $previous [optional] The previous exception used for the exception chaining. Since 5.3.0
      */
     public function __construct($message = "", $code = 0, \Exception $previous = null)

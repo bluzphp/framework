@@ -12,14 +12,17 @@
 namespace Bluz\Validator\Rule;
 
 /**
- * Class AbstractCtypeRule
+ * Abstract ctype rules
+ *
  * @package Bluz\Validator\Rule
+ * @link    http://php.net/manual/ru/book.ctype.php
  */
 abstract class AbstractCtypeRule extends AbstractFilterRule
 {
     /**
      * Filter input data
-     * @param string $input
+     *
+     * @param  string $input
      * @return string
      */
     protected function filter($input)

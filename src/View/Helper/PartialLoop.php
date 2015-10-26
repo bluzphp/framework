@@ -19,6 +19,7 @@ return
      * Render partial script in loop
      *
      * Example of usage:
+     * <code>
      *     <?php
      *      $data = array(2,4,6,8);
      *      $this->partialLoop('tr.phtml', $data, array('colspan'=>2));
@@ -33,16 +34,18 @@ return
      *        </td>
      *      </tr>
      *     ?>
+     * </code>
      *
-     * @var View $this
-     * @param       $template
-     * @param array $data
-     * @param array $params
-     * @throws ViewException|\InvalidArgumentException
+     * @param  string $template
+     * @param  array  $data
+     * @param  array  $params
      * @return string
+     * @throws ViewException|\InvalidArgumentException
      */
     function ($template, $data = array(), $params = array()) {
-
+        /**
+         * @var View $this
+         */
         if (!is_array($data)
             && !($data instanceof \Traversable)
             && !(is_object($data) && method_exists($data, 'toArray'))

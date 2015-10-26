@@ -18,79 +18,68 @@ use Psr\Log\AbstractLogger;
  * Logger
  *
  * @package  Bluz\Logger
- * @link     https://github.com/bluzphp/framework/wiki/Logger
- *
  * @author   Taras Omelianenko <mail@taras.pro>
+ * @link     https://github.com/bluzphp/framework/wiki/Logger
  */
 class Logger extends AbstractLogger
 {
     use Options;
 
     /**
-     * Start time
-     * @var float
+     * @var float start time
      */
     protected $start;
 
     /**
-     * Part time
-     * @var float
+     * @var float part time
      */
     protected $timer;
 
     /**
-     * Stack of alerts
-     * @var array
+     * @var array list of alerts
      */
     protected $alert = array();
 
     /**
-     * Stack of alerts
-     * @var array
+     * @var array list of critical
      */
     protected $critical = array();
 
     /**
-     * Stack of alerts
-     * @var array
+     * @var array list of debug messages
      */
     protected $debug = array();
 
     /**
-     * Stack of alerts
-     * @var array
+     * @var array list of emergency
      */
     protected $emergency = array();
 
     /**
-     * Stack of alerts
-     * @var array
+     * @var array list of errors
      */
     protected $error = array();
 
     /**
-     * Stack of alerts
-     * @var array
+     * @var array list of info
      */
     protected $info = array();
 
     /**
-     * Stack of alerts
-     * @var array
+     * @var array list of notices
      */
     protected $notice = array();
 
     /**
-     * Stack of alerts
-     * @var array
+     * @var array list of warnings
      */
     protected $warning = array();
 
     /**
      * Interpolates context values into the message placeholders
      *
-     * @param string $message
-     * @param array $context
+     * @param  string $message
+     * @param  array  $context
      * @return string
      */
     protected function interpolate($message, array $context = [])
@@ -108,8 +97,8 @@ class Logger extends AbstractLogger
     /**
      * Log info message
      *
-     * @param string $message
-     * @param array $context
+     * @param  string $message
+     * @param  array  $context
      * @return void
      */
     public function info($message, array $context = [])
@@ -140,9 +129,9 @@ class Logger extends AbstractLogger
     /**
      * Logs with an arbitrary level
      *
-     * @param mixed $level
-     * @param string $message
-     * @param array $context
+     * @param  mixed  $level
+     * @param  string $message
+     * @param  array  $context
      * @return void
      */
     public function log($level, $message, array $context = [])
@@ -151,9 +140,9 @@ class Logger extends AbstractLogger
     }
 
     /**
-     * get
+     * Get logs records by level
      *
-     * @param $level
+     * @param  $level
      * @return array
      */
     public function get($level)

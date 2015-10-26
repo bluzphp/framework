@@ -17,9 +17,7 @@ use Bluz\Common\Exception\CommonException;
  * Exception
  *
  * @package  Bluz\Router
- *
  * @author   Anton Shevchuk
- * @created  03.07.12 11:12
  */
 class RouterException extends CommonException
 {

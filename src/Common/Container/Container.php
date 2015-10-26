@@ -15,10 +15,8 @@ namespace Bluz\Common\Container;
  * Container of data for object
  *
  * @package  Bluz\Common
- * @link     https://github.com/bluzphp/framework/wiki/Trait-Container
- *
  * @author   Anton Shevchuk
- * @created  17.09.2014 16:03
+ * @link     https://github.com/bluzphp/framework/wiki/Trait-Container
  */
 trait Container
 {
@@ -30,8 +28,8 @@ trait Container
     /**
      * Set key/value pair
      *
-     * @param string $key
-     * @param mixed $value
+     * @param  string $key
+     * @param  mixed  $value
      * @return void
      */
     protected function doSetContainer($key, $value)
@@ -41,7 +39,8 @@ trait Container
 
     /**
      * Get value by key
-     * @param string $key
+     *
+     * @param  string $key
      * @return mixed
      */
     protected function doGetContainer($key)
@@ -55,7 +54,8 @@ trait Container
 
     /**
      * Check contains key in container
-     * @param string $key
+     *
+     * @param  string $key
      * @return bool
      */
     protected function doContainsContainer($key)
@@ -65,7 +65,8 @@ trait Container
 
     /**
      * Delete value by key
-     * @param string $key
+     *
+     * @param  string $key
      * @return void
      */
     protected function doDeleteContainer($key)
@@ -75,6 +76,7 @@ trait Container
 
     /**
      * Sets all data in the row from an array
+     *
      * @param  array $data
      * @return self
      */
@@ -88,6 +90,7 @@ trait Container
 
     /**
      * Returns the column/value data as an array
+     *
      * @return array
      */
     public function toArray()
@@ -97,6 +100,7 @@ trait Container
 
     /**
      * Reset container array
+     *
      * @return self
      */
     public function resetArray()

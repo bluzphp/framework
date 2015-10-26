@@ -16,28 +16,32 @@ use Bluz\Db\Row;
 /**
  * Abstract class for Users\Row
  *
- * @property integer $id
  * @package Bluz\Auth
+ *
+ * @property integer $id
  */
 abstract class AbstractRowEntity extends Row implements EntityInterface
 {
     /**
      * Can entity login
-     * @throws AuthException
+     *
      * @return bool
+     * @throws AuthException
      */
     abstract public function login();
 
     /**
      * Get privileges
+     *
      * @return array
      */
     abstract public function getPrivileges();
 
     /**
      * Has role a privilege
-     * @param string $module
-     * @param string $privilege
+     *
+     * @param  string $module
+     * @param  string $privilege
      * @return bool
      */
     public function hasPrivilege($module, $privilege)

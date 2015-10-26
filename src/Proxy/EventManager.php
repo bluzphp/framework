@@ -17,6 +17,7 @@ use Bluz\EventManager\EventManager as Instance;
  * Proxy to EventManager
  *
  * Example of usage
+ * <code>
  *     use Bluz\Proxy\EventManager;
  *
  *     EvenManager::attach('event name', function() {
@@ -24,8 +25,10 @@ use Bluz\EventManager\EventManager as Instance;
  *     });
  *
  *     EventManager::trigger('event name');
+ * </code>
  *
  * @package  Bluz\Proxy
+ * @author   Anton Shevchuk
  *
  * @method   static Instance getInstance()
  *
@@ -34,9 +37,6 @@ use Bluz\EventManager\EventManager as Instance;
  *
  * @method   static string|object trigger($event, $target = null, $params = null)
  * @see      Bluz\EventManager\EventManager::trigger()
- *
- * @author   Anton Shevchuk
- * @created  26.09.2014 18:35
  */
 class EventManager extends AbstractProxy
 {

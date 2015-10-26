@@ -17,12 +17,14 @@ return
     /**
      * Generate HTML for <style> or <link> element
      *
-     * @var View $this
-     * @param string $style
-     * @param string $media
+     * @param  string $style
+     * @param  string $media
      * @return string
      */
     function ($style, $media = 'all') {
+        /**
+         * @var View $this
+         */
         if ('.css' == substr($style, -4)) {
             if (strpos($style, 'http://') !== 0
                 && strpos($style, 'https://') !== 0

@@ -17,9 +17,7 @@ use Bluz\Common\Exception\CommonException;
  * Cache Exception
  *
  * @package Bluz\Cache
- *
- * @author   Anton Shevchuk
- * @created  06.03.12 15:52
+ * @author  Anton Shevchuk
  */
 class CacheException extends CommonException
 {

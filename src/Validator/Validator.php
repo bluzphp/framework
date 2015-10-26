@@ -20,6 +20,8 @@ use Bluz\Validator\Rule\Required;
  * Validator
  *
  * @package  Bluz\Validator
+ * @author   Anton Shevchuk
+ * @link     https://github.com/Respect/Validation
  *
  * @method static Validator alpha($additionalCharacters = '')
  * @method static Validator alphaNumeric($additionalCharacters = '')
@@ -51,41 +53,37 @@ use Bluz\Validator\Rule\Required;
  * @method static Validator regexp($expression)
  * @method static Validator slug()
  * @method static Validator string()
- *
- * @link https://github.com/Respect/Validation
- *
- * @author   Anton Shevchuk
- * @created  30.05.2014 10:03
  */
 class Validator
 {
     /**
-     * @var AbstractRule[] Stack of validation rules
+     * @var AbstractRule[] list of validation rules
      */
     protected $rules = array();
 
     /**
-     * @var AbstractRule[] Stack of invalid rules
+     * @var AbstractRule[] list of invalid rules
      */
     protected $invalid = array();
 
     /**
-     * @var string Field name
+     * @var string field name
      */
     protected $name;
 
     /**
-     * @var string Input data
+     * @var string input data
      */
     protected $input;
 
     /**
-     * @var string Error text
+     * @var string error text
      */
     protected $error;
 
     /**
      * Create new instance if Validator
+     *
      * @return Validator
      */
     public static function create()
@@ -95,8 +93,9 @@ class Validator
 
     /**
      * Magic static call for create instance of Validator
+     *
      * @param string $ruleName
-     * @param array $arguments
+     * @param array  $arguments
      * @return Validator
      */
     public static function __callStatic($ruleName, $arguments)
@@ -108,10 +107,11 @@ class Validator
 
     /**
      * Magic call for create new rule
-     * @param string $ruleName
-     * @param array $arguments
-     * @throws Exception\ComponentException
+     *
+     * @param  string $ruleName
+     * @param  array  $arguments
      * @return Validator
+     * @throws Exception\ComponentException
      */
     public function __call($ruleName, $arguments)
     {
@@ -139,6 +139,7 @@ class Validator
 
     /**
      * Get required flag
+     *
      * @return bool
      */
     public function isRequired()
@@ -153,6 +154,7 @@ class Validator
 
     /**
      * Set field Title
+     *
      * @param string $name
      * @return Validator
      */
@@ -164,6 +166,7 @@ class Validator
 
     /**
      * Get field Title
+     *
      * @return string
      */
     public function getName()
@@ -173,6 +176,7 @@ class Validator
 
     /**
      * Get input data
+     *
      * @return string
      */
     public function getInput()
@@ -182,6 +186,7 @@ class Validator
 
     /**
      * Callable
+     *
      * @param mixed $input
      * @return bool
      */
@@ -192,8 +197,9 @@ class Validator
 
     /**
      * Validate chain of rules
+     *
      * @param mixed $input
-     * @param bool $all
+     * @param bool  $all
      * @return bool
      */
     public function validate($input, $all = false)
@@ -213,9 +219,10 @@ class Validator
 
     /**
      * Assert
-     * @param mixed $input
-     * @throws ValidatorException
+     *
+     * @param  mixed $input
      * @return bool
+     * @throws ValidatorException
      */
     public function assert($input)
     {
@@ -227,7 +234,8 @@ class Validator
 
     /**
      * Set error template for complex rule
-     * @param string $message
+     *
+     * @param  string $message
      * @return Validator
      */
     public function setError($message)
@@ -238,6 +246,7 @@ class Validator
 
     /**
      * Get error message
+     *
      * @return false|string
      */
     public function getError()
@@ -258,7 +267,8 @@ class Validator
     }
 
     /**
-     * getErrors
+     * Get all errors
+     *
      * @return string[]
      */
     public function getErrors()
@@ -272,7 +282,8 @@ class Validator
 
     /**
      * Prepare error message for output
-     * @param string $message
+     *
+     * @param  string $message
      * @return string
      */
     protected function prepareError($message)
@@ -290,6 +301,7 @@ class Validator
 
     /**
      * Cast to string
+     *
      * @return string
      */
     public function __toString()

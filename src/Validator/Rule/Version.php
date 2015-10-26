@@ -12,20 +12,22 @@
 namespace Bluz\Validator\Rule;
 
 /**
- * Class Version
- * @link http://semver.org/
+ * Check for version format
+ *
  * @package Bluz\Validator\Rule
+ * @link    http://semver.org/
  */
 class Version extends AbstractRule
 {
     /**
-     * @var string Error template
+     * @var string error template
      */
     protected $template = '{{name}} must be a version';
 
     /**
      * Check for version format
-     * @param string $input
+     *
+     * @param  string $input
      * @return bool
      */
     public function validate($input)

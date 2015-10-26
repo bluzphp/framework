@@ -16,29 +16,26 @@ use Bluz\Common\Exception\ConfigurationException;
 /**
  * Base class for all filesystem-based cache adapters
  *
- * @todo http://habrahabr.ru/post/148527/#comment_5014715
- *
  * @package Bluz\Cache\Adapter
  * @author  murzik
+ * @todo    http://habrahabr.ru/post/148527/#comment_5014715
  */
 abstract class FileBase extends AbstractAdapter
 {
     /**
-     * Directory of cache files
-     * @var null|string
+     * @var null|string directory of cache files
      */
     protected $cacheDir = null;
 
     /**
-     * Extension of cache files
-     * @var string
+     * @var string extension of cache files
      */
     protected $extension = ".cache";
 
     /**
      * Check configuration and permissions
      *
-     * @param array $settings
+     * @param  array $settings
      * @throws ConfigurationException
      */
     public function __construct($settings = array())
@@ -84,7 +81,7 @@ abstract class FileBase extends AbstractAdapter
     /**
      * {@inheritdoc}
      *
-     * @param string $id
+     * @param  string $id
      * @return bool|mixed
      */
     protected function doDelete($id)
@@ -95,7 +92,7 @@ abstract class FileBase extends AbstractAdapter
     /**
      * Generate path to cache file based on cache entry id
      *
-     * @param string $id cache entry id
+     * @param  string $id cache entry id
      * @return string path to file
      */
     protected function getFilename($id)
@@ -111,8 +108,8 @@ abstract class FileBase extends AbstractAdapter
     /**
      * Write string to the file in an atomic way
      *
-     * @param string $fileName
-     * @param string $content
+     * @param  string $fileName
+     * @param  string $content
      * @return bool|int The number of bytes that were written to the file, or false on failure
      */
     protected function writeFile($fileName, $content)

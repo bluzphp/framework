@@ -24,8 +24,7 @@ use Bluz\Cache\CacheInterface;
 abstract class AbstractAdapter implements CacheInterface
 {
     /**
-     * Cache settings
-     * @var array
+     * @var array list of Cache settings
      */
     protected $settings = array();
 
@@ -42,7 +41,7 @@ abstract class AbstractAdapter implements CacheInterface
     /**
      * {@inheritdoc}
      *
-     * @param string $id
+     * @param  string $id
      * @return mixed
      * @throws CacheException
      */
@@ -54,7 +53,7 @@ abstract class AbstractAdapter implements CacheInterface
     /**
      * {@inheritdoc}
      *
-     * @param string $id
+     * @param  string $id
      * @return bool
      * @throws CacheException
      */
@@ -66,9 +65,9 @@ abstract class AbstractAdapter implements CacheInterface
     /**
      * {@inheritdoc}
      *
-     * @param string $id
-     * @param mixed $data
-     * @param int $ttl
+     * @param  string  $id
+     * @param  mixed   $data
+     * @param  integer $ttl
      * @return bool
      * @throws CacheException
      */
@@ -80,9 +79,9 @@ abstract class AbstractAdapter implements CacheInterface
     /**
      * {@inheritdoc}
      *
-     * @param string $id
-     * @param mixed $data
-     * @param int $ttl
+     * @param  string  $id
+     * @param  mixed   $data
+     * @param  integer $ttl
      * @return bool
      * @throws CacheException
      */
@@ -94,7 +93,7 @@ abstract class AbstractAdapter implements CacheInterface
     /**
      * {@inheritdoc}
      *
-     * @param string $id
+     * @param  string $id
      * @return mixed
      * @throws CacheException
      */
@@ -115,58 +114,64 @@ abstract class AbstractAdapter implements CacheInterface
 
     /**
      * Must be implemented in particular cache driver implementation
-     * Actual  work for \Bluz\Cache\CacheInterface::flush() goes here
+     * Actual work for \Bluz\Cache\CacheInterface::flush() goes here
      * @see \Bluz\Cache\CacheInterface::flush()
+     *
      * @return mixed
      */
     abstract protected function doFlush();
 
     /**
      * Must be implemented in particular cache driver implementation
-     * Actual  work for \Bluz\Cache\CacheInterface::get() goes here
-     * @see \Bluz\Cache\CacheInterface::get()
-     * @param string $id
+     * Actual work for \Bluz\Cache\CacheInterface::get() goes here
+     *
+     * @param  string $id
      * @return mixed
+     * @see    CacheInterface::get()
      */
     abstract protected function doGet($id);
 
     /**
      * Must be implemented in particular cache driver implementation
-     * Actual  work for \Bluz\Cache\CacheInterface::add() goes here
-     * @see \Bluz\Cache\CacheInterface::add()
-     * @param string $id
-     * @param mixed $data
-     * @param int $ttl
+     * Actual work for \Bluz\Cache\CacheInterface::add() goes here
+     *
+     * @param  string  $id
+     * @param  mixed   $data
+     * @param  integer $ttl
      * @return mixed
+     * @see    CacheInterface::add()
      */
     abstract protected function doAdd($id, $data, $ttl = Cache::TTL_NO_EXPIRY);
 
     /**
      * Must be implemented in particular cache driver implementation
      * Actual  work for \Bluz\Cache\CacheInterface::set() goes here
-     * @see \Bluz\Cache\CacheInterface::set()
-     * @param string $id
-     * @param mixed $data
-     * @param int $ttl
+     *
+     * @param  string  $id
+     * @param  mixed   $data
+     * @param  integer $ttl
      * @return mixed
+     * @see    CacheInterface::set()
      */
     abstract protected function doSet($id, $data, $ttl = Cache::TTL_NO_EXPIRY);
 
     /**
      * Must be implemented in particular cache driver implementation
-     * Actual  work for \Bluz\Cache\CacheInterface::delete() goes here
-     * @see \Bluz\Cache\CacheInterface::delete()
-     * @param string $id
+     * Actual work for \Bluz\Cache\CacheInterface::delete() goes here
+     *
+     * @param  string $id
      * @return mixed
+     * @see    CacheInterface::delete()
      */
     abstract protected function doDelete($id);
 
     /**
      * Must be implemented in particular cache driver implementation
      * Actual  work for \Bluz\Cache\CacheInterface::contains() goes here
-     * @see Bluz\Cache\CacheInterface::contains()
-     * @param string $id
+     *
+     * @param  string $id
      * @return mixed
+     * @see    CacheInterface::contains()
      */
     abstract protected function doContains($id);
 }

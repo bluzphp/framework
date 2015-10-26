@@ -17,17 +17,16 @@ return
     /**
      * Generate HTML for <input type="radio">
      *
-     * @author The-Who
-     *
-     * @var View $this
-     * @param string $name
-     * @param string|null $value
-     * @param bool $checked
-     * @param array $attributes
+     * @param  string      $name
+     * @param  string|null $value
+     * @param  bool        $checked
+     * @param  array       $attributes
      * @return string
      */
     function ($name, $value = null, $checked = false, array $attributes = []) {
-        /** @var View $this */
+        /**
+         * @var View $this
+         */
         if (true === $checked) {
             $attributes['checked'] = 'checked';
         }

@@ -18,61 +18,60 @@ use Bluz\Common\Options;
  * Reflection
  *
  * @package  Bluz\Controller
- *
  * @author   Anton Shevchuk
- * @created  06.10.2014 14:52
  */
 class Reflection
 {
     use Options;
 
     /**
-     * @var string Full path to file
+     * @var string full path to file
      */
     protected $file;
 
     /**
-     * @var int Cache TTL
+     * @var integer cache TTL
      */
     protected $cache = 0;
 
     /**
-     * @var int Cache TTL for HTML content
+     * @var integer cache TTL for HTML content
      */
     protected $cacheHtml = 0;
 
     /**
-     * @var array Accept
+     * @var array list of Accept
      */
     protected $accept = array();
 
     /**
-     * @var array HTTP Methods
+     * @var array list of HTTP methods
      */
     protected $method = array();
 
     /**
-     * @var array Described params
+     * @var array described params
      */
     protected $params = array();
 
     /**
-     * @var string Privilege
+     * @var string privilege
      */
     protected $privilege;
 
     /**
-     * @var array Routers
+     * @var array routers
      */
     protected $route = array();
 
     /**
-     * @var array Default values of params
+     * @var array default values of params
      */
     protected $values = array();
 
     /**
      * Constructor of Reflection
+     *
      * @param string $file
      */
     public function __construct($file)
@@ -82,7 +81,8 @@ class Reflection
 
     /**
      * Set state required for working with var_export (used inside PHP File cache)
-     * @param $array
+     *
+     * @param  $array
      * @return Reflection
      */
     public static function __set_state($array)
@@ -96,8 +96,9 @@ class Reflection
 
     /**
      * Process to get reflection from file
-     * @throws ComponentException
+     *
      * @return void
+     * @throws ComponentException
      */
     public function process()
     {
@@ -149,10 +150,11 @@ class Reflection
 
     /**
      * Process request params
+     *
      *  - type conversion
      *  - set default value
      *
-     * @param array $requestParams
+     * @param  array $requestParams
      * @return array
      */
     public function params($requestParams)
@@ -204,7 +206,8 @@ class Reflection
 
     /**
      * Get Cache TTL
-     * @return int
+     *
+     * @return integer
      */
     public function getCache()
     {
@@ -213,7 +216,8 @@ class Reflection
 
     /**
      * Set Cache TTL
-     * @param string $ttl
+     *
+     * @param  string $ttl
      * @return void
      */
     public function setCache($ttl)
@@ -223,7 +227,8 @@ class Reflection
 
     /**
      * Get HTML Cache TTL
-     * @return int
+     *
+     * @return integer
      */
     public function getCacheHtml()
     {
@@ -232,7 +237,8 @@ class Reflection
 
     /**
      * Set HTML Cache TTL
-     * @param string $ttl
+     *
+     * @param  string $ttl
      * @return void
      */
     public function setCacheHtml($ttl)
@@ -242,8 +248,9 @@ class Reflection
 
     /**
      * Prepare Cache
-     * @param string $cache
-     * @return int
+     *
+     * @param  string $cache
+     * @return integer
      */
     protected function prepareCache($cache)
     {
@@ -264,6 +271,7 @@ class Reflection
 
     /**
      * Get accepted type
+     *
      * @return array|null
      */
     public function getAccept()
@@ -273,7 +281,8 @@ class Reflection
 
     /**
      * Set accepted types
-     * @param string $accept
+     *
+     * @param  string $accept
      * @return void
      */
     public function setAccept($accept)
@@ -283,6 +292,7 @@ class Reflection
 
     /**
      * Get HTTP Method
+     *
      * @return array|null
      */
     public function getMethod()
@@ -292,7 +302,8 @@ class Reflection
 
     /**
      * Set HTTP Method
-     * @param string $method
+     *
+     * @param  string $method
      * @return void
      */
     public function setMethod($method)
@@ -302,6 +313,7 @@ class Reflection
 
     /**
      * Get all params
+     *
      * @return array
      */
     public function getParams()
@@ -311,7 +323,8 @@ class Reflection
 
     /**
      * Set param types
-     * @param string $param
+     *
+     * @param  string $param
      * @return void
      */
     public function setParam($param)
@@ -329,6 +342,7 @@ class Reflection
 
     /**
      * Get Privilege fo ACL
+     *
      * @return string
      */
     public function getPrivilege()
@@ -338,7 +352,8 @@ class Reflection
 
     /**
      * Set Privilege fo ACL allow only one privilege
-     * @param string $privilege
+     *
+     * @param  string $privilege
      * @return void
      */
     public function setPrivilege($privilege)
@@ -348,6 +363,7 @@ class Reflection
 
     /**
      * Get Route
+     *
      * @return array|null
      */
     public function getRoute()
@@ -357,7 +373,8 @@ class Reflection
 
     /**
      * Set Route
-     * @param string $route
+     *
+     * @param  string $route
      * @return void
      */
     public function setRoute($route)
@@ -367,6 +384,7 @@ class Reflection
 
     /**
      * Init Route
+     *
      * @return void
      */
     protected function initRoute()
@@ -378,7 +396,8 @@ class Reflection
 
     /**
      * Prepare Route pattern
-     * @param string $route
+     *
+     * @param  string $route
      * @return string
      */
     protected function prepareRoutePattern($route)

@@ -18,10 +18,9 @@ return
     /**
      * Set or generate <title> code for <head>
      *
-     * @var Layout $this
-     * @param string $title
-     * @param string $position
-     * @param string $separator
+     * @param  string $title
+     * @param  string $position
+     * @param  string $separator
      * @return string|null
      */
     function ($title = null, $position = Layout::POS_REPLACE, $separator = ' :: ') {

@@ -27,17 +27,14 @@ class Select extends AbstractBuilder
     use Traits\Limit;
 
     /**
-     * PDO fetch types
-     * or object class
-     *
-     * @var mixed
+     * @var mixed PDO fetch types or object class
      */
     protected $fetchType = \PDO::FETCH_ASSOC;
 
     /**
      * {@inheritdoc}
      *
-     * @param integer|string|object $fetchType
+     * @param  integer|string|object $fetchType
      * @return integer|string|array
      */
     public function execute($fetchType = null)
@@ -60,7 +57,7 @@ class Select extends AbstractBuilder
     /**
      * Setup fetch type, any of PDO, or any Class
      *
-     * @param string $fetchType
+     * @param  string $fetchType
      * @return Select instance
      */
     public function setFetchType($fetchType)
@@ -104,13 +101,15 @@ class Select extends AbstractBuilder
      * Replaces any previously specified selections, if any
      *
      * Example
+     * <code>
      *     $sb = new Select();
      *     $sb
      *         ->select('u.id', 'p.id')
      *         ->from('users', 'u')
-     *         ->leftJoin('u', 'phonenumbers', 'p', 'u.id = p.user_id');
+     *         ->leftJoin('u', 'phone', 'p', 'u.id = p.user_id');
+     * </code>
      *
-     * @param string[] $select The selection expressions
+     * @param  string[] $select the selection expressions
      * @return Select instance
      */
     public function select(...$select)
@@ -122,14 +121,16 @@ class Select extends AbstractBuilder
      * Adds an item that is to be returned in the query result.
      *
      * Example
+     * <code>
      *     $sb = new Select();
      *     $sb
      *         ->select('u.id')
      *         ->addSelect('p.id')
      *         ->from('users', 'u')
-     *         ->leftJoin('u', 'phonenumbers', 'u.id = p.user_id');
+     *         ->leftJoin('u', 'phone', 'u.id = p.user_id');
+     * </code>
      *
-     * @param string $select The selection expression
+     * @param  string $select the selection expression
      * @return Select instance
      */
     public function addSelect($select)
@@ -141,16 +142,18 @@ class Select extends AbstractBuilder
      * Creates and adds a join to the query
      *
      * Example
+     * <code>
      *     $sb = new Select();
      *     $sb
      *         ->select('u.name')
      *         ->from('users', 'u')
-     *         ->join('u', 'phonenumbers', 'p', 'p.is_primary = 1');
+     *         ->join('u', 'phone', 'p', 'p.is_primary = 1');
+     * </code>
      *
-     * @param string $fromAlias The alias that points to a from clause
-     * @param string $join The table name to join
-     * @param string $alias The alias of the join table
-     * @param string $condition The condition for the join
+     * @param  string $fromAlias the alias that points to a from clause
+     * @param  string $join      the table name to join
+     * @param  string $alias     the alias of the join table
+     * @param  string $condition the condition for the join
      * @return Select instance
      */
     public function join($fromAlias, $join, $alias, $condition = null)
@@ -162,16 +165,18 @@ class Select extends AbstractBuilder
      * Creates and adds a join to the query
      *
      * Example
+     * <code>
      *     $sb = new Select();
      *     $sb
      *         ->select('u.name')
      *         ->from('users', 'u')
-     *         ->innerJoin('u', 'phonenumbers', 'p', 'p.is_primary = 1');
+     *         ->innerJoin('u', 'phone', 'p', 'p.is_primary = 1');
+     * </code>
      *
-     * @param string $fromAlias The alias that points to a from clause
-     * @param string $join The table name to join
-     * @param string $alias The alias of the join table
-     * @param string $condition The condition for the join
+     * @param  string $fromAlias the alias that points to a from clause
+     * @param  string $join      the table name to join
+     * @param  string $alias     the alias of the join table
+     * @param  string $condition the condition for the join
      * @return Select instance
      */
     public function innerJoin($fromAlias, $join, $alias, $condition = null)
@@ -196,16 +201,18 @@ class Select extends AbstractBuilder
      * Creates and adds a left join to the query.
      *
      * Example
+     * <code>
      *     $sb = new Select();
      *     $sb
      *         ->select('u.name')
      *         ->from('users', 'u')
-     *         ->leftJoin('u', 'phonenumbers', 'p', 'p.is_primary = 1');
+     *         ->leftJoin('u', 'phone', 'p', 'p.is_primary = 1');
+     * </code>
      *
-     * @param string $fromAlias The alias that points to a from clause
-     * @param string $join The table name to join
-     * @param string $alias The alias of the join table
-     * @param string $condition The condition for the join
+     * @param  string $fromAlias the alias that points to a from clause
+     * @param  string $join      the table name to join
+     * @param  string $alias     the alias of the join table
+     * @param  string $condition the condition for the join
      * @return Select instance
      */
     public function leftJoin($fromAlias, $join, $alias, $condition = null)
@@ -230,16 +237,18 @@ class Select extends AbstractBuilder
      * Creates and adds a right join to the query.
      *
      * Example
+     * <code>
      *     $sb = new Select();
      *     $sb
      *         ->select('u.name')
      *         ->from('users', 'u')
-     *         ->rightJoin('u', 'phonenumbers', 'p', 'p.is_primary = 1');
+     *         ->rightJoin('u', 'phone', 'p', 'p.is_primary = 1');
+     * </code>
      *
-     * @param string $fromAlias The alias that points to a from clause
-     * @param string $join The table name to join
-     * @param string $alias The alias of the join table
-     * @param string $condition The condition for the join
+     * @param  string $fromAlias the alias that points to a from clause
+     * @param  string $join      the table name to join
+     * @param  string $alias     the alias of the join table
+     * @param  string $condition the condition for the join
      * @return Select instance
      */
     public function rightJoin($fromAlias, $join, $alias, $condition = null)
@@ -265,13 +274,15 @@ class Select extends AbstractBuilder
      * Replaces any previously specified groupings, if any.
      *
      * Example
+     * <code>
      *     $sb = new Select();
      *     $sb
      *         ->select('u.name')
      *         ->from('users', 'u')
      *         ->groupBy('u.id');
+     * </code>
      *
-     * @param string[] $groupBy The grouping expression
+     * @param  string[] $groupBy the grouping expression
      * @return Select instance
      */
     public function groupBy(...$groupBy)
@@ -287,14 +298,16 @@ class Select extends AbstractBuilder
      * Adds a grouping expression to the query.
      *
      * Example
+     * <code>
      *     $sb = new Select();
      *     $sb
      *         ->select('u.name')
      *         ->from('users', 'u')
      *         ->groupBy('u.lastLogin');
      *         ->addGroupBy('u.createdAt')
+     * </code>
      *
-     * @param string[] $groupBy The grouping expression
+     * @param  string[] $groupBy the grouping expression
      * @return Select instance
      */
     public function addGroupBy(...$groupBy)
@@ -308,9 +321,9 @@ class Select extends AbstractBuilder
 
     /**
      * Specifies a restriction over the groups of the query.
-     * Replaces any previous having restrictions, if any.
+     * Replaces any previous having restrictions, if any
      *
-     * @param string[] $condition The query restriction predicates
+     * @param  string[] $condition the query restriction predicates
      * @return Select
      */
     public function having(...$condition)
@@ -323,7 +336,7 @@ class Select extends AbstractBuilder
      * Adds a restriction over the groups of the query, forming a logical
      * conjunction with any existing having restrictions
      *
-     * @param string[] $condition The query restriction predicates
+     * @param  string[] $condition the query restriction predicates
      * @return Select
      */
     public function andHaving(...$condition)
@@ -342,9 +355,9 @@ class Select extends AbstractBuilder
 
     /**
      * Adds a restriction over the groups of the query, forming a logical
-     * disjunction with any existing having restrictions.
+     * disjunction with any existing having restrictions
      *
-     * @param string[] $condition The query restriction predicates
+     * @param  string[] $condition the query restriction predicates
      * @return Select
      */
     public function orHaving(...$condition)
@@ -364,9 +377,9 @@ class Select extends AbstractBuilder
     /**
      * Setup offset like a page number, start from 1
      *
-     * @param int $page
-     * @throws DbException
+     * @param  integer $page
      * @return Select
+     * @throws DbException
      */
     public function setPage($page = 1)
     {
@@ -381,7 +394,7 @@ class Select extends AbstractBuilder
      * Generate SQL string for JOINs
      *
      * @internal
-     * @param string $fromAlias Alias of table
+     * @param  string $fromAlias alias of table
      * @return string
      */
     protected function getSQLForJoins($fromAlias)

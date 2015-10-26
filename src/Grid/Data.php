@@ -12,26 +12,22 @@
 namespace Bluz\Grid;
 
 /**
- * Data
+ * Grid Data
  *
  * @package  Bluz\Grid
- *
  * @author   AntonShevchuk
- * @created  16.08.12 9:55
  */
 class Data extends \ArrayIterator
 {
     /**
-     * How many data rows w/out limits
-     *
-     * @var integer
+     * @var integer how many data rows w/out limits
      */
     protected $total;
 
     /**
-     * set total rows
+     * Set total rows
      *
-     * @param $total
+     * @param  integer $total
      * @return self
      */
     public function setTotal($total)
@@ -41,7 +37,7 @@ class Data extends \ArrayIterator
     }
 
     /**
-     * total rows
+     * Get total rows
      *
      * @return integer
      */

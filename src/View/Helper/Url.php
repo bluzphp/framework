@@ -21,14 +21,16 @@ return
     /**
      * Generate URL
      *
-     * @var View $this
-     * @param string $module
-     * @param string $controller
-     * @param array $params
-     * @param bool $checkAccess
+     * @param  string $module
+     * @param  string $controller
+     * @param  array  $params
+     * @param  bool   $checkAccess
      * @return string|null
      */
     function ($module, $controller, $params = [], $checkAccess = false) {
+        /**
+         * @var View $this
+         */
         try {
             if ($checkAccess) {
                 if (!Application::getInstance()->isAllowed($module, $controller)) {

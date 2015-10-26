@@ -18,21 +18,21 @@ use Predis\Client;
 
 /**
  * Redis cache adapter over Predis library
+ *
  * @package Bluz\Cache\Adapter
- * @link    https://github.com/nrk/predis/wiki
  * @author  Anton Shevchuk
+ * @link    https://github.com/nrk/predis/wiki
+ * @see     \Predis\Client
  */
 class Predis extends AbstractAdapter
 {
     /**
-     * Instance of Redis client
-     * @var \Predis\Client
+     * @var \Predis\Client instance
      */
     protected $handler = null;
 
     /**
-     * Default Redis settings
-     * @var array
+     * @var array default settings
      */
     protected $settings = array(
         'host' => '127.0.0.1',
@@ -45,7 +45,7 @@ class Predis extends AbstractAdapter
     /**
      * Check and setup Redis server
      *
-     * @param array $settings
+     * @param  array $settings
      * @throws ComponentException
      * @throws ConfigurationException
      */
@@ -84,7 +84,7 @@ class Predis extends AbstractAdapter
     /**
      * {@inheritdoc}
      *
-     * @param string $id
+     * @param  string $id
      * @return bool|mixed|string
      */
     protected function doGet($id)
@@ -95,9 +95,9 @@ class Predis extends AbstractAdapter
     /**
      * {@inheritdoc}
      *
-     * @param string $id
-     * @param mixed $data
-     * @param int $ttl
+     * @param  string  $id
+     * @param  mixed   $data
+     * @param  integer $ttl
      * @return bool
      */
     protected function doAdd($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
@@ -112,9 +112,9 @@ class Predis extends AbstractAdapter
     /**
      * {@inheritdoc}
      *
-     * @param string $id
-     * @param mixed $data
-     * @param int $ttl
+     * @param  string  $id
+     * @param  mixed   $data
+     * @param  integer $ttl
      * @return bool
      */
     protected function doSet($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
@@ -130,7 +130,7 @@ class Predis extends AbstractAdapter
     /**
      * {@inheritdoc}
      *
-     * @param string $id
+     * @param  string $id
      * @return bool
      */
     protected function doContains($id)
@@ -141,8 +141,8 @@ class Predis extends AbstractAdapter
     /**
      * {@inheritdoc}
      *
-     * @param string $id
-     * @return int Number of keys deleted.
+     * @param  string $id
+     * @return integer Number of keys deleted.
      */
     protected function doDelete($id)
     {

@@ -38,16 +38,15 @@ use Bluz\View\View;
  * Application
  *
  * @package  Bluz\Application
- * @link     https://github.com/bluzphp/framework/wiki/Application
+ * @link     https://github.com/bluzphp/framework/wiki/Application *
+ * @author   Anton Shevchuk
+ * @created  06.07.11 16:25
  *
  * @method void denied()
  * @method void redirect(string $url)
  * @method void redirectTo(string $module, string $controller, array $params = array())
  * @method void reload()
  * @method AbstractRowEntity user()
- *
- * @author   Anton Shevchuk
- * @created  06.07.11 16:25
  */
 class Application
 {
@@ -96,6 +95,7 @@ class Application
 
     /**
      * Get application environment
+     *
      * @return string
      */
     public function getEnvironment()
@@ -105,6 +105,7 @@ class Application
 
     /**
      * Get path to Application
+     *
      * @return string
      */
     public function getPath()
@@ -123,7 +124,7 @@ class Application
 
     /**
      * Check debug flag
-     * @api
+     *
      * @return bool
      */
     public function isDebug()
@@ -133,9 +134,9 @@ class Application
 
     /**
      * Check Json flag
-     * @api
-     * @deprecated since 0.9
+     *
      * @return bool
+     * @deprecated 0.9
      */
     public function isJson()
     {
@@ -144,9 +145,9 @@ class Application
 
     /**
      * Check XML flag
-     * @api
-     * @deprecated since 0.9
+     *
      * @return bool
+     * @deprecated 0.9
      */
     public function isXml()
     {
@@ -155,7 +156,7 @@ class Application
 
     /**
      * Check Layout flag
-     * @api
+     *
      * @return bool
      */
     public function hasLayout()
@@ -165,8 +166,8 @@ class Application
 
     /**
      * Set Layout template and/or flag
-     * @api
-     * @param bool|string $flag
+     *
+     * @param  bool|string $flag
      * @return void
      */
     public function useLayout($flag = true)
@@ -181,7 +182,7 @@ class Application
 
     /**
      * Set JSON presentation
-     * @api
+     *
      * @return void
      */
     public function useJson()
@@ -193,7 +194,7 @@ class Application
 
     /**
      * Set JSONP presentation
-     * @api
+     *
      * @return void
      */
     public function useJsonp()
@@ -205,7 +206,7 @@ class Application
 
     /**
      * Set XML presentation
-     * @api
+     *
      * @return void
      */
     public function useXml()
@@ -217,7 +218,8 @@ class Application
 
     /**
      * Initialize process
-     * @param string $environment
+     *
+     * @param  string $environment
      * @throws ApplicationException
      * @return void
      */
@@ -270,6 +272,7 @@ class Application
 
     /**
      * Initial Request instance
+     *
      * @return void
      */
     protected function initRequest()
@@ -282,6 +285,7 @@ class Application
 
     /**
      * Initial Response instance
+     *
      * @return void
      */
     protected function initResponse()
@@ -294,8 +298,9 @@ class Application
 
     /**
      * Initial controller view
-     * @param $module
-     * @param $controller
+     *
+     * @param  string $module
+     * @param  string $controller
      * @return View
      */
     protected function initView($module, $controller)
@@ -323,8 +328,7 @@ class Application
      *
      * Note:
      * - Why you don't use "X-" prefix for custom headers?
-     * - Because it deprecated
-     * @link http://tools.ietf.org/html/rfc6648
+     * - Because it deprecated ({@link http://tools.ietf.org/html/rfc6648})
      *
      * @return void
      */
@@ -339,8 +343,9 @@ class Application
 
     /**
      * Pre process
-     * @throws ApplicationException
+     *
      * @return void
+     * @throws ApplicationException
      */
     protected function preProcess()
     {
@@ -356,6 +361,7 @@ class Application
 
     /**
      * Do process
+     *
      * @return void
      */
     protected function doProcess()
@@ -474,6 +480,7 @@ class Application
 
     /**
      * Post process
+     *
      * @return void
      */
     protected function postProcess()
@@ -487,12 +494,11 @@ class Application
      * Call dispatch from any \Bluz\Package
      *     Application::getInstance()->dispatch($module, $controller, array $params);
      *
-     * @api
-     * @param string $module
-     * @param string $controller
-     * @param array $params
-     * @throws ApplicationException
+     * @param  string $module
+     * @param  string $controller
+     * @param  array  $params
      * @return View|callable
+     * @throws ApplicationException
      */
     public function dispatch($module, $controller, $params = array())
     {
@@ -507,9 +513,10 @@ class Application
 
     /**
      * Pre dispatch mount point
-     * @param string $module
-     * @param string $controller
-     * @param array $params
+     *
+     * @param  string $module
+     * @param  string $controller
+     * @param  array  $params
      * @return void
      */
     protected function preDispatch($module, $controller, $params = array())
@@ -524,12 +531,12 @@ class Application
 
     /**
      * Do dispatch
-     * @param string $module
-     * @param string $controller
-     * @param array $params
-     * @throws ApplicationException
      *
+     * @param  string $module
+     * @param  string $controller
+     * @param  array  $params
      * @return View|callable
+     * @throws ApplicationException
      */
     protected function doDispatch($module, $controller, $params = array())
     {
@@ -609,9 +616,10 @@ class Application
 
     /**
      * Post dispatch mount point
-     * @param string $module
-     * @param string $controller
-     * @param array $params
+     *
+     * @param  string $module
+     * @param  string $controller
+     * @param  array  $params
      * @return void
      */
     protected function postDispatch($module, $controller, $params = array())
@@ -621,6 +629,7 @@ class Application
 
     /**
      * Render, is send Response
+     *
      * @return void
      */
     public function render()
@@ -632,7 +641,6 @@ class Application
     /**
      * Get Response instance
      *
-     * @api
      * @return Http\Response
      */
     public function getResponse()
@@ -643,7 +651,6 @@ class Application
     /**
      * Get Request instance
      *
-     * @api
      * @return Http\Request
      */
     public function getRequest()
@@ -655,14 +662,15 @@ class Application
      * Widget call
      *
      * Call widget from any \Bluz\Package
+     * <code>
      *     Application::getInstance()->widget($module, $widget, array $params);
+     * </code>
      *
-     * @api
-     * @param string $module
-     * @param string $widget
-     * @param array $params
-     * @throws ApplicationException
+     * @param  string $module
+     * @param  string $widget
+     * @param  array  $params
      * @return \Closure
+     * @throws ApplicationException
      */
     public function widget($module, $widget, $params = array())
     {
@@ -701,13 +709,14 @@ class Application
      * Api call
      *
      * Call API from any \Bluz\Package
+     * <code>
      *     Application::getInstance()->api($module, $widget, array $params);
+     * </code>
      *
-     * @api
-     * @param string $module
-     * @param string $method
-     * @throws ApplicationException
+     * @param  string $module
+     * @param  string $method
      * @return \Closure
+     * @throws ApplicationException
      */
     public function api($module, $method)
     {
@@ -739,9 +748,10 @@ class Application
 
     /**
      * Retrieve reflection for anonymous function
-     * @param string $file
-     * @throws ApplicationException
+     *
+     * @param  string $file
      * @return Reflection
+     * @throws ApplicationException
      */
     public function reflection($file)
     {
@@ -758,10 +768,11 @@ class Application
 
     /**
      * Is allowed controller/widget/etc
-     * @param string $module
-     * @param string $controller
-     * @throws ApplicationException
+     *
+     * @param  string $module
+     * @param  string $controller
      * @return bool
+     * @throws ApplicationException
      */
     public function isAllowed($module, $controller)
     {
@@ -776,6 +787,7 @@ class Application
 
     /**
      * Get controller file
+     *
      * @param  string $module
      * @param  string $controller
      * @return string
@@ -795,6 +807,7 @@ class Application
 
     /**
      * Get widget file
+     *
      * @param  string $module
      * @param  string $widget
      * @return string
@@ -814,6 +827,7 @@ class Application
 
     /**
      * Get API file
+     *
      * @param  string $module
      * @param  string $method
      * @return string
@@ -833,6 +847,7 @@ class Application
     
     /**
      * Finally method
+     *
      * @return void
      */
     public function finish()

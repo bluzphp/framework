@@ -15,21 +15,17 @@ namespace Bluz\Application\Exception;
  * BadRequest Exception
  *
  * @package  Bluz\Application\Exception
- *
  * @author   Anton Shevchuk
- * @created  23.01.13 17:46
  */
 class BadRequestException extends ApplicationException
 {
     /**
-     * Exception message
-     * @var string
+     * @var string exception message
      */
     protected $message = "Bad Request";
 
     /**
-     * Bad Request HTTP Code
-     * @var int
+     * @var integer HTTP Code for "Bad Request"
      */
     protected $code = 400;
 }

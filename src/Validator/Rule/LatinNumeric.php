@@ -12,14 +12,16 @@
 namespace Bluz\Validator\Rule;
 
 /**
- * Class String
+ * Check for latin and numeric character(s)
+ *
  * @package Bluz\Validator\Rule
  */
 class LatinNumeric extends AbstractFilterRule
 {
     /**
      * Check for latin and numeric character(s)
-     * @param mixed $input
+     *
+     * @param  mixed $input
      * @return bool
      */
     public function validateClean($input)
@@ -29,6 +31,7 @@ class LatinNumeric extends AbstractFilterRule
 
     /**
      * Get error template
+     *
      * @return string
      */
     public function getTemplate()

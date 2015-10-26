@@ -17,9 +17,7 @@ use Bluz\Proxy\Request;
  * JSONP presentation
  *
  * @package  Bluz\Response\Presentation
- *
  * @author   Anton Shevchuk
- * @created  17.11.2014 13:47
  */
 class Jsonp extends AbstractPresentation
 {

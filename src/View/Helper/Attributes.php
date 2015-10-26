@@ -19,8 +19,8 @@ return
      *
      * @author The-Who
      *
-     * @var View $this
-     * @param array $attributes
+     * @var    View  $this
+     * @param  array $attributes
      * @return string
      */
     function (array $attributes = []) {

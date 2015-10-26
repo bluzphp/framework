@@ -17,9 +17,7 @@ use Bluz\Request\RequestException;
  * HttpFile
  *
  * @package  Bluz\Request
- *
  * @author   Anton Shevchuk
- * @created  07.02.13 15:18
  */
 class File
 {
@@ -36,44 +34,44 @@ class File
     const TYPE_VIDEO = 'video';
 
     /**
-     * Filename without extension
-     * @var string
+     * @var string filename without extension
      */
     protected $name;
+
     /**
-     * File extension
-     * @var string
+     * @var string file extension
      */
     protected $ext;
+
     /**
-     * File type
-     * @var string
+     * @var string file type
      */
     protected $type;
+
     /**
-     * File mimetype
-     * @var string
+     * @var string mimetype
      */
     protected $mimetype;
+
     /**
-     * Path to temporary file
-     * @var string
+     * @var string path to temporary file
      */
     protected $tmp;
+
     /**
-     * Error status of upload
-     * @var int
+     * @var integer error status of upload
      */
     protected $error = UPLOAD_ERR_OK;
+
     /**
-     * File size in bytes
-     * @var int
+     * @var integer file size in bytes
      */
     protected $size = 0;
 
     /**
      * Construct of File
-     * @param array $data
+     *
+     * @param  array $data
      * @throws \Bluz\Request\RequestException
      */
     public function __construct($data = array())
@@ -108,9 +106,9 @@ class File
     /**
      * Set filename (w/o extension)
      *
-     * @param string $name
-     * @throws RequestException
+     * @param  string $name
      * @return File
+     * @throws RequestException
      */
     public function setName($name)
     {
@@ -194,7 +192,7 @@ class File
     /**
      * Get size
      *
-     * @param string $exp b|kb|mb|gb|tb
+     * @param  string $exp b|kb|mb|gb|tb
      * @return integer
      */
     public function getSize($exp = 'byte')
@@ -229,9 +227,9 @@ class File
     /**
      * Move uploaded file to directory
      *
-     * @param string $path
-     * @throws RequestException
+     * @param  string $path
      * @return string
+     * @throws RequestException
      */
     public function moveTo($path)
     {

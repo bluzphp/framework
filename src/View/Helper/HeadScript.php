@@ -18,11 +18,13 @@ return
     /**
      * Set or generate <script> code for <head>
      *
-     * @var Layout $this
      * @param string $script
      * @return string|null
      */
     function ($script = null) {
+        /**
+         * @var Layout $this
+         */
         if (Application::getInstance()->hasLayout()) {
             return Layout::headScript($script);
         } else {

@@ -17,11 +17,14 @@ use Bluz\Translator\Translator as Instance;
  * Proxy to Translator
  *
  * Example of usage
+ * <code>
  *     use Bluz\Proxy\Translator;
  *
  *     echo Translator::translate('message id');
+ * </code>
  *
  * @package  Bluz\Proxy
+ * @author   Anton Shevchuk
  *
  * @method   static Instance getInstance()
  *
@@ -30,9 +33,6 @@ use Bluz\Translator\Translator as Instance;
  *
  * @method   static string translatePlural($singular, $plural, $number, ...$text)
  * @see      Bluz\Translator\Translator::translatePlural()
- *
- * @author   Anton Shevchuk
- * @created  26.09.2014 16:32
  */
 class Translator extends AbstractProxy
 {

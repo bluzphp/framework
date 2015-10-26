@@ -15,21 +15,17 @@ namespace Bluz\Application\Exception;
  * Not Acceptable Exception
  *
  * @package  Bluz\Application\Exception
- *
  * @author   Anton Shevchuk
- * @created  25.11.14 17:00
  */
 class NotAcceptableException extends ApplicationException
 {
     /**
-     * Exception message
-     * @var string
+     * @var string exception message
      */
     protected $message = "Not Acceptable";
 
     /**
-     * Method Not Allowed
-     * @var int
+     * @var integer HTTP Code for "Not Acceptable"
      */
     protected $code = 406;
 }

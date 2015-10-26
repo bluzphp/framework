@@ -17,11 +17,8 @@ use Bluz\Response\AbstractResponse;
 /**
  * Response
  *
- * @category Http
  * @package  Bluz\Response
- *
  * @author   Anton Shevchuk
- * @created  18.02.14 11:57
  */
 class Response extends AbstractResponse
 {
@@ -53,6 +50,7 @@ class Response extends AbstractResponse
 
     /**
      * Send body
+     *
      * @return void
      */
     protected function sendBody()

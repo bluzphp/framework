@@ -15,19 +15,18 @@ namespace Bluz\Common\Container;
  * Implements magic access to container
  *
  * @package  Bluz\Common
- *
- * @method void doSetContainer($key, $value)
- * @method mixed doGetContainer($key)
- * @method bool doContainsContainer($key)
- * @method void doDeleteContainer($key)
- *
  * @author   Anton Shevchuk
- * @created  14.10.2014 10:11
+ *
+ * @method   void  doSetContainer($key, $value)
+ * @method   mixed doGetContainer($key)
+ * @method   bool  doContainsContainer($key)
+ * @method   void  doDeleteContainer($key)
  */
 trait MagicAccess
 {
     /**
      * Magic alias for set() regular method
+     *
      * @param  string $key
      * @param  mixed $value
      * @return void
@@ -39,6 +38,7 @@ trait MagicAccess
 
     /**
      * Magic alias for get() regular method
+     *
      * @param  string $key
      * @return mixed
      */
@@ -49,6 +49,7 @@ trait MagicAccess
 
     /**
      * Magic alias for contains() regular method
+     *
      * @param  string $key
      * @return bool
      */
@@ -59,6 +60,7 @@ trait MagicAccess
 
     /**
      * Magic alias for delete() regular method
+     *
      * @param  string $key
      * @return void
      */

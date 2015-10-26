@@ -19,9 +19,8 @@ use Bluz\Proxy\Translator;
  * Realization of Flash Messages
  *
  * @package  Bluz\Messages
- * @link     https://github.com/bluzphp/framework/wiki/Messages
- *
  * @author   Anton Shevchuk
+ * @link     https://github.com/bluzphp/framework/wiki/Messages
  */
 class Messages
 {
@@ -32,8 +31,7 @@ class Messages
     const TYPE_NOTICE = 'notice';
 
     /**
-     * Stack of messages types
-     * @var array
+     * @var array list of messages types
      */
     protected $types = array(
         self::TYPE_ERROR,
@@ -43,6 +41,7 @@ class Messages
 
     /**
      * Initialize Messages container
+     *
      * @return Messages
      */
     protected function init()
@@ -55,11 +54,11 @@ class Messages
 
     /**
      * Add notice
-     * @api
-     * @since 1.0.0 added $text
-     * @param string $message
-     * @param string[] $text
+     *
+     * @param  string   $message
+     * @param  string[] $text
      * @return void
+     * @since  1.0.0 added $text
      */
     public function addNotice($message, ...$text)
     {
@@ -68,11 +67,11 @@ class Messages
 
     /**
      * Add success
-     * @api
-     * @since 1.0.0 added $text
-     * @param string $message
-     * @param string[] $text
+     *
+     * @param  string   $message
+     * @param  string[] $text
      * @return void
+     * @since  1.0.0 added $text
      */
     public function addSuccess($message, ...$text)
     {
@@ -81,11 +80,11 @@ class Messages
 
     /**
      * Add error
-     * @api
-     * @since 1.0.0 added $text
-     * @param string $message
-     * @param string[] $text
+     *
+     * @param  string   $message
+     * @param  string[] $text
      * @return void
+     * @since  1.0.0 added $text
      */
     public function addError($message, ...$text)
     {
@@ -94,9 +93,10 @@ class Messages
 
     /**
      * Add message to container
-     * @param string $type One of error, notice or success
-     * @param string $message
-     * @param string[] $text
+     *
+     * @param  string   $type One of error, notice or success
+     * @param  string   $message
+     * @param  string[] $text
      * @return void
      */
     protected function add($type, $message, ...$text)
@@ -107,7 +107,8 @@ class Messages
 
     /**
      * Pop a message
-     * @param string $type
+     *
+     * @param  string $type
      * @return \stdClass|null
      */
     public function pop($type = null)
@@ -136,6 +137,7 @@ class Messages
 
     /**
      * Pop all messages
+     *
      * @return array
      */
     public function popAll()
@@ -151,6 +153,7 @@ class Messages
 
     /**
      * Get size of messages container
+     *
      * @return integer
      */
     public function count()
@@ -167,6 +170,7 @@ class Messages
 
     /**
      * Reset messages
+     *
      * @return void
      */
     public function reset()
@@ -176,6 +180,7 @@ class Messages
 
     /**
      * Returns current messages store
+     *
      * @return \ArrayObject|null Returns null if store not exists yet
      */
     protected function getMessagesStore()
@@ -185,6 +190,7 @@ class Messages
 
     /**
      * Creates a new empty store for messages
+     *
      * @return \ArrayObject
      */
     protected function createEmptyMessagesStore()

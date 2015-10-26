@@ -18,7 +18,6 @@ use Bluz\Common\Exception\CommonException;
  *
  * @package  Bluz\Application\Exception
  * @author   Anton Shevchuk
- * @created  17.12.12 16:46
  */
 class ApplicationException extends CommonException
 {

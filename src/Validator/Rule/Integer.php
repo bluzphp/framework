@@ -12,19 +12,21 @@
 namespace Bluz\Validator\Rule;
 
 /**
- * Class Integer
+ * Check for iInteger
+ *
  * @package Bluz\Validator\Rule
  */
 class Integer extends AbstractRule
 {
     /**
-     * @var string Error template
+     * @var string error template
      */
     protected $template = '{{name}} must be an integer number';
 
     /**
      * Check input data
-     * @param mixed $input
+     *
+     * @param  mixed $input
      * @return bool
      */
     public function validate($input)

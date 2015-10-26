@@ -16,13 +16,13 @@ use Bluz\Common\Exception\ConfigurationException;
 
 /**
  * Redis session handler
+ *
  * @package Bluz\Session\Adapter
  */
 class Redis extends AbstractAdapter implements \SessionHandlerInterface
 {
     /**
-     * Default Redis settings
-     * @var array
+     * @var array default Redis settings
      */
     protected $settings = array(
         'host' => '127.0.0.1',
@@ -33,7 +33,8 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
 
     /**
      * Check and setup Redis server
-     * @param array $settings
+     *
+     * @param  array $settings
      * @throws ComponentException
      * @throws ConfigurationException
      */
@@ -72,7 +73,8 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
 
     /**
      * Read session data
-     * @param string $id
+     *
+     * @param  string $id
      * @return bool|string
      */
     public function read($id)
@@ -82,8 +84,9 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
 
     /**
      * Write session data
-     * @param string $id
-     * @param string $data
+     *
+     * @param  string $id
+     * @param  string $data
      * @return bool|void
      */
     public function write($id, $data)
@@ -93,7 +96,8 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
 
     /**
      * Destroy a session
-     * @param int $id
+     *
+     * @param  integer $id
      * @return bool|void
      */
     public function destroy($id)

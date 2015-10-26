@@ -14,26 +14,28 @@ namespace Bluz\Validator\Rule;
 use Bluz\Validator\Exception\ComponentException;
 
 /**
- * Class Between
+ * Check for value in range between minimum and maximum values
+ *
  * @package Bluz\Validator\Rule
  */
 class Between extends AbstractCompareRule
 {
     /**
-     * @var mixed Minimum value
+     * @var mixed minimum value
      */
     protected $minValue;
 
     /**
-     * @var mixed Maximum value
+     * @var mixed maximum value
      */
     protected $maxValue;
 
     /**
      * Setup validation rule
-     * @param mixed $min
-     * @param mixed $max
-     * @param bool $inclusive
+     *
+     * @param  mixed $min
+     * @param  mixed $max
+     * @param  bool  $inclusive
      * @throws \Bluz\Validator\Exception\ComponentException
      */
     public function __construct($min, $max, $inclusive = false)
@@ -53,7 +55,8 @@ class Between extends AbstractCompareRule
 
     /**
      * Check input data
-     * @param numeric $input
+     *
+     * @param  numeric $input
      * @return bool
      */
     public function validate($input)
@@ -64,6 +67,7 @@ class Between extends AbstractCompareRule
 
     /**
      * Get error template
+     *
      * @return string
      */
     public function getTemplate()

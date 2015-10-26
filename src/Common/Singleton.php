@@ -15,20 +15,19 @@ namespace Bluz\Common;
  * Singleton
  *
  * @package  Bluz\Common
- * @link     https://github.com/bluzphp/framework/wiki/Trait-Singleton
- *
  * @author   Anton Shevchuk
- * @created  16.05.12 14:26
+ * @link     https://github.com/bluzphp/framework/wiki/Trait-Singleton
  */
 trait Singleton
 {
     /**
-     * @var static Singleton instance
+     * @var static singleton instance
      */
     protected static $instance;
 
     /**
      * Get instance
+     *
      * @return static
      */
     final public static function getInstance()
@@ -43,7 +42,6 @@ trait Singleton
      */
     protected function __construct()
     {
-
     }
 
     /**
@@ -51,6 +49,5 @@ trait Singleton
      */
     protected function __clone()
     {
-
     }
 }

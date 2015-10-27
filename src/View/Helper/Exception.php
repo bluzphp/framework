@@ -18,8 +18,7 @@ return
     /**
      * Return Exception message
      *
-     * @var View $this
-     * @param \Exception $exception
+     * @param  \Exception $exception
      * @return string
      */
     function ($exception) {

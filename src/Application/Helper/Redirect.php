@@ -15,10 +15,11 @@ use Bluz\Application\Exception\RedirectException;
 
 return
     /**
-     * Redirect to url
-     * @param string $url
-     * @throws RedirectException
+     * Redirect to URL
+     *
+     * @param  string $url
      * @return void
+     * @throws RedirectException
      */
     function ($url) {
         throw new RedirectException($url);

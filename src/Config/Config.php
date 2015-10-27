@@ -15,39 +15,37 @@ namespace Bluz\Config;
  * Config
  *
  * @package  Bluz\Config
- * @link     https://github.com/bluzphp/framework/wiki/Config
- *
  * @author   Anton Shevchuk
- * @created  03.03.12 14:03
+ * @link     https://github.com/bluzphp/framework/wiki/Config
  */
 class Config
 {
     /**
-     * @var array Configuration data
+     * @var array configuration data
      */
     protected $config;
 
     /**
-     * @var array Modules configuration data
+     * @var array modules configuration data
      */
     protected $modules;
 
     /**
-     * @var string Path to configuration files
+     * @var string path to configuration files
      */
     protected $path;
 
     /**
-     * @var string Environment
+     * @var string environment
      */
     protected $environment;
 
     /**
      * Set path to configuration files
      *
-     * @param string $path
-     * @throws ConfigException
+     * @param  string $path
      * @return void
+     * @throws ConfigException
      */
     public function setPath($path)
     {
@@ -60,7 +58,7 @@ class Config
     /**
      * Set application environment
      *
-     * @param string $environment
+     * @param  string $environment
      * @return void
      */
     public function setEnvironment($environment)
@@ -70,8 +68,9 @@ class Config
 
     /**
      * Load configuration
-     * @throws ConfigException
+     *
      * @return void
+     * @throws ConfigException
      */
     public function init()
     {
@@ -89,9 +88,10 @@ class Config
 
     /**
      * Load configuration file
-     * @param string $path
-     * @throws ConfigException
+     *
+     * @param  string $path
      * @return array
+     * @throws ConfigException
      */
     protected function loadFile($path)
     {
@@ -103,9 +103,10 @@ class Config
 
     /**
      * Load configuration files to array
-     * @param string $path
-     * @throws ConfigException
+     *
+     * @param  string $path
      * @return array
+     * @throws ConfigException
      */
     protected function loadFiles($path)
     {
@@ -129,11 +130,11 @@ class Config
 
     /**
      * Return configuration by key
-     * @api
-     * @param string|null $key of config
-     * @param string|null $section of config
-     * @throws ConfigException
+     *
+     * @param  string|null $key     Key of config
+     * @param  string|null $section Section of config
      * @return array|mixed
+     * @throws ConfigException
      */
     public function getData($key = null, $section = null)
     {
@@ -162,9 +163,9 @@ class Config
 
     /**
      * Return module configuration by section
-     * @api
-     * @param string $module
-     * @param null $section
+     *
+     * @param  string $module
+     * @param  string $section
      * @return mixed
      */
     public function getModuleData($module, $section = null)

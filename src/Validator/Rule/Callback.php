@@ -14,19 +14,21 @@ namespace Bluz\Validator\Rule;
 use Bluz\Validator\Exception\ComponentException;
 
 /**
- * Class Callback
+ * Check input by callback
+ *
  * @package Bluz\Validator\Rule
  */
 class Callback extends AbstractRule
 {
     /**
-     * @var callable Callback for check input
+     * @var callable callback for check input
      */
     protected $callback;
 
     /**
      * Setup validation rule
-     * @param callable $callback
+     *
+     * @param  callable $callback
      * @throws \Bluz\Validator\Exception\ComponentException
      */
     public function __construct($callback)
@@ -40,7 +42,8 @@ class Callback extends AbstractRule
 
     /**
      * Check input data
-     * @param mixed $input
+     *
+     * @param  mixed $input
      * @return bool
      */
     public function validate($input)

@@ -17,26 +17,25 @@ use Bluz\Common\Exception\CommonException;
  * Helper trait
  *
  * @package  Bluz\Common
- * @link     https://github.com/bluzphp/framework/wiki/Trait-Helper
- *
  * @author   Anton Shevchuk
- * @created  18.07.12 14:46
+ * @link     https://github.com/bluzphp/framework/wiki/Trait-Helper
  */
 trait Helper
 {
     /**
-     * @var array of helpers
+     * @var array list of helpers
      */
     protected $helpers = array();
 
     /**
-     * @var array of helpers paths
+     * @var array list of helpers paths
      */
     protected $helpersPath = array();
 
     /**
      * Add helper path
-     * @param string $path
+     *
+     * @param  string $path
      * @return self
      */
     public function addHelperPath($path)
@@ -51,7 +50,8 @@ trait Helper
 
     /**
      * Set helpers path
-     * @param string|array $helpersPath
+     *
+     * @param  string|array $helpersPath
      * @return self
      */
     public function setHelpersPath($helpersPath)
@@ -68,6 +68,7 @@ trait Helper
 
     /**
      * Reset helpers path
+     *
      * @return self
      */
     public function resetHelpersPath()
@@ -78,10 +79,11 @@ trait Helper
 
     /**
      * Call magic helper
-     * @param string $method
-     * @param array $args
-     * @throws CommonException
+     *
+     * @param  string $method
+     * @param  array  $args
      * @return mixed
+     * @throws CommonException
      */
     public function __call($method, $args)
     {

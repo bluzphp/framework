@@ -12,18 +12,20 @@
 namespace Bluz\Validator\Rule;
 
 /**
- * Class String
+ * Check input by condition
+ *
  * @package Bluz\Validator\Rule
  */
 class Condition extends AbstractRule
 {
     /**
-     * @var bool Condition rule
+     * @var bool condition rule
      */
     protected $condition;
 
     /**
      * Setup validation rule
+     *
      * @param bool $condition
      */
     public function __construct($condition)
@@ -33,7 +35,8 @@ class Condition extends AbstractRule
 
     /**
      * Check input data
-     * @param mixed $input
+     *
+     * @param  mixed $input
      * @return bool
      */
     public function validate($input)

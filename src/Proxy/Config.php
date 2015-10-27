@@ -18,13 +18,16 @@ use Bluz\Config\Config as Instance;
  * Proxy to Config
  *
  * Example of usage
+ * <code>
  *     use Bluz\Proxy\Config;
  *
  *     if (!Config::getData('db')) {
  *          throw new Exception('Configuration for `db` is missed');
  *     }
+ * </code>
  *
  * @package  Bluz\Proxy
+ * @author   Anton Shevchuk
  *
  * @method   static Instance getInstance()
  *
@@ -33,9 +36,6 @@ use Bluz\Config\Config as Instance;
  *
  * @method   static mixed getModuleData($module, $section = null)
  * @see      Bluz\Config\Config::getModuleData()
- *
- * @author   Anton Shevchuk
- * @created  26.09.2014 13:06
  */
 class Config extends AbstractProxy
 {

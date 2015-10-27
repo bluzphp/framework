@@ -14,24 +14,26 @@ namespace Bluz\Validator\Rule;
 use Bluz\Validator\Exception\ComponentException;
 
 /**
- * Class Ip
+ * Check for IP
+ *
  * @package Bluz\Validator\Rule
  */
 class Ip extends AbstractRule
 {
     /**
-     * @var int Setup options
+     * @var integer setup options
      */
     protected $options;
 
     /**
-     * @var array Network range
+     * @var array network range
      */
     protected $networkRange;
 
     /**
      * Setup validation rule
-     * @param null $options
+     *
+     * @param mixed $options
      * @throws \Bluz\Validator\Exception\ComponentException
      */
     public function __construct($options = null)
@@ -46,7 +48,8 @@ class Ip extends AbstractRule
 
     /**
      * Parse IP range
-     * @param string $input
+     *
+     * @param  string $input
      * @return array
      * @throws \Bluz\Validator\Exception\ComponentException
      */
@@ -82,6 +85,7 @@ class Ip extends AbstractRule
 
     /**
      * Fill address
+     *
      * @param string $input
      * @param string $char
      */
@@ -94,6 +98,7 @@ class Ip extends AbstractRule
 
     /**
      * Parse range using wildcards
+     *
      * @param string $input
      * @param array $range
      */
@@ -107,10 +112,11 @@ class Ip extends AbstractRule
 
     /**
      * Parse range using Classless Inter-Domain Routing (CIDR)
-     * @link http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing
-     * @param string $input
-     * @param array $range
+     *
+     * @param  string $input
+     * @param  array  $range
      * @throws \Bluz\Validator\Exception\ComponentException
+     * @link http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing
      */
     protected function parseRangeUsingCidr($input, &$range)
     {
@@ -135,7 +141,8 @@ class Ip extends AbstractRule
 
     /**
      * Check input data
-     * @param string $input
+     *
+     * @param  string $input
      * @return bool
      */
     public function validate($input)
@@ -145,7 +152,8 @@ class Ip extends AbstractRule
 
     /**
      * Verify IP address
-     * @param string $address
+     *
+     * @param  string $address
      * @return bool
      */
     protected function verifyAddress($address)
@@ -161,7 +169,8 @@ class Ip extends AbstractRule
 
     /**
      * Verify Network by mask
-     * @param string $input
+     *
+     * @param  string $input
      * @return bool
      */
     protected function verifyNetwork($input)
@@ -184,7 +193,8 @@ class Ip extends AbstractRule
 
     /**
      * Check subnet
-     * @param string $input
+     *
+     * @param  string $input
      * @return bool
      */
     protected function belongsToSubnet($input)
@@ -198,6 +208,7 @@ class Ip extends AbstractRule
 
     /**
      * Get error template
+     *
      * @return string
      */
     public function getTemplate()

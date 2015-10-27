@@ -15,17 +15,17 @@ use Bluz\Db\Query\Delete;
 use Bluz\Db\Query\Select;
 
 /**
- * From Trait, required for:
+ * From Trait
+ *
+ * Required for:
  *  - Select Builder
  *  - Delete Builder
  *
- * @package Bluz\Db\Query\Traits
+ * @package  Bluz\Db\Query\Traits
+ * @author   Anton Shevchuk
  *
  * @property array $aliases
- * @method Select|Delete addQueryPart(string $sqlPartName, mixed $sqlPart, $append = false)
- *
- * @author   Anton Shevchuk
- * @created  17.06.13 10:46
+ * @method   Select|Delete addQueryPart(string $sqlPartName, mixed $sqlPart, $append = false)
  */
 trait From
 {
@@ -34,13 +34,16 @@ trait From
      *
      * Create and add a query root corresponding to the table identified by the
      * given alias, forming a cartesian product with any existing query roots
+     *
+     * <code>
      *     $sb = new SelectBuilder();
      *     $sb
      *         ->select('u.id')
      *         ->from('users', 'u')
+     * </code>
      *
-     * @param string $from   The table
-     * @param string $alias  The alias of the table
+     * @param  string $from   The table
+     * @param  string $alias  The alias of the table
      * @return Select|Delete
      */
     public function from($from, $alias)

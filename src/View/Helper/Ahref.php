@@ -21,10 +21,10 @@ return
      *
      * @author ErgallM
      *
-     * @var View $this
-     * @param string $text
-     * @param string|array $href
-     * @param array $attributes HTML attributes
+     * @var    View         $this
+     * @param  string       $text
+     * @param  string|array $href
+     * @param  array        $attributes HTML attributes
      * @return string
      */
     function ($text, $href, array $attributes = []) {

@@ -15,21 +15,17 @@ namespace Bluz\Application\Exception;
  * NotImplemented Exception
  *
  * @package  Bluz\Application\Exception
- *
  * @author   Anton Shevchuk
- * @created  13.08.13 13:09
  */
 class NotImplementedException extends ApplicationException
 {
     /**
-     * Exception message
-     * @var string
+     * @var string exception message
      */
     protected $message = "Not Implemented";
 
     /**
-     * Not Implemented HTTP Code
-     * @var int
+     * @var integer HTTP code for "Not Implemented"
      */
     protected $code = 501;
 }

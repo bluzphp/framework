@@ -16,12 +16,10 @@ use Bluz\Crud\AbstractCrud;
 use Bluz\Proxy\Request;
 
 /**
- * AbstractController
+ * Abstract Controller
  *
  * @package  Bluz\Controller
- *
  * @author   Anton Shevchuk
- * @created  02.10.13 13:52
  */
 abstract class AbstractController
 {
@@ -31,22 +29,22 @@ abstract class AbstractController
     protected $method = Request::METHOD_GET;
 
     /**
-     * @var array Params of query
+     * @var array params of query
      */
     protected $params = array();
 
     /**
-     * @var array Identifier
+     * @var array identifier
      */
     protected $primary;
 
     /**
-     * @var array Query data
+     * @var array query data
      */
     protected $data = array();
 
     /**
-     * @var AbstractCrud Instance of CRUD
+     * @var AbstractCrud instance of CRUD
      */
     protected $crud;
 
@@ -72,6 +70,7 @@ abstract class AbstractController
 
     /**
      * Controller should be executable
+     *
      * @return mixed
      */
     abstract public function __invoke();
@@ -79,6 +78,7 @@ abstract class AbstractController
     /**
      * Return HTTP request method
      * Can be rewrite by '_method' parameter
+     *
      * @return string
      */
     public function getMethod()
@@ -88,7 +88,8 @@ abstract class AbstractController
 
     /**
      * Get Data
-     * @param string $field
+     *
+     * @param  string $field
      * @return array
      */
     public function getData($field = null)
@@ -106,7 +107,8 @@ abstract class AbstractController
 
     /**
      * Setup Crud instance
-     * @param AbstractCrud $crud
+     *
+     * @param  AbstractCrud $crud
      * @return self
      */
     public function setCrud(AbstractCrud $crud)
@@ -117,8 +119,9 @@ abstract class AbstractController
 
     /**
      * Get crud instance
-     * @throws \Bluz\Application\Exception\ApplicationException
+     *
      * @return AbstractCrud
+     * @throws \Bluz\Application\Exception\ApplicationException
      */
     public function getCrud()
     {
@@ -143,7 +146,8 @@ abstract class AbstractController
 
     /**
      * Get item by primary key(s)
-     * @param mixed $primary
+     *
+     * @param  mixed $primary
      * @return mixed
      */
     public function readOne($primary)
@@ -153,9 +157,10 @@ abstract class AbstractController
 
     /**
      * List of items
-     * @param int $offset
-     * @param int $limit
-     * @param array $params
+     *
+     * @param  integer $offset
+     * @param  integer $limit
+     * @param  array   $params
      * @return mixed
      */
     public function readSet($offset = 0, $limit = AbstractCrud::DEFAULT_LIMIT, $params = array())
@@ -164,8 +169,9 @@ abstract class AbstractController
     }
 
     /**
-     * Create new item
-     * @param array $data
+     * Create new item from array
+     *
+     * @param  array $data
      * @return mixed
      */
     public function createOne($data)
@@ -174,8 +180,9 @@ abstract class AbstractController
     }
 
     /**
-     * Create items
-     * @param array $data
+     * Create items from two-level array
+     *
+     * @param  array $data
      * @return mixed
      */
     public function createSet($data)
@@ -184,9 +191,10 @@ abstract class AbstractController
     }
 
     /**
-     * Update item
-     * @param mixed $id
-     * @param array $data
+     * Update item from array
+     *
+     * @param  mixed $id
+     * @param  array $data
      * @return integer
      */
     public function updateOne($id, $data)
@@ -195,8 +203,9 @@ abstract class AbstractController
     }
 
     /**
-     * Update items
-     * @param array $data
+     * Update items from arrays
+     *
+     * @param  array $data
      * @return integer
      */
     public function updateSet($data)
@@ -206,7 +215,8 @@ abstract class AbstractController
 
     /**
      * Delete item
-     * @param mixed $primary
+     *
+     * @param  mixed $primary
      * @return integer
      */
     public function deleteOne($primary)
@@ -215,8 +225,9 @@ abstract class AbstractController
     }
 
     /**
-     * Delete items
-     * @param array $data
+     * Delete items by array of IDs
+     *
+     * @param  array $data
      * @return integer
      */
     public function deleteSet($data)

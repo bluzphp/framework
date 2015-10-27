@@ -17,10 +17,8 @@ use Bluz\Application\Exception\NotImplementedException;
  * Crud
  *
  * @package  Bluz\Crud
- * @link     https://github.com/bluzphp/framework/wiki/Crud
- *
  * @author   Anton Shevchuk
- * @created  23.09.13 15:33
+ * @link     https://github.com/bluzphp/framework/wiki/Crud
  */
 abstract class AbstractCrud
 {
@@ -31,6 +29,7 @@ abstract class AbstractCrud
 
     /**
      * Get CRUD Instance
+     *
      * @return static
      */
     public static function getInstance()
@@ -45,15 +44,17 @@ abstract class AbstractCrud
 
     /**
      * Return primary key signature
+     *
      * @return array
      */
     abstract public function getPrimaryKey();
 
     /**
      * Get item by primary key(s)
-     * @param mixed $primary
-     * @throws NotImplementedException
+     *
+     * @param  mixed $primary
      * @return mixed
+     * @throws NotImplementedException
      */
     public function readOne($primary)
     {
@@ -62,11 +63,12 @@ abstract class AbstractCrud
 
     /**
      * Get collection of items
-     * @param int $offset
-     * @param int $limit
-     * @param array $params
-     * @throws NotImplementedException
+     *
+     * @param  integer $offset
+     * @param  integer $limit
+     * @param  array   $params
      * @return mixed
+     * @throws NotImplementedException
      */
     public function readSet($offset = 0, $limit = self::DEFAULT_LIMIT, $params = array())
     {
@@ -75,9 +77,10 @@ abstract class AbstractCrud
 
     /**
      * Create new item
-     * @param array $data
-     * @throws NotImplementedException
+     *
+     * @param  array $data
      * @return mixed
+     * @throws NotImplementedException
      */
     public function createOne($data)
     {
@@ -86,9 +89,10 @@ abstract class AbstractCrud
 
     /**
      * Create items
-     * @param array $data
-     * @throws NotImplementedException
+     *
+     * @param  array $data
      * @return mixed
+     * @throws NotImplementedException
      */
     public function createSet($data)
     {
@@ -97,10 +101,11 @@ abstract class AbstractCrud
 
     /**
      * Update item
-     * @param mixed $primary
-     * @param array $data
-     * @throws NotImplementedException
+     *
+     * @param  mixed $primary
+     * @param  array $data
      * @return integer
+     * @throws NotImplementedException
      */
     public function updateOne($primary, $data)
     {
@@ -109,9 +114,10 @@ abstract class AbstractCrud
 
     /**
      * Update items
-     * @param array $data
-     * @throws NotImplementedException
+     *
+     * @param  array $data
      * @return integer
+     * @throws NotImplementedException
      */
     public function updateSet($data)
     {
@@ -120,9 +126,10 @@ abstract class AbstractCrud
 
     /**
      * Delete item
-     * @param mixed $primary
-     * @throws NotImplementedException
+     *
+     * @param  mixed $primary
      * @return integer
+     * @throws NotImplementedException
      */
     public function deleteOne($primary)
     {
@@ -131,9 +138,10 @@ abstract class AbstractCrud
 
     /**
      * Delete items
-     * @param array $data
-     * @throws NotImplementedException
+     *
+     * @param  array $data
      * @return integer
+     * @throws NotImplementedException
      */
     public function deleteSet($data)
     {
@@ -142,6 +150,7 @@ abstract class AbstractCrud
 
     /**
      * Get realized methods
+     *
      * @return array
      */
     public function getMethods()

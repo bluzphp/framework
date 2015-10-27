@@ -17,12 +17,15 @@ use Bluz\Registry\Registry as Instance;
  * Proxy to Registry
  *
  * Example of usage
+ * <code>
  *     use Bluz\Proxy\Registry;
  *
  *     Registry::set('key', 'value');
  *     Registry::get('key');
+ * </code>
  *
  * @package  Bluz\Proxy
+ * @author   Anton Shevchuk
  *
  * @method   static Instance getInstance()
  *
@@ -37,9 +40,6 @@ use Bluz\Registry\Registry as Instance;
  *
  * @method   static void  delete($key)
  * @see      Bluz\Registry\Registry::delete()
- *
- * @author   Anton Shevchuk
- * @created  29.09.2014 11:32
  */
 class Registry extends AbstractProxy
 {

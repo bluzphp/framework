@@ -23,6 +23,7 @@ use Bluz\Auth\EntityInterface;
  *     $user = Auth::getIdentity();
  *
  * @package  Bluz\Proxy
+ * @author   Anton Shevchuk
  *
  * @method   static Instance getInstance()
  *
@@ -34,9 +35,6 @@ use Bluz\Auth\EntityInterface;
  *
  * @method   static void clearIdentity()
  * @see      Bluz\Auth\Auth::clearIdentity()
- *
- * @author   Anton Shevchuk
- * @created  26.09.2014 18:02
  */
 class Auth extends AbstractProxy
 {

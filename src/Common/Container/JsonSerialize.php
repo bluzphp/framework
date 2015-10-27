@@ -13,19 +13,18 @@ namespace Bluz\Common\Container;
 
 /**
  * Container implements JsonSerializable interface
- * @see JsonSerializable
  *
  * @package  Bluz\Common
- *
- * @method array toArray()
- *
  * @author   Anton Shevchuk
- * @created  14.10.2014 10:15
+ * @see      JsonSerializable
+ *
+ * @method   array toArray()
  */
 trait JsonSerialize
 {
     /**
      * Specify data which should be serialized to JSON
+     *
      * @return array
      */
     public function jsonSerialize()

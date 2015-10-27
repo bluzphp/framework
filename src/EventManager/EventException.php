@@ -17,9 +17,7 @@ use Bluz\Common\Exception\CommonException;
  * Exception
  *
  * @package  Bluz\EventManager
- *
  * @author   Anton Shevchuk
- * @created  16.03.12 13:05
  */
 class EventException extends CommonException
 {

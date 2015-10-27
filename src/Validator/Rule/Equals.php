@@ -12,25 +12,27 @@
 namespace Bluz\Validator\Rule;
 
 /**
- * Class Equals
+ * Check input data by compare with some value
+ *
  * @package Bluz\Validator\Rule
  */
 class Equals extends AbstractRule
 {
     /**
-     * @var string String for compare
+     * @var string string for compare
      */
     protected $compareTo;
 
     /**
-     * @var bool Strong comparison
+     * @var bool strong comparison
      */
     protected $identical = false;
 
     /**
      * Setup validation rule
+     *
      * @param string $compareTo
-     * @param bool $identical
+     * @param bool   $identical
      */
     public function __construct($compareTo, $identical = false)
     {
@@ -40,7 +42,8 @@ class Equals extends AbstractRule
 
     /**
      * Check input data
-     * @param string $input
+     *
+     * @param  string $input
      * @return bool
      */
     public function validate($input)
@@ -54,6 +57,7 @@ class Equals extends AbstractRule
 
     /**
      * Get error template
+     *
      * @return string
      */
     public function getTemplate()

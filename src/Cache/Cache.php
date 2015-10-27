@@ -20,6 +20,7 @@ use Bluz\Common\Options;
  * Cache Frontend for Bluz\Cache system
  *
  * Configuration
+ * <code>
  *     'enabled' => true,           // Boolean,optional, true by default
  *     'cacheAdapter' => 'redis',   // Required if option 'enabled' set to true
  *     'tagAdapter' => 'memcached', // Optional
@@ -27,11 +28,11 @@ use Bluz\Common\Options;
  *         'redis' => [],           // Settings for setup Instance of Bluz\Cache\CacheInterface.
  *         'memcached' => [],       // Settings for another cache adapter
  *     ]
+ * </code>
  *
  * @package Bluz\Cache
- * @link    https://github.com/bluzphp/framework/wiki/Cache
- *
  * @author  murzik
+ * @link    https://github.com/bluzphp/framework/wiki/Cache
  */
 class Cache implements CacheInterface, TagableInterface
 {
@@ -64,8 +65,9 @@ class Cache implements CacheInterface, TagableInterface
 
     /**
      * Check Cache configuration
-     * @throws ConfigurationException
+     *
      * @return void
+     * @throws ConfigurationException
      */
     protected function initOptions()
     {
@@ -81,9 +83,10 @@ class Cache implements CacheInterface, TagableInterface
 
     /**
      * Prepare Id with prefix
+     *
      * @param  string $id
-     * @throws CacheException
      * @return string
+     * @throws CacheException
      */
     protected function prepareId($id)
     {
@@ -92,7 +95,8 @@ class Cache implements CacheInterface, TagableInterface
 
     /**
      * Setup prefix for cache records
-     * @param string $prefix
+     *
+     * @param  string $prefix
      * @return void
      */
     public function setPrefix($prefix)
@@ -102,7 +106,8 @@ class Cache implements CacheInterface, TagableInterface
 
     /**
      * Setup prefix for cache records of tags
-     * @param string $prefix
+     *
+     * @param  string $prefix
      * @return void
      */
     public function setTagPrefix($prefix)
@@ -113,10 +118,9 @@ class Cache implements CacheInterface, TagableInterface
     /**
      * {@inheritdoc}
      *
-     * @api
-     * @param string $id
-     * @param mixed $data
-     * @param int $ttl
+     * @param  string  $id
+     * @param  mixed   $data
+     * @param  integer $ttl
      * @return bool
      */
     public function add($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
@@ -128,10 +132,9 @@ class Cache implements CacheInterface, TagableInterface
     /**
      * {@inheritdoc}
      *
-     * @api
-     * @param string $id
-     * @param mixed $data
-     * @param int $ttl
+     * @param  string  $id
+     * @param  mixed   $data
+     * @param  integer $ttl
      * @return bool
      */
     public function set($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
@@ -143,8 +146,7 @@ class Cache implements CacheInterface, TagableInterface
     /**
      * {@inheritdoc}
      *
-     * @api
-     * @param string $id
+     * @param  string $id
      * @return mixed
      */
     public function get($id)
@@ -156,8 +158,7 @@ class Cache implements CacheInterface, TagableInterface
     /**
      * {@inheritdoc}
      *
-     * @api
-     * @param string $id
+     * @param  string $id
      * @return bool
      */
     public function contains($id)
@@ -169,8 +170,7 @@ class Cache implements CacheInterface, TagableInterface
     /**
      * {@inheritdoc}
      *
-     * @api
-     * @param string $id
+     * @param  string $id
      * @return mixed
      */
     public function delete($id)
@@ -182,7 +182,6 @@ class Cache implements CacheInterface, TagableInterface
     /**
      * {@inheritdoc}
      *
-     * @api
      * @return void
      */
     public function flush()
@@ -193,10 +192,11 @@ class Cache implements CacheInterface, TagableInterface
 
     /**
      * Get underlying cache adapter
-     * @param string $adapterName
+     *
+     * @param  string $adapterName
+     * @return Adapter\AbstractAdapter
      * @throws ComponentException
      * @throws ConfigurationException
-     * @return Adapter\AbstractAdapter
      */
     public function getAdapter($adapterName = null)
     {
@@ -213,8 +213,9 @@ class Cache implements CacheInterface, TagableInterface
 
     /**
      * Get underlying tag adapter
-     * @throws ConfigurationException
+     *
      * @return Adapter\AbstractAdapter
+     * @throws ConfigurationException
      */
     public function getTagAdapter()
     {
@@ -233,11 +234,11 @@ class Cache implements CacheInterface, TagableInterface
 
     /**
      * Initialize adapter
-     * @internal
-     * @param string $adapterName
+     *
+     * @param  string $adapterName
+     * @return Adapter\AbstractAdapter
      * @throws ComponentException
      * @throws ConfigurationException
-     * @return Adapter\AbstractAdapter
      */
     protected function initAdapter($adapterName)
     {
@@ -259,9 +260,8 @@ class Cache implements CacheInterface, TagableInterface
     /**
      * {@inheritdoc}
      *
-     * @api
-     * @param string $id
-     * @param string $tag
+     * @param  string $id
+     * @param  string $tag
      * @return bool
      * @throws CacheException
      */
@@ -284,8 +284,7 @@ class Cache implements CacheInterface, TagableInterface
     /**
      * {@inheritdoc}
      *
-     * @api
-     * @param string $tag
+     * @param  string $tag
      * @return bool
      * @throws CacheException
      */

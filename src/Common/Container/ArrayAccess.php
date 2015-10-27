@@ -13,25 +13,23 @@ namespace Bluz\Common\Container;
 
 /**
  * Container implements ArrayAccess
- * @see ArrayAccess
  *
  * @package  Bluz\Common
- *
- * @method void doSetContainer($key, $value)
- * @method mixed doGetContainer($key)
- * @method bool doContainsContainer($key)
- * @method void doDeleteContainer($key)
- *
- *
  * @author   Anton Shevchuk
- * @created  14.10.2014 10:11
+ * @see      ArrayAccess
+ *
+ * @method   void  doSetContainer($key, $value)
+ * @method   mixed doGetContainer($key)
+ * @method   bool  doContainsContainer($key)
+ * @method   void  doDeleteContainer($key)
  */
 trait ArrayAccess
 {
     /**
      * Offset to set
-     * @param mixed $offset
-     * @param mixed $value
+     *
+     * @param  mixed $offset
+     * @param  mixed $value
      * @throws \InvalidArgumentException
      */
     public function offsetSet($offset, $value)
@@ -45,7 +43,8 @@ trait ArrayAccess
 
     /**
      * Offset to retrieve
-     * @param mixed $offset
+     *
+     * @param  mixed $offset
      * @return string
      */
     public function offsetGet($offset)
@@ -55,7 +54,8 @@ trait ArrayAccess
 
     /**
      * Whether a offset exists
-     * @param mixed $offset
+     *
+     * @param  mixed $offset
      * @return bool
      */
     public function offsetExists($offset)
@@ -65,6 +65,7 @@ trait ArrayAccess
 
     /**
      * Offset to unset
+     *
      * @param mixed $offset
      */
     public function offsetUnset($offset)

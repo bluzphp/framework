@@ -17,14 +17,13 @@ use Bluz\Db\Exception\RelationNotFoundException;
  * Relations map of Db tables
  *
  * @package  Bluz\Db
- *
  * @author   Anton Shevchuk
- * @created  12.11.13 13:22
  */
 class Relations
 {
     /**
      * Relation stack, i.e.
+     * <code>
      *     array(
      *         'Model1:Model2' => ['Model1'=>'foreignKey', 'Model2'=>'primaryKey'],
      *         'Pages:Users' => ['Pages'=>'userId', 'Users'=>'id'],
@@ -32,6 +31,7 @@ class Relations
      *         'PagesTags:Tags' => ['PagesTags'=>'tagId', 'Tags'=>'id'],
      *         'Pages:Tags' => ['PagesTags'],
      *     )
+     * </code>
      *
      * @var array
      */
@@ -39,10 +39,12 @@ class Relations
 
     /**
      * Class map, i.e.
+     * <code>
      *     array(
      *         'Pages' => '\Application\Pages\Table',
      *         'Users' => '\Application\Users\Table',
      *     )
+     * </code>
      *
      * @var array
      */
@@ -51,10 +53,10 @@ class Relations
     /**
      * Setup relation between two models
      *
-     * @param string $modelOne
-     * @param string $keyOne
-     * @param string $modelTwo
-     * @param string $keyTwo
+     * @param  string $modelOne
+     * @param  string $keyOne
+     * @param  string $modelTwo
+     * @param  string $keyTwo
      * @return void
      */
     public static function setRelation($modelOne, $keyOne, $modelTwo, $keyTwo)
@@ -66,9 +68,9 @@ class Relations
     /**
      * Setup multi relations
      *
-     * @param string $modelOne
-     * @param string $modelTwo
-     * @param array $relations
+     * @param  string $modelOne
+     * @param  string $modelTwo
+     * @param  array  $relations
      * @return void
      */
     public static function setRelations($modelOne, $modelTwo, $relations)
@@ -83,8 +85,8 @@ class Relations
     /**
      * Get relations
      *
-     * @param string $modelOne
-     * @param string $modelTwo
+     * @param  string $modelOne
+     * @param  string $modelTwo
      * @return array|false
      */
     public static function getRelations($modelOne, $modelTwo)
@@ -103,10 +105,10 @@ class Relations
     /**
      * findRelation
      *
-     * @param Row $row
-     * @param string $relation
-     * @throws Exception\RelationNotFoundException
+     * @param  Row $row
+     * @param  string $relation
      * @return array
+     * @throws Exception\RelationNotFoundException
      */
     public static function findRelation($row, $relation)
     {
@@ -136,11 +138,11 @@ class Relations
     /**
      * Find Relations between two tables
      *
-     * @param string $modelOne
-     * @param string $modelTwo target table
-     * @param array $keys from first table
-     * @throws Exception\RelationNotFoundException
+     * @param  string $modelOne Table
+     * @param  string $modelTwo Target table
+     * @param  array  $keys     Keys from first table
      * @return array
+     * @throws Exception\RelationNotFoundException
      */
     public static function findRelations($modelOne, $modelTwo, $keys)
     {
@@ -209,8 +211,8 @@ class Relations
     /**
      * Add information about model's classes
      *
-     * @param string $model
-     * @param string $className
+     * @param  string $model
+     * @param  string $className
      * @return void
      */
     public static function addClassMap($model, $className)
@@ -221,9 +223,9 @@ class Relations
     /**
      * Get information about Model classes
      *
-     * @param string $model
-     * @throws Exception\RelationNotFoundException
+     * @param  string $model
      * @return string
+     * @throws Exception\RelationNotFoundException
      */
     public static function getModelClass($model)
     {
@@ -242,10 +244,10 @@ class Relations
     /**
      * Get information about Table classes
      *
-     * @param string $modelName
-     * @param array $data
-     * @throws Exception\RelationNotFoundException
+     * @param  string $modelName
+     * @param  array  $data
      * @return Row
+     * @throws Exception\RelationNotFoundException
      */
     public static function createRow($modelName, $data)
     {
@@ -258,8 +260,7 @@ class Relations
     /**
      * Fetch by Divider
      *
-     * @access  public
-     * @param array $input
+     * @param  array $input
      * @return array
      */
     public static function fetch($input)

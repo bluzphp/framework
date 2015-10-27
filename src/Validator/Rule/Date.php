@@ -14,19 +14,21 @@ namespace Bluz\Validator\Rule;
 use DateTime;
 
 /**
- * Class Date
+ * Check for date
+ *
  * @package Bluz\Validator\Rule
  */
 class Date extends AbstractRule
 {
     /**
-     * @var null Date format
+     * @var string date format
      */
     protected $format = null;
 
     /**
      * Setup validation rule
-     * @param null $format
+     *
+     * @param string $format
      */
     public function __construct($format = null)
     {
@@ -35,7 +37,8 @@ class Date extends AbstractRule
 
     /**
      * Check input data
-     * @param mixed $input
+     *
+     * @param  mixed $input
      * @return bool
      */
     public function validate($input)
@@ -56,6 +59,7 @@ class Date extends AbstractRule
 
     /**
      * Get error template
+     *
      * @return string
      */
     public function getTemplate()

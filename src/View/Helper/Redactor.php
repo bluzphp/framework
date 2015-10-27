@@ -17,14 +17,16 @@ return
     /**
      * Generate HTML and JavaScript for WYSIWYG redactor
      *
-     * @link http://imperavi.com/redactor/
-     *
-     * @var View $this
-     * @param string $selector
-     * @param array $settings
+     * @param  string $selector
+     * @param  array $settings
      * @return string
+     *
+     * @link http://imperavi.com/redactor/
      */
     function ($selector, array $settings = []) {
+        /**
+        * @var View $this
+        */
         $defaultSettings = [
             'imageUpload' => $this->url('media', 'upload'),    // default media upload controller
             'imageManagerJson' => $this->url('media', 'list'), // default images list

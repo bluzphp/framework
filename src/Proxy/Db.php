@@ -18,11 +18,14 @@ use Bluz\Db\Query;
  * Proxy to Db
  *
  * Example of usage
+ * <code>
  *     use Bluz\Proxy\Db;
  *
  *     Db::fetchAll('SELECT * FROM users');
+ * </code>
  *
  * @package  Bluz\Proxy
+ * @author   Anton Shevchuk
  *
  * @method   static Instance getInstance()
  *
@@ -85,9 +88,6 @@ use Bluz\Db\Query;
  *
  * @method   static void disconnect()
  * @see      Bluz\Db\Db::disconnect()
- *
- * @author   Anton Shevchuk
- * @created  26.09.2014 16:46
  */
 class Db extends AbstractProxy
 {

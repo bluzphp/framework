@@ -15,21 +15,19 @@ namespace Bluz\Common\Container;
  * Implements regular access to container
  *
  * @package  Bluz\Common
- *
- * @method void doSetContainer($key, $value)
- * @method mixed doGetContainer($key)
- * @method bool doContainsContainer($key)
- * @method void doDeleteContainer($key)
- *
  * @author   Anton Shevchuk
- * @created  14.10.2014 10:11
+ *
+ * @method   void  doSetContainer($key, $value)
+ * @method   mixed doGetContainer($key)
+ * @method   bool  doContainsContainer($key)
+ * @method   void  doDeleteContainer($key)
  */
 trait RegularAccess
 {
     /**
      * Set key/value pair
-     * @param string $key
-     * @param mixed $value
+     * @param  string $key
+     * @param  mixed  $value
      * @return void
      */
     public function set($key, $value)
@@ -39,7 +37,7 @@ trait RegularAccess
 
     /**
      * Get value by key
-     * @param string $key
+     * @param  string $key
      * @return mixed
      */
     public function get($key)
@@ -49,7 +47,7 @@ trait RegularAccess
 
     /**
      * Check contains key in container
-     * @param string $key
+     * @param  string $key
      * @return bool
      */
     public function contains($key)
@@ -59,7 +57,7 @@ trait RegularAccess
 
     /**
      * Delete value by key
-     * @param string $key
+     * @param  string $key
      * @return void
      */
     public function delete($key)

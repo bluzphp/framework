@@ -19,21 +19,19 @@ use Bluz\Proxy;
  * SQL Source Adapter for Grid package
  *
  * @package  Bluz\Grid
- *
  * @author   Anton Shevchuk
- * @created  27.08.12 10:10
  */
 class SelectSource extends AbstractSource
 {
     /**
-     * @var Db\Query\Select instance
+     * @var Db\Query\Select instance of select source
      */
     protected $source;
 
     /**
-     * setSource
+     * Set Select source
      *
-     * @param Db\Query\Select $source
+     * @param  Db\Query\Select $source
      * @throws \Bluz\Grid\GridException
      * @return self
      */
@@ -48,9 +46,9 @@ class SelectSource extends AbstractSource
     }
 
     /**
-     * process
+     * Process
      *
-     * @param array $settings
+     * @param  array $settings
      * @return \Bluz\Grid\Data
      */
     public function process(array $settings = [])

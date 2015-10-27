@@ -17,15 +17,13 @@ use Bluz\Db\Table;
  * Abstract class for Auth\Table
  *
  * @package  Bluz\Auth
+ * @author   Anton Shevchuk
  *
  * @method   static AbstractRow findRow($primaryKey)
  * @see      Bluz\Db\Table::findRow()
  *
  * @method   static AbstractRow findRowWhere($whereList)
  * @see      Bluz\Db\Table::findRowWhere()
- *
- * @author   Anton Shevchuk
- * @created  12.07.11 15:28
  */
 abstract class AbstractTable extends Table
 {
@@ -61,8 +59,9 @@ abstract class AbstractTable extends Table
 
     /**
      * Get AuthRow
-     * @param string $provider
-     * @param string $foreignKey
+     *
+     * @param  string $provider
+     * @param  string $foreignKey
      * @return AbstractRow
      */
     public function getAuthRow($provider, $foreignKey)
@@ -72,7 +71,8 @@ abstract class AbstractTable extends Table
 
     /**
      * Generate Secret token
-     * @param int $id
+     *
+     * @param  integer $id
      * @return string
      */
     protected function generateSecret($id)

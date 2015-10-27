@@ -18,11 +18,14 @@ use Bluz\Common\Nil;
  * Proxy to Logger
  *
  * Example of usage
+ * <code>
  *     use Bluz\Proxy\Logger;
  *
  *     Logger::error('Configuration not found');
+ * </code>
  *
  * @package  Bluz\Proxy
+ * @author   Anton Shevchuk
  *
  * @method   static Instance getInstance()
  *
@@ -55,9 +58,6 @@ use Bluz\Common\Nil;
  *
  * @method   static array get($level)
  * @see      Bluz\Logger\Logger::get()
- *
- * @author   Anton Shevchuk
- * @created  26.09.2014 13:05
  */
 class Logger extends AbstractProxy
 {

@@ -17,17 +17,17 @@ use Bluz\Request\RequestException;
 /**
  * CLI Request
  *
- * @package  Bluz\Cli
+ * <code>
+ *     $> php bin/cli.php --uri "/index/index/?foo=bar"
+ * </code>
  *
+ * @package  Bluz\Cli
  * @author   Anton Shevchuk
- * @created  06.07.11 16:59
  */
 class Request extends AbstractRequest
 {
     /**
      * Constructor
-     *
-     * @example $> php bin/cli.php --uri "/index/index/?foo=bar"
      */
     public function __construct()
     {
@@ -62,6 +62,7 @@ class Request extends AbstractRequest
 
     /**
      * Get the request URI
+     *
      * @return string
      */
     public function getRequestUri()
@@ -74,6 +75,7 @@ class Request extends AbstractRequest
 
     /**
      * Get the request URI
+     *
      * @return string
      */
     public function getCleanUri()
@@ -83,6 +85,7 @@ class Request extends AbstractRequest
 
     /**
      * Get the base URL
+     *
      * @return string
      */
     public function getBaseUrl()
@@ -95,6 +98,7 @@ class Request extends AbstractRequest
 
     /**
      * Get the client's IP address
+     *
      * @return string
      */
     public function getClientIp()
@@ -105,7 +109,7 @@ class Request extends AbstractRequest
     /**
      * Return false for CLI
      *
-     * @param string $header HTTP header name
+     * @param  string $header HTTP header name
      * @return false HTTP header not found
      */
     public function getHeader($header)
@@ -116,6 +120,7 @@ class Request extends AbstractRequest
 
     /**
      * Accept only CLI
+     *
      * @return string
      */
     public function getAccept()

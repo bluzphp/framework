@@ -44,13 +44,15 @@ class Update extends AbstractBuilder
      * a certain table
      *
      * Example
+     * <code>
      *     $ub = new UpdateBuilder();
      *     $ub
      *         ->update('users')
      *         ->set('password', md5('password'))
      *         ->where('id = ?');
+     * </code>
      *
-     * @param string $table The table whose rows are subject to the update
+     * @param  string $table the table whose rows are subject to the update
      * @return Update instance
      */
     public function update($table)

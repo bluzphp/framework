@@ -18,11 +18,13 @@ return
     /**
      * Set or generate <link> code for <head>
      *
-     * @var Layout $this
-     * @param array $link
+     * @param  array  $link
      * @return string|null
      */
     function (array $link = null) {
+        /**
+         * @var Layout $this
+         */
         // it's stack for <head>
         $links = Registry::get('layout:link') ? : [];
 

@@ -26,6 +26,7 @@ use Bluz\Common\Nil;
  *     }
  *
  * @package  Bluz\Proxy
+ * @author   Anton Shevchuk
  *
  * @method   static Instance getInstance()
  *
@@ -52,9 +53,6 @@ use Bluz\Common\Nil;
  *
  * @method   static bool deleteByTag($tag)
  * @see      Bluz\Cache\Cache::deleteByTag()
- *
- * @author   Anton Shevchuk
- * @created  26.09.2014 13:05
  */
 class Cache extends AbstractProxy
 {

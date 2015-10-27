@@ -20,6 +20,7 @@ use Bluz\Proxy\Router;
  * Grid
  *
  * @package  Bluz\Grid
+ * @author   Anton Shevchuk
  * @link     https://github.com/bluzphp/framework/wiki/Grid
  *
  * @method string filter($column, $filter, $value, $reset = true)
@@ -33,9 +34,6 @@ use Bluz\Proxy\Router;
  * @method string prev()
  * @method string reset()
  * @method string total()
- *
- * @author   Anton Shevchuk
- * @created  15.08.12 11:52
  */
 abstract class Grid
 {
@@ -57,100 +55,92 @@ abstract class Grid
     const FILTER_LE = 'le'; // less than .. or equal
 
     /**
-     * Instance of Source
-     * @var Source\AbstractSource
+     * @var Source\AbstractSource instance of Source
      */
     protected $adapter;
 
     /**
-     * Instance of Data
-     * @var Data
+     * @var Data instance of Data
      */
     protected $data;
 
     /**
-     * Unique identification of grid
-     * @var string
+     * @var string unique identification of grid
      */
     protected $uid;
 
     /**
-     * Unique prefix of grid
-     * @var string
+     * @var string unique prefix of grid
      */
     protected $prefix;
 
     /**
-     * Location of Grid
-     * @var string $module
+     * @var string location of Grid
      */
     protected $module;
 
     /**
-     * Location of Grid
-     * @var string $controller
+     * @var string location of Grid
      */
     protected $controller;
 
     /**
-     * Custom array params
-     * @var array
+     * @var array custom array params
      */
     protected $params = array();
 
     /**
-     * Start from 1!
-     * @var int
+     * @var integer start from first page
      */
     protected $page = 1;
 
     /**
-     * Limit per page
-     * @var int
+     * @var integer limit per page
      */
     protected $limit = 25;
 
     /**
-     * Default value of page limit
-     * @var int
+     * @var integer default value of page limit
+     * @see Grid::$limit
      */
     protected $defaultLimit = 25;
 
     /**
-     * Default order
-     * @var array
-     */
-    protected $defaultOrder;
-
-    /**
-     * Stack of orders
+     * List of orders
      *
      * Example
      *     'first' => 'ASC',
      *     'last' => 'ASC'
+     *
      * @var array
      */
     protected $orders = array();
 
     /**
-     * Stack of allow orders
-     * @var array
+     * @var array default order
+     * @see Grid::$orders
+     */
+    protected $defaultOrder;
+
+    /**
+     * @var array list of allow orders
+     * @see Grid::$orders
      */
     protected $allowOrders = array();
 
     /**
-     * Stack of filters
-     * @var array
+     * @var array list of filters
      */
     protected $filters = array();
 
     /**
-     * Stack of allow filters
+     * List of allow filters
      *
      * Example
      *     ['id', 'status' => ['active', 'disable']]
      *
      * @var array
+     * @see Grid::$filters
      */
     protected $allowFilters = array();
 
@@ -199,8 +189,8 @@ abstract class Grid
     /**
      * Get source adapter
      *
-     * @throws GridException
      * @return Source\AbstractSource
+     * @throws GridException
      */
     public function getAdapter()
     {
@@ -254,7 +244,7 @@ abstract class Grid
     /**
      * Set controller
      *
-     * @param string $controller
+     * @param  string $controller
      * @return void
      */
     public function setController($controller)
@@ -339,8 +329,8 @@ abstract class Grid
     /**
      * Process source
      *
-     * @throws GridException
      * @return self
+     * @throws GridException
      */
     public function processSource()
     {
@@ -388,7 +378,7 @@ abstract class Grid
     /**
      * Setup params
      *
-     * @param $params
+     * @param  $params
      * @return void
      */
     public function setParams($params)
@@ -399,7 +389,7 @@ abstract class Grid
     /**
      * Return params prepared for url builder
      *
-     * @param array $rewrite
+     * @param  array $rewrite
      * @return array
      */
     public function getParams(array $rewrite = [])
@@ -458,7 +448,7 @@ abstract class Grid
     /**
      * Get Url
      *
-     * @param array $params
+     * @param  array $params
      * @return string
      */
     public function getUrl($params)
@@ -477,7 +467,7 @@ abstract class Grid
     /**
      * Set allow orders
      *
-     * @param string[] $orders
+     * @param  string[] $orders
      * @return void
      */
     public function setAllowOrders(array $orders = [])
@@ -498,10 +488,10 @@ abstract class Grid
     /**
      * Add order rule
      *
-     * @param string $column
-     * @param string $order
-     * @throws GridException
+     * @param  string $column
+     * @param  string $order
      * @return void
+     * @throws GridException
      */
     public function addOrder($column, $order = Grid::ORDER_ASC)
     {
@@ -521,7 +511,7 @@ abstract class Grid
     /**
      * Add order rules
      *
-     * @param array $orders
+     * @param  array $orders
      * @return void
      */
     public function addOrders(array $orders)
@@ -534,8 +524,8 @@ abstract class Grid
     /**
      * Set order
      *
-     * @param string $column
-     * @param string $order ASC or DESC
+     * @param  string $column
+     * @param  string $order  ASC or DESC
      * @return void
      */
     public function setOrder($column, $order = Grid::ORDER_ASC)
@@ -547,7 +537,7 @@ abstract class Grid
     /**
      * Set orders
      *
-     * @param array $orders
+     * @param  array $orders
      * @return void
      */
     public function setOrders(array $orders)
@@ -580,7 +570,7 @@ abstract class Grid
     /**
      * Set allowed filters
      *
-     * @param string[] $filters
+     * @param  string[] $filters
      * @return void
      */
     public function setAllowFilters(array $filters = array())
@@ -601,7 +591,7 @@ abstract class Grid
     /**
      * Check filter
      *
-     * @param string $filter
+     * @param  string $filter
      * @return bool
      */
     public function checkFilter($filter)
@@ -624,11 +614,11 @@ abstract class Grid
     /**
      * Add filter
      *
-     * @param string $column
-     * @param string $filter
-     * @param string $value
-     * @throws GridException
+     * @param  string $column
+     * @param  string $filter
+     * @param  string $value
      * @return void
+     * @throws GridException
      */
     public function addFilter($column, $filter, $value)
     {
@@ -664,9 +654,9 @@ abstract class Grid
     /**
      * Set page
      *
-     * @param int $page
-     * @throws GridException
+     * @param  integer $page
      * @return void
+     * @throws GridException
      */
     public function setPage($page = 1)
     {
@@ -689,9 +679,9 @@ abstract class Grid
     /**
      * Set limit per page
      *
-     * @param int $limit
-     * @throws GridException
+     * @param  integer $limit
      * @return void
+     * @throws GridException
      */
     public function setLimit($limit)
     {
@@ -714,9 +704,9 @@ abstract class Grid
     /**
      * Set default limit
      *
-     * @param int $limit
-     * @throws GridException
+     * @param  integer $limit
      * @return void
+     * @throws GridException
      */
     public function setDefaultLimit($limit)
     {
@@ -741,10 +731,10 @@ abstract class Grid
     /**
      * Set default order
      *
-     * @param string $column
-     * @param string $order ASC or DESC
-     * @throws GridException
+     * @param  string $column
+     * @param  string $order ASC or DESC
      * @return void
+     * @throws GridException
      */
     public function setDefaultOrder($column, $order = Grid::ORDER_ASC)
     {

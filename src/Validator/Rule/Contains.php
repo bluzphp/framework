@@ -12,25 +12,27 @@
 namespace Bluz\Validator\Rule;
 
 /**
- * Class Contains
+ * Check for contains
+ *
  * @package Bluz\Validator\Rule
  */
 class Contains extends AbstractRule
 {
     /**
-     * @var string Needle for search inside input data (haystack)
+     * @var string needle for search inside input data (haystack)
      */
     protected $containsValue;
 
     /**
-     * @var bool Strong comparison
+     * @var bool strong comparison
      */
     protected $identical;
 
     /**
      * Setup validation rule
-     * @param $containsValue
-     * @param bool $identical
+     *
+     * @param mixed $containsValue
+     * @param bool  $identical
      */
     public function __construct($containsValue, $identical = false)
     {
@@ -40,7 +42,8 @@ class Contains extends AbstractRule
 
     /**
      * Check input data
-     * @param string|array $input
+     *
+     * @param  string|array $input
      * @return bool
      */
     public function validate($input)
@@ -60,6 +63,7 @@ class Contains extends AbstractRule
 
     /**
      * Get error template
+     *
      * @return string
      */
     public function getTemplate()

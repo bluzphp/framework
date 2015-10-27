@@ -17,13 +17,16 @@ use Bluz\Session\Session as Instance;
  * Proxy to Session
  *
  * Example of usage
+ * <code>
  *     use Bluz\Proxy\Session;
  *
  *     // lazy session loading
  *     Session::set('some key in session', 'value example');
  *     Session::get('some key in session');
+ * </code>
  *
  * @package  Bluz\Proxy
+ * @author   Anton Shevchuk
  *
  * @method   static Instance getInstance()
  *
@@ -47,9 +50,6 @@ use Bluz\Session\Session as Instance;
  * @see      Bluz\Session\Session::setSessionCookieLifetime()
  *
  * @method   static void  expireSessionCookie()
- *
- * @author   Anton Shevchuk
- * @created  29.09.2014 12:15
  */
 class Session extends AbstractProxy
 {

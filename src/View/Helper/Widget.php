@@ -20,15 +20,19 @@ return
      * Widget call
      *
      * Example of usage:
+     * <code>
      *     $this->widget($module, $controller, array $params);
+     * </code>
      *
-     * @var View $this
-     * @param string $module
-     * @param string $widget
-     * @param array $params
+     * @param  string $module
+     * @param  string $widget
+     * @param  array $params
      * @return void
      */
     function ($module, $widget, $params = array()) {
+        /**
+         * @var View $this
+         */
         try {
             $widgetClosure = Application::getInstance()->widget($module, $widget);
             $widgetClosure(...$params);

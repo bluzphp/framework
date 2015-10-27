@@ -18,10 +18,12 @@ use Bluz\Common\Nil;
  * Proxy to Http\CacheControl
  *
  * Example of usage
+ * <code>
  *     use Bluz\Proxy\HttpCacheControl;
- *
+ * </code>
  *
  * @package  Bluz\Proxy
+ * @author   Anton Shevchuk
  *
  * @method   static Instance getInstance()
  *
@@ -31,7 +33,7 @@ use Bluz\Common\Nil;
  * @method   static void setPublic()
  * @see      Bluz\Http\CacheControl::setPublic()
  *
- * @method   static int getMaxAge()
+ * @method   static integer getMaxAge()
  * @see      Bluz\Http\CacheControl::getMaxAge()
  *
  * @method   static void setMaxAge($value)
@@ -40,7 +42,7 @@ use Bluz\Common\Nil;
  * @method   static void setSharedMaxAge($value)
  * @see      Bluz\Http\CacheControl::getMaxAge()
  *
- * @method   static int getTtl()
+ * @method   static integer getTtl()
  * @see      Bluz\Http\CacheControl::getTtl()
  *
  * @method   static void setTtl($seconds)
@@ -55,7 +57,7 @@ use Bluz\Common\Nil;
  * @method   static void setEtag($etag, $weak = false)
  * @see      Bluz\Http\CacheControl::setEtag()
  *
- * @method   static int getAge()
+ * @method   static integer getAge()
  * @see      Bluz\Http\CacheControl::getAge()
  *
  * @method   static void setAge($age)
@@ -72,9 +74,6 @@ use Bluz\Common\Nil;
  *
  * @method   static void setLastModified($date)
  * @see      Bluz\Http\CacheControl::setLastModified()
- *
- * @author   Anton Shevchuk
- * @created  06.11.2014 13:21
  */
 class HttpCacheControl extends AbstractProxy
 {

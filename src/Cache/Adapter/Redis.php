@@ -17,20 +17,20 @@ use Bluz\Common\Exception\ConfigurationException;
 
 /**
  * Redis cache adapter
+ *
  * @package Bluz\Cache\Adapter
  * @author  The-Who
+ * @see     \Redis
  */
 class Redis extends AbstractAdapter
 {
     /**
-     * Instance of Redis
-     * @var \Redis
+     * @var \Redis instance
      */
     protected $handler = null;
 
     /**
-     * Default Redis settings
-     * @var array
+     * @var array default settings
      */
     protected $settings = array(
         'host' => '127.0.0.1',
@@ -45,7 +45,7 @@ class Redis extends AbstractAdapter
     /**
      * Check and setup Redis server
      *
-     * @param array $settings
+     * @param  array $settings
      * @throws ComponentException
      * @throws ConfigurationException
      */
@@ -96,7 +96,7 @@ class Redis extends AbstractAdapter
     /**
      * {@inheritdoc}
      *
-     * @param string $id
+     * @param  string $id
      * @return bool|mixed|string
      */
     protected function doGet($id)
@@ -107,9 +107,9 @@ class Redis extends AbstractAdapter
     /**
      * {@inheritdoc}
      *
-     * @param string $id
-     * @param mixed $data
-     * @param int $ttl
+     * @param  string  $id
+     * @param  mixed   $data
+     * @param  integer $ttl
      * @return bool
      */
     protected function doAdd($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
@@ -123,9 +123,9 @@ class Redis extends AbstractAdapter
     /**
      * {@inheritdoc}
      *
-     * @param string $id
-     * @param mixed $data
-     * @param int $ttl
+     * @param  string  $id
+     * @param  mixed   $data
+     * @param  integer $ttl
      * @return bool
      */
     protected function doSet($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
@@ -140,7 +140,7 @@ class Redis extends AbstractAdapter
     /**
      * {@inheritdoc}
      *
-     * @param string $id
+     * @param  string $id
      * @return bool
      */
     protected function doContains($id)
@@ -151,8 +151,8 @@ class Redis extends AbstractAdapter
     /**
      * {@inheritdoc}
      *
-     * @param string $id
-     * @return int Number of keys deleted.
+     * @param  string $id
+     * @return integer Number of keys deleted.
      */
     protected function doDelete($id)
     {

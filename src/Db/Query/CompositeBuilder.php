@@ -13,6 +13,7 @@ namespace Bluz\Db\Query;
 
 /**
  * Class Expression Builder
+ *
  * @package Bluz\Db\Query
  */
 class CompositeBuilder implements \Countable
@@ -23,15 +24,15 @@ class CompositeBuilder implements \Countable
     private $type;
 
     /**
-     * @var array Parts of the composite expression
+     * @var array parts of the composite expression
      */
     private $parts = array();
 
     /**
      * Constructor
      *
-     * @param array $parts Parts of the composite expression
-     * @param string $type AND|OR
+     * @param array  $parts parts of the composite expression
+     * @param string $type  AND|OR
      */
     public function __construct(array $parts = array(), $type = 'AND')
     {
@@ -42,7 +43,7 @@ class CompositeBuilder implements \Countable
     /**
      * Adds an expression to composite expression.
      *
-     * @param mixed $parts
+     * @param  mixed $parts
      * @return CompositeBuilder
      */
     public function add($parts)

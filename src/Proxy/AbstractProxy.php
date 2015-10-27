@@ -17,25 +17,21 @@ use Bluz\Common\Exception\ComponentException;
  * Abstract Proxy
  *
  * @package  Bluz\Proxy
- * @link     https://github.com/bluzphp/framework/wiki/Proxy
- *
  * @author   Anton Shevchuk
- * @created  26.09.2014 10:51
+ * @link     https://github.com/bluzphp/framework/wiki/Proxy
  */
 abstract class AbstractProxy
 {
     /**
-     * @var array Instances of classes
+     * @var array instances of classes
      */
     protected static $instances = array();
 
     /**
      * Init class instance
      *
-     * @abstract
-     * @internal
-     * @throws ComponentException
      * @return mixed
+     * @throws ComponentException
      */
     protected static function initInstance()
     {
@@ -47,8 +43,8 @@ abstract class AbstractProxy
     /**
      * Get class instance
      *
-     * @throws ComponentException
      * @return mixed
+     * @throws ComponentException
      */
     public static function getInstance()
     {
@@ -77,9 +73,8 @@ abstract class AbstractProxy
     /**
      * Handle dynamic, static calls to the object.
      *
-     * @internal
      * @param  string $method
-     * @param  array $args
+     * @param  array  $args
      * @return mixed
      */
     public static function __callStatic($method, $args)

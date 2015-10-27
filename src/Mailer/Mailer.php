@@ -20,10 +20,8 @@ use Bluz\Proxy\Translator;
  * Wrapper over PHPMailer
  *
  * @package  Bluz\Mailer
- * @link     https://github.com/bluzphp/framework/wiki/Mailer
- *
  * @author   Pavel Machekhin
- * @created  27.12.12 16:25
+ * @link     https://github.com/bluzphp/framework/wiki/Mailer
  */
 class Mailer
 {
@@ -31,6 +29,7 @@ class Mailer
 
     /**
      * Check Mailer configuration
+     *
      * @throws ConfigurationException
      * @return void
      */
@@ -47,7 +46,7 @@ class Mailer
 
     /**
      * Creates new instance of PHPMailer and set default options from config
-     * @api
+     *
      * @throws ComponentException
      * @throws \phpmailerException
      * @return \PHPMailer
@@ -91,11 +90,12 @@ class Mailer
 
     /**
      * Send email
-     * @api
-     * @param \PHPMailer $mail
+     *
+     * @todo Add mail to queue
+     *
+     * @param  \PHPMailer $mail
      * @return bool
      * @throws MailerException
-     * @todo Add mail to queue
      */
     public function send(\PHPMailer $mail)
     {

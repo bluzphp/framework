@@ -16,7 +16,6 @@ namespace Bluz\Common\Exception;
  *
  * @package  Bluz\Common\Exception
  * @author   Anton Shevchuk
- * @created  26.09.14 11:22
  */
 class ConfigurationException extends ComponentException
 {

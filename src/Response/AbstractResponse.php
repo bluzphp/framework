@@ -16,13 +16,11 @@ use Bluz\Response\Presentation\AbstractPresentation;
 use Bluz\View\View;
 
 /**
- * AbstractResponse
+ * Abstract Response
  *
  * @package  Bluz\Response
- * @link     https://github.com/bluzphp/framework/wiki/Response
- *
  * @author   Anton Shevchuk
- * @created  18.02.14 11:11
+ * @link     https://github.com/bluzphp/framework/wiki/Response
  */
 abstract class AbstractResponse
 {
@@ -34,7 +32,7 @@ abstract class AbstractResponse
     protected $protocol = '1.1';
 
     /**
-     * @var int Response code equal to HTTP status codes
+     * @var integer response code equal to HTTP status codes
      */
     protected $code = 200;
 
@@ -44,45 +42,47 @@ abstract class AbstractResponse
     protected $phrase;
 
     /**
-     * @var array Stack of headers
+     * @var array list of headers
      */
     protected $headers = array();
 
     /**
-     * @var array Stack of cookies
+     * @var array list of cookies
      */
     protected $cookies = array();
 
     /**
-     * @var mixed Result can be View|object|function
+     * @var mixed result can be View|object|function
      */
     protected $body;
 
     /**
-     * @var \Exception Catches exception
+     * @var \Exception catches exception
      */
     protected $exception;
 
     /**
-     * @var string|AbstractPresentation Support JSON, JSONP, XML, CLI
+     * @var string|AbstractPresentation support JSON, JSONP, XML, CLI
      */
     protected $presentation;
 
     /**
      * Send messages to client
+     *
      * @return mixed
      */
     abstract protected function sendHeaders();
 
     /**
      * Send messages to client
+     *
      * @return mixed
      */
     abstract protected function sendBody();
 
     /**
      * Send data to client (console or browser)
-     * @access  public
+     *
      * @return void
      */
     public function send()
@@ -101,7 +101,7 @@ abstract class AbstractResponse
     }
 
     /**
-     * Gets the HTTP protocol version as a string.
+     * Gets the HTTP protocol version as a string
      *
      * The string MUST contain only the HTTP version number (e.g., "1.1", "1.0").
      *
@@ -113,12 +113,12 @@ abstract class AbstractResponse
     }
 
     /**
-     * Gets the response Status-Code.
+     * Gets the response Status-Code
      *
      * The Status-Code is a 3-digit integer result code of the server's attempt
      * to understand and satisfy the request.
      *
-     * @return int Status code.
+     * @return integer status code.
      */
     public function getStatusCode()
     {
@@ -126,8 +126,9 @@ abstract class AbstractResponse
     }
 
     /**
-     * Sets the status code of this response.
-     * @param int $code The 3-digit integer result code to set.
+     * Sets the status code of this response
+     *
+     * @param  integer $code the 3-digit integer result code to set.
      * @return void
      */
     public function setStatusCode($code)
@@ -136,14 +137,14 @@ abstract class AbstractResponse
     }
 
     /**
-     * Gets the response Reason-Phrase, a short textual description of the Status-Code.
+     * Gets the response Reason-Phrase, a short textual description of the Status-Code
      *
      * Because a Reason-Phrase is not a required element in response
      * Status-Line, the Reason-Phrase value MAY be null. Implementations MAY
      * choose to return the default RFC 2616 recommended reason phrase for the
      * response's Status-Code.
      *
-     * @return string|null Reason phrase, or null if unknown.
+     * @return string|null reason phrase, or null if unknown.
      */
     public function getReasonPhrase()
     {
@@ -151,12 +152,12 @@ abstract class AbstractResponse
     }
 
     /**
-     * Sets the Reason-Phrase of the response.
+     * Sets the Reason-Phrase of the response
      *
      * If no Reason-Phrase is specified, implementations MAY choose to default
      * to the RFC 2616 recommended reason phrase for the response's Status-Code.
      *
-     * @param string $phrase The Reason-Phrase to set.
+     * @param string $phrase the Reason-Phrase to set.
      */
     public function setReasonPhrase($phrase)
     {
@@ -164,13 +165,13 @@ abstract class AbstractResponse
     }
 
     /**
-     * Retrieve a header by the given case-insensitive name as a string.
+     * Retrieve a header by the given case-insensitive name as a string
      *
      * This method returns all of the header values of the given
      * case-insensitive header name as a string concatenated together using
      * a comma.
      *
-     * @param string $header Case-insensitive header name.
+     * @param  string $header case-insensitive header name.
      * @return string
      */
     public function getHeader($header)
@@ -185,7 +186,7 @@ abstract class AbstractResponse
     /**
      * Retrieves a header by the given case-insensitive name as an array of strings
      *
-     * @param string $header Case-insensitive header name.
+     * @param  string $header Case-insensitive header name.
      * @return string[]
      */
     public function getHeaderAsArray($header)
@@ -198,12 +199,12 @@ abstract class AbstractResponse
     }
 
     /**
-     * Checks if a header exists by the given case-insensitive name.
+     * Checks if a header exists by the given case-insensitive name
      *
-     * @param string $header Case-insensitive header name.
-     * @return bool Returns true if any header names match the given header
-     *     name using a case-insensitive string comparison. Returns false if
-     *     no matching header name is found in the message.
+     * @param  string $header case-insensitive header name.
+     * @return bool returns true if any header names match the given header
+     *              name using a case-insensitive string comparison. Returns false if
+     *              no matching header name is found in the message.
      */
     public function hasHeader($header)
     {
@@ -212,13 +213,13 @@ abstract class AbstractResponse
 
     /**
      * Sets a header, replacing any existing values of any headers with the
-     * same case-insensitive name.
+     * same case-insensitive name
      *
      * The header name is case-insensitive. The header values MUST be a string
      * or an array of strings.
      *
-     * @param string $header Header name
-     * @param string|string[] $value  Header value(s)
+     * @param  string          $header header name
+     * @param  string|string[] $value  header value(s)
      * @return void
      */
     public function setHeader($header, $value)
@@ -227,13 +228,13 @@ abstract class AbstractResponse
     }
 
     /**
-     * Appends a header value for the specified header.
+     * Appends a header value for the specified header
      *
      * Existing values for the specified header will be maintained. The new
      * value will be appended to the existing list.
      *
-     * @param string $header Header name to add
-     * @param string $value  Value of the header
+     * @param  string $header header name to add
+     * @param  string $value  value of the header
      * @return void
      */
     public function addHeader($header, $value)
@@ -248,7 +249,7 @@ abstract class AbstractResponse
     /**
      * Remove a specific header by case-insensitive name.
      *
-     * @param string $header HTTP header to remove
+     * @param  string $header HTTP header to remove
      * @return void
      */
     public function removeHeader($header)
@@ -257,7 +258,7 @@ abstract class AbstractResponse
     }
 
     /**
-     * Gets all message headers.
+     * Gets all message headers
      *
      * The keys represent the header name as it will be sent over the wire, and
      * each value is an array of strings associated with the header.
@@ -267,7 +268,7 @@ abstract class AbstractResponse
      *         echo $name . ": " . implode(", ", $values);
      *     }
      *
-     * @return array Returns an associative array of the message's headers.
+     * @return array returns an associative array of the message's headers.
      */
     public function getHeaders()
     {
@@ -275,12 +276,12 @@ abstract class AbstractResponse
     }
 
     /**
-     * Sets headers, replacing any headers that have already been set on the message.
+     * Sets headers, replacing any headers that have already been set on the message
      *
      * The array keys MUST be a string. The array values must be either a
      * string or an array of strings.
      *
-     * @param array $headers Headers to set.
+     * @param  array $headers Headers to set.
      * @return void
      */
     public function setHeaders(array $headers)
@@ -297,7 +298,7 @@ abstract class AbstractResponse
      * name, or, if a header does not already exist by the given name, then the
      * header is added.
      *
-     * @param array $headers Associative array of headers to add to the message
+     * @param  array $headers Associative array of headers to add to the message
      * @return void
      */
     public function addHeaders(array $headers)
@@ -307,6 +308,7 @@ abstract class AbstractResponse
 
     /**
      * Remove all headers
+     *
      * @return void
      */
     public function removeHeaders()
@@ -316,7 +318,8 @@ abstract class AbstractResponse
 
     /**
      * Set response body
-     * @param mixed $body
+     *
+     * @param  mixed $body
      * @return void
      */
     public function setBody($body)
@@ -326,6 +329,7 @@ abstract class AbstractResponse
 
     /**
      * Get response body
+     *
      * @return View
      */
     public function getBody()
@@ -335,6 +339,7 @@ abstract class AbstractResponse
 
     /**
      * Clear response body
+     *
      * @return void
      */
     public function clearBody()
@@ -345,13 +350,13 @@ abstract class AbstractResponse
     /**
      * Set Cookie
      *
-     * @param string $name
-     * @param string $value
-     * @param int|string|\DateTime $expire
-     * @param string $path
-     * @param string $domain
-     * @param bool $secure
-     * @param bool $httpOnly
+     * @param  string               $name
+     * @param  string               $value
+     * @param  int|string|\DateTime $expire
+     * @param  string               $path
+     * @param  string               $domain
+     * @param  bool                 $secure
+     * @param  bool                 $httpOnly
      * @return void
      */
     public function setCookie(
@@ -396,7 +401,7 @@ abstract class AbstractResponse
     /**
      * Get Cookie by name
      *
-     * @param string $name
+     * @param  string $name
      * @return array|null
      */
     public function getCookie($name)
@@ -406,7 +411,8 @@ abstract class AbstractResponse
 
     /**
      * Set Exception
-     * @param \Exception $exception
+     *
+     * @param  \Exception $exception
      * @return void
      */
     public function setException($exception)
@@ -418,6 +424,7 @@ abstract class AbstractResponse
 
     /**
      * Get Exception
+     *
      * @return \Exception
      */
     public function getException()
@@ -427,7 +434,8 @@ abstract class AbstractResponse
 
     /**
      * Set Presentation
-     * @param string $presentation
+     *
+     * @param  string $presentation
      * @return void
      */
     public function setPresentation($presentation)
@@ -437,6 +445,7 @@ abstract class AbstractResponse
 
     /**
      * Get Presentation
+     *
      * @return string
      */
     public function getPresentation()

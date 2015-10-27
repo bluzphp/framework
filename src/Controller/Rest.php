@@ -23,30 +23,28 @@ use Bluz\Validator\Exception\ValidatorException;
  * Controller
  *
  * @package  Bluz\Controller
- * @link     https://github.com/bluzphp/framework/wiki/Controller-Rest
- *
  * @author   Anton Shevchuk
- * @created  27.09.13 15:32
+ * @link     https://github.com/bluzphp/framework/wiki/Controller-Rest
  */
 class Rest extends AbstractController
 {
     /**
-     * @var string Relation list
+     * @var string relation list
      */
     protected $relation;
 
     /**
-     * @var string Relation Id
+     * @var string relation Id
      */
     protected $relationId;
 
     /**
-     * @var array Params of query
+     * @var array params of query
      */
     protected $params = array();
 
     /**
-     * @var array Query data
+     * @var array query data
      */
     protected $data = array();
 
@@ -103,10 +101,10 @@ class Rest extends AbstractController
      *    DELETE /module/rest/id -> 204 // item was deleted
      *                           -> 404 // not found
      *
+     * @return mixed
      * @throws NotImplementedException
      * @throws NotFoundException
      * @throws BadRequestException
-     * @return mixed
      */
     public function __invoke()
     {
@@ -135,6 +133,7 @@ class Rest extends AbstractController
 
     /**
      * Method HEAD and GET
+     *
      * @return mixed
      */
     public function methodGet()
@@ -159,9 +158,10 @@ class Rest extends AbstractController
 
     /**
      * Method POST
+     *
+     * @return array|false
      * @throws BadRequestException
      * @throws NotImplementedException
-     * @return array|false
      */
     public function methodPost()
     {
@@ -196,8 +196,9 @@ class Rest extends AbstractController
 
     /**
      * Method PUT
-     * @throws BadRequestException
+     *
      * @return array|false
+     * @throws BadRequestException
      */
     public function methodPut()
     {
@@ -228,8 +229,9 @@ class Rest extends AbstractController
 
     /**
      * Method DELETE
-     * @throws BadRequestException
+     *
      * @return false
+     * @throws BadRequestException
      */
     public function methodDelete()
     {
@@ -252,6 +254,7 @@ class Rest extends AbstractController
 
     /**
      * Method OPTIONS
+     *
      * @return false
      */
     public function methodOptions()
@@ -263,7 +266,8 @@ class Rest extends AbstractController
 
     /**
      * Get allowed methods by CRUD
-     * @param bool $primary
+     *
+     * @param  bool $primary
      * @return array
      */
     protected function getMethods($primary = false)

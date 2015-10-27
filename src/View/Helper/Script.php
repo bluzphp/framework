@@ -17,11 +17,13 @@ return
     /**
      *  Generate HTML for <script> element
      *
-     * @var View $this
-     * @param string $script
+     * @param  string $script
      * @return string
      */
     function ($script) {
+        /**
+         * @var View $this
+         */
         if ('.js' == substr($script, -3)) {
             if (strpos($script, 'http://') !== 0
                 && strpos($script, 'https://') !== 0

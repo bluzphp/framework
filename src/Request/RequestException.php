@@ -17,9 +17,7 @@ use Bluz\Common\Exception\CommonException;
  * RequestException
  *
  * @package  Bluz\Request
- *
  * @author   Anton Shevchuk
- * @created  11.02.13 11:26
  */
 class RequestException extends CommonException
 {

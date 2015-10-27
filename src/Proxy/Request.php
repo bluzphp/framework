@@ -19,11 +19,14 @@ use Bluz\Request\AbstractRequest as Instance;
  * Proxy to Request
  *
  * Example of usage
+ * <code>
  *     use Bluz\Proxy\Request;
  *
  *     Request::getParam('foo');
+ * </code>
  *
  * @package  Bluz\Proxy
+ * @author   Anton Shevchuk
  *
  * @method   static Instance getInstance()
  *
@@ -115,9 +118,6 @@ use Bluz\Request\AbstractRequest as Instance;
  * @see      Bluz\Http\Request::isXmlHttpRequest()
  * @method   static bool isFlashRequest()
  * @see      Bluz\Http\Request::isFlashRequest()
- *
- * @author   Anton Shevchuk
- * @created  29.09.2014 12:15
  */
 class Request extends AbstractProxy
 {

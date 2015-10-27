@@ -22,13 +22,15 @@ return
      * Example of usage:
      *     $this->dispatch($module, $controller, array $params);
      *
-     * @var View $this
-     * @param string $module
-     * @param string $controller
-     * @param array $params
+     * @param  string $module
+     * @param  string $controller
+     * @param  array $params
      * @return View|string|null
      */
     function ($module, $controller, $params = array()) {
+        /**
+         * @var View $this
+         */
         try {
             $view = Application::getInstance()->dispatch($module, $controller, $params);
         } catch (ForbiddenException $e) {

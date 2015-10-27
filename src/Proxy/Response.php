@@ -19,12 +19,15 @@ use Bluz\View\View;
  * Proxy to Response
  *
  * Example of usage
+ * <code>
  *     use Bluz\Proxy\Response;
  *
  *     Response::setStatusCode(304);
  *     Response::setHeader('Location', '/index/index');
+ * </code>
  *
  * @package  Bluz\Proxy
+ * @author   Anton Shevchuk
  *
  * @method   static Instance getInstance()
  *
@@ -88,9 +91,6 @@ use Bluz\View\View;
  * @see      Bluz\Response\AbstractResponse::setPresentation()
  * @method   static \Exception getPresentation()
  * @see      Bluz\Response\AbstractResponse::getPresentation()
- *
- * @author   Anton Shevchuk
- * @created  29.09.2014 12:15
  */
 class Response extends AbstractProxy
 {

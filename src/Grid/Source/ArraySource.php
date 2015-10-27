@@ -17,18 +17,16 @@ use Bluz\Grid;
  * Array Source Adapter for Grid package
  *
  * @package  Bluz\Grid
- *
  * @author   Anton Shevchuk
- * @created  27.08.12 10:11
  */
 class ArraySource extends AbstractSource
 {
     /**
-     * setSource
+     * Set array source
      *
-     * @param array $source
-     * @throws Grid\GridException
+     * @param  array $source
      * @return self
+     * @throws Grid\GridException
      */
     public function setSource($source)
     {
@@ -41,9 +39,9 @@ class ArraySource extends AbstractSource
     }
 
     /**
-     * process
+     * Process
      *
-     * @param array $settings
+     * @param  array $settings
      * @return \Bluz\Grid\Data
      */
     public function process(array $settings = [])

@@ -12,18 +12,20 @@
 namespace Bluz\Validator\Rule;
 
 /**
- * Class CountryCode
+ * Check for country code
+ *
  * @package Bluz\Validator\Rule
+ * @link    https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
  */
 class CountryCode extends AbstractRule
 {
     /**
-     * @var string Error template
+     * @var string error template
      */
     protected $template = '{{name}} must be a valid country code';
 
     /**
-     * @var array Stack of valid country codes
+     * @var array list of valid country codes
      */
     protected $countryCodeList = array(
         'AD', 'AE', 'AF', 'AG', 'AI', 'AL', 'AM', 'AO', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AW',
@@ -48,7 +50,8 @@ class CountryCode extends AbstractRule
 
     /**
      * Check for country code
-     * @param string $input
+     *
+     * @param  string $input
      * @return bool
      */
     public function validate($input)

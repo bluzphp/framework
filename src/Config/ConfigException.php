@@ -17,9 +17,7 @@ use Bluz\Common\Exception\CommonException;
  * Config Exception
  *
  * @package  Bluz\Config
- *
  * @author   Anton Shevchuk
- * @created  06.03.12 15:57
  */
 class ConfigException extends CommonException
 {

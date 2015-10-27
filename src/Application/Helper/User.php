@@ -17,7 +17,7 @@ use Bluz\Proxy\Auth;
 return
     /**
      * Get current user
-     * @var Application $this
+     *
      * @return \Bluz\Auth\AbstractRowEntity|null
      */
     function () {

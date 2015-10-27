@@ -17,9 +17,7 @@ use Bluz\Validator\Exception\ValidatorException;
  * Validator Builder
  *
  * @package  Bluz\Validator
- *
  * @author   Anton Shevchuk
- * @created  03.06.2014 10:58
  */
 class ValidatorBuilder
 {
@@ -34,13 +32,13 @@ class ValidatorBuilder
     protected $validators = array();
 
     /**
-     * @var array Stack of validation errors
+     * @var array list of validation errors
      */
     protected $errors = array();
 
     /**
      * Add validator to builder
-     * @param string $name
+     * @param string    $name
      * @param Validator ...$validators
      * @return ValidatorBuilder
      */
@@ -56,7 +54,8 @@ class ValidatorBuilder
 
     /**
      * Validate chain of rules
-     * @param array|object $input
+     *
+     * @param  array|object $input
      * @return bool
      */
     public function validate($input)
@@ -74,8 +73,9 @@ class ValidatorBuilder
 
     /**
      * Validate chain of rules for single item
-     * @param string $key
-     * @param array|object $input
+     *
+     * @param  string $key
+     * @param  array|object $input
      * @return bool
      */
     public function validateItem($key, $input)
@@ -135,9 +135,10 @@ class ValidatorBuilder
 
     /**
      * Assert
-     * @param mixed $input
-     * @throws ValidatorException
+     *
+     * @param  mixed $input
      * @return bool
+     * @throws ValidatorException
      */
     public function assert($input)
     {
@@ -151,6 +152,7 @@ class ValidatorBuilder
 
     /**
      * Get errors
+     *
      * @return array
      */
     public function getErrors()

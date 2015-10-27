@@ -12,14 +12,16 @@
 namespace Bluz\Validator\Rule;
 
 /**
- * Class AlphaNumeric
+ * Check for alphabetic character(s)
+ *
  * @package Bluz\Validator\Rule
  */
 class Alpha extends AbstractCtypeRule
 {
     /**
      * Check for alphabetic character(s)
-     * @param string $input
+     *
+     * @param  string $input
      * @return bool
      */
     protected function validateClean($input)
@@ -29,6 +31,7 @@ class Alpha extends AbstractCtypeRule
 
     /**
      * Get error template
+     *
      * @return string
      */
     public function getTemplate()

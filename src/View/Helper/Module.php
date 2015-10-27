@@ -19,8 +19,7 @@ return
      * Return module name
      * or check to current module
      *
-     * @var View $this
-     * @param string $module
+     * @param  string $module
      * @return string|bool
      */
     function ($module = null) {

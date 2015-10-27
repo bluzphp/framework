@@ -19,8 +19,7 @@ return
      * Return controller name
      * or check to current controller
      *
-     * @var View $this
-     * @param string $controller
+     * @param  string $controller
      * @return string|bool
      */
     function ($controller = null) {

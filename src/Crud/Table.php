@@ -20,21 +20,20 @@ use Bluz\Db\Row;
  * Crud Table
  *
  * @package  Bluz\Crud
- * @link     https://github.com/bluzphp/framework/wiki/Crud-Table
- *
  * @author   AntonShevchuk
- * @created  15.08.12 15:37
+ * @link     https://github.com/bluzphp/framework/wiki/Crud-Table
  */
 class Table extends AbstractCrud
 {
     /**
-     * @var \Bluz\Db\Table Instance of Db\Table
+     * @var \Bluz\Db\Table instance of Db\Table
      */
     protected $table;
 
     /**
      * Setup Table instance
-     * @param Db\Table $table
+     *
+     * @param  Db\Table $table
      * @return self
      */
     public function setTable(Db\Table $table)
@@ -45,8 +44,9 @@ class Table extends AbstractCrud
 
     /**
      * Return table instance for manipulation
-     * @throws ApplicationException
+     *
      * @return Db\Table
+     * @throws ApplicationException
      */
     public function getTable()
     {
@@ -71,6 +71,7 @@ class Table extends AbstractCrud
 
     /**
      * Get primary key
+     *
      * @return array
      */
     public function getPrimaryKey()
@@ -79,14 +80,11 @@ class Table extends AbstractCrud
     }
 
     /**
-     * CRUD methods here
-     */
-
-    /**
      * Get record from Db or create new
-     * @param mixed $primary
-     * @throws NotFoundException
+     *
+     * @param  mixed $primary
      * @return Row
+     * @throws NotFoundException
      */
     public function readOne($primary)
     {
@@ -104,7 +102,8 @@ class Table extends AbstractCrud
 
     /**
      * Create item
-     * @param array $data
+     *
+     * @param  array $data
      * @return integer
      */
     public function createOne($data)
@@ -116,10 +115,11 @@ class Table extends AbstractCrud
 
     /**
      * Update item
-     * @param mixed $primary
-     * @param array $data
-     * @throws NotFoundException
+     *
+     * @param  mixed $primary
+     * @param  array $data
      * @return integer
+     * @throws NotFoundException
      */
     public function updateOne($primary, $data)
     {
@@ -135,9 +135,10 @@ class Table extends AbstractCrud
 
     /**
      * Delete item
-     * @param mixed $primary
-     * @throws NotFoundException
+     *
+     * @param  mixed $primary
      * @return integer
+     * @throws NotFoundException
      */
     public function deleteOne($primary)
     {

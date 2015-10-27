@@ -17,43 +17,10 @@ use Bluz\Request\RequestException;
  * HttpFileUpload
  *
  * @package  Bluz\Request
- *
  * @author   Anton Shevchuk
- * @created  07.02.13 13:20
  */
 class FileUpload
 {
-    /**
-     * @var array of Files
-     */
-    protected $files = array();
-
-    /**
-     * __construct
-     *
-     * @param array $array The array of $_FILES
-     * @throws RequestException
-     */
-    public function __construct($array = null)
-    {
-        // check max file size error
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($_POST) &&
-            empty($_FILES) && $_SERVER['CONTENT_LENGTH'] > 0 ) {
-            $displayMaxSize = ini_get('post_max_size');
-
-            $error = 'Posted file is too large. '. $_SERVER["CONTENT_LENGTH"].
-                ' bytes exceeds the maximum size of '. $displayMaxSize;
-            // mute error message by user notice
-            @trigger_error($error, E_USER_NOTICE);
-            throw new RequestException($error);
-        }
-
-        $rawFiles = $array ? : $_FILES;
-        foreach ($rawFiles as $key => $file) {
-            $this->processFileArray($key, $file);
-        }
-    }
-
     /*
         name=data
         data
@@ -86,10 +53,41 @@ class FileUpload
     */
 
     /**
+     * @var array list of Files
+     */
+    protected $files = array();
+
+    /**
+     * Constructor
+     *
+     * @param  array $array The array of $_FILES
+     * @throws RequestException
+     */
+    public function __construct($array = null)
+    {
+        // check max file size error
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($_POST) &&
+            empty($_FILES) && $_SERVER['CONTENT_LENGTH'] > 0 ) {
+            $displayMaxSize = ini_get('post_max_size');
+
+            $error = 'Posted file is too large. '. $_SERVER["CONTENT_LENGTH"].
+                ' bytes exceeds the maximum size of '. $displayMaxSize;
+            // mute error message by user notice
+            @trigger_error($error, E_USER_NOTICE);
+            throw new RequestException($error);
+        }
+
+        $rawFiles = $array ? : $_FILES;
+        foreach ($rawFiles as $key => $file) {
+            $this->processFileArray($key, $file);
+        }
+    }
+
+    /**
      * Process file information from array
      *
-     * @param $key
-     * @param $fileInfo
+     * @param  string $key
+     * @param  array  $fileInfo
      * @return array
      */
     protected function processFileArray($key, $fileInfo)
@@ -115,10 +113,9 @@ class FileUpload
     /**
      * Create File
      *
-     * @param array $fileInfo
-     * @param string $fileKey
+     * @param array    $fileInfo
+     * @param string   $fileKey
      * @param string[] $keys
-     *
      * @return File instance
      */
     public function createFile($fileInfo, $fileKey, ...$keys)
@@ -147,9 +144,8 @@ class FileUpload
     /**
      * Parse array
      *
-     * @param array|string $paramArr
-     * @param string[] $argList
-     *
+     * @param  array|string $paramArr
+     * @param  string[]     $argList
      * @return string|array
      */
     public function parseArray($paramArr, $argList)
@@ -168,9 +164,9 @@ class FileUpload
     }
 
     /**
-     * getFile
+     * Get file
      *
-     * @param string $name
+     * @param  string $name
      * @return File
      */
     public function getFile($name)
@@ -183,9 +179,9 @@ class FileUpload
     }
 
     /**
-     * getFiles
+     * Get files
      *
-     * @param string $name
+     * @param  string $name
      * @return array
      */
     public function getFiles($name)

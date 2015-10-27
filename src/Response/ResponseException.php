@@ -17,9 +17,7 @@ use Bluz\Common\Exception\CommonException;
  * ResponseException
  *
  * @package  Bluz\Response
- *
  * @author   Anton Shevchuk
- * @created  28.02.14 10:50
  */
 class ResponseException extends CommonException
 {

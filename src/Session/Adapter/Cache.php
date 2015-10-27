@@ -17,13 +17,15 @@ use Bluz\Proxy;
 
 /**
  * Cache session handler
+ *
  * @package Bluz\Session\Adapter
  */
 class Cache extends AbstractAdapter implements \SessionHandlerInterface
 {
     /**
      * Check and setup Redis server
-     * @param array $settings
+     *
+     * @param  array $settings
      * @throws ConfigurationException
      */
     public function __construct($settings = array())
@@ -39,7 +41,8 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
 
     /**
      * Read session data
-     * @param string $id
+     *
+     * @param  string $id
      * @return bool|string
      */
     public function read($id)
@@ -49,8 +52,9 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
 
     /**
      * Write session data
-     * @param string $id
-     * @param string $data
+     *
+     * @param  string $id
+     * @param  string $data
      * @return bool|void
      */
     public function write($id, $data)
@@ -60,7 +64,8 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
 
     /**
      * Destroy a session
-     * @param int $id
+     *
+     * @param  integer $id
      * @return bool|void
      */
     public function destroy($id)

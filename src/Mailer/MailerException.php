@@ -17,9 +17,7 @@ use Bluz\Common\Exception\CommonException;
  * Exception
  *
  * @package  Bluz\Mailer
- *
  * @author   Pavel Machekhin
- * @created  27.12.12 16:24
  */
 class MailerException extends CommonException
 {

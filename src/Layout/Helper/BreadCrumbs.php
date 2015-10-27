@@ -18,8 +18,7 @@ return
     /**
      * Set or Get Breadcrumbs
      *
-     * @var Layout $this
-     * @param array $data
+     * @param  array  $data
      * @return array|null
      */
     function (array $data = []) {

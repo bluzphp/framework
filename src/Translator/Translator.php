@@ -18,10 +18,8 @@ use Bluz\Common\Options;
  * Translator based on gettext library
  *
  * @package  Bluz\Translator
- * @link     https://github.com/bluzphp/framework/wiki/Translator
- *
  * @author   Anton Shevchuk
- * @created  23.04.13 16:37
+ * @link     https://github.com/bluzphp/framework/wiki/Translator
  */
 class Translator
 {
@@ -29,27 +27,26 @@ class Translator
 
     /**
      * Locale
-     * @link http://www.loc.gov/standards/iso639-2/php/code_list.php
+     *
      * @var string
+     * @link http://www.loc.gov/standards/iso639-2/php/code_list.php
      */
     protected $locale = 'en_US';
 
     /**
-     * Text Domain
-     * @var string
+     * @var string text domain
      */
     protected $domain = 'messages';
 
     /**
-     * Path to text domain files
-     * @var string
+     * @var string path to text domain files
      */
     protected $path;
 
     /**
-     * set domain
+     * Set domain
      *
-     * @param string $domain
+     * @param  string $domain
      * @return self
      */
     public function setDomain($domain)
@@ -59,9 +56,9 @@ class Translator
     }
 
     /**
-     * set locale
+     * Set locale
      *
-     * @param string $locale
+     * @param  string $locale
      * @return self
      */
     public function setLocale($locale)
@@ -71,9 +68,9 @@ class Translator
     }
 
     /**
-     * set path to l10n
+     * Set path to l10n
      *
-     * @param string $path
+     * @param  string $path
      * @return self
      */
     public function setPath($path)
@@ -85,8 +82,8 @@ class Translator
     /**
      * Initialization
      *
-     * @throw \Bluz\Config\ConfigException
      * @return void
+     * @throw  \Bluz\Config\ConfigException
      */
     protected function initOptions()
     {
@@ -115,10 +112,10 @@ class Translator
     /**
      * Add text domain for gettext
      *
-     * @param string $domain of text for gettext setup
-     * @param string $path on filesystem
-     * @throws ConfigurationException
+     * @param  string $domain of text for gettext setup
+     * @param  string $path on filesystem
      * @return self
+     * @throws ConfigurationException
      */
     public function addTextDomain($domain, $path)
     {
@@ -139,16 +136,15 @@ class Translator
      * Translate message
      *
      * Simple example of usage
-     * equal to <code>gettext('Message')</code>
+     * equal to gettext('Message')
      *     Translator::translate('Message');
      *
      * Simple replace of one or more argument(s)
-     * equal to <code>sprintf(gettext('Message to %s'), 'Username')</code>
+     * equal to sprintf(gettext('Message to %s'), 'Username')
      *     Translator::translate('Message to %s', 'Username');
      *
-     * @api
-     * @param string $message
-     * @param string ...$text
+     * @param  string $message
+     * @param  string ...$text
      * @return string
      */
     public static function translate($message, ...$text)
@@ -172,20 +168,19 @@ class Translator
      * Translate plural form
      *
      * Example of usage plural form + sprintf
-     * equal to <code>sprintf(ngettext('%d comment', '%d comments', 4), 4)</code>
+     * equal to sprintf(ngettext('%d comment', '%d comments', 4), 4)
      *     Translator::translatePlural('%d comment', '%d comments', 4, 4)
      *
      * Example of usage plural form + sprintf
-     * equal to <code>sprintf(ngettext('%d comment', '%d comments', 4), 4, 'Topic')</code>
+     * equal to sprintf(ngettext('%d comment', '%d comments', 4), 4, 'Topic')
      *     Translator::translatePlural('%d comment to %s', '%d comments to %s', 4, 'Topic')
      *
-     * @api
-     * @link http://docs.translatehouse.org/projects/localization-guide/en/latest/l10n/pluralforms.html
-     * @param string $singular
-     * @param string $plural
-     * @param integer $number
-     * @param string ...$text
+     * @param  string  $singular
+     * @param  string  $plural
+     * @param  integer $number
+     * @param  string  ...$text
      * @return string
+     * @link   http://docs.translatehouse.org/projects/localization-guide/en/latest/l10n/pluralforms.html
      */
     public static function translatePlural($singular, $plural, $number, ...$text)
     {

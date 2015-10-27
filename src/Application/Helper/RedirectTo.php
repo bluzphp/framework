@@ -17,13 +17,16 @@ use Bluz\Proxy\Router;
 return
     /**
      * Redirect to controller
-     * @var Application $this
-     * @param string $module
-     * @param string $controller
-     * @param array $params
+     *
+     * @param  string      $module
+     * @param  string      $controller
+     * @param  array       $params
      * @return void
      */
     function ($module = 'index', $controller = 'index', $params = array()) {
+        /**
+         * @var Application $this
+         */
         $url = Router::getUrl($module, $controller, $params);
         $this->redirect($url);
     };

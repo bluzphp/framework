@@ -24,23 +24,22 @@ use Bluz\Common\Container\Container;
  *     - Age
  *
  * @package  Bluz\Http
+ * @author   Anton Shevchuk
  * @link     http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html
  * @link     http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9
- *
- * @author   Anton Shevchuk
- * @created  03.11.2014 13:14
  */
 class CacheControl
 {
     use Container;
 
     /**
-     * @var Response Instance
+     * @var Response instance
      */
     protected $response;
 
     /**
      * Create instance
+     *
      * @param Response $response
      */
     public function __construct($response)
@@ -50,6 +49,7 @@ class CacheControl
 
     /**
      * Prepare Cache-Control header
+     *
      * @return string
      */
     protected function updateCacheControlHeader()
@@ -129,7 +129,7 @@ class CacheControl
      *
      * This methods sets the Cache-Control max-age directive.
      *
-     * @param int $value Number of seconds
+     * @param  integer $value Number of seconds
      * @return void
      */
     public function setMaxAge($value)
@@ -143,7 +143,7 @@ class CacheControl
      *
      * This methods sets the Cache-Control s-maxage directive.
      *
-     * @param int $value Number of seconds
+     * @param  integer $value Number of seconds
      * @return void
      */
     public function setSharedMaxAge($value)
@@ -160,7 +160,7 @@ class CacheControl
      * When the responses TTL is <= 0, the response may not be served from cache without first
      * revalidating with the origin.
      *
-     * @return int|null The TTL in seconds
+     * @return integer|null The TTL in seconds
      */
     public function getTtl()
     {
@@ -175,7 +175,7 @@ class CacheControl
      *
      * This method adjusts the Cache-Control/s-maxage directive.
      *
-     * @param int $seconds Number of seconds
+     * @param  integer $seconds Number of seconds
      * @return void
      */
     public function setTtl($seconds)
@@ -187,7 +187,7 @@ class CacheControl
      *
      * This method adjusts the Cache-Control/max-age directive.
      *
-     * @param int $seconds Number of seconds
+     * @param  integer $seconds Number of seconds
      * @return void
      */
     public function setClientTtl($seconds)
@@ -208,8 +208,8 @@ class CacheControl
     /**
      * Sets the ETag value
      *
-     * @param string $etag The ETag unique identifier
-     * @param bool   $weak Whether you want a weak ETag or not
+     * @param  string $etag The ETag unique identifier
+     * @param  bool   $weak Whether you want a weak ETag or not
      * @return void
      */
     public function setEtag($etag, $weak = false)
@@ -221,7 +221,7 @@ class CacheControl
     /**
      * Returns the age of the response
      *
-     * @return int The age of the response in seconds
+     * @return integer The age of the response in seconds
      */
     public function getAge()
     {
@@ -234,7 +234,7 @@ class CacheControl
     /**
      * Set the age of the response
      *
-     * @param int $age
+     * @param  integer $age
      * @return void
      */
     public function setAge($age)
@@ -255,7 +255,7 @@ class CacheControl
     /**
      * Sets the Expires HTTP header with a DateTime instance
      *
-     * @param \DateTime|string $date A \DateTime instance or date as string
+     * @param  \DateTime|string $date A \DateTime instance or date as string
      * @return void
      */
     public function setExpires($date)
@@ -283,7 +283,7 @@ class CacheControl
     /**
      * Sets the Last-Modified HTTP header with a DateTime instance or string
      *
-     * @param \DateTime|string $date A \DateTime instance or date as string
+     * @param  \DateTime|string $date A \DateTime instance or date as string
      * @return void
      */
     public function setLastModified($date)

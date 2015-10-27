@@ -16,21 +16,22 @@ use Bluz\Common\Exception\ComponentException;
 use Bluz\Common\Exception\ConfigurationException;
 
 /**
- * Class Memcached
+ * Memcached cache adapter
+ *
  * @package Bluz\Cache\Adapter
+ * @see     \Memcached
  */
 class Memcached extends AbstractAdapter
 {
     /**
-     * Instance of memcached
-     * @var \Memcached
+     * @var \Memcached instance of memcached
      */
     protected $handler = null;
 
     /**
      * Check and setup memcached servers
      *
-     * @param array $settings
+     * @param  array $settings
      * @throws ComponentException
      * @throws ConfigurationException
      */
@@ -80,7 +81,7 @@ class Memcached extends AbstractAdapter
     /**
      * {@inheritdoc}
      *
-     * @param string $id
+     * @param  string $id
      * @return mixed
      */
     protected function doGet($id)
@@ -91,9 +92,9 @@ class Memcached extends AbstractAdapter
     /**
      * {@inheritdoc}
      *
-     * @param string $id
-     * @param mixed $data
-     * @param int $ttl
+     * @param  string  $id
+     * @param  mixed   $data
+     * @param  integer $ttl
      * @return bool
      */
     protected function doAdd($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
@@ -104,9 +105,9 @@ class Memcached extends AbstractAdapter
     /**
      * {@inheritdoc}
      *
-     * @param string $id
-     * @param mixed $data
-     * @param int $ttl
+     * @param  string  $id
+     * @param  mixed   $data
+     * @param  integer $ttl
      * @return bool
      */
     protected function doSet($id, $data, $ttl = Cache::TTL_NO_EXPIRY)
@@ -117,7 +118,7 @@ class Memcached extends AbstractAdapter
     /**
      * {@inheritdoc}
      *
-     * @param string $id
+     * @param  string $id
      * @return bool
      */
     protected function doContains($id)
@@ -129,7 +130,7 @@ class Memcached extends AbstractAdapter
     /**
      * {@inheritdoc}
      *
-     * @param string $id
+     * @param  string $id
      * @return bool
      */
     protected function doDelete($id)

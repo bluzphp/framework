@@ -18,25 +18,22 @@ use Bluz\View\View;
  * Layout
  *
  * @package  Bluz\Layout
+ * @author   Anton Shevchuk
  * @link     https://github.com/bluzphp/framework/wiki/Layout
  *
- * @method   array|null breadCrumbs(array $data = [])
+ * @method   array|null  breadCrumbs(array $data = [])
  * @method   string|null headScript(string $script = null)
  * @method   string|null headStyle(string $style = null, $media = 'all')
  * @method   string|null link(string $src = null, string $rel = 'stylesheet')
  * @method   string|null meta(string $name = null, string $content = null)
  * @method   string|null title(string $title = null, $position = 'replace', $separator = ' :: ')
- *
- * @author   Anton Shevchuk
- * @created  08.07.11 11:49
  */
 class Layout extends View
 {
     use RegularAccess;
 
     /**
-     * Content container, usually is instance of View
-     * @var mixed
+     * @var mixed content container, usually is instance of View
      */
     protected $content;
 
@@ -56,7 +53,7 @@ class Layout extends View
 
     /**
      * Get content
-     * @api
+     *
      * @return View
      */
     public function getContent()
@@ -66,8 +63,8 @@ class Layout extends View
 
     /**
      * Set content
-     * @api
-     * @param View|callable $content
+     *
+     * @param  View|callable $content
      * @return void
      */
     public function setContent($content)

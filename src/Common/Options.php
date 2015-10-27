@@ -36,22 +36,21 @@ namespace Bluz\Common;
  *     $Foo = new Foo(array('bar'=>123, 'baz'=>456));
  *
  * @package  Bluz\Common
- * @link     https://github.com/bluzphp/framework/wiki/Trait-Options
- *
  * @author   Anton Shevchuk
- * @created  12.07.11 16:15
+ * @link     https://github.com/bluzphp/framework/wiki/Trait-Options
  */
 trait Options
 {
     /**
-     * @var array Options store
+     * @var array options store
      */
     protected $options;
 
     /**
      * Get option by key
-     * @param string $key
-     * @param string|null $section
+     *
+     * @param  string      $key
+     * @param  string|null $section
      * @return mixed
      */
     public function getOption($key, $section = null)
@@ -69,8 +68,9 @@ trait Options
 
     /**
      * Set option by key over setter
-     * @param string $key
-     * @param string $value
+     *
+     * @param  string $key
+     * @param  string $value
      * @return void
      */
     public function setOption($key, $value)
@@ -85,6 +85,7 @@ trait Options
 
     /**
      * Get all options
+     *
      * @return array
      */
     public function getOptions()
@@ -99,7 +100,7 @@ trait Options
      * - options must be a array
      * - options can be null
      *
-     * @param array $options
+     * @param  array $options
      * @return self
      */
     public function setOptions($options)
@@ -120,6 +121,7 @@ trait Options
 
     /**
      * Check and initialize options in package
+     *
      * @throws \Bluz\Config\ConfigException
      * @return void
      */
@@ -130,6 +132,7 @@ trait Options
 
     /**
      * Normalize key name
+     *
      * @param  string $key
      * @return string
      */

@@ -19,9 +19,7 @@ use Bluz\Proxy;
  * SQL Source Adapter for Grid package
  *
  * @package  Bluz\Grid
- *
  * @author   Anton Shevchuk
- * @created  27.08.12 10:10
  */
 class SqlSource extends AbstractSource
 {
@@ -31,11 +29,11 @@ class SqlSource extends AbstractSource
     protected $source;
 
     /**
-     * setSource
+     * Set SQL source
      *
-     * @param string $source
-     * @throws \Bluz\Grid\GridException
+     * @param  string $source
      * @return self
+     * @throws \Bluz\Grid\GridException
      */
     public function setSource($source)
     {
@@ -48,9 +46,9 @@ class SqlSource extends AbstractSource
     }
 
     /**
-     * process
+     * Process
      *
-     * @param array $settings
+     * @param  array $settings
      * @return \Bluz\Grid\Data
      */
     public function process(array $settings = [])

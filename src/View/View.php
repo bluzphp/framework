@@ -21,6 +21,8 @@ use Bluz\Common\Options;
  * View - simple template engine with native PHP syntax
  *
  * @package  Bluz\View
+ * @author   Anton Shevchuk
+ * @author   ErgallM
  * @link     https://github.com/bluzphp/framework/wiki/View
  *
  * @method string ahref(string $text, mixed $href, array $attributes = [])
@@ -44,9 +46,6 @@ use Bluz\Common\Options;
  * @method string|null url(string $module, string $controller, array $params = [], bool $checkAccess = false)
  * @method AbstractRowEntity|null user()
  * @method void widget($module, $widget, $params = [])
- *
- * @author   Anton Shevchuk, ErgallM
- * @created  08.07.11 11:49
  */
 class View implements ViewInterface, \JsonSerializable
 {
@@ -69,17 +68,17 @@ class View implements ViewInterface, \JsonSerializable
     protected $baseUrl;
 
     /**
-     * @var string Path to template
+     * @var string path to template
      */
     protected $path;
 
     /**
-     * @var array Paths to partial
+     * @var array paths to partial
      */
     protected $partialPath = [];
 
     /**
-     * @var string Template name
+     * @var string template name
      */
     protected $template;
 
@@ -94,6 +93,7 @@ class View implements ViewInterface, \JsonSerializable
 
     /**
      * List of packed properties
+     *
      * @return string[]
      */
     public function __sleep()
@@ -103,6 +103,7 @@ class View implements ViewInterface, \JsonSerializable
 
     /**
      * View should be callable
+     *
      * @return string
      */
     public function __invoke()
@@ -112,6 +113,7 @@ class View implements ViewInterface, \JsonSerializable
 
     /**
      * Render like string
+     *
      * @return string
      */
     public function __toString()
@@ -121,7 +123,8 @@ class View implements ViewInterface, \JsonSerializable
 
     /**
      * {@inheritdoc}
-     * @param string $path
+     *
+     * @param  string $path
      * @return void
      */
     public function setPath($path)
@@ -131,7 +134,8 @@ class View implements ViewInterface, \JsonSerializable
 
     /**
      * {@inheritdoc}
-     * @param string $file
+     *
+     * @param  string $file
      * @return void
      */
     public function setTemplate($file)
@@ -141,7 +145,8 @@ class View implements ViewInterface, \JsonSerializable
 
     /**
      * Add partial path for use inside partial and partialLoop helpers
-     * @param string $path
+     *
+     * @param  string $path
      * @return View
      */
     public function addPartialPath($path)
@@ -151,9 +156,10 @@ class View implements ViewInterface, \JsonSerializable
     }
 
     /**
-     * Render
-     * @throws ViewException
+     * Render template
+     *
      * @return string
+     * @throws ViewException
      */
     public function render()
     {

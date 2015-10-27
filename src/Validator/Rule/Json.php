@@ -12,19 +12,21 @@
 namespace Bluz\Validator\Rule;
 
 /**
- * Class Json
+ * Check for JSON
+ *
  * @package Bluz\Validator\Rule
  */
 class Json extends AbstractRule
 {
     /**
-     * @var string Error template
+     * @var string error template
      */
     protected $template = '{{name}} must be a valid JSON string';
 
     /**
      * Check for valid JSON string
-     * @param string $input
+     *
+     * @param  string $input
      * @return bool
      */
     public function validate($input)

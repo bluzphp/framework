@@ -18,9 +18,7 @@ use Bluz\Response\Presentation\AbstractPresentation;
  * Response
  *
  * @package  Bluz\Cli
- *
  * @author   Anton Shevchuk
- * @created  18.02.14 11:57
  */
 class Response extends AbstractResponse
 {
@@ -31,6 +29,7 @@ class Response extends AbstractResponse
 
     /**
      * Send headers
+     *
      * @return void
      */
     protected function sendHeaders()
@@ -40,6 +39,7 @@ class Response extends AbstractResponse
 
     /**
      * Send headers
+     *
      * @return void
      */
     protected function sendBody()

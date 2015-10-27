@@ -14,12 +14,10 @@ namespace Bluz\Response\Presentation;
 use Bluz\View\View;
 
 /**
- * Json
+ * CLI presentation
  *
  * @package  Bluz\Response\Presentation
- *
  * @author   Anton Shevchuk
- * @created  10.11.2014 18:03
  */
 class Cli extends AbstractPresentation
 {

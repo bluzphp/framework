@@ -15,21 +15,17 @@ namespace Bluz\Application\Exception;
  * NotFound Exception
  *
  * @package  Bluz\Application\Exception
- *
  * @author   Anton Shevchuk
- * @created  23.01.13 17:46
  */
 class NotFoundException extends ApplicationException
 {
     /**
-     * Exception message
-     * @var string
+     * @var string exception message
      */
     protected $message = "Page Not Found";
 
     /**
-     * Not Found HTTP code
-     * @var int
+     * @var integer HTTP Code for "Not Found"
      */
     protected $code = 404;
 }

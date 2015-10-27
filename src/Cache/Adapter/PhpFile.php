@@ -15,28 +15,28 @@ use Bluz\Cache\Cache;
 use Bluz\Cache\CacheException;
 
 /**
- * Adapter that caches data into php array.
+ * Adapter that caches data into php array
+ *
  * It can cache data that support var_export.
  * This adapter very fast and cacheable by opcode cachers but it have some limitations related to var_export.
  * It's best to use for scalar data caching
  *
  * @package Bluz\Cache\Adapter
+ * @author  murzik
  * @link    http://php.net/manual/en/function.var-export.php
  * @link    http://php.net/manual/en/language.oop5.magic.php#object.set-state
- * @author  murzik
  */
 class PhpFile extends FileBase
 {
     /**
-     * Cache data
-     * @var array
+     * @var array cache data
      */
     protected $data = array();
 
     /**
      * {@inheritdoc}
      *
-     * @param string $id
+     * @param  string $id
      * @return bool
      */
     protected function doContains($id)
@@ -85,7 +85,7 @@ class PhpFile extends FileBase
      *
      * @param string $id
      * @param mixed $data
-     * @param int $ttl
+     * @param integer $ttl
      * @return integer The number of bytes that were written to the file, or false on failure.
      * @throws CacheException
      */
@@ -126,7 +126,7 @@ class PhpFile extends FileBase
      *
      * @param string $id
      * @param mixed $data
-     * @param int $ttl
+     * @param integer $ttl
      * @return bool|int
      * @throws CacheException
      */

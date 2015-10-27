@@ -24,18 +24,17 @@ use Bluz\Proxy\Db;
 abstract class AbstractBuilder
 {
     /**
-     * Known table aliases
-     * @var array
+     * @var array list of table aliases
      */
     protected $aliases = array();
 
     /**
-     * @var string The complete SQL string for this query
+     * @var string the complete SQL string for this query
      */
     protected $sql;
 
     /**
-     * @var array The array of SQL parts collected
+     * @var array the array of SQL parts collected
      */
     protected $sqlParts = array(
         'select'  => array(),
@@ -49,12 +48,12 @@ abstract class AbstractBuilder
     );
 
     /**
-     * @var array The query parameters
+     * @var array the query parameters
      */
     protected $params = array();
 
     /**
-     * @var array The parameter type map of this query
+     * @var array the parameter type map of this query
      */
     protected $types = array();
 
@@ -72,11 +71,13 @@ abstract class AbstractBuilder
      * Return the complete SQL string formed by the current specifications
      *
      * Example
+     * <code>
      *     $sb = new SelectBuilder();
      *     $sb
      *         ->select('u')
      *         ->from('User', 'u');
      *     echo $qb->getSQL(); // SELECT u FROM User u
+     * </code>
      *
      * @return string The SQL query string.
      */
@@ -86,12 +87,14 @@ abstract class AbstractBuilder
      * Return the complete SQL string formed for use
      *
      * Example
+     * <code>
      *     $sb = new SelectBuilder();
      *     $sb
      *         ->select('u')
      *         ->from('User', 'u')
      *         ->where('id = ?', 42);
      *     echo $qb->getQuery(); // SELECT u FROM User u WHERE id = "42"
+     * </code>
      *
      * @return string
      */
@@ -110,16 +113,18 @@ abstract class AbstractBuilder
      * Sets a query parameter for the query being constructed
      *
      * Example
+     * <code>
      *     $sb = new SelectBuilder();
      *     $sb
      *         ->select('u')
      *         ->from('users', 'u')
      *         ->where('u.id = :user_id')
      *         ->setParameter(':user_id', 1);
+     * </code>
      *
-     * @param string|integer $key The parameter position or name
-     * @param mixed $value The parameter value
-     * @param integer $type PDO::PARAM_*
+     * @param  string|int $key   The parameter position or name
+     * @param  mixed      $value The parameter value
+     * @param  integer    $type  PDO::PARAM_*
      * @return self instance
      */
     public function setParameter($key, $value, $type = \PDO::PARAM_STR)
@@ -138,6 +143,7 @@ abstract class AbstractBuilder
      * Sets a collection of query parameters for the query being constructed
      *
      * Example
+     * <code>
      *     $sb = new SelectBuilder();
      *     $sb
      *         ->select('u')
@@ -147,9 +153,10 @@ abstract class AbstractBuilder
      *             ':user_id1' => 1,
      *             ':user_id2' => 2
      *         ));
+     * </code>
      *
-     * @param array $params The query parameters to set
-     * @param array $types  The query parameters types to set
+     * @param  array $params The query parameters to set
+     * @param  array $types  The query parameters types to set
      * @return self instance
      */
     public function setParameters(array $params, array $types = array())
@@ -163,7 +170,7 @@ abstract class AbstractBuilder
     /**
      * Gets a (previously set) query parameter of the query being constructed
      *
-     * @param mixed $key The key (index or name) of the bound parameter
+     * @param  mixed $key The key (index or name) of the bound parameter
      * @return mixed The value of the bound parameter.
      */
     public function getParameter($key)
@@ -187,9 +194,9 @@ abstract class AbstractBuilder
      * The available parts are: 'select', 'from', 'set', 'where',
      * 'groupBy', 'having' and 'orderBy'
      *
-     * @param string  $sqlPartName
-     * @param string|array  $sqlPart
-     * @param bool $append
+     * @param  string       $sqlPartName
+     * @param  string|array $sqlPart
+     * @param  bool         $append
      * @return self instance
      */
     protected function addQueryPart($sqlPartName, $sqlPart, $append = false)
@@ -224,8 +231,8 @@ abstract class AbstractBuilder
     /**
      * Get a query part by its name
      *
-     * @param string $queryPartName
-     * @return mixed $queryPart
+     * @param  string $queryPartName
+     * @return mixed
      */
     public function getQueryPart($queryPartName)
     {
@@ -235,7 +242,7 @@ abstract class AbstractBuilder
     /**
      * Reset single SQL part
      *
-     * @param string $queryPartName
+     * @param  string $queryPartName
      * @return self instance
      */
     protected function resetQueryPart($queryPartName)
@@ -249,7 +256,7 @@ abstract class AbstractBuilder
     /**
      * setFromQueryPart
      *
-     * @param string $table
+     * @param  string $table
      * @return self instance
      */
     protected function setFromQueryPart($table)
@@ -261,16 +268,15 @@ abstract class AbstractBuilder
     /**
      * Prepare condition
      *
-     * @param array $args
+     * <code>
+     *     $builder->prepareCondition("WHERE id IN (?)", [..,..]);
+     * </code>
+     *
+     * @param  array $args
      * @return string
      */
     protected function prepareCondition($args = array())
     {
-        /**
-         * <code>
-         *     prepareCondition("WHERE id IN (?)", [..,..]);
-         * </code>
-         */
         $condition = array_shift($args);
         foreach ($args as &$value) {
             if (is_array($value)) {

@@ -36,7 +36,6 @@ class Router
     const ERROR_CONTROLLER = 'index';
 
     /**
-     *
      * @var string base URL
      */
     protected $baseUrl;
@@ -461,7 +460,6 @@ class Router
     public function getCleanUri()
     {
         if ($this->cleanUri === null) {
-
             $uri = parse_url(Request::getRequestUri());
             $uri = $uri['path'];
 

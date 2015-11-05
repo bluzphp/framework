@@ -8,7 +8,6 @@
         "ext-pdo_mysql": "*",
         "ext-json": "*",
         "psr/log": "1.*",
-        "psr/http-message": "1.0",
         "zendframework/zend-diactoros": "^1.1"
     },
     "require-dev": {

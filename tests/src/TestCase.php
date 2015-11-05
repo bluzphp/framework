@@ -12,6 +12,7 @@ namespace Bluz\Tests;
 use Bluz;
 use Bluz\Http;
 use Bluz\Proxy;
+use Bluz\Router\Router;
 
 /**
  * Bluz TestCase
@@ -68,6 +69,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     {
         if (self::$app) {
             self::$app->useLayout(true);
+            self::$app->resetRouter();
         }
 
         Proxy\Auth::clearIdentity();
@@ -75,6 +77,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
         Proxy\Request::setInstance(new Http\Request());
         Proxy\Response::setInstance(new Http\Response());
         Proxy\Response::setPresentation(null);
+
     }
 
     /**

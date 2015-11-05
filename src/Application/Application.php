@@ -263,7 +263,7 @@ class Application
             $this->initResponse();
 
             // init router
-            Router::getInstance();
+            $this->initRouter();
 
         } catch (\Exception $e) {
             throw new ApplicationException("Application can't be loaded: " . $e->getMessage());
@@ -294,6 +294,19 @@ class Application
         $response->setOptions(Config::getData('response'));
 
         Response::setInstance($response);
+    }
+
+    /**
+     * Initial Router instance
+     *
+     * @return void
+     */
+    protected function initRouter()
+    {
+        $router = new \Bluz\Router\Router();
+        $router->setOptions(Config::getData('router'));
+
+        Router::setInstance($router);
     }
 
     /**

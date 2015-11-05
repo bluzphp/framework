@@ -62,11 +62,6 @@ class AbstractRequest
     protected $requestUri;
 
     /**
-     * @var string REQUEST_URI minus Base URL
-     */
-    protected $cleanUri;
-
-    /**
      *
      * @var string base URL
      */
@@ -187,46 +182,6 @@ class AbstractRequest
     public function isDelete()
     {
         return ($this->getMethod() === self::METHOD_DELETE);
-    }
-
-    /**
-     * Get the base URL.
-     *
-     * @return string
-     */
-    public function getBaseUrl()
-    {
-        return $this->baseUrl;
-    }
-
-    /**
-     * Set the base URL.
-     *
-     * @param  string $baseUrl
-     * @return void
-     */
-    public function setBaseUrl($baseUrl)
-    {
-        $this->baseUrl = rtrim($baseUrl, '/') . '/';
-    }
-
-    /**
-     * Get the request URI without baseUrl
-     *
-     * @return string
-     */
-    public function getCleanUri()
-    {
-        if ($this->cleanUri === null) {
-            $uri = parse_url($this->getRequestUri());
-            $uri = $uri['path'];
-
-            if ($this->getBaseUrl() && strpos($uri, $this->getBaseUrl()) === 0) {
-                $uri = substr($uri, strlen($this->getBaseUrl()));
-            }
-            $this->cleanUri = $uri;
-        }
-        return $this->cleanUri;
     }
 
     /**

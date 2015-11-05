@@ -291,20 +291,6 @@ class Request extends AbstractRequest
     }
 
     /**
-     * Get the base URL.
-     *
-     * @return string
-     */
-    public function getBaseUrl()
-    {
-        if (null === $this->baseUrl) {
-            $this->setBaseUrl($this->detectBaseUrl());
-        }
-
-        return $this->baseUrl;
-    }
-
-    /**
      * Get the client's IP address
      *
      * @param  bool $checkProxy

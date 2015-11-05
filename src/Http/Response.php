@@ -17,7 +17,7 @@ use Bluz\Response\AbstractResponse;
 /**
  * Response
  *
- * @package  Bluz\Response
+ * @package  Bluz\Http
  * @author   Anton Shevchuk
  */
 class Response extends AbstractResponse

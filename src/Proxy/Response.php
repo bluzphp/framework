@@ -98,7 +98,6 @@ class Response extends AbstractProxy
      * Init instance
      *
      * @throws ComponentException
-     * @return Instance
      */
     protected static function initInstance()
     {

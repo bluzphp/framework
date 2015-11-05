@@ -11,6 +11,7 @@
  */
 namespace Bluz\Proxy;
 
+use Bluz\Common\Exception\ComponentException;
 use Bluz\Router\Router as Instance;
 
 /**
@@ -27,6 +28,11 @@ use Bluz\Router\Router as Instance;
  * @author   Anton Shevchuk
  *
  * @method   static Instance getInstance()
+ *
+ * @method   static string getBaseUrl()
+ * @see      Bluz\Router\Router::getBaseUrl()
+ * @method   static void   setBaseUrl($baseUrl)
+ * @see      Bluz\Router\Router::setBaseUrl()
  *
  * @method   static string getUrl($module = 'index', $controller = 'index', $params = array())
  * @see      Bluz\Router\Router::getUrl()
@@ -54,12 +60,10 @@ class Router extends AbstractProxy
     /**
      * Init instance
      *
-     * @return Instance
+     * @throws ComponentException
      */
     protected static function initInstance()
     {
-        $instance = new Instance();
-        $instance->setOptions(Config::getData('router'));
-        return $instance;
+        throw new ComponentException("Class `Proxy\\Router` required external initialization");
     }
 }

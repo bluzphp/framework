@@ -34,6 +34,16 @@ class BootstrapTest extends Application
     protected $dispatchController;
 
     /**
+     * resetRouter
+     *
+     * @return void
+     */
+    public function resetRouter()
+    {
+        $this->initRouter();
+    }
+
+    /**
      * Get dispatched module name
      *
      * @return string

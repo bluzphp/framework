@@ -74,16 +74,6 @@ class Request extends AbstractRequest
     }
 
     /**
-     * Get the request URI
-     *
-     * @return string
-     */
-    public function getCleanUri()
-    {
-        return ltrim($this->getRequestUri(), '/');
-    }
-
-    /**
      * Get the base URL
      *
      * @return string

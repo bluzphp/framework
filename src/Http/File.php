@@ -16,7 +16,7 @@ use Bluz\Request\RequestException;
 /**
  * HttpFile
  *
- * @package  Bluz\Request
+ * @package  Bluz\Http
  * @author   Anton Shevchuk
  */
 class File

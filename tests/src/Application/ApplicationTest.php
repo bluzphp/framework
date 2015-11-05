@@ -54,7 +54,7 @@ class ApplicationTest extends TestCase
         //  - configs/default/
         //  - configs/testing/
         // hardcoded numbers of configuration items
-        $this->assertEquals(13, sizeof(Proxy\Config::getData()));
+        $this->assertEquals(14, sizeof(Proxy\Config::getData()));
         $this->assertEquals(["foo" => "bar"], Proxy\Config::getData("test"));
         $this->assertEquals("bar", Proxy\Config::getData("test", "foo"));
     }
@@ -75,11 +75,8 @@ class ApplicationTest extends TestCase
     public function testIndexController()
     {
         // setup Request
-        Request::setRequestUri('/');
+        Request::setRequestUri('');
         Request::setMethod(Request::METHOD_GET);
-
-        // run Router
-        Router::process();
 
         // run Application
         $this->getApp()->process();
@@ -96,9 +93,6 @@ class ApplicationTest extends TestCase
         // setup Request
         Request::setRequestUri(uniqid('module'). '/'. uniqid('controller'));
         Request::setMethod(Request::METHOD_GET);
-
-        // run Router
-        Router::process();
 
         // run Application
         $this->getApp()->process();

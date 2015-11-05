@@ -46,7 +46,7 @@ class DomainTest extends Tests\TestCase
     {
         return array(
             array('domain.local'),
-            array('google.com', true),
+//            array('google.com', true),
             array('example.com'),
             array('xn--bcher-kva.com'),
             array('example-hyphen.com'),
@@ -61,7 +61,7 @@ class DomainTest extends Tests\TestCase
         return array(
             array(null),
             array(''),
-            array('domain.local', true),
+//            array('domain.local', true),
             array('-example-invalid.com'),
             array('example.invalid.-com'),
 //            array('1.2.3.256', true),

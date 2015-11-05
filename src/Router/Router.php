@@ -36,6 +36,17 @@ class Router
     const ERROR_CONTROLLER = 'index';
 
     /**
+     *
+     * @var string base URL
+     */
+    protected $baseUrl;
+
+    /**
+     * @var string REQUEST_URI minus Base URL
+     */
+    protected $cleanUri;
+
+    /**
      * @var string default module
      */
     protected $defaultModule = self::DEFAULT_MODULE;
@@ -114,6 +125,27 @@ class Router
 
         $this->routers = $routers;
         $this->reverse = $reverse;
+    }
+
+    /**
+     * Get the base URL.
+     *
+     * @return string
+     */
+    public function getBaseUrl()
+    {
+        return $this->baseUrl;
+    }
+
+    /**
+     * Set the base URL.
+     *
+     * @param  string $baseUrl
+     * @return void
+     */
+    public function setBaseUrl($baseUrl)
+    {
+        $this->baseUrl = rtrim($baseUrl, '/') . '/';
     }
 
     /**
@@ -282,7 +314,7 @@ class Router
         if (!empty($getParams)) {
             $url .= '?' . http_build_query($getParams);
         }
-        return Request::getBaseUrl() . ltrim($url, '/');
+        return $this->getBaseUrl() . ltrim($url, '/');
     }
 
     /**
@@ -295,7 +327,7 @@ class Router
      */
     protected function urlRoute($module, $controller, $params)
     {
-        $url = Request::getBaseUrl();
+        $url = $this->getBaseUrl();
 
         if (empty($params)) {
             if ($controller == self::DEFAULT_CONTROLLER) {
@@ -352,7 +384,7 @@ class Router
      */
     protected function processDefault()
     {
-        $uri = Request::getCleanUri();
+        $uri = $this->getCleanUri();
         return empty($uri);
     }
 
@@ -363,7 +395,7 @@ class Router
      */
     protected function processCustom()
     {
-        $uri = '/' . Request::getCleanUri();
+        $uri = '/' . $this->getCleanUri();
         foreach ($this->routers as $router) {
             if (preg_match($router['pattern'], $uri, $matches)) {
                 Request::setModule($router['module']);
@@ -393,7 +425,7 @@ class Router
      */
     protected function processRoute()
     {
-        $uri = Request::getCleanUri();
+        $uri = $this->getCleanUri();
         $uri = trim($uri, '/');
         $params = explode('/', $uri);
 
@@ -419,5 +451,25 @@ class Router
         }
 
         return true;
+    }
+
+    /**
+     * Get the request URI without baseUrl
+     *
+     * @return string
+     */
+    public function getCleanUri()
+    {
+        if ($this->cleanUri === null) {
+
+            $uri = parse_url(Request::getRequestUri());
+            $uri = $uri['path'];
+
+            if ($this->getBaseUrl() && strpos($uri, $this->getBaseUrl()) === 0) {
+                $uri = substr($uri, strlen($this->getBaseUrl()));
+            }
+            $this->cleanUri = $uri;
+        }
+        return $this->cleanUri;
     }
 }

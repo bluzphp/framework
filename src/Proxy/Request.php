@@ -35,19 +35,10 @@ use Bluz\Request\AbstractRequest as Instance;
  * @method   static void   setMethod($method)
  * @see      Bluz\Request\AbstractRequest::setMethod()
  *
- * @method   static string getBaseUrl()
- * @see      Bluz\Cli\Request::getBaseUrl()
- * @see      Bluz\Http\Request::getBaseUrl()
- * @method   static void   setBaseUrl($baseUrl)
- * @see      Bluz\Request\AbstractRequest::setBaseUrl()
- *
  * @method   static string getRequestUri()
  * @see      Bluz\Request\AbstractRequest::getRequestUri()
  * @method   static void   setRequestUri($requestUri)
  * @see      Bluz\Request\AbstractRequest::setRequestUri()
- *
- * @method   static string getCleanUri()
- * @see      Bluz\Request\AbstractRequest::getCleanUri()
  *
  * @method   static mixed getParam($key, $default = null)
  * @see      Bluz\Request\AbstractRequest::getParam()
@@ -157,7 +148,6 @@ class Request extends AbstractProxy
      * Init instance
      *
      * @throws ComponentException
-     * @return Instance
      */
     protected static function initInstance()
     {

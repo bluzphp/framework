@@ -11,7 +11,6 @@
  */
 namespace Bluz\Layout\Helper;
 
-use Bluz\Layout\Layout;
 use Bluz\Proxy\Registry;
 
 return

@@ -74,19 +74,6 @@ class Request extends AbstractRequest
     }
 
     /**
-     * Get the base URL
-     *
-     * @return string
-     */
-    public function getBaseUrl()
-    {
-        if (null === $this->baseUrl) {
-            $this->setBaseUrl('/');
-        }
-        return $this->baseUrl;
-    }
-
-    /**
      * Get the client's IP address
      *
      * @return string
@@ -106,7 +93,6 @@ class Request extends AbstractRequest
     {
         return false;
     }
-
 
     /**
      * Accept only CLI

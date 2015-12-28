@@ -47,6 +47,7 @@ class ArraySource extends AbstractSource
     public function process(array $settings = [])
     {
         $data = $this->source;
+
         // process filters
         if (!empty($settings['filters'])) {
             $data = array_filter(

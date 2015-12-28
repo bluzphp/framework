@@ -32,6 +32,7 @@ use Bluz\Proxy\Response;
 use Bluz\Proxy\Router;
 use Bluz\Proxy\Session;
 use Bluz\Proxy\Translator;
+use Bluz\Request\RequestFactory;
 use Bluz\View\View;
 
 /**
@@ -275,10 +276,22 @@ class Application
      *
      * @return void
      */
+//    protected function initRequest()
+//    {
+//        $request = new Http\Request();
+//        $request->setOptions(Config::getData('request'));
+//
+//        Request::setInstance($request);
+//    }
+
+    /**
+     * Initial Request instance
+     *
+     * @return void
+     */
     protected function initRequest()
     {
-        $request = new Http\Request();
-        $request->setOptions(Config::getData('request'));
+        $request = RequestFactory::fromGlobals();
 
         Request::setInstance($request);
     }
@@ -367,7 +380,7 @@ class Application
         Router::process();
 
         // disable layout for AJAX requests
-        if ($this->getRequest()->isXmlHttpRequest()) {
+        if (Request::isXmlHttpRequest()) {
             $this->useLayout(false);
         }
     }
@@ -383,7 +396,7 @@ class Application
 
         $module = Request::getModule();
         $controller = Request::getController();
-        $params = Request::getAllParams();
+        $params = Request::getParams();
 
         // try to dispatch controller
         try {
@@ -393,20 +406,40 @@ class Application
 
             // check header "accept" for catch JSON(P) or XML requests, and switch presentation
             // it's some magic for AJAX and REST requests
-            if ($reflection->getAccept() && $accept = $this->getRequest()->getAccept()) {
+            if ($allowAccept = $reflection->getAccept()) {
+
+                $acceptMap = [
+                    'HTML' => 'text/html',
+                    'JSON' => 'application/json',
+                    'JSONP' => 'application/javascript',
+                    'XML' => 'application/xml'
+                ];
+
+                // convert list of controller @accept to MIME types
+                $allowAccept = array_filter($acceptMap, function ($key) use ($allowAccept) {
+                    return in_array($key, $allowAccept);
+                }, ARRAY_FILTER_USE_KEY);
+
+                // choose MIME type by browser accept header
+                // filtered by controller @accept
+                $accept = Request::getAccept(array_values($allowAccept));
+
+                // find key by MIME type
+                $accept = array_search($accept, $acceptMap);
+
                 // switch statement for Accept header
                 switch ($accept) {
-                    case Request::ACCEPT_HTML:
+                    case 'HTML':
                         // with layout
                         // without additional presentation
                         break;
-                    case Request::ACCEPT_JSON:
+                    case 'JSON':
                         $this->useJson();
                         break;
-                    case Request::ACCEPT_JSONP:
+                    case 'JSONP':
                         $this->useJsonp();
                         break;
-                    case Request::ACCEPT_XML:
+                    case 'XML':
                         $this->useXml();
                         break;
                     default:

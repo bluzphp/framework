@@ -89,7 +89,7 @@ class CrudTest extends TestCase
      */
     public function testNewRecord()
     {
-        Request::setMethod(Request::METHOD_GET);
+        $this->setRequestParams();
 
         $result = $this->processCrud();
 
@@ -103,8 +103,7 @@ class CrudTest extends TestCase
      */
     public function testReadRecord()
     {
-        Request::setMethod(Request::METHOD_GET);
-        Request::setParam('id', 1);
+        $this->setRequestParams(['id' => 1]);
 
         $result = $this->processCrud();
 
@@ -118,9 +117,7 @@ class CrudTest extends TestCase
      */
     public function testReadRecordError()
     {
-        Request::setMethod(Request::METHOD_GET);
-        Request::setParam('id', 100042);
-
+        $this->setRequestParams(['id' => 100042]);
         $this->processCrud();
     }
 
@@ -129,8 +126,11 @@ class CrudTest extends TestCase
      */
     public function testCreate()
     {
-        Request::setMethod(Request::METHOD_POST);
-        Request::setParams(['name' => 'Splinter', 'email' => 'splinter@turtles.org']);
+        $this->setRequestParams(
+            [],
+            ['name' => 'Splinter', 'email' => 'splinter@turtles.org'],
+            Request::METHOD_POST
+        );
 
         $result = $this->processCrud();
 
@@ -139,14 +139,16 @@ class CrudTest extends TestCase
         $this->assertNotNull($result['row']['id']);
     }
 
-
     /**
      * POST request with empty data should return ERROR and information
      */
     public function testCreateValidationErrors()
     {
-        Request::setMethod(Request::METHOD_POST);
-        Request::setParams(['name' => '', 'email' => '']);
+        $this->setRequestParams(
+            [],
+            ['name' => '', 'email' => ''],
+            Request::METHOD_POST
+        );
 
         $result = $this->processCrud();
 
@@ -161,8 +163,11 @@ class CrudTest extends TestCase
      */
     public function testUpdate()
     {
-        Request::setMethod(Request::METHOD_PUT);
-        Request::setParams(['id' => 2, 'name' => 'Leonardo', 'email' => 'leonardo@turtles.ua']);
+        $this->setRequestParams(
+            [],
+            ['id' => 2, 'name' => 'Leonardo', 'email' => 'leonardo@turtles.ua'],
+            Request::METHOD_PUT
+        );
 
         $result = $this->processCrud();
 
@@ -183,8 +188,11 @@ class CrudTest extends TestCase
      */
     public function testUpdateNotFoundError()
     {
-        Request::setMethod(Request::METHOD_PUT);
-        Request::setParams(['id' => 100042, 'name' => 'You Knows', 'email' => 'all@turtles.ua']);
+        $this->setRequestParams(
+            [],
+            ['id' => 100042, 'name' => 'You Knows', 'email' => 'all@turtles.ua'],
+            Request::METHOD_PUT
+        );
 
         $this->processCrud();
     }
@@ -194,9 +202,11 @@ class CrudTest extends TestCase
      */
     public function testUpdateValidationErrors()
     {
-        Request::setMethod(Request::METHOD_PUT);
-        Request::setParams(['id' => 2, 'name' => '123456', 'email' => 'leonardo[at]turtles.ua']);
-
+        $this->setRequestParams(
+            [],
+            ['id' => 2, 'name' => '123456', 'email' => 'leonardo[at]turtles.ua'],
+            Request::METHOD_PUT
+        );
 
         $result = $this->processCrud();
 
@@ -211,8 +221,11 @@ class CrudTest extends TestCase
      */
     public function testDelete()
     {
-        Request::setMethod(Request::METHOD_DELETE);
-        Request::setParams(['id' => 3]);
+        $this->setRequestParams(
+            [],
+            ['id' => 3],
+            Request::METHOD_DELETE
+        );
 
         $result = $this->processCrud();
         $this->assertEquals(1, $result);
@@ -227,8 +240,11 @@ class CrudTest extends TestCase
      */
     public function testDeleteError()
     {
-        Request::setMethod(Request::METHOD_DELETE);
-        Request::setParams(['id' => 100042]);
+        $this->setRequestParams(
+            [],
+            ['id' => 100042],
+            Request::METHOD_DELETE
+        );
 
         $this->processCrud();
     }
@@ -239,7 +255,11 @@ class CrudTest extends TestCase
      */
     public function testNotImplementedException()
     {
-        Request::setMethod(Request::METHOD_HEAD);
+        $this->setRequestParams(
+            [],
+            [],
+            Request::METHOD_HEAD
+        );
 
         $this->processCrud();
     }

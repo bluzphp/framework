@@ -48,15 +48,6 @@ class AbstractRequest
     const METHOD_HTTP = 'HTTP';
 
     /**
-     * @const string HTTP ACCEPT MIME types
-     */
-    const ACCEPT_CLI = 'CLI';
-    const ACCEPT_HTML = 'HTML';
-    const ACCEPT_JSON = 'JSON';
-    const ACCEPT_JSONP = 'JSONP';
-    const ACCEPT_XML = 'XML';
-
-    /**
      * @var string REQUEST_URI
      */
     protected $requestUri;
@@ -102,7 +93,6 @@ class AbstractRequest
      */
     protected $rawParams = array();
 
-
     /**
      * Return HTTP method or CLI
      *
@@ -131,7 +121,7 @@ class AbstractRequest
      */
     public function isCli()
     {
-        return $this->method == self::METHOD_CLI;
+        return ($this->getMethod() == self::METHOD_CLI);
     }
 
     /**
@@ -141,7 +131,7 @@ class AbstractRequest
      */
     public function isHttp()
     {
-        return $this->method != self::METHOD_CLI;
+        return ($this->getMethod() != self::METHOD_CLI);
     }
 
     /**

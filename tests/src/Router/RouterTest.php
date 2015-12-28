@@ -9,6 +9,7 @@
  */
 namespace Bluz\Tests\Router;
 
+use Bluz\Proxy\Request;
 use Bluz\Proxy\Router;
 use Bluz\Tests\TestCase;
 
@@ -55,11 +56,9 @@ class RouterTest extends TestCase
      */
     public function testRouterFullUrl()
     {
-        if (!isset($_SERVER['SERVER_NAME'])) {
-            $_SERVER['SERVER_NAME'] = 'localhost';
-        }
+        $this->setRequestParams([], [], Request::METHOD_GET, '/');
 
-        $this->assertEquals('http://'.$_SERVER['SERVER_NAME'].'/', Router::getFullUrl());
+        $this->assertEquals('http://127.0.0.1/', Router::getFullUrl());
     }
 
     /**

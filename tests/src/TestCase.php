@@ -12,7 +12,9 @@ namespace Bluz\Tests;
 use Bluz;
 use Bluz\Http;
 use Bluz\Proxy;
-use Bluz\Router\Router;
+use Bluz\Request\RequestFactory;
+use Bluz\Proxy\Request;
+use Zend\Diactoros\ServerRequest;
 
 /**
  * Bluz TestCase
@@ -63,6 +65,38 @@ class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Set new Request instance
+     *
+     * @param array  $query
+     * @param array  $params
+     * @param string $method
+     * @param string $path   Path part of URI http://host/module/controller/path
+     * @return \Psr\Http\Message\ServerRequestInterface|ServerRequest
+     */
+    protected function setRequestParams($query = [], $params = [], $method = Request::METHOD_GET, $path = '')
+    {
+        if (!empty($path)) {
+            $uri = 'http://127.0.0.1/index/index/'. $path;
+        } else {
+            $uri = '';
+        }
+
+        $request = new ServerRequest([], [], $uri, $method);
+
+        if (!empty($query)) {
+            $request = $request->withQueryParams($query);
+        }
+
+        if (!empty($params)) {
+            $request = $request->withParsedBody($params);
+        }
+
+        Request::setInstance($request);
+
+        return $request;
+    }
+
+    /**
      * Reset layout and Request
      */
     protected static function resetApp()
@@ -74,10 +108,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
         Proxy\Auth::clearIdentity();
         Proxy\Messages::popAll();
-        Proxy\Request::setInstance(new Http\Request());
+        Proxy\Request::setInstance(RequestFactory::fromGlobals());
         Proxy\Response::setInstance(new Http\Response());
         Proxy\Response::setPresentation(null);
-
     }
 
     /**

@@ -31,8 +31,8 @@ class Request extends AbstractRequest
      */
     public function __construct()
     {
-        $this->method = self::METHOD_CLI;
-        $this->accept = self::ACCEPT_CLI;
+        $this->method = 'CLI';
+        $this->accept = 'CLI';
 
         $arguments = getopt("u:", ["uri:"]);
 

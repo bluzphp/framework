@@ -34,11 +34,19 @@ class GridTest extends TestCase
      */
     public function testProcessRequest()
     {
-        Request::setParam('arr-page', 2);  // 2 page
-        Request::setParam('arr-limit', 2); // 2 rows per page
-        Request::setParam('arr-order-id', 'desc');
-        Request::setParam('arr-filter-name', 'ne-Smith');
-        Request::setParam('arr-filter-status', 'disable');
+        $request = Request::getInstance();
+
+        $request = $request->withQueryParams(
+            [
+                'arr-page' => 2, // 2 page
+                'arr-limit' => 2, // 2 rows per page
+                'arr-order-id' => 'desc',
+                'arr-filter-name' => 'ne-Smith',
+                'arr-filter-status' => 'disable',
+            ]
+        );
+
+        Request::setInstance($request);
 
         $grid = new ArrayGrid();
 

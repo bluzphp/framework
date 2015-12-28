@@ -11,6 +11,7 @@
  */
 namespace Bluz\Proxy;
 
+use Bluz\Common\Exception\CommonException;
 use Bluz\Common\Exception\ComponentException;
 
 /**
@@ -74,14 +75,20 @@ abstract class AbstractProxy
      * Handle dynamic, static calls to the object.
      *
      * @param  string $method
-     * @param  array  $args
+     * @param  array $args
      * @return mixed
+     * @throws CommonException
+     * @throws ComponentException
      */
     public static function __callStatic($method, $args)
     {
         $instance = static::getInstance();
 
         // not need to check method exists, because we can use Nil class or magic methods
+        /*if (!method_exists($instance, $method)) {
+            throw new CommonException("Class `". get_class($instance) ."` don't have `$method` method");
+        }*/
+
         return $instance->$method(...$args);
     }
 }

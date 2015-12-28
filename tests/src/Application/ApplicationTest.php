@@ -13,7 +13,9 @@ use Bluz\Proxy;
 use Bluz\Proxy\Request;
 use Bluz\Proxy\Response;
 use Bluz\Proxy\Router;
+use Bluz\Request\RequestFactory;
 use Bluz\Tests\TestCase;
+use Zend\Diactoros\ServerRequest;
 
 /**
  * ApplicationTest
@@ -41,7 +43,7 @@ class ApplicationTest extends TestCase
     public function testGettersOfPackages()
     {
         // cache disabled for testing
-        $this->assertInstanceOf('\Bluz\Http\Request', $this->getApp()->getRequest());
+//        $this->assertInstanceOf('\Bluz\Http\Request', $this->getApp()->getRequest());
         $this->assertInstanceOf('\Bluz\Http\Response', $this->getApp()->getResponse());
     }
 
@@ -75,8 +77,11 @@ class ApplicationTest extends TestCase
     public function testIndexController()
     {
         // setup Request
-        Request::setRequestUri('');
-        Request::setMethod(Request::METHOD_GET);
+//        Request::setRequestUri('');
+//        Request::setMethod(Request::METHOD_GET);
+
+        $request = new ServerRequest([], [], '', Request::METHOD_GET);
+        Request::setInstance($request);
 
         // run Application
         $this->getApp()->process();
@@ -91,8 +96,12 @@ class ApplicationTest extends TestCase
     public function testErrorController()
     {
         // setup Request
-        Request::setRequestUri(uniqid('module'). '/'. uniqid('controller'));
-        Request::setMethod(Request::METHOD_GET);
+//        Request::setRequestUri(uniqid('module'). '/'. uniqid('controller'));
+//        Request::setMethod(Request::METHOD_GET);
+
+
+        $request = new ServerRequest([], [], uniqid('module'). '/'. uniqid('controller'), Request::METHOD_GET);
+        Request::setInstance($request);
 
         // run Application
         $this->getApp()->process();

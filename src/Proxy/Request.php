@@ -13,7 +13,8 @@ namespace Bluz\Proxy;
 
 use Bluz\Common\Exception\ComponentException;
 use Bluz\Http\FileUpload;
-use Bluz\Request\AbstractRequest as Instance;
+use Bluz\Request\RequestFactory;
+use Zend\Diactoros\ServerRequest as Instance;
 
 /**
  * Proxy to Request
@@ -31,99 +32,37 @@ use Bluz\Request\AbstractRequest as Instance;
  * @method   static Instance getInstance()
  *
  * @method   static string getMethod()
- * @see      Bluz\Request\AbstractRequest::getMethod()
- * @method   static void   setMethod($method)
- * @see      Bluz\Request\AbstractRequest::setMethod()
- *
- * @method   static string getRequestUri()
- * @see      Bluz\Request\AbstractRequest::getRequestUri()
- * @method   static void   setRequestUri($requestUri)
- * @see      Bluz\Request\AbstractRequest::setRequestUri()
- *
- * @method   static mixed getParam($key, $default = null)
- * @see      Bluz\Request\AbstractRequest::getParam()
- * @method   static void  setParam($key, $value)
- * @see      Bluz\Request\AbstractRequest::setParam()
- * @method   static array getParams()
- * @see      Bluz\Request\AbstractRequest::getParams()
- * @method   static array getAllParams()
- * @see      Bluz\Request\AbstractRequest::getAllParams()
- * @method   static void  setParams(array $params)
- * @see      Bluz\Request\AbstractRequest::setParams()
- * @method   static array getRawParams()
- * @see      Bluz\Request\AbstractRequest::getRawParams()
- * @method   static void  setRawParams(array $params)
- * @see      Bluz\Request\AbstractRequest::setRawParams()
- *
- * @method   static bool isCli()
- * @see      Bluz\Request\AbstractRequest::isCli()
- * @method   static bool isHttp()
- * @see      Bluz\Request\AbstractRequest::isHttp()
- * @method   static bool isGet()
- * @see      Bluz\Request\AbstractRequest::isGet()
- * @method   static bool isPost()
- * @see      Bluz\Request\AbstractRequest::isPost()
- * @method   static bool isPut()
- * @see      Bluz\Request\AbstractRequest::isPut()
- * @method   static bool isDelete()
- * @see      Bluz\Request\AbstractRequest::isDelete()
- *
- * @method   static string getServer($key = null, $default = null)
- * @see      Bluz\Request\AbstractRequest::getServer()
- * @method   static string getEnv($key = null, $default = null)
- * @see      Bluz\Request\AbstractRequest::getEnv()
- *
- * @method   static string|array getQuery($key = null, $default = null)
- * @see      Bluz\Http\Request::getQuery()
- * @method   static string|array getPost($key = null, $default = null)
- * @see      Bluz\Http\Request::getPost()
- * @method   static string|array getCookie($key = null, $default = null)
- * @see      Bluz\Http\Request::getCookie()
- *
- * @method   static string getHttpHost()
- * @see      Bluz\Http\Request::getHttpHost()
- * @method   static string getScheme()
- * @see      Bluz\Http\Request::getScheme()
- *
- * @method   static string getAccept()
- * @see      Bluz\Http\Request::getAccept()
- * @method   static string getHeader($header)
- * @see      Bluz\Http\Request::getHeader()
+ * @see      Zend\Diactoros\ServerRequest::getMethod()
  *
  * @method   static FileUpload getFileUpload()
  * @see      Bluz\Http\Request::getFileUpload()
  * @method   static void setFileUpload(FileUpload $fileUpload)
  * @see      Bluz\Http\Request::setFileUpload()
- *
- * @method   static bool isXmlHttpRequest()
- * @see      Bluz\Http\Request::isXmlHttpRequest()
- * @method   static bool isFlashRequest()
- * @see      Bluz\Http\Request::isFlashRequest()
  */
 class Request extends AbstractProxy
 {
     /**
      * @const string HTTP METHOD constant names
      */
-    const METHOD_OPTIONS = Instance::METHOD_OPTIONS;
-    const METHOD_GET = Instance::METHOD_GET;
-    const METHOD_HEAD = Instance::METHOD_HEAD;
-    const METHOD_PATCH = Instance::METHOD_PATCH;
-    const METHOD_POST = Instance::METHOD_POST;
-    const METHOD_PUT = Instance::METHOD_PUT;
-    const METHOD_DELETE = Instance::METHOD_DELETE;
-    const METHOD_TRACE = Instance::METHOD_TRACE;
-    const METHOD_CONNECT = Instance::METHOD_CONNECT;
+    const METHOD_OPTIONS = 'OPTIONS';
+    const METHOD_GET = 'GET';
+    const METHOD_HEAD = 'HEAD';
+    const METHOD_PATCH = 'PATCH';
+    const METHOD_POST = 'POST';
+    const METHOD_PUT = 'PUT';
+    const METHOD_DELETE = 'DELETE';
+    const METHOD_TRACE = 'TRACE';
+    const METHOD_CONNECT = 'CONNECT';
 
     /**
      * Command line request
      */
-    const METHOD_CLI = Instance::METHOD_CLI;
+    const METHOD_CLI = 'CLI';
 
     /**
      * HTTP Request
      */
-    const METHOD_HTTP = Instance::METHOD_HTTP;
+    const METHOD_HTTP = 'HTTP';
 
     /**
      * Init instance
@@ -156,13 +95,48 @@ class Request extends AbstractProxy
      */
     public static function getServer($key = null, $default = null)
     {
-        $params = self::getInstance()->getServerParams();
-        if (null === $key) {
-            return $params;
-        }
-        return (isset($params[$key])) ? $params[$key] : $default;
+        return RequestFactory::get($key, self::getInstance()->getServerParams(), $default);
     }
 
+    /**
+     * Retrieve a member of the $_COOKIE super global
+     *
+     * If no $key is passed, returns the entire $_COOKIE array.
+     *
+     * @param  string $key
+     * @param  string $default Default value to use if key not found
+     * @return string Returns null if key does not exist
+     */
+    public static function getCookie($key = null, $default = null)
+    {
+        return RequestFactory::get($key, self::getInstance()->getCookieParams(), $default);
+    }
+    /**
+     * Retrieve a member of the $_ENV super global
+     *
+     * If no $key is passed, returns the entire $_ENV array.
+     *
+     * @param  string $key
+     * @param  string $default Default value to use if key not found
+     * @return string Returns null if key does not exist
+     */
+    public static function getEnv($key = null, $default = null)
+    {
+        return RequestFactory::get($key, $_ENV, $default);
+    }
+
+    /**
+     * Search for a header value
+     *
+     * @param string $header
+     * @param mixed  $default
+     * @return string
+     */
+    public static function getHeader($header, $default = null)
+    {
+        return RequestFactory::getHeader($header, self::getInstance()->getHeaders(), $default);
+    }
+    
     /**
      * Access values contained in the superglobals as public members
      * Order of precedence: 1. GET, 2. POST, 3. COOKIE, 4. SERVER, 5. ENV
@@ -204,6 +178,17 @@ class Request extends AbstractProxy
     }
 
     /**
+     * Get uploaded file
+     *
+     * @param  string $name
+     * @return \Zend\Diactoros\UploadedFile
+     */
+    public static function getFile($name)
+    {
+        return RequestFactory::get($name, self::getInstance()->getUploadedFiles());
+    }
+
+    /**
      * Get module
      *
      * @return string
@@ -230,7 +215,7 @@ class Request extends AbstractProxy
      */
     public static function isCli()
     {
-        return (self::getInstance()->getMethod() == self::METHOD_CLI);
+        return (self::getInstance()->getMethod() == 'CLI');
     }
 
     /**
@@ -240,7 +225,7 @@ class Request extends AbstractProxy
      */
     public static function isHttp()
     {
-        return (self::getInstance()->getMethod() != self::METHOD_CLI);
+        return (self::getInstance()->getMethod() != 'CLI');
     }
 
     /**
@@ -250,7 +235,7 @@ class Request extends AbstractProxy
      */
     public static function isGet()
     {
-        return (self::getInstance()->getMethod() === self::METHOD_GET);
+        return (self::getInstance()->getMethod() === 'GET');
     }
 
     /**
@@ -260,7 +245,7 @@ class Request extends AbstractProxy
      */
     public static function isPost()
     {
-        return (self::getInstance()->getMethod() === self::METHOD_POST);
+        return (self::getInstance()->getMethod() === 'POST');
     }
 
     /**
@@ -270,7 +255,7 @@ class Request extends AbstractProxy
      */
     public static function isPut()
     {
-        return (self::getInstance()->getMethod() === self::METHOD_PUT);
+        return (self::getInstance()->getMethod() === 'PUT');
     }
 
     /**
@@ -280,7 +265,7 @@ class Request extends AbstractProxy
      */
     public static function isDelete()
     {
-        return (self::getInstance()->getMethod() === self::METHOD_DELETE);
+        return (self::getInstance()->getMethod() === 'DELETE');
     }
 
     /**
@@ -292,7 +277,7 @@ class Request extends AbstractProxy
      */
     public static function isXmlHttpRequest()
     {
-        return (current(self::getInstance()->getHeader('X-Requested-With')) == 'XMLHttpRequest');
+        return (self::getHeader('X-Requested-With') == 'XMLHttpRequest');
     }
 
     /**

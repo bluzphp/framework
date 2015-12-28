@@ -157,7 +157,7 @@ class Rest extends AbstractController
             $limit = isset($this->params['limit'])?$this->params['limit']:10;
 
             if ($range = Request::getHeader('Range')) {
-                list(, $offset, $last) = preg_split('/[-=]/', current($range));
+                list(, $offset, $last) = preg_split('/[-=]/', $range);
                 // for better compatibility
                 $limit = $last - $offset;
             }

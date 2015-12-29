@@ -55,16 +55,6 @@ class Request extends AbstractProxy
     const METHOD_CONNECT = 'CONNECT';
 
     /**
-     * Command line request
-     */
-    const METHOD_CLI = 'CLI';
-
-    /**
-     * HTTP Request
-     */
-    const METHOD_HTTP = 'HTTP';
-
-    /**
      * Init instance
      *
      * @throws ComponentException
@@ -215,7 +205,7 @@ class Request extends AbstractProxy
      */
     public static function isCli()
     {
-        return (self::getInstance()->getMethod() == 'CLI');
+        return (PHP_SAPI === 'cli');
     }
 
     /**
@@ -225,7 +215,7 @@ class Request extends AbstractProxy
      */
     public static function isHttp()
     {
-        return (self::getInstance()->getMethod() != 'CLI');
+        return (PHP_SAPI !== 'cli');
     }
 
     /**
@@ -287,8 +277,8 @@ class Request extends AbstractProxy
     public static function getAccept($allowTypes = [])
     {
         // get header from request
-        $header = self::getInstance()->getHeader('accept');
-        $header = current($header);
+        $header = self::getHeader('accept');
+
         // make array if types
         $accept = explode(',', $header);
         $accept = array_map('trim', $accept);

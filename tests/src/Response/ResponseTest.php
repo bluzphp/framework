@@ -9,7 +9,7 @@
  */
 namespace Bluz\Tests\Response;
 
-use Bluz\Http\Response;
+use Bluz\Response\Response;
 use Bluz\Tests\TestCase;
 
 /**
@@ -40,7 +40,6 @@ class ResponseTest extends TestCase
     {
         $this->assertNotEmpty($this->response->getProtocolVersion());
         $this->assertNull($this->response->getReasonPhrase());
-        $this->assertNull($this->response->getException());
     }
 
     /**

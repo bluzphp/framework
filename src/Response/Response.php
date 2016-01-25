@@ -12,17 +12,23 @@
 namespace Bluz\Response;
 
 use Bluz\Common\Options;
-use Bluz\Response\Presentation\AbstractPresentation;
+use Bluz\Proxy\Messages;
 use Bluz\View\View;
+use Psr\Http\Message\ResponseInterface;
+use Zend\Diactoros\Response\EmptyResponse;
+use Zend\Diactoros\Response\HtmlResponse;
+use Zend\Diactoros\Response\JsonResponse;
+use Zend\Diactoros\Response\RedirectResponse;
+use Zend\Diactoros\Response\SapiEmitter;
 
 /**
- * Abstract Response
+ * Response Container
  *
  * @package  Bluz\Response
  * @author   Anton Shevchuk
  * @link     https://github.com/bluzphp/framework/wiki/Response
  */
-abstract class AbstractResponse
+class Response
 {
     use Options;
 
@@ -57,47 +63,57 @@ abstract class AbstractResponse
     protected $body;
 
     /**
-     * @var \Exception catches exception
-     */
-    protected $exception;
-
-    /**
-     * @var string|AbstractPresentation support JSON, JSONP, XML, CLI
-     */
-    protected $presentation;
-
-    /**
-     * Send messages to client
-     *
-     * @return mixed
-     */
-    abstract protected function sendHeaders();
-
-    /**
-     * Send messages to client
-     *
-     * @return mixed
-     */
-    abstract protected function sendBody();
-
-    /**
-     * Send data to client (console or browser)
+     * send
      *
      * @return void
      */
     public function send()
     {
-        // Apply presentation metamorphosis
-        if ($this->presentation) {
-            if (is_string($this->presentation)) {
-                $presentationClass = '\\Bluz\\Response\\Presentation\\'.ucfirst(strtolower($this->presentation));
-                $this->presentation = new $presentationClass($this);
-            }
+        // switch statement for $this->status
+        switch ($this->getStatusCode()) {
+            case 204:
+                $response = new EmptyResponse($this->getStatusCode(), $this->getHeaders());
+                break;
+            case 301:
+            case 302:
+                $response = new RedirectResponse(
+                    $this->getHeader('Location'),
+                    $this->getStatusCode(),
+                    $this->getHeaders()
+                );
+                break;
+            default:
+                if ($this->getHeader('Content-Type') == 'application/json') {
+                    // setup messages
+                    if (Messages::count()) {
+                        $this->setHeader('Bluz-Notify', json_encode(Messages::popAll()));
+                    }
 
-            $this->presentation->process();
+                    // encode body data to JSON
+                    $response = new JsonResponse(
+                        $this->getBody()->toArray(),
+                        $this->getStatusCode(),
+                        $this->getHeaders()
+                    );
+                } else {
+
+                    $body = $this->getBody();
+
+                    if (is_callable($body)) {
+                        $body = $body();
+                    }
+
+                    $response = new HtmlResponse(
+                        (string) $body,
+                        $this->getStatusCode(),
+                        $this->getHeaders()
+                    );
+                }
+                break;
         }
-        $this->sendHeaders();
-        $this->sendBody();
+
+        $emitter = new SapiEmitter();
+        $emitter->emit($response);
     }
 
     /**
@@ -407,49 +423,5 @@ abstract class AbstractResponse
     public function getCookie($name)
     {
         return isset($this->cookies[$name])?$this->cookies[$name]:null;
-    }
-
-    /**
-     * Set Exception
-     *
-     * @param  \Exception $exception
-     * @return void
-     */
-    public function setException($exception)
-    {
-        $this->removeHeaders();
-        $this->clearBody();
-        $this->exception = $exception;
-    }
-
-    /**
-     * Get Exception
-     *
-     * @return \Exception
-     */
-    public function getException()
-    {
-        return $this->exception;
-    }
-
-    /**
-     * Set Presentation
-     *
-     * @param  string $presentation
-     * @return void
-     */
-    public function setPresentation($presentation)
-    {
-        $this->presentation = $presentation;
-    }
-
-    /**
-     * Get Presentation
-     *
-     * @return string
-     */
-    public function getPresentation()
-    {
-        return $this->presentation;
     }
 }

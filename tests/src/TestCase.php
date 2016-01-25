@@ -12,8 +12,8 @@ namespace Bluz\Tests;
 use Bluz;
 use Bluz\Http;
 use Bluz\Proxy;
-use Bluz\Request\RequestFactory;
 use Bluz\Proxy\Request;
+use Bluz\Request\RequestFactory;
 use Zend\Diactoros\ServerRequest;
 
 /**
@@ -109,8 +109,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
         Proxy\Auth::clearIdentity();
         Proxy\Messages::popAll();
         Proxy\Request::setInstance(RequestFactory::fromGlobals());
-        Proxy\Response::setInstance(new Http\Response());
-        Proxy\Response::setPresentation(null);
+        Proxy\Response::setInstance(new Bluz\Response\Response());
     }
 
     /**

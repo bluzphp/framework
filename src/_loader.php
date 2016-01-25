@@ -50,8 +50,6 @@ require_once 'Cache/Cache.php';
 require_once 'Config/Config.php';
 require_once 'Controller/Reflection.php';
 require_once 'Messages/Messages.php';
-require_once 'Response/AbstractResponse.php';
-require_once 'Request/AbstractRequest.php';
 require_once 'Router/Router.php';
 require_once 'Session/Session.php';
 require_once 'Translator/Translator.php';

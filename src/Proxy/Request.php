@@ -175,7 +175,7 @@ class Request extends AbstractProxy
      */
     public static function getFile($name)
     {
-        return RequestFactory::get($name, self::getInstance()->getUploadedFiles());
+        return Request::get($name, self::getInstance()->getUploadedFiles());
     }
 
     /**

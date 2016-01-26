@@ -60,8 +60,8 @@ class Request extends AbstractProxy
     }
     
     /**
-     * getRequestUri
-     * 
+     * Get Request Uri
+     *
      * @return UriInterface
      */
     public static function getRequestUri()

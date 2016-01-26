@@ -496,11 +496,11 @@ class Router
 
         // rewrite module from request
         if (sizeof($raw)) {
-            $this->setParam('_module',  array_shift($raw));
+            $this->setParam('_module', array_shift($raw));
         }
         // rewrite module from controller
         if (sizeof($raw)) {
-            $this->setParam('_controller',  array_shift($raw));
+            $this->setParam('_controller', array_shift($raw));
         }
         if ($size = sizeof($raw)) {
             // save raw

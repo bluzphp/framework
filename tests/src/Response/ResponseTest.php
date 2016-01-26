@@ -52,9 +52,9 @@ class ResponseTest extends TestCase
     }
 
     /**
-     * @covers \Bluz\Response\AbstractResponse::setHeader
-     * @covers \Bluz\Response\AbstractResponse::getHeader
-     * @covers \Bluz\Response\AbstractResponse::hasHeader
+     * @covers \Bluz\Response\Response::setHeader
+     * @covers \Bluz\Response\Response::getHeader
+     * @covers \Bluz\Response\Response::hasHeader
      */
     public function testSetGetHasHeader()
     {
@@ -66,9 +66,9 @@ class ResponseTest extends TestCase
     }
 
     /**
-     * @covers \Bluz\Response\AbstractResponse::addHeader
-     * @covers \Bluz\Response\AbstractResponse::getHeader
-     * @covers \Bluz\Response\AbstractResponse::getHeaderAsArray
+     * @covers \Bluz\Response\Response::addHeader
+     * @covers \Bluz\Response\Response::getHeader
+     * @covers \Bluz\Response\Response::getHeaderAsArray
      */
     public function testAddHeader()
     {
@@ -82,7 +82,7 @@ class ResponseTest extends TestCase
     }
 
     /**
-     * @covers \Bluz\Response\AbstractResponse::removeHeader
+     * @covers \Bluz\Response\Response::removeHeader
      */
     public function testRemoveHeader()
     {
@@ -93,9 +93,9 @@ class ResponseTest extends TestCase
     }
 
     /**
-     * @covers \Bluz\Response\AbstractResponse::setHeaders
-     * @covers \Bluz\Response\AbstractResponse::addHeaders
-     * @covers \Bluz\Response\AbstractResponse::getHeaders
+     * @covers \Bluz\Response\Response::setHeaders
+     * @covers \Bluz\Response\Response::addHeaders
+     * @covers \Bluz\Response\Response::getHeaders
      */
     public function testAddHeaders()
     {
@@ -107,7 +107,7 @@ class ResponseTest extends TestCase
     }
 
     /**
-     * @covers \Bluz\Response\AbstractResponse::removeHeaders
+     * @covers \Bluz\Response\Response::removeHeaders
      */
     public function testRemoveHeaders()
     {
@@ -120,8 +120,8 @@ class ResponseTest extends TestCase
     }
 
     /**
-     * @covers \Bluz\Response\AbstractResponse::setCookie
-     * @covers \Bluz\Response\AbstractResponse::getCookie
+     * @covers \Bluz\Response\Response::setCookie
+     * @covers \Bluz\Response\Response::getCookie
      */
     public function testSetGetCookies()
     {

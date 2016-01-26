@@ -334,9 +334,6 @@ class Application
         $controller = Request::getController();
         $params = Request::getParams();
 
-        // need for switch to JSON in error controller
-        $jsonFlag = false;
-
         // try to dispatch controller
         try {
             // get reflection of requested controller
@@ -376,7 +373,6 @@ class Application
                     // HTML response with layout
                     break;
                 case 'application/json':
-                    $jsonFlag = true;
                     $this->useJson();
                     break;
                 default:
@@ -448,8 +444,7 @@ class Application
                 Router::getErrorController(),
                 array(
                     'code' => $e->getCode(),
-                    'message' => $e->getMessage(),
-                    'json' => $jsonFlag
+                    'message' => $e->getMessage()
                 )
             );
         }

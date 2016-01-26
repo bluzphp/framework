@@ -287,6 +287,8 @@ class Request extends AbstractProxy
 
     /**
      * Get Accept MIME Type
+     *
+     * @param  array $allowTypes
      * @return string
      */
     public static function getAccept($allowTypes = [])

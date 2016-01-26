@@ -559,7 +559,6 @@ class Router
     {
         if ($this->cleanUri === null) {
             $uri = Request::getRequestUri()->getPath();
-
             if ($this->getBaseUrl() && strpos($uri, $this->getBaseUrl()) === 0) {
                 $uri = substr($uri, strlen($this->getBaseUrl()));
             }

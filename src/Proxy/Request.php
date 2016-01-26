@@ -13,6 +13,7 @@ namespace Bluz\Proxy;
 
 use Bluz\Common\Exception\ComponentException;
 use Bluz\Request\RequestFactory;
+use Psr\Http\Message\UriInterface;
 use Zend\Diactoros\ServerRequest as Instance;
 
 /**
@@ -61,7 +62,7 @@ class Request extends AbstractProxy
     /**
      * getRequestUri
      * 
-     * @return string
+     * @return UriInterface
      */
     public static function getRequestUri()
     {
@@ -169,9 +170,8 @@ class Request extends AbstractProxy
      */
     public static function getFile($name)
     {
-        return Request::get($name, self::getInstance()->getUploadedFiles());
+        return RequestFactory::get($name, self::getInstance()->getUploadedFiles());
     }
-
 
     /**
      * Get the client's IP address

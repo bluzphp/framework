@@ -59,7 +59,7 @@ class Rest extends AbstractController
         // %module% / %controller% / %id% / %relation% / %id%
         $path = Router::getCleanUri();
 
-        $params = explode('/', $path);
+        $params = explode('/', rtrim($path, '/'));
 
         // module
         array_shift($params);

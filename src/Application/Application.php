@@ -334,50 +334,58 @@ class Application
         $controller = Request::getController();
         $params = Request::getParams();
 
+        // need for switch to JSON in error controller
+        $jsonFlag = false;
+
         // try to dispatch controller
         try {
             // get reflection of requested controller
             $controllerFile = $this->getControllerFile($module, $controller);
             $reflection = $this->reflection($controllerFile);
 
-            // check header "accept" for catch JSON(P) or XML requests, and switch presentation
+            // check header "accept" for catch JSON requests, and switch response to JSON
             // it's some magic for AJAX and REST requests
+            $acceptMap = [
+                'HTML' => 'text/html',
+                'JSON' => 'application/json'
+            ];
+
+            // some controller has @accept tag
             if ($allowAccept = $reflection->getAccept()) {
-
-                $acceptMap = [
-                    'HTML' => 'text/html',
-                    'JSON' => 'application/json',
-                    'JSONP' => 'application/javascript',
-                    'XML' => 'application/xml'
-                ];
-
                 // convert list of controller @accept to MIME types
-                $allowAccept = array_filter($acceptMap, function ($key) use ($allowAccept) {
-                    return in_array($key, $allowAccept);
-                }, ARRAY_FILTER_USE_KEY);
+                $allowAccept = array_filter(
+                    $acceptMap,
+                    function ($key) use ($allowAccept) {
+                        return in_array($key, $allowAccept);
+                    },
+                    ARRAY_FILTER_USE_KEY
+                );
+                $allowAccept = array_values($allowAccept);
+            } else {
+                // by default allow just HTML output
+                $allowAccept = ['text/html'];
+            }
 
-                // choose MIME type by browser accept header
-                // filtered by controller @accept
-                $accept = Request::getAccept(array_values($allowAccept));
+            // choose MIME type by browser accept header
+            // filtered by controller @accept
+            $accept = Request::getAccept($allowAccept);
 
-                // find key by MIME type
-                $accept = array_search($accept, $acceptMap);
-
-                // switch statement for Accept header
-                switch ($accept) {
-                    case 'HTML':
-                        // with layout
-                        // without additional presentation
-                        break;
-                    case 'JSON':
-                        $this->useJson();
-                        break;
-                    case 'JSONP':
-                    case 'XML':
-                    default:
+            // switch statement for Accept header
+            switch ($accept) {
+                case 'text/html':
+                    // HTML response with layout
+                    break;
+                case 'application/json':
+                    $jsonFlag = true;
+                    $this->useJson();
+                    break;
+                default:
+                    if (PHP_SAPI == 'cli') {
+                        // all ok
+                    } else {
                         // not acceptable MIME type
                         throw new NotAcceptableException();
-                }
+                    }
             }
 
             // check call method(s)
@@ -434,12 +442,14 @@ class Application
             $statusCode = (100 <= $e->getCode() && $e->getCode() <= 505) ? $e->getCode() : 500;
             Response::setStatusCode($statusCode);
 
+            // TODO: if `error` controller consist error
             $dispatchResult = $this->dispatch(
                 Router::getErrorModule(),
                 Router::getErrorController(),
                 array(
                     'code' => $e->getCode(),
-                    'message' => $e->getMessage()
+                    'message' => $e->getMessage(),
+                    'json' => $jsonFlag
                 )
             );
         }

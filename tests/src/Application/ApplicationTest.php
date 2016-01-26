@@ -76,7 +76,7 @@ class ApplicationTest extends TestCase
     public function testIndexController()
     {
         // setup Request
-        $request = new ServerRequest([], [], '', Request::METHOD_GET);
+        $request = new ServerRequest([], [], '', Request::METHOD_GET, 'php://input', ['Accept' => 'text/html']);
         Request::setInstance($request);
 
         // run Application

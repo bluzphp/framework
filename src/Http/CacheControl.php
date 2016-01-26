@@ -12,6 +12,7 @@
 namespace Bluz\Http;
 
 use Bluz\Common\Container\Container;
+use Bluz\Response\Response;
 
 /**
  * HTTP Cache Control

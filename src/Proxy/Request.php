@@ -12,7 +12,6 @@
 namespace Bluz\Proxy;
 
 use Bluz\Common\Exception\ComponentException;
-use Bluz\Http\FileUpload;
 use Bluz\Request\RequestFactory;
 use Zend\Diactoros\ServerRequest as Instance;
 
@@ -33,11 +32,6 @@ use Zend\Diactoros\ServerRequest as Instance;
  *
  * @method   static string getMethod()
  * @see      Zend\Diactoros\ServerRequest::getMethod()
- *
- * @method   static FileUpload getFileUpload()
- * @see      Bluz\Http\Request::getFileUpload()
- * @method   static void setFileUpload(FileUpload $fileUpload)
- * @see      Bluz\Http\Request::setFileUpload()
  */
 class Request extends AbstractProxy
 {
@@ -176,6 +170,27 @@ class Request extends AbstractProxy
     public static function getFile($name)
     {
         return Request::get($name, self::getInstance()->getUploadedFiles());
+    }
+
+
+    /**
+     * Get the client's IP address
+     *
+     * @param  bool $checkProxy
+     * @return string
+     */
+    public static function getClientIp($checkProxy = true)
+    {
+        if ($checkProxy && self::getServer('HTTP_CLIENT_IP') != null) {
+            $ip = self::getServer('HTTP_CLIENT_IP');
+        } else {
+            if ($checkProxy && self::getServer('HTTP_X_FORWARDED_FOR') != null) {
+                $ip = self::getServer('HTTP_X_FORWARDED_FOR');
+            } else {
+                $ip = self::getServer('REMOTE_ADDR');
+            }
+        }
+        return $ip;
     }
 
     /**

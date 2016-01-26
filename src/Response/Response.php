@@ -14,7 +14,6 @@ namespace Bluz\Response;
 use Bluz\Common\Options;
 use Bluz\Proxy\Messages;
 use Bluz\View\View;
-use Psr\Http\Message\ResponseInterface;
 use Zend\Diactoros\Response\EmptyResponse;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\JsonResponse;
@@ -98,6 +97,22 @@ class Response
                 } else {
 
                     $body = $this->getBody();
+
+                    if (PHP_SAPI === 'cli') {
+                        // extract data from view
+                        if ($body instanceof View) {
+                            $body = $body->toArray();
+                        }
+                        // output
+                        if (is_array($body)) {
+                            // just print to console as key-value pair
+                            $output = array();
+                            array_walk_recursive($body, function ($value, $key) use (&$output) {
+                                $output[] = $key .': '. $value;
+                            });
+                            $body = join("\n", $output);
+                        }
+                    }
 
                     if (is_callable($body)) {
                         $body = $body();

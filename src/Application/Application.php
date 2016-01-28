@@ -639,7 +639,7 @@ class Application
     /**
      * Get Request instance
      *
-     * @return \Bluz\Request\RequestFactory
+     * @return \Zend\Diactoros\ServerRequest
      */
     public function getRequest()
     {

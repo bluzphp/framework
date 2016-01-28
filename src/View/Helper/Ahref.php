@@ -11,7 +11,6 @@
  */
 namespace Bluz\View\Helper;
 
-use Bluz\Proxy\Router;
 use Bluz\View\View;
 use Bluz\Proxy\Request;
 use Bluz\Proxy\Translator;

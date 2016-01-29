@@ -22,7 +22,7 @@ class UserAdmin extends AbstractRowEntity
      *
      * @return void
      */
-    public function login()
+    public function tryLogin()
     {
         Auth::setIdentity($this);
     }

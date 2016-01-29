@@ -103,7 +103,7 @@ class CrudTest extends TestCase
      */
     public function testReadRecord()
     {
-        $this->setRequestParams(['id' => 1]);
+        $this->setRequestParams('', ['id' => 1]);
 
         $result = $this->processCrud();
 
@@ -117,7 +117,7 @@ class CrudTest extends TestCase
      */
     public function testReadRecordError()
     {
-        $this->setRequestParams(['id' => 100042]);
+        $this->setRequestParams('', ['id' => 100042]);
         $this->processCrud();
     }
 
@@ -127,6 +127,7 @@ class CrudTest extends TestCase
     public function testCreate()
     {
         $this->setRequestParams(
+            '',
             [],
             ['name' => 'Splinter', 'email' => 'splinter@turtles.org'],
             Request::METHOD_POST
@@ -145,6 +146,7 @@ class CrudTest extends TestCase
     public function testCreateValidationErrors()
     {
         $this->setRequestParams(
+            '',
             [],
             ['name' => '', 'email' => ''],
             Request::METHOD_POST
@@ -164,6 +166,7 @@ class CrudTest extends TestCase
     public function testUpdate()
     {
         $this->setRequestParams(
+            '',
             [],
             ['id' => 2, 'name' => 'Leonardo', 'email' => 'leonardo@turtles.ua'],
             Request::METHOD_PUT
@@ -189,6 +192,7 @@ class CrudTest extends TestCase
     public function testUpdateNotFoundError()
     {
         $this->setRequestParams(
+            '',
             [],
             ['id' => 100042, 'name' => 'You Knows', 'email' => 'all@turtles.ua'],
             Request::METHOD_PUT
@@ -203,6 +207,7 @@ class CrudTest extends TestCase
     public function testUpdateValidationErrors()
     {
         $this->setRequestParams(
+            '',
             [],
             ['id' => 2, 'name' => '123456', 'email' => 'leonardo[at]turtles.ua'],
             Request::METHOD_PUT
@@ -222,6 +227,7 @@ class CrudTest extends TestCase
     public function testDelete()
     {
         $this->setRequestParams(
+            '',
             [],
             ['id' => 3],
             Request::METHOD_DELETE
@@ -241,6 +247,7 @@ class CrudTest extends TestCase
     public function testDeleteError()
     {
         $this->setRequestParams(
+            '',
             [],
             ['id' => 100042],
             Request::METHOD_DELETE
@@ -256,6 +263,7 @@ class CrudTest extends TestCase
     public function testNotImplementedException()
     {
         $this->setRequestParams(
+            '',
             [],
             [],
             Request::METHOD_HEAD

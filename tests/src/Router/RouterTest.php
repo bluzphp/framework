@@ -56,7 +56,7 @@ class RouterTest extends TestCase
      */
     public function testRouterFullUrl()
     {
-        $this->setRequestParams([], [], Request::METHOD_GET, '/');
+        $this->setRequestParams('/', [], [], Request::METHOD_GET);
 
         $this->assertEquals('http://127.0.0.1/', Router::getFullUrl());
     }

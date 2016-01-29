@@ -74,6 +74,7 @@ class BootstrapTest extends Application
         $this->dispatchModule = $module;
         $this->dispatchController = $controller;
 
+
         return parent::dispatch($module, $controller, $params);
     }
 }

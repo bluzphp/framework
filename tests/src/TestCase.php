@@ -51,7 +51,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     /**
      * Get Application instance
      *
-     * @return BootstrapTest
+     * @return \Bluz\Application\Application
      */
     protected static function getApp()
     {
@@ -67,17 +67,24 @@ class TestCase extends \PHPUnit_Framework_TestCase
     /**
      * Set new Request instance
      *
-     * @param array  $query
-     * @param array  $params
-     * @param string $method
-     * @param string $path   Path part of URI http://host/module/controller/path
+     * @param string $path Path part of URI http://host/module/controller/path
+     * @param array  $query $_GET params
+     * @param array  $params $_POST params
+     * @param string $method HTTP method
+     * @param array  $headers HTTP headers
      * @return \Psr\Http\Message\ServerRequestInterface|ServerRequest
      */
-    protected function setRequestParams($query = [], $params = [], $method = Request::METHOD_GET, $path = '')
+    protected function prepareRequest(
+        $path = '',
+        $query = [],
+        $params = [],
+        $method = Request::METHOD_GET,
+        $headers = []
+    )
     {
         $uri = 'http://127.0.0.1/'. $path;
 
-        $request = new ServerRequest([], [], $uri, $method);
+        $request = new ServerRequest([], [], $uri, $method, 'php://input', $headers);
 
         if (!empty($query)) {
             $request = $request->withQueryParams($query);
@@ -86,6 +93,29 @@ class TestCase extends \PHPUnit_Framework_TestCase
         if (!empty($params)) {
             $request = $request->withParsedBody($params);
         }
+
+        return $request;
+    }
+
+    /**
+     * Set new Request instance
+     *
+     * @param string $path Path part of URI http://host/module/controller/path
+     * @param array  $query $_GET params
+     * @param array  $params $_POST params
+     * @param string $method HTTP method
+     * @param array  $headers HTTP headers
+     * @return \Psr\Http\Message\ServerRequestInterface|ServerRequest
+     */
+    protected function setRequestParams(
+        $path = '',
+        $query = [],
+        $params = [],
+        $method = Request::METHOD_GET,
+        $headers = []
+    )
+    {
+        $request = $this->prepareRequest($path, $query, $params, $method, $headers);
 
         Request::setInstance($request);
 

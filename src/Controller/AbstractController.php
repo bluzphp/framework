@@ -65,7 +65,10 @@ abstract class AbstractController
             $this->params = $query;
         }
 
-        $this->data = Request::getParams();
+        $data = Request::getParams();
+        unset($data['_method'], $data['_module'], $data['_controller']);
+
+        $this->data = $data;
     }
 
     /**

@@ -28,7 +28,7 @@ abstract class AbstractRowEntity extends Row implements EntityInterface
      * @return bool
      * @throws AuthException
      */
-    abstract public function login();
+    abstract public function tryLogin();
 
     /**
      * Get privileges

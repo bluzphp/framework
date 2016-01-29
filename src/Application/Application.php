@@ -402,6 +402,8 @@ class Application
             $dispatchResult = $this->dispatch($module, $controller, $params);
 
         } catch (RedirectException $e) {
+            $this->setException($e);
+
             Response::removeHeaders();
             Response::clearBody();
 
@@ -415,6 +417,8 @@ class Application
                 return;
             }
         } catch (ReloadException $e) {
+            $this->setException($e);
+
             Response::removeHeaders();
             Response::clearBody();
 

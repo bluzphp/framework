@@ -75,11 +75,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected function setRequestParams($query = [], $params = [], $method = Request::METHOD_GET, $path = '')
     {
-        if (!empty($path)) {
-            $uri = 'http://127.0.0.1/index/index/'. $path;
-        } else {
-            $uri = '';
-        }
+        $uri = 'http://127.0.0.1/'. $path;
 
         $request = new ServerRequest([], [], $uri, $method);
 

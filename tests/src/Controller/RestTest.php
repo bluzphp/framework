@@ -95,7 +95,8 @@ class RestTest extends TestCase
         $this->setRequestParams(
             ['1'],
             [],
-            Request::METHOD_HEAD
+            Request::METHOD_HEAD,
+            'index/index'
         );
 
         $result = $this->processRest();
@@ -114,7 +115,8 @@ class RestTest extends TestCase
         $this->setRequestParams(
             ['offset' => 0, 'limit' => 3],
             [],
-            Request::METHOD_HEAD
+            Request::METHOD_HEAD,
+            'index/index'
         );
 
         $result = $this->processRest();
@@ -131,7 +133,7 @@ class RestTest extends TestCase
             [],
             [],
             Request::METHOD_GET,
-            '1'
+            'index/index/1'
         );
 
         $result = $this->processRest();
@@ -152,7 +154,7 @@ class RestTest extends TestCase
             [],
             [],
             Request::METHOD_GET,
-            '1/pages'
+            'index/index/1/pages'
         );
 
         $result = $this->processRest();
@@ -173,7 +175,7 @@ class RestTest extends TestCase
             [],
             [],
             Request::METHOD_GET,
-            '1/pages/1'
+            'index/index/1/pages/1'
         );
 
         $result = $this->processRest();
@@ -194,7 +196,7 @@ class RestTest extends TestCase
             [],
             [],
             Request::METHOD_GET,
-            '100042'
+            'index/index/100042'
         );
 
         $this->processRest();
@@ -208,7 +210,8 @@ class RestTest extends TestCase
         $this->setRequestParams(
             ['offset' => 0, 'limit' => 3],
             [],
-            Request::METHOD_HEAD
+            Request::METHOD_HEAD,
+            'index/index'
         );
 
         $restController = new Controller\Rest();
@@ -227,7 +230,8 @@ class RestTest extends TestCase
         $request = $this->setRequestParams(
             [],
             [],
-            Request::METHOD_GET
+            Request::METHOD_GET,
+            'index/index'
         );
 
         $request = $request->withHeader('Range', 'test=0-3');
@@ -246,7 +250,8 @@ class RestTest extends TestCase
         $this->setRequestParams(
             [],
             ['name' => 'Splinter', 'email' => 'splinter@turtles.org'],
-            Request::METHOD_POST
+            Request::METHOD_POST,
+            'index/index'
         );
 
         $result = $this->processRest();
@@ -270,7 +275,7 @@ class RestTest extends TestCase
             [],
             [],
             Request::METHOD_POST,
-            '1'
+            'index/index/1'
         );
 
         $this->processRest();
@@ -284,7 +289,8 @@ class RestTest extends TestCase
         $this->setRequestParams(
             [],
             [],
-            Request::METHOD_POST
+            Request::METHOD_POST,
+            'index/index'
         );
 
         $this->processRest();
@@ -300,7 +306,8 @@ class RestTest extends TestCase
         $this->setRequestParams(
             [],
             ['name' => '', 'email' => ''],
-            Request::METHOD_POST
+            Request::METHOD_POST,
+            'index/index'
         );
         $result = $this->processRest();
         $this->assertEquals(sizeof($result['errors']), 2);
@@ -315,7 +322,7 @@ class RestTest extends TestCase
             [],
             ['name' => 'Leonardo', 'email' => 'leonardo@turtles.ua'],
             Request::METHOD_PUT,
-            '2'
+            'index/index/2'
         );
 
         $result = $this->processRest();
@@ -337,7 +344,7 @@ class RestTest extends TestCase
             [],
             ['name' => 'Donatello', 'email' => 'donatello@turtles.org'],
             Request::METHOD_PUT,
-            '1'
+            'index/index/1'
         );
 
         $result = $this->processRest();
@@ -356,7 +363,7 @@ class RestTest extends TestCase
             [],
             ['name' => 'Leonardo', 'email' => 'leonardo@turtles.ua'],
             Request::METHOD_PUT,
-            '100042'
+            'index/index/100042'
         );
 
         $this->processRest();
@@ -372,7 +379,7 @@ class RestTest extends TestCase
             [],
             [],
             Request::METHOD_PUT,
-            '100042'
+            'index/index/100042'
         );
 
         $this->processRest();
@@ -387,7 +394,7 @@ class RestTest extends TestCase
             [],
             ['name' => '123456', 'email' => 'leonardo[at]turtles.ua'],
             Request::METHOD_PUT,
-            '2'
+            'index/index/2'
         );
 
         $result = $this->processRest();
@@ -407,7 +414,8 @@ class RestTest extends TestCase
                 ['id' => 3, 'name' => 'Michelangelo', 'email' => 'michelangelo@turtles.org.ua'],
                 ['id' => 4, 'name' => 'Raphael', 'email' => 'Raphael@turtles.org.ua'],
             ],
-            Request::METHOD_PUT
+            Request::METHOD_PUT,
+            'index/index'
         );
 
         $this->processRest();
@@ -422,7 +430,7 @@ class RestTest extends TestCase
             [],
             [],
             Request::METHOD_DELETE,
-            '1'
+            'index/index/1'
         );
 
         $result = $this->processRest();
@@ -445,7 +453,7 @@ class RestTest extends TestCase
             [],
             [],
             Request::METHOD_DELETE,
-            '100042'
+            'index/index/100042'
         );
 
         $this->processRest();
@@ -460,7 +468,8 @@ class RestTest extends TestCase
         $this->setRequestParams(
             [],
             [],
-            Request::METHOD_DELETE
+            Request::METHOD_DELETE,
+            'index/index'
         );
 
         $this->processRest();
@@ -478,7 +487,8 @@ class RestTest extends TestCase
                 ['id' => 3],
                 ['id' => 4],
             ],
-            Request::METHOD_DELETE
+            Request::METHOD_DELETE,
+            'index/index'
         );
 
         $this->processRest();
@@ -493,7 +503,7 @@ class RestTest extends TestCase
             [],
             [],
             Request::METHOD_OPTIONS,
-            '100042'
+            'index/index/100042'
         );
 
         $this->processRest();
@@ -509,7 +519,8 @@ class RestTest extends TestCase
         $this->setRequestParams(
             [],
             [],
-            Request::METHOD_OPTIONS
+            Request::METHOD_OPTIONS,
+            'index/index'
         );
 
         $this->processRest();
@@ -526,7 +537,8 @@ class RestTest extends TestCase
         $this->setRequestParams(
             [],
             [],
-            Request::METHOD_TRACE
+            Request::METHOD_TRACE,
+            'index/index'
         );
 
         $this->processRest();

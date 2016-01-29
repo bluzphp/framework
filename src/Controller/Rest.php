@@ -55,9 +55,18 @@ class Rest extends AbstractController
     {
         parent::__construct();
 
-        $params = Request::getRawParams();
-
+        // get path
         // %module% / %controller% / %id% / %relation% / %id%
+        $path = Router::getCleanUri();
+
+        $params = explode('/', rtrim($path, '/'));
+
+        // module
+        array_shift($params);
+
+        // controller
+        array_shift($params);
+
         if (sizeof($params)) {
             $this->primary = explode('-', array_shift($params));
         }

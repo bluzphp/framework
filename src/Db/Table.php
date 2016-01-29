@@ -333,8 +333,7 @@ abstract class Table
         if (!$primaryKey) {
             return null;
         }
-        $self = static::getInstance();
-        $result = call_user_func(array($self, 'find'), $primaryKey);
+        $result = static::getInstance()->find($primaryKey);
         return current($result);
     }
 
@@ -400,6 +399,7 @@ abstract class Table
                 "please use `Table::fetchAll()` instead"
             );
         }
+
         return $self->fetch($self->select . ' WHERE ' . $whereClause, $whereParams);
     }
 
@@ -411,8 +411,7 @@ abstract class Table
      */
     public static function findRowWhere($whereList)
     {
-        $self = static::getInstance();
-        $result = call_user_func(array($self, 'findWhere'), $whereList);
+        $result = static::getInstance()->findWhere($whereList);
         return current($result);
     }
 

@@ -14,7 +14,7 @@ namespace Bluz\Validator\Rule;
 use Bluz\Validator\Exception\ComponentException;
 
 /**
- * Abstract rule for filetrs
+ * Abstract rule for filters
  *
  * @package Bluz\Validator\Rule
  */

@@ -66,6 +66,16 @@ class Router
     protected $errorController = self::ERROR_CONTROLLER;
 
     /**
+     * @var array instance parameters
+     */
+    protected $params = array();
+
+    /**
+     * @var array instance raw parameters
+     */
+    protected $rawParams = array();
+
+    /**
      * @var array routers map
      */
     protected $routers = array();
@@ -80,6 +90,9 @@ class Router
      */
     public function __construct()
     {
+        $this->module = $this->getDefaultModule();
+        $this->controller = $this->getDefaultController();
+
         $routers = Cache::get('router:routers');
         $reverse = Cache::get('router:reverse');
 
@@ -145,6 +158,58 @@ class Router
     public function setBaseUrl($baseUrl)
     {
         $this->baseUrl = rtrim($baseUrl, '/') . '/';
+    }
+
+    /**
+     * Get an action parameter
+     *
+     * @param  string $key
+     * @param  mixed  $default Default value to use if key not found
+     * @return mixed
+     */
+    public function getParam($key, $default = null)
+    {
+        return isset($this->params[$key]) ? $this->params[$key] : $default;
+    }
+
+    /**
+     * Set an action parameter
+     *
+     * A $value of null will unset the $key if it exists
+     *
+     * @param  string $key
+     * @param  mixed  $value
+     * @return void
+     */
+    public function setParam($key, $value)
+    {
+        $key = (string)$key;
+
+        if ((null === $value) && isset($this->params[$key])) {
+            unset($this->params[$key]);
+        } elseif (null !== $value) {
+            $this->params[$key] = $value;
+        }
+    }
+
+    /**
+     * Get parameters
+     *
+     * @return array
+     */
+    public function getParams()
+    {
+        return $this->params;
+    }
+
+    /**
+     * Get raw params, w/out module and controller
+     *
+     * @return array
+     */
+    public function getRawParams()
+    {
+        return $this->rawParams;
     }
 
     /**
@@ -272,8 +337,8 @@ class Router
         $controller = self::DEFAULT_CONTROLLER,
         $params = array()
     ) {
-        $scheme = Request::getScheme() . '://';
-        $host = Request::getHttpHost();
+        $scheme = Request::getInstance()->getUri()->getScheme() . '://';
+        $host = Request::getInstance()->getUri()->getHost();
         $url = $this->getUrl($module, $controller, $params);
         return $scheme . $host . $url;
     }
@@ -373,6 +438,7 @@ class Router
                 break;
         }
 
+        $this->resetRequest();
         return $this;
     }
 
@@ -397,12 +463,12 @@ class Router
         $uri = '/' . $this->getCleanUri();
         foreach ($this->routers as $router) {
             if (preg_match($router['pattern'], $uri, $matches)) {
-                Request::setModule($router['module']);
-                Request::setController($router['controller']);
+                $this->setParam('_module', $router['module']);
+                $this->setParam('_controller', $router['controller']);
 
                 foreach ($router['params'] as $param => $type) {
                     if (isset($matches[$param])) {
-                        Request::setParam($param, $matches[$param]);
+                        $this->setParam($param, $matches[$param]);
                     }
                 }
                 return true;
@@ -426,30 +492,62 @@ class Router
     {
         $uri = $this->getCleanUri();
         $uri = trim($uri, '/');
-        $params = explode('/', $uri);
+        $raw = explode('/', $uri);
 
-        if (sizeof($params)) {
-            Request::setModule(array_shift($params));
+        // rewrite module from request
+        if (sizeof($raw)) {
+            $this->setParam('_module', array_shift($raw));
         }
-        if (sizeof($params)) {
-            Request::setController(array_shift($params));
+        // rewrite module from controller
+        if (sizeof($raw)) {
+            $this->setParam('_controller', array_shift($raw));
         }
-        if ($size = sizeof($params)) {
-            // save raw params
-            Request::setRawParams($params);
+        if ($size = sizeof($raw)) {
+            // save raw
+            $this->rawParams = $raw;
+
+            // save as index params
+            foreach ($raw as $i => $value) {
+                $this->setParam($i, $value);
+            }
 
             // remove tail
             if ($size % 2 == 1) {
-                array_pop($params);
-                $size = sizeof($params);
+                array_pop($raw);
+                $size = sizeof($raw);
             }
             // or use array_chunk and run another loop?
             for ($i = 0; $i < $size; $i = $i + 2) {
-                Request::setParam($params[$i], $params[$i + 1]);
+                $this->setParam($raw[$i], $raw[$i + 1]);
             }
         }
-
         return true;
+    }
+
+    /**
+     * Reset Request
+     *
+     * @return void
+     */
+    protected function resetRequest()
+    {
+        $request = Request::getInstance();
+
+        // priority:
+        //  - default values
+        //  - from GET query
+        //  - from path
+        $request = $request->withQueryParams(
+            array_merge(
+                [
+                    '_module' => $this->getDefaultModule(),
+                    '_controller' => $this->getDefaultController()
+                ],
+                $request->getQueryParams(),
+                $this->params
+            )
+        );
+        Request::setInstance($request);
     }
 
     /**
@@ -460,9 +558,7 @@ class Router
     public function getCleanUri()
     {
         if ($this->cleanUri === null) {
-            $uri = parse_url(Request::getRequestUri());
-            $uri = $uri['path'];
-
+            $uri = Request::getRequestUri()->getPath();
             if ($this->getBaseUrl() && strpos($uri, $this->getBaseUrl()) === 0) {
                 $uri = substr($uri, strlen($this->getBaseUrl()));
             }

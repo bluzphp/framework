@@ -272,6 +272,7 @@ class Reflection
     /**
      * Get accepted type
      *
+     * @todo move here "accept map" from Application
      * @return array|null
      */
     public function getAccept()

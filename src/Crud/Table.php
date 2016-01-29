@@ -91,6 +91,7 @@ class Table extends AbstractCrud
         if (!$primary) {
             return $this->getTable()->create();
         }
+
         $row = $this->getTable()->findRow($primary);
 
         if (!$row) {

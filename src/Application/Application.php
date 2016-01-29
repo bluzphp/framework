@@ -32,6 +32,8 @@ use Bluz\Proxy\Response;
 use Bluz\Proxy\Router;
 use Bluz\Proxy\Session;
 use Bluz\Proxy\Translator;
+use Bluz\Request\RequestFactory;
+use Bluz\Response\Response as ResponseInstance;
 use Bluz\View\View;
 
 /**
@@ -64,6 +66,11 @@ class Application
     protected $environment = 'production';
 
     /**
+     * @var \Exception
+     */
+    protected $exception;
+
+    /**
      * @var bool Debug application flag
      */
     protected $debugFlag = false;
@@ -72,16 +79,6 @@ class Application
      * @var bool Layout flag
      */
     protected $layoutFlag = true;
-
-    /**
-     * @var bool JSON response flag
-     */
-    protected $jsonFlag = false;
-
-    /**
-     * @var bool XML response flag
-     */
-    protected $xmlFlag = false;
 
     /**
      * @var array Stack of widgets closures
@@ -133,28 +130,6 @@ class Application
     }
 
     /**
-     * Check Json flag
-     *
-     * @return bool
-     * @deprecated 0.9
-     */
-    public function isJson()
-    {
-        return $this->jsonFlag;
-    }
-
-    /**
-     * Check XML flag
-     *
-     * @return bool
-     * @deprecated 0.9
-     */
-    public function isXml()
-    {
-        return $this->xmlFlag;
-    }
-
-    /**
      * Check Layout flag
      *
      * @return bool
@@ -189,31 +164,7 @@ class Application
     {
         // disable view and layout for JSON output
         $this->useLayout(false);
-        $this->getResponse()->setPresentation('json');
-    }
-
-    /**
-     * Set JSONP presentation
-     *
-     * @return void
-     */
-    public function useJsonp()
-    {
-        // disable view and layout for JSONP output
-        $this->useLayout(false);
-        $this->getResponse()->setPresentation('jsonp');
-    }
-
-    /**
-     * Set XML presentation
-     *
-     * @return void
-     */
-    public function useXml()
-    {
-        // disable view and layout for JSON output
-        $this->useLayout(false);
-        $this->getResponse()->setPresentation('xml');
+        Response::setHeader('Content-Type', 'application/json');
     }
 
     /**
@@ -277,8 +228,7 @@ class Application
      */
     protected function initRequest()
     {
-        $request = new Http\Request();
-        $request->setOptions(Config::getData('request'));
+        $request = RequestFactory::fromGlobals();
 
         Request::setInstance($request);
     }
@@ -290,8 +240,7 @@ class Application
      */
     protected function initResponse()
     {
-        $response = new Http\Response();
-        $response->setOptions(Config::getData('response'));
+        $response = new ResponseInstance();
 
         Response::setInstance($response);
     }
@@ -367,7 +316,7 @@ class Application
         Router::process();
 
         // disable layout for AJAX requests
-        if ($this->getRequest()->isXmlHttpRequest()) {
+        if (Request::isXmlHttpRequest()) {
             $this->useLayout(false);
         }
     }
@@ -383,7 +332,7 @@ class Application
 
         $module = Request::getModule();
         $controller = Request::getController();
-        $params = Request::getAllParams();
+        $params = Request::getParams();
 
         // try to dispatch controller
         try {
@@ -391,28 +340,48 @@ class Application
             $controllerFile = $this->getControllerFile($module, $controller);
             $reflection = $this->reflection($controllerFile);
 
-            // check header "accept" for catch JSON(P) or XML requests, and switch presentation
+            // check header "accept" for catch JSON requests, and switch response to JSON
             // it's some magic for AJAX and REST requests
-            if ($reflection->getAccept() && $accept = $this->getRequest()->getAccept()) {
-                // switch statement for Accept header
-                switch ($accept) {
-                    case Request::ACCEPT_HTML:
-                        // with layout
-                        // without additional presentation
-                        break;
-                    case Request::ACCEPT_JSON:
-                        $this->useJson();
-                        break;
-                    case Request::ACCEPT_JSONP:
-                        $this->useJsonp();
-                        break;
-                    case Request::ACCEPT_XML:
-                        $this->useXml();
-                        break;
-                    default:
+            $acceptMap = [
+                'HTML' => 'text/html',
+                'JSON' => 'application/json'
+            ];
+
+            // some controller has @accept tag
+            if ($allowAccept = $reflection->getAccept()) {
+                // convert list of controller @accept to MIME types
+                $allowAccept = array_filter(
+                    $acceptMap,
+                    function ($key) use ($allowAccept) {
+                        return in_array($key, $allowAccept);
+                    },
+                    ARRAY_FILTER_USE_KEY
+                );
+                $allowAccept = array_values($allowAccept);
+            } else {
+                // by default allow just HTML output
+                $allowAccept = ['text/html'];
+            }
+
+            // choose MIME type by browser accept header
+            // filtered by controller @accept
+            $accept = Request::getAccept($allowAccept);
+
+            // switch statement for Accept header
+            switch ($accept) {
+                case 'text/html':
+                    // HTML response with layout
+                    break;
+                case 'application/json':
+                    $this->useJson();
+                    break;
+                default:
+                    if (PHP_SAPI == 'cli') {
+                        // all ok
+                    } else {
                         // not acceptable MIME type
                         throw new NotAcceptableException();
-                }
+                    }
             }
 
             // check call method(s)
@@ -433,37 +402,47 @@ class Application
             $dispatchResult = $this->dispatch($module, $controller, $params);
 
         } catch (RedirectException $e) {
-            Response::setException($e);
+            $this->setException($e);
+
+            Response::removeHeaders();
+            Response::clearBody();
 
             if (Request::isXmlHttpRequest()) {
-                // 204 - No Content
                 Response::setStatusCode(204);
                 Response::setHeader('Bluz-Redirect', $e->getMessage());
+                return;
             } else {
-                Response::setStatusCode($e->getCode());
+                Response::setStatusCode(302);
                 Response::setHeader('Location', $e->getMessage());
+                return;
             }
-            return null;
         } catch (ReloadException $e) {
-            Response::setException($e);
+            $this->setException($e);
+
+            Response::removeHeaders();
+            Response::clearBody();
 
             if (Request::isXmlHttpRequest()) {
-                // 204 - No Content
                 Response::setStatusCode(204);
                 Response::setHeader('Bluz-Reload', 'true');
+                return;
             } else {
-                Response::setStatusCode($e->getCode());
-                Response::setHeader('Refresh', '0; url=' . Request::getRequestUri());
+                Response::setStatusCode(302);
+                Response::setHeader('Location', Request::getRequestUri());
+                return;
             }
-            return null;
         } catch (\Exception $e) {
-            Response::setException($e);
+            $this->setException($e);
+
+            Response::removeHeaders();
+            Response::clearBody();
 
             // cast to valid HTTP error code
             // 500 - Internal Server Error
             $statusCode = (100 <= $e->getCode() && $e->getCode() <= 505) ? $e->getCode() : 500;
             Response::setStatusCode($statusCode);
 
+            // TODO: if `error` controller consist error
             $dispatchResult = $this->dispatch(
                 Router::getErrorModule(),
                 Router::getErrorController(),
@@ -487,7 +466,6 @@ class Application
             Cache::addTag($htmlKey, 'html:' . $module);
             Cache::addTag($htmlKey, 'html:' . $module . ':' . $controller);
         }
-
         Response::setBody($dispatchResult);
     }
 
@@ -648,13 +626,14 @@ class Application
     public function render()
     {
         Logger::info('app:render');
+
         Response::send();
     }
 
     /**
      * Get Response instance
      *
-     * @return Http\Response
+     * @return \Bluz\Response\Response
      */
     public function getResponse()
     {
@@ -664,11 +643,32 @@ class Application
     /**
      * Get Request instance
      *
-     * @return Http\Request
+     * @return \Zend\Diactoros\ServerRequest
      */
     public function getRequest()
     {
         return Request::getInstance();
+    }
+
+    /**
+     * setException
+     *
+     * @param \Exception $exception
+     * @return void
+     */
+    public function setException($exception)
+    {
+        $this->exception = $exception;
+    }
+
+    /**
+     * getException
+     *
+     * @return \Exception
+     */
+    public function getException()
+    {
+        return $this->exception;
     }
 
     /**

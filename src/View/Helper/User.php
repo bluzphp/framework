@@ -11,7 +11,6 @@
  */
 namespace Bluz\View\Helper;
 
-use Bluz\View\View;
 use Bluz\Proxy\Auth;
 
 return

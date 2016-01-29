@@ -24,6 +24,23 @@ use Bluz\View\View;
 class ViewTest extends TestCase
 {
     /**
+     * Setup `test` table before the first test
+     */
+    public static function setUpBeforeClass()
+    {
+        self::getApp();
+    }
+
+    /**
+     * Drop `test` table after the last test
+     */
+    public static function tearDownAfterClass()
+    {
+        self::resetGlobals();
+        self::resetApp();
+    }
+
+    /**
      * Working with View container over MagicAccess
      */
     public function testMagicMethods()
@@ -111,11 +128,11 @@ class ViewTest extends TestCase
         $this->assertEmpty($view->ahref('text', null));
         $this->assertEquals('<a href="test/test" >text</a>', $view->ahref('text', 'test/test'));
         $this->assertEquals(
-            '<a href="/" class="on">text</a>',
+            '<a href="/" class="active">text</a>',
             $view->ahref('text', [Router::DEFAULT_MODULE, Router::DEFAULT_CONTROLLER])
         );
         $this->assertEquals(
-            '<a href="/" class="foo on">text</a>',
+            '<a href="/" class="foo active">text</a>',
             $view->ahref('text', [Router::DEFAULT_MODULE, Router::DEFAULT_CONTROLLER], ['class' => 'foo'])
         );
     }

@@ -12,7 +12,9 @@ namespace Bluz\Tests;
 use Bluz;
 use Bluz\Http;
 use Bluz\Proxy;
-use Bluz\Router\Router;
+use Bluz\Proxy\Request;
+use Bluz\Request\RequestFactory;
+use Zend\Diactoros\ServerRequest;
 
 /**
  * Bluz TestCase
@@ -49,7 +51,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     /**
      * Get Application instance
      *
-     * @return BootstrapTest
+     * @return \Bluz\Application\Application
      */
     protected static function getApp()
     {
@@ -60,6 +62,62 @@ class TestCase extends \PHPUnit_Framework_TestCase
             self::$app->init($env);
         }
         return self::$app;
+    }
+
+    /**
+     * Set new Request instance
+     *
+     * @param string $path Path part of URI http://host/module/controller/path
+     * @param array  $query $_GET params
+     * @param array  $params $_POST params
+     * @param string $method HTTP method
+     * @param array  $headers HTTP headers
+     * @return \Psr\Http\Message\ServerRequestInterface|ServerRequest
+     */
+    protected function prepareRequest(
+        $path = '',
+        $query = [],
+        $params = [],
+        $method = Request::METHOD_GET,
+        $headers = []
+    ) {
+        $uri = 'http://127.0.0.1/'. $path;
+
+        $request = new ServerRequest([], [], $uri, $method, 'php://input', $headers);
+
+        if (!empty($query)) {
+            $request = $request->withQueryParams($query);
+        }
+
+        if (!empty($params)) {
+            $request = $request->withParsedBody($params);
+        }
+
+        return $request;
+    }
+
+    /**
+     * Set new Request instance
+     *
+     * @param string $path Path part of URI http://host/module/controller/path
+     * @param array  $query $_GET params
+     * @param array  $params $_POST params
+     * @param string $method HTTP method
+     * @param array  $headers HTTP headers
+     * @return \Psr\Http\Message\ServerRequestInterface|ServerRequest
+     */
+    protected function setRequestParams(
+        $path = '',
+        $query = [],
+        $params = [],
+        $method = Request::METHOD_GET,
+        $headers = []
+    ) {
+        $request = $this->prepareRequest($path, $query, $params, $method, $headers);
+
+        Request::setInstance($request);
+
+        return $request;
     }
 
     /**
@@ -74,10 +132,8 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
         Proxy\Auth::clearIdentity();
         Proxy\Messages::popAll();
-        Proxy\Request::setInstance(new Http\Request());
-        Proxy\Response::setInstance(new Http\Response());
-        Proxy\Response::setPresentation(null);
-
+        Proxy\Request::setInstance(RequestFactory::fromGlobals());
+        Proxy\Response::setInstance(new Bluz\Response\Response());
     }
 
     /**

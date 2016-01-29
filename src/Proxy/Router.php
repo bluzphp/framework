@@ -40,6 +40,9 @@ use Bluz\Router\Router as Instance;
  * @method   static string getFullUrl($module = 'index', $controller = 'index', $params = array())
  * @see      Bluz\Router\Router::getFullUrl()
  *
+ * @method   static string getCleanUri()
+ * @see      Bluz\Router\Router::getCleanUri()
+ *
  * @method   static void process()
  * @see      Bluz\Router\Router::process()
  *

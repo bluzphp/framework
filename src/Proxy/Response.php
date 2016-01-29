@@ -12,7 +12,7 @@
 namespace Bluz\Proxy;
 
 use Bluz\Common\Exception\ComponentException;
-use Bluz\Response\AbstractResponse as Instance;
+use Bluz\Response\Response as Instance;
 use Bluz\View\View;
 
 /**
@@ -30,9 +30,6 @@ use Bluz\View\View;
  * @author   Anton Shevchuk
  *
  * @method   static Instance getInstance()
- *
- * @method   static void send()
- * @see      Bluz\Response\AbstractResponse::send()
  *
  * @method   static string getProtocolVersion()
  * @see      Bluz\Response\AbstractResponse::getProtocolVersion()
@@ -82,15 +79,8 @@ use Bluz\View\View;
  * @method   static array getCookie()
  * @see      Bluz\Response\AbstractResponse::getCookie()
  *
- * @method   static void  setException($exception)
- * @see      Bluz\Response\AbstractResponse::setException()
- * @method   static \Exception getException()
- * @see      Bluz\Response\AbstractResponse::getException()
- *
- * @method   static void  setPresentation($presentation)
- * @see      Bluz\Response\AbstractResponse::setPresentation()
- * @method   static \Exception getPresentation()
- * @see      Bluz\Response\AbstractResponse::getPresentation()
+ * @method   static void  send()
+ * @see      Bluz\Response\Response::send()
  */
 class Response extends AbstractProxy
 {

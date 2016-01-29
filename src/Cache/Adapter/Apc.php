@@ -36,6 +36,7 @@ class Apc extends AbstractAdapter
                     Install and/or enable APC extension. See phpinfo() for more information";
             throw new ComponentException($msg);
         }
+        parent::__construct($settings);
     }
 
     /**

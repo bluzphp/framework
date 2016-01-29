@@ -12,8 +12,9 @@
 namespace Bluz\Proxy;
 
 use Bluz\Common\Exception\ComponentException;
-use Bluz\Http\FileUpload;
-use Bluz\Request\AbstractRequest as Instance;
+use Bluz\Request\RequestFactory;
+use Psr\Http\Message\UriInterface;
+use Zend\Diactoros\ServerRequest as Instance;
 
 /**
  * Proxy to Request
@@ -31,119 +32,23 @@ use Bluz\Request\AbstractRequest as Instance;
  * @method   static Instance getInstance()
  *
  * @method   static string getMethod()
- * @see      Bluz\Request\AbstractRequest::getMethod()
- * @method   static void   setMethod($method)
- * @see      Bluz\Request\AbstractRequest::setMethod()
- *
- * @method   static string getRequestUri()
- * @see      Bluz\Request\AbstractRequest::getRequestUri()
- * @method   static void   setRequestUri($requestUri)
- * @see      Bluz\Request\AbstractRequest::setRequestUri()
- *
- * @method   static mixed getParam($key, $default = null)
- * @see      Bluz\Request\AbstractRequest::getParam()
- * @method   static void  setParam($key, $value)
- * @see      Bluz\Request\AbstractRequest::setParam()
- * @method   static array getParams()
- * @see      Bluz\Request\AbstractRequest::getParams()
- * @method   static array getAllParams()
- * @see      Bluz\Request\AbstractRequest::getAllParams()
- * @method   static void  setParams(array $params)
- * @see      Bluz\Request\AbstractRequest::setParams()
- * @method   static array getRawParams()
- * @see      Bluz\Request\AbstractRequest::getRawParams()
- * @method   static void  setRawParams(array $params)
- * @see      Bluz\Request\AbstractRequest::setRawParams()
- *
- * @method   static bool isCli()
- * @see      Bluz\Request\AbstractRequest::isCli()
- * @method   static bool isHttp()
- * @see      Bluz\Request\AbstractRequest::isHttp()
- * @method   static bool isGet()
- * @see      Bluz\Request\AbstractRequest::isGet()
- * @method   static bool isPost()
- * @see      Bluz\Request\AbstractRequest::isPost()
- * @method   static bool isPut()
- * @see      Bluz\Request\AbstractRequest::isPut()
- * @method   static bool isDelete()
- * @see      Bluz\Request\AbstractRequest::isDelete()
- *
- * @method   static string getServer($key = null, $default = null)
- * @see      Bluz\Request\AbstractRequest::getServer()
- * @method   static string getEnv($key = null, $default = null)
- * @see      Bluz\Request\AbstractRequest::getEnv()
- *
- * @method   static string getModule()
- * @see      Bluz\Request\AbstractRequest::getModule()
- * @method   static void   setModule($name)
- * @see      Bluz\Request\AbstractRequest::setModule()
- *
- * @method   static string getController()
- * @see      Bluz\Request\AbstractRequest::getController()
- * @method   static void   setController($name)
- * @see      Bluz\Request\AbstractRequest::setController()
- *
- * @method   static string|array getQuery($key = null, $default = null)
- * @see      Bluz\Http\Request::getQuery()
- * @method   static string|array getPost($key = null, $default = null)
- * @see      Bluz\Http\Request::getPost()
- * @method   static string|array getCookie($key = null, $default = null)
- * @see      Bluz\Http\Request::getCookie()
- *
- * @method   static string getHttpHost()
- * @see      Bluz\Http\Request::getHttpHost()
- * @method   static string getScheme()
- * @see      Bluz\Http\Request::getScheme()
- *
- * @method   static string getAccept()
- * @see      Bluz\Http\Request::getAccept()
- * @method   static string getHeader($header)
- * @see      Bluz\Http\Request::getHeader()
- *
- * @method   static FileUpload getFileUpload()
- * @see      Bluz\Http\Request::getFileUpload()
- * @method   static void setFileUpload(FileUpload $fileUpload)
- * @see      Bluz\Http\Request::setFileUpload()
- *
- * @method   static bool isXmlHttpRequest()
- * @see      Bluz\Http\Request::isXmlHttpRequest()
- * @method   static bool isFlashRequest()
- * @see      Bluz\Http\Request::isFlashRequest()
+ * @see      Zend\Diactoros\ServerRequest::getMethod()
  */
 class Request extends AbstractProxy
 {
     /**
      * @const string HTTP METHOD constant names
      */
-    const METHOD_OPTIONS = Instance::METHOD_OPTIONS;
-    const METHOD_GET = Instance::METHOD_GET;
-    const METHOD_HEAD = Instance::METHOD_HEAD;
-    const METHOD_PATCH = Instance::METHOD_PATCH;
-    const METHOD_POST = Instance::METHOD_POST;
-    const METHOD_PUT = Instance::METHOD_PUT;
-    const METHOD_DELETE = Instance::METHOD_DELETE;
-    const METHOD_TRACE = Instance::METHOD_TRACE;
-    const METHOD_CONNECT = Instance::METHOD_CONNECT;
+    const METHOD_OPTIONS = 'OPTIONS';
+    const METHOD_GET = 'GET';
+    const METHOD_HEAD = 'HEAD';
+    const METHOD_PATCH = 'PATCH';
+    const METHOD_POST = 'POST';
+    const METHOD_PUT = 'PUT';
+    const METHOD_DELETE = 'DELETE';
+    const METHOD_TRACE = 'TRACE';
+    const METHOD_CONNECT = 'CONNECT';
 
-    /**
-     * Command line request
-     */
-    const METHOD_CLI = Instance::METHOD_CLI;
-
-    /**
-     * HTTP Request
-     */
-    const METHOD_HTTP = Instance::METHOD_HTTP;
-
-    /**
-     * @const string HTTP ACCEPT MIME types
-     */
-    const ACCEPT_CLI = Instance::ACCEPT_CLI;
-    const ACCEPT_HTML = Instance::ACCEPT_HTML;
-    const ACCEPT_JSON = Instance::ACCEPT_JSON;
-    const ACCEPT_JSONP = Instance::ACCEPT_JSONP;
-    const ACCEPT_XML = Instance::ACCEPT_XML;
-    
     /**
      * Init instance
      *
@@ -152,5 +57,282 @@ class Request extends AbstractProxy
     protected static function initInstance()
     {
         throw new ComponentException("Class `Proxy\\Request` required external initialization");
+    }
+    
+    /**
+     * Get Request Uri
+     *
+     * @return UriInterface
+     */
+    public static function getRequestUri()
+    {
+        return self::getInstance()->getUri();
+    }
+
+    /**
+     * Retrieve a member of the $_SERVER super global
+     *
+     * If no $key is passed, returns the entire $_SERVER array.
+     *
+     * @param  string $key
+     * @param  string $default Default value to use if key not found
+     * @return string Returns null if key does not exist
+     */
+    public static function getServer($key = null, $default = null)
+    {
+        return RequestFactory::get($key, self::getInstance()->getServerParams(), $default);
+    }
+
+    /**
+     * Retrieve a member of the $_COOKIE super global
+     *
+     * If no $key is passed, returns the entire $_COOKIE array.
+     *
+     * @param  string $key
+     * @param  string $default Default value to use if key not found
+     * @return string Returns null if key does not exist
+     */
+    public static function getCookie($key = null, $default = null)
+    {
+        return RequestFactory::get($key, self::getInstance()->getCookieParams(), $default);
+    }
+    /**
+     * Retrieve a member of the $_ENV super global
+     *
+     * If no $key is passed, returns the entire $_ENV array.
+     *
+     * @param  string $key
+     * @param  string $default Default value to use if key not found
+     * @return string Returns null if key does not exist
+     */
+    public static function getEnv($key = null, $default = null)
+    {
+        return RequestFactory::get($key, $_ENV, $default);
+    }
+
+    /**
+     * Search for a header value
+     *
+     * @param string $header
+     * @param mixed  $default
+     * @return string
+     */
+    public static function getHeader($header, $default = null)
+    {
+        return RequestFactory::getHeader($header, self::getInstance()->getHeaders(), $default);
+    }
+    
+    /**
+     * Access values contained in the superglobals as public members
+     * Order of precedence: 1. GET, 2. POST, 3. COOKIE, 4. SERVER, 5. ENV
+     *
+     * @param  string $key
+     * @param  null   $default
+     * @return mixed
+     * @link http://msdn.microsoft.com/en-us/library/system.web.httprequest.item.aspx
+     */
+    public static function getParam($key, $default = null)
+    {
+        switch (true) {
+            case ($params = self::getInstance()->getQueryParams()) && isset($params[$key]):
+                return $params[$key];
+            case ($params = self::getInstance()->getParsedBody()) && isset($params[$key]):
+                return $params[$key];
+            case ($params = self::getInstance()->getCookieParams()) && isset($params[$key]):
+                return $params[$key];
+            case ($params = self::getInstance()->getServerParams()) && isset($params[$key]):
+                return $params[$key];
+            case isset($_ENV[$key]):
+                return $_ENV[$key];
+            default:
+                return $default;
+        }
+    }
+
+    /**
+     * Get all params from GET and POST or PUT
+     *
+     * @return array
+     */
+    public static function getParams()
+    {
+        $query = (array) self::getInstance()->getQueryParams();
+        $body = (array) self::getInstance()->getParsedBody();
+
+        return array_merge($body, $query);
+    }
+
+    /**
+     * Get uploaded file
+     *
+     * @param  string $name
+     * @return \Zend\Diactoros\UploadedFile
+     */
+    public static function getFile($name)
+    {
+        return RequestFactory::get($name, self::getInstance()->getUploadedFiles());
+    }
+
+    /**
+     * Get the client's IP address
+     *
+     * @param  bool $checkProxy
+     * @return string
+     */
+    public static function getClientIp($checkProxy = true)
+    {
+        if ($checkProxy && self::getServer('HTTP_CLIENT_IP') != null) {
+            $ip = self::getServer('HTTP_CLIENT_IP');
+        } else {
+            if ($checkProxy && self::getServer('HTTP_X_FORWARDED_FOR') != null) {
+                $ip = self::getServer('HTTP_X_FORWARDED_FOR');
+            } else {
+                $ip = self::getServer('REMOTE_ADDR');
+            }
+        }
+        return $ip;
+    }
+
+    /**
+     * Get module
+     *
+     * @return string
+     */
+    public static function getModule()
+    {
+        return self::getParam('_module', Router::getDefaultModule());
+    }
+
+    /**
+     * Get controller
+     *
+     * @return string
+     */
+    public static function getController()
+    {
+        return self::getParam('_controller', Router::getDefaultController());
+    }
+
+    /**
+     * Check CLI
+     *
+     * @return bool
+     */
+    public static function isCli()
+    {
+        return (PHP_SAPI === 'cli');
+    }
+
+    /**
+     * Check HTTP
+     *
+     * @return bool
+     */
+    public static function isHttp()
+    {
+        return (PHP_SAPI !== 'cli');
+    }
+
+    /**
+     * Is this a GET method request?
+     *
+     * @return bool
+     */
+    public static function isGet()
+    {
+        return (self::getInstance()->getMethod() === 'GET');
+    }
+
+    /**
+     * Is this a POST method request?
+     *
+     * @return bool
+     */
+    public static function isPost()
+    {
+        return (self::getInstance()->getMethod() === 'POST');
+    }
+
+    /**
+     * Is this a PUT method request?
+     *
+     * @return bool
+     */
+    public static function isPut()
+    {
+        return (self::getInstance()->getMethod() === 'PUT');
+    }
+
+    /**
+     * Is this a DELETE method request?
+     *
+     * @return bool
+     */
+    public static function isDelete()
+    {
+        return (self::getInstance()->getMethod() === 'DELETE');
+    }
+
+    /**
+     * Is the request a Javascript XMLHttpRequest?
+     *
+     * Should work with Prototype/Script.aculo.us, possibly others.
+     *
+     * @return bool
+     */
+    public static function isXmlHttpRequest()
+    {
+        return (self::getHeader('X-Requested-With') == 'XMLHttpRequest');
+    }
+
+    /**
+     * Get Accept MIME Type
+     *
+     * @param  array $allowTypes
+     * @return string
+     */
+    public static function getAccept($allowTypes = [])
+    {
+        // get header from request
+        $header = self::getHeader('accept');
+
+        // make array if types
+        $accept = explode(',', $header);
+        $accept = array_map('trim', $accept);
+
+        // result store
+        $types = [];
+
+        foreach ($accept as $a) {
+            // the default quality is 1.
+            $q = 1;
+            // check if there is a different quality
+            if (strpos($a, ';q=') or strpos($a, '; q=')) {
+                // divide "mime/type;q=X" into two parts: "mime/type" i "X"
+                $res = preg_split('/;([ ]?)q=/', $a);
+                $a = $res[0];
+                $q = $res[1];
+            }
+            // mime-type $a is accepted with the quality $q
+            // WARNING: $q == 0 means, that mime-type isn’t supported!
+            $types[$a] = (float) $q;
+        }
+        arsort($types);
+
+        // if no parameter was passed, just return parsed data
+        if (empty($allowTypes)) {
+            return $types;
+        }
+
+        $mimeTypes = array_map('strtolower', $allowTypes);
+
+        // let’s check our supported types:
+        foreach ($types as $mime => $q) {
+            if ($q && in_array($mime, $mimeTypes)) {
+                return $mime;
+            }
+        }
+        // no mime-type found
+        return null;
     }
 }

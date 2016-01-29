@@ -83,7 +83,7 @@ class Length extends AbstractCompareRule
     /**
      * Extract length
      *
-     * @param  string $input
+     * @param  string|object $input
      * @return integer|false
      */
     protected function extractLength($input)

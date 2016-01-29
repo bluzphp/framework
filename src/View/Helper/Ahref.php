@@ -38,11 +38,17 @@ return
             return '';
         }
 
-        if ($href == Request::getRequestUri()) {
+        $current = Request::getRequestUri()->getPath();
+
+        if (Request::getRequestUri()->getQuery()) {
+            $current .= sprintf('?%s', Request::getRequestUri()->getQuery());
+        }
+
+        if ($href == $current) {
             if (isset($attributes['class'])) {
-                $attributes['class'] .= ' on';
+                $attributes['class'] .= ' active';
             } else {
-                $attributes['class'] = 'on';
+                $attributes['class'] = 'active';
             }
         }
 

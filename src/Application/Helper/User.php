@@ -11,7 +11,6 @@
  */
 namespace Bluz\Application\Helper;
 
-use Bluz\Application\Application;
 use Bluz\Proxy\Auth;
 
 return

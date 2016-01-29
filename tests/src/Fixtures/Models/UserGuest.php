@@ -22,7 +22,7 @@ class UserGuest extends AbstractRowEntity
      *
      * @throws ApplicationException
      */
-    public function login()
+    public function tryLogin()
     {
         throw new ApplicationException("User status is undefined in system");
     }

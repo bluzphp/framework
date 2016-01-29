@@ -80,8 +80,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
         $params = [],
         $method = Request::METHOD_GET,
         $headers = []
-    )
-    {
+    ) {
         $uri = 'http://127.0.0.1/'. $path;
 
         $request = new ServerRequest([], [], $uri, $method, 'php://input', $headers);
@@ -113,8 +112,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
         $params = [],
         $method = Request::METHOD_GET,
         $headers = []
-    )
-    {
+    ) {
         $request = $this->prepareRequest($path, $query, $params, $method, $headers);
 
         Request::setInstance($request);

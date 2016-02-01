@@ -270,7 +270,7 @@ class Rest extends AbstractController
     {
         $allow = $this->getMethods(sizeof($this->primary));
         Response::setHeader('Allow', join(',', $allow));
-        return null; // no body
+        return false; // no body
     }
 
     /**

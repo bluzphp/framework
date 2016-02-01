@@ -576,9 +576,7 @@ class Application
             case ($result === false):
                 // return "false" is equal to disable view and layout
                 $this->useLayout(false);
-                return function () {
-                    // just empty closure
-                };
+                return null;
             case is_callable($result):
             case is_object($result):
                 // return callable structure (closure or object) for replace logic of controller

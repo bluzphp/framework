@@ -82,42 +82,59 @@ class Response
                 );
                 break;
             default:
-                if ($this->getHeader('Content-Type') == 'application/json') {
+                $body = $this->getBody();
+
+                // run callable structure, but don't run view
+                if (is_callable($body) && !($body instanceof View)) {
+                    $body = $body();
+                }
+
+                if (is_null($body)) {
+                    // empty response
+                    $response = new EmptyResponse(
+                        $this->getStatusCode(),
+                        $this->getHeaders()
+                    );
+                } elseif (PHP_SAPI === 'cli') {
+                    // CLI response
+                    // extract data from view
+                    if ($body instanceof View) {
+                        // just print to console as key-value pair
+                        $data = $body->toArray();
+                        $output = array();
+                        array_walk_recursive($data, function ($value, $key) use (&$output) {
+                            $output[] = $key .': '. $value;
+                        });
+                        $body = join("\n", $output);
+                    }
+
+                    // @TODO: create CLIResponse
+                    $response = new HtmlResponse(
+                        (string) $body,
+                        $this->getStatusCode(),
+                        $this->getHeaders()
+                    );
+                } elseif ($this->getHeader('Content-Type') == 'application/json') {
+                    // JSON response
+
                     // setup messages
                     if (Messages::count()) {
                         $this->setHeader('Bluz-Notify', json_encode(Messages::popAll()));
                     }
 
+                    // extract data from view
+                    if ($body instanceof View) {
+                        $body = $body->toArray();
+                    }
+
                     // encode body data to JSON
                     $response = new JsonResponse(
-                        $this->getBody()->toArray(),
+                        (array) $body,
                         $this->getStatusCode(),
                         $this->getHeaders()
                     );
                 } else {
-
-                    $body = $this->getBody();
-
-                    if (PHP_SAPI === 'cli') {
-                        // extract data from view
-                        if ($body instanceof View) {
-                            $body = $body->toArray();
-                        }
-                        // output
-                        if (is_array($body)) {
-                            // just print to console as key-value pair
-                            $output = array();
-                            array_walk_recursive($body, function ($value, $key) use (&$output) {
-                                $output[] = $key .': '. $value;
-                            });
-                            $body = join("\n", $output);
-                        }
-                    }
-
-                    if (is_callable($body)) {
-                        $body = $body();
-                    }
-
+                    // HTML response
                     $response = new HtmlResponse(
                         (string) $body,
                         $this->getStatusCode(),

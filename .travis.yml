@@ -27,8 +27,7 @@ script:
   # PHPUnit tests
   - php vendor/bin/phpunit --configuration ./phpunit.xml.dist --coverage-clover=.reports/clover.xml --coverage-xml=.reports/coverage
   # Code style
-  - php vendor/bin/phpcs
-  # --report=xml --report-file=.reports/phpcs.xml
+  - php vendor/bin/phpcs --report=xml --report-file=.reports/phpcs.xml
   # Lines of code
   - php vendor/bin/phploc --log-xml=.reports/phploc.xml src
   # Mess detection

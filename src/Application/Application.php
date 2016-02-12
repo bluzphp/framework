@@ -222,6 +222,18 @@ class Application
     }
 
     /**
+     * Run application
+     *
+     * @return void
+     */
+    public function run()
+    {
+        $this->process();
+        $this->render();
+        $this->finish();
+    }
+
+    /**
      * Initial Request instance
      *
      * @return void

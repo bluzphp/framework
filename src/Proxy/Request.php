@@ -313,6 +313,11 @@ class Request extends AbstractProxy
                 $a = $res[0];
                 $q = $res[1];
             }
+            // remove other extension
+            if (strpos($a, ';')) {
+                $a = substr($a, 0, strpos($a, ';'));
+            }
+
             // mime-type $a is accepted with the quality $q
             // WARNING: $q == 0 means, that mime-type isn’t supported!
             $types[$a] = (float) $q;

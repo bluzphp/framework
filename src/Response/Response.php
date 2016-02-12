@@ -129,7 +129,7 @@ class Response
 
                     // encode body data to JSON
                     $response = new JsonResponse(
-                        (array) $body,
+                        $body,
                         $this->getStatusCode(),
                         $this->getHeaders()
                     );

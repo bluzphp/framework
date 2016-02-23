@@ -20,7 +20,6 @@ use Bluz\Application\Exception\ReloadException;
 use Bluz\Auth\AbstractRowEntity;
 use Bluz\Common;
 use Bluz\Controller\Reflection;
-use Bluz\Http;
 use Bluz\Proxy\Acl;
 use Bluz\Proxy\Cache;
 use Bluz\Proxy\Config;

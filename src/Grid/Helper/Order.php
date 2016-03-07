@@ -29,8 +29,9 @@ return
 
         // change order
         if (null === $order) {
-            if (isset($orders[$column])) {
-                $order = ($orders[$column] == Grid\Grid::ORDER_ASC) ?
+            $alias = $this->applyAlias($column);
+            if (isset($orders[$alias])) {
+                $order = ($orders[$alias] == Grid\Grid::ORDER_ASC) ?
                     Grid\Grid::ORDER_DESC : Grid\Grid::ORDER_ASC;
             } else {
                 $order = $defaultOrder;

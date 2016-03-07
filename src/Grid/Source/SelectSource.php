@@ -64,7 +64,7 @@ class SelectSource extends AbstractSource
                 }
             }
         }
-
+        
         // process orders
         if (!empty($settings['orders'])) {
             // Obtain a list of columns
@@ -72,7 +72,7 @@ class SelectSource extends AbstractSource
                 $this->source->addOrderBy($column, $order);
             }
         }
-
+        
         // process pages
         $this->source->setLimit($settings['limit']);
         $this->source->setPage($settings['page']);

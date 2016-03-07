@@ -643,6 +643,30 @@ abstract class Grid
 
 
     /**
+     * Get filter
+     *
+     * @param  string $column
+     * @param  string $filter
+     * @return mixed
+     */
+    public function getFilter($column, $filter = null)
+    {
+        if (isset($this->filters[$column])) {
+            if ($filter) {
+                if (isset($this->filters[$column][$filter])) {
+                    return $this->filters[$column][$filter];
+                } else {
+                    return null;
+                }
+            } else {
+                return $this->filters[$column];
+            }
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * Get filters
      *
      * @return array

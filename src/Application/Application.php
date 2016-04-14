@@ -214,7 +214,6 @@ class Application
 
             // init router
             $this->initRouter();
-
         } catch (\Exception $e) {
             throw new ApplicationException("Application can't be loaded: " . $e->getMessage());
         }
@@ -411,7 +410,6 @@ class Application
 
             // dispatch controller
             $dispatchResult = $this->dispatch($module, $controller, $params);
-
         } catch (RedirectException $e) {
             $this->setException($e);
 

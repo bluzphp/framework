@@ -101,7 +101,6 @@ return
             $subOptions = "\n" . join("\n", $subOptions) . "\n";
 
             $result[] = '<optgroup ' . $this->attributes(['label' => $value]) . '>' . $subOptions . '</optgroup>';
-
         } else {
             $result[] = $buildOption($value, $text);
         }

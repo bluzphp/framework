@@ -216,7 +216,6 @@ abstract class Table
                 Cache::addTag('table:columns:'. $this->table, 'db');
             }
             $this->columns = $columns;
-
         }
         return $this->columns;
     }

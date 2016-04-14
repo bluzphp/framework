@@ -325,7 +325,6 @@ abstract class Grid
 
                         $this->addFilter($column, $filterType, $filterValue);
                     }
-
                 } else {
                     $this->addFilter($column, self::FILTER_EQ, $filter);
                 }

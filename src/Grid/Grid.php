@@ -145,6 +145,13 @@ abstract class Grid
     protected $allowFilters = array();
 
     /**
+     * List of aliases for columns in DB
+     *
+     * @var array
+     */
+    protected $aliases = array();
+
+    /**
      * Grid constructor
      *
      * @param array $options
@@ -298,9 +305,9 @@ abstract class Grid
                 $this->addOrder($column, $order);
             }
         }
-
         foreach ($this->allowFilters as $column) {
             $filter = Request::getParam($this->prefix . 'filter-' . $column);
+
             if ($filter) {
                 if (strpos($filter, '-')) {
                     $filter = trim($filter, ' -');
@@ -318,7 +325,6 @@ abstract class Grid
 
                         $this->addFilter($column, $filterType, $filterValue);
                     }
-
                 } else {
                     $this->addFilter($column, self::FILTER_EQ, $filter);
                 }
@@ -505,6 +511,7 @@ abstract class Grid
         ) {
             throw new GridException('Order for column "' . $column . '" is incorrect');
         }
+        $column = $this->applyAlias($column);
 
         $this->orders[$column] = $order;
     }
@@ -635,12 +642,38 @@ abstract class Grid
             throw new GridException('Wrong filter name');
         }
 
+        $column = $this->applyAlias($column);
+        
         if (!isset($this->filters[$column])) {
             $this->filters[$column] = [];
         }
         $this->filters[$column][$filter] = $value;
     }
 
+
+    /**
+     * Get filter
+     *
+     * @param  string $column
+     * @param  string $filter
+     * @return mixed
+     */
+    public function getFilter($column, $filter = null)
+    {
+        if (isset($this->filters[$column])) {
+            if ($filter) {
+                if (isset($this->filters[$column][$filter])) {
+                    return $this->filters[$column][$filter];
+                } else {
+                    return null;
+                }
+            } else {
+                return $this->filters[$column];
+            }
+        } else {
+            return null;
+        }
+    }
 
     /**
      * Get filters
@@ -650,6 +683,40 @@ abstract class Grid
     public function getFilters()
     {
         return $this->filters;
+    }
+
+    /**
+     * Add alias
+     *
+     * @param  string $key
+     * @param  string $value
+     * @return void
+     */
+    public function addAlias($key, $value)
+    {
+        $this->aliases[$key] = $value;
+    }
+
+    /**
+     * Set aliases
+     *
+     * @param array $aliases
+     * @return void
+     */
+    public function setAliases($aliases)
+    {
+        $this->aliases = $aliases;
+    }
+
+    /**
+     * Apply Alias
+     *
+     * @param  string $key
+     * @return string
+     */
+    protected function applyAlias($key)
+    {
+        return isset($this->aliases[$key])?$this->aliases[$key]:$key;
     }
 
     /**

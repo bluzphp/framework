@@ -31,4 +31,3 @@ class ConcreteContainer implements \ArrayAccess, \JsonSerializable
     use RegularAccess;
     use JsonSerialize;
 }
- 

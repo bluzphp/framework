@@ -6,7 +6,7 @@
 
 /**
  * Example of helpers
- * 
+ *
  * @author   Anton Shevchuk
  * @created  14.01.14 11:39
  */

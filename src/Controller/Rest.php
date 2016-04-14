@@ -189,7 +189,6 @@ class Rest extends AbstractController
             if (is_array($result)) {
                 $result = join('-', array_values($result));
             }
-
         } catch (ValidatorException $e) {
             Response::setStatusCode(400);
             return ['errors' => $e->getErrors()];

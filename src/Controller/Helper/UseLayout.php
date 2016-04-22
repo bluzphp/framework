@@ -11,8 +11,8 @@
  */
 namespace Bluz\Controller\Helper;
 
+use Bluz\Application\Application;
 use Bluz\Proxy\Layout;
-use Bluz\Proxy\Registry;
 
 return
     /**
@@ -21,6 +21,6 @@ return
      * @return void
      */
     function ($layout) {
-        Registry::set('app::layout', true);
+        Application::getInstance()->useLayout(true);
         Layout::setTemplate($layout);
     };

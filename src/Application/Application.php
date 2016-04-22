@@ -17,12 +17,10 @@ use Bluz\Application\Exception\RedirectException;
 use Bluz\Application\Exception\ReloadException;
 use Bluz\Common;
 use Bluz\Controller\Controller;
-use Bluz\Proxy\Auth;
 use Bluz\Proxy\Config;
 use Bluz\Proxy\Layout;
 use Bluz\Proxy\Logger;
 use Bluz\Proxy\Messages;
-use Bluz\Proxy\Registry;
 use Bluz\Proxy\Request;
 use Bluz\Proxy\Response;
 use Bluz\Proxy\Router;
@@ -65,6 +63,11 @@ class Application
     protected $debugFlag = false;
 
     /**
+     * @var bool Layout usage flag
+     */
+    protected $layoutFlag = true;
+
+    /**
      * Get application environment
      *
      * @return string
@@ -94,13 +97,28 @@ class Application
     }
 
     /**
-     * Check debug flag
+     * Return Debug flag
      *
      * @return bool
      */
     public function isDebug()
     {
         return $this->debugFlag;
+    }
+
+    /**
+     * Return Layout Flag
+     *
+     * @param  bool|null $flag
+     * @return bool
+     */
+    public function useLayout($flag = null)
+    {
+        if (is_bool($flag)) {
+            $this->layoutFlag = $flag;
+        }
+        
+        return $this->layoutFlag;
     }
 
     /**
@@ -256,7 +274,7 @@ class Application
         Router::process();
 
         if (Request::isXmlHttpRequest()) {
-            Registry::set('app::layout', false);
+            $this->layoutFlag = false;
         }
     }
 
@@ -295,7 +313,7 @@ class Application
         }
 
         // setup layout, if needed
-        if (Registry::get('app::layout') !== false) {
+        if ($this->useLayout()) {
             Layout::setContent($controllerInstance);
             Response::setBody(Layout::getInstance());
         } else {

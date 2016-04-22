@@ -11,7 +11,7 @@
  */
 namespace Bluz\Controller\Helper;
 
-use Bluz\Proxy\Registry;
+use Bluz\Application\Application;
 use Bluz\Proxy\Response;
 
 return
@@ -21,6 +21,6 @@ return
      * @return void
      */
     function () {
-        Registry::set('app::layout', false);
+        Application::getInstance()->useLayout(false);
         Response::setHeader('Content-Type', 'application/json');
     };

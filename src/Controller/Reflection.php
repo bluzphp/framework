@@ -103,7 +103,7 @@ class Reflection
     public function process()
     {
         // workaround for get reflection of closure function
-        $bootstrap = $view = $module = $controller = null;
+        $data = $view = $module = $controller = null;
         /** @var \Closure|object $closure */
         $closure = include $this->file;
 

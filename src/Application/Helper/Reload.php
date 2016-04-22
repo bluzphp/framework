@@ -9,17 +9,24 @@
 /**
  * @namespace
  */
-namespace Bluz\Application\Helper;
+namespace Bluz\Controller\Helper;
 
-use Bluz\Application\Exception\ReloadException;
+use Bluz\Proxy\Request;
+use Bluz\Proxy\Response;
 
+/**
+ * Reload helper can be declared inside Bootstrap
+ */
 return
-    /**
-     * Reload current page please, be careful to avoid loop of reload
-     *
-     * @return void
-     * @throws ReloadException
-     */
     function () {
-        throw new ReloadException();
+        Response::removeHeaders();
+        Response::clearBody();
+
+        if (Request::isXmlHttpRequest()) {
+            Response::setStatusCode(204);
+            Response::setHeader('Bluz-Reload', 'true');
+        } else {
+            Response::setStatusCode(302);
+            Response::setHeader('Location', Request::getRequestUri());
+        }
     };

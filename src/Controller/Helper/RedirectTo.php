@@ -9,9 +9,9 @@
 /**
  * @namespace
  */
-namespace Bluz\Application\Helper;
+namespace Bluz\Controller\Helper;
 
-use Bluz\Application\Application;
+use Bluz\Controller\Controller;
 use Bluz\Proxy\Router;
 
 return
@@ -25,7 +25,7 @@ return
      */
     function ($module = 'index', $controller = 'index', $params = array()) {
         /**
-         * @var Application $this
+         * @var Controller $this
          */
         $url = Router::getUrl($module, $controller, $params);
         $this->redirect($url);

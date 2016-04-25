@@ -20,6 +20,8 @@ use Bluz\Proxy\Response;
  */
 return
     function ($url) {
+        $this->useLayout(false);
+        
         Response::removeHeaders();
         Response::clearBody();
 

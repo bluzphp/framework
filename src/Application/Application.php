@@ -294,30 +294,25 @@ class Application
         // try to dispatch controller
         try {
             // dispatch controller
-            $controllerInstance = $this->dispatch($module, $controller, $params);
+            $result = $this->dispatch($module, $controller, $params);
         } catch (ForbiddenException $e) {
-            $controllerInstance = $this->forbidden($e);
+            $result = $this->forbidden($e);
         } catch (RedirectException $e) {
             // redirect to URL
-            $controllerInstance = $this->redirect($e->getUrl());
+            $result = $this->redirect($e->getUrl());
         } catch (ReloadException $e) {
             // reload page
-            $controllerInstance = $this->reload();
+            $result = $this->reload();
         } catch (\Exception $e) {
-            $controllerInstance = $this->error($e);
-        }
-
-        // empty response body
-        if (!$controllerInstance) {
-            return;
+            $result = $this->error($e);
         }
 
         // setup layout, if needed
         if ($this->useLayout()) {
-            Layout::setContent($controllerInstance);
+            Layout::setContent($result);
             Response::setBody(Layout::getInstance());
         } else {
-            Response::setBody($controllerInstance);
+            Response::setBody($result);
         }
     }
 

@@ -19,6 +19,8 @@ use Bluz\Proxy\Response;
  */
 return
     function () {
+        $this->useLayout(false);
+        
         Response::removeHeaders();
         Response::clearBody();
 

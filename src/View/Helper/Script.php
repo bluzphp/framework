@@ -31,12 +31,12 @@ return
             ) {
                 $script = $this->baseUrl($script);
             }
-            return "\t<script src=\"" . $script . "\"></script>\n";
+            return "<script src=\" $script \"></script>\n";
         } else {
-            return "\t<script type=\"text/javascript\">\n"
-            . "\t\t<!--\n\t\t"
-            . $script . "\n"
-            . "\t\t//-->\n"
-            . "\t</script>";
+            return "<script type=\"text/javascript\">\n"
+            . "<!--\n"
+            . "$script\n"
+            . "//-->\n"
+            . "</script>";
         }
     };

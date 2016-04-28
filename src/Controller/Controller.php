@@ -32,6 +32,7 @@ use Bluz\View\View;
  * @method void denied()
  * @method void disableLayout()
  * @method void disableView()
+ * @method Controller dispatch(string $module, string $controller, array $params = array())
  * @method void redirect(string $url)
  * @method void redirectTo(string $module, string $controller, array $params = array())
  * @method void reload()
@@ -229,6 +230,9 @@ class Controller implements \JsonSerializable
                 // return associative array is equal to setup view data
                 $this->getData()->setFromArray($result);
                 break;
+            case ($result instanceof Controller):
+                $this->getData()->setFromArray($result->getData()->toArray());
+                break;
         }
 
         if ($this->getReflection()->getCache()) {
@@ -301,6 +305,18 @@ class Controller implements \JsonSerializable
         return $this->reflection;
     }
 
+    /**
+     * Assign key/value pair to Data object
+     * @param  string $key
+     * @param  mixed  $value
+     * @return Controller
+     */
+    public function assign($key, $value)
+    {
+        $this->getData()->set($key, $value);
+        return $this;
+    }
+    
     /**
      * Get controller Data container
      *

@@ -30,9 +30,6 @@ use Zend\Diactoros\ServerRequest as Instance;
  * @author   Anton Shevchuk
  *
  * @method   static Instance getInstance()
- *
- * @method   static string getMethod()
- * @see      Zend\Diactoros\ServerRequest::getMethod()
  */
 class Request extends AbstractProxy
 {
@@ -211,6 +208,16 @@ class Request extends AbstractProxy
     public static function getController()
     {
         return self::getParam('_controller', Router::getDefaultController());
+    }
+    
+    /**
+     * Get method
+     *
+     * @return string
+     */
+    public static function getMethod()
+    {
+        return self::getParam('_method', self::getInstance()->getMethod());
     }
 
     /**

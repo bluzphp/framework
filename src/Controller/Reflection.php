@@ -43,6 +43,11 @@ class Reflection
      * @var array list of Accept
      */
     protected $accept = array();
+    
+    /**
+     * @var array list of Acl
+     */
+    protected $acl = array();
 
     /**
      * @var array list of HTTP methods
@@ -102,8 +107,6 @@ class Reflection
      */
     public function process()
     {
-        // workaround for get reflection of closure function
-        $data = $view = $module = $controller = null;
         /** @var \Closure|object $closure */
         $closure = include $this->file;
 
@@ -111,11 +114,7 @@ class Reflection
             throw new ComponentException("There is no callable structure in file `{$this->file}`");
         }
 
-        if ($closure instanceof \Closure) {
-            $reflection = new \ReflectionFunction($closure);
-        } else {
-            $reflection = new \ReflectionObject($closure);
-        }
+        $reflection = new \ReflectionFunction($closure);
 
         // check and normalize params by doc comment
         $docComment = $reflection->getDocComment();
@@ -272,7 +271,6 @@ class Reflection
     /**
      * Get accepted type
      *
-     * @todo move here "accept map" from Application
      * @return array|null
      */
     public function getAccept()
@@ -289,6 +287,27 @@ class Reflection
     public function setAccept($accept)
     {
         $this->accept[] = strtoupper($accept);
+    }
+    
+    /**
+     * Get Acl privileges
+     * 
+     * @return array|null
+     */
+    public function getAcl()
+    {
+        return sizeof($this->acl)?$this->acl:null;
+    }
+
+    /**
+     * Set Acl privileges
+     *
+     * @param  string $acl
+     * @return void
+     */
+    public function setAcl($acl)
+    {
+        $this->acl[] = $acl;
     }
 
     /**

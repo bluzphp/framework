@@ -26,7 +26,7 @@ return
         /**
          * @var Layout $this
          */
-        if (Application::getInstance()->hasLayout()) {
+        if (Application::getInstance()->useLayout()) {
             return Layout::headStyle($style, $media);
         } else {
             // it's just alias to style() call

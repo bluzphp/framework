@@ -309,7 +309,9 @@ class Application
 
         // setup layout, if needed
         if ($this->useLayout()) {
-            Layout::setContent($result);
+            // render view to layout
+            // needed for headScript and headStyle helpers
+            Layout::setContent($result->render());
             Response::setBody(Layout::getInstance());
         } else {
             Response::setBody($result);

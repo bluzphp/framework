@@ -25,7 +25,7 @@ return
         /**
          * @var Layout $this
          */
-        if (Application::getInstance()->hasLayout()) {
+        if (Application::getInstance()->useLayout()) {
             return Layout::headScript($script);
         } else {
             // it's just alias to script() call

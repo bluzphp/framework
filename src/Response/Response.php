@@ -12,8 +12,10 @@
 namespace Bluz\Response;
 
 use Bluz\Common\Options;
+use Bluz\Controller\Controller;
+use Bluz\Layout\Layout;
 use Bluz\Proxy\Messages;
-use Bluz\View\View;
+use Bluz\Proxy\Request;
 use Zend\Diactoros\Response\EmptyResponse;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\JsonResponse;
@@ -57,7 +59,7 @@ class Response
     protected $cookies = array();
 
     /**
-     * @var mixed result can be View|object|function
+     * @var mixed result can be Controller|Layout
      */
     protected $body;
 
@@ -84,11 +86,6 @@ class Response
             default:
                 $body = $this->getBody();
 
-                // run callable structure, but don't run view
-                if (is_callable($body) && !($body instanceof View)) {
-                    $body = $body();
-                }
-
                 if (is_null($body)) {
                     // empty response
                     $response = new EmptyResponse(
@@ -97,10 +94,10 @@ class Response
                     );
                 } elseif (PHP_SAPI === 'cli') {
                     // CLI response
-                    // extract data from view
-                    if ($body instanceof View) {
+                    // extract data from Controller
+                    if ($body instanceof Controller) {
                         // just print to console as key-value pair
-                        $data = $body->toArray();
+                        $data = $body->getData()->toArray();
                         $output = array();
                         array_walk_recursive($data, function ($value, $key) use (&$output) {
                             $output[] = $key .': '. $value;
@@ -114,17 +111,11 @@ class Response
                         $this->getStatusCode(),
                         $this->getHeaders()
                     );
-                } elseif ($this->getHeader('Content-Type') == 'application/json') {
+                } elseif (Request::getAccept(['application/json'])) {
                     // JSON response
-
                     // setup messages
                     if (Messages::count()) {
                         $this->setHeader('Bluz-Notify', json_encode(Messages::popAll()));
-                    }
-
-                    // extract data from view
-                    if ($body instanceof View) {
-                        $body = $body->toArray();
                     }
 
                     // encode body data to JSON
@@ -378,7 +369,7 @@ class Response
     /**
      * Get response body
      *
-     * @return View
+     * @return Controller|Layout
      */
     public function getBody()
     {

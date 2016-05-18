@@ -295,6 +295,7 @@ class Request extends AbstractProxy
     /**
      * Get Accept MIME Type
      *
+     * @todo:  refactoring this method, accept types should be stored in static? variable
      * @param  array $allowTypes
      * @return string
      */

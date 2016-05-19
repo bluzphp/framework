@@ -11,9 +11,11 @@
  */
 namespace Bluz\Proxy;
 
+use Bluz\Application\Exception\RedirectException;
+use Bluz\Application\Exception\ReloadException;
 use Bluz\Common\Exception\ComponentException;
+use Bluz\Controller\Controller;
 use Bluz\Response\Response as Instance;
-use Bluz\View\View;
 
 /**
  * Proxy to Response
@@ -68,7 +70,7 @@ use Bluz\View\View;
  *
  * @method   static void  setBody($phrase)
  * @see      Bluz\Response\Response::setBody()
- * @method   static View  getBody()
+ * @method   static Controller  getBody()
  * @see      Bluz\Response\Response::getBody()
  * @method   static void  clearBody()
  * @see      Bluz\Response\Response::clearBody()
@@ -92,5 +94,44 @@ class Response extends AbstractProxy
     protected static function initInstance()
     {
         throw new ComponentException("Class `Proxy\\Request` required external initialization");
+    }
+
+    /**
+     * Redirect to URL
+     *
+     * @param  string $url
+     * @return void
+     * @throws RedirectException
+     */
+    public static function redirect($url)
+    {
+        $redirect = new RedirectException();
+        $redirect->setUrl($url);
+        throw $redirect;
+    }
+
+    /**
+     * Redirect to controller
+     *
+     * @param  string      $module
+     * @param  string      $controller
+     * @param  array       $params
+     * @return void
+     */
+    public static function redirectTo($module = 'index', $controller = 'index', $params = array())
+    {
+        $url = Router::getUrl($module, $controller, $params);
+        self::redirect($url);
+    }
+
+    /**
+     * Reload current page please, be careful to avoid loop of reload
+     *
+     * @return void
+     * @throws ReloadException
+     */
+    public static function reload()
+    {
+        throw new ReloadException();
     }
 }

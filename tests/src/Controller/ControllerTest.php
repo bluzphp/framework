@@ -10,7 +10,6 @@
 namespace Bluz\Tests\Controller;
 
 use Bluz\Controller;
-use Bluz\Proxy\Router;
 use Bluz\Tests\TestCase;
 
 /**
@@ -50,36 +49,6 @@ class ControllerTest extends TestCase
     public function testHelperDenied()
     {
         $this->controller->denied();
-    }
-
-    /**
-     * Test Helper Redirect
-     *
-     * @expectedException \Bluz\Application\Exception\RedirectException
-     */
-    public function testHelperRedirect()
-    {
-        $this->controller->redirect('/');
-    }
-
-    /**
-     * Test Helper RedirectTo
-     *
-     * @expectedException \Bluz\Application\Exception\RedirectException
-     */
-    public function testHelperRedirectTo()
-    {
-        $this->controller->redirectTo(Router::getDefaultModule(), Router::getDefaultController());
-    }
-
-    /**
-     * Test Helper Reload
-     *
-     * @expectedException \Bluz\Application\Exception\ReloadException
-     */
-    public function testHelperReload()
-    {
-        $this->controller->reload();
     }
 
     /**

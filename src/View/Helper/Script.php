@@ -31,7 +31,7 @@ return
             ) {
                 $script = $this->baseUrl($script);
             }
-            return "<script src=\" $script \"></script>\n";
+            return "<script src=\"$script\"></script>\n";
         } else {
             return "<script type=\"text/javascript\">\n"
             . "<!--\n"

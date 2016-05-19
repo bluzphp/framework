@@ -12,6 +12,8 @@ namespace Bluz\Tests\Fixtures\Controllers;
 return
 /**
  * @privilege Test
+ * @acl Read
+ * @acl Write
  * @cache 5 min
  * @cache-html 1 min
  * @method CLI

@@ -51,7 +51,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     /**
      * Get Application instance
      *
-     * @return \Bluz\Application\Application
+     * @return BootstrapTest
      */
     protected static function getApp()
     {

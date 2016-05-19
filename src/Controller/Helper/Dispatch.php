@@ -19,6 +19,6 @@ return
      *
      * @return void
      */
-    function ($module, $controller, $params) {
+    function ($module, $controller, $params = []) {
         return Application::getInstance()->dispatch($module, $controller, $params);
     };

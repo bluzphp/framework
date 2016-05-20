@@ -38,10 +38,10 @@ return
             return '';
         }
 
-        $current = Request::getRequestUri()->getPath();
+        $current = Request::getUri()->getPath();
 
-        if (Request::getRequestUri()->getQuery()) {
-            $current .= sprintf('?%s', Request::getRequestUri()->getQuery());
+        if (Request::getUri()->getQuery()) {
+            $current .= sprintf('?%s', Request::getUri()->getQuery());
         }
 
         if ($href == $current) {

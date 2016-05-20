@@ -286,7 +286,17 @@ class Reflection
      */
     public function setAccept($accept)
     {
-        $this->accept[] = strtoupper($accept);
+        // allow accept map
+        $acceptMap = [
+            'HTML' => 'text/html',
+            'JSON' => 'application/json'
+        ];
+
+        $accept = strtoupper($accept);
+
+        if (isset($acceptMap[$accept])) {
+            $this->accept[] = $acceptMap[$accept];
+        }
     }
     
     /**

@@ -560,7 +560,7 @@ class Router
     public function getCleanUri()
     {
         if ($this->cleanUri === null) {
-            $uri = Request::getRequestUri()->getPath();
+            $uri = Request::getUri()->getPath();
             if ($this->getBaseUrl() && strpos($uri, $this->getBaseUrl()) === 0) {
                 $uri = substr($uri, strlen($this->getBaseUrl()));
             }

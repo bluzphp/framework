@@ -29,6 +29,6 @@ return
             Response::setHeader('Bluz-Reload', 'true');
         } else {
             Response::setStatusCode(302);
-            Response::setHeader('Location', Request::getRequestUri());
+            Response::setHeader('Location', Request::getUri());
         }
     };

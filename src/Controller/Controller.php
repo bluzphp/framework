@@ -136,26 +136,9 @@ class Controller implements \JsonSerializable
             return;
         }
 
-        // check header "accept" for catch JSON requests, and switch response to JSON
-        // it's some magic for AJAX and REST requests
-        $acceptMap = [
-            'HTML' => 'text/html',
-            'JSON' => 'application/json'
-        ];
-
         // some controller has @accept tag
-        if ($allowAccept = $this->getReflection()->getAccept()) {
-            // convert list of controller @accept to MIME types
-            $allowAccept = array_filter(
-                $acceptMap,
-                function ($key) use ($allowAccept) {
-                    return in_array($key, $allowAccept);
-                },
-                ARRAY_FILTER_USE_KEY
-            );
-            $allowAccept = array_values($allowAccept);
-        } else {
-            // by default allow just HTML output
+        if (!$allowAccept = $this->getReflection()->getAccept()) {
+            // but by default allow just HTML output
             $allowAccept = ['text/html'];
         }
 

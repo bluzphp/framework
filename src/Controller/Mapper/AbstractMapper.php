@@ -9,11 +9,12 @@
 /**
  * @namespace
  */
-namespace Bluz\Rest;
+namespace Bluz\Controller\Mapper;
 
 use Bluz\Application\Application;
 use Bluz\Application\Exception\ForbiddenException;
 use Bluz\Application\Exception\NotImplementedException;
+use Bluz\Controller\ControllerException;
 use Bluz\Crud\AbstractCrud;
 use Bluz\Proxy\Acl;
 use Bluz\Proxy\Request;
@@ -21,12 +22,12 @@ use Bluz\Proxy\Response;
 use Bluz\Proxy\Router;
 
 /**
- * Rest
+ * Mapper for controller
  *
  * @package  Bluz\Rest
  * @author   Anton Shevchuk
  */
-class Rest
+abstract class AbstractMapper
 {
     /**
      * @var string HTTP Method
@@ -74,15 +75,45 @@ class Rest
     protected $crud;
 
     /**
-     * METHOD => [
-     *     'module' => 'module',
-     *     'controller' => 'controller',
-     *     'acl' => 'privilege'
+     * [
+     *     METHOD => [
+     *         'module' => 'module',
+     *         'controller' => 'controller',
+     *         'acl' => 'privilege',
+     *     ],
      * ]
      * 
      * @var array
      */
     protected $map = array();
+
+    /**
+     * Prepare request for processing
+     */
+    public function __construct()
+    {
+        // HTTP method
+        $method = Request::getMethod();
+        $this->method = strtoupper($method);
+
+        // get path
+        // %module% / %controller% / %id% / %relation% / %id%
+        $path = Router::getCleanUri();
+
+        $this->params = explode('/', rtrim($path, '/'));
+
+        // module
+        $this->module = array_shift($this->params);
+
+        // controller
+        $this->controller = array_shift($this->params);
+
+        $data = Request::getParams();
+
+        unset($data['_method'], $data['_module'], $data['_controller']);
+
+        $this->data = $data;
+    }
 
     /**
      * Add mapping data
@@ -112,46 +143,31 @@ class Rest
     }
 
     /**
-     * process
+     * Get crud instance
      *
-     * @return void
+     * @return AbstractCrud
+     * @throws ControllerException
      */
-    public function process()
+    public function getCrud()
     {
-        // HTTP method
-        $method = Request::getMethod();
-        $this->method = strtoupper($method);
-
-        // get path
-        // %module% / %controller% / %id% / %relation% / %id%
-        $path = Router::getCleanUri();
-
-        $params = explode('/', rtrim($path, '/'));
-
-        $this->params = $params;
-
-        // module
-        $this->module = array_shift($params);
-
-        // controller
-        $this->controller = array_shift($params);
-
-        if (sizeof($params)) {
-            $this->primary = explode('-', array_shift($params));
+        if (!$this->crud) {
+            throw new ControllerException("`Crud` class is not exists or not initialized");
         }
+        return $this->crud;
+    }
 
-        if (sizeof($params)) {
-            $this->relation = array_shift($params);
+    /**
+     * Return primary key
+     *
+     * @return array
+     */
+    public function getPrimaryKey()
+    {
+        if (is_null($this->primary)) {
+            $primary = $this->getCrud()->getPrimaryKey();
+            $this->primary = array_intersect_key($this->data, array_flip($primary));
         }
-        if (sizeof($params)) {
-            $this->relationId = array_shift($params);
-        }
-
-        $data = Request::getParams();
-
-        unset($data['_method'], $data['_module'], $data['_controller']);
-
-        $this->data = $data;
+        return $this->primary;
     }
 
     /**
@@ -162,13 +178,6 @@ class Rest
      */
     public function run()
     {
-        // OPTIONS
-        if ('OPTIONS' == $this->method) {
-            Response::setHeader('Allow', join(',', array_keys($this->map)));
-            return null;
-        }
-        
-        
         // check implementation
         if (!isset($this->map[$this->method])) {
             throw new NotImplementedException;
@@ -188,8 +197,8 @@ class Rest
             $map['module'],
             $map['controller'],
             [
-                'crud' => $this->crud,
-                'primary' => $this->primary,
+                'crud' => $this->getCrud(),
+                'primary' => $this->getPrimaryKey(),
                 'data' => $this->data
             ]
             );

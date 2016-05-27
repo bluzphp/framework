@@ -116,33 +116,35 @@ class Table extends AbstractCrud
     {
         $select = $this->getTable()->select();
 
-        if (!is_null($total)) {
-            // switch statement for DB type
-            $type = Proxy\Db::getOption('connect', 'type');
-            switch ($type) {
-                case 'mysql':
-                    $selectPart = $select->getQueryPart('select');
-                    $selectPart = 'SQL_CALC_FOUND_ROWS ' . current($selectPart);
-                    $select->select($selectPart);
-                    $totalSQL = 'SELECT FOUND_ROWS()';
-                    break;
-                case 'pgsql':
-                default:
-                    $selectTotal = clone $select;
-                    $selectTotal->select('COUNT(*)');
-                    $totalSQL = $selectTotal->getSql();
-                    break;
-            }
+        // switch statement for DB type
+        $type = Proxy\Db::getOption('connect', 'type');
+        switch ($type) {
+            case 'mysql':
+                $selectPart = $select->getQueryPart('select');
+                $selectPart = 'SQL_CALC_FOUND_ROWS ' . current($selectPart);
+                $select->select($selectPart);
+                $totalSQL = 'SELECT FOUND_ROWS()';
+                break;
+            case 'pgsql':
+            default:
+                $selectTotal = clone $select;
+                $selectTotal->select('COUNT(*)');
+                $totalSQL = $selectTotal->getSql();
+                break;
         }
 
         $select->setLimit($limit);
         $select->setOffset($offset);
 
-        $result = $select->execute();
+        // run queries
+        // use transaction to avoid errors
+        Proxy\Db::transaction(function() use (&$result, &$total, $select, $totalSQL) {
+            $result = $select->execute();
 
-        if (!is_null($total) && isset($totalSQL)) {
-            $total = Proxy\Db::fetchOne($totalSQL);
-        }
+            if (!is_null($total)) {
+                $total = Proxy\Db::fetchOne($totalSQL);
+            }
+        });
 
         return $result;
     }

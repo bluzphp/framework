@@ -66,11 +66,12 @@ abstract class AbstractCrud
      *
      * @param  integer $offset
      * @param  integer $limit
-     * @param  array   $params
+     * @param  array $params
+     * @param  null $total
      * @return mixed
      * @throws NotImplementedException
      */
-    public function readSet($offset = 0, $limit = self::DEFAULT_LIMIT, $params = array())
+    public function readSet($offset = 0, $limit = self::DEFAULT_LIMIT, $params = array(), &$total = null)
     {
         throw new NotImplementedException();
     }

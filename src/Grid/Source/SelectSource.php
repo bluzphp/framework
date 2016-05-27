@@ -85,18 +85,25 @@ class SelectSource extends AbstractSource
             $select = $this->source->getQueryPart('select');
             $this->source->select('SQL_CALC_FOUND_ROWS ' . current($select));
 
-            // run queries
-            $data = $this->source->execute();
-            $total = Proxy\Db::fetchOne('SELECT FOUND_ROWS()');
+            $totalSql = 'SELECT FOUND_ROWS()';
         } else {
             // other
             $totalSource = clone $this->source;
             $totalSource->select('COUNT(*)');
 
-            // run queries
-            $data = $this->source->execute();
-            $total = $totalSource->execute();
+            $totalSql = $totalSource->getSql();
         }
+
+        $data = [];
+        $total = 0;
+
+        // run queries
+        // use transaction to avoid errors
+        Proxy\Db::transaction(function() use (&$data, &$total, $totalSql) {
+            $data = $this->source->execute();
+            $total = Proxy\Db::fetchOne($totalSql);
+        });
+
         $gridData = new Grid\Data($data);
         $gridData->setTotal($total);
         return $gridData;

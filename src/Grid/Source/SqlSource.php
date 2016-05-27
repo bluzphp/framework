@@ -82,8 +82,9 @@ class SqlSource extends AbstractSource
         $limit = ' LIMIT ' . ($settings['page'] - 1) * $settings['limit'] . ', ' . $settings['limit'];
 
         // prepare query
-        $connect = Proxy\Config::getData('db', 'connect');
-        if (strtolower($connect['type']) == 'mysql') {
+        $type = Proxy\Db::getOption('connect', 'type');
+
+        if (strtolower($type) == 'mysql') {
             // MySQL
             $dataSql = preg_replace('/SELECT\s(.*?)\sFROM/is', 'SELECT SQL_CALC_FOUND_ROWS $1 FROM', $this->source, 1);
             $countSql = 'SELECT FOUND_ROWS()';

@@ -78,8 +78,9 @@ class SelectSource extends AbstractSource
         $this->source->setPage($settings['page']);
 
         // prepare query
-        $connect = Proxy\Config::getData('db', 'connect');
-        if (strtolower($connect['type']) == 'mysql') {
+        $type = Proxy\Db::getOption('connect', 'type');
+
+        if (strtolower($type) == 'mysql') {
             // MySQL
             $select = $this->source->getQueryPart('select');
             $this->source->select('SQL_CALC_FOUND_ROWS ' . current($select));

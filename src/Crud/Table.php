@@ -15,6 +15,7 @@ use Bluz\Application\Exception\ApplicationException;
 use Bluz\Application\Exception\NotFoundException;
 use Bluz\Db;
 use Bluz\Db\Row;
+use Bluz\Proxy;
 
 /**
  * Crud Table
@@ -80,7 +81,7 @@ class Table extends AbstractCrud
     }
 
     /**
-     * Get record from Db or create new
+     * Get record from Db or create new object
      *
      * @param  mixed $primary
      * @return Row
@@ -99,6 +100,51 @@ class Table extends AbstractCrud
         }
 
         return $row;
+    }
+
+    /**
+     * Get set of records
+     *
+     * @param int $offset
+     * @param int $limit
+     * @param array $params
+     * @param int $total
+     * @return array|int|mixed
+     * @throws ApplicationException
+     */
+    public function readSet($offset = 0, $limit = 10, $params = array(), &$total = null)
+    {
+        $select = $this->getTable()->select();
+
+        if (!is_null($total)) {
+            // switch statement for DB type
+            $type = Proxy\Db::getOption('connect', 'type');
+            switch ($type) {
+                case 'mysql':
+                    $selectPart = $select->getQueryPart('select');
+                    $selectPart = 'SQL_CALC_FOUND_ROWS ' . current($selectPart);
+                    $select->select($selectPart);
+                    $totalSQL = 'SELECT FOUND_ROWS()';
+                    break;
+                case 'pgsql':
+                default:
+                    $selectTotal = clone $select;
+                    $selectTotal->select('COUNT(*)');
+                    $totalSQL = $selectTotal->getSql();
+                    break;
+            }
+        }
+
+        $select->setLimit($limit);
+        $select->setOffset($offset);
+
+        $result = $select->execute();
+
+        if (!is_null($total) && isset($totalSQL)) {
+            $total = Proxy\Db::fetchOne($totalSQL);
+        }
+
+        return $result;
     }
 
     /**

@@ -300,9 +300,6 @@ class Application
         } catch (RedirectException $e) {
             // redirect to URL
             $result = $this->redirect($e->getUrl());
-        } catch (ReloadException $e) {
-            // reload page
-            $result = $this->reload();
         } catch (\Exception $e) {
             $result = $this->error($e);
         }

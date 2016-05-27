@@ -132,6 +132,6 @@ class Response extends AbstractProxy
      */
     public static function reload()
     {
-        throw new ReloadException();
+        self::redirect(Request::getUri());
     }
 }

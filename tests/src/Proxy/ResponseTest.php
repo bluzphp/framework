@@ -44,7 +44,7 @@ class ResponseTest extends TestCase
     /**
      * Test Helper Reload
      *
-     * @expectedException \Bluz\Application\Exception\ReloadException
+     * @expectedException \Bluz\Application\Exception\RedirectException
      */
     public function testHelperReload()
     {

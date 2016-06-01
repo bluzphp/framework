@@ -11,6 +11,7 @@
  */
 namespace Bluz\Response;
 
+use Bluz\Application\Exception\NotAcceptableException;
 use Bluz\Common\Options;
 use Bluz\Controller\Controller;
 use Bluz\Layout\Layout;
@@ -66,7 +67,7 @@ class Response
     /**
      * send
      *
-     * @return void
+     * @throws NotAcceptableException
      */
     public function send()
     {
@@ -111,26 +112,34 @@ class Response
                         $this->getStatusCode(),
                         $this->getHeaders()
                     );
-                } elseif (Request::getAccept(['application/json'])) {
-                    // JSON response
-                    // setup messages
-                    if (Messages::count()) {
-                        $this->setHeader('Bluz-Notify', json_encode(Messages::popAll()));
-                    }
-
-                    // encode body data to JSON
-                    $response = new JsonResponse(
-                        $body,
-                        $this->getStatusCode(),
-                        $this->getHeaders()
-                    );
                 } else {
-                    // HTML response
-                    $response = new HtmlResponse(
-                        (string) $body,
-                        $this->getStatusCode(),
-                        $this->getHeaders()
-                    );
+                    // switch Response type by Request Accept header
+                    switch (Request::getAccept([Request::TYPE_HTML, Request::TYPE_JSON])) {
+                        case Request::TYPE_HTML:
+                            // HTML response
+                            $response = new HtmlResponse(
+                                (string) $body,
+                                $this->getStatusCode(),
+                                $this->getHeaders()
+                            );
+                            break;
+                        case Request::TYPE_JSON:
+                            // JSON response
+                            // setup messages
+                            if (Messages::count()) {
+                                $this->setHeader('Bluz-Notify', json_encode(Messages::popAll()));
+                            }
+
+                            // encode body data to JSON
+                            $response = new JsonResponse(
+                                $body,
+                                $this->getStatusCode(),
+                                $this->getHeaders()
+                            );
+                            break;
+                        default:
+                            throw new NotAcceptableException;
+                    }
                 }
                 break;
         }

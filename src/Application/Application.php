@@ -14,7 +14,6 @@ namespace Bluz\Application;
 use Bluz\Application\Exception\ApplicationException;
 use Bluz\Application\Exception\ForbiddenException;
 use Bluz\Application\Exception\RedirectException;
-use Bluz\Application\Exception\ReloadException;
 use Bluz\Common;
 use Bluz\Controller\Controller;
 use Bluz\Proxy\Config;
@@ -273,7 +272,9 @@ class Application
 
         Router::process();
 
-        if (Request::isXmlHttpRequest()) {
+        if (Request::isXmlHttpRequest()
+            or Request::getAccept([Request::TYPE_HTML, Request::TYPE_JSON]) == Request::TYPE_JSON
+        ) {
             $this->layoutFlag = false;
         }
     }

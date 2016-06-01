@@ -37,7 +37,7 @@ use Zend\Diactoros\ServerRequest as Instance;
 class Request extends AbstractProxy
 {
     /**
-     * @const string HTTP METHOD constant names
+     * @const string HTTP methods
      */
     const METHOD_OPTIONS = 'OPTIONS';
     const METHOD_GET = 'GET';
@@ -48,6 +48,12 @@ class Request extends AbstractProxy
     const METHOD_DELETE = 'DELETE';
     const METHOD_TRACE = 'TRACE';
     const METHOD_CONNECT = 'CONNECT';
+
+    /**
+     * @const string HTTP content types 
+     */
+    const TYPE_HTML = 'text/html';
+    const TYPE_JSON = 'application/json';
 
     /**
      * Init instance

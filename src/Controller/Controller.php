@@ -139,7 +139,7 @@ class Controller implements \JsonSerializable
         // some controller has @accept tag
         if (!$allowAccept = $this->getReflection()->getAccept()) {
             // but by default allow just HTML output
-            $allowAccept = ['text/html'];
+            $allowAccept = [Request::TYPE_HTML, Request::TYPE_ANY];
         }
 
         // choose MIME type by browser accept header
@@ -148,10 +148,11 @@ class Controller implements \JsonSerializable
 
         // switch statement for Accept header
         switch ($accept) {
-            case 'text/html':
+            case Request::TYPE_ANY:
+            case Request::TYPE_HTML:
                 // HTML response with layout
                 break;
-            case 'application/json':
+            case Request::TYPE_JSON:
                 // JSON response
                 $this->template = null;
                 break;

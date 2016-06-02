@@ -114,7 +114,8 @@ class Response
                     );
                 } else {
                     // switch Response type by Request Accept header
-                    switch (Request::getAccept([Request::TYPE_HTML, Request::TYPE_JSON])) {
+                    switch (Request::getAccept([Request::TYPE_ANY, Request::TYPE_HTML, Request::TYPE_JSON])) {
+                        case Request::TYPE_ANY:
                         case Request::TYPE_HTML:
                             // HTML response
                             $response = new HtmlResponse(

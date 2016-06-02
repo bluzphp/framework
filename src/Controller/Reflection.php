@@ -13,6 +13,7 @@ namespace Bluz\Controller;
 
 use Bluz\Common\Exception\ComponentException;
 use Bluz\Common\Options;
+use Bluz\Proxy\Request;
 
 /**
  * Reflection
@@ -288,8 +289,8 @@ class Reflection
     {
         // allow accept map
         $acceptMap = [
-            'HTML' => 'text/html',
-            'JSON' => 'application/json'
+            'HTML' => Request::TYPE_HTML,
+            'JSON' => Request::TYPE_JSON
         ];
 
         $accept = strtoupper($accept);

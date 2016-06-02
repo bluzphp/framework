@@ -52,6 +52,7 @@ class Request extends AbstractProxy
     /**
      * @const string HTTP content types 
      */
+    const TYPE_ANY = '*/*';
     const TYPE_HTML = 'text/html';
     const TYPE_JSON = 'application/json';
 

@@ -133,6 +133,54 @@ abstract class AbstractMapper
     }
 
     /**
+     * Add mapping for GET method
+     *
+     * @param string $module
+     * @param string $controller
+     * @param String $acl
+     */
+    public function get($module, $controller, $acl = null)
+    {
+        $this->addMap('GET', $module, $controller, $acl);
+    }
+
+    /**
+     * Add mapping for POST method
+     *
+     * @param string $module
+     * @param string $controller
+     * @param String $acl
+     */
+    public function post($module, $controller, $acl = null)
+    {
+        $this->addMap('POST', $module, $controller, $acl);
+    }
+
+    /**
+     * Add mapping for PUT method
+     *
+     * @param string $module
+     * @param string $controller
+     * @param String $acl
+     */
+    public function put($module, $controller, $acl = null)
+    {
+        $this->addMap('PUT', $module, $controller, $acl);
+    }
+
+    /**
+     * Add mapping for DELETE method
+     *
+     * @param string $module
+     * @param string $controller
+     * @param String $acl
+     */
+    public function delete($module, $controller, $acl = null)
+    {
+        $this->addMap('DELETE', $module, $controller, $acl);
+    }
+
+    /**
      * Set Crud
      *
      * @param AbstractCrud $crud

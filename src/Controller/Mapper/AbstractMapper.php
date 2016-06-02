@@ -133,6 +133,18 @@ abstract class AbstractMapper
     }
 
     /**
+     * Add mapping for HEAD method
+     *
+     * @param string $module
+     * @param string $controller
+     * @param String $acl
+     */
+    public function head($module, $controller, $acl = null)
+    {
+        $this->addMap('HEAD', $module, $controller, $acl);
+    }
+
+    /**
      * Add mapping for GET method
      *
      * @param string $module

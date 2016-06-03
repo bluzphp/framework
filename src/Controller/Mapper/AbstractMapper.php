@@ -169,6 +169,18 @@ abstract class AbstractMapper
     }
 
     /**
+     * Add mapping for PATCH method
+     *
+     * @param string $module
+     * @param string $controller
+     * @param String $acl
+     */
+    public function patch($module, $controller, $acl = null)
+    {
+        $this->addMap('PATCH', $module, $controller, $acl);
+    }
+
+    /**
      * Add mapping for PUT method
      *
      * @param string $module

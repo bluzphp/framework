@@ -335,6 +335,7 @@ class Controller implements \JsonSerializable
     {
         // switch statement for $type
         switch (strtoupper($type)) {
+            case 'CLI':
             case 'JSON':
                 return $this->getData();
             case 'HTML':

@@ -12,6 +12,7 @@
 namespace Bluz\Response;
 
 use Bluz\Application\Exception\NotAcceptableException;
+use Bluz\Cli\CliResponse;
 use Bluz\Common\Options;
 use Bluz\Controller\Controller;
 use Bluz\Layout\Layout;
@@ -79,26 +80,13 @@ class Response
         $body = $this->getBody();
 
         $this->sendCookies();
-
+        
         switch (true) {
             case 'CLI' == $this->type:
                 // CLI response
-                // extract data from Controller
-                if ($body instanceof Controller) {
-                    // just print to console as key-value pair
-                    $data = $body->getData()->toArray();
-                    $output = array();
-                    array_walk_recursive($data, function ($value, $key) use (&$output) {
-                        $output[] = $key .': '. $value;
-                    });
-                    $body = join("\n", $output);
-                }
-
-                // @TODO: create CLIResponse
-                $response = new HtmlResponse(
-                    (string) $body,
-                    $this->getStatusCode(),
-                    array()
+                $response = new CliResponse(
+                    $body->render('CLI'),
+                    $this->getStatusCode()
                 );
                 break;
             case is_null($body):

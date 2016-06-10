@@ -126,7 +126,7 @@ class ResponseTest extends TestCase
     public function testSetGetCookies()
     {
         $this->response->setCookie('foo', 'bar');
-        $this->assertEqualsArray(['foo', 'bar', 0, '/', null, false, true], $this->response->getCookie('foo'));
+        $this->assertEqualsArray(['foo', 'bar', 0, '/', null, false, false], $this->response->getCookie('foo'));
     }
 
     /**
@@ -137,7 +137,7 @@ class ResponseTest extends TestCase
         $dateTime = new \DateTime('now');
         $this->response->setCookie('foo', 'bar', $dateTime);
         $this->assertEqualsArray(
-            ['foo', 'bar', $dateTime->format('U'), '/', null, false, true],
+            ['foo', 'bar', $dateTime->format('U'), '/', null, false, false],
             $this->response->getCookie('foo')
         );
     }

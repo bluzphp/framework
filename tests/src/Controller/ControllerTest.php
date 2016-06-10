@@ -42,6 +42,30 @@ class ControllerTest extends TestCase
     }
 
     /**
+     * @todo Implement testAcceptCheck().
+     */
+    public function testAcceptCheck()
+    {
+        // 12 tests:
+        //   -/- -> ANY,JSON,HTML
+        //   */* -> ANY,JSON,HTML
+        //   html/text -> ANY,JSON,HTML
+        //   application/json -> ANY,JSON,HTML
+
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete('This test has not been implemented yet.');
+    }
+
+    /**
+     * @todo Implement testMethodCheck().
+     */
+    public function testMethodCheck()
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete('This test has not been implemented yet.');
+    }
+
+    /**
      * Test Helper Denied
      *
      * @expectedException \Bluz\Application\Exception\ForbiddenException

@@ -36,11 +36,6 @@ class Reflection
     protected $cache = 0;
 
     /**
-     * @var integer cache TTL for HTML content
-     */
-    protected $cacheHtml = 0;
-
-    /**
      * @var array list of Accept
      */
     protected $accept = array();
@@ -226,27 +221,6 @@ class Reflection
     }
 
     /**
-     * Get HTML Cache TTL
-     *
-     * @return integer
-     */
-    public function getCacheHtml()
-    {
-        return $this->cacheHtml;
-    }
-
-    /**
-     * Set HTML Cache TTL
-     *
-     * @param  string $ttl
-     * @return void
-     */
-    public function setCacheHtml($ttl)
-    {
-        $this->cacheHtml = $this->prepareCache($ttl);
-    }
-
-    /**
      * Prepare Cache
      *
      * @param  string $cache
@@ -289,6 +263,7 @@ class Reflection
     {
         // allow accept map
         $acceptMap = [
+            'ANY'  => Request::TYPE_ANY,
             'HTML' => Request::TYPE_HTML,
             'JSON' => Request::TYPE_JSON
         ];

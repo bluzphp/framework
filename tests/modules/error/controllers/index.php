@@ -19,13 +19,13 @@ use Bluz\Proxy\Messages;
 use Bluz\Proxy\Response;
 use Bluz\Proxy\Request;
 
-return
 /**
  * @route  /error/{$code}
  * @param  int $code
  * @param  string $message
+ * @return array|null
  */
-function ($code, $message = '') {
+return function ($code, $message = '') {
     /**
      * @var Controller $this
      */
@@ -42,11 +42,11 @@ function ($code, $message = '') {
             break;
         case 403:
             $title = __("Forbidden");
-            $description = $message ?: __("You don't have permissions to access this page");
+            $description = __("You don't have permissions to access this page");
             break;
         case 404:
             $title = __("Not Found");
-            $description = $message ?: __("The page you requested was not found");
+            $description = __("The page you requested was not found");
             break;
         case 405:
             $title = __("Method Not Allowed");

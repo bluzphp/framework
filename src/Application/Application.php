@@ -272,10 +272,15 @@ class Application
 
         Router::process();
 
-        if (Request::isXmlHttpRequest()
-            or Request::getAccept([Request::TYPE_HTML, Request::TYPE_JSON]) == Request::TYPE_JSON
-        ) {
+        // disable Layout for XmlHttpRequests
+        if (Request::isXmlHttpRequest()) {
             $this->layoutFlag = false;
+        }
+
+        // switch to JSON response based on Accept header
+        if (Request::getAccept([Request::TYPE_HTML, Request::TYPE_JSON]) == Request::TYPE_JSON) {
+            $this->layoutFlag = false;
+            Response::switchType('JSON');
         }
     }
 

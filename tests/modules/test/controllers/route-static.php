@@ -7,12 +7,11 @@
  */
 namespace Application;
 
-return
 /**
  * @route /static-route/
  * @route /another-route.html
- * @return \closure
+ * @return bool
  */
-function () {
+return function () {
     return false;
 };

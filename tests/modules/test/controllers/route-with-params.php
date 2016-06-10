@@ -7,14 +7,13 @@
  */
 namespace Application;
 
-return
 /**
  * @route /{$a}-{$b}-{$c}/
  * @param int $a
  * @param float $b
  * @param string $c
- * @return \closure
+ * @return bool
  */
-function ($a, $b, $c) {
+return function ($a, $b, $c) {
     return false;
 };

@@ -65,88 +65,102 @@ class Response
     protected $body;
 
     /**
+     * @var string CLI|HTML|JSON
+     */
+    protected $type = 'HTML';
+
+    /**
      * send
      *
      * @throws NotAcceptableException
      */
     public function send()
     {
-        // switch statement for $this->status
-        switch ($this->getStatusCode()) {
-            case 204:
+        $body = $this->getBody();
+
+        $this->sendCookies();
+
+        switch (true) {
+            case 'CLI' == $this->type:
+                // CLI response
+                // extract data from Controller
+                if ($body instanceof Controller) {
+                    // just print to console as key-value pair
+                    $data = $body->getData()->toArray();
+                    $output = array();
+                    array_walk_recursive($data, function ($value, $key) use (&$output) {
+                        $output[] = $key .': '. $value;
+                    });
+                    $body = join("\n", $output);
+                }
+
+                // @TODO: create CLIResponse
+                $response = new HtmlResponse(
+                    (string) $body,
+                    $this->getStatusCode(),
+                    array()
+                );
+                break;
+            case is_null($body):
+            case 204 == $this->getStatusCode():
                 $response = new EmptyResponse($this->getStatusCode(), $this->getHeaders());
                 break;
-            case 301:
-            case 302:
+            case 301 == $this->getStatusCode():
+            case 302 == $this->getStatusCode():
                 $response = new RedirectResponse(
                     $this->getHeader('Location'),
                     $this->getStatusCode(),
                     $this->getHeaders()
                 );
                 break;
-            default:
-                $body = $this->getBody();
-
-                if (is_null($body)) {
-                    // empty response
-                    $response = new EmptyResponse(
-                        $this->getStatusCode(),
-                        $this->getHeaders()
-                    );
-                } elseif (PHP_SAPI === 'cli') {
-                    // CLI response
-                    // extract data from Controller
-                    if ($body instanceof Controller) {
-                        // just print to console as key-value pair
-                        $data = $body->getData()->toArray();
-                        $output = array();
-                        array_walk_recursive($data, function ($value, $key) use (&$output) {
-                            $output[] = $key .': '. $value;
-                        });
-                        $body = join("\n", $output);
-                    }
-
-                    // @TODO: create CLIResponse
-                    $response = new HtmlResponse(
-                        (string) $body,
-                        $this->getStatusCode(),
-                        $this->getHeaders()
-                    );
-                } else {
-                    // switch Response type by Request Accept header
-                    switch (Request::getAccept([Request::TYPE_ANY, Request::TYPE_HTML, Request::TYPE_JSON])) {
-                        case Request::TYPE_ANY:
-                        case Request::TYPE_HTML:
-                            // HTML response
-                            $response = new HtmlResponse(
-                                (string) $body,
-                                $this->getStatusCode(),
-                                $this->getHeaders()
-                            );
-                            break;
-                        case Request::TYPE_JSON:
-                            // JSON response
-                            // setup messages
-                            if (Messages::count()) {
-                                $this->setHeader('Bluz-Notify', json_encode(Messages::popAll()));
-                            }
-
-                            // encode body data to JSON
-                            $response = new JsonResponse(
-                                $body,
-                                $this->getStatusCode(),
-                                $this->getHeaders()
-                            );
-                            break;
-                        default:
-                            throw new NotAcceptableException;
-                    }
+            case 'JSON' == $this->type:
+                // JSON response
+                // setup messages
+                if (Messages::count()) {
+                    $this->setHeader('Bluz-Notify', json_encode(Messages::popAll()));
                 }
+
+                // encode body data to JSON
+                $response = new JsonResponse(
+                    $body,
+                    $this->getStatusCode(),
+                    $this->getHeaders()
+                );
+                break;
+            case 'HTML' == $this->type:
+            default:
+                // HTML response
+                $response = new HtmlResponse(
+                    (string) $body,
+                    $this->getStatusCode(),
+                    $this->getHeaders()
+                );
                 break;
         }
 
         $emitter = new SapiEmitter();
         $emitter->emit($response);
+    }
+
+    /**
+     * Set Response Type, one of JSON, HTML or CLI
+     *
+     * @param $type
+     */
+    public function switchType($type)
+    {
+        // switch statement for $type
+        switch ($type) {
+            case 'JSON':
+                $this->setHeader('Content-Type', 'application/json');
+                break;
+            case 'CLI':
+            case 'HTML':
+            default:
+                break;
+        }
+
+        $this->type = $type;
     }
 
     /**
@@ -410,12 +424,12 @@ class Response
      */
     public function setCookie(
         $name,
-        $value = null,
+        $value = '',
         $expire = 0,
         $path = '/',
-        $domain = null,
+        $domain = '',
         $secure = false,
-        $httpOnly = true
+        $httpOnly = false
     ) {
         // from PHP source code
         if (preg_match("/[=,; \t\r\n\013\014]/", $name)) {
@@ -440,7 +454,7 @@ class Response
             'name' => $name,
             'value' => $value,
             'expire' => $expire,
-            'path' => empty($path) ? '/' : $path,
+            'path' => $path,
             'domain' => $domain,
             'secure' => (bool) $secure,
             'httpOnly' => (bool) $httpOnly
@@ -456,5 +470,21 @@ class Response
     public function getCookie($name)
     {
         return isset($this->cookies[$name])?$this->cookies[$name]:null;
+    }
+
+    /**
+     * Process Cookies to Header
+     *
+     *   Set-Cookie: <name>=<value>[; <name>=<value>]...
+     *   [; expires=<date>][; domain=<domain_name>]
+     *   [; path=<some_path>][; secure][; httponly]
+     *
+     * @return void
+     */
+    protected function sendCookies()
+    {
+        foreach ($this->cookies as $cookie) {
+            setcookie(...array_values($cookie));
+        }
     }
 }

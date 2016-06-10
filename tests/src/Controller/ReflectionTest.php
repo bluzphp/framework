@@ -37,7 +37,6 @@ class ReflectionTest extends TestCase
         $reflection->process();
 
         $this->assertEqualsArray(['CLI', 'GET'], $reflection->getMethod());
-        $this->assertEquals(60, $reflection->getCacheHtml());
         $this->assertEquals(300, $reflection->getCache());
         $this->assertEqualsArray(['a' => 'int', 'b' => 'float', 'c' => 'string'], $reflection->getParams());
         $this->assertEquals('Test', $reflection->getPrivilege());

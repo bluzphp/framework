@@ -75,12 +75,14 @@ use Bluz\Response\Response as Instance;
  * @method   static void  clearBody()
  * @see      Bluz\Response\Response::clearBody()
  *
- * @method   static void setCookie($name, $value = null, $expire = 0, $path = '/', $domain = null, $s = null, $h = null)
- * @see      Bluz\Response\Response::setCookie($name, $value = null, $expire = 0, $path = '/', $domain = null,
- *              $secure = null, $httpOnly = null)
+ * @method   static void setCookie($name, $value = '', $expire = 0, $path = '/', $domain = '', $s = null, $h = null)
+ * @see      Bluz\Response\Response::setCookie()
  * @method   static array getCookie()
  * @see      Bluz\Response\Response::getCookie()
  *
+ * @method   static switchType($type)
+ * @see      Bluz\Response\Response::switchType()
+ 
  * @method   static void  send()
  * @see      Bluz\Response\Response::send()
  */

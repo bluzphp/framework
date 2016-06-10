@@ -136,17 +136,28 @@ class Controller implements \JsonSerializable
             return;
         }
 
-        // some controller has @accept tag
-        if (!$allowAccept = $this->getReflection()->getAccept()) {
+        $allowAccept = $this->getReflection()->getAccept();
+
+        // some controllers hasn't @accept tag
+        if (!$allowAccept) {
             // but by default allow just HTML output
             $allowAccept = [Request::TYPE_HTML, Request::TYPE_ANY];
         }
 
-        // choose MIME type by browser accept header
-        // filtered by controller @accept
+        // get Accept with high priority
         $accept = Request::getAccept($allowAccept);
 
-        // switch statement for Accept header
+        // some controllers allow any type (*/*)
+        // and client doesn't send Accept header
+        if (in_array(Request::TYPE_ANY, $allowAccept) && !$accept) {
+            // all OK, controller should realize logic for response
+            return;
+        }
+
+        // some controllers allow just selected types
+        // choose MIME type by browser accept header
+        // filtered by controller @accept
+        // switch statement for this logic
         switch ($accept) {
             case Request::TYPE_ANY:
             case Request::TYPE_HTML:

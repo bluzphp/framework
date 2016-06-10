@@ -22,5 +22,5 @@ return
      */
     function () {
         Application::getInstance()->useLayout(false);
-        Response::setHeader('Content-Type', 'application/json');
+        Response::switchType('JSON');
     };

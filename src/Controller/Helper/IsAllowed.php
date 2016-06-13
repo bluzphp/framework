@@ -11,14 +11,19 @@
  */
 namespace Bluz\Controller\Helper;
 
+use Bluz\Controller\Controller;
 use Bluz\Proxy\Acl;
 
+/**
+ * Check privilege
+ *
+ * @param $privilege
+ * @return bool
+ */
 return
-    /**
-     * Check privilege
-     *
-     * @return void
-     */
     function ($privilege) {
+        /**
+         * @var Controller $this
+         */
         return Acl::isAllowed($this->module, $privilege);
     };

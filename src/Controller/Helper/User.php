@@ -11,14 +11,18 @@
  */
 namespace Bluz\Controller\Helper;
 
+use Bluz\Controller\Controller;
 use Bluz\Proxy\Auth;
 
+/**
+ * Get current user
+ *
+ * @return \Bluz\Auth\AbstractRowEntity|null
+ */
 return
-    /**
-     * Get current user
-     *
-     * @return \Bluz\Auth\AbstractRowEntity|null
-     */
     function () {
+        /**
+         * @var Controller $this
+         */
         return Auth::getIdentity();
     };

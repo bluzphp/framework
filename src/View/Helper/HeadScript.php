@@ -13,17 +13,18 @@ namespace Bluz\View\Helper;
 
 use Bluz\Application\Application;
 use Bluz\Proxy\Layout;
+use Bluz\View\View;
 
+/**
+ * Set or generate <script> code for <head>
+ *
+ * @param  string $script
+ * @return string|null
+ */
 return
-    /**
-     * Set or generate <script> code for <head>
-     *
-     * @param string $script
-     * @return string|null
-     */
     function ($script = null) {
         /**
-         * @var Layout $this
+         * @var View $this
          */
         if (Application::getInstance()->useLayout()) {
             return Layout::headScript($script);

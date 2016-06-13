@@ -11,6 +11,7 @@
  */
 namespace Bluz\Controller\Helper;
 
+use Bluz\Application\Application;
 use Bluz\Application\Exception\ForbiddenException;
 use Bluz\Controller\Controller;
 
@@ -21,5 +22,8 @@ use Bluz\Controller\Controller;
  */
 return
     function ($exception) {
+        /**
+         * @var Application $this
+         */
         return $this->error($exception);
     };

@@ -13,13 +13,13 @@ namespace Bluz\View\Helper;
 
 use Bluz\View\View;
 
+/**
+ * Generate HTML for <script> element
+ *
+ * @param  string $script
+ * @return string
+ */
 return
-    /**
-     *  Generate HTML for <script> element
-     *
-     * @param  string $script
-     * @return string
-     */
     function ($script) {
         /**
          * @var View $this

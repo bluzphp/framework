@@ -13,16 +13,16 @@ namespace Bluz\View\Helper;
 
 use Bluz\View\View;
 
+/**
+ * Generate HTML for <input type="radio">
+ *
+ * @param  string      $name
+ * @param  string|null $value
+ * @param  bool        $checked
+ * @param  array       $attributes
+ * @return string
+ */
 return
-    /**
-     * Generate HTML for <input type="radio">
-     *
-     * @param  string      $name
-     * @param  string|null $value
-     * @param  bool        $checked
-     * @param  array       $attributes
-     * @return string
-     */
     function ($name, $value = null, $checked = false, array $attributes = []) {
         /**
          * @var View $this

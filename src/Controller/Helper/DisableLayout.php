@@ -12,13 +12,17 @@
 namespace Bluz\Controller\Helper;
 
 use Bluz\Application\Application;
+use Bluz\Controller\Controller;
 
+/**
+ * Switch layout or disable it
+ *
+ * @return void
+ */
 return
-    /**
-     * Switch layout or disable it
-     *
-     * @return void
-     */
     function () {
+        /**
+         * @var Controller $this
+         */
         Application::getInstance()->useLayout(false);
     };

@@ -13,14 +13,14 @@ namespace Bluz\View\Helper;
 
 use Bluz\View\View;
 
+/**
+ * Generate HTML for <style> or <link> element
+ *
+ * @param  string $style
+ * @param  string $media
+ * @return string
+ */
 return
-    /**
-     * Generate HTML for <style> or <link> element
-     *
-     * @param  string $style
-     * @param  string $media
-     * @return string
-     */
     function ($style, $media = 'all') {
         /**
          * @var View $this

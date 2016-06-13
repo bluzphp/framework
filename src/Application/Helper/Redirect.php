@@ -11,15 +11,20 @@
  */
 namespace Bluz\Controller\Helper;
 
+use Bluz\Application\Application;
 use Bluz\Proxy\Request;
 use Bluz\Proxy\Response;
 
 /**
  * Redirect helper can be declared inside Bootstrap
  * @param string $url
+ * @return null
  */
 return
     function ($url) {
+        /**
+         * @var Application $this
+         */
         $this->useLayout(false);
         
         Response::removeHeaders();
@@ -32,4 +37,6 @@ return
             Response::setStatusCode(302);
             Response::setHeader('Location', $url);
         }
+
+        return null;
     };

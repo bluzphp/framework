@@ -13,16 +13,16 @@ namespace Bluz\View\Helper;
 
 use Bluz\View\View;
 
+/**
+ * Generate HTML attributes
+ *
+ * @author The-Who
+ *
+ * @var    View  $this
+ * @param  array $attributes
+ * @return string
+ */
 return
-    /**
-     * Generate HTML attributes
-     *
-     * @author The-Who
-     *
-     * @var    View  $this
-     * @param  array $attributes
-     * @return string
-     */
     function (array $attributes = []) {
         if (empty($attributes)) {
             return '';

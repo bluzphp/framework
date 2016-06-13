@@ -21,6 +21,7 @@ use Bluz\Proxy\Acl;
 use Bluz\Proxy\Cache;
 use Bluz\Proxy\Request;
 use Bluz\Proxy\Response;
+use Bluz\Response\ResponseTrait;
 use Bluz\View\View;
 
 /**
@@ -43,6 +44,7 @@ use Bluz\View\View;
 class Controller implements \JsonSerializable
 {
     use Helper;
+    use ResponseTrait;
 
     /**
      * @var string
@@ -326,56 +328,13 @@ class Controller implements \JsonSerializable
     }
 
     /**
-     * Render controller
-     *
-     * @param  string $type
-     * @return mixed
-     */
-    public function render($type = 'HTML')
-    {
-        // switch statement for $type
-        switch (strtoupper($type)) {
-            case 'CLI':
-            case 'JSON':
-                return $this->getData();
-            case 'HTML':
-                if (!$this->template) {
-                    return '';
-                }
-
-                // $view for use in closure
-                $view = new View();
-
-                $path = Application::getInstance()->getPath();
-
-                // setup additional helper path
-                $view->addHelperPath($path . '/layouts/helpers');
-
-                // setup additional partial path
-                $view->addPartialPath($path . '/layouts/partial');
-
-                // setup default path
-                $view->setPath($path . '/modules/' . $this->module . '/views');
-
-                // setup template
-                $view->setTemplate($this->template);
-
-                // setup data
-                $view->setFromArray($this->getData()->toArray());
-                return $view->render();
-            default:
-                return '';
-        }
-    }
-
-    /**
      * Specify data which should be serialized to JSON
      *
      * @return array
      */
     public function jsonSerialize()
     {
-        return $this->render('JSON');
+        return $this->getData();
     }
 
     /**
@@ -385,6 +344,29 @@ class Controller implements \JsonSerializable
      */
     public function __toString()
     {
-        return $this->render('HTML');
+        if (!$this->template) {
+            return '';
+        }
+
+        // $view for use in closure
+        $view = new View();
+
+        $path = Application::getInstance()->getPath();
+
+        // setup additional helper path
+        $view->addHelperPath($path . '/layouts/helpers');
+
+        // setup additional partial path
+        $view->addPartialPath($path . '/layouts/partial');
+
+        // setup default path
+        $view->setPath($path . '/modules/' . $this->module . '/views');
+
+        // setup template
+        $view->setTemplate($this->template);
+
+        // setup data
+        $view->setFromArray($this->getData()->toArray());
+        return $view->render();
     }
 }

@@ -13,18 +13,19 @@ namespace Bluz\View\Helper;
 
 use Bluz\Application\Application;
 use Bluz\Proxy\Layout;
+use Bluz\View\View;
 
+/**
+ * Set or generate <style> code for <head>
+ *
+ * @param  string $style
+ * @param  string $media
+ * @return string|null
+ */
 return
-    /**
-     * Set or generate <style> code for <head>
-     *
-     * @param  string $style
-     * @param  string $media
-     * @return string|null
-     */
     function ($style = null, $media = 'all') {
         /**
-         * @var Layout $this
+         * @var View $this
          */
         if (Application::getInstance()->useLayout()) {
             return Layout::headStyle($style, $media);

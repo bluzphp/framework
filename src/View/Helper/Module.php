@@ -13,14 +13,14 @@ namespace Bluz\View\Helper;
 
 use Bluz\Proxy\Request;
 
+/**
+ * Return module name
+ * or check to current module
+ *
+ * @param  string $module
+ * @return string|bool
+ */
 return
-    /**
-     * Return module name
-     * or check to current module
-     *
-     * @param  string $module
-     * @return string|bool
-     */
     function ($module = null) {
         if (is_null($module)) {
             return Request::getModule();

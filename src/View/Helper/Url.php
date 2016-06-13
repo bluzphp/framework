@@ -19,16 +19,17 @@ use Bluz\Proxy\Router;
 use Bluz\View\View;
 use Bluz\View\ViewException;
 
+/**
+ * Generate URL
+ *
+ * @param  string $module
+ * @param  string $controller
+ * @param  array  $params
+ * @param  bool   $checkAccess
+ * @return null|string
+ * @throws ViewException
+ */
 return
-    /**
-     * Generate URL
-     *
-     * @param  string $module
-     * @param  string $controller
-     * @param  array  $params
-     * @param  bool   $checkAccess
-     * @return string|null
-     */
     function ($module, $controller, $params = [], $checkAccess = false) {
         /**
          * @var View $this

@@ -14,15 +14,14 @@ namespace Bluz\View\Helper;
 use Bluz\Proxy\Router;
 use Bluz\View\View;
 
+/**
+ * Get baseUrl
+ *
+ * @var    View   $this
+ * @param  string $file
+ * @return string
+ */
 return
-
-    /**
-     * Get baseUrl
-     *
-     * @var    View   $this
-     * @param  string $file
-     * @return string
-     */
     function ($file = null) {
         // setup baseUrl
         if (!$this->baseUrl) {

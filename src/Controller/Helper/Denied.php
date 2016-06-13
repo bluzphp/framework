@@ -12,13 +12,17 @@
 namespace Bluz\Controller\Helper;
 
 use Bluz\Application\Exception\ForbiddenException;
+use Bluz\Controller\Controller;
 
+/**
+ * Denied helper can be declared inside Bootstrap
+ * @return void
+ * @throws ForbiddenException
+ */
 return
-    /**
-     * Denied helper can be declared inside Bootstrap
-     *
-     * @return bool
-     */
     function () {
+        /**
+         * @var Controller $this
+         */
         throw new ForbiddenException();
     };

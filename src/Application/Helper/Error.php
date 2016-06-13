@@ -11,6 +11,7 @@
  */
 namespace Bluz\Controller\Helper;
 
+use Bluz\Application\Application;
 use Bluz\Controller\Controller;
 use Bluz\Proxy\Response;
 use Bluz\Proxy\Router;
@@ -22,6 +23,9 @@ use Bluz\Proxy\Router;
  */
 return
     function ($exception) {
+        /**
+         * @var Application $this
+         */
         Response::removeHeaders();
         Response::clearBody();
 

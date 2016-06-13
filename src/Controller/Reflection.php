@@ -13,6 +13,7 @@ namespace Bluz\Controller;
 
 use Bluz\Common\Exception\ComponentException;
 use Bluz\Common\Options;
+use Bluz\Proxy\Request;
 
 /**
  * Reflection
@@ -35,14 +36,14 @@ class Reflection
     protected $cache = 0;
 
     /**
-     * @var integer cache TTL for HTML content
-     */
-    protected $cacheHtml = 0;
-
-    /**
      * @var array list of Accept
      */
     protected $accept = array();
+    
+    /**
+     * @var array list of Acl
+     */
+    protected $acl = array();
 
     /**
      * @var array list of HTTP methods
@@ -102,8 +103,6 @@ class Reflection
      */
     public function process()
     {
-        // workaround for get reflection of closure function
-        $bootstrap = $view = $module = $controller = null;
         /** @var \Closure|object $closure */
         $closure = include $this->file;
 
@@ -111,11 +110,7 @@ class Reflection
             throw new ComponentException("There is no callable structure in file `{$this->file}`");
         }
 
-        if ($closure instanceof \Closure) {
-            $reflection = new \ReflectionFunction($closure);
-        } else {
-            $reflection = new \ReflectionObject($closure);
-        }
+        $reflection = new \ReflectionFunction($closure);
 
         // check and normalize params by doc comment
         $docComment = $reflection->getDocComment();
@@ -226,27 +221,6 @@ class Reflection
     }
 
     /**
-     * Get HTML Cache TTL
-     *
-     * @return integer
-     */
-    public function getCacheHtml()
-    {
-        return $this->cacheHtml;
-    }
-
-    /**
-     * Set HTML Cache TTL
-     *
-     * @param  string $ttl
-     * @return void
-     */
-    public function setCacheHtml($ttl)
-    {
-        $this->cacheHtml = $this->prepareCache($ttl);
-    }
-
-    /**
      * Prepare Cache
      *
      * @param  string $cache
@@ -272,7 +246,6 @@ class Reflection
     /**
      * Get accepted type
      *
-     * @todo move here "accept map" from Application
      * @return array|null
      */
     public function getAccept()
@@ -288,7 +261,39 @@ class Reflection
      */
     public function setAccept($accept)
     {
-        $this->accept[] = strtoupper($accept);
+        // allow accept map
+        $acceptMap = [
+            'ANY'  => Request::TYPE_ANY,
+            'HTML' => Request::TYPE_HTML,
+            'JSON' => Request::TYPE_JSON
+        ];
+
+        $accept = strtoupper($accept);
+
+        if (isset($acceptMap[$accept])) {
+            $this->accept[] = $acceptMap[$accept];
+        }
+    }
+    
+    /**
+     * Get Acl privileges
+     *
+     * @return array|null
+     */
+    public function getAcl()
+    {
+        return sizeof($this->acl)?$this->acl:null;
+    }
+
+    /**
+     * Set Acl privileges
+     *
+     * @param  string $acl
+     * @return void
+     */
+    public function setAcl($acl)
+    {
+        $this->acl[] = $acl;
     }
 
     /**

@@ -249,7 +249,7 @@ class Db
     /**
      * Create new query select builder
      *
-     * @param  string $select The selection expressions
+     * @param array|string ...$select The selection expressions
      * @return Query\Select
      */
     public function select(...$select)

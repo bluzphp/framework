@@ -48,6 +48,7 @@ use Bluz\View\View;
  * @method   static void delete($key)
  * @see      Bluz\Common\Container\RegularAccess::delete()
  *
+ * @method   static string ahref(string $text, mixed $href, array $attributes = [])
  * @method   static array|null breadCrumbs(array $data = [])
  * @method   static string|null headScript(string $script = null)
  * @method   static string|null headStyle(string $style = null, $media = 'all')

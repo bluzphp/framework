@@ -7,13 +7,12 @@
  */
 namespace Application;
 
-return
 /**
  * @route /test/param/$
  * @route /test/param/{$a}/
- * @param string $a
- * @return \closure
+ * @param integer $a
+ * @return bool
  */
-function ($a = 42) {
+return function ($a = 42) {
     return false;
 };

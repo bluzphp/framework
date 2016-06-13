@@ -34,4 +34,29 @@ class RedirectException extends ApplicationException
      * @var integer
      */
     protected $code = 302;
+
+    /**
+     * @var string
+     */
+    protected $url;
+
+    /**
+     * Set Url to Redirect
+     *
+     * @param string $url
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+    }
+
+    /**
+     * getUrl
+     *
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
 }

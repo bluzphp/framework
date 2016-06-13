@@ -29,15 +29,17 @@ use Zend\Diactoros\ServerRequest as Instance;
  * @package  Bluz\Proxy
  * @author   Anton Shevchuk
  *
- * @method   static Instance getInstance()
+ * @todo Proxy class should be clean
  *
- * @method   static string getMethod()
- * @see      Zend\Diactoros\ServerRequest::getMethod()
+ * @method   static \Psr\Http\Message\UriInterface getUri()
+ * @see      \Zend\Diactoros\RequestTrait::getUri()
+ *
+ * @method   static Instance getInstance()
  */
 class Request extends AbstractProxy
 {
     /**
-     * @const string HTTP METHOD constant names
+     * @const string HTTP methods
      */
     const METHOD_OPTIONS = 'OPTIONS';
     const METHOD_GET = 'GET';
@@ -50,6 +52,13 @@ class Request extends AbstractProxy
     const METHOD_CONNECT = 'CONNECT';
 
     /**
+     * @const string HTTP content types
+     */
+    const TYPE_ANY = '*/*';
+    const TYPE_HTML = 'text/html';
+    const TYPE_JSON = 'application/json';
+
+    /**
      * Init instance
      *
      * @throws ComponentException
@@ -57,16 +66,6 @@ class Request extends AbstractProxy
     protected static function initInstance()
     {
         throw new ComponentException("Class `Proxy\\Request` required external initialization");
-    }
-    
-    /**
-     * Get Request Uri
-     *
-     * @return UriInterface
-     */
-    public static function getRequestUri()
-    {
-        return self::getInstance()->getUri();
     }
 
     /**
@@ -212,7 +211,79 @@ class Request extends AbstractProxy
     {
         return self::getParam('_controller', Router::getDefaultController());
     }
+    
+    /**
+     * Get method
+     *
+     * @return string
+     */
+    public static function getMethod()
+    {
+        return self::getParam('_method', self::getInstance()->getMethod());
+    }
 
+    /**
+     * Get Accept MIME Type
+     *
+     * @todo:  refactoring this method, accept types should be stored in static? variable
+     * @param  array $allowTypes
+     * @return string
+     */
+    public static function getAccept($allowTypes = [])
+    {
+        static $accept;
+
+        if (!$accept) {
+            // get header from request
+            $header = self::getHeader('accept');
+
+            // make array if types
+            $header = explode(',', $header);
+            $header = array_map('trim', $header);
+
+            // result store
+            $types = [];
+
+            foreach ($header as $a) {
+                // the default quality is 1.
+                $q = 1;
+                // check if there is a different quality
+                if (strpos($a, ';q=') or strpos($a, '; q=')) {
+                    // divide "mime/type;q=X" into two parts: "mime/type" i "X"
+                    $res = preg_split('/;([ ]?)q=/', $a);
+                    $a = $res[0];
+                    $q = $res[1];
+                }
+                // remove other extension
+                if (strpos($a, ';')) {
+                    $a = substr($a, 0, strpos($a, ';'));
+                }
+
+                // mime-type $a is accepted with the quality $q
+                // WARNING: $q == 0 means, that mime-type isn’t supported!
+                $types[$a] = (float) $q;
+            }
+            arsort($types);
+            $accept = $types;
+        }
+
+        // if no parameter was passed, just return parsed data
+        if (empty($allowTypes)) {
+            return $accept;
+        }
+
+        $mimeTypes = array_map('strtolower', $allowTypes);
+
+        // let’s check our supported types:
+        foreach ($accept as $mime => $q) {
+            if ($q && in_array($mime, $mimeTypes)) {
+                return $mime;
+            }
+        }
+        // no mime-type found
+        return null;
+    }
+    
     /**
      * Check CLI
      *
@@ -283,61 +354,5 @@ class Request extends AbstractProxy
     public static function isXmlHttpRequest()
     {
         return (self::getHeader('X-Requested-With') == 'XMLHttpRequest');
-    }
-
-    /**
-     * Get Accept MIME Type
-     *
-     * @param  array $allowTypes
-     * @return string
-     */
-    public static function getAccept($allowTypes = [])
-    {
-        // get header from request
-        $header = self::getHeader('accept');
-
-        // make array if types
-        $accept = explode(',', $header);
-        $accept = array_map('trim', $accept);
-
-        // result store
-        $types = [];
-
-        foreach ($accept as $a) {
-            // the default quality is 1.
-            $q = 1;
-            // check if there is a different quality
-            if (strpos($a, ';q=') or strpos($a, '; q=')) {
-                // divide "mime/type;q=X" into two parts: "mime/type" i "X"
-                $res = preg_split('/;([ ]?)q=/', $a);
-                $a = $res[0];
-                $q = $res[1];
-            }
-            // remove other extension
-            if (strpos($a, ';')) {
-                $a = substr($a, 0, strpos($a, ';'));
-            }
-
-            // mime-type $a is accepted with the quality $q
-            // WARNING: $q == 0 means, that mime-type isn’t supported!
-            $types[$a] = (float) $q;
-        }
-        arsort($types);
-
-        // if no parameter was passed, just return parsed data
-        if (empty($allowTypes)) {
-            return $types;
-        }
-
-        $mimeTypes = array_map('strtolower', $allowTypes);
-
-        // let’s check our supported types:
-        foreach ($types as $mime => $q) {
-            if ($q && in_array($mime, $mimeTypes)) {
-                return $mime;
-            }
-        }
-        // no mime-type found
-        return null;
     }
 }

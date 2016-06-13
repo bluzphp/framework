@@ -9,11 +9,13 @@
  */
 namespace Bluz\Tests\Fixtures\Controllers;
 
-return
+use Bluz\Controller\Controller;
+
 /**
  * @privilege Test
+ * @acl Read
+ * @acl Write
  * @cache 5 min
- * @cache-html 1 min
  * @method CLI
  * @method GET
  * @route /example/
@@ -23,9 +25,9 @@ return
  * @param string $c
  * @return array
  */
-function ($a, $b, $c = null) {
+return function ($a, $b, $c = null) {
     /**
-     * @var \Bluz\Application\Application $this
+     * @var Controller $this
      */
     return array();
 };

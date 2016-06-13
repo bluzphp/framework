@@ -37,10 +37,10 @@ class ReflectionTest extends TestCase
         $reflection->process();
 
         $this->assertEqualsArray(['CLI', 'GET'], $reflection->getMethod());
-        $this->assertEquals(60, $reflection->getCacheHtml());
         $this->assertEquals(300, $reflection->getCache());
         $this->assertEqualsArray(['a' => 'int', 'b' => 'float', 'c' => 'string'], $reflection->getParams());
         $this->assertEquals('Test', $reflection->getPrivilege());
+        $this->assertEqualsArray(['Read', 'Write'], $reflection->getAcl());
         $this->assertArrayHasSize($reflection->getRoute(), 2);
     }
 
@@ -57,30 +57,6 @@ class ReflectionTest extends TestCase
         $data = var_export($reflection, true);
 
         $this->assertStringStartsWith('Bluz\Controller\Reflection::__set_state', $data);
-    }
-
-    /**
-     * Test all reflection options for class
-     *  - methods
-     *  - cache
-     *  - cache to html
-     *  - params with type cast
-     *  - privilege
-     *  - routes
-     */
-    public function testReflectionClassWithData()
-    {
-        $controllerFile = dirname(__FILE__) .'/../Fixtures/Controllers/ConcreteClassWithData.php';
-
-        $reflection = new Reflection($controllerFile);
-        $reflection->process();
-
-        $this->assertEqualsArray(['CLI', 'GET'], $reflection->getMethod());
-        $this->assertEquals(60, $reflection->getCacheHtml());
-        $this->assertEquals(300, $reflection->getCache());
-        $this->assertEqualsArray(['a' => 'int', 'b' => 'float', 'c' => 'string'], $reflection->getParams());
-        $this->assertEquals('Test', $reflection->getPrivilege());
-        $this->assertArrayHasSize($reflection->getRoute(), 2);
     }
 
     /**

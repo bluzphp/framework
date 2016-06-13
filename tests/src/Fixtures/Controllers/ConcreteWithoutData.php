@@ -9,13 +9,14 @@
  */
 namespace Bluz\Tests\Fixtures\Controllers;
 
-return
+use Bluz\Controller\Controller;
+
 /**
  * @return array
  */
-function ($a, $b, $c = null) {
+return function ($a, $b, $c = null) {
     /**
-     * @var \Bluz\Application\Application $this
+     * @var Controller $this
      */
     return array();
 };

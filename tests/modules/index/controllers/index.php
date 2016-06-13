@@ -12,11 +12,9 @@
  */
 namespace Application;
 
-return
 /**
- * @var Bootstrap $this
  * @return void
  */
-function () {
+return function () {
 
 };

@@ -129,6 +129,28 @@ class Row implements \JsonSerializable, \ArrayAccess
     }
 
     /**
+     * Validate input data
+     *
+     * @param  array|object $data
+     * @return boolean
+     */
+    public function validate($data)
+    {
+        return true;
+    }
+
+    /**
+     * Assert input data
+     *
+     * @param  array|object $data
+     * @return boolean
+     */
+    public function assert($data)
+    {
+        return true;
+    }
+
+    /**
      * Saves the properties to the database.
      *
      * This performs an intelligent insert/update, and reloads the
@@ -175,9 +197,7 @@ class Row implements \JsonSerializable, \ArrayAccess
          * Execute validator logic
          * Can throw ValidatorException
          */
-        if (method_exists($this, 'assert')) {
-            $this->assert($data);
-        }
+        $this->assert($data);
 
         $table = $this->getTable();
 
@@ -231,9 +251,7 @@ class Row implements \JsonSerializable, \ArrayAccess
          * Execute validator logic
          * Can throw ValidatorException
          */
-        if (method_exists($this, 'assert')) {
-            $this->assert($data);
-        }
+        $this->assert($data);
 
         $primaryKey = $this->getPrimaryKey();
 

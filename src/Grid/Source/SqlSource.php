@@ -82,17 +82,18 @@ class SqlSource extends AbstractSource
         $limit = ' LIMIT ' . ($settings['page'] - 1) * $settings['limit'] . ', ' . $settings['limit'];
 
         // prepare query
-        $connect = Proxy\Config::getData('db', 'connect');
-        if (strtolower($connect['type']) == 'mysql') {
+        $type = Proxy\Db::getOption('connect', 'type');
+
+        if (strtolower($type) == 'mysql') {
             // MySQL
             $dataSql = preg_replace('/SELECT\s(.*?)\sFROM/is', 'SELECT SQL_CALC_FOUND_ROWS $1 FROM', $this->source, 1);
-            $countSql = 'SELECT FOUND_ROWS()';
+            $totalSql = 'SELECT FOUND_ROWS()';
         } else {
             // other
             $dataSql = $this->source;
-            $countSql = preg_replace('/SELECT\s(.*?)\sFROM/is', 'SELECT COUNT(*) FROM', $this->source, 1);
+            $totalSql = preg_replace('/SELECT\s(.*?)\sFROM/is', 'SELECT COUNT(*) FROM', $this->source, 1);
             if (sizeof($where)) {
-                $countSql .= ' WHERE ' . (join(' AND ', $where));
+                $totalSql .= ' WHERE ' . (join(' AND ', $where));
             }
         }
 
@@ -105,8 +106,12 @@ class SqlSource extends AbstractSource
         $dataSql .= $limit;
 
         // run queries
-        $data = Proxy\Db::fetchAll($dataSql);
-        $total = Proxy\Db::fetchOne($countSql);
+        // use transaction to avoid errors
+        Proxy\Db::transaction(function () use (&$data, &$total, $dataSql, $totalSql) {
+            $data = Proxy\Db::fetchAll($dataSql);
+            $total = Proxy\Db::fetchOne($totalSql);
+        });
+        
         $gridData = new Grid\Data($data);
         $gridData->setTotal($total);
         return $gridData;

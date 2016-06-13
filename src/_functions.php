@@ -55,18 +55,6 @@ if (!function_exists('debug')) {
     }
 }
 
-if (!function_exists('app')) {
-    /**
-     * Alias for call instance of Application
-     *
-     * @return \Bluz\Application\Application
-     */
-    function app()
-    {
-        return \Bluz\Application\Application::getInstance();
-    }
-}
-
 if (!function_exists('esc')) {
     /**
      * Escape variable for use in View

@@ -15,11 +15,6 @@
 
 // @codeCoverageIgnoreStart
 
-/** Controller\Crud */
-_('Record was created');
-_('Record was updated');
-_('Record was deleted');
-
 /** Validator\Rule\* */
 _('{{name}} has invalid value {{input}}');
 _('{{name}} must contain only letters');

@@ -16,6 +16,7 @@ CREATE TABLE auth (
   tokenType CHAR(8) NOT NULL,
   created TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
   updated TIMESTAMP,
+  expired TIMESTAMP,
   PRIMARY KEY ( userId, provider )
 );
 /*Data for the table `auth` */

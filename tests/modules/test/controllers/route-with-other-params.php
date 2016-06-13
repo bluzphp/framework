@@ -9,10 +9,11 @@
  */
 namespace Application;
 
-return
 /**
  * @route /test/route-with-other-params/{$alias}(.*)
+ * @param $alias
+ * @return bool
  */
-function ($alias) {
+return function ($alias) {
     return false;
 };

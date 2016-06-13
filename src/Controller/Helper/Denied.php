@@ -9,7 +9,7 @@
 /**
  * @namespace
  */
-namespace Bluz\Application\Helper;
+namespace Bluz\Controller\Helper;
 
 use Bluz\Application\Exception\ForbiddenException;
 

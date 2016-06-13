@@ -25,18 +25,6 @@ use Zend\Diactoros\ServerRequest;
 class ApplicationTest extends TestCase
 {
     /**
-     * @covers \Bluz\Application\Application::reflection
-     */
-    public function testReflection()
-    {
-        $file = dirname(__FILE__) .'/../Fixtures/Controllers/ConcreteWithData.php';
-
-        $reflection = $this->getApp()->reflection($file);
-
-        $this->assertInstanceOf('\\Bluz\\Controller\\Reflection', $reflection);
-    }
-
-    /**
      * Check all getters of Application
      */
     public function testGettersOfPackages()
@@ -99,54 +87,5 @@ class ApplicationTest extends TestCase
         $this->getApp()->process();
         $this->assertEquals(Router::getErrorModule(), $this->getApp()->getModule());
         $this->assertEquals(Router::getErrorController(), $this->getApp()->getController());
-    }
-
-    /**
-     * Test Helper Denied
-     *
-     * @expectedException \Bluz\Application\Exception\ForbiddenException
-     */
-    public function testHelperDenied()
-    {
-        $this->getApp()->denied();
-    }
-
-    /**
-     * Test Helper Redirect
-     *
-     * @expectedException \Bluz\Application\Exception\RedirectException
-     */
-    public function testHelperRedirect()
-    {
-        $this->getApp()->redirect('/');
-    }
-
-    /**
-     * Test Helper RedirectTo
-     *
-     * @expectedException \Bluz\Application\Exception\RedirectException
-     */
-    public function testHelperRedirectTo()
-    {
-        $this->getApp()->redirectTo(Router::getDefaultModule(), Router::getDefaultController());
-    }
-
-    /**
-     * Test Helper Reload
-     *
-     * @expectedException \Bluz\Application\Exception\ReloadException
-     */
-    public function testHelperReload()
-    {
-        $this->getApp()->reload();
-    }
-
-    /**
-     * Test Helper User
-     */
-    public function testHelperUser()
-    {
-        $result = $this->getApp()->user();
-        $this->assertNull($result);
     }
 }

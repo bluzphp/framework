@@ -28,7 +28,9 @@ use Zend\Diactoros\ServerRequest as Instance;
  *
  * @package  Bluz\Proxy
  * @author   Anton Shevchuk
- * 
+ *
+ * @todo Proxy class should be clean
+ *
  * @method   static \Psr\Http\Message\UriInterface getUri()
  * @see      \Zend\Diactoros\RequestTrait::getUri()
  *
@@ -50,7 +52,7 @@ class Request extends AbstractProxy
     const METHOD_CONNECT = 'CONNECT';
 
     /**
-     * @const string HTTP content types 
+     * @const string HTTP content types
      */
     const TYPE_ANY = '*/*';
     const TYPE_HTML = 'text/html';
@@ -232,7 +234,6 @@ class Request extends AbstractProxy
         static $accept;
 
         if (!$accept) {
-
             // get header from request
             $header = self::getHeader('accept');
 

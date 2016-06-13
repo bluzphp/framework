@@ -88,5 +88,4 @@ class ApplicationTest extends TestCase
         $this->assertEquals(Router::getErrorModule(), $this->getApp()->getModule());
         $this->assertEquals(Router::getErrorController(), $this->getApp()->getController());
     }
-
 }

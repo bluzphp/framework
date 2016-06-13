@@ -82,7 +82,7 @@ use Bluz\Response\Response as Instance;
  *
  * @method   static switchType($type)
  * @see      Bluz\Response\Response::switchType()
- 
+ *
  * @method   static void  send()
  * @see      Bluz\Response\Response::send()
  */

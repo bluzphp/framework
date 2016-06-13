@@ -99,7 +99,7 @@ class SelectSource extends AbstractSource
 
         // run queries
         // use transaction to avoid errors
-        Proxy\Db::transaction(function() use (&$data, &$total, $totalSql) {
+        Proxy\Db::transaction(function () use (&$data, &$total, $totalSql) {
             $data = $this->source->execute();
             $total = Proxy\Db::fetchOne($totalSql);
         });

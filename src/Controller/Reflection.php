@@ -277,7 +277,7 @@ class Reflection
     
     /**
      * Get Acl privileges
-     * 
+     *
      * @return array|null
      */
     public function getAcl()

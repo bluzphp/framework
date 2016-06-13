@@ -82,7 +82,7 @@ abstract class AbstractMapper
      *         'acl' => 'privilege',
      *     ],
      * ]
-     * 
+     *
      * @var array
      */
     protected $map = array();
@@ -273,6 +273,6 @@ abstract class AbstractMapper
                 'primary' => $this->getPrimaryKey(),
                 'data' => $this->data
             ]
-            );
+        );
     }
 }

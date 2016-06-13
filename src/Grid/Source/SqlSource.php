@@ -107,7 +107,7 @@ class SqlSource extends AbstractSource
 
         // run queries
         // use transaction to avoid errors
-        Proxy\Db::transaction(function() use (&$data, &$total, $dataSql, $totalSql) {
+        Proxy\Db::transaction(function () use (&$data, &$total, $dataSql, $totalSql) {
             $data = Proxy\Db::fetchAll($dataSql);
             $total = Proxy\Db::fetchOne($totalSql);
         });

@@ -138,7 +138,7 @@ class Table extends AbstractCrud
 
         // run queries
         // use transaction to avoid errors
-        Proxy\Db::transaction(function() use (&$result, &$total, $select, $totalSQL) {
+        Proxy\Db::transaction(function () use (&$result, &$total, $select, $totalSQL) {
             $result = $select->execute();
 
             if (!is_null($total)) {

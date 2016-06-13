@@ -12,15 +12,19 @@
 namespace Bluz\Controller\Helper;
 
 use Bluz\Application\Application;
+use Bluz\Controller\Controller;
 use Bluz\Proxy\Layout;
 
+/**
+ * Switch layout
+ *
+ * @param $layout
+ */
 return
-    /**
-     * Switch layout
-     *
-     * @return void
-     */
     function ($layout) {
+        /**
+         * @var Controller $this
+         */
         Application::getInstance()->useLayout(true);
         Layout::setTemplate($layout);
     };

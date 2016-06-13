@@ -16,6 +16,7 @@ use Bluz\Auth\AbstractRowEntity;
 use Bluz\Common\Container;
 use Bluz\Common\Helper;
 use Bluz\Common\Options;
+use Bluz\Response\ResponseTrait;
 
 /**
  * View - simple template engine with native PHP syntax
@@ -54,6 +55,7 @@ class View implements ViewInterface, \JsonSerializable
     use Container\MagicAccess;
     use Options;
     use Helper;
+    use ResponseTrait;
 
     /**
      * Constants for define positions
@@ -102,23 +104,32 @@ class View implements ViewInterface, \JsonSerializable
     }
 
     /**
-     * View should be callable
-     *
-     * @return string
-     */
-    public function __invoke()
-    {
-        return $this->render();
-    }
-
-    /**
      * Render like string
      *
      * @return string
      */
     public function __toString()
     {
-        return $this->render();
+        ob_start();
+        try {
+            if (!file_exists($this->path . '/' . $this->template)
+                || !is_file($this->path . '/' . $this->template)) {
+                throw new ViewException("Template '{$this->template}' not found");
+            }
+            extract($this->container);
+            require $this->path . '/' . $this->template;
+        } catch (\Exception $e) {
+            // clean output
+            ob_end_clean();
+            // @codeCoverageIgnoreStart
+            if (Application::getInstance()->isDebug()) {
+                return $e->getMessage() ."\n<br/>". $e->getTraceAsString();
+            }
+            // @codeCoverageIgnoreEnd
+            // nothing for production
+            return '';
+        }
+        return ob_get_clean();
     }
 
     /**
@@ -153,35 +164,5 @@ class View implements ViewInterface, \JsonSerializable
     {
         $this->partialPath[] = $path;
         return $this;
-    }
-
-    /**
-     * Render template
-     *
-     * @return string
-     * @throws ViewException
-     */
-    public function render()
-    {
-        ob_start();
-        try {
-            if (!file_exists($this->path . '/' . $this->template)
-                || !is_file($this->path . '/' . $this->template)) {
-                throw new ViewException("Template '{$this->template}' not found");
-            }
-            extract($this->container);
-            require $this->path . '/' . $this->template;
-        } catch (\Exception $e) {
-            // clean output
-            ob_end_clean();
-            // @codeCoverageIgnoreStart
-            if (Application::getInstance()->isDebug()) {
-                return $e->getMessage() ."\n<br/>". $e->getTraceAsString();
-            }
-            // @codeCoverageIgnoreEnd
-            // nothing for production
-            return '';
-        }
-        return ob_get_clean();
     }
 }

@@ -15,18 +15,18 @@ use Bluz\View\View;
 use Bluz\Proxy\Request;
 use Bluz\Proxy\Translator;
 
+/**
+ * Generate HTML for <a> element
+ *
+ * @author ErgallM
+ *
+ * @var    View         $this
+ * @param  string       $text
+ * @param  string|array $href
+ * @param  array        $attributes HTML attributes
+ * @return string
+ */
 return
-    /**
-     * Generate HTML for <a> element
-     *
-     * @author ErgallM
-     *
-     * @var    View         $this
-     * @param  string       $text
-     * @param  string|array $href
-     * @param  array        $attributes HTML attributes
-     * @return string
-     */
     function ($text, $href, array $attributes = []) {
         // if href is settings for url helper
         if (is_array($href)) {

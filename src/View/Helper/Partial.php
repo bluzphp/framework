@@ -14,17 +14,17 @@ namespace Bluz\View\Helper;
 use Bluz\View\View;
 use Bluz\View\ViewException;
 
+/**
+ * Render partial file
+ *
+ * be careful, method rewrites the View variables with params
+ *
+ * @param  string $__template
+ * @param  array  $__params
+ * @return string
+ * @throws ViewException
+ */
 return
-    /**
-     * Render partial file
-     *
-     * be careful, method rewrites the View variables with params
-     *
-     * @param  string $__template
-     * @param  array $__params
-     * @return string
-     * @throws ViewException
-     */
     function ($__template, $__params = array()) {
         /**
          * @var View $this

@@ -138,17 +138,6 @@ class ViewTest extends TestCase
     }
 
     /**
-     * Helper Api
-     *  - this API call is not exists -> call Exception helper
-     */
-    public function testHelperApi()
-    {
-        $view = $this->getView();
-
-        $this->assertEmpty($view->api('test', 'test'));
-    }
-
-    /**
      * Helper Attributes
      */
     public function testHelperAttributes()
@@ -548,18 +537,5 @@ class ViewTest extends TestCase
         $view = $this->getView();
 
         $this->assertNull($view->user());
-    }
-
-    /**
-     * Helper Widget
-     *  - this Widget is not exists -> call Exception helper
-     */
-    public function testHelperWidget()
-    {
-        $view = $this->getView();
-
-        $this->expectOutputString('');
-
-        $view->widget('test', 'test');
     }
 }

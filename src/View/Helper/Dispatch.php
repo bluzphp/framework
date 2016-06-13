@@ -15,18 +15,18 @@ use Bluz\Application\Application;
 use Bluz\Application\Exception\ForbiddenException;
 use Bluz\View\View;
 
+/**
+ * Dispatch controller View Helper
+ *
+ * Example of usage:
+ *     $this->dispatch($module, $controller, array $params);
+ *
+ * @param  string $module
+ * @param  string $controller
+ * @param  array  $params
+ * @return View|string|null
+ */
 return
-    /**
-     * Dispatch controller View Helper
-     *
-     * Example of usage:
-     *     $this->dispatch($module, $controller, array $params);
-     *
-     * @param  string $module
-     * @param  string $controller
-     * @param  array $params
-     * @return View|string|null
-     */
     function ($module, $controller, $params = array()) {
         /**
          * @var View $this

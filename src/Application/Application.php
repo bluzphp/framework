@@ -39,7 +39,6 @@ use Bluz\Response\Response as ResponseInstance;
  * @method Controller error(\Exception $exception)
  * @method Controller forbidden(ForbiddenException $exception)
  * @method null redirect(string $url)
- * @method null reload()
  */
 class Application
 {

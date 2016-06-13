@@ -12,15 +12,19 @@
 namespace Bluz\Controller\Helper;
 
 use Bluz\Application\Application;
+use Bluz\Controller\Controller;
 use Bluz\Proxy\Response;
 
+/**
+ * Switch to JSON content
+ *
+ * @return void
+ */
 return
-    /**
-     * Switch to JSON content
-     *
-     * @return void
-     */
     function () {
+        /**
+         * @var Controller $this
+         */
         Application::getInstance()->useLayout(false);
         Response::switchType('JSON');
     };

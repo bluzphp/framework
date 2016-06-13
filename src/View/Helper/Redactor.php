@@ -13,16 +13,15 @@ namespace Bluz\View\Helper;
 
 use Bluz\View\View;
 
+/**
+ * Generate HTML and JavaScript for WYSIWYG redactor
+ * @link http://imperavi.com/redactor/
+ *
+ * @param  string $selector
+ * @param  array $settings
+ * @return string
+ */
 return
-    /**
-     * Generate HTML and JavaScript for WYSIWYG redactor
-     *
-     * @param  string $selector
-     * @param  array $settings
-     * @return string
-     *
-     * @link http://imperavi.com/redactor/
-     */
     function ($selector, array $settings = []) {
         /**
         * @var View $this

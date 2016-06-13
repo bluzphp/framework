@@ -13,13 +13,13 @@ namespace Bluz\View\Helper;
 
 use Bluz\Application\Application;
 
+/**
+ * Return Exception message
+ *
+ * @param  \Exception $exception
+ * @return string
+ */
 return
-    /**
-     * Return Exception message
-     *
-     * @param  \Exception $exception
-     * @return string
-     */
     function ($exception) {
         /**
          * @var \Exception $exception

@@ -14,34 +14,34 @@ namespace Bluz\View\Helper;
 use Bluz\View\View;
 use Bluz\View\ViewException;
 
+/**
+ * Render partial script in loop
+ *
+ * Example of usage:
+ * <code>
+ *     <?php
+ *      $data = array(2,4,6,8);
+ *      $this->partialLoop('tr.phtml', $data, array('colspan'=>2));
+ *     ?>
+ *     <?php
+ *      <tr>
+ *        <th>
+ *          <?=$key?>
+ *        </th>
+ *        <td colspan="<?=$colspan?>">
+ *          <?=$value?>
+ *        </td>
+ *      </tr>
+ *     ?>
+ * </code>
+ *
+ * @param  string $template
+ * @param  array  $data
+ * @param  array  $params
+ * @return string
+ * @throws ViewException|\InvalidArgumentException
+ */
 return
-    /**
-     * Render partial script in loop
-     *
-     * Example of usage:
-     * <code>
-     *     <?php
-     *      $data = array(2,4,6,8);
-     *      $this->partialLoop('tr.phtml', $data, array('colspan'=>2));
-     *     ?>
-     *     <?php
-     *      <tr>
-     *        <th>
-     *          <?=$key?>
-     *        </th>
-     *        <td colspan="<?=$colspan?>">
-     *          <?=$value?>
-     *        </td>
-     *      </tr>
-     *     ?>
-     * </code>
-     *
-     * @param  string $template
-     * @param  array  $data
-     * @param  array  $params
-     * @return string
-     * @throws ViewException|\InvalidArgumentException
-     */
     function ($template, $data = array(), $params = array()) {
         /**
          * @var View $this

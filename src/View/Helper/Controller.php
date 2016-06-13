@@ -13,14 +13,14 @@ namespace Bluz\View\Helper;
 
 use Bluz\Proxy\Request;
 
+/**
+ * Return controller name
+ * or check to current controller
+ *
+ * @param  string $controller
+ * @return string|bool
+ */
 return
-    /**
-     * Return controller name
-     * or check to current controller
-     *
-     * @param  string $controller
-     * @return string|bool
-     */
     function ($controller = null) {
         if (is_null($controller)) {
             return Request::getController();

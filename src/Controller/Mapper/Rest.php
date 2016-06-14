@@ -45,8 +45,7 @@ class Rest extends AbstractMapper
 
         // OPTIONS
         if ('OPTIONS' == $this->method) {
-            Response::setHeader('Allow', join(',', array_keys($this->map)));
-            return null;
+            $this->data = array_keys($this->map);
         }
 
         // dispatch controller

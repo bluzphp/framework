@@ -205,6 +205,18 @@ abstract class AbstractMapper
     }
 
     /**
+     * Add mapping for OPTIONS method
+     *
+     * @param string $module
+     * @param string $controller
+     * @param String $acl
+     */
+    public function options($module, $controller, $acl = null)
+    {
+        $this->addMap('OPTIONS', $module, $controller, $acl);
+    }
+
+    /**
      * Set Crud
      *
      * @param AbstractCrud $crud

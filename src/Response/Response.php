@@ -80,7 +80,7 @@ class Response
         $body = $this->getBody();
 
         $this->sendCookies();
-        
+
         switch (true) {
             case 'CLI' == $this->type:
                 // CLI response

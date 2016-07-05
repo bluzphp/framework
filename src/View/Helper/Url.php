@@ -11,7 +11,6 @@
  */
 namespace Bluz\View\Helper;
 
-use Bluz\Application\Application;
 use Bluz\Application\Exception\ForbiddenException;
 use Bluz\Controller\Controller;
 use Bluz\Proxy\Request;

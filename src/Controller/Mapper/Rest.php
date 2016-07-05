@@ -13,7 +13,6 @@ namespace Bluz\Controller\Mapper;
 
 use Bluz\Application\Exception\ForbiddenException;
 use Bluz\Application\Exception\NotImplementedException;
-use Bluz\Proxy\Response;
 
 /**
  * Rest

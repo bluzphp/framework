@@ -11,8 +11,8 @@
  */
 namespace Bluz\Proxy;
 
-use Bluz\Http\CacheControl as Instance;
 use Bluz\Common\Nil;
+use Bluz\Http\CacheControl as Instance;
 
 /**
  * Proxy to Http\CacheControl

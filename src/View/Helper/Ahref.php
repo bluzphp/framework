@@ -11,9 +11,9 @@
  */
 namespace Bluz\View\Helper;
 
-use Bluz\View\View;
 use Bluz\Proxy\Request;
 use Bluz\Proxy\Translator;
+use Bluz\View\View;
 
 /**
  * Generate HTML for <a> element

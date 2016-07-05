@@ -11,8 +11,8 @@
  */
 namespace Bluz\Validator\Rule;
 
-use Bluz\Validator\Exception\ValidatorException;
 use Bluz\Translator\Translator;
+use Bluz\Validator\Exception\ValidatorException;
 
 /**
  * Abstract validation rule

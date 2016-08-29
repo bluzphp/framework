@@ -67,7 +67,6 @@ class MessagesTest extends TestCase
 
         $success = Proxy\Messages::pop(Messages::TYPE_SUCCESS);
         $this->assertEquals('success 1.02', $success->text);
-
     }
 
     /**

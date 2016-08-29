@@ -46,6 +46,5 @@ class SingletonTest extends TestCase
 
         $this->assertTrue($reflection->getMethod('__construct')->isProtected());
         $this->assertTrue($reflection->getMethod('__clone')->isProtected());
-
     }
 }

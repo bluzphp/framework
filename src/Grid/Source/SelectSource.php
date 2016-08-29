@@ -107,6 +107,5 @@ class SelectSource extends AbstractSource
         $gridData = new Grid\Data($data);
         $gridData->setTotal($total);
         return $gridData;
-
     }
 }

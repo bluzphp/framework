@@ -38,7 +38,6 @@ class ControllerTest extends TestCase
      */
     public function tearDown()
     {
-        
     }
 
     /**

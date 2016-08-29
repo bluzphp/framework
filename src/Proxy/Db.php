@@ -30,64 +30,64 @@ use Bluz\Db\Query;
  * @method   static Instance getInstance()
  *
  * @method   static \PDO handler()
- * @see      Bluz\Db\Db::handler()
+ * @see      Instance::handler()
  *
  * @method   static string quote($value)
- * @see      Bluz\Db\Db::quote()
+ * @see      Instance::quote()
  *
  * @method   static string quoteIdentifier($identifier)
- * @see      Bluz\Db\Db::quoteIdentifier()
+ * @see      Instance::quoteIdentifier()
  *
  * @method   static integer query($sql, $params = array(), $types = array())
- * @see      Bluz\Db\Db::query()
+ * @see      Instance::query()
  *
  * @method   static Query\Select select($select)
- * @see      Bluz\Db\Db::select()
+ * @see      Instance::select()
  *
  * @method   static Query\Insert insert($table)
- * @see      Bluz\Db\Db::insert()
+ * @see      Instance::insert()
  *
  * @method   static Query\Update update($table)
- * @see      Bluz\Db\Db::update()
+ * @see      Instance::update()
  *
  * @method   static Query\Delete delete($table)
- * @see      Bluz\Db\Db::delete()
+ * @see      Instance::delete()
  *
  * @method   static string fetchOne($sql, $params = [])
- * @see      Bluz\Db\Db::fetchOne()
+ * @see      Instance::fetchOne()
  *
  * @method   static array fetchRow($sql, $params = [])
- * @see      Bluz\Db\Db::fetchRow()
+ * @see      Instance::fetchRow()
  *
  * @method   static array fetchAll($sql, $params = [])
- * @see      Bluz\Db\Db::fetchAll()
+ * @see      Instance::fetchAll()
  *
  * @method   static array fetchColumn($sql, $params = [])
- * @see      Bluz\Db\Db::fetchColumn()
+ * @see      Instance::fetchColumn()
  *
  * @method   static array fetchGroup($sql, $params = [])
- * @see      Bluz\Db\Db::fetchGroup()
+ * @see      Instance::fetchGroup()
  *
  * @method   static array fetchColumnGroup($sql, $params = [])
- * @see      Bluz\Db\Db::fetchColumnGroup()
+ * @see      Instance::fetchColumnGroup()
  *
  * @method   static array fetchPairs($sql, $params = [])
- * @see      Bluz\Db\Db::fetchPairs()
+ * @see      Instance::fetchPairs()
  *
  * @method   static array fetchObject($sql, $params = [], $object = "stdClass")
- * @see      Bluz\Db\Db::fetchObject()
+ * @see      Instance::fetchObject()
  *
  * @method   static array fetchObjects($sql, $params = [], $object = null)
- * @see      Bluz\Db\Db::fetchObjects()
+ * @see      Instance::fetchObjects()
  *
  * @method   static array fetchRelations($sql, $params = [])
- * @see      Bluz\Db\Db::fetchRelations()
+ * @see      Instance::fetchRelations()
  *
  * @method   static bool transaction($process)
- * @see      Bluz\Db\Db::transaction()
+ * @see      Instance::transaction()
  *
  * @method   static void disconnect()
- * @see      Bluz\Db\Db::disconnect()
+ * @see      Instance::disconnect()
  */
 class Db extends AbstractProxy
 {

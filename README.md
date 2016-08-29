@@ -34,8 +34,6 @@ The project is developed by [NIX Solutions][3] PHP team and distributed under [M
 
 Thanks to [JetBrains][5] for license of PHPStorm
 
-![PHPStorm](https://www.jetbrains.com/phpstorm/documentation/docs/logo_phpstorm.png)
-
 [1]: https://github.com/bluzphp/skeleton
 [2]: https://github.com/bluzphp/framework/wiki
 [3]: http://nixsolutions.com

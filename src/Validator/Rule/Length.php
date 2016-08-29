@@ -11,8 +11,8 @@
  */
 namespace Bluz\Validator\Rule;
 
-use Countable;
 use Bluz\Validator\Exception\ComponentException;
+use Countable;
 
 /**
  * Check for length in range between minimum and maximum values

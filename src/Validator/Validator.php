@@ -11,9 +11,9 @@
  */
 namespace Bluz\Validator;
 
-use Bluz\Validator\Rule\AbstractRule;
 use Bluz\Validator\Exception\ComponentException;
 use Bluz\Validator\Exception\ValidatorException;
+use Bluz\Validator\Rule\AbstractRule;
 use Bluz\Validator\Rule\Required;
 
 /**

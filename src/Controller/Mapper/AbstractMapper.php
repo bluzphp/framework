@@ -18,7 +18,6 @@ use Bluz\Controller\ControllerException;
 use Bluz\Crud\AbstractCrud;
 use Bluz\Proxy\Acl;
 use Bluz\Proxy\Request;
-use Bluz\Proxy\Response;
 use Bluz\Proxy\Router;
 
 /**

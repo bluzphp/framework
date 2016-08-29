@@ -17,7 +17,6 @@ use Bluz\Common\Options;
 use Bluz\Controller\Controller;
 use Bluz\Layout\Layout;
 use Bluz\Proxy\Messages;
-use Bluz\Proxy\Request;
 use Zend\Diactoros\Response\EmptyResponse;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\JsonResponse;

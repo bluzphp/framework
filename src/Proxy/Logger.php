@@ -11,8 +11,8 @@
  */
 namespace Bluz\Proxy;
 
-use Bluz\Logger\Logger as Instance;
 use Bluz\Common\Nil;
+use Bluz\Logger\Logger as Instance;
 
 /**
  * Proxy to Logger

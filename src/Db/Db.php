@@ -13,8 +13,8 @@ namespace Bluz\Db;
 
 use Bluz\Common\Exception\ConfigurationException;
 use Bluz\Common\Options;
-use Bluz\Db\Query;
 use Bluz\Db\Exception\DbException;
+use Bluz\Db\Query;
 use Bluz\Proxy\Logger;
 
 /**

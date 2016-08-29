@@ -6,7 +6,7 @@ echo "-- Repo Tag: $TRAVIS_TAG"
 echo "-- PHP Version: $TRAVIS_PHP_VERSION"
 echo "-- PULL Request: $TRAVIS_PULL_REQUEST"
 
-if [ "$TRAVIS_REPO_SLUG" == "bluzphp/framework" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_PHP_VERSION" == "5.6" ]; then
+if [ "$TRAVIS_REPO_SLUG" == "bluzphp/framework" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_PHP_VERSION" == "7.0" ]; then
 
   echo "Generate"
   wget http://phpdox.de/releases/phpdox.phar

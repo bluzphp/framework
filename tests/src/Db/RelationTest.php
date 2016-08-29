@@ -24,7 +24,6 @@ class RelationTest extends Bluz\Tests\TestCase
      */
     public function setUp()
     {
-
     }
 
     /**
@@ -32,7 +31,6 @@ class RelationTest extends Bluz\Tests\TestCase
      */
     public function tearDown()
     {
-
     }
 
     /**

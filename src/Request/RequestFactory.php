@@ -11,8 +11,8 @@
  */
 namespace Bluz\Request;
 
-use \Zend\Diactoros\ServerRequest;
-use \Zend\Diactoros\ServerRequestFactory;
+use Zend\Diactoros\ServerRequest;
+use Zend\Diactoros\ServerRequestFactory;
 
 /**
  * Request Factory

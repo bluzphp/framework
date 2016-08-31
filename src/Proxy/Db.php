@@ -65,7 +65,7 @@ use Bluz\Db\Query;
  * @method   static array fetchColumn($sql, $params = [])
  * @see      Instance::fetchColumn()
  *
- * @method   static array fetchGroup($sql, $params = [])
+ * @method   static array fetchGroup($sql, $params = [], $object = null))
  * @see      Instance::fetchGroup()
  *
  * @method   static array fetchColumnGroup($sql, $params = [])

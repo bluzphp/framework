@@ -391,6 +391,7 @@ class Db
      * Returns an array containing all of the result set rows
      *
      * Group by first column
+     *
      * <code>
      *     $db->fetchGroup("SELECT ip, COUNT(id) FROM users GROUP BY ip", array());
      * </code>
@@ -398,12 +399,18 @@ class Db
      * @param  string $sql    SQL query with placeholders
      *                        "SELECT ip, id FROM users"
      * @param  array  $params params for query placeholders (optional)
+     * @param  mixed  $object
      * @return array
      */
-    public function fetchGroup($sql, $params = array())
+    public function fetchGroup($sql, $params = array(), $object = null)
     {
         $stmt = $this->prepare($sql, $params);
-        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC | \PDO::FETCH_GROUP);
+
+        if ($object) {
+            $result = $stmt->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_GROUP, $object);
+        } else {
+            $result = $stmt->fetchAll(\PDO::FETCH_ASSOC | \PDO::FETCH_GROUP);
+        }
 
         $this->ok();
         return $result;
@@ -466,7 +473,7 @@ class Db
      * @param  mixed  $object
      * @return array
      */
-    public function fetchObject($sql, $params = array(), $object = "stdClass")
+    public function fetchObject($sql, $params = array(), $object = 'stdClass')
     {
         $stmt = $this->prepare($sql, $params);
 

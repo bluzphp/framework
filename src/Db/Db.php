@@ -473,7 +473,7 @@ class Db
      * @param  mixed  $object
      * @return array
      */
-    public function fetchObject($sql, $params = array(), $object = null)
+    public function fetchObject($sql, $params = array(), $object = 'stdClass')
     {
         $stmt = $this->prepare($sql, $params);
 

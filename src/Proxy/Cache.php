@@ -31,31 +31,33 @@ use Bluz\Common\Nil;
  * @method   static Instance getInstance()
  *
  * @method   static bool add($id, $data, $ttl = Instance::TTL_NO_EXPIRY)
- * @see      Bluz\Cache\Cache::add()
+ * @see      Instance::add()
  *
  * @method   static bool set($id, $data, $ttl = Instance::TTL_NO_EXPIRY)
- * @see      Bluz\Cache\Cache::set()
+ * @see      Instance::set()
  *
  * @method   static mixed get($id)
- * @see      Bluz\Cache\Cache::get()
+ * @see      Instance::get()
  *
  * @method   static bool contains($id)
- * @see      Bluz\Cache\Cache::contains()
+ * @see      Instance::contains()
  *
  * @method   static mixed delete($id)
- * @see      Bluz\Cache\Cache::delete()
+ * @see      Instance::delete()
  *
  * @method   static mixed flush()
- * @see      Bluz\Cache\Cache::flush()
+ * @see      Instance::flush()
  *
  * @method   static bool addTag($id, $tag)
- * @see      Bluz\Cache\Cache::addTag()
+ * @see      Instance::addTag()
  *
  * @method   static bool deleteByTag($tag)
- * @see      Bluz\Cache\Cache::deleteByTag()
+ * @see      Instance::deleteByTag()
  */
-class Cache extends AbstractProxy
+class Cache
 {
+    use ProxyTrait;
+
     /**
      * No expiry TTL
      */
@@ -64,17 +66,18 @@ class Cache extends AbstractProxy
     /**
      * Init instance
      *
-     * @return Instance
+     * @return Instance|Nil
      */
     protected static function initInstance()
     {
         $config = Config::getData('cache');
-        if (!$config || !isset($config['enabled']) || !$config['enabled']) {
-            return new Nil();
-        } else {
+
+        if ($config && isset($config['enabled']) && $config['enabled']) {
             $instance = new Instance();
             $instance->setOptions($config);
             return $instance;
+        } else {
+            return new Nil();
         }
     }
 }

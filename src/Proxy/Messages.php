@@ -29,28 +29,30 @@ use Bluz\Messages\Messages as Instance;
  * @method   static Instance getInstance()
  *
  * @method   static Messages addNotice($message, ...$text)
- * @see      Bluz\Messages\Messages::addNotice()
+ * @see      Instance::addNotice()
  *
  * @method   static Messages addSuccess($message, ...$text)
- * @see      Bluz\Messages\Messages::addSuccess()
+ * @see      Instance::addSuccess()
  *
  * @method   static Messages addError($message, ...$text)
- * @see      Bluz\Messages\Messages::addError()
+ * @see      Instance::addError()
  *
  * @method   static integer count()
- * @see      Bluz\Messages\Messages::count()
+ * @see      Instance::count()
  *
  * @method   static \stdClass pop($type = null)
- * @see      Bluz\Messages\Messages::pop()
+ * @see      Instance::pop()
  *
  * @method   static \ArrayObject popAll()
- * @see      Bluz\Messages\Messages::popAll()
+ * @see      Instance::popAll()
  *
  * @method   static void reset()
- * @see      Bluz\Messages\Messages::reset()
+ * @see      Instance::reset()
  */
-class Messages extends AbstractProxy
+class Messages
 {
+    use ProxyTrait;
+
     /**
      * Init instance
      *

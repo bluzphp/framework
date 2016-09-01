@@ -29,10 +29,12 @@ use Bluz\Acl\Acl as Instance;
  * @method   static Instance getInstance()
  *
  * @method   static bool isAllowed($module, $privilege)
- * @see      Bluz\Acl\Acl::isAllowed()
+ * @see      Instance::isAllowed()
  */
-class Acl extends AbstractProxy
+class Acl
 {
+    use ProxyTrait;
+
     /**
      * Init instance
      *

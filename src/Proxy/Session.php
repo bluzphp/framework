@@ -31,28 +31,30 @@ use Bluz\Session\Session as Instance;
  * @method   static Instance getInstance()
  *
  * @method   static void  start()
- * @see      Bluz\Session\Session::start()
+ * @see      Instance::start()
  * @method   static void  destroy()
- * @see      Bluz\Session\Session::destroy()
+ * @see      Instance::destroy()
  * @method   static void  set($key, $value)
- * @see      Bluz\Session\Session::set()
+ * @see      Instance::set()
  * @method   static mixed get($key)
- * @see      Bluz\Session\Session::get()
+ * @see      Instance::get()
  * @method   static bool  contains($key)
- * @see      Bluz\Session\Session::contains()
+ * @see      Instance::contains()
  * @method   static void  delete($key)
- * @see      Bluz\Session\Session::delete()
+ * @see      Instance::delete()
  * @method   static string getId()
- * @see      Bluz\Session\Session::getId()
+ * @see      Instance::getId()
  * @method   static bool  regenerateId($deleteOldSession = true)
- * @see      Bluz\Session\Session::regenerateId()
+ * @see      Instance::regenerateId()
  * @method   static void  setSessionCookieLifetime($ttl)
- * @see      Bluz\Session\Session::setSessionCookieLifetime()
+ * @see      Instance::setSessionCookieLifetime()
  *
  * @method   static void  expireSessionCookie()
  */
-class Session extends AbstractProxy
+class Session
 {
+    use ProxyTrait;
+
     /**
      * Init instance
      *

@@ -20,7 +20,18 @@ namespace Bluz\Response;
 trait ResponseTrait
 {
     /**
-     * @access public
+     * @return string
+     */
+    abstract public function jsonSerialize();
+
+    /**
+     * @return string
+     */
+    abstract public function __toString();
+
+    /**
+     * Render object as HTML or JSON
+     *
      * @param  string $type
      * @return mixed
      */

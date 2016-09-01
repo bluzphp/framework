@@ -64,7 +64,7 @@ abstract class AbstractBuilder
      */
     public function execute()
     {
-        return Db::query($this->getSQL(), $this->params, $this->types);
+        return Db::query($this->getSql(), $this->params, $this->types);
     }
     
     /**
@@ -76,7 +76,7 @@ abstract class AbstractBuilder
      *     $sb
      *         ->select('u')
      *         ->from('User', 'u');
-     *     echo $qb->getSQL(); // SELECT u FROM User u
+     *     echo $qb->getSql(); // SELECT u FROM User u
      * </code>
      *
      * @return string The SQL query string.
@@ -125,7 +125,7 @@ abstract class AbstractBuilder
      * @param  string|int $key   The parameter position or name
      * @param  mixed      $value The parameter value
      * @param  integer    $type  PDO::PARAM_*
-     * @return self instance
+     * @return AbstractBuilder|Select|Insert|Update|Delete instance
      */
     public function setParameter($key, $value, $type = \PDO::PARAM_STR)
     {
@@ -157,7 +157,7 @@ abstract class AbstractBuilder
      *
      * @param  array $params The query parameters to set
      * @param  array $types  The query parameters types to set
-     * @return self instance
+     * @return AbstractBuilder|Select|Insert|Update|Delete instance
      */
     public function setParameters(array $params, array $types = array())
     {
@@ -197,7 +197,7 @@ abstract class AbstractBuilder
      * @param  string       $sqlPartName
      * @param  string|array $sqlPart
      * @param  bool         $append
-     * @return self instance
+     * @return AbstractBuilder|Select|Insert|Update|Delete instance
      */
     protected function addQueryPart($sqlPartName, $sqlPart, $append = false)
     {
@@ -243,7 +243,7 @@ abstract class AbstractBuilder
      * Reset single SQL part
      *
      * @param  string $queryPartName
-     * @return self instance
+     * @return AbstractBuilder|Select|Insert|Update|Delete instance
      */
     protected function resetQueryPart($queryPartName)
     {
@@ -257,7 +257,7 @@ abstract class AbstractBuilder
      * setFromQueryPart
      *
      * @param  string $table
-     * @return self instance
+     * @return AbstractBuilder|Select|Insert|Update|Delete instance
      */
     protected function setFromQueryPart($table)
     {
@@ -303,6 +303,6 @@ abstract class AbstractBuilder
      */
     public function __toString()
     {
-        return $this->getSQL();
+        return $this->getSql();
     }
 }

@@ -30,19 +30,21 @@ use Bluz\Registry\Registry as Instance;
  * @method   static Instance getInstance()
  *
  * @method   static void  set($key, $value)
- * @see      Bluz\Registry\Registry::set()
+ * @see      Instance::set()
  *
  * @method   static mixed get($key)
- * @see      Bluz\Registry\Registry::get()
+ * @see      Instance::get()
  *
  * @method   static bool  contains($key)
- * @see      Bluz\Registry\Registry::contains()
+ * @see      Instance::contains()
  *
  * @method   static void  delete($key)
- * @see      Bluz\Registry\Registry::delete()
+ * @see      Instance::delete()
  */
-class Registry extends AbstractProxy
+class Registry
 {
+    use ProxyTrait;
+
     /**
      * Init instance
      *

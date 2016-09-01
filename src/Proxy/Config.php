@@ -32,13 +32,15 @@ use Bluz\Config\Config as Instance;
  * @method   static Instance getInstance()
  *
  * @method   static mixed getData($key = null, $section = null)
- * @see      Bluz\Config\Config::getData()
+ * @see      Instance::getData()
  *
  * @method   static mixed getModuleData($module, $section = null)
- * @see      Bluz\Config\Config::getModuleData()
+ * @see      Instance::getModuleData()
  */
-class Config extends AbstractProxy
+class Config
 {
+    use ProxyTrait;
+
     /**
      * Init instance
      *

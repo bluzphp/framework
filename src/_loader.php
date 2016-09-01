@@ -32,7 +32,7 @@ require_once 'Common/Singleton.php';
 require_once 'Application/Application.php';
 
 // proxy package
-require_once 'Proxy/AbstractProxy.php';
+require_once 'Proxy/ProxyTrait.php';
 require_once 'Proxy/Cache.php';
 require_once 'Proxy/Config.php';
 require_once 'Proxy/Logger.php';

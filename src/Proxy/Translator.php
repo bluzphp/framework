@@ -29,13 +29,15 @@ use Bluz\Translator\Translator as Instance;
  * @method   static Instance getInstance()
  *
  * @method   static string translate($message, ...$text)
- * @see      Bluz\Translator\Translator::translate()
+ * @see      Instance::translate()
  *
  * @method   static string translatePlural($singular, $plural, $number, ...$text)
- * @see      Bluz\Translator\Translator::translatePlural()
+ * @see      Instance::translatePlural()
  */
-class Translator extends AbstractProxy
+class Translator
 {
+    use ProxyTrait;
+
     /**
      * Init instance
      *

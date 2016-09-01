@@ -11,6 +11,7 @@
  */
 namespace Bluz\Proxy;
 
+use Bluz\Common\Container\RegularAccess;
 use Bluz\Layout\Layout as Instance;
 use Bluz\View\View;
 
@@ -31,22 +32,22 @@ use Bluz\View\View;
  * @method   static Instance getInstance()
  *
  * @method   static View getContent()
- * @see      Bluz\Layout\Layout::getContent()
+ * @see      Instance::getContent()
  * @method   static void setContent($content)
- * @see      Bluz\Layout\Layout::setContent()
+ * @see      Instance::setContent()
  * @method   static void setPath($path)
- * @see      Bluz\View\View::setPath()
+ * @see      View::setPath()
  * @method   static void setTemplate($file)
- * @see      Bluz\View\View::setTemplate()
+ * @see      View::setTemplate()
  *
  * @method   static void set($key, $value)
- * @see      Bluz\Common\Container\RegularAccess::set()
+ * @see      RegularAccess::set()
  * @method   static mixed get($key)
- * @see      Bluz\Common\Container\RegularAccess::get()
+ * @see      RegularAccess::get()
  * @method   static bool contains($key)
- * @see      Bluz\Common\Container\RegularAccess::contains()
+ * @see      RegularAccess::contains()
  * @method   static void delete($key)
- * @see      Bluz\Common\Container\RegularAccess::delete()
+ * @see      RegularAccess::delete()
  *
  * @method   static string ahref(string $text, mixed $href, array $attributes = [])
  * @method   static array|null breadCrumbs(array $data = [])
@@ -56,8 +57,10 @@ use Bluz\View\View;
  * @method   static string|null meta(string $name = null, string $content = null)
  * @method   static string|null title(string $title = null, $position = 'replace', $separator = ' :: ')
  */
-class Layout extends AbstractProxy
+class Layout
 {
+    use ProxyTrait;
+
     /**
      * Constants for define positions
      */

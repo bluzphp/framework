@@ -26,15 +26,36 @@ trait Singleton
     protected static $instance;
 
     /**
+     * Set or replace instance
+     *
+     * @param  mixed $instance
+     * @return void
+     */
+    public static function setInstance($instance)
+    {
+        static::$instance = $instance;
+    }
+
+    /**
      * Get instance
      *
      * @return static
      */
-    final public static function getInstance()
+    public static function getInstance()
     {
         return isset(static::$instance)
             ? static::$instance
-            : static::$instance = new static;
+            : static::$instance = static::initInstance();
+    }
+
+    /**
+     * Initialization of class instance
+     *
+     * @return static
+     */
+    protected static function initInstance()
+    {
+        return new static;
     }
 
     /**

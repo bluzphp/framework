@@ -28,59 +28,61 @@ use Bluz\Http\CacheControl as Instance;
  * @method   static Instance getInstance()
  *
  * @method   static void setPrivate()
- * @see      Bluz\Http\CacheControl::setPrivate()
+ * @see      Instance::setPrivate()
  *
  * @method   static void setPublic()
- * @see      Bluz\Http\CacheControl::setPublic()
+ * @see      Instance::setPublic()
  *
  * @method   static integer getMaxAge()
- * @see      Bluz\Http\CacheControl::getMaxAge()
+ * @see      Instance::getMaxAge()
  *
  * @method   static void setMaxAge($value)
- * @see      Bluz\Http\CacheControl::getMaxAge()
+ * @see      Instance::getMaxAge()
  *
  * @method   static void setSharedMaxAge($value)
- * @see      Bluz\Http\CacheControl::getMaxAge()
+ * @see      Instance::getMaxAge()
  *
  * @method   static integer getTtl()
- * @see      Bluz\Http\CacheControl::getTtl()
+ * @see      Instance::getTtl()
  *
  * @method   static void setTtl($seconds)
- * @see      Bluz\Http\CacheControl::setTtl()
+ * @see      Instance::setTtl()
  *
  * @method   static void setClientTtl($seconds)
- * @see      Bluz\Http\CacheControl::setClientTtl()
+ * @see      Instance::setClientTtl()
  *
  * @method   static string getEtag()
- * @see      Bluz\Http\CacheControl::getEtag()
+ * @see      Instance::getEtag()
  *
  * @method   static void setEtag($etag, $weak = false)
- * @see      Bluz\Http\CacheControl::setEtag()
+ * @see      Instance::setEtag()
  *
  * @method   static integer getAge()
- * @see      Bluz\Http\CacheControl::getAge()
+ * @see      Instance::getAge()
  *
  * @method   static void setAge($age)
- * @see      Bluz\Http\CacheControl::setAge()
+ * @see      Instance::setAge()
  *
  * @method   static \DateTime getExpires()
- * @see      Bluz\Http\CacheControl::getExpires()
+ * @see      Instance::getExpires()
  *
  * @method   static void setExpires($date)
- * @see      Bluz\Http\CacheControl::setExpires()
+ * @see      Instance::setExpires()
  *
  * @method   static \DateTime|null getLastModified()
- * @see      Bluz\Http\CacheControl::getLastModified()
+ * @see      Instance::getLastModified()
  *
  * @method   static void setLastModified($date)
- * @see      Bluz\Http\CacheControl::setLastModified()
+ * @see      Instance::setLastModified()
  */
-class HttpCacheControl extends AbstractProxy
+class HttpCacheControl
 {
+    use ProxyTrait;
+
     /**
      * Init instance
      *
-     * @return Instance
+     * @return Instance|Nil
      */
     protected static function initInstance()
     {

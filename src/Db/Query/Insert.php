@@ -30,7 +30,7 @@ class Insert extends AbstractBuilder
      */
     public function execute($sequence = null)
     {
-        $result = Db::query($this->getSQL(), $this->params, $this->types);
+        $result = Db::query($this->getSql(), $this->params, $this->types);
         if ($result) {
             return Db::handler()->lastInsertId($sequence);
         }

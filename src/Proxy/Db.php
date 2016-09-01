@@ -89,8 +89,10 @@ use Bluz\Db\Query;
  * @method   static void disconnect()
  * @see      Instance::disconnect()
  */
-class Db extends AbstractProxy
+class Db
 {
+    use ProxyTrait;
+
     /**
      * Init instance
      *

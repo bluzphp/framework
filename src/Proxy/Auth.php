@@ -28,16 +28,18 @@ use Bluz\Auth\EntityInterface;
  * @method   static Instance getInstance()
  *
  * @method   static void setIdentity(EntityInterface $identity)
- * @see      Bluz\Auth\Auth::setIdentity()
+ * @see      Instance::setIdentity()
  *
  * @method   static EntityInterface getIdentity()
- * @see      Bluz\Auth\Auth::getIdentity()
+ * @see      Instance::getIdentity()
  *
  * @method   static void clearIdentity()
- * @see      Bluz\Auth\Auth::clearIdentity()
+ * @see      Instance::clearIdentity()
  */
-class Auth extends AbstractProxy
+class Auth
 {
+    use ProxyTrait;
+
     /**
      * Init instance
      *

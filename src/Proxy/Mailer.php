@@ -33,13 +33,15 @@ use Bluz\Mailer\Mailer as Instance;
  * @method   static Instance getInstance()
  *
  * @method   static \PHPMailer create()
- * @see      Bluz\Mailer\Mailer::create()
+ * @see      Instance::create()
  *
  * @method   static bool send(\PHPMailer $mail)
- * @see      Bluz\Mailer\Mailer::send()
+ * @see      Instance::send()
  */
-class Mailer extends AbstractProxy
+class Mailer
 {
+    use ProxyTrait;
+
     /**
      * Init instance
      *

@@ -31,13 +31,15 @@ use Zend\Diactoros\ServerRequest as Instance;
  *
  * @todo Proxy class should be clean
  *
+ * @method   static Instance getInstance()
+ *
  * @method   static \Psr\Http\Message\UriInterface getUri()
  * @see      \Zend\Diactoros\RequestTrait::getUri()
- *
- * @method   static Instance getInstance()
  */
-class Request extends AbstractProxy
+class Request
 {
+    use ProxyTrait;
+
     /**
      * @const string HTTP methods
      */
@@ -346,8 +348,6 @@ class Request extends AbstractProxy
 
     /**
      * Is the request a Javascript XMLHttpRequest?
-     *
-     * Should work with Prototype/Script.aculo.us, possibly others.
      *
      * @return bool
      */

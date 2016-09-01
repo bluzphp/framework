@@ -33,13 +33,15 @@ use Bluz\EventManager\EventManager as Instance;
  * @method   static Instance getInstance()
  *
  * @method   static Instance attach($eventName, $callback, $priority = 1)
- * @see      Bluz\EventManager\EventManager::attach()
+ * @see      Instance::attach()
  *
  * @method   static string|object trigger($event, $target = null, $params = null)
- * @see      Bluz\EventManager\EventManager::trigger()
+ * @see      Instance::trigger()
  */
-class EventManager extends AbstractProxy
+class EventManager
 {
+    use ProxyTrait;
+
     /**
      * Init instance
      *

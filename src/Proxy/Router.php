@@ -30,36 +30,38 @@ use Bluz\Router\Router as Instance;
  * @method   static Instance getInstance()
  *
  * @method   static string getBaseUrl()
- * @see      Bluz\Router\Router::getBaseUrl()
+ * @see      Instance::getBaseUrl()
  * @method   static void   setBaseUrl($baseUrl)
- * @see      Bluz\Router\Router::setBaseUrl()
+ * @see      Instance::setBaseUrl()
  *
  * @method   static string getUrl($module = 'index', $controller = 'index', $params = array())
- * @see      Bluz\Router\Router::getUrl()
+ * @see      Instance::getUrl()
  *
  * @method   static string getFullUrl($module = 'index', $controller = 'index', $params = array())
- * @see      Bluz\Router\Router::getFullUrl()
+ * @see      Instance::getFullUrl()
  *
  * @method   static string getCleanUri()
- * @see      Bluz\Router\Router::getCleanUri()
+ * @see      Instance::getCleanUri()
  *
  * @method   static void process()
- * @see      Bluz\Router\Router::process()
+ * @see      Instance::process()
  *
  * @method   static string getDefaultModule()
- * @see      Bluz\Router\Router::getDefaultModule()
+ * @see      Instance::getDefaultModule()
  *
  * @method   static string getDefaultController()
- * @see      Bluz\Router\Router::getDefaultController()
+ * @see      Instance::getDefaultController()
  *
  * @method   static string getErrorModule()
- * @see      Bluz\Router\Router::getErrorModule()
+ * @see      Instance::getErrorModule()
  *
  * @method   static string getErrorController()
- * @see      Bluz\Router\Router::getErrorController()
+ * @see      Instance::getErrorController()
  */
-class Router extends AbstractProxy
+class Router
 {
+    use ProxyTrait;
+
     /**
      * Init instance
      *

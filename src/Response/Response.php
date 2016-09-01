@@ -136,7 +136,7 @@ class Response
      */
     public function switchType($type)
     {
-        // switch statement for $type
+        // switch statement by content type
         switch ($type) {
             case 'JSON':
                 $this->setHeader('Content-Type', 'application/json');

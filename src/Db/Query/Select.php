@@ -45,12 +45,12 @@ class Select extends AbstractBuilder
 
         switch ($fetchType) {
             case (!is_int($fetchType)):
-                return Db::fetchObjects($this->getSQL(), $this->params, $fetchType);
+                return Db::fetchObjects($this->getSql(), $this->params, $fetchType);
             case \PDO::FETCH_CLASS:
-                return Db::fetchObjects($this->getSQL(), $this->params);
+                return Db::fetchObjects($this->getSql(), $this->params);
             case \PDO::FETCH_ASSOC:
             default:
-                return Db::fetchAll($this->getSQL(), $this->params);
+                return Db::fetchAll($this->getSql(), $this->params);
         }
     }
 

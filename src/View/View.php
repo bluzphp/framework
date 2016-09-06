@@ -34,6 +34,7 @@ use Bluz\Response\ResponseTrait;
  * @method string|bool controller(string $controller = null)
  * @method string|View dispatch($module, $controller, $params = [])
  * @method string exception(\Exception $exception)
+ * @method string gravatar($email, $size = 80, $default = 'mm', $rate = 'g')
  * @method string|null headScript(string $script = null)
  * @method string|null headStyle(string $style = null, $media = 'all')
  * @method string|bool module(string $module = null)

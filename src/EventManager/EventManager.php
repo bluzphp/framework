@@ -22,7 +22,7 @@ class EventManager
     /**
      * @var array list of listeners
      */
-    protected $listeners = array();
+    protected $listeners = [];
 
     /**
      * Attach callback to event
@@ -35,10 +35,10 @@ class EventManager
     public function attach($eventName, $callback, $priority = 1)
     {
         if (!isset($this->listeners[$eventName])) {
-            $this->listeners[$eventName] = array();
+            $this->listeners[$eventName] = [];
         }
         if (!isset($this->listeners[$eventName][$priority])) {
-            $this->listeners[$eventName][$priority] = array();
+            $this->listeners[$eventName][$priority] = [];
         }
         $this->listeners[$eventName][$priority][] = $callback;
         return $this;

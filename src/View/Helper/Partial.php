@@ -25,7 +25,7 @@ use Bluz\View\ViewException;
  * @throws ViewException
  */
 return
-    function ($__template, $__params = array()) {
+    function ($__template, $__params = []) {
         /**
          * @var View $this
          */

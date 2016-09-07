@@ -46,7 +46,7 @@ class Cache implements CacheInterface, TagableInterface
     /**
      * @var CacheInterface[] Instance of cache adapter
      */
-    protected $adapter = array();
+    protected $adapter = [];
 
     /**
      * @var string Prefix for cache keys
@@ -272,7 +272,7 @@ class Cache implements CacheInterface, TagableInterface
         if ($this->getTagAdapter()->contains($tag)) {
             $identifiers = $this->getTagAdapter()->get($tag);
         } else {
-            $identifiers = array();
+            $identifiers = [];
         }
 
         // array may contain not unique values, but I can't see problem here

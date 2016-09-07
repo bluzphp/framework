@@ -34,7 +34,7 @@ class UserAdmin extends AbstractRowEntity
      */
     public function getPrivileges()
     {
-        return array();
+        return [];
     }
 
     /**

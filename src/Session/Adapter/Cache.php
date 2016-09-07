@@ -28,7 +28,7 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
      * @param  array $settings
      * @throws ConfigurationException
      */
-    public function __construct($settings = array())
+    public function __construct($settings = [])
     {
         $this->handler = Proxy\Cache::getInstance();
 

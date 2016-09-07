@@ -46,13 +46,13 @@ class InTest extends Tests\TestCase
     public function providerForPass()
     {
         return array(
-            array('foo', array('foo', 'bar')),
-            array('foo', 'barfoobaz'),
-            array('foo', 'foobarbaz'),
-            array('foo', 'barbazfoo'),
-            array('foo', 'foo', true),
-            array('1', array(1, 2, 3)),
-            array('1', array('1', 2, 3), true),
+            ['foo', ['foo', 'bar']],
+            ['foo', 'barfoobaz'],
+            ['foo', 'foobarbaz'],
+            ['foo', 'barbazfoo'],
+            ['foo', 'foo', true],
+            ['1', [1, 2, 3]],
+            ['1', ['1', 2, 3], true],
         );
     }
 
@@ -62,14 +62,14 @@ class InTest extends Tests\TestCase
     public function providerForFail()
     {
         return array(
-            array('', 'barfoobaz'),
-            array('', 42),
-            array('bat', array('foo', 'bar')),
-            array('foo', 'barfaabaz'),
-            array('foo', 'faabarbaz'),
-            array('foo', 'baabazfaa'),
-            array('Foo', 'barbazfoo', true),
-            array('1', array(1, 2, 3), true),
+            ['', 'barfoobaz'],
+            ['', 42],
+            ['bat', ['foo', 'bar']],
+            ['foo', 'barfaabaz'],
+            ['foo', 'faabarbaz'],
+            ['foo', 'baabazfaa'],
+            ['Foo', 'barbazfoo', true],
+            ['1', [1, 2, 3], true],
         );
     }
 }

@@ -53,10 +53,10 @@ class IntegerTest extends Tests\TestCase
     public function providerForPass()
     {
         return array(
-            array(16),
-            array('165'),
-            array(123456),
-            array(PHP_INT_MAX),
+            [16],
+            ['165'],
+            [123456],
+            [PHP_INT_MAX],
         );
     }
 
@@ -66,13 +66,13 @@ class IntegerTest extends Tests\TestCase
     public function providerForFail()
     {
         return array(
-            array(null),
-            array(''),
-            array(' '),
-            array('a'),
-            array('Foo'),
-            array('1.44'),
-            array(1e-5),
+            [null],
+            [''],
+            [' '],
+            ['a'],
+            ['Foo'],
+            ['1.44'],
+            [1e-5],
         );
     }
 }

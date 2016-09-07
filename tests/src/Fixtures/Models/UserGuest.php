@@ -34,7 +34,7 @@ class UserGuest extends AbstractRowEntity
      */
     public function getPrivileges()
     {
-        return array();
+        return [];
     }
 
     /**

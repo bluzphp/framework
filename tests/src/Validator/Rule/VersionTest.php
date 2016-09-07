@@ -45,13 +45,13 @@ class VersionTest extends Tests\TestCase
     public function providerForPass()
     {
         return array(
-            array('1.0.0'),
-            array('1.0.0-alpha'),
-            array('1.0.0-alpha.1'),
-            array('1.0.0-0.3.7'),
-            array('1.0.0-x.7.z.92'),
-            array('1.3.7+build.2.b8f12d7'),
-            array('1.3.7-rc.1'),
+            ['1.0.0'],
+            ['1.0.0-alpha'],
+            ['1.0.0-alpha.1'],
+            ['1.0.0-0.3.7'],
+            ['1.0.0-x.7.z.92'],
+            ['1.3.7+build.2.b8f12d7'],
+            ['1.3.7-rc.1'],
         );
     }
 
@@ -61,13 +61,13 @@ class VersionTest extends Tests\TestCase
     public function providerForFail()
     {
         return array(
-            array(''),
-            array('1.3.7--'),
-            array('1.3.7++'),
-            array('foo'),
-            array('1.2.3.4'),
-            array('1.2.3.4-beta'),
-            array('beta'),
+            [''],
+            ['1.3.7--'],
+            ['1.3.7++'],
+            ['foo'],
+            ['1.2.3.4'],
+            ['1.2.3.4-beta'],
+            ['beta'],
         );
     }
 }

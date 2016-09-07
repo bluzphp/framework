@@ -26,7 +26,7 @@ class CompositeBuilder implements \Countable
     /**
      * @var array parts of the composite expression
      */
-    private $parts = array();
+    private $parts = [];
 
     /**
      * Constructor
@@ -34,7 +34,7 @@ class CompositeBuilder implements \Countable
      * @param array  $parts parts of the composite expression
      * @param string $type  AND|OR
      */
-    public function __construct(array $parts = array(), $type = 'AND')
+    public function __construct(array $parts = [], $type = 'AND')
     {
         $this->type = (strtoupper($type)=='OR')?'OR':'AND';
         $this->add($parts);

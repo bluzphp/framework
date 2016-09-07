@@ -33,11 +33,11 @@ class Messages
     /**
      * @var array list of messages types
      */
-    protected $types = array(
+    protected $types = [
         self::TYPE_ERROR,
         self::TYPE_SUCCESS,
         self::TYPE_NOTICE
-    );
+    ];
 
     /**
      * Initialize Messages container
@@ -196,11 +196,11 @@ class Messages
     protected function createEmptyMessagesStore()
     {
         return new \ArrayObject(
-            array(
-                self::TYPE_ERROR => array(),
-                self::TYPE_SUCCESS => array(),
-                self::TYPE_NOTICE => array()
-            )
+            [
+                self::TYPE_ERROR => [],
+                self::TYPE_SUCCESS => [],
+                self::TYPE_NOTICE => []
+            ]
         );
     }
 }

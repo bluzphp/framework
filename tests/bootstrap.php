@@ -10,7 +10,7 @@ define('PATH_APPLICATION', PATH_ROOT . '/tests');
 define('PATH_VENDOR', PATH_ROOT . '/vendor');
 
 // Emulate session
-$_SESSION = array();
+$_SESSION = [];
 $_COOKIE[session_name()] = uniqid();
 
 // init autoloader

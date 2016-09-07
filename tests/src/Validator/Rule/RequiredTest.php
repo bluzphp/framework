@@ -54,11 +54,11 @@ class RequiredTest extends Tests\TestCase
     public function providerForPass()
     {
         return array(
-            array(1),
-            array('foo'),
-            array(array(5)),
-            array(array(0)),
-            array(new \stdClass)
+            [1],
+            ['foo'],
+            [[5]],
+            [[0]],
+            [new \stdClass]
         );
     }
 
@@ -68,9 +68,9 @@ class RequiredTest extends Tests\TestCase
     public function providerForFail()
     {
         return array(
-            array(''),
-            array(false),
-            array(null)
+            [''],
+            [false],
+            [null]
         );
     }
 }

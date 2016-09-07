@@ -27,7 +27,7 @@ use Bluz\View\View;
  * @return View|string|null
  */
 return
-    function ($module, $controller, $params = array()) {
+    function ($module, $controller, $params = []) {
         /**
          * @var View $this
          */

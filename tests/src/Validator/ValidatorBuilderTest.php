@@ -139,7 +139,7 @@ class ValidatorBuilderTest extends Tests\TestCase
             'bar',
             Validator::numeric()
         );
-        $this->assertFalse($validator->validate(array()));
-        $this->assertFalse($validator->assert(array()));
+        $this->assertFalse($validator->validate([]));
+        $this->assertFalse($validator->assert([]));
     }
 }

@@ -25,12 +25,12 @@ trait Helper
     /**
      * @var array list of helpers
      */
-    protected $helpers = array();
+    protected $helpers = [];
 
     /**
      * @var array list of helpers paths
      */
-    protected $helpersPath = array();
+    protected $helpersPath = [];
 
     /**
      * Add helper path

@@ -32,7 +32,7 @@ class RouterTest extends TestCase
      * @param string $controller
      * @param array $params
      */
-    public function testRouterUrl($url, $module, $controller, $params = array())
+    public function testRouterUrl($url, $module, $controller, $params = [])
     {
         $this->assertEquals($url, Router::getUrl($module, $controller, $params));
     }
@@ -46,7 +46,7 @@ class RouterTest extends TestCase
      * @param string $controller
      * @param array $params
      */
-    public function testRouterUrlWithCustomControllerRoute($url, $module, $controller, $params = array())
+    public function testRouterUrlWithCustomControllerRoute($url, $module, $controller, $params = [])
     {
         $this->assertEquals($url, Router::getUrl($module, $controller, $params));
     }
@@ -67,14 +67,14 @@ class RouterTest extends TestCase
     public function providerForDefaultRoutes()
     {
         return array(
-            ['/test/test', 'test', 'test', array()],
+            ['/test/test', 'test', 'test', []],
             ['/test/test/foo/bar', 'test', 'test', ['foo'=>'bar']],
             ['/test/test?foo%5B0%5D=bar&foo%5B1%5D=baz', 'test', 'test', ['foo'=> ['bar', 'baz']]],
-            ['/test', 'test', null, array()],
-            ['/test', 'test', 'index', array()],
+            ['/test', 'test', null, []],
+            ['/test', 'test', 'index', []],
             ['/test/index/foo/bar', 'test', 'index', ['foo'=>'bar']],
-            ['/index/test', null, 'test', array()],
-            ['/index/test', 'index', 'test', array()],
+            ['/index/test', null, 'test', []],
+            ['/index/test', 'index', 'test', []],
             ['/index/test/foo/bar', 'index', 'test', ['foo'=>'bar']],
         );
     }

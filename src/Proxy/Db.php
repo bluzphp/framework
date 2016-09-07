@@ -38,7 +38,7 @@ use Bluz\Db\Query;
  * @method   static string quoteIdentifier($identifier)
  * @see      Instance::quoteIdentifier()
  *
- * @method   static integer query($sql, $params = array(), $types = array())
+ * @method   static integer query($sql, $params = [], $types = [])
  * @see      Instance::query()
  *
  * @method   static Query\Select select($select)

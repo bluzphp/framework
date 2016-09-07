@@ -46,8 +46,8 @@ class ConditionTest extends Tests\TestCase
     public function providerForPass()
     {
         return array(
-            array((4 > 2), 'always'),
-            array((is_int(42)), 'always'),
+            [(4 > 2), 'always'],
+            [(is_int(42)), 'always'],
         );
     }
 
@@ -57,8 +57,8 @@ class ConditionTest extends Tests\TestCase
     public function providerForFail()
     {
         return array(
-            array((4 < 2), 'always'),
-            array((is_int(42.0204)), 'always'),
+            [(4 < 2), 'always'],
+            [(is_int(42.0204)), 'always'],
         );
     }
 }

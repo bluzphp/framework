@@ -43,12 +43,12 @@ class MinTest extends Tests\TestCase
     public function providerForPass()
     {
         return array(
-            array(0, true, ''),       // empty string is equal zero
-            array(100, false, 123.0),
-            array(100, true, 100),
-            array(-50, true, -50),
-            array(-50, false, 100),
-            array(100, false, 200),
+            [0, true, ''],       // empty string is equal zero
+            [100, false, 123.0],
+            [100, true, 100],
+            [-50, true, -50],
+            [-50, false, 100],
+            [100, false, 200],
         );
     }
 
@@ -58,11 +58,11 @@ class MinTest extends Tests\TestCase
     public function providerForFail()
     {
         return array(
-            array(0, false, ''),     // empty string is equal zero
-            array(100, false, ''),
-            array(100, false, 50),
-            array(0, false, -50),
-            array(50, false, 50),
+            [0, false, ''],     // empty string is equal zero
+            [100, false, ''],
+            [100, false, 50],
+            [0, false, -50],
+            [50, false, 50],
         );
     }
 }

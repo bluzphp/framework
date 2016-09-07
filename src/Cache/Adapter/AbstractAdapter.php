@@ -26,14 +26,14 @@ abstract class AbstractAdapter implements CacheInterface
     /**
      * @var array list of Cache settings
      */
-    protected $settings = array();
+    protected $settings = [];
 
     /**
      * Setup adapter settings
      *
      * @param array $settings setup adapter
      */
-    public function __construct($settings = array())
+    public function __construct($settings = [])
     {
         $this->settings = array_replace_recursive($this->settings, $settings);
     }

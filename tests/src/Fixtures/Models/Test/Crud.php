@@ -48,7 +48,7 @@ class Crud extends \Bluz\Crud\Table
      * @param array $params
      * @return array|int|mixed
      */
-    public function readSet($offset = 0, $limit = 10, $params = array())
+    public function readSet($offset = 0, $limit = 10, $params = [])
     {
         $select = Db::select('*')
             ->from('test', 't');

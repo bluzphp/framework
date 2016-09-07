@@ -342,7 +342,7 @@ class Application
      * @return Controller
      * @throws ApplicationException
      */
-    public function dispatch($module, $controller, $params = array())
+    public function dispatch($module, $controller, $params = [])
     {
         Logger::info("app:dispatch: " . $module . '/' . $controller);
 
@@ -361,7 +361,7 @@ class Application
      * @param  array  $params
      * @return void
      */
-    protected function preDispatch($module, $controller, $params = array())
+    protected function preDispatch($module, $controller, $params = [])
     {
         Logger::info("---:dispatch:pre: " . $module . '/' . $controller);
     }
@@ -374,7 +374,7 @@ class Application
      * @param  array  $params
      * @return Controller
      */
-    protected function doDispatch($module, $controller, $params = array())
+    protected function doDispatch($module, $controller, $params = [])
     {
         // @TODO: try to find custom controller class
 
@@ -402,7 +402,7 @@ class Application
      * @param  array  $params
      * @return void
      */
-    protected function postDispatch($module, $controller, $params = array())
+    protected function postDispatch($module, $controller, $params = [])
     {
         Logger::info("---:dispatch:post: " . $module . '/' . $controller);
     }

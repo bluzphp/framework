@@ -46,12 +46,12 @@ class ContainsTest extends Tests\TestCase
     public function providerForPass()
     {
         return array(
-            array('foo', array('bar', 'foo')),
-            array('foo', 'barbazFOO'),
-            array('foo', 'barbazfoo'),
-            array('foo', 'foobazfoo'),
-            array('1', array(2, 3, 1)),
-            array('1', array(2, 3, '1'), true),
+            ['foo', ['bar', 'foo']],
+            ['foo', 'barbazFOO'],
+            ['foo', 'barbazfoo'],
+            ['foo', 'foobazfoo'],
+            ['1', [2, 3, 1]],
+            ['1', [2, 3, '1'], true],
         );
     }
 
@@ -61,11 +61,11 @@ class ContainsTest extends Tests\TestCase
     public function providerForFail()
     {
         return array(
-            array('foo', ''),
-            array('bat', array('bar', 'foo')),
-            array('foo', 'barfaabaz'),
-            array('foo', 'barbazFOO', true),
-            array('foo', 'faabarbaz'),
+            ['foo', ''],
+            ['bat', ['bar', 'foo']],
+            ['foo', 'barfaabaz'],
+            ['foo', 'barbazFOO', true],
+            ['foo', 'faabarbaz'],
         );
     }
 }

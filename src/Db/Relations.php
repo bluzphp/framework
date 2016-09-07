@@ -24,13 +24,13 @@ class Relations
     /**
      * Relation stack, i.e.
      * <code>
-     *     array(
+     *     [
      *         'Model1:Model2' => ['Model1'=>'foreignKey', 'Model2'=>'primaryKey'],
      *         'Pages:Users' => ['Pages'=>'userId', 'Users'=>'id'],
      *         'PagesTags:Pages' => ['PagesTags'=>'pageId', 'Pages'=>'id'],
      *         'PagesTags:Tags' => ['PagesTags'=>'tagId', 'Tags'=>'id'],
      *         'Pages:Tags' => ['PagesTags'],
-     *     )
+     *     ]
      * </code>
      *
      * @var array
@@ -40,10 +40,10 @@ class Relations
     /**
      * Class map, i.e.
      * <code>
-     *     array(
+     *     [
      *         'Pages' => '\Application\Pages\Table',
      *         'Users' => '\Application\Users\Table',
-     *     )
+     *     ]
      * </code>
      *
      * @var array
@@ -265,8 +265,8 @@ class Relations
      */
     public static function fetch($input)
     {
-        $output = array();
-        $map = array();
+        $output = [];
+        $map = [];
         foreach ($input as $i => $row) {
             $model = '';
             foreach ($row as $key => $value) {

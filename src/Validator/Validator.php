@@ -59,12 +59,12 @@ class Validator
     /**
      * @var AbstractRule[] list of validation rules
      */
-    protected $rules = array();
+    protected $rules = [];
 
     /**
      * @var AbstractRule[] list of invalid rules
      */
-    protected $invalid = array();
+    protected $invalid = [];
 
     /**
      * @var string field name
@@ -205,7 +205,7 @@ class Validator
     public function validate($input, $all = false)
     {
         $this->input = $input;
-        $this->invalid = array(); // clean
+        $this->invalid = []; // clean
         foreach ($this->rules as $rule) {
             if (!$rule->validate($this->input)) {
                 $this->invalid[] = $rule;
@@ -273,7 +273,7 @@ class Validator
      */
     public function getErrors()
     {
-        $output = array();
+        $output = [];
         foreach ($this->invalid as $rule) {
             $output[] = $this->prepareError($rule);
         }

@@ -75,20 +75,20 @@ class AlphaTest extends Tests\TestCase
     public function providerForPass()
     {
         return array(
-            array('', ''),
-            array('foobar', ''),
-            array('foobar', 'foobar'),
-            array('0alg-anet0', '0-9'),
-            array('a', ''),
-            array("\t", ''),
-            array("\n", ''),
-            array('foobar', ''),
-            array('python_', '_'),
-            array('google.com.ua', '.'),
-            array('foobar foobar', ''),
-            array("\nabc", ''),
-            array("\tdef", ''),
-            array("\nabc \t", ''),
+            ['', ''],
+            ['foobar', ''],
+            ['foobar', 'foobar'],
+            ['0alg-anet0', '0-9'],
+            ['a', ''],
+            ["\t", ''],
+            ["\n", ''],
+            ['foobar', ''],
+            ['python_', '_'],
+            ['google.com.ua', '.'],
+            ['foobar foobar', ''],
+            ["\nabc", ''],
+            ["\tdef", ''],
+            ["\nabc \t", ''],
         );
     }
 
@@ -98,17 +98,17 @@ class AlphaTest extends Tests\TestCase
     public function providerForFail()
     {
         return array(
-            array('@#$', ''),
-            array('_', ''),
-            array('dgç', ''),
-            array('122al', ''),
-            array('122', ''),
-            array(11123, ''),
-            array(1e21, ''),
-            array(0, ''),
-            array(null, ''),
-            array(new \stdClass, ''),
-            array(array(), ''),
+            ['@#$', ''],
+            ['_', ''],
+            ['dgç', ''],
+            ['122al', ''],
+            ['122', ''],
+            [11123, ''],
+            [1e21, ''],
+            [0, ''],
+            [null, ''],
+            [new \stdClass, ''],
+            [[], ''],
         );
     }
 
@@ -118,9 +118,9 @@ class AlphaTest extends Tests\TestCase
     public function providerForComponentException()
     {
         return array(
-            array(new \stdClass),
-            array(array()),
-            array(0x2)
+            [new \stdClass],
+            [[]],
+            [0x2]
         );
     }
 
@@ -130,8 +130,8 @@ class AlphaTest extends Tests\TestCase
     public function providerAdditionalChars()
     {
         return array(
-            array('!@#$%^&*(){}', '!@#$%^&*(){} abc'),
-            array('[]?+=/\\-_|"\',<>.', "[]?+=/\\-_|\"',<>. \t \n abc"),
+            ['!@#$%^&*(){}', '!@#$%^&*(){} abc'],
+            ['[]?+=/\\-_|"\',<>.', "[]?+=/\\-_|\"',<>. \t \n abc"],
         );
     }
 }

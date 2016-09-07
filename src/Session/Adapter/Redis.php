@@ -24,12 +24,12 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
     /**
      * @var array default Redis settings
      */
-    protected $settings = array(
+    protected $settings = [
         'host' => '127.0.0.1',
         'port' => '6379',
         'timeout' => null,
         'persistence' => false,
-    );
+    ];
 
     /**
      * Check and setup Redis server
@@ -38,7 +38,7 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
      * @throws ComponentException
      * @throws ConfigurationException
      */
-    public function __construct($settings = array())
+    public function __construct($settings = [])
     {
         // check Redis extension
         if (!extension_loaded('redis')) {

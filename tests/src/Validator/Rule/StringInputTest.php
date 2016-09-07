@@ -50,8 +50,8 @@ class StringInputTest extends Tests\TestCase
     public function providerForPass()
     {
         return array(
-            array(''),
-            array('165.7'),
+            [''],
+            ['165.7'],
         );
     }
 
@@ -61,10 +61,10 @@ class StringInputTest extends Tests\TestCase
     public function providerForFail()
     {
         return array(
-            array(null),
-            array(array()),
-            array(new \stdClass),
-            array(150)
+            [null],
+            [[]],
+            [new \stdClass],
+            [150]
         );
     }
 }

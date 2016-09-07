@@ -112,7 +112,7 @@ class Table extends AbstractCrud
      * @return array|int|mixed
      * @throws ApplicationException
      */
-    public function readSet($offset = 0, $limit = 10, $params = array(), &$total = null)
+    public function readSet($offset = 0, $limit = 10, $params = [], &$total = null)
     {
         $select = $this->getTable()->select();
 

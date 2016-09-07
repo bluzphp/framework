@@ -42,8 +42,8 @@ class RegexTest extends Tests\TestCase
     public function providerForPass()
     {
         return array(
-            array('/^[a-z]+$/', 'foobar'),
-            array('/^[a-z]+$/i', 'FooBar'),
+            ['/^[a-z]+$/', 'foobar'],
+            ['/^[a-z]+$/i', 'FooBar'],
         );
     }
 
@@ -53,8 +53,8 @@ class RegexTest extends Tests\TestCase
     public function providerForFail()
     {
         return array(
-            array('/^[a-z]+$/', 'foo bar'),
-            array('/^w+$/', 'foo bar'),
+            ['/^[a-z]+$/', 'foo bar'],
+            ['/^w+$/', 'foo bar'],
         );
     }
 }

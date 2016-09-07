@@ -33,7 +33,7 @@ namespace Bluz\Common;
  *       }
  *     }
  *
- *     $Foo = new Foo(array('bar'=>123, 'baz'=>456));
+ *     $Foo = new Foo(['bar'=>123, 'baz'=>456]);
  *
  * @package  Bluz\Common
  * @author   Anton Shevchuk

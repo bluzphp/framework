@@ -29,12 +29,12 @@ class ValidatorBuilder
      *
      * @var array
      */
-    protected $validators = array();
+    protected $validators = [];
 
     /**
      * @var array list of validation errors
      */
-    protected $errors = array();
+    protected $errors = [];
 
     /**
      * Add validator to builder
@@ -60,7 +60,7 @@ class ValidatorBuilder
      */
     public function validate($input)
     {
-        $this->errors = array();
+        $this->errors = [];
         $result = true;
         // check be validators
         foreach ($this->validators as $key => $validators) {
@@ -124,7 +124,7 @@ class ValidatorBuilder
 
             if (!$validator->validate($value)) {
                 if (!isset($this->errors[$key])) {
-                    $this->errors[$key] = array();
+                    $this->errors[$key] = [];
                 }
                 $this->errors[$key][] = $validator->getError();
                 return false;

@@ -29,5 +29,5 @@ return function ($a, $b, $c = null) {
     /**
      * @var Controller $this
      */
-    return array();
+    return [];
 };

@@ -51,7 +51,7 @@ class CacheTest extends TestCase
     public function testCacheWithEmptyConfigurationThrowsException()
     {
         $cache = new Cache();
-        $cache->setOptions(array());
+        $cache->setOptions([]);
     }
 
     /**

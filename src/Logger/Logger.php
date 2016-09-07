@@ -38,42 +38,42 @@ class Logger extends AbstractLogger
     /**
      * @var array list of alerts
      */
-    protected $alert = array();
+    protected $alert = [];
 
     /**
      * @var array list of critical
      */
-    protected $critical = array();
+    protected $critical = [];
 
     /**
      * @var array list of debug messages
      */
-    protected $debug = array();
+    protected $debug = [];
 
     /**
      * @var array list of emergency
      */
-    protected $emergency = array();
+    protected $emergency = [];
 
     /**
      * @var array list of errors
      */
-    protected $error = array();
+    protected $error = [];
 
     /**
      * @var array list of info
      */
-    protected $info = array();
+    protected $info = [];
 
     /**
      * @var array list of notices
      */
-    protected $notice = array();
+    protected $notice = [];
 
     /**
      * @var array list of warnings
      */
-    protected $warning = array();
+    protected $warning = [];
 
     /**
      * Interpolates context values into the message placeholders
@@ -85,7 +85,7 @@ class Logger extends AbstractLogger
     protected function interpolate($message, array $context = [])
     {
         // build a replacement array with braces around the context keys
-        $replace = array();
+        $replace = [];
         foreach ($context as $key => $val) {
             $replace['{' . $key . '}'] = $val;
         }

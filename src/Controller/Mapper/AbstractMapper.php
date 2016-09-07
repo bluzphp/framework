@@ -61,12 +61,12 @@ abstract class AbstractMapper
     /**
      * @var array params of query
      */
-    protected $params = array();
+    protected $params = [];
 
     /**
      * @var array query data
      */
-    protected $data = array();
+    protected $data = [];
 
     /**
      * @var AbstractCrud instance of CRUD
@@ -84,7 +84,7 @@ abstract class AbstractMapper
      *
      * @var array
      */
-    protected $map = array();
+    protected $map = [];
 
     /**
      * Prepare request for processing
@@ -124,11 +124,11 @@ abstract class AbstractMapper
      */
     public function addMap($method, $module, $controller, $acl = null)
     {
-        $this->map[strtoupper($method)] = array(
+        $this->map[strtoupper($method)] = [
             'module' => $module,
             'controller' => $controller,
             'acl' => $acl
-        );
+        ];
     }
 
     /**

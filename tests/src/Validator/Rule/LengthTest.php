@@ -61,12 +61,12 @@ class LengthTest extends Tests\TestCase
     public function providerForPass()
     {
         return array(
-            array('foobar', 1, 15),
-            array('ççççç', 4, 6),
-            array(range(1, 20), 1, 30),
-            array((object) array('foo'=>'bar', 'bar'=>'baz'), 1, 2),
-            array('foobar', 1, null), //null is a valid max length, means "no maximum",
-            array('foobar', null, 15) //null is a valid min length, means "no minimum"
+            ['foobar', 1, 15],
+            ['ççççç', 4, 6],
+            [range(1, 20), 1, 30],
+            [(object) ['foo'=>'bar', 'bar'=>'baz'], 1, 2],
+            ['foobar', 1, null], //null is a valid max length, means "no maximum",
+            ['foobar', null, 15] //null is a valid min length, means "no minimum"
         );
     }
 
@@ -76,10 +76,10 @@ class LengthTest extends Tests\TestCase
     public function providerForFail()
     {
         return array(
-            array(0, 1, 3),
-            array('foobar', 1, 3),
-            array((object) array('foo'=>'bar', 'bar'=>'baz'), 3, 5),
-            array(range(1, 50), 1, 30),
+            [0, 1, 3],
+            ['foobar', 1, 3],
+            [(object) ['foo'=>'bar', 'bar'=>'baz'], 3, 5],
+            [range(1, 50), 1, 30],
         );
     }
 
@@ -89,10 +89,10 @@ class LengthTest extends Tests\TestCase
     public function providerForFailInclusive()
     {
         return array(
-            array(range(1, 20), 1, 20),
-            array('foobar', 1, 6),
-            array('foobar', 6, null), // null is a valid max length, means "no maximum",
-            array('foobar', null, 6)  // null is a valid min length, means "no minimum"
+            [range(1, 20), 1, 20],
+            ['foobar', 1, 6],
+            ['foobar', 6, null], // null is a valid max length, means "no maximum",
+            ['foobar', null, 6]  // null is a valid min length, means "no minimum"
         );
     }
 
@@ -102,9 +102,9 @@ class LengthTest extends Tests\TestCase
     public function providerForComponentException()
     {
         return array(
-            array('foobar', 'a', 15),
-            array('foobar', 1, 'abc d'),
-            array('foobar', 10, 1),
+            ['foobar', 'a', 15],
+            ['foobar', 1, 'abc d'],
+            ['foobar', 10, 1],
         );
     }
 }

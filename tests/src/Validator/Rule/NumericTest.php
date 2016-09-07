@@ -54,12 +54,12 @@ class NumericTest extends Tests\TestCase
     public function providerForPass()
     {
         return array(
-            array(165),
-            array(165.0),
-            array(-165),
-            array('165'),
-            array('165.0'),
-            array('+165.0'),
+            [165],
+            [165.0],
+            [-165],
+            ['165'],
+            ['165.0'],
+            ['+165.0'],
         );
     }
 
@@ -69,11 +69,11 @@ class NumericTest extends Tests\TestCase
     public function providerForFail()
     {
         return array(
-            array(null),
-            array('a'),
-            array(''),
-            array(' '),
-            array('Foo'),
+            [null],
+            ['a'],
+            [''],
+            [' '],
+            ['Foo'],
         );
     }
 }

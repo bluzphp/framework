@@ -29,7 +29,7 @@ class Apc extends AbstractAdapter
      * @param  array $settings
      * @throws ComponentException
      */
-    public function __construct($settings = array())
+    public function __construct($settings = [])
     {
         if (!extension_loaded('apc')) {
             $msg = "APC extension not installed/enabled.

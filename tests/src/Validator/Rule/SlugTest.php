@@ -54,26 +54,26 @@ class SlugTest extends Tests\TestCase
     public function providerForPass()
     {
         return array(
-            array('o-rato-roeu-o-rei-de-roma'),
-            array('o-alganet-e-um-feio'),
-            array('a-e-i-o-u'),
-            array('anticonstitucionalissimamente')
+            ['o-rato-roeu-o-rei-de-roma'],
+            ['o-alganet-e-um-feio'],
+            ['a-e-i-o-u'],
+            ['anticonstitucionalissimamente']
         );
     }
 
     public function providerForFail()
     {
         return array(
-            array(''),
-            array('o-alganet-é-um-feio'),
-            array('á-é-í-ó-ú'),
-            array('-assim-nao-pode'),
-            array('assim-tambem-nao-'),
-            array('nem--assim'),
-            array('--nem-assim'),
-            array('Nem mesmo Assim'),
-            array('Ou-ate-assim'),
-            array('-Se juntar-tudo-Então-')
+            [''],
+            ['o-alganet-é-um-feio'],
+            ['á-é-í-ó-ú'],
+            ['-assim-nao-pode'],
+            ['assim-tambem-nao-'],
+            ['nem--assim'],
+            ['--nem-assim'],
+            ['Nem mesmo Assim'],
+            ['Ou-ate-assim'],
+            ['-Se juntar-tudo-Então-']
         );
     }
 }

@@ -20,8 +20,8 @@ use Bluz\View\ViewException;
  * Example of usage:
  * <code>
  *     <?php
- *      $data = array(2,4,6,8);
- *      $this->partialLoop('tr.phtml', $data, array('colspan'=>2));
+ *         $data = [2, 4, 6, 8];
+ *         $this->partialLoop('tr.phtml', $data, ['colspan'=>2]);
  *     ?>
  *     <?php
  *      <tr>
@@ -42,7 +42,7 @@ use Bluz\View\ViewException;
  * @throws ViewException|\InvalidArgumentException
  */
 return
-    function ($template, $data = array(), $params = array()) {
+    function ($template, $data = [], $params = []) {
         /**
          * @var View $this
          */
@@ -60,7 +60,7 @@ return
             $data = $data->toArray();
         }
 
-        $result = array();
+        $result = [];
         foreach ($data as $key => $value) {
             $params['partialKey'] = $key;
             $params['partialValue'] = $value;

@@ -68,19 +68,19 @@ class Row implements \JsonSerializable, \ArrayAccess
      *
      * @var array
      */
-    protected $clean = array();
+    protected $clean = [];
 
     /**
      * @var array relations rows
      */
-    protected $relations = array();
+    protected $relations = [];
 
     /**
      * Create Row instance
      *
      * @param array $data
      */
-    public function __construct($data = array())
+    public function __construct($data = [])
     {
         // original cleaner data
         $this->clean = $this->toArray();
@@ -99,7 +99,7 @@ class Row implements \JsonSerializable, \ArrayAccess
      */
     public function __sleep()
     {
-        return array('container', 'clean');
+        return ['container', 'clean'];
     }
 
     /**
@@ -210,7 +210,7 @@ class Row implements \JsonSerializable, \ArrayAccess
          * Normalize the result to an array indexed by primary key column(s)
          */
         $tempPrimaryKey = $table->getPrimaryKey();
-        $newPrimaryKey = array(current($tempPrimaryKey) => $primaryKey);
+        $newPrimaryKey = [current($tempPrimaryKey) => $primaryKey];
 
         /**
          * Save the new primary key value in object. The primary key may have

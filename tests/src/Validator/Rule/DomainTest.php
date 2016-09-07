@@ -45,11 +45,11 @@ class DomainTest extends Tests\TestCase
     public function providerForPass()
     {
         return array(
-            array('domain.local'),
-//            array('google.com', true),
-            array('example.com'),
-            array('xn--bcher-kva.com'),
-            array('example-hyphen.com'),
+            ['domain.local'],
+//            ['google.com', true],
+            ['example.com'],
+            ['xn--bcher-kva.com'],
+            ['example-hyphen.com'],
         );
     }
 
@@ -59,13 +59,13 @@ class DomainTest extends Tests\TestCase
     public function providerForFail()
     {
         return array(
-            array(null),
-            array(''),
-//            array('domain.local', true),
-            array('-example-invalid.com'),
-            array('example.invalid.-com'),
-//            array('1.2.3.256', true),
-//            array('1.2.3.4', true),
+            [null],
+            [''],
+//            ['domain.local', true],
+            ['-example-invalid.com'],
+            ['example.invalid.-com'],
+//            ['1.2.3.256', true],
+//            ['1.2.3.4', true],
         );
     }
 }

@@ -122,7 +122,7 @@ class Response
      * @param  array       $params
      * @return void
      */
-    public static function redirectTo($module = 'index', $controller = 'index', $params = array())
+    public static function redirectTo($module = 'index', $controller = 'index', $params = [])
     {
         $url = Router::getUrl($module, $controller, $params);
         self::redirect($url);

@@ -26,7 +26,7 @@ abstract class AbstractBuilder
     /**
      * @var array list of table aliases
      */
-    protected $aliases = array();
+    protected $aliases = [];
 
     /**
      * @var string the complete SQL string for this query
@@ -36,26 +36,26 @@ abstract class AbstractBuilder
     /**
      * @var array the array of SQL parts collected
      */
-    protected $sqlParts = array(
-        'select'  => array(),
-        'from'    => array(),
-        'join'    => array(),
-        'set'     => array(),
+    protected $sqlParts = [
+        'select'  => [],
+        'from'    => [],
+        'join'    => [],
+        'set'     => [],
         'where'   => null,
-        'groupBy' => array(),
+        'groupBy' => [],
         'having'  => null,
-        'orderBy' => array()
-    );
+        'orderBy' => []
+    ];
 
     /**
      * @var array the query parameters
      */
-    protected $params = array();
+    protected $params = [];
 
     /**
      * @var array the parameter type map of this query
      */
-    protected $types = array();
+    protected $types = [];
 
     /**
      * Execute this query using the bound parameters and their types
@@ -149,17 +149,17 @@ abstract class AbstractBuilder
      *         ->select('u')
      *         ->from('users', 'u')
      *         ->where('u.id = :user_id1 OR u.id = :user_id2')
-     *         ->setParameters(array(
+     *         ->setParameters([
      *             ':user_id1' => 1,
      *             ':user_id2' => 2
-     *         ));
+     *         ]);
      * </code>
      *
      * @param  array $params The query parameters to set
      * @param  array $types  The query parameters types to set
      * @return AbstractBuilder|Select|Insert|Update|Delete instance
      */
-    public function setParameters(array $params, array $types = array())
+    public function setParameters(array $params, array $types = [])
     {
         $this->types = $types;
         $this->params = $params;
@@ -205,7 +205,7 @@ abstract class AbstractBuilder
         $isMultiple = is_array($this->sqlParts[$sqlPartName]);
 
         if ($isMultiple && !$isArray) {
-            $sqlPart = array($sqlPart);
+            $sqlPart = [$sqlPart];
         }
 
         if ($append) {
@@ -248,7 +248,7 @@ abstract class AbstractBuilder
     protected function resetQueryPart($queryPartName)
     {
         $this->sqlParts[$queryPartName] = is_array($this->sqlParts[$queryPartName])
-            ? array() : null;
+            ? [] : null;
 
         return $this;
     }
@@ -262,7 +262,7 @@ abstract class AbstractBuilder
     protected function setFromQueryPart($table)
     {
         $table = Db::quoteIdentifier($table);
-        return $this->addQueryPart('from', array('table' => $table), false);
+        return $this->addQueryPart('from', ['table' => $table], false);
     }
 
     /**
@@ -275,7 +275,7 @@ abstract class AbstractBuilder
      * @param  array $args
      * @return string
      */
-    protected function prepareCondition($args = array())
+    protected function prepareCondition($args = [])
     {
         $condition = array_shift($args);
         foreach ($args as &$value) {

@@ -52,12 +52,12 @@ class Response
     /**
      * @var array list of headers
      */
-    protected $headers = array();
+    protected $headers = [];
 
     /**
      * @var array list of cookies
      */
-    protected $cookies = array();
+    protected $cookies = [];
 
     /**
      * @var mixed result can be Controller|Layout
@@ -244,7 +244,7 @@ class Response
         if ($this->hasHeader($header)) {
             return $this->headers[$header];
         } else {
-            return array();
+            return [];
         }
     }
 
@@ -363,7 +363,7 @@ class Response
      */
     public function removeHeaders()
     {
-        $this->headers = array();
+        $this->headers = [];
     }
 
     /**

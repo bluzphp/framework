@@ -29,31 +29,31 @@ use Bluz\Logger\Logger as Instance;
  *
  * @method   static Instance getInstance()
  *
- * @method   static void alert($message, array $context = array())
+ * @method   static void alert($message, array $context = [])
  * @see      Instance::alert()
  *
- * @method   static void critical($message, array $context = array())
+ * @method   static void critical($message, array $context = [])
  * @see      Instance::critical()
  *
- * @method   static void debug($message, array $context = array())
+ * @method   static void debug($message, array $context = [])
  * @see      Instance::debug()
  *
- * @method   static void emergency($message, array $context = array())
+ * @method   static void emergency($message, array $context = [])
  * @see      Instance::emergency()
  *
- * @method   static void error($message, array $context = array())
+ * @method   static void error($message, array $context = [])
  * @see      Instance::error()
  *
- * @method   static void info($message, array $context = array())
+ * @method   static void info($message, array $context = [])
  * @see      Instance::info()
  *
- * @method   static void notice($message, array $context = array())
+ * @method   static void notice($message, array $context = [])
  * @see      Instance::notice()
  *
- * @method   static void warning($message, array $context = array())
+ * @method   static void warning($message, array $context = [])
  * @see      Instance::warning()
  *
- * @method   static void log($level, $message, array $context = array())
+ * @method   static void log($level, $message, array $context = [])
  * @see      Instance::log()
  *
  * @method   static array get($level)

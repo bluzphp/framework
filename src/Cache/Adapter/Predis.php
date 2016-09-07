@@ -34,13 +34,13 @@ class Predis extends AbstractAdapter
     /**
      * @var array default settings
      */
-    protected $settings = array(
+    protected $settings = [
         'host' => '127.0.0.1',
         'port' => '6379',
         'timeout' => 5.0,
         'connection_persistent' => false,
-        'options' => array()
-    );
+        'options' => []
+    ];
 
     /**
      * Check and setup Redis server
@@ -49,7 +49,7 @@ class Predis extends AbstractAdapter
      * @throws ComponentException
      * @throws ConfigurationException
      */
-    public function __construct($settings = array())
+    public function __construct($settings = [])
     {
         // check Redis extension
         if (!class_exists('\\Predis\\Client')) {

@@ -75,14 +75,14 @@ class LatinNumericTest extends Tests\TestCase
     public function providerForPass()
     {
         return array(
-            array(0),
-            array(123456789),
-            array('1234567890'),
-            array('foobar'),
-            array('foobar1234567890'),
-            array('foobar_', '_'),
-            array('google.com.ua', '.'),
-            array('foobar foobar', ' ')
+            [0],
+            [123456789],
+            ['1234567890'],
+            ['foobar'],
+            ['foobar1234567890'],
+            ['foobar_', '_'],
+            ['google.com.ua', '.'],
+            ['foobar foobar', ' ']
         );
     }
 
@@ -92,13 +92,13 @@ class LatinNumericTest extends Tests\TestCase
     public function providerForFail()
     {
         return array(
-            array(1e21),
-            array('@#$'),
-            array('_'),
-            array('dgç'),
-            array(null),
-            array(new \stdClass),
-            array(array()),
+            [1e21],
+            ['@#$'],
+            ['_'],
+            ['dgç'],
+            [null],
+            [new \stdClass],
+            [[]],
         );
     }
 
@@ -108,9 +108,9 @@ class LatinNumericTest extends Tests\TestCase
     public function providerForComponentException()
     {
         return array(
-            array(new \stdClass),
-            array(array()),
-            array(0x2)
+            [new \stdClass],
+            [[]],
+            [0x2]
         );
     }
 
@@ -120,8 +120,8 @@ class LatinNumericTest extends Tests\TestCase
     public function providerAdditionalChars()
     {
         return array(
-            array('!@#$%^&*(){} ', '!@#$%^&*(){} abc'),
-            array('[]?+=/\\-_|"\',<>. ', "[]?+=/\\-_|\"',<>. abc"),
+            ['!@#$%^&*(){} ', '!@#$%^&*(){} abc'],
+            ['[]?+=/\\-_|"\',<>. ', "[]?+=/\\-_|\"',<>. abc"],
         );
     }
 }

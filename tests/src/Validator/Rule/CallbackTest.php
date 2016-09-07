@@ -19,12 +19,12 @@ use Bluz\Validator\Rule\Callback;
 class CallbackTest extends Tests\TestCase
 {
     /**
-     * @var Callback
+     * @var \Bluz\Validator\Rule\Callback
      */
     private $alwaysTrue;
 
     /**
-     * @var Callback
+     * @var \Bluz\Validator\Rule\Callback
      */
     private $alwaysFalse;
 
@@ -54,7 +54,7 @@ class CallbackTest extends Tests\TestCase
 
     public function testCallbackValidatorShouldAcceptArrayCallbackDefinitions()
     {
-        $v = new Callback(array($this, 'thisIsASampleCallbackUsedInsideThisTest'));
+        $v = new Callback([$this, 'thisIsASampleCallbackUsedInsideThisTest']);
         $this->assertTrue($v->validate('test'));
     }
 

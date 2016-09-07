@@ -55,7 +55,7 @@ abstract class AbstractTable extends Table
     /**
      * @var array Primary key(s)
      */
-    protected $primary = array('provider', 'foreignKey');
+    protected $primary = ['provider', 'foreignKey'];
 
     /**
      * Get AuthRow

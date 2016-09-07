@@ -55,7 +55,7 @@ class CacheControl
      */
     protected function updateCacheControlHeader()
     {
-        $parts = array();
+        $parts = [];
         ksort($this->container);
         foreach ($this->container as $key => $value) {
             if (true === $value) {

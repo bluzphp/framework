@@ -60,7 +60,7 @@ class Ip extends AbstractRule
             return null;
         }
 
-        $range = array('min' => null, 'max' => null, 'mask' => null);
+        $range = ['min' => null, 'max' => null, 'mask' => null];
 
         if (strpos($input, '-') !== false) {
             list($range['min'], $range['max']) = explode('-', $input);
@@ -161,9 +161,9 @@ class Ip extends AbstractRule
         return (boolean) filter_var(
             $address,
             FILTER_VALIDATE_IP,
-            array(
+            [
                 'flags' => $this->options
-            )
+            ]
         );
     }
 

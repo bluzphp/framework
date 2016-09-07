@@ -33,23 +33,23 @@ class Db
      * @var  array
      * @link http://php.net/manual/en/pdo.construct.php
      */
-    protected $connect = array(
+    protected $connect = [
         "type" => "mysql",
         "host" => "localhost",
         "name" => "",
         "user" => "root",
         "pass" => "",
-        "options" => array()
-    );
+        "options" => []
+    ];
 
     /**
      * PDO connection flags
      * @var  array
      * @link http://php.net/manual/en/pdo.setattribute.php
      */
-    protected $attributes = array(
+    protected $attributes = [
         \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
-    );
+    ];
 
     /**
      * @var \PDO PDO instance
@@ -66,13 +66,13 @@ class Db
      *
      * Just save connection settings
      * <code>
-     *     $db->setConnect(array(
+     *     $db->setConnect([
      *         'type' => 'mysql',
      *         'host' => 'localhost',
      *         'name' => 'db name',
      *         'user' => 'root',
      *         'pass' => ''
-     *     ));
+     *     ]);
      * </code>
      *
      * @param  array $connect options
@@ -230,7 +230,7 @@ class Db
      *                        array (':name' => \PDO::PARAM_STR, ':id' => \PDO::PARAM_INT)
      * @return integer the number of rows
      */
-    public function query($sql, $params = array(), $types = array())
+    public function query($sql, $params = [], $types = [])
     {
         $stmt = $this->handler()->prepare($sql);
         foreach ($params as $key => &$param) {
@@ -312,7 +312,7 @@ class Db
      *                         array (':name' => 'John', ':pass' => '123456')
      * @return string
      */
-    public function fetchOne($sql, $params = array())
+    public function fetchOne($sql, $params = [])
     {
         $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetch(\PDO::FETCH_COLUMN);
@@ -327,8 +327,8 @@ class Db
      * Example of usage
      * <code>
      *     $db->fetchRow("SELECT name, email FROM users WHERE id = ". $db->quote($id));
-     *     $db->fetchRow("SELECT name, email FROM users WHERE id = ?", array($id));
-     *     $db->fetchRow("SELECT name, email FROM users WHERE id = :id", array(':id'=>$id));
+     *     $db->fetchRow("SELECT name, email FROM users WHERE id = ?", [$id]);
+     *     $db->fetchRow("SELECT name, email FROM users WHERE id = :id", [':id'=>$id]);
      * </code>
      *
      * @param  string $sql     SQL query with placeholders
@@ -337,7 +337,7 @@ class Db
      *                         array (':name' => 'John', ':pass' => '123456')
      * @return array           array ('name' => 'John', 'email' => 'john@smith.com')
      */
-    public function fetchRow($sql, $params = array())
+    public function fetchRow($sql, $params = [])
     {
         $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
@@ -351,7 +351,7 @@ class Db
      *
      * Example of usage
      * <code>
-     *     $db->fetchAll("SELECT * FROM users WHERE ip = ?", array('192.168.1.1'));
+     *     $db->fetchAll("SELECT * FROM users WHERE ip = ?", ['192.168.1.1']);
      * </code>
      *
      * @param  string $sql    SQL query with placeholders
@@ -360,7 +360,7 @@ class Db
      *                        array (':ip' => '127.0.0.1')
      * @return array[]
      */
-    public function fetchAll($sql, $params = array())
+    public function fetchAll($sql, $params = [])
     {
         $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -378,7 +378,7 @@ class Db
      *                        array (':ip' => '127.0.0.1')
      * @return array
      */
-    public function fetchColumn($sql, $params = array())
+    public function fetchColumn($sql, $params = [])
     {
         $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetchAll(\PDO::FETCH_COLUMN);
@@ -393,7 +393,7 @@ class Db
      * Group by first column
      *
      * <code>
-     *     $db->fetchGroup("SELECT ip, COUNT(id) FROM users GROUP BY ip", array());
+     *     $db->fetchGroup("SELECT ip, COUNT(id) FROM users GROUP BY ip", []);
      * </code>
      *
      * @param  string $sql    SQL query with placeholders
@@ -402,7 +402,7 @@ class Db
      * @param  mixed  $object
      * @return array
      */
-    public function fetchGroup($sql, $params = array(), $object = null)
+    public function fetchGroup($sql, $params = [], $object = null)
     {
         $stmt = $this->prepare($sql, $params);
 
@@ -426,7 +426,7 @@ class Db
      * @param  array  $params params for query placeholders (optional)
      * @return array
      */
-    public function fetchColumnGroup($sql, $params = array())
+    public function fetchColumnGroup($sql, $params = [])
     {
         $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetchAll(\PDO::FETCH_COLUMN | \PDO::FETCH_GROUP);
@@ -444,7 +444,7 @@ class Db
      *                        array (':ip' => '127.0.0.1')
      * @return array
      */
-    public function fetchPairs($sql, $params = array())
+    public function fetchPairs($sql, $params = [])
     {
         $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetchAll(\PDO::FETCH_KEY_PAIR);
@@ -459,11 +459,11 @@ class Db
      * Example of usage
      * <code>
      *     // Fetch object to stdClass
-     *     $stdClass = $db->fetchObject('SELECT * FROM some_table WHERE id = ?', array($id));
+     *     $stdClass = $db->fetchObject('SELECT * FROM some_table WHERE id = ?', [$id]);
      *     // Fetch object to new Some object
-     *     $someClass = $db->fetchObject('SELECT * FROM some_table WHERE id = ?', array($id), 'Some');
+     *     $someClass = $db->fetchObject('SELECT * FROM some_table WHERE id = ?', [$id], 'Some');
      *     // Fetch object to exists instance of Some object
-     *     $someClass = $db->fetchObject('SELECT * FROM some_table WHERE id = ?', array($id), $someClass);
+     *     $someClass = $db->fetchObject('SELECT * FROM some_table WHERE id = ?', [$id], $someClass);
      * </code>
      *
      * @param  string $sql    SQL query with placeholders
@@ -473,7 +473,7 @@ class Db
      * @param  mixed  $object
      * @return array
      */
-    public function fetchObject($sql, $params = array(), $object = 'stdClass')
+    public function fetchObject($sql, $params = [], $object = 'stdClass')
     {
         $stmt = $this->prepare($sql, $params);
 
@@ -501,7 +501,7 @@ class Db
      * @param  mixed  $object Class name or instance
      * @return array
      */
-    public function fetchObjects($sql, $params = array(), $object = null)
+    public function fetchObjects($sql, $params = [], $object = null)
     {
         $stmt = $this->prepare($sql, $params);
 
@@ -530,7 +530,7 @@ class Db
      *                        array (':name' => 'John')
      * @return array
      */
-    public function fetchRelations($sql, $params = array())
+    public function fetchRelations($sql, $params = [])
     {
         $stmt = $this->prepare($sql, $params);
 

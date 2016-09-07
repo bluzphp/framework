@@ -31,7 +31,7 @@ class Event
     /**
      * @var array|object the event parameters
      */
-    protected $params = array();
+    protected $params = [];
 
     /**
      * Constructor

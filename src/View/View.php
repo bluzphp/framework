@@ -38,7 +38,7 @@ use Bluz\Response\ResponseTrait;
  * @method string|null headScript(string $script = null)
  * @method string|null headStyle(string $style = null, $media = 'all')
  * @method string|bool module(string $module = null)
- * @method string partial($__template, $__params = array())
+ * @method string partial($__template, $__params = [])
  * @method string partialLoop($template, $data = [], $params = [])
  * @method string radio($name, $value = null, $checked = false, array $attributes = [])
  * @method string redactor($selector, array $settings = [])

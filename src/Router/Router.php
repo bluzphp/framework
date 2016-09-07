@@ -69,22 +69,22 @@ class Router
     /**
      * @var array instance parameters
      */
-    protected $params = array();
+    protected $params = [];
 
     /**
      * @var array instance raw parameters
      */
-    protected $rawParams = array();
+    protected $rawParams = [];
 
     /**
      * @var array routers map
      */
-    protected $routers = array();
+    protected $routers = [];
 
     /**
      * @var array reverse map
      */
-    protected $reverse = array();
+    protected $reverse = [];
 
     /**
      * Constructor of Router
@@ -98,8 +98,8 @@ class Router
         $reverse = Cache::get('router:reverse');
 
         if (!$routers || !$reverse) {
-            $routers = array();
-            $reverse = array();
+            $routers = [];
+            $reverse = [];
             $path = Application::getInstance()->getPath() . '/modules/*/controllers/*.php';
             foreach (new \GlobIterator($path) as $file) {
                 /* @var \SplFileInfo $file */
@@ -110,7 +110,7 @@ class Router
                 if ($routes = $reflection->getRoute()) {
                     foreach ($routes as $route => $pattern) {
                         if (!isset($reverse[$module])) {
-                            $reverse[$module] = array();
+                            $reverse[$module] = [];
                         }
 
                         $reverse[$module][$controller] = ['route' => $route, 'params' => $reflection->getParams()];
@@ -306,7 +306,7 @@ class Router
      * @param  array  $params
      * @return string
      */
-    public function getUrl($module = self::DEFAULT_MODULE, $controller = self::DEFAULT_CONTROLLER, $params = array())
+    public function getUrl($module = self::DEFAULT_MODULE, $controller = self::DEFAULT_CONTROLLER, $params = [])
     {
         if (is_null($module)) {
             $module = Request::getModule();
@@ -337,7 +337,7 @@ class Router
     public function getFullUrl(
         $module = self::DEFAULT_MODULE,
         $controller = self::DEFAULT_CONTROLLER,
-        $params = array()
+        $params = []
     ) {
         $scheme = Request::getInstance()->getUri()->getScheme() . '://';
         $host = Request::getInstance()->getUri()->getHost();
@@ -357,7 +357,7 @@ class Router
     {
         $url = $this->reverse[$module][$controller]['route'];
 
-        $getParams = array();
+        $getParams = [];
         foreach ($params as $key => $value) {
             // sub-array as GET params
             if (is_array($value)) {
@@ -406,7 +406,7 @@ class Router
         }
 
         $url .= $module . '/' . $controller;
-        $getParams = array();
+        $getParams = [];
         foreach ($params as $key => $value) {
             // sub-array as GET params
             if (is_array($value)) {

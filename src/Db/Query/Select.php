@@ -75,7 +75,7 @@ class Select extends AbstractBuilder
     {
         $query = "SELECT " . implode(', ', $this->sqlParts['select']) . " FROM ";
 
-        $fromClauses = array();
+        $fromClauses = [];
 
         // Loop through all FROM clauses
         foreach ($this->sqlParts['from'] as $from) {
@@ -185,14 +185,14 @@ class Select extends AbstractBuilder
 
         return $this->addQueryPart(
             'join',
-            array(
-                $fromAlias => array(
+            [
+                $fromAlias => [
                     'joinType'      => 'inner',
                     'joinTable'     => $join,
                     'joinAlias'     => $alias,
                     'joinCondition' => $condition
-                )
-            ),
+                ]
+            ],
             true
         );
     }
@@ -221,14 +221,14 @@ class Select extends AbstractBuilder
 
         return $this->addQueryPart(
             'join',
-            array(
-                $fromAlias => array(
+            [
+                $fromAlias => [
                     'joinType'      => 'left',
                     'joinTable'     => $join,
                     'joinAlias'     => $alias,
                     'joinCondition' => $condition
-                )
-            ),
+                ]
+            ],
             true
         );
     }
@@ -257,14 +257,14 @@ class Select extends AbstractBuilder
 
         return $this->addQueryPart(
             'join',
-            array(
-                $fromAlias => array(
+            [
+                $fromAlias => [
                     'joinType'      => 'right',
                     'joinTable'     => $join,
                     'joinAlias'     => $alias,
                     'joinCondition' => $condition
-                )
-            ),
+                ]
+            ],
             true
         );
     }

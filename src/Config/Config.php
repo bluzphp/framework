@@ -110,7 +110,7 @@ class Config
      */
     protected function loadFiles($path)
     {
-        $config = array();
+        $config = [];
 
         if (!is_dir($path)) {
             throw new ConfigException('Configuration directory `'.$path.'` not found');

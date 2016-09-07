@@ -54,10 +54,10 @@ class NoWhitespaceTest extends Tests\TestCase
     public function providerForPass()
     {
         return array(
-            array(''),
-            array(0),
-            array('wpoiur'),
-            array('Foo'),
+            [''],
+            [0],
+            ['wpoiur'],
+            ['Foo'],
         );
     }
 
@@ -67,11 +67,11 @@ class NoWhitespaceTest extends Tests\TestCase
     public function providerForFail()
     {
         return array(
-            array(' '),
-            array('w poiur'),
-            array('      '),
-            array("Foo\nBar"),
-            array("Foo\tBar"),
+            [' '],
+            ['w poiur'],
+            ['      '],
+            ["Foo\nBar"],
+            ["Foo\tBar"],
         );
     }
 }

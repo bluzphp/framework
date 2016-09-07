@@ -55,10 +55,10 @@ class EmailTest extends Tests\TestCase
     public function providerForPass()
     {
         return array(
-            array('test@test.com'),
-            array('mail+mail@gmail.com'),
-            array('mail.email@e.test.com'),
-            array('a@a.a')
+            ['test@test.com'],
+            ['mail+mail@gmail.com'],
+            ['mail.email@e.test.com'],
+            ['a@a.a']
         );
     }
 
@@ -68,17 +68,17 @@ class EmailTest extends Tests\TestCase
     public function providerForFail()
     {
         return array(
-            array('test@test'),
-            array('test'),
-            array('test@тест.рф'),
-            array('@test.com'),
-            array('mail@test@test.com'),
-            array('test.test@'),
-            array('test.@test.com'),
-            array('test@.test.com'),
-            array('test@test..com'),
-            array('test@test.com.'),
-            array('.test@test.com')
+            ['test@test'],
+            ['test'],
+            ['test@тест.рф'],
+            ['@test.com'],
+            ['mail@test@test.com'],
+            ['test.test@'],
+            ['test.@test.com'],
+            ['test@.test.com'],
+            ['test@test..com'],
+            ['test@test.com.'],
+            ['.test@test.com']
         );
     }
 }

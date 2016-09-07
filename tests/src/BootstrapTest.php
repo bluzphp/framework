@@ -75,7 +75,7 @@ class BootstrapTest extends Application
      * @return \Bluz\Controller\Controller
      * @throws \Exception
      */
-    public function dispatch($module, $controller, $params = array())
+    public function dispatch($module, $controller, $params = [])
     {
         $this->dispatchModule = $module;
         $this->dispatchController = $controller;

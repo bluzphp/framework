@@ -56,11 +56,11 @@ class CreditCardTest extends Tests\TestCase
     public function providerForPass()
     {
         return array(
-            array('5376 7473 9720 8720'), // MasterCard
-            array('4024.0071.5336.1885'), // Visa 16
-            array('4024 007 193 879'),    // Visa 13
-            array('340-3161-9380-9364'),  // AmericanExpress
-            array('30351042633884'),      // Dinners
+            ['5376 7473 9720 8720'], // MasterCard
+            ['4024.0071.5336.1885'], // Visa 16
+            ['4024 007 193 879'],    // Visa 13
+            ['340-3161-9380-9364'],  // AmericanExpress
+            ['30351042633884'],      // Dinners
         );
     }
 
@@ -70,12 +70,12 @@ class CreditCardTest extends Tests\TestCase
     public function providerForFail()
     {
         return array(
-            array(null),
-            array(''),
-            array('it isnt my credit card number'),
-            array('&stR@ng3|) (|-|@r$'),
-            array('1234 1234 1234 1234'),
-            array('1234.1234.1234.1234'),
+            [null],
+            [''],
+            ['it isnt my credit card number'],
+            ['&stR@ng3|) (|-|@r$'],
+            ['1234 1234 1234 1234'],
+            ['1234.1234.1234.1234'],
         );
     }
 }

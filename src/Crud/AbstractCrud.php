@@ -71,7 +71,7 @@ abstract class AbstractCrud
      * @return mixed
      * @throws NotImplementedException
      */
-    public function readSet($offset = 0, $limit = self::DEFAULT_LIMIT, $params = array(), &$total = null)
+    public function readSet($offset = 0, $limit = self::DEFAULT_LIMIT, $params = [], &$total = null)
     {
         throw new NotImplementedException();
     }
@@ -159,7 +159,7 @@ abstract class AbstractCrud
         $reflection = new \ReflectionObject($this);
         $methods = $reflection->getMethods(\ReflectionMethod::IS_PUBLIC);
 
-        $available = array();
+        $available = [];
         $allow = [
             'readOne',
             'readSet',

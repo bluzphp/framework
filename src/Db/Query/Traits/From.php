@@ -52,10 +52,10 @@ trait From
 
         return $this->addQueryPart(
             'from',
-            array(
+            [
                 'table' => $from,
                 'alias' => $alias
-            ),
+            ],
             true
         );
     }

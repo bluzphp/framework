@@ -59,10 +59,10 @@ return
         if (!is_array($selected)) {
             if ($selected === null) {
                 // empty array
-                $selected = array();
+                $selected = [];
             } else {
                 // convert one option to an array
-                $selected = array((string)$selected);
+                $selected = [(string)$selected];
             }
         } elseif (is_array($selected) && sizeof($selected) > 1) {
             $attributes['multiple'] = 'multiple';
@@ -75,7 +75,7 @@ return
          */
         $buildOption = function ($value, $text) use ($selected) {
             $value = (string)$value;
-            $option = array('value' => $value);
+            $option = ['value' => $value];
             if (in_array($value, $selected)) {
                 $option['selected'] = 'selected';
             }
@@ -93,7 +93,7 @@ return
         if (is_array($text)) {
             // optgroup support
             // create a list of sub-options
-            $subOptions = array();
+            $subOptions = [];
             foreach ($text as $subValue => $subText) {
                 $subOptions[] = $buildOption($subValue, $subText);
             }

@@ -38,22 +38,22 @@ class Reflection
     /**
      * @var array list of Accept
      */
-    protected $accept = array();
+    protected $accept = [];
     
     /**
      * @var array list of Acl
      */
-    protected $acl = array();
+    protected $acl = [];
 
     /**
      * @var array list of HTTP methods
      */
-    protected $method = array();
+    protected $method = [];
 
     /**
      * @var array described params
      */
-    protected $params = array();
+    protected $params = [];
 
     /**
      * @var string privilege
@@ -63,12 +63,12 @@ class Reflection
     /**
      * @var array routers
      */
-    protected $route = array();
+    protected $route = [];
 
     /**
      * @var array default values of params
      */
-    protected $values = array();
+    protected $values = [];
 
     /**
      * Constructor of Reflection
@@ -155,7 +155,7 @@ class Reflection
     public function params($requestParams)
     {
         // apply type and default value for request params
-        $params = array();
+        $params = [];
         foreach ($this->params as $param => $type) {
             if (isset($requestParams[$param])) {
                 switch ($type) {

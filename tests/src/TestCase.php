@@ -141,7 +141,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected static function resetGlobals()
     {
-        $_GET = $_POST = array();
+        $_GET = $_POST = [];
         unset($_SERVER['HTTP_X_REQUESTED_WITH'], $_SERVER['HTTP_ACCEPT']);
     }
 

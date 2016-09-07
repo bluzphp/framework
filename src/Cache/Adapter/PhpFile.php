@@ -31,7 +31,7 @@ class PhpFile extends FileBase
     /**
      * @var array cache data
      */
-    protected $data = array();
+    protected $data = [];
 
     /**
      * {@inheritdoc}
@@ -110,10 +110,10 @@ class PhpFile extends FileBase
             mkdir($filePath, 0777, true);
         }
 
-        $cacheEntry = array(
+        $cacheEntry = [
             'ttl' => $ttl,
             'data' => $data
-        );
+        ];
 
         $cacheEntry = var_export($cacheEntry, true);
         $code = sprintf('<?php return %s;', $cacheEntry);

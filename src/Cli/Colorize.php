@@ -22,7 +22,7 @@ class Colorize
     /**
      * @var array list of text colors
      */
-    protected static $colors = array(
+    protected static $colors = [
         'black' => '30',
         'red' => '31',
         'green' => '32',
@@ -31,12 +31,12 @@ class Colorize
         'magenta' => '35',
         'cyan' => '36',
         'gray' => '37',
-    );
+    ];
 
     /**
      * @var array list of background colors
      */
-    protected static $background = array(
+    protected static $background = [
         'black' => '40',
         'red' => '41',
         'green' => '42',
@@ -45,7 +45,7 @@ class Colorize
         'magenta' => '45',
         'cyan' => '46',
         'gray' => '47'
-    );
+    ];
 
     /**
      * Return string colorized for Linux console

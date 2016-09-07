@@ -50,10 +50,10 @@ class ArrayInputTest extends Tests\TestCase
     public function providerForPass()
     {
         return array(
-            array(array()),
-            array([1, 2, 3]),
-            array(['1', '2', '3']),
-            array(['1.2', '2e10']),
+            [[]],
+            [[1, 2, 3]],
+            [['1', '2', '3']],
+            [['1.2', '2e10']],
         );
     }
 
@@ -63,11 +63,11 @@ class ArrayInputTest extends Tests\TestCase
     public function providerForFail()
     {
         return array(
-            array(null),
-            array(150),
-            array('abc'),
-            array(['abc']),
-            array(['abc', 1, 2, 3]),
+            [null],
+            [150],
+            ['abc'],
+            [['abc']],
+            [['abc', 1, 2, 3]],
         );
     }
 }

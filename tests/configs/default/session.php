@@ -8,7 +8,7 @@
 return array(
     "adapter" => "files",
     "settings" => array(
-        "cache" => array(),
+        "cache" => [],
         "files" => array(
             "save_path" => PATH_ROOT . '/tests/sessions'
         ),

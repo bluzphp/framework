@@ -25,7 +25,7 @@ use Bluz\Proxy\Db as DbProxy;
  *     class Table extends \Bluz\Db\Table
  *     {
  *        protected $table = 'users';
- *        protected $primary = array('id');
+ *        protected $primary = ['id'];
  *     }
  *
  *     $userRows = \Application\Users\Table::find(1,2,3,4,5);
@@ -239,7 +239,7 @@ abstract class Table
      * @param  array  $params Params for query placeholders
      * @return array of rows results in FETCH_CLASS mode
      */
-    public static function fetch($sql, $params = array())
+    public static function fetch($sql, $params = [])
     {
         $self = static::getInstance();
         return DbProxy::fetchObjects($sql, $params, $self->rowClass);
@@ -291,7 +291,7 @@ abstract class Table
         $self = static::getInstance();
 
         $keyNames = array_values((array)$self->primary);
-        $whereList = array();
+        $whereList = [];
         foreach ($keys as $keyValues) {
             $keyValues = (array)$keyValues;
             if (count($keyValues) < count($keyNames)) {
@@ -357,15 +357,15 @@ abstract class Table
         $self = static::getInstance();
 
         $whereClause = null;
-        $whereParams = array();
+        $whereParams = [];
 
         if (sizeof($where) == 2 && is_string($where[0])) {
             $whereClause = $where[0];
             $whereParams = (array)$where[1];
         } elseif (sizeof($where)) {
-            $whereOrTerms = array();
+            $whereOrTerms = [];
             foreach ($where as $keyValueSets) {
-                $whereAndTerms = array();
+                $whereAndTerms = [];
                 foreach ($keyValueSets as $keyName => $keyValue) {
                     if (is_array($keyValue)) {
                         $keyValue = array_map(

@@ -69,7 +69,7 @@ class TableTest extends Bluz\Tests\TestCase
     public function testGetPrimaryKey()
     {
         $table = Bluz\Tests\Db\Fixtures\ConcreteTable::getInstance();
-        $this->assertEquals(array('bar', 'baz'), $table->getPrimaryKey());
+        $this->assertEquals(['bar', 'baz'], $table->getPrimaryKey());
     }
 
     /**
@@ -88,8 +88,8 @@ class TableTest extends Bluz\Tests\TestCase
     public function getFindWrongData()
     {
         return array(
-            array(array(1)),
-            array(array(1, 2, 3))
+            [[1]],
+            [[1, 2, 3]]
         );
     }
 

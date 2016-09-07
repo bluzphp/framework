@@ -58,7 +58,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function testCheckConnectException()
     {
         $db = new Db\Db();
-        $db->setConnect(array());
+        $db->setConnect([]);
     }
 
     /**
@@ -144,7 +144,7 @@ class DbTest extends Bluz\Tests\TestCase
      */
     public function testFetchObjectToDeclaredClass()
     {
-        $result = $this->db->fetchObject("SELECT * FROM test LIMIT 10", array(), 'stdClass');
+        $result = $this->db->fetchObject("SELECT * FROM test LIMIT 10", [], 'stdClass');
         $this->assertInstanceOf('\stdClass', $result);
     }
 
@@ -153,7 +153,7 @@ class DbTest extends Bluz\Tests\TestCase
      */
     public function testFetchObjectToInstance()
     {
-        $result = $this->db->fetchObject("SELECT * FROM test LIMIT 1", array(), new \stdClass());
+        $result = $this->db->fetchObject("SELECT * FROM test LIMIT 1", [], new \stdClass());
         $this->assertInstanceOf('\stdClass', $result);
     }
 
@@ -172,7 +172,7 @@ class DbTest extends Bluz\Tests\TestCase
      */
     public function testFetchObjectsToDeclaredClass()
     {
-        $result = $this->db->fetchObjects("SELECT * FROM test LIMIT 10", array(), 'stdClass');
+        $result = $this->db->fetchObjects("SELECT * FROM test LIMIT 10", [], 'stdClass');
         $this->assertEquals(10, sizeof($result));
         $this->assertInstanceOf('\stdClass', current($result));
     }

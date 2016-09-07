@@ -56,11 +56,11 @@ class JsonTest extends Tests\TestCase
     public function providerForPass()
     {
         return array(
-            array('2'),
-            array('"abc"'),
-            array('[1,2,3]'),
-            array('["foo", "bar", "number", 1]'),
-            array('{"foo": "bar", "number":1}'),
+            ['2'],
+            ['"abc"'],
+            ['[1,2,3]'],
+            ['["foo", "bar", "number", 1]'],
+            ['{"foo": "bar", "number":1}'],
         );
     }
 
@@ -70,8 +70,8 @@ class JsonTest extends Tests\TestCase
     public function providerForFail()
     {
         return array(
-            array(''),
-            array('{foo:bar}'),
+            [''],
+            ['{foo:bar}'],
         );
     }
 }

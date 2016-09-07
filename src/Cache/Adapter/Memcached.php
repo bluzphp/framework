@@ -35,7 +35,7 @@ class Memcached extends AbstractAdapter
      * @throws ComponentException
      * @throws ConfigurationException
      */
-    public function __construct($settings = array())
+    public function __construct($settings = [])
     {
         // check Memcached extension
         if (!extension_loaded('memcached')) {

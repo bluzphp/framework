@@ -87,7 +87,7 @@ abstract class Grid
     /**
      * @var array custom array params
      */
-    protected $params = array();
+    protected $params = [];
 
     /**
      * @var integer start from first page
@@ -114,7 +114,7 @@ abstract class Grid
      *
      * @var array
      */
-    protected $orders = array();
+    protected $orders = [];
 
     /**
      * @var array default order
@@ -126,12 +126,12 @@ abstract class Grid
      * @var array list of allow orders
      * @see Grid::$orders
      */
-    protected $allowOrders = array();
+    protected $allowOrders = [];
 
     /**
      * @var array list of filters
      */
-    protected $filters = array();
+    protected $filters = [];
 
     /**
      * List of allow filters
@@ -142,14 +142,14 @@ abstract class Grid
      * @var array
      * @see Grid::$filters
      */
-    protected $allowFilters = array();
+    protected $allowFilters = [];
 
     /**
      * List of aliases for columns in DB
      *
      * @var array
      */
-    protected $aliases = array();
+    protected $aliases = [];
 
     /**
      * Grid constructor
@@ -374,7 +374,7 @@ abstract class Grid
      */
     public function getSettings()
     {
-        $settings = array();
+        $settings = [];
         $settings['page'] = $this->getPage();
         $settings['limit'] = $this->getLimit();
         $settings['orders'] = $this->getOrders();
@@ -581,7 +581,7 @@ abstract class Grid
      * @param  string[] $filters
      * @return void
      */
-    public function setAllowFilters(array $filters = array())
+    public function setAllowFilters(array $filters = [])
     {
         $this->allowFilters = $filters;
     }
@@ -808,7 +808,7 @@ abstract class Grid
     {
         $this->setOrder($column, $order);
 
-        $this->defaultOrder = array($column => $order);
+        $this->defaultOrder = [$column => $order];
     }
 
     /**

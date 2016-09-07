@@ -46,8 +46,8 @@ class EqualsTest extends Tests\TestCase
     public function providerForPass()
     {
         return array(
-            array('foo', 'foo'),
-            array(10, "10"),
+            ['foo', 'foo'],
+            [10, "10"],
         );
     }
 
@@ -57,9 +57,9 @@ class EqualsTest extends Tests\TestCase
     public function providerForFail()
     {
         return array(
-            array('foo', ''),
-            array('foo', 'bar'),
-            array(10, "10", true),
+            ['foo', ''],
+            ['foo', 'bar'],
+            [10, "10", true],
         );
     }
 }

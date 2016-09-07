@@ -29,7 +29,7 @@ class ValidatorException extends BadRequestException
     /**
      * @var array list of error messages
      */
-    protected $errors = array();
+    protected $errors = [];
 
     /**
      * Create and throw Exception

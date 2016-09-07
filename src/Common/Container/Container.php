@@ -23,7 +23,7 @@ trait Container
     /**
      * @var array Container of elements
      */
-    protected $container = array();
+    protected $container = [];
 
     /**
      * Set key/value pair

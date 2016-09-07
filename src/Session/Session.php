@@ -272,7 +272,7 @@ class Session
             if (!class_exists($adapterClass) || !is_subclass_of($adapterClass, '\SessionHandlerInterface')) {
                 throw new ComponentException("Class for session adapter `{$this->adapter}` not found");
             }
-            $settings = $this->getOption('settings', $this->adapter) ?: array();
+            $settings = $this->getOption('settings', $this->adapter) ?: [];
 
             $this->adapter = new $adapterClass($settings);
         }
@@ -353,7 +353,7 @@ class Session
         $this->start();
         // check storage
         if (!isset($_SESSION[$this->getNamespace()])) {
-            $_SESSION[$this->getNamespace()] = array();
+            $_SESSION[$this->getNamespace()] = [];
         }
         $_SESSION[$this->namespace][$key] = $value;
     }

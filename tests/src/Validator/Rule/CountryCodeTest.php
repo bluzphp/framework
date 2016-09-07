@@ -54,7 +54,7 @@ class CountryCodeTest extends Tests\TestCase
     public function providerForPass()
     {
         return array(
-            array('UA'),
+            ['UA'],
         );
     }
 
@@ -64,8 +64,8 @@ class CountryCodeTest extends Tests\TestCase
     public function providerForFail()
     {
         return array(
-            array(''),
-            array('UKR'),
+            [''],
+            ['UKR'],
         );
     }
 }

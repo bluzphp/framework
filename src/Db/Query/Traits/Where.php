@@ -29,7 +29,7 @@ use Bluz\Db\Query\Update;
  *
  * @method   Select|Update|Delete addQueryPart(string $sqlPartName, mixed $sqlPart, $append = 'true')
  * @method   mixed getQueryPart(string $queryPartName)
- * @method   string prepareCondition($args = array())
+ * @method   string prepareCondition($args = [])
  */
 trait Where
 {

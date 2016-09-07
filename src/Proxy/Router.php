@@ -34,10 +34,10 @@ use Bluz\Router\Router as Instance;
  * @method   static void   setBaseUrl($baseUrl)
  * @see      Instance::setBaseUrl()
  *
- * @method   static string getUrl($module = 'index', $controller = 'index', $params = array())
+ * @method   static string getUrl($module = 'index', $controller = 'index', $params = [])
  * @see      Instance::getUrl()
  *
- * @method   static string getFullUrl($module = 'index', $controller = 'index', $params = array())
+ * @method   static string getFullUrl($module = 'index', $controller = 'index', $params = [])
  * @see      Instance::getFullUrl()
  *
  * @method   static string getCleanUri()

@@ -24,6 +24,6 @@ class EmptyCrud extends \Bluz\Crud\AbstractCrud
      */
     public function getPrimaryKey()
     {
-        return array();
+        return [];
     }
 }

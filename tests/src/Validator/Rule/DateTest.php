@@ -79,8 +79,8 @@ class DateTest extends Tests\TestCase
     public function providerForPass()
     {
         return array(
-            array('Y-m-d', '2009-09-09'),
-            array('d/m/Y', '23/05/1987'),
+            ['Y-m-d', '2009-09-09'],
+            ['d/m/Y', '23/05/1987'],
         );
     }
 
@@ -90,10 +90,10 @@ class DateTest extends Tests\TestCase
     public function providerForFail()
     {
         return array(
-            array(null, 'invalid date'),
-            array('Y-m-d', '2009-09-00'),
-            array('y-m-d', '2009-09-09'),
-            array('y-m-d', new \stdClass),
+            [null, 'invalid date'],
+            ['Y-m-d', '2009-09-00'],
+            ['y-m-d', '2009-09-09'],
+            ['y-m-d', new \stdClass],
         );
     }
 }

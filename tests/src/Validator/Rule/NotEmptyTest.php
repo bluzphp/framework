@@ -54,11 +54,11 @@ class NotEmptyTest extends Tests\TestCase
     public function providerForPass()
     {
         return array(
-            array(1),
-            array(' oi'),
-            array(array(5)),
-            array(array(0)),
-            array(new \stdClass)
+            [1],
+            [' oi'],
+            [[5]],
+            [[0]],
+            [new \stdClass]
         );
     }
 
@@ -68,12 +68,12 @@ class NotEmptyTest extends Tests\TestCase
     public function providerForFail()
     {
         return array(
-            array(''),
-            array('    '),
-            array("\n"),
-            array(false),
-            array(null),
-            array(array())
+            [''],
+            ['    '],
+            ["\n"],
+            [false],
+            [null],
+            [[]]
         );
     }
 }

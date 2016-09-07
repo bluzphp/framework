@@ -12,7 +12,7 @@ return array(
     "tagAdapter" => "memcached",
     "tagPrefix" => "bluz:@:",
     "settings" => array(
-        "apc" => array(),
+        "apc" => [],
         /**
          * @link http://php.net/manual/en/memcached.addservers.php
          * @link http://php.net/manual/en/memcached.setoptions.php
@@ -22,7 +22,7 @@ return array(
             "servers" => [
                 ["localhost", 11211, 1],
             ],
-            "options" => array()
+            "options" => []
         ),
         "phpFile" => array(
             "cacheDir" => PATH_ROOT . '/tests/cache'
@@ -33,7 +33,7 @@ return array(
          */
         "redis" => array(
             "host" => 'localhost',
-            "options" => array()
+            "options" => []
         ),
         /**
          * @link https://github.com/nrk/predis/wiki/Connection-Parameters
@@ -41,7 +41,7 @@ return array(
          */
         "predis" => array(
             "host" => 'localhost',
-            "options" => array()
+            "options" => []
         )
     )
 );

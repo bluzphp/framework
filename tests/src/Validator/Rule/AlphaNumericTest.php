@@ -75,22 +75,22 @@ class AlphaNumericTest extends Tests\TestCase
     public function providerForPass()
     {
         return array(
-            array('', ''),
-            array('foobar', ''),
-            array('foobar', 'foobar'),
-            array('0alg-anet0', '0-9'),
-            array('1', ''),
-            array("\t", ''),
-            array("\n", ''),
-            array('a', ''),
-            array('foobar', ''),
-            array('rubinho_', '_'),
-            array('google.com', '.'),
-            array('foobar foobar', ''),
-            array("\nabc", ''),
-            array("\tdef", ''),
-            array("\nabc \t", ''),
-            array(0, ''),
+            ['', ''],
+            ['foobar', ''],
+            ['foobar', 'foobar'],
+            ['0alg-anet0', '0-9'],
+            ['1', ''],
+            ["\t", ''],
+            ["\n", ''],
+            ['a', ''],
+            ['foobar', ''],
+            ['rubinho_', '_'],
+            ['google.com', '.'],
+            ['foobar foobar', ''],
+            ["\nabc", ''],
+            ["\tdef", ''],
+            ["\nabc \t", ''],
+            [0, ''],
         );
     }
 
@@ -100,13 +100,13 @@ class AlphaNumericTest extends Tests\TestCase
     public function providerForFail()
     {
         return array(
-            array('@#$', ''),
-            array('_', ''),
-            array('dgç', ''),
-            array(1e21, ''), //evaluates to "1.0E+21"
-            array(null, ''),
-            array(new \stdClass, ''),
-            array(array(), ''),
+            ['@#$', ''],
+            ['_', ''],
+            ['dgç', ''],
+            [1e21, ''], //evaluates to "1.0E+21"
+            [null, ''],
+            [new \stdClass, ''],
+            [[], ''],
         );
     }
 
@@ -116,9 +116,9 @@ class AlphaNumericTest extends Tests\TestCase
     public function providerForComponentException()
     {
         return array(
-            array(new \stdClass),
-            array(array()),
-            array(0x2)
+            [new \stdClass],
+            [[]],
+            [0x2]
         );
     }
 
@@ -128,8 +128,8 @@ class AlphaNumericTest extends Tests\TestCase
     public function providerAdditionalChars()
     {
         return array(
-            array('!@#$%^&*(){}', '!@#$%^&*(){} abc 123'),
-            array('[]?+=/\\-_|"\',<>.', "[]?+=/\\-_|\"',<>. \t \n abc 123"),
+            ['!@#$%^&*(){}', '!@#$%^&*(){} abc 123'],
+            ['[]?+=/\\-_|"\',<>.', "[]?+=/\\-_|\"',<>. \t \n abc 123"],
         );
     }
 }

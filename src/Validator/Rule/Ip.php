@@ -218,7 +218,7 @@ class Ip extends AbstractRule
             if (isset($this->networkRange['max'])) {
                 $message .= '-' . $this->networkRange['max'];
             } else {
-                $message .= '/' . long2ip($this->networkRange['mask']);
+                $message .= '/' . long2ip(bindec($this->networkRange['mask']));
             }
             return __('{{name}} must be an IP address in the "%s" range', $message);
         } else {

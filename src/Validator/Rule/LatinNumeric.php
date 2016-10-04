@@ -24,7 +24,7 @@ class LatinNumeric extends AbstractFilterRule
      * @param  mixed $input
      * @return bool
      */
-    public function validateClean($input)
+    public function validateClean($input) : bool
     {
         return (bool) preg_match('/^[a-z0-9]+$/i', $input);
     }

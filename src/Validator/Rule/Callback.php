@@ -46,7 +46,7 @@ class Callback extends AbstractRule
      * @param  mixed $input
      * @return bool
      */
-    public function validate($input)
+    public function validate($input) : bool
     {
         return (bool) call_user_func($this->callback, $input);
     }

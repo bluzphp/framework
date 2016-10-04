@@ -29,7 +29,7 @@ class Positive extends AbstractRule
      * @param  string $input
      * @return bool
      */
-    public function validate($input)
+    public function validate($input) : bool
     {
         return $input > 0;
     }

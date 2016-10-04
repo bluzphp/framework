@@ -44,7 +44,7 @@ class Email extends AbstractRule
      * @param  mixed $input
      * @return bool
      */
-    public function validate($input)
+    public function validate($input) : bool
     {
         if (is_string($input) && filter_var($input, FILTER_VALIDATE_EMAIL)) {
             list(, $domain) = explode("@", $input, 2);

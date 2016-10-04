@@ -145,7 +145,7 @@ class Ip extends AbstractRule
      * @param  string $input
      * @return bool
      */
-    public function validate($input)
+    public function validate($input) : bool
     {
         return $this->verifyAddress($input) && $this->verifyNetwork($input);
     }

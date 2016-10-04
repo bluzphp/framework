@@ -41,7 +41,7 @@ class Max extends AbstractCompareRule
      * @param  numeric $input
      * @return bool
      */
-    public function validate($input)
+    public function validate($input) : bool
     {
         return $this->less($input, $this->maxValue);
     }

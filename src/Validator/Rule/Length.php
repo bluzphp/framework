@@ -70,7 +70,7 @@ class Length extends AbstractCompareRule
      * @param  string $input
      * @return bool
      */
-    public function validate($input)
+    public function validate($input) : bool
     {
         if (!$length = $this->extractLength($input)) {
             return false;

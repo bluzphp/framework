@@ -30,7 +30,7 @@ class CreditCard extends AbstractRule
      * @param  string $input
      * @return bool
      */
-    public function validate($input)
+    public function validate($input) : bool
     {
         $input = preg_replace('([ \.-])', '', $input);
 

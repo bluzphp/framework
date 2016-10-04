@@ -24,7 +24,7 @@ class AlphaNumeric extends AbstractCtypeRule
      * @param string $input
      * @return bool
      */
-    protected function validateClean($input)
+    protected function validateClean($input) : bool
     {
         return ctype_alnum($input);
     }

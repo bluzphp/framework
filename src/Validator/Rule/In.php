@@ -46,7 +46,7 @@ class In extends AbstractRule
      * @param  string $input
      * @return bool
      */
-    public function validate($input)
+    public function validate($input) : bool
     {
         if (is_array($this->haystack)) {
             return in_array($input, $this->haystack, $this->identical);

@@ -37,7 +37,7 @@ abstract class AbstractRule
      * @param  mixed $input
      * @return bool
      */
-    abstract public function validate($input);
+    abstract public function validate($input) : bool;
 
     /**
      * Invoke
@@ -45,7 +45,7 @@ abstract class AbstractRule
      * @param  mixed $input
      * @return bool
      */
-    public function __invoke($input)
+    public function __invoke($input) : bool
     {
         return $this->validate($input);
     }

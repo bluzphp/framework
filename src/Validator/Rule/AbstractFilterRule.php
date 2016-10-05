@@ -64,7 +64,7 @@ abstract class AbstractFilterRule extends AbstractRule
      * @param  mixed $input
      * @return bool
      */
-    public function validate($input)
+    public function validate($input) : bool
     {
         if (!is_scalar($input)) {
             return false;

@@ -41,7 +41,7 @@ class Date extends AbstractRule
      * @param  mixed $input
      * @return bool
      */
-    public function validate($input)
+    public function validate($input) : bool
     {
         if ($input instanceof DateTime) {
             return true;

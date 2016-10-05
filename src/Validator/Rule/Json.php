@@ -29,7 +29,7 @@ class Json extends AbstractRule
      * @param  string $input
      * @return bool
      */
-    public function validate($input)
+    public function validate($input) : bool
     {
         return (bool) (json_decode($input));
     }

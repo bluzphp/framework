@@ -29,7 +29,7 @@ class Required extends AbstractRule
      * @param  mixed $input
      * @return bool
      */
-    public function validate($input)
+    public function validate($input) : bool
     {
         if (is_string($input)) {
             $input = trim($input);

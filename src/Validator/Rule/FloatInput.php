@@ -29,7 +29,7 @@ class FloatInput extends AbstractRule
      * @param  string $input
      * @return bool
      */
-    public function validate($input)
+    public function validate($input) : bool
     {
         return is_float(filter_var($input, FILTER_VALIDATE_FLOAT));
     }

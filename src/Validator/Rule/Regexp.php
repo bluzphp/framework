@@ -44,7 +44,7 @@ class Regexp extends AbstractRule
      * @param  mixed $input
      * @return bool
      */
-    public function validate($input)
+    public function validate($input) : bool
     {
         return (bool) preg_match($this->regexp, $input);
     }

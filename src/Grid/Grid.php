@@ -421,22 +421,15 @@ abstract class Grid
         }
 
         // change orders
-        if (isset($rewrite['orders'])) {
-            $orders = $rewrite['orders'];
-        } else {
-            $orders = $this->getOrders();
-        }
+        $orders = $rewrite['orders'] ?? $this->getOrders();
 
         foreach ($orders as $column => $order) {
             $params[$this->prefix . 'order-' . $column] = $order;
         }
 
         // change filters
-        if (isset($rewrite['filters'])) {
-            $filters = $rewrite['filters'];
-        } else {
-            $filters = $this->getFilters();
-        }
+        $filters = $rewrite['filters'] ?? $this->getFilters();
+
         foreach ($filters as $column => $columnFilters) {
             $columnFilter = [];
             foreach ($columnFilters as $filterName => $filterValue) {

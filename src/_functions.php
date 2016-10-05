@@ -47,7 +47,7 @@ if (!function_exists('debug')) {
             }
             var_dump($params);
         } else {
-            echo '<div class="textleft clear"><pre>';
+            echo '<div class="textleft clear"><pre class="bluz-debug">';
             debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
             var_dump($params);
             echo '</pre></div>';

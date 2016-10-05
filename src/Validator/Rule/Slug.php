@@ -29,7 +29,7 @@ class Slug extends AbstractRule
      * @param  string $input
      * @return bool
      */
-    public function validate($input)
+    public function validate($input) : bool
     {
         if (strstr($input, '--')) {
             return false;

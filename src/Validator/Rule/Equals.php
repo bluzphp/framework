@@ -46,7 +46,7 @@ class Equals extends AbstractRule
      * @param  string $input
      * @return bool
      */
-    public function validate($input)
+    public function validate($input) : bool
     {
         if ($this->identical) {
             return $input === $this->compareTo;

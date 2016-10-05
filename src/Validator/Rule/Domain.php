@@ -44,7 +44,7 @@ class Domain extends AbstractRule
      * @param  string $input
      * @return bool
      */
-    public function validate($input)
+    public function validate($input) : bool
     {
         // check by regular expression
         if (preg_match("/^([a-z\d](-*[a-z\d])*)(\.([a-z\d](-*[a-z\d])*))*$/i", $input)

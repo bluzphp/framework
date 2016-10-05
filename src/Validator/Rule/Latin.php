@@ -24,7 +24,7 @@ class Latin extends AbstractFilterRule
      * @param  mixed $input
      * @return bool
      */
-    public function validateClean($input)
+    public function validateClean($input) : bool
     {
         return (bool) preg_match('/^[a-z]+$/i', $input);
     }

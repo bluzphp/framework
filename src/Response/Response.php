@@ -456,7 +456,7 @@ class Response
      */
     public function getCookie($name)
     {
-        return isset($this->cookies[$name])?$this->cookies[$name]:null;
+        return $this->cookies[$name] ?? null;
     }
 
     /**

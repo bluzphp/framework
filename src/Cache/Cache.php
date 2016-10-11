@@ -194,7 +194,7 @@ class Cache implements CacheInterface, TagableInterface
      * Get underlying cache adapter
      *
      * @param  string $adapterName
-     * @return Adapter\AbstractAdapter
+     * @return CacheInterface
      * @throws ComponentException
      * @throws ConfigurationException
      */
@@ -214,7 +214,7 @@ class Cache implements CacheInterface, TagableInterface
     /**
      * Get underlying tag adapter
      *
-     * @return Adapter\AbstractAdapter
+     * @return CacheInterface
      * @throws ConfigurationException
      */
     public function getTagAdapter()
@@ -236,7 +236,7 @@ class Cache implements CacheInterface, TagableInterface
      * Initialize adapter
      *
      * @param  string $adapterName
-     * @return Adapter\AbstractAdapter
+     * @return CacheInterface
      * @throws ComponentException
      * @throws ConfigurationException
      */

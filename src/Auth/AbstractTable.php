@@ -20,10 +20,10 @@ use Bluz\Db\Table;
  * @author   Anton Shevchuk
  *
  * @method   static AbstractRow findRow($primaryKey)
- * @see      Bluz\Db\Table::findRow()
+ * @see      Table::findRow()
  *
  * @method   static AbstractRow findRowWhere($whereList)
- * @see      Bluz\Db\Table::findRowWhere()
+ * @see      Table::findRowWhere()
  */
 abstract class AbstractTable extends Table
 {

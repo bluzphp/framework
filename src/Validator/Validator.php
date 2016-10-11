@@ -142,7 +142,7 @@ class Validator
      *
      * @return bool
      */
-    public function isRequired()
+    public function isRequired() : bool
     {
         foreach ($this->rules as $rule) {
             if ($rule instanceof Required) {
@@ -190,7 +190,7 @@ class Validator
      * @param mixed $input
      * @return bool
      */
-    public function __invoke($input)
+    public function __invoke($input) : bool
     {
         return $this->validate($input);
     }
@@ -202,7 +202,7 @@ class Validator
      * @param bool  $all
      * @return bool
      */
-    public function validate($input, $all = false)
+    public function validate($input, $all = false) : bool
     {
         $this->input = $input;
         $this->invalid = []; // clean

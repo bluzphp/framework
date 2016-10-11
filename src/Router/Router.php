@@ -171,7 +171,7 @@ class Router
      */
     public function getParam($key, $default = null)
     {
-        return isset($this->params[$key]) ? $this->params[$key] : $default;
+        return $this->params[$key] ?? $default;
     }
 
     /**

@@ -106,9 +106,7 @@ class Logger extends AbstractLogger
         $message = $this->interpolate($message, $context);
 
         if (!$this->start) {
-            $this->start = $this->timer = isset($_SERVER['REQUEST_TIME_FLOAT'])
-                ? $_SERVER['REQUEST_TIME_FLOAT']
-                : microtime(true);
+            $this->start = $this->timer = $_SERVER['REQUEST_TIME_FLOAT'] ?? microtime(true);
         }
 
         $curTimer = microtime(true);

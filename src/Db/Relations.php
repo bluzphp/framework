@@ -95,11 +95,7 @@ class Relations
         sort($name);
         $name = join(':', $name);
 
-        if (isset(self::$relations[$name])) {
-            return self::$relations[$name];
-        } else {
-            return false;
-        }
+        return self::$relations[$name] ?? false;
     }
 
     /**

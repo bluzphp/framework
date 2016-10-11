@@ -63,7 +63,7 @@ class Memcached extends AbstractAdapter
     public function getHandler()
     {
         if (!$this->handler) {
-            $persistentId = isset($this->settings['persistent']) ? $this->settings['persistent'] : null;
+            $persistentId = $this->settings['persistent'] ?? null;
 
             $this->handler = new \Memcached($persistentId);
 

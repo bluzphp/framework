@@ -120,19 +120,16 @@ class Event
      */
     public function getParam($name, $default = null)
     {
-        // Check in params that are arrays or implement array access
         if (is_array($this->params)) {
-            if (!isset($this->params[$name])) {
-                return $default;
-            }
-            return $this->params[$name];
-        }
-
-        // Check in normal objects
-        if (!isset($this->params->{$name})) {
+            // Check in params that are arrays or implement array access
+            return $this->params[$name] ?? $default;
+        } elseif (is_object($this->params)) {
+            // Check in normal objects
+            return $this->params->{$name} ?? $default;
+        } else {
+            // Wrong type, return default value
             return $default;
         }
-        return $this->params->{$name};
     }
 
     /**

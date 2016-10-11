@@ -26,7 +26,7 @@ if (!function_exists('debug')) {
      *
      * @codeCoverageIgnore
      *
-     * @param $params
+     * @param mixed ...$params
      */
     function debug(...$params)
     {
@@ -63,11 +63,11 @@ if (!function_exists('esc')) {
      *     esc($_GET['name']);
      *     esc($_GET['name'], ENT_QUOTES);
      *
-     * @param string $variable
-     * @param integer $flags
+     * @param  string  $variable
+     * @param  integer $flags
      * @return string
      */
-    function esc($variable, $flags = ENT_HTML5)
+    function esc($variable, int $flags = ENT_HTML5)
     {
         return htmlentities($variable, $flags, "UTF-8");
     }
@@ -79,6 +79,7 @@ if (!function_exists('__')) {
      * Translate message
      *
      * Example of usage
+     *
      *     // simple
      *     // equal to gettext('Message')
      *     __('Message');
@@ -102,6 +103,7 @@ if (!function_exists('_n')) {
      * Translate plural form
      *
      * Example of usage
+     *
      *     // plural form + sprintf
      *     // equal to sprintf(ngettext('%d comment', '%d comments', 4), 4)
      *     _n('%d comment', '%d comments', 4, 4)
@@ -112,7 +114,7 @@ if (!function_exists('_n')) {
      *
      * @param  string   $singular
      * @param  string   $plural
-     * @param  integer      $number
+     * @param  integer  $number
      * @param  string[] $text      [optional]
      * @return string
      */

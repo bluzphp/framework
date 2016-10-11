@@ -36,7 +36,7 @@ trait Order
      *
      * @param  string $sort  Sort expression
      * @param  string $order Sort direction (ASC or DESC)
-     * @return Select|Update|Delete
+     * @return $this
      */
     public function orderBy($sort, $order = 'ASC')
     {
@@ -49,7 +49,7 @@ trait Order
      *
      * @param  string $sort  Sort expression
      * @param  string $order Sort direction (ASC or DESC)
-     * @return Select|Update|Delete
+     * @return $this
      */
     public function addOrderBy($sort, $order = 'ASC')
     {

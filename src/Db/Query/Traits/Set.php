@@ -20,7 +20,7 @@ use Bluz\Proxy\Db;
  *
  * Required for:
  *  - Insert Builder
- *  - Update  Builder
+ *  - Update Builder
  *
  * @package  Bluz\Db\Query\Traits
  * @author   Anton Shevchuk
@@ -44,7 +44,7 @@ trait Set
      *
      * @param  string $key   The column to set
      * @param  string $value The value, expression, placeholder, etc
-     * @return Insert|Update
+     * @return $this
      */
     public function set($key, $value)
     {
@@ -68,7 +68,7 @@ trait Set
      * </code>
      *
      * @param  array $data
-     * @return Insert|Update
+     * @return $this
      */
     public function setArray(array $data)
     {

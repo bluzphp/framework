@@ -43,7 +43,7 @@ trait Limit
      *
      * @param  integer $limit  The maximum number of results to retrieve
      * @param  integer $offset
-     * @return Select|Update|Delete
+     * @return $this
      */
     public function limit($limit, $offset = 0)
     {
@@ -56,7 +56,7 @@ trait Limit
      * Setup limit for the query
      *
      * @param  integer $limit
-     * @return Select|Update|Delete
+     * @return $this
      */
     public function setLimit($limit)
     {
@@ -68,7 +68,7 @@ trait Limit
      * Setup offset for the query
      *
      * @param  integer $offset
-     * @return Select|Update|Delete
+     * @return $this
      */
     public function setOffset($offset)
     {

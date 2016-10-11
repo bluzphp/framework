@@ -79,7 +79,7 @@ abstract class AbstractBuilder
      *     echo $qb->getSql(); // SELECT u FROM User u
      * </code>
      *
-     * @return string The SQL query string.
+     * @return string The SQL query string
      */
     abstract public function getSql();
 
@@ -125,7 +125,7 @@ abstract class AbstractBuilder
      * @param  string|int $key   The parameter position or name
      * @param  mixed      $value The parameter value
      * @param  integer    $type  PDO::PARAM_*
-     * @return AbstractBuilder|Select|Insert|Update|Delete instance
+     * @return $this
      */
     public function setParameter($key, $value, $type = \PDO::PARAM_STR)
     {
@@ -157,7 +157,7 @@ abstract class AbstractBuilder
      *
      * @param  array $params The query parameters to set
      * @param  array $types  The query parameters types to set
-     * @return AbstractBuilder|Select|Insert|Update|Delete instance
+     * @return $this
      */
     public function setParameters(array $params, array $types = [])
     {
@@ -197,7 +197,7 @@ abstract class AbstractBuilder
      * @param  string       $sqlPartName
      * @param  string|array $sqlPart
      * @param  bool         $append
-     * @return AbstractBuilder|Select|Insert|Update|Delete instance
+     * @return $this
      */
     protected function addQueryPart($sqlPartName, $sqlPart, $append = false)
     {
@@ -243,7 +243,7 @@ abstract class AbstractBuilder
      * Reset single SQL part
      *
      * @param  string $queryPartName
-     * @return AbstractBuilder|Select|Insert|Update|Delete instance
+     * @return $this
      */
     protected function resetQueryPart($queryPartName)
     {
@@ -257,7 +257,7 @@ abstract class AbstractBuilder
      * setFromQueryPart
      *
      * @param  string $table
-     * @return AbstractBuilder|Select|Insert|Update|Delete instance
+     * @return $this
      */
     protected function setFromQueryPart($table)
     {

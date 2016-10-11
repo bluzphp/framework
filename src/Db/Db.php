@@ -237,7 +237,7 @@ class Db
             $stmt->bindParam(
                 (is_int($key)?$key+1:":".$key),
                 $param,
-                isset($types[$key])?$types[$key]:\PDO::PARAM_STR
+                $types[$key] ?? \PDO::PARAM_STR
             );
         }
         $this->log($sql, $params);

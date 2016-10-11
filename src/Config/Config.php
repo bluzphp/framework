@@ -152,7 +152,7 @@ class Config
         if (isset($this->config[$key])) {
             // return section of configuration
             if (!is_null($section)) {
-                return isset($this->config[$key][$section])?$this->config[$key][$section]:null;
+                return $this->config[$key][$section] ?? null;
             } else {
                 return $this->config[$key];
             }
@@ -188,11 +188,7 @@ class Config
         }
 
         if (!is_null($section)) {
-            if (isset($this->modules[$module][$section])) {
-                return $this->modules[$module][$section];
-            } else {
-                return null;
-            }
+            return $this->modules[$module][$section] ?? null;
         } else {
             return $this->modules[$module];
         }

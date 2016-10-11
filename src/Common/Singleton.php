@@ -43,9 +43,7 @@ trait Singleton
      */
     public static function getInstance()
     {
-        return isset(static::$instance)
-            ? static::$instance
-            : static::$instance = static::initInstance();
+        return static::$instance ?? (static::$instance = static::initInstance());
     }
 
     /**

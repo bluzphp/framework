@@ -57,7 +57,7 @@ trait Options
     {
         if (isset($this->options[$key])) {
             if (!is_null($section)) {
-                return isset($this->options[$key][$section])?$this->options[$key][$section]:null;
+                return $this->options[$key][$section] ?? null;
             } else {
                 return $this->options[$key];
             }

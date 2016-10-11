@@ -238,7 +238,7 @@ class Application
     {
         $this->process();
         $this->render();
-        $this->finish();
+        $this->end();
     }
 
     /**
@@ -424,8 +424,8 @@ class Application
      *
      * @return void
      */
-    public function finish()
+    public function end()
     {
-        Logger::info('app:finish');
+        Logger::info('app:end');
     }
 }

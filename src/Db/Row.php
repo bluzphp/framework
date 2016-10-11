@@ -132,7 +132,7 @@ class Row implements \JsonSerializable, \ArrayAccess
      * Validate input data
      *
      * @param  array|object $data
-     * @return boolean
+     * @return bool
      */
     public function validate($data)
     {
@@ -143,7 +143,7 @@ class Row implements \JsonSerializable, \ArrayAccess
      * Assert input data
      *
      * @param  array|object $data
-     * @return boolean
+     * @return bool
      */
     public function assert($data)
     {

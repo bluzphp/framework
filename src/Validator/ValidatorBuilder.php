@@ -38,8 +38,8 @@ class ValidatorBuilder
 
     /**
      * Add validator to builder
-     * @param string    $name
-     * @param Validator ...$validators
+     * @param string $name
+     * @param Validator[] ...$validators
      * @return ValidatorBuilder
      */
     public function add($name, ...$validators)
@@ -58,7 +58,7 @@ class ValidatorBuilder
      * @param  array|object $input
      * @return bool
      */
-    public function validate($input)
+    public function validate($input) : bool
     {
         $this->errors = [];
         $result = true;
@@ -78,7 +78,7 @@ class ValidatorBuilder
      * @param  array|object $input
      * @return bool
      */
-    public function validateItem($key, $input)
+    public function validateItem($key, $input) : bool
     {
         // w/out any rules element is valid
         if (!isset($this->validators[$key])) {

@@ -655,11 +655,7 @@ abstract class Grid
     {
         if (isset($this->filters[$column])) {
             if ($filter) {
-                if (isset($this->filters[$column][$filter])) {
-                    return $this->filters[$column][$filter];
-                } else {
-                    return null;
-                }
+                return $this->filters[$column][$filter] ?? null;
             } else {
                 return $this->filters[$column];
             }
@@ -709,7 +705,7 @@ abstract class Grid
      */
     protected function applyAlias($key)
     {
-        return isset($this->aliases[$key])?$this->aliases[$key]:$key;
+        return $this->aliases[$key] ?? $key;
     }
 
     /**

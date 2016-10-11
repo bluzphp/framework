@@ -73,9 +73,9 @@ trait Validator
      * Validate input data
      *
      * @param  array|object $input
-     * @return boolean
+     * @return bool
      */
-    public function validate($input)
+    public function validate($input) : bool
     {
         return $this->getValidatorBuilder()->validate($input);
     }
@@ -84,7 +84,7 @@ trait Validator
      * Assert input data
      *
      * @param  array|object $input
-     * @return boolean
+     * @return bool
      */
     public function assert($input)
     {

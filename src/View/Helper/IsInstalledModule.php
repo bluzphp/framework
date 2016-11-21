@@ -19,10 +19,9 @@ namespace Bluz\View\Helper;
  */
 return
     function ($module = null) {
-        defined('DS') ? : define('DS', DIRECTORY_SEPARATOR);
-
-        $modulePath = realpath($_SERVER['DOCUMENT_ROOT']) . DS .
-            'application' . DS . 'modules' . DS . $module;
+        $modulePath = realpath($_SERVER['DOCUMENT_ROOT']) . DIRECTORY_SEPARATOR .
+            'application' . DIRECTORY_SEPARATOR .
+            'modules' . DIRECTORY_SEPARATOR . $module;
 
         return file_exists($modulePath);
     };

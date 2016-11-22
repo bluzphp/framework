@@ -93,9 +93,7 @@ class Translator
         putenv('LANGUAGE=' . $this->locale);
 
         // Windows workaround
-        if (!defined('LC_MESSAGES')) {
-            define('LC_MESSAGES', 6);
-        }
+        defined('LC_MESSAGES') ? : define('LC_MESSAGES', 6);
 
         setlocale(LC_MESSAGES, $this->locale);
 
@@ -144,7 +142,7 @@ class Translator
      *     Translator::translate('Message to %s', 'Username');
      *
      * @param  string $message
-     * @param  string ...$text
+     * @param  string[] ...$text
      * @return string
      */
     public static function translate($message, ...$text)
@@ -178,7 +176,7 @@ class Translator
      * @param  string  $singular
      * @param  string  $plural
      * @param  integer $number
-     * @param  string  ...$text
+     * @param  string[]  ...$text
      * @return string
      * @link   http://docs.translatehouse.org/projects/localization-guide/en/latest/l10n/pluralforms.html
      */

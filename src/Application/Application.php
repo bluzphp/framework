@@ -137,20 +137,10 @@ class Application
             // initial default helper path
             $this->addHelperPath(dirname(__FILE__) . '/Helper/');
 
-            // setup configuration for current environment
-            if ($debug = Config::getData('debug')) {
-                $this->debugFlag = (bool) $debug;
-            }
+            // init Config
+            $this->initConfig();
 
-            // initial php settings
-            if ($ini = Config::getData('php')) {
-                foreach ($ini as $key => $value) {
-                    $result = ini_set($key, $value);
-                    Logger::info('app:init:php:'.$key.':'.($result?:'---'));
-                }
-            }
-
-            // init session, start inside class
+            // init Session, start inside class (if needed)
             Session::getInstance();
 
             // init Messages
@@ -159,16 +149,39 @@ class Application
             // init Translator
             Translator::getInstance();
 
-            // init request
+            // init Request
             $this->initRequest();
 
-            // init response
+            // init Response
             $this->initResponse();
 
-            // init router
+            // init Router
             $this->initRouter();
         } catch (\Exception $e) {
             throw new ApplicationException("Application can't be loaded: " . $e->getMessage());
+        }
+    }
+
+    /**
+     * Initial Request instance
+     *
+     * @return void
+     */
+    protected function initConfig()
+    {
+        Config::getInstance();
+
+        // setup configuration for current environment
+        if ($debug = Config::getData('debug')) {
+            $this->debugFlag = (bool) $debug;
+        }
+
+        // initial php settings
+        if ($ini = Config::getData('php')) {
+            foreach ($ini as $key => $value) {
+                $result = ini_set($key, $value);
+                Logger::info('app:init:php:'.$key.':'.($result?:'---'));
+            }
         }
     }
 

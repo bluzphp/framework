@@ -15,11 +15,11 @@ namespace Bluz\View\Helper;
  * Check to isset module
  *
  * @param  string $module
- * @return string|bool
+ * @return bool
  */
 return
     function ($module = null) {
-        $modulePath = realpath($_SERVER['DOCUMENT_ROOT']) . DIRECTORY_SEPARATOR .
+        $modulePath = dirname(realpath($_SERVER['DOCUMENT_ROOT'])) . DIRECTORY_SEPARATOR .
             'application' . DIRECTORY_SEPARATOR .
             'modules' . DIRECTORY_SEPARATOR . $module;
 

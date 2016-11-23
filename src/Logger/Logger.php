@@ -28,12 +28,17 @@ class Logger extends AbstractLogger
     /**
      * @var float start time
      */
-    protected $start;
+    protected $startTime;
 
     /**
      * @var float part time
      */
     protected $timer;
+
+    /**
+     * @var integer
+     */
+    protected $memory = 0;
 
     /**
      * @var array list of alerts
@@ -105,23 +110,24 @@ class Logger extends AbstractLogger
     {
         $message = $this->interpolate($message, $context);
 
-        if (!$this->start) {
-            $this->start = $this->timer = $_SERVER['REQUEST_TIME_FLOAT'] ?? microtime(true);
+        if (!$this->startTime) {
+            $this->startTime = $this->timer = $_SERVER['REQUEST_TIME_FLOAT'] ?? microtime(true);
         }
 
         $curTimer = microtime(true);
-        $curMemory = ceil((memory_get_usage() / 1024));
+        $curMemory = memory_get_usage();
 
         $key = sprintf(
-            "%f :: %f :: %s kb",
-            ($curTimer - $this->start),
+            "%f :: %f :: %d",
+            ($curTimer - $this->startTime),
             ($curTimer - $this->timer),
-            $curMemory
+            ($curMemory - $this->memory)
         );
 
         $this->info[$key] = $message;
 
         $this->timer = $curTimer;
+        $this->memory = $curMemory;
     }
 
     /**

@@ -265,8 +265,6 @@ class Application
      */
     public function process()
     {
-        Logger::info('app:process');
-
         $this->preProcess();
         $this->doProcess();
         $this->postProcess();
@@ -280,8 +278,6 @@ class Application
      */
     protected function preProcess()
     {
-        Logger::info("app:process:pre");
-
         Router::process();
 
         // disable Layout for XmlHttpRequests
@@ -303,8 +299,6 @@ class Application
      */
     protected function doProcess()
     {
-        Logger::info("app:process:do");
-
         $module = Request::getModule();
         $controller = Request::getController();
         $params = Request::getParams();
@@ -340,7 +334,7 @@ class Application
      */
     protected function postProcess()
     {
-        Logger::info("app:process:post");
+        // nothing
     }
 
     /**
@@ -357,8 +351,6 @@ class Application
      */
     public function dispatch($module, $controller, $params = [])
     {
-        Logger::info("app:dispatch: " . $module . '/' . $controller);
-
         $this->preDispatch($module, $controller, $params);
         $result = $this->doDispatch($module, $controller, $params);
         $this->postDispatch($module, $controller, $params);
@@ -376,7 +368,7 @@ class Application
      */
     protected function preDispatch($module, $controller, $params = [])
     {
-        Logger::info("---:dispatch:pre: " . $module . '/' . $controller);
+        Logger::info("app:dispatch:pre: " . $module . '/' . $controller);
     }
 
     /**
@@ -417,7 +409,7 @@ class Application
      */
     protected function postDispatch($module, $controller, $params = [])
     {
-        Logger::info("---:dispatch:post: " . $module . '/' . $controller);
+        Logger::info("<<<:dispatch:post: " . $module . '/' . $controller);
     }
 
     /**
@@ -427,8 +419,6 @@ class Application
      */
     public function render()
     {
-        Logger::info('app:render');
-
         Response::send();
     }
 
@@ -439,6 +429,6 @@ class Application
      */
     public function end()
     {
-        Logger::info('app:end');
+        // nothing
     }
 }

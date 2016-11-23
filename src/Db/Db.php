@@ -57,11 +57,6 @@ class Db
     protected $handler;
 
     /**
-     * @var float part time
-     */
-    protected $timer;
-
-    /**
      * Setup connection
      *
      * Just save connection settings
@@ -583,8 +578,7 @@ class Db
      */
     protected function ok()
     {
-        $log = sprintf("--: %f", microtime(true) - $this->timer);
-        Logger::info($log);
+        Logger::info("<<<");
     }
 
     /**
@@ -596,13 +590,11 @@ class Db
      */
     protected function log($sql, array $context = [])
     {
-        $this->timer = microtime(true);
-
         $sql = str_replace('%', '%%', $sql);
         $sql = preg_replace('/\?/', '"%s"', $sql, sizeof($context));
 
         // replace mask by data
-        $log = vsprintf("db: ". $sql, $context);
+        $log = vsprintf($sql, $context);
 
         Logger::info($log);
     }

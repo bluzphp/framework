@@ -11,7 +11,7 @@
         "zendframework/zend-diactoros": "^1.3"
     },
     "require-dev": {
-        "phpunit/phpunit": "~5.0",
+        "phpunit/phpunit": "~5.7",
         "satooshi/php-coveralls": "~1.0",
         "squizlabs/php_codesniffer": "~2.3",
         "phploc/phploc": "*",

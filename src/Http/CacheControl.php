@@ -51,7 +51,7 @@ class CacheControl
     /**
      * Prepare Cache-Control header
      *
-     * @return string
+     * @return void
      */
     protected function updateCacheControlHeader()
     {

@@ -38,7 +38,7 @@ return
             }
         }
 
-        // reset ot additional sort collumn
+        // reset to additional sort column
         if ($reset) {
             $rewrite = ['orders' => []];
         } else {

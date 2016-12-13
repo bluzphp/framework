@@ -274,7 +274,7 @@ class Controller implements \JsonSerializable
 
     /**
      * Retrieve reflection for anonymous function
-     * @return Reflection
+     * @return void
      * @throws \Bluz\Common\Exception\ComponentException
      */
     protected function setReflection()
@@ -330,7 +330,7 @@ class Controller implements \JsonSerializable
     /**
      * Specify data which should be serialized to JSON
      *
-     * @return array
+     * @return Data
      */
     public function jsonSerialize()
     {

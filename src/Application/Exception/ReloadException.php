@@ -22,11 +22,6 @@ use Bluz\Http\StatusCode;
 class ReloadException extends ApplicationException
 {
     /**
-     * @var string exception message
-     */
-    protected $message = "Application Reload";
-
-    /**
      * @var integer HTTP code
      */
     protected $code = StatusCode::OK;

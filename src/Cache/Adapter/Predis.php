@@ -71,7 +71,7 @@ class Predis extends AbstractAdapter
     /**
      * Get Redis handler
      *
-     * @return \Redis
+     * @return \Predis\Client
      */
     public function getHandler()
     {
@@ -146,7 +146,7 @@ class Predis extends AbstractAdapter
      */
     protected function doDelete($id)
     {
-        return $this->getHandler()->del($id);
+        return $this->getHandler()->del([$id]);
     }
 
     /**

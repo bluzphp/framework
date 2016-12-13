@@ -34,7 +34,7 @@ return
         // 500 - Internal Server Error
         $statusCode = (
                 StatusCode::CONTINUE <= $exception->getCode()
-                && $exception->getCode() <= StatusCode::INSUFFICIENT_STORAGE
+                && $exception->getCode() < 600
             )
             ? $exception->getCode()
             : StatusCode::INTERNAL_SERVER_ERROR;

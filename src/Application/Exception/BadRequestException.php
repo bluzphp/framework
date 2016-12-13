@@ -11,6 +11,8 @@
  */
 namespace Bluz\Application\Exception;
 
+use Bluz\Http\StatusCode;
+
 /**
  * BadRequest Exception
  *
@@ -20,12 +22,7 @@ namespace Bluz\Application\Exception;
 class BadRequestException extends ApplicationException
 {
     /**
-     * @var string exception message
+     * @var integer HTTP Code
      */
-    protected $message = "Bad Request";
-
-    /**
-     * @var integer HTTP Code for "Bad Request"
-     */
-    protected $code = 400;
+    protected $code = StatusCode::BAD_REQUEST;
 }

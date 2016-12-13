@@ -11,6 +11,8 @@
  */
 namespace Bluz\Application\Exception;
 
+use Bluz\Http\StatusCode;
+
 /**
  * Not Acceptable Exception
  *
@@ -20,12 +22,7 @@ namespace Bluz\Application\Exception;
 class NotAcceptableException extends ApplicationException
 {
     /**
-     * @var string exception message
+     * @var integer HTTP Code
      */
-    protected $message = "Not Acceptable";
-
-    /**
-     * @var integer HTTP Code for "Not Acceptable"
-     */
-    protected $code = 406;
+    protected $code = StatusCode::NOT_ACCEPTABLE;
 }

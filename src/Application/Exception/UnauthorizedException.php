@@ -11,6 +11,8 @@
  */
 namespace Bluz\Application\Exception;
 
+use Bluz\Http\StatusCode;
+
 /**
  * Unauthorized Exception
  *
@@ -20,13 +22,7 @@ namespace Bluz\Application\Exception;
 class UnauthorizedException extends ApplicationException
 {
     /**
-     * @var string exception message
+     * @var integer HTTP code
      */
-    protected $message = "Unauthorized";
-
-    /**
-     *
-     * @var integer HTTP code for "Unauthorized"
-     */
-    protected $code = 401;
+    protected $code = StatusCode::UNAUTHORIZED;
 }

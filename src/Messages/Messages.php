@@ -138,7 +138,7 @@ class Messages
     /**
      * Pop all messages
      *
-     * @return array
+     * @return \ArrayObject
      */
     public function popAll()
     {

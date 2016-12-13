@@ -11,6 +11,8 @@
  */
 namespace Bluz\Application\Exception;
 
+use Bluz\Http\StatusCode;
+
 /**
  * NotFound Exception
  *
@@ -20,12 +22,7 @@ namespace Bluz\Application\Exception;
 class NotFoundException extends ApplicationException
 {
     /**
-     * @var string exception message
+     * @var integer HTTP Code
      */
-    protected $message = "Page Not Found";
-
-    /**
-     * @var integer HTTP Code for "Not Found"
-     */
-    protected $code = 404;
+    protected $code = StatusCode::NOT_FOUND;
 }

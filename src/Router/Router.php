@@ -91,9 +91,6 @@ class Router
      */
     public function __construct()
     {
-        $this->module = $this->getDefaultModule();
-        $this->controller = $this->getDefaultController();
-
         $routers = Cache::get('router:routers');
         $reverse = Cache::get('router:reverse');
 

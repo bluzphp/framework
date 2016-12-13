@@ -11,6 +11,8 @@
  */
 namespace Bluz\Application\Exception;
 
+use Bluz\Http\StatusCode;
+
 /**
  * NotImplemented Exception
  *
@@ -20,12 +22,7 @@ namespace Bluz\Application\Exception;
 class NotImplementedException extends ApplicationException
 {
     /**
-     * @var string exception message
+     * @var integer HTTP code
      */
-    protected $message = "Not Implemented";
-
-    /**
-     * @var integer HTTP code for "Not Implemented"
-     */
-    protected $code = 501;
+    protected $code = StatusCode::NOT_IMPLEMENTED;
 }

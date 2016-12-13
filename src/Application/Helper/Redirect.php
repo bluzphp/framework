@@ -35,7 +35,7 @@ return
             Response::setStatusCode(StatusCode::NO_CONTENT);
             Response::setHeader('Bluz-Redirect', $url);
         } else {
-            Response::setStatusCode(StatusCode::MOVED_PERMANENTLY);
+            Response::setStatusCode(StatusCode::FOUND);
             Response::setHeader('Location', $url);
         }
 

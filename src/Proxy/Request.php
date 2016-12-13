@@ -33,7 +33,7 @@ use Zend\Diactoros\ServerRequest as Instance;
  *
  * @method   static Instance getInstance()
  *
- * @method   static \Psr\Http\Message\UriInterface getUri()
+ * @method   static UriInterface getUri()
  * @see      \Zend\Diactoros\RequestTrait::getUri()
  */
 class Request

@@ -105,7 +105,7 @@ class Application
     }
 
     /**
-     * Return Layout Flag
+     * Return/setup Layout Flag
      *
      * @param  bool|null $flag
      * @return bool
@@ -120,7 +120,7 @@ class Application
     }
 
     /**
-     * Initialize process
+     * Initialize system packages
      *
      * @param  string $environment
      * @throws ApplicationException
@@ -271,7 +271,10 @@ class Application
     }
 
     /**
-     * Pre process
+     * Extension point: pre process
+     *
+     * - Router processing
+     * - Analyse request headers
      *
      * @return void
      * @throws ApplicationException
@@ -294,6 +297,11 @@ class Application
 
     /**
      * Do process
+     *
+     * - Dispatch controller
+     * - Exceptions handling
+     * - Setup layout
+     * - Setup response body
      *
      * @return void
      */
@@ -328,7 +336,7 @@ class Application
     }
 
     /**
-     * Post process
+     * Extension point: post process
      *
      * @return void
      */
@@ -359,7 +367,7 @@ class Application
     }
 
     /**
-     * Pre dispatch mount point
+     * Extension point: pre dispatch
      *
      * @param  string $module
      * @param  string $controller
@@ -400,7 +408,7 @@ class Application
     }
 
     /**
-     * Post dispatch mount point
+     * Extension point: post dispatch
      *
      * @param  string $module
      * @param  string $controller
@@ -423,7 +431,7 @@ class Application
     }
 
     /**
-     * Finally method
+     * Extension point: finally method
      *
      * @return void
      */

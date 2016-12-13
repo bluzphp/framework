@@ -9,6 +9,7 @@
  */
 namespace Bluz\Tests\Fixtures\Models\Test;
 
+use Bluz\Http\StatusCode;
 use Bluz\Proxy\Db;
 use Bluz\Proxy\Response;
 
@@ -25,7 +26,7 @@ class Crud extends \Bluz\Crud\Table
     /**
      * Return table instance for manipulation
      *
-     * @return Table
+     * @return \Bluz\Db\Table
      */
     public function getTable()
     {
@@ -48,7 +49,7 @@ class Crud extends \Bluz\Crud\Table
      * @param array $params
      * @return array|int|mixed
      */
-    public function readSet($offset = 0, $limit = 10, $params = [])
+    public function readSet($offset = 0, $limit = 10, $params = [], &$total = null)
     {
         $select = Db::select('*')
             ->from('test', 't');
@@ -71,7 +72,7 @@ class Crud extends \Bluz\Crud\Table
         }
 
         if (sizeof($result) < $total) {
-            Response::setStatusCode(206);
+            Response::setStatusCode(StatusCode::PARTIAL_CONTENT);
             Response::setHeader(
                 'Content-Range',
                 'items '.$offset.'-'.($offset+sizeof($result)).'/'. $total

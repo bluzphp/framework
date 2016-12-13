@@ -11,6 +11,7 @@
  */
 namespace Bluz\Cli;
 
+use Bluz\Http\StatusCode;
 use InvalidArgumentException;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Stream;
@@ -31,7 +32,7 @@ class CliResponse extends Response
      * @param int $status Integer status code for the response; 200 by default.
      * @throws InvalidArgumentException if unable to encode the $data to JSON.
      */
-    public function __construct($data, $status = 200)
+    public function __construct($data, $status = StatusCode::OK)
     {
         $body = new Stream('php://temp', 'wb+');
         $body->write($this->encode($data));

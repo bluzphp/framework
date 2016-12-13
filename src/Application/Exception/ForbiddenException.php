@@ -11,6 +11,8 @@
  */
 namespace Bluz\Application\Exception;
 
+use Bluz\Http\StatusCode;
+
 /**
  * Forbidden Exception
  *
@@ -20,12 +22,7 @@ namespace Bluz\Application\Exception;
 class ForbiddenException extends ApplicationException
 {
     /**
-     * @var string exception message
+     * @var integer HTTP Code
      */
-    protected $message = "Forbidden";
-
-    /**
-     * @var integer HTTP Code for "Forbidden"
-     */
-    protected $code = 403;
+    protected $code = StatusCode::FORBIDDEN;
 }

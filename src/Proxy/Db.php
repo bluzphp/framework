@@ -29,6 +29,9 @@ use Bluz\Db\Query;
  *
  * @method   static Instance getInstance()
  *
+ * @method   static mixed getOption($key, $section = null)
+ * @see      Instance::getOption()
+ *
  * @method   static \PDO handler()
  * @see      Instance::handler()
  *

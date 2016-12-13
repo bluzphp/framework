@@ -12,6 +12,7 @@
 namespace Bluz\Application\Helper;
 
 use Bluz\Application\Application;
+use Bluz\Http\StatusCode;
 use Bluz\Proxy\Request;
 use Bluz\Proxy\Response;
 
@@ -31,10 +32,10 @@ return
         Response::clearBody();
 
         if (Request::isXmlHttpRequest()) {
-            Response::setStatusCode(204);
+            Response::setStatusCode(StatusCode::NO_CONTENT);
             Response::setHeader('Bluz-Redirect', $url);
         } else {
-            Response::setStatusCode(302);
+            Response::setStatusCode(StatusCode::FOUND);
             Response::setHeader('Location', $url);
         }
 

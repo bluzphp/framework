@@ -11,6 +11,8 @@
  */
 namespace Bluz\Common\Exception;
 
+use Bluz\Http\StatusCode;
+
 /**
  * Basic Exception for Bluz framework
  *
@@ -22,7 +24,7 @@ class CommonException extends \Exception
     /**
      * @var integer Used as default HTTP code for exceptions
      */
-    protected $code = 500;
+    protected $code = StatusCode::INTERNAL_SERVER_ERROR;
 
     /**
      * (PHP 5 &gt;= 5.1.0)<br/>

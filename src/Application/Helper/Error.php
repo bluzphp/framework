@@ -13,6 +13,7 @@ namespace Bluz\Application\Helper;
 
 use Bluz\Application\Application;
 use Bluz\Controller\Controller;
+use Bluz\Http\StatusCode;
 use Bluz\Proxy\Response;
 use Bluz\Proxy\Router;
 
@@ -31,7 +32,12 @@ return
 
         // cast to valid HTTP error code
         // 500 - Internal Server Error
-        $statusCode = (100 <= $exception->getCode() && $exception->getCode() <= 505) ? $exception->getCode() : 500;
+        $statusCode = (
+                StatusCode::CONTINUE <= $exception->getCode()
+                && $exception->getCode() < 600
+            )
+            ? $exception->getCode()
+            : StatusCode::INTERNAL_SERVER_ERROR;
         Response::setStatusCode($statusCode);
 
         $module = Router::getErrorModule();

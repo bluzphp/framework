@@ -11,13 +11,14 @@
  */
 namespace Bluz\Controller\Helper;
 
+use Bluz\Auth\EntityInterface;
 use Bluz\Controller\Controller;
 use Bluz\Proxy\Auth;
 
 /**
  * Get current user
  *
- * @return \Bluz\Auth\AbstractRowEntity|null
+ * @return EntityInterface|null
  */
 return
     function () {

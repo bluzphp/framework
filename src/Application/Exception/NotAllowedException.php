@@ -11,6 +11,8 @@
  */
 namespace Bluz\Application\Exception;
 
+use Bluz\Http\StatusCode;
+
 /**
  * Not Allowed Exception
  *
@@ -20,12 +22,7 @@ namespace Bluz\Application\Exception;
 class NotAllowedException extends ApplicationException
 {
     /**
-     * @var string exception message
+     * @var integer HTTP Code
      */
-    protected $message = "Method Not Allowed";
-
-    /**
-     * @var integer HTTP Code for "Method Not Allowed"
-     */
-    protected $code = 405;
+    protected $code = StatusCode::METHOD_NOT_ALLOWED;
 }

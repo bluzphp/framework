@@ -65,7 +65,7 @@ abstract class FileBase extends AbstractAdapter
      */
     protected function doFlush()
     {
-        // copypaste from Doctrine\Common\Cache\FileCache.
+        // copied from Doctrine\Common\Cache\FileCache
         $pattern = '/^.+\\' . $this->extension . '$/i';
         $iterator = new \RecursiveDirectoryIterator($this->cacheDir);
         $iterator = new \RecursiveIteratorIterator($iterator);

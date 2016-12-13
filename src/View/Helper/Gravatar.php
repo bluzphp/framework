@@ -20,7 +20,7 @@ use Bluz\View\View;
  *
  * @param string $email The email address
  * @param integer $size Size in pixels, defaults to 80px [ 1 - 2048 ]
- * @param string $default Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
+ * @param string $default Default set of images to use [ 404 | mm | identicon | monsterid | wavatar ]
  * @param string $rate Maximum rating (inclusive) [ g | pg | r | x ]
  * @return String containing either just a URL or a complete image tag
  * @source https://gravatar.com/site/implement/images/php/

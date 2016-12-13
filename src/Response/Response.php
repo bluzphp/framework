@@ -15,6 +15,7 @@ use Bluz\Application\Exception\NotAcceptableException;
 use Bluz\Cli\CliResponse;
 use Bluz\Common\Options;
 use Bluz\Controller\Controller;
+use Bluz\Http\StatusCode;
 use Bluz\Layout\Layout;
 use Bluz\Proxy\Messages;
 use Zend\Diactoros\Response\EmptyResponse;
@@ -42,7 +43,7 @@ class Response
     /**
      * @var integer response code equal to HTTP status codes
      */
-    protected $code = 200;
+    protected $code = StatusCode::OK;
 
     /**
      * @var string|null HTTP Phrase
@@ -89,11 +90,11 @@ class Response
                 );
                 break;
             case is_null($body):
-            case 204 == $this->getStatusCode():
+            case StatusCode::NO_CONTENT == $this->getStatusCode():
                 $response = new EmptyResponse($this->getStatusCode(), $this->getHeaders());
                 break;
-            case 301 == $this->getStatusCode():
-            case 302 == $this->getStatusCode():
+            case StatusCode::MOVED_PERMANENTLY == $this->getStatusCode():
+            case StatusCode::FOUND == $this->getStatusCode():
                 $response = new RedirectResponse(
                     $this->getHeader('Location'),
                     $this->getStatusCode(),

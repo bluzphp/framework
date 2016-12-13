@@ -11,6 +11,8 @@
  */
 namespace Bluz\Application\Exception;
 
+use Bluz\Http\StatusCode;
+
 /**
  * Reload Exception
  *
@@ -27,5 +29,5 @@ class ReloadException extends ApplicationException
     /**
      * @var integer HTTP code
      */
-    protected $code = 200;
+    protected $code = StatusCode::OK;
 }

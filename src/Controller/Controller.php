@@ -187,15 +187,14 @@ class Controller implements \JsonSerializable
         $module = $this->module;
         $controller = $this->controller;
 
-        $cacheKey = 'data:' . $module . ':' . $controller . ':' . http_build_query($params);
+        $cacheKey = 'data.' . Cache::prepare($this->module . '.' . $this->controller)
+            . '.' . md5(http_build_query($params));
 
         if ($this->getReflection()->getCache()) {
             if ($cached = Cache::get($cacheKey)) {
                 return $cached;
             }
         }
-        
-        $data = $this->getData();
 
         /**
          * @var \closure $controllerClosure
@@ -233,10 +232,12 @@ class Controller implements \JsonSerializable
         }
 
         if ($this->getReflection()->getCache()) {
-            Cache::set($cacheKey, $this->getData(), $this->getReflection()->getCache());
-            Cache::addTag($cacheKey, $module);
-            Cache::addTag($cacheKey, 'data');
-            Cache::addTag($cacheKey, 'data:' . $module . ':' . $controller);
+            Cache::set(
+                $cacheKey,
+                $this->getData(),
+                $this->getReflection()->getCache(),
+                ['system', 'data', Cache::prepare($this->module . '.' . $this->controller)]
+            );
         }
 
         return $this->getData();
@@ -280,12 +281,17 @@ class Controller implements \JsonSerializable
     protected function setReflection()
     {
         // cache for reflection data
-        if (!$reflection = Cache::get('reflection:' . $this->module . ':' . $this->controller)) {
+        $cacheKey = 'reflection.' . Cache::prepare($this->module . '.' . $this->controller);
+        if (!$reflection = Cache::get($cacheKey)) {
             $reflection = new Reflection($this->getFile());
             $reflection->process();
 
-            Cache::set('reflection:' . $this->module . ':' . $this->controller, $reflection);
-            Cache::addTag('reflection:' . $this->module . ':' . $this->controller, 'reflection');
+            Cache::set(
+                $cacheKey,
+                $reflection,
+                Cache::TTL_NO_EXPIRY,
+                ['system', 'reflection', Cache::prepare($this->module . '.' . $this->controller)]
+            );
         }
         $this->reflection = $reflection;
     }

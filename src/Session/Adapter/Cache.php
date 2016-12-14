@@ -18,6 +18,7 @@ use Bluz\Proxy;
 /**
  * Cache session handler
  *
+ * @todo Migrate to {@link https://github.com/php-cache/session-handler PSR-6 Session handler}
  * @package Bluz\Session\Adapter
  */
 class Cache extends AbstractAdapter implements \SessionHandlerInterface
@@ -30,9 +31,7 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
      */
     public function __construct($settings = [])
     {
-        $this->handler = Proxy\Cache::getInstance();
-
-        if ($this->handler instanceof Nil) {
+        if (!Proxy\Cache::getInstance()) {
             throw new ConfigurationException(
                 "Cache configuration is missed or disabled. Please check 'cache' configuration section"
             );
@@ -47,7 +46,7 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
      */
     public function read($id)
     {
-        return $this->handler->get($this->prepareId($id));
+        return Proxy\Cache::get($this->prepareId($id));
     }
 
     /**
@@ -59,7 +58,7 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
      */
     public function write($id, $data)
     {
-        $this->handler->set($this->prepareId($id), $data, $this->ttl);
+        Proxy\Cache::set($this->prepareId($id), $data, $this->ttl);
     }
 
     /**
@@ -70,6 +69,6 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
      */
     public function destroy($id)
     {
-        $this->handler->delete($this->prepareId($id));
+        Proxy\Cache::delete($this->prepareId($id));
     }
 }

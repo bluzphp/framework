@@ -91,8 +91,8 @@ class Router
      */
     public function __construct()
     {
-        $routers = Cache::get('router:routers');
-        $reverse = Cache::get('router:reverse');
+        $routers = Cache::get('router.routers');
+        $reverse = Cache::get('router.reverse');
 
         if (!$routers || !$reverse) {
             $routers = [];
@@ -130,8 +130,8 @@ class Router
                     }
                 }
             }
-            Cache::set('router:routers', $routers);
-            Cache::set('router:reverse', $reverse);
+            Cache::set('router.routers', $routers, Cache::TTL_NO_EXPIRY, ['system']);
+            Cache::set('router.reverse', $reverse, Cache::TTL_NO_EXPIRY, ['system']);
         }
 
         $this->routers = $routers;

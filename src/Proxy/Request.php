@@ -313,7 +313,7 @@ class Request
      */
     public static function isGet()
     {
-        return (self::getInstance()->getMethod() === 'GET');
+        return (self::getInstance()->getMethod() === self::METHOD_GET);
     }
 
     /**
@@ -323,7 +323,7 @@ class Request
      */
     public static function isPost()
     {
-        return (self::getInstance()->getMethod() === 'POST');
+        return (self::getInstance()->getMethod() === self::METHOD_POST);
     }
 
     /**
@@ -333,7 +333,7 @@ class Request
      */
     public static function isPut()
     {
-        return (self::getInstance()->getMethod() === 'PUT');
+        return (self::getInstance()->getMethod() === self::METHOD_PUT);
     }
 
     /**
@@ -343,7 +343,7 @@ class Request
      */
     public static function isDelete()
     {
-        return (self::getInstance()->getMethod() === 'DELETE');
+        return (self::getInstance()->getMethod() === self::METHOD_DELETE);
     }
 
     /**

@@ -11,8 +11,10 @@
  */
 namespace Bluz\Proxy;
 
-use Bluz\Cache\Cache as Instance;
-use Bluz\Common\Nil;
+use Bluz\Common\Exception\ComponentException;
+use Bluz\Common\Singleton;
+use Cache\Adapter\Common\CacheItem as Item;
+use Psr\Cache\CacheItemPoolInterface as Instance;
 
 /**
  * Proxy to Cache
@@ -20,9 +22,11 @@ use Bluz\Common\Nil;
  * Example of usage
  *     use Bluz\Proxy\Cache;
  *
- *     if (!$result = Cache::get('some unique id')) {
+ *     if (!Cache::hasItem('some unique id')) {
  *          $result = 2*2;
- *          Cache::set('some unique id', $result);
+ *          $item = Cache::getItem('some unique id');
+ *          $item->set($result);
+ *          Cache::save($item);
  *     }
  *
  * @package  Bluz\Proxy
@@ -30,54 +34,170 @@ use Bluz\Common\Nil;
  *
  * @method   static Instance getInstance()
  *
- * @method   static bool add($id, $data, $ttl = Instance::TTL_NO_EXPIRY)
- * @see      Instance::add()
+ * @method   static Item getItem($key)
+ * @see      Instance::getItem()
  *
- * @method   static bool set($id, $data, $ttl = Instance::TTL_NO_EXPIRY)
- * @see      Instance::set()
+ * @method   static array|\Traversable getItems(array $keys = array())
+ * @see      Instance::getItems()
  *
- * @method   static mixed get($id)
- * @see      Instance::get()
+ * @method   static bool hasItem($key)
+ * @see      Instance::hasItem()
  *
- * @method   static bool contains($id)
- * @see      Instance::contains()
+ * @method   static bool deleteItem($key)
+ * @see      Instance::deleteItem()
  *
- * @method   static mixed delete($id)
- * @see      Instance::delete()
+ * @method   static bool deleteItems(array $keys)
+ * @see      Instance::deleteItems()
  *
- * @method   static mixed flush()
- * @see      Instance::flush()
+ * @method   static bool save(Item $item)
+ * @see      Instance::save()
  *
- * @method   static bool addTag($id, $tag)
- * @see      Instance::addTag()
+ * @method   static bool clear()
+ * @see      Instance::clear()
  *
- * @method   static bool deleteByTag($tag)
- * @see      Instance::deleteByTag()
+ * @method   static bool clearTags(array $tags)
+ * @see      TaggablePoolInterface::clearTags()
  */
 class Cache
 {
-    use ProxyTrait;
+    use Singleton;
+
+    const TTL_NO_EXPIRY = 0;
 
     /**
-     * No expiry TTL
+     * @var array
      */
-    const TTL_NO_EXPIRY = Instance::TTL_NO_EXPIRY;
+    protected static $pools = [];
 
     /**
-     * Init instance
+     * Handle dynamic, static calls to the object.
      *
-     * @return Instance|Nil
+     * @param  string $method
+     * @param  array $args
+     * @return mixed
+     * @throws ComponentException
+     */
+    public static function __callStatic($method, $args)
+    {
+        if (false === static::getInstance()) {
+            throw new ComponentException(
+                "Class `Proxy\\Cache` is disabled, please use safe-methods.\n".
+                "For more information read documentation at https://github.com/bluzphp/framework/wiki/Cache"
+            );
+        }
+
+        return static::getInstance()->$method(...$args);
+    }
+
+
+    /**
+     * Init cache instance
+     *
+     * @return Instance|false
+     * @throws ComponentException
      */
     protected static function initInstance()
     {
+        $adapter = Config::getData('cache', 'adapter');
+        return self::getAdapter($adapter);
+    }
+
+    /**
+     * Get Cache Adapter
+     *
+     * @param string $adapter
+     * @return Instance|false
+     * @throws ComponentException
+     */
+    public static function getAdapter($adapter)
+    {
         $config = Config::getData('cache');
 
-        if ($config && isset($config['enabled']) && $config['enabled']) {
-            $instance = new Instance();
-            $instance->setOptions($config);
-            return $instance;
-        } else {
-            return new Nil();
+        if ($config && $adapter && isset($config['enabled']) && $config['enabled']) {
+            if (!isset($config['pools'][$adapter])) {
+                throw new ComponentException("Class `Proxy\\Cache` required configuration for `$adapter` adapter");
+            } else {
+                if (!isset(static::$pools[$adapter])) {
+                    static::$pools[$adapter] = $config['pools'][$adapter]();
+                }
+                return static::$pools[$adapter];
+            }
         }
+        return false;
+    }
+
+    /**
+     * Get value of cache item
+     *
+     * @param string $key
+     * @return mixed
+     */
+    public static function get($key)
+    {
+        if (!self::getInstance()) {
+            return false;
+        }
+
+        if (self::hasItem($key)) {
+            $item = self::getItem($key);
+            if ($item->isHit()) {
+                return $item->get();
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Set value of cache item
+     *
+     * @param string $key
+     * @param mixed $data
+     * @param int $ttl
+     * @param array $tags
+     * @return bool
+     */
+    public static function set($key, $data, $ttl = self::TTL_NO_EXPIRY, $tags = [])
+    {
+        if (!self::getInstance()) {
+            return false;
+        }
+
+        $item = self::getItem($key);
+        $item->set($data);
+
+        if (self::TTL_NO_EXPIRY !== $ttl) {
+            $item->expiresAfter($ttl);
+        }
+
+        if (!empty($tags)) {
+            $item->setTags($tags);
+        }
+
+        return self::save($item);
+    }
+
+    /**
+     * Delete cache item
+     *
+     * @param string $key
+     * @return bool
+     */
+    public static function delete($key)
+    {
+        if (!self::getInstance()) {
+            return false;
+        }
+
+        return self::deleteItem($key);
+    }
+
+    /**
+     * Prepare key
+     *
+     * @return string
+     */
+    public static function prepare($key)
+    {
+        return str_replace(['-', '/'], '_', $key);
     }
 }

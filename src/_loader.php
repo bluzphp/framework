@@ -44,9 +44,6 @@ require_once 'Proxy/Session.php';
 require_once 'Proxy/Translator.php';
 
 // packages and support
-require_once 'Cache/CacheInterface.php';
-require_once 'Cache/TagableInterface.php';
-require_once 'Cache/Cache.php';
 require_once 'Config/Config.php';
 require_once 'Controller/Reflection.php';
 require_once 'Messages/Messages.php';

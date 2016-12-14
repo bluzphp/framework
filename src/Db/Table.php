@@ -200,7 +200,8 @@ abstract class Table
     public function getColumns()
     {
         if (empty($this->columns)) {
-            $columns = Cache::get('table:columns:'. $this->table);
+            $cacheKey = 'db.table.'. $this->table;
+            $columns = Cache::get($cacheKey);
             if (!$columns) {
                 $connect = DbProxy::getOption('connect');
 
@@ -212,8 +213,7 @@ abstract class Table
                       AND TABLE_NAME = ?',
                     [$connect['name'], $this->getName()]
                 );
-                Cache::set('table:columns:'. $this->table, $columns);
-                Cache::addTag('table:columns:'. $this->table, 'db');
+                Cache::set($cacheKey, $columns, Cache::TTL_NO_EXPIRY, ['system', 'db']);
             }
             $this->columns = $columns;
         }

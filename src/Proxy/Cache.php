@@ -67,7 +67,7 @@ class Cache
     /**
      * @var array
      */
-    static $pools = [];
+    protected static $pools = [];
 
     /**
      * Handle dynamic, static calls to the object.

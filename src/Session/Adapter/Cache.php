@@ -12,7 +12,6 @@
 namespace Bluz\Session\Adapter;
 
 use Bluz\Common\Exception\ConfigurationException;
-use Bluz\Common\Nil;
 use Bluz\Proxy;
 
 /**

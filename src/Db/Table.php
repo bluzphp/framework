@@ -44,7 +44,7 @@ abstract class Table
     /**
      * @var string the table name
      */
-    protected $table;
+    protected $name;
 
     /**
      * @var string the model name
@@ -91,9 +91,9 @@ abstract class Table
         }
 
         // autodetect table name - camelCase to uppercase
-        if (!$this->table) {
+        if (!$this->name) {
             $table = preg_replace('/(?<=\\w)(?=[A-Z])/', "_$1", $this->model);
-            $this->table = strtolower($table);
+            $this->name = strtolower($table);
         }
 
         // autodetect row class
@@ -105,7 +105,7 @@ abstract class Table
         // setup default select query
         if (empty($this->select)) {
             $this->select = "SELECT * ".
-                "FROM " . DbProxy::quoteIdentifier($this->table);
+                "FROM " . DbProxy::quoteIdentifier($this->name);
         }
 
         Relations::addClassMap($this->model, $tableClass);
@@ -179,7 +179,7 @@ abstract class Table
      */
     public function getName()
     {
-        return $this->table;
+        return $this->name;
     }
 
     /**
@@ -200,7 +200,7 @@ abstract class Table
     public function getColumns()
     {
         if (empty($this->columns)) {
-            $cacheKey = 'db.table.'. $this->table;
+            $cacheKey = 'db.table.'. $this->name;
             $columns = Cache::get($cacheKey);
             if (!$columns) {
                 $connect = DbProxy::getOption('connect');
@@ -288,9 +288,7 @@ abstract class Table
      */
     public static function find(...$keys)
     {
-        $self = static::getInstance();
-
-        $keyNames = array_values((array)$self->primary);
+        $keyNames = array_values(static::getInstance()->getPrimaryKey());
         $whereList = [];
         foreach ($keys as $keyValues) {
             $keyValues = (array)$keyValues;
@@ -318,7 +316,7 @@ abstract class Table
                 $whereList[] = $keyValues;
             }
         }
-        return $self::findWhere(...$whereList);
+        return static::findWhere(...$whereList);
     }
 
     /**
@@ -332,7 +330,7 @@ abstract class Table
         if (!$primaryKey) {
             return null;
         }
-        $result = static::getInstance()->find($primaryKey);
+        $result = static::find($primaryKey);
         return current($result);
     }
 
@@ -375,11 +373,11 @@ abstract class Table
                             $keyValue
                         );
                         $keyValue = join(',', $keyValue);
-                        $whereAndTerms[] = $self->table . '.' . $keyName . ' IN ('.$keyValue.')';
+                        $whereAndTerms[] = $self->name . '.' . $keyName . ' IN ('.$keyValue.')';
                     } elseif (is_null($keyValue)) {
-                        $whereAndTerms[] = $self->table . '.' . $keyName . ' IS NULL';
+                        $whereAndTerms[] = $self->name . '.' . $keyName . ' IS NULL';
                     } else {
-                        $whereAndTerms[] = $self->table . '.' . $keyName . ' = ?';
+                        $whereAndTerms[] = $self->name . '.' . $keyName . ' = ?';
                         $whereParams[] = $keyValue;
                     }
                     if (!is_scalar($keyValue) && !is_null($keyValue)) {
@@ -399,7 +397,7 @@ abstract class Table
             );
         }
 
-        return $self->fetch($self->select . ' WHERE ' . $whereClause, $whereParams);
+        return static::fetch($self->select . ' WHERE ' . $whereClause, $whereParams);
     }
 
     /**
@@ -410,7 +408,7 @@ abstract class Table
      */
     public static function findRowWhere($whereList)
     {
-        $result = static::getInstance()->findWhere($whereList);
+        $result = static::findWhere($whereList);
         return current($result);
     }
 
@@ -456,8 +454,8 @@ abstract class Table
         $self = static::getInstance();
 
         $select = new Query\Select();
-        $select->select($self->table.'.*')
-            ->from($self->table, $self->table)
+        $select->select($self->name.'.*')
+            ->from($self->name, $self->name)
             ->setFetchType($self->rowClass);
 
         return $select;
@@ -493,15 +491,15 @@ abstract class Table
     {
         $self = static::getInstance();
 
-        $data = $self->filterColumns($data);
+        $data = static::filterColumns($data);
 
         if (!sizeof($data)) {
             throw new DbException(
-                "Invalid field names of table `{$self->table}`. Please check use of `insert()` method"
+                "Invalid field names of table `{$self->name}`. Please check use of `insert()` method"
             );
         }
 
-        $table = DbProxy::quoteIdentifier($self->table);
+        $table = DbProxy::quoteIdentifier($self->name);
 
         $sql = "INSERT INTO $table SET " . join(',', self::prepareStatement($data));
         $result = DbProxy::query($sql, array_values($data));
@@ -544,17 +542,17 @@ abstract class Table
 
         $self = static::getInstance();
 
-        $data = $self->filterColumns($data);
+        $data = static::filterColumns($data);
 
-        $where = $self->filterColumns($where);
+        $where = static::filterColumns($where);
 
         if (!sizeof($data) || !sizeof($where)) {
             throw new DbException(
-                "Invalid field names of table `{$self->table}`. Please check use of `update()` method"
+                "Invalid field names of table `{$self->name}`. Please check use of `update()` method"
             );
         }
 
-        $table = DbProxy::quoteIdentifier($self->table);
+        $table = DbProxy::quoteIdentifier($self->name);
 
         $sql = "UPDATE $table"
             . " SET " . join(',', self::prepareStatement($data))
@@ -585,15 +583,15 @@ abstract class Table
 
         $self = static::getInstance();
 
-        $where = $self->filterColumns($where);
+        $where = static::filterColumns($where);
 
         if (!sizeof($where)) {
             throw new DbException(
-                "Invalid field names of table `{$self->table}`. Please check use of `delete()` method"
+                "Invalid field names of table `{$self->name}`. Please check use of `delete()` method"
             );
         }
 
-        $table = DbProxy::quoteIdentifier($self->table);
+        $table = DbProxy::quoteIdentifier($self->name);
 
         $sql = "DELETE FROM $table"
             . " WHERE " . join(' AND ', self::prepareStatement($where));

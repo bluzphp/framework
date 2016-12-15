@@ -50,7 +50,7 @@ abstract class AbstractTable extends Table
     /**
      * @var string Table
      */
-    protected $table = 'auth';
+    protected $name = 'auth';
 
     /**
      * @var array Primary key(s)

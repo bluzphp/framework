@@ -22,5 +22,5 @@ use Bluz\Db;
  */
 class WrongKeysTable extends Bluz\Db\Table
 {
-    protected $table = 'foo';
+    protected $name = 'foo';
 }

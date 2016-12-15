@@ -204,7 +204,7 @@ class Row implements \JsonSerializable, \ArrayAccess
         /**
          * Execute the INSERT (this may throw an exception)
          */
-        $primaryKey = $table->insert($data);
+        $primaryKey = $table::insert($data);
 
         /**
          * Normalize the result to an array indexed by primary key column(s)
@@ -262,7 +262,7 @@ class Row implements \JsonSerializable, \ArrayAccess
         $diffData = array_diff_assoc($data, $this->clean);
 
         $table = $this->getTable();
-        $diffData = $table->filterColumns($diffData);
+        $diffData = $table::filterColumns($diffData);
 
         /**
          * Execute the UPDATE (this may throw an exception)
@@ -271,7 +271,7 @@ class Row implements \JsonSerializable, \ArrayAccess
          * includes SET terms only for data values that changed.
          */
         if (sizeof($diffData) > 0) {
-            $result = $table->update($diffData, $primaryKey);
+            $result = $table::update($diffData, $primaryKey);
         } else {
             $result = 0;
         }
@@ -310,7 +310,7 @@ class Row implements \JsonSerializable, \ArrayAccess
          * Execute the DELETE (this may throw an exception)
          */
         $table = $this->getTable();
-        $result = $table->delete($primaryKey);
+        $result = $table::delete($primaryKey);
 
         /**
          * Execute post-DELETE logic

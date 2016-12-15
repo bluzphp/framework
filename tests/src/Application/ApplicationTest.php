@@ -30,8 +30,8 @@ class ApplicationTest extends TestCase
     public function testGettersOfPackages()
     {
         // cache disabled for testing
-        $this->assertInstanceOf('\Zend\Diactoros\ServerRequest', $this->getApp()->getRequest());
-        $this->assertInstanceOf('\Bluz\Response\Response', $this->getApp()->getResponse());
+        self::assertInstanceOf('\Zend\Diactoros\ServerRequest', self::getApp()->getRequest());
+        self::assertInstanceOf('\Bluz\Response\Response', self::getApp()->getResponse());
     }
 
     /**
@@ -43,9 +43,9 @@ class ApplicationTest extends TestCase
         //  - configs/default/
         //  - configs/testing/
         // hardcoded numbers of configuration items
-        $this->assertEquals(14, sizeof(Proxy\Config::getData()));
-        $this->assertEquals(["foo" => "bar"], Proxy\Config::getData("test"));
-        $this->assertEquals("bar", Proxy\Config::getData("test", "foo"));
+        self::assertEquals(14, sizeof(Proxy\Config::getData()));
+        self::assertEquals(["foo" => "bar"], Proxy\Config::getData("test"));
+        self::assertEquals("bar", Proxy\Config::getData("test", "foo"));
     }
 
     /**
@@ -53,9 +53,9 @@ class ApplicationTest extends TestCase
      */
     public function testRegistry()
     {
-        $this->assertEquals(["moo" => "baz"], Proxy\Config::getData("registry"));
-        $this->assertEquals("baz", Proxy\Config::getData("registry", "moo"));
-        $this->assertEquals("baz", Proxy\Registry::get('moo'));
+        self::assertEquals(["moo" => "baz"], Proxy\Config::getData("registry"));
+        self::assertEquals("baz", Proxy\Config::getData("registry", "moo"));
+        self::assertEquals("baz", Proxy\Registry::get('moo'));
     }
 
     /**
@@ -68,10 +68,10 @@ class ApplicationTest extends TestCase
         Request::setInstance($request);
 
         // run Application
-        $this->getApp()->process();
+        self::getApp()->process();
 
-        $this->assertEquals(Router::getDefaultModule(), $this->getApp()->getModule());
-        $this->assertEquals(Router::getDefaultController(), $this->getApp()->getController());
+        self::assertEquals(Router::getDefaultModule(), self::getApp()->getModule());
+        self::assertEquals(Router::getDefaultController(), self::getApp()->getController());
     }
 
     /**
@@ -84,8 +84,8 @@ class ApplicationTest extends TestCase
         Request::setInstance($request);
 
         // run Application
-        $this->getApp()->process();
-        $this->assertEquals(Router::getErrorModule(), $this->getApp()->getModule());
-        $this->assertEquals(Router::getErrorController(), $this->getApp()->getController());
+        self::getApp()->process();
+        self::assertEquals(Router::getErrorModule(), self::getApp()->getModule());
+        self::assertEquals(Router::getErrorController(), self::getApp()->getController());
     }
 }

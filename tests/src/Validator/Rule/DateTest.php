@@ -35,37 +35,43 @@ class DateTest extends Tests\TestCase
 
     public function testDateWithoutFormatShouldValidate()
     {
-        $this->assertTrue($this->validator->validate('today'));
+        self::assertTrue($this->validator->validate('today'));
     }
 
     public function testDateTimeInstancesShouldAlwaysValidate()
     {
-        $this->assertTrue($this->validator->validate(new DateTime('today')));
+        self::assertTrue($this->validator->validate(new DateTime('today')));
     }
 
     /**
      * @dataProvider providerForPass
+     * @param $format
+     * @param $date
      */
     public function testValidDateShouldPass($format, $date)
     {
         $validator = new Date($format);
-        $this->assertTrue($validator->validate($date));
-        $this->assertNotEmpty($validator->__toString());
+        self::assertTrue($validator->validate($date));
+        self::assertNotEmpty($validator->__toString());
     }
 
     /**
      * @dataProvider providerForFail
+     * @param $format
+     * @param $date
      */
     public function testInvalidateDateShouldFail($format, $date)
     {
         $validator = new Date($format);
-        $this->assertFalse($validator->validate($date));
-        $this->assertNotEmpty($validator->__toString());
+        self::assertFalse($validator->validate($date));
+        self::assertNotEmpty($validator->__toString());
     }
 
     /**
      * @dataProvider providerForFail
      * @expectedException \Bluz\Validator\Exception\ValidatorException
+     * @param $format
+     * @param $date
      */
     public function testInvalidateDateThrowException($format, $date)
     {

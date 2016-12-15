@@ -43,11 +43,11 @@ class MessagesTest extends TestCase
         Proxy\Messages::addNotice('notice');
         Proxy\Messages::addSuccess('success');
 
-        $this->assertEquals(3, Proxy\Messages::count());
+        self::assertEquals(3, Proxy\Messages::count());
 
-        $this->assertInstanceOf('\stdClass', Proxy\Messages::pop(Messages::TYPE_ERROR));
-        $this->assertInstanceOf('\stdClass', Proxy\Messages::pop(Messages::TYPE_NOTICE));
-        $this->assertInstanceOf('\stdClass', Proxy\Messages::pop(Messages::TYPE_SUCCESS));
+        self::assertInstanceOf('\stdClass', Proxy\Messages::pop(Messages::TYPE_ERROR));
+        self::assertInstanceOf('\stdClass', Proxy\Messages::pop(Messages::TYPE_NOTICE));
+        self::assertInstanceOf('\stdClass', Proxy\Messages::pop(Messages::TYPE_SUCCESS));
     }
 
     /**
@@ -60,13 +60,13 @@ class MessagesTest extends TestCase
         Proxy\Messages::addSuccess('success %01.2f', 1.020304);
 
         $error = Proxy\Messages::pop(Messages::TYPE_ERROR);
-        $this->assertEquals('error 1 2 3', $error->text);
+        self::assertEquals('error 1 2 3', $error->text);
 
         $notice = Proxy\Messages::pop(Messages::TYPE_NOTICE);
-        $this->assertEquals('notice a b a', $notice->text);
+        self::assertEquals('notice a b a', $notice->text);
 
         $success = Proxy\Messages::pop(Messages::TYPE_SUCCESS);
-        $this->assertEquals('success 1.02', $success->text);
+        self::assertEquals('success 1.02', $success->text);
     }
 
     /**
@@ -74,10 +74,10 @@ class MessagesTest extends TestCase
      */
     public function testMessagesEmpty()
     {
-        $this->assertEquals(0, Proxy\Messages::count());
-        $this->assertNull(Proxy\Messages::pop(Messages::TYPE_ERROR));
-        $this->assertNull(Proxy\Messages::pop(Messages::TYPE_NOTICE));
-        $this->assertNull(Proxy\Messages::pop(Messages::TYPE_SUCCESS));
+        self::assertEquals(0, Proxy\Messages::count());
+        self::assertNull(Proxy\Messages::pop(Messages::TYPE_ERROR));
+        self::assertNull(Proxy\Messages::pop(Messages::TYPE_NOTICE));
+        self::assertNull(Proxy\Messages::pop(Messages::TYPE_SUCCESS));
     }
 
     /**
@@ -94,7 +94,7 @@ class MessagesTest extends TestCase
             $counter++;
         }
 
-        $this->assertEquals(3, $counter);
+        self::assertEquals(3, $counter);
     }
 
     /**
@@ -108,9 +108,9 @@ class MessagesTest extends TestCase
 
         $messages = Proxy\Messages::popAll();
 
-        $this->assertArrayHasKeyAndSize($messages, 'error', 1);
-        $this->assertArrayHasKeyAndSize($messages, 'notice', 1);
-        $this->assertArrayHasKeyAndSize($messages, 'success', 1);
+        self::assertArrayHasKeyAndSize($messages, 'error', 1);
+        self::assertArrayHasKeyAndSize($messages, 'notice', 1);
+        self::assertArrayHasKeyAndSize($messages, 'success', 1);
     }
 
     /**
@@ -120,8 +120,8 @@ class MessagesTest extends TestCase
     {
         $messages = Proxy\Messages::popAll();
 
-        $this->assertArrayHasKey('error', $messages);
-        $this->assertArrayHasKey('notice', $messages);
-        $this->assertArrayHasKey('success', $messages);
+        self::assertArrayHasKey('error', $messages);
+        self::assertArrayHasKey('notice', $messages);
+        self::assertArrayHasKey('success', $messages);
     }
 }

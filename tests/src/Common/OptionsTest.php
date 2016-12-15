@@ -49,8 +49,8 @@ class OptionsTest extends TestCase
     {
         $this->class->setOptions($this->options);
 
-        $this->assertEquals('bar', $this->class->foo);
-        $this->assertEquals('qux', $this->class->fooBar);
+        self::assertEquals('bar', $this->class->foo);
+        self::assertEquals('qux', $this->class->fooBar);
     }
 
     /**
@@ -60,9 +60,9 @@ class OptionsTest extends TestCase
     {
         $this->class->setOptions($this->options);
 
-        $this->assertEquals($this->options, $this->class->getOptions());
-        $this->assertEquals('bar', $this->class->getOption('foo'));
-        $this->assertEquals('bar', $this->class->getOption('baz', 'foo'));
+        self::assertEquals($this->options, $this->class->getOptions());
+        self::assertEquals('bar', $this->class->getOption('foo'));
+        self::assertEquals('bar', $this->class->getOption('baz', 'foo'));
     }
 
     /**
@@ -72,7 +72,7 @@ class OptionsTest extends TestCase
     {
         $this->class->setOptions($this->options);
 
-        $this->assertNull($this->class->getOption('bar'));
-        $this->assertNull($this->class->getOption('baz', 'bar'));
+        self::assertNull($this->class->getOption('bar'));
+        self::assertNull($this->class->getOption('baz', 'bar'));
     }
 }

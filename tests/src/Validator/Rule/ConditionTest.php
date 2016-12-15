@@ -20,24 +20,28 @@ class ConditionTest extends Tests\TestCase
 {
     /**
      * @dataProvider providerForPass
+     * @param $condition
+     * @param string $input
      */
     public function testValidAlphanumericCharsShouldReturnTrue($condition, $input = 'any')
     {
         $validator = new Condition($condition);
-        $this->assertTrue($validator->validate($input));
-        $this->assertTrue($validator->assert($input));
+        self::assertTrue($validator->validate($input));
+        self::assertTrue($validator->assert($input));
     }
 
     /**
      * @dataProvider providerForFail
      * @expectedException \Bluz\Validator\Exception\ValidatorException
+     * @param $condition
+     * @param string $input
      */
     public function testInvalidAlphanumericCharsShouldReturnFalse($condition, $input = 'any')
     {
 
         $validator = new Condition($condition);
-        $this->assertFalse($validator->validate($input));
-        $this->assertFalse($validator->assert($input));
+        self::assertFalse($validator->validate($input));
+        self::assertFalse($validator->assert($input));
     }
 
     /**

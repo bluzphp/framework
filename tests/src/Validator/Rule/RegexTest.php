@@ -20,20 +20,24 @@ class RegexTest extends Tests\TestCase
 {
     /**
      * @dataProvider providerForPass
+     * @param $expression
+     * @param $input
      */
     public function testValidRegexp($expression, $input)
     {
         $v = new Regexp($expression);
-        $this->assertTrue($v->validate($input));
+        self::assertTrue($v->validate($input));
     }
 
     /**
      * @dataProvider providerForFail
+     * @param $expression
+     * @param $input
      */
     public function testInvalidRegexp($expression, $input)
     {
         $v = new Regexp($expression);
-        $this->assertFalse($v->validate($input));
+        self::assertFalse($v->validate($input));
     }
 
     /**

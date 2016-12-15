@@ -43,8 +43,8 @@ class TranslatorTest extends TestCase
         $translator->setLocale('uk_UA');
         $translator->setPath(PATH_APPLICATION .'/locale');
 
-        $this->assertEquals('', $translator->translate(''));
-        $this->assertEquals('message', $translator->translate('message'));
+        self::assertEquals('', $translator->translate(''));
+        self::assertEquals('message', $translator->translate('message'));
     }
 
     /**
@@ -57,11 +57,11 @@ class TranslatorTest extends TestCase
         $translator->setLocale('uk_UA');
         $translator->setPath(PATH_APPLICATION .'/locale');
 
-        $this->assertEquals('', $translator->translatePlural('', '', 2));
+        self::assertEquals('', $translator->translatePlural('', '', 2));
         if (function_exists('ngettext')) {
-            $this->assertEquals('messages', $translator->translatePlural('message', 'messages', 2));
+            self::assertEquals('messages', $translator->translatePlural('message', 'messages', 2));
         } else {
-            $this->assertEquals('message', $translator->translatePlural('message', 'messages', 2));
+            self::assertEquals('message', $translator->translatePlural('message', 'messages', 2));
         }
     }
 
@@ -76,12 +76,12 @@ class TranslatorTest extends TestCase
         $translator->setPath(PATH_APPLICATION .'/locale');
 
         if (function_exists('ngettext')) {
-            $this->assertEquals(
+            self::assertEquals(
                 '2 messages',
                 $translator->translatePlural('%d message', '%d messages', 2, 2)
             );
         } else {
-            $this->assertEquals(
+            self::assertEquals(
                 '2 message',
                 $translator->translatePlural('%d message', '%d messages', 2, 2)
             );

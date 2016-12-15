@@ -30,7 +30,7 @@ class ControllerTest extends TestCase
      */
     public function setUp()
     {
-        $this->controller = $this->getApp()->dispatch('index', 'index');
+        $this->controller = self::getApp()->dispatch('index', 'index');
     }
     
     /**
@@ -52,7 +52,7 @@ class ControllerTest extends TestCase
         //   application/json -> ANY,JSON,HTML
 
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
+        self::markTestIncomplete('This test has not been implemented yet.');
     }
 
     /**
@@ -61,7 +61,7 @@ class ControllerTest extends TestCase
     public function testMethodCheck()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
+        self::markTestIncomplete('This test has not been implemented yet.');
     }
 
     /**
@@ -80,6 +80,6 @@ class ControllerTest extends TestCase
     public function testHelperUser()
     {
         $result = $this->controller->user();
-        $this->assertNull($result);
+        self::assertNull($result);
     }
 }

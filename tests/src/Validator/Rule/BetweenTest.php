@@ -21,29 +21,39 @@ class BetweenTest extends Tests\TestCase
 {
     /**
      * @dataProvider providerForPass
+     * @param $min
+     * @param $max
+     * @param $inclusive
+     * @param $input
      */
     public function testValuesBetweenBoundsShouldPass($min, $max, $inclusive, $input)
     {
         $validator = new Between($min, $max, $inclusive);
-        $this->assertTrue($validator->validate($input));
-        $this->assertTrue($validator->assert($input));
+        self::assertTrue($validator->validate($input));
+        self::assertTrue($validator->assert($input));
     }
 
     /**
      * @dataProvider providerForFail
      * @expectedException \Bluz\Validator\Exception\ValidatorException
+     * @param $min
+     * @param $max
+     * @param $inclusive
+     * @param $input
      */
     public function testValuesOutBoundsShouldRaiseException($min, $max, $inclusive, $input)
     {
         $validator = new Between($min, $max, $inclusive);
-        $this->assertFalse($validator->validate($input));
-        $this->assertNotEmpty($validator->__toString());
-        $this->assertFalse($validator->assert($input));
+        self::assertFalse($validator->validate($input));
+        self::assertNotEmpty($validator->__toString());
+        self::assertFalse($validator->assert($input));
     }
 
     /**
      * @dataProvider providerForComponentException
      * @expectedException \Bluz\Validator\Exception\ComponentException
+     * @param $min
+     * @param $max
      */
     public function testInvalidConstructionParamsShouldRaiseException($min, $max)
     {

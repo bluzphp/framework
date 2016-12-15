@@ -20,24 +20,30 @@ class InTest extends Tests\TestCase
 {
     /**
      * @dataProvider providerForPass
+     * @param $input
+     * @param null $haystack
+     * @param bool $strict
      */
     public function testSuccessInValidatorCases($input, $haystack = null, $strict = false)
     {
         $v = new In($haystack, $strict);
-        $this->assertTrue($v->validate($input));
-        $this->assertTrue($v->assert($input));
+        self::assertTrue($v->validate($input));
+        self::assertTrue($v->assert($input));
     }
 
     /**
      * @dataProvider providerForFail
      * @expectedException \Bluz\Validator\Exception\ValidatorException
+     * @param $input
+     * @param $haystack
+     * @param bool $strict
      */
     public function testInvalidInChecksShouldThrowInException($input, $haystack, $strict = false)
     {
         $v = new In($haystack, $strict);
-        $this->assertFalse($v->validate($input));
-        $this->assertNotEmpty($v->__toString($input));
-        $this->assertFalse($v->assert($input));
+        self::assertFalse($v->validate($input));
+        self::assertNotEmpty($v->__toString());
+        self::assertFalse($v->assert($input));
     }
 
     /**

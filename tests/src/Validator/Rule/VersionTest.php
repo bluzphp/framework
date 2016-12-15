@@ -20,23 +20,25 @@ class VersionTest extends Tests\TestCase
 {
     /**
      * @dataProvider providerForPass
+     * @param $input
      */
     public function testValidVersionShouldReturnTrue($input)
     {
         $rule = new Version();
-        $this->assertTrue($rule->validate($input));
-        $this->assertTrue($rule->assert($input));
+        self::assertTrue($rule->validate($input));
+        self::assertTrue($rule->assert($input));
     }
 
     /**
      * @dataProvider providerForFail
      * @expectedException \Bluz\Validator\Exception\ValidatorException
+     * @param $input
      */
     public function testInvalidVersionShouldThrowException($input)
     {
         $rule = new Version();
-        $this->assertFalse($rule->validate($input));
-        $this->assertFalse($rule->assert($input));
+        self::assertFalse($rule->validate($input));
+        self::assertFalse($rule->assert($input));
     }
 
     /**

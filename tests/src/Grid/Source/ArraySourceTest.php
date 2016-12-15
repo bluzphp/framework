@@ -27,8 +27,8 @@ class ArraySourceTest extends TestCase
     public function testArrayGrid()
     {
         $grid = new ArrayGrid();
-        $this->assertEquals(3, $grid->pages());
-        $this->assertEquals(10, $grid->total());
+        self::assertEquals(3, $grid->pages());
+        self::assertEquals(10, $grid->total());
     }
 
     /**
@@ -50,8 +50,8 @@ class ArraySourceTest extends TestCase
         $grid->setDefaultOrder('id', Grid::ORDER_DESC);
         $grid->getData();
 
-        $this->assertEquals(3, $grid->pages());
-        $this->assertEquals(10, $grid->total());
+        self::assertEquals(3, $grid->pages());
+        self::assertEquals(10, $grid->total());
     }
 
     /**
@@ -66,8 +66,8 @@ class ArraySourceTest extends TestCase
         $grid->addFilter('id', Grid::FILTER_LT, 10); // id < 10
         $grid->addFilter('id', Grid::FILTER_LE, 9);  // id <= 9
 
-        $this->assertEquals(2, $grid->pages());
-        $this->assertEquals(8, $grid->total());
+        self::assertEquals(2, $grid->pages());
+        self::assertEquals(8, $grid->total());
     }
 
     /**
@@ -79,8 +79,8 @@ class ArraySourceTest extends TestCase
 
         $grid->addFilter('id', Grid::FILTER_EQ, 1);  // id = 1
 
-        $this->assertEquals(1, $grid->pages());
-        $this->assertEquals(1, $grid->total());
+        self::assertEquals(1, $grid->pages());
+        self::assertEquals(1, $grid->total());
     }
 
     /**
@@ -92,8 +92,8 @@ class ArraySourceTest extends TestCase
 
         $grid->addFilter('id', Grid::FILTER_NE, 1);  // id != 1
 
-        $this->assertEquals(3, $grid->pages());
-        $this->assertEquals(9, $grid->total());
+        self::assertEquals(3, $grid->pages());
+        self::assertEquals(9, $grid->total());
     }
 
     /**
@@ -105,7 +105,7 @@ class ArraySourceTest extends TestCase
 
         $grid->addFilter('email', Grid::FILTER_LIKE, '^m@');  // preg_match('/^m@/', email)
 
-        $this->assertEquals(1, $grid->pages());
-        $this->assertEquals(2, $grid->total());
+        self::assertEquals(1, $grid->pages());
+        self::assertEquals(2, $grid->total());
     }
 }

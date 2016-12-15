@@ -42,14 +42,14 @@ class NilTest extends TestCase
     public function testComplexNill()
     {
         // methods
-        $this->assertNull(Nil::call());
-        $this->assertNull($this->class->call());
+        self::assertNull(Nil::call());
+        self::assertNull($this->class->call());
 
         // properties
         $this->class->foo = 'bar';
-        $this->assertNull($this->class->foo);
+        self::assertNull($this->class->foo);
 
         // magic __toString
-        $this->assertEmpty('' . $this->class);
+        self::assertEmpty('' . $this->class);
     }
 }

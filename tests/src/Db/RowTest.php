@@ -40,7 +40,7 @@ class RowTest extends Bluz\Tests\TestCase
      */
     public function testGet()
     {
-        $this->assertNull($this->row->someValue);
+        self::assertNull($this->row->someValue);
     }
 
     /**
@@ -49,7 +49,7 @@ class RowTest extends Bluz\Tests\TestCase
     public function testSet()
     {
         $this->row->someValue = 'foo';
-        $this->assertEquals('foo', $this->row->someValue);
+        self::assertEquals('foo', $this->row->someValue);
     }
 
     /**
@@ -58,7 +58,7 @@ class RowTest extends Bluz\Tests\TestCase
     public function testIsset()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
+        self::markTestIncomplete('This test has not been implemented yet.');
     }
 
     /**
@@ -67,7 +67,7 @@ class RowTest extends Bluz\Tests\TestCase
     public function testSave()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
+        self::markTestIncomplete('This test has not been implemented yet.');
     }
 
     /**
@@ -76,7 +76,7 @@ class RowTest extends Bluz\Tests\TestCase
     public function testDelete()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
+        self::markTestIncomplete('This test has not been implemented yet.');
     }
 
     /**
@@ -85,7 +85,7 @@ class RowTest extends Bluz\Tests\TestCase
     public function testRefresh()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
+        self::markTestIncomplete('This test has not been implemented yet.');
     }
 
     /**
@@ -94,7 +94,7 @@ class RowTest extends Bluz\Tests\TestCase
     public function testGetTable()
     {
         $table = $this->row->getTable();
-        $this->assertTrue($table instanceof Bluz\Db\Table);
+        self::assertTrue($table instanceof Bluz\Db\Table);
     }
 
     /**
@@ -113,7 +113,7 @@ class RowTest extends Bluz\Tests\TestCase
     public function testGetRelation()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
+        self::markTestIncomplete('This test has not been implemented yet.');
     }
     
     /**
@@ -130,7 +130,7 @@ class RowTest extends Bluz\Tests\TestCase
     public function testSetRelation()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
+        self::markTestIncomplete('This test has not been implemented yet.');
     }
 
     /**
@@ -139,7 +139,7 @@ class RowTest extends Bluz\Tests\TestCase
     public function testToArray()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
+        self::markTestIncomplete('This test has not been implemented yet.');
     }
 
     /**
@@ -148,7 +148,7 @@ class RowTest extends Bluz\Tests\TestCase
     public function testSetFromArray()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
+        self::markTestIncomplete('This test has not been implemented yet.');
     }
 
     /**
@@ -158,7 +158,7 @@ class RowTest extends Bluz\Tests\TestCase
     public function testOffsetSet()
     {
         $this->row['someValue'] = 'foo';
-        $this->assertEquals('foo', $this->row->someValue);
+        self::assertEquals('foo', $this->row->someValue);
     }
 
     /**
@@ -168,7 +168,7 @@ class RowTest extends Bluz\Tests\TestCase
     public function testOffsetExists()
     {
         $this->row->someValue = 'foo';
-        $this->assertTrue(isset($this->row['someValue']));
+        self::assertTrue(isset($this->row['someValue']));
     }
 
     /**
@@ -179,7 +179,7 @@ class RowTest extends Bluz\Tests\TestCase
     {
         $this->row->someValue = 'foo';
         unset($this->row['someValue']);
-        $this->assertFalse(isset($this->row['someValue']));
+        self::assertFalse(isset($this->row['someValue']));
     }
 
     /**
@@ -189,6 +189,6 @@ class RowTest extends Bluz\Tests\TestCase
     public function testOffsetGet()
     {
         $this->row->someValue = 'foo';
-        $this->assertEquals('foo', $this->row['someValue']);
+        self::assertEquals('foo', $this->row['someValue']);
     }
 }

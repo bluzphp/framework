@@ -9,6 +9,8 @@
  */
 namespace Bluz\Tests\Crud\Fixtures;
 
+use Bluz\Crud\AbstractCrud;
+
 /**
  * Crud based on Db\Table
  *
@@ -17,7 +19,7 @@ namespace Bluz\Tests\Crud\Fixtures;
  * @author   Anton Shevchuk
  * @created  03.09.12 13:11
  */
-class EmptyCrud extends \Bluz\Crud\AbstractCrud
+class EmptyCrud extends AbstractCrud
 {
     /**
      * @return array

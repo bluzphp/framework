@@ -30,9 +30,9 @@ class SingletonTest extends TestCase
         $result = ConcreteSingleton::getInstance();
         $result->foo = 'bar';
 
-        $this->assertInstanceOf('Bluz\Tests\Common\Fixtures\ConcreteSingleton', $result);
-        $this->assertEquals(ConcreteSingleton::getInstance(), $result);
-        $this->assertEquals('bar', ConcreteSingleton::getInstance()->foo);
+        self::assertInstanceOf('Bluz\Tests\Common\Fixtures\ConcreteSingleton', $result);
+        self::assertEquals(ConcreteSingleton::getInstance(), $result);
+        self::assertEquals('bar', ConcreteSingleton::getInstance()->foo);
     }
 
     /**
@@ -44,7 +44,7 @@ class SingletonTest extends TestCase
 
         $reflection = new \ReflectionObject($result);
 
-        $this->assertTrue($reflection->getMethod('__construct')->isProtected());
-        $this->assertTrue($reflection->getMethod('__clone')->isProtected());
+        self::assertTrue($reflection->getMethod('__construct')->isProtected());
+        self::assertTrue($reflection->getMethod('__clone')->isProtected());
     }
 }

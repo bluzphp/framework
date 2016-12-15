@@ -20,24 +20,29 @@ class EqualsTest extends Tests\TestCase
 {
     /**
      * @dataProvider providerForPass
+     * @param $start
+     * @param $input
      */
     public function testStringsContainingExpectedValueShouldPass($start, $input)
     {
         $validator = new Equals($start);
-        $this->assertTrue($validator->validate($input));
-        $this->assertTrue($validator->assert($input));
+        self::assertTrue($validator->validate($input));
+        self::assertTrue($validator->assert($input));
     }
 
     /**
      * @dataProvider providerForFail
      * @expectedException \Bluz\Validator\Exception\ValidatorException
+     * @param $start
+     * @param $input
+     * @param bool $identical
      */
     public function testStringsNotEqualsExpectedValueShouldNotPass($start, $input, $identical = false)
     {
         $validator = new Equals($start, $identical);
-        $this->assertFalse($validator->validate($input));
-        $this->assertNotEmpty($validator->__toString());
-        $this->assertFalse($validator->assert($input));
+        self::assertFalse($validator->validate($input));
+        self::assertNotEmpty($validator->__toString());
+        self::assertFalse($validator->assert($input));
     }
 
     /**

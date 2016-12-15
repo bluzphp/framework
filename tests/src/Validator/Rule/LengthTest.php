@@ -20,35 +20,47 @@ class LengthTest extends Tests\TestCase
 {
     /**
      * @dataProvider providerForPass
+     * @param $string
+     * @param $min
+     * @param $max
      */
     public function testLengthInsideBoundsShouldReturnTrue($string, $min, $max)
     {
         $validator = new Length($min, $max);
-        $this->assertTrue($validator->validate($string));
+        self::assertTrue($validator->validate($string));
     }
 
     /**
      * @dataProvider providerForFail
+     * @param $string
+     * @param $min
+     * @param $max
      */
     public function testLengthOutsideValidBoundsShouldThrowLengthException($string, $min, $max)
     {
         $validator = new Length($min, $max);
-        $this->assertFalse($validator->validate($string));
+        self::assertFalse($validator->validate($string));
     }
 
     /**
      * @dataProvider providerForFailInclusive
+     * @param $string
+     * @param $min
+     * @param $max
      */
     public function testLengthOutsideBoundsShouldThrowLengthException($string, $min, $max)
     {
         $validator = new Length($min, $max, false);
-        $this->assertFalse($validator->validate($string));
-        $this->assertNotEmpty($validator->getTemplate());
+        self::assertFalse($validator->validate($string));
+        self::assertNotEmpty($validator->getTemplate());
     }
 
     /**
      * @dataProvider providerForComponentException
      * @expectedException \Bluz\Validator\Exception\ComponentException
+     * @param $string
+     * @param $min
+     * @param $max
      */
     public function testInvalidConstructorParametersShouldThrowComponentExceptionUponInstantiation($string, $min, $max)
     {

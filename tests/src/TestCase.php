@@ -154,7 +154,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected function assertEqualsArray($expected, $actual, $message = null)
     {
-        $this->assertSame(
+        self::assertSame(
             array_diff($expected, $actual),
             array_diff($actual, $expected),
             $message ?: 'Failed asserting that two arrays is equals.'
@@ -169,7 +169,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected function assertArrayHasSize($array, $size, $message = null)
     {
-        $this->assertEquals(
+        self::assertEquals(
             $size,
             sizeof($array),
             $message ?: 'Failed asserting that array has size '.$size.' matches expected '.sizeof($array). '.'
@@ -190,7 +190,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
                 . ' matches expected '.sizeof($array). '.';
         }
 
-        $this->assertArrayHasKey($key, $array, $message);
-        $this->assertEquals($size, sizeof($array[$key]), $message);
+        self::assertArrayHasKey($key, $array, $message);
+        self::assertEquals($size, sizeof($array[$key]), $message);
     }
 }

@@ -52,9 +52,9 @@ class ViewTest extends TestCase
 
         unset($view->baz);
 
-        $this->assertTrue(isset($view->foo));
-        $this->assertEquals('bar', $view->foo);
-        $this->assertNull($view->baz);
+        self::assertTrue(isset($view->foo));
+        self::assertEquals('bar', $view->foo);
+        self::assertNull($view->baz);
     }
 
     /**
@@ -66,9 +66,9 @@ class ViewTest extends TestCase
         $view->setFromArray(['foo' => '---']);
         $view->setFromArray(['foo' => 'bar', 'baz' => 'qux']);
 
-        $this->assertEquals('bar', $view->foo);
-        $this->assertEquals('qux', $view->baz);
-        $this->assertEqualsArray(['foo' => 'bar', 'baz' => 'qux'], $view->toArray());
+        self::assertEquals('bar', $view->foo);
+        self::assertEquals('qux', $view->baz);
+        self::assertEqualsArray(['foo' => 'bar', 'baz' => 'qux'], $view->toArray());
     }
 
     /**
@@ -83,8 +83,8 @@ class ViewTest extends TestCase
 
         $view = unserialize(serialize($view));
 
-        $this->assertEquals('bar', $view->foo);
-        $this->assertEquals('qux', $view->baz);
+        self::assertEquals('bar', $view->foo);
+        self::assertEquals('qux', $view->baz);
     }
 
     /**
@@ -99,8 +99,8 @@ class ViewTest extends TestCase
 
         $view = json_decode(json_encode($view));
 
-        $this->assertEquals('bar', $view->foo);
-        $this->assertEquals('qux', $view->baz);
+        self::assertEquals('bar', $view->foo);
+        self::assertEquals('qux', $view->baz);
     }
 
     /**
@@ -113,7 +113,7 @@ class ViewTest extends TestCase
         $view = new View();
 
         // setup default partial path
-        $view->addPartialPath($this->getApp()->getPath() . '/layouts/partial');
+        $view->addPartialPath(self::getApp()->getPath() . '/layouts/partial');
 
         return $view;
     }
@@ -125,13 +125,13 @@ class ViewTest extends TestCase
     {
         $view = $this->getView();
 
-        $this->assertEmpty($view->ahref('text', null));
-        $this->assertEquals('<a href="test/test" >text</a>', $view->ahref('text', 'test/test'));
-        $this->assertEquals(
+        self::assertEmpty($view->ahref('text', null));
+        self::assertEquals('<a href="test/test" >text</a>', $view->ahref('text', 'test/test'));
+        self::assertEquals(
             '<a href="/" class="active">text</a>',
             $view->ahref('text', [Router::DEFAULT_MODULE, Router::DEFAULT_CONTROLLER])
         );
-        $this->assertEquals(
+        self::assertEquals(
             '<a href="/" class="foo active">text</a>',
             $view->ahref('text', [Router::DEFAULT_MODULE, Router::DEFAULT_CONTROLLER], ['class' => 'foo'])
         );
@@ -144,11 +144,11 @@ class ViewTest extends TestCase
     {
         $view = $this->getView();
 
-        $this->assertEmpty($view->attributes([]));
+        self::assertEmpty($view->attributes([]));
 
         $result = $view->attributes(['foo' => 'bar', 'baz' => null, 'qux']);
 
-        $this->assertEquals('foo="bar" qux="qux"', $result);
+        self::assertEquals('foo="bar" qux="qux"', $result);
     }
 
     /**
@@ -158,8 +158,8 @@ class ViewTest extends TestCase
     {
         $view = $this->getView();
 
-        $this->assertEquals('/', $view->baseUrl());
-        $this->assertEquals('/about.html', $view->baseUrl('/about.html'));
+        self::assertEquals('/', $view->baseUrl());
+        self::assertEquals('/about.html', $view->baseUrl('/about.html'));
     }
 
     /**
@@ -170,10 +170,10 @@ class ViewTest extends TestCase
         $view = $this->getView();
 
         $result = $view->checkbox('test', 1, true, ['class' => 'foo']);
-        $this->assertEquals('<input class="foo" checked="checked" value="1" name="test" type="checkbox"/>', $result);
+        self::assertEquals('<input class="foo" checked="checked" value="1" name="test" type="checkbox"/>', $result);
 
         $result = $view->checkbox('sex', 'male', 'male', ['class' => 'foo']);
-        $this->assertEquals('<input class="foo" checked="checked" value="male" name="sex" type="checkbox"/>', $result);
+        self::assertEquals('<input class="foo" checked="checked" value="male" name="sex" type="checkbox"/>', $result);
     }
 
     /**
@@ -183,8 +183,8 @@ class ViewTest extends TestCase
     {
         $view = $this->getView();
 
-        $this->assertEquals(Router::DEFAULT_CONTROLLER, $view->controller());
-        $this->assertTrue($view->controller(Router::DEFAULT_CONTROLLER));
+        self::assertEquals(Router::DEFAULT_CONTROLLER, $view->controller());
+        self::assertTrue($view->controller(Router::DEFAULT_CONTROLLER));
     }
 
     /**
@@ -195,7 +195,7 @@ class ViewTest extends TestCase
     {
         $view = $this->getView();
 
-        $this->assertEmpty($view->dispatch('test', 'test'));
+        self::assertEmpty($view->dispatch('test', 'test'));
     }
 
     /**
@@ -206,7 +206,7 @@ class ViewTest extends TestCase
     {
         $view = $this->getView();
 
-        $this->assertEmpty($view->exception(new \Exception()));
+        self::assertEmpty($view->exception(new \Exception()));
     }
 
     /**
@@ -222,7 +222,7 @@ class ViewTest extends TestCase
 
         $result = $view->headScript();
 
-        $this->assertEquals(
+        self::assertEquals(
             '<script src="/foo.js"></script>'.
             '<script src="/bar.js"></script>',
             str_replace(["\t", "\n", "\r"], '', $result)
@@ -242,7 +242,7 @@ class ViewTest extends TestCase
 
         $result = $view->headStyle();
 
-        $this->assertEquals(
+        self::assertEquals(
             '<link href="/foo.css" rel="stylesheet" media="all"/>'.
             '<link href="/bar.css" rel="stylesheet" media="all"/>',
             str_replace(["\t", "\n", "\r"], '', $result)
@@ -257,8 +257,8 @@ class ViewTest extends TestCase
     {
         $view = $this->getView();
 
-        $this->assertEquals(Router::DEFAULT_MODULE, $view->module());
-        $this->assertTrue($view->module(Router::DEFAULT_MODULE));
+        self::assertEquals(Router::DEFAULT_MODULE, $view->module());
+        self::assertTrue($view->module(Router::DEFAULT_MODULE));
     }
 
     /**
@@ -267,10 +267,10 @@ class ViewTest extends TestCase
     public function testHelperPartial()
     {
         $view = $this->getView();
-        $view->setPath($this->getApp()->getPath() . '/modules/index/views');
+        $view->setPath(self::getApp()->getPath() . '/modules/index/views');
 
         $result = $view->partial('partial/partial.phtml', ['foo' => 'bar']);
-        $this->assertEquals('bar', $result);
+        self::assertEquals('bar', $result);
     }
 
     /**
@@ -291,10 +291,10 @@ class ViewTest extends TestCase
     public function testHelperPartialLoop()
     {
         $view = $this->getView();
-        $view->setPath($this->getApp()->getPath() . '/modules/index/views');
+        $view->setPath(self::getApp()->getPath() . '/modules/index/views');
 
         $result = $view->partialLoop('partial/partial-loop.phtml', [1, 2, 3], ['foo' => 'bar']);
-        $this->assertEquals('bar:0:1:bar:1:2:bar:2:3:', $result);
+        self::assertEquals('bar:0:1:bar:1:2:bar:2:3:', $result);
     }
 
     /**
@@ -330,7 +330,7 @@ class ViewTest extends TestCase
 
         $result = $view->radio('test', 1, true, ['class' => 'foo']);
 
-        $this->assertEquals('<input class="foo" checked="checked" value="1" name="test" type="radio"/>', $result);
+        self::assertEquals('<input class="foo" checked="checked" value="1" name="test" type="radio"/>', $result);
     }
 
     /**
@@ -342,8 +342,8 @@ class ViewTest extends TestCase
 
         $view->redactor('#editor');
 
-        $this->assertNotEmpty($view->headScript());
-        $this->assertNotEmpty($view->headStyle());
+        self::assertNotEmpty($view->headScript());
+        self::assertNotEmpty($view->headStyle());
     }
 
     /**
@@ -355,7 +355,7 @@ class ViewTest extends TestCase
 
         $result = $view->script('foo.js');
 
-        $this->assertEquals('<script src="/foo.js"></script>', trim($result));
+        self::assertEquals('<script src="/foo.js"></script>', trim($result));
     }
 
     /**
@@ -368,7 +368,7 @@ class ViewTest extends TestCase
         $result = $view->script('alert("foo=bar")');
         $result = str_replace(["\t", "\n", "\r"], '', $result);
 
-        $this->assertEquals('<script type="text/javascript"><!--alert("foo=bar")//--></script>', $result);
+        self::assertEquals('<script type="text/javascript"><!--alert("foo=bar")//--></script>', $result);
     }
 
     /**
@@ -397,7 +397,7 @@ class ViewTest extends TestCase
 
         $result = str_replace(["\t", "\n", "\r"], '', $result);
 
-        $this->assertEquals(
+        self::assertEquals(
             '<select id="car" name="car">'.
             '<option value="none">No Car</option>'.
             '<optgroup label="class-A">'.
@@ -434,7 +434,7 @@ class ViewTest extends TestCase
 
         $result = str_replace(["\t", "\n", "\r"], '', $result);
 
-        $this->assertEquals(
+        self::assertEquals(
             '<select id="car" name="car">'.
             '<option value="none">No Car</option>'.
             '<option value="citroen-c1">Citroen C1</option>'.
@@ -468,7 +468,7 @@ class ViewTest extends TestCase
 
         $result = str_replace(["\t", "\n", "\r"], '', $result);
 
-        $this->assertEquals(
+        self::assertEquals(
             '<select name="car" multiple="multiple">'.
             '<option value="citroen-c1" selected="selected">Citroen C1</option>'.
             '<option value="mercedes-benz-a200">Mercedes Benz A200</option>'.
@@ -488,7 +488,7 @@ class ViewTest extends TestCase
 
         $result = $view->style('foo.css');
 
-        $this->assertEquals('<link href="/foo.css" rel="stylesheet" media="all"/>', trim($result));
+        self::assertEquals('<link href="/foo.css" rel="stylesheet" media="all"/>', trim($result));
     }
 
     /**
@@ -501,7 +501,7 @@ class ViewTest extends TestCase
         $result = $view->style('#my{color:red}');
         $result = str_replace(["\t", "\n", "\r"], '', $result);
 
-        $this->assertEquals('<style type="text/css" media="all">#my{color:red}</style>', $result);
+        self::assertEquals('<style type="text/css" media="all">#my{color:red}</style>', $result);
     }
 
     /**
@@ -511,10 +511,10 @@ class ViewTest extends TestCase
     {
         $view = $this->getView();
 
-        $this->assertEquals('/test/test/foo/bar', $view->url('test', 'test', ['foo' => 'bar']));
-        $this->assertEquals('/test/test', $view->url('test', 'test', null));
-        $this->assertEquals('/test', $view->url('test', null));
-        $this->assertEquals('/index/test', $view->url(null, 'test'));
+        self::assertEquals('/test/test/foo/bar', $view->url('test', 'test', ['foo' => 'bar']));
+        self::assertEquals('/test/test', $view->url('test', 'test', null));
+        self::assertEquals('/test', $view->url('test', null));
+        self::assertEquals('/index/test', $view->url(null, 'test'));
     }
 
     /**
@@ -526,7 +526,7 @@ class ViewTest extends TestCase
     {
         $view = $this->getView();
 
-        $this->assertEquals('/test/test', $view->url('test', 'test', [], true));
+        self::assertEquals('/test/test', $view->url('test', 'test', [], true));
     }
 
     /**
@@ -536,6 +536,6 @@ class ViewTest extends TestCase
     {
         $view = $this->getView();
 
-        $this->assertNull($view->user());
+        self::assertNull($view->user());
     }
 }

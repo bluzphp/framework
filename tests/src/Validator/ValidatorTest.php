@@ -24,7 +24,7 @@ class ValidatorTest extends Tests\TestCase
      */
     public function testStaticCreateShouldReturnNewValidator()
     {
-        $this->assertInstanceOf('Bluz\Validator\Validator', Validator::create());
+        self::assertInstanceOf('Bluz\Validator\Validator', Validator::create());
     }
 
     /**
@@ -32,11 +32,11 @@ class ValidatorTest extends Tests\TestCase
      */
     public function testStaticCallsShouldReturnNewValidator()
     {
-        $this->assertInstanceOf('Bluz\Validator\Validator', Validator::arrayInput(function () {
+        self::assertInstanceOf('Bluz\Validator\Validator', Validator::arrayInput(function () {
             return true;
         }));
-        $this->assertInstanceOf('Bluz\Validator\Validator', Validator::string());
-        $this->assertInstanceOf('Bluz\Validator\Validator', Validator::notEmpty());
+        self::assertInstanceOf('Bluz\Validator\Validator', Validator::string());
+        self::assertInstanceOf('Bluz\Validator\Validator', Validator::notEmpty());
     }
 
     /**
@@ -58,7 +58,7 @@ class ValidatorTest extends Tests\TestCase
                 ->setError('"{{name}}" is not numeric, is equal "{{input}}"')
                 ->assert('something');
         } catch (\Exception $e) {
-            $this->assertEquals('"Input" is not numeric, is equal "something"', $e->getMessage());
+            self::assertEquals('"Input" is not numeric, is equal "something"', $e->getMessage());
         }
     }
 
@@ -69,8 +69,8 @@ class ValidatorTest extends Tests\TestCase
     {
         $validator = Validator::callback('is_int');
 
-        $this->assertTrue($validator->validate(42));
-        $this->assertTrue($validator->assert(42));
+        self::assertTrue($validator->validate(42));
+        self::assertTrue($validator->assert(42));
     }
 
     /**
@@ -85,7 +85,7 @@ class ValidatorTest extends Tests\TestCase
                 ->setError('"{{name}}" is not numeric, is equal "{{input}}"')
                 ->assert('something');
         } catch (\Exception $e) {
-            $this->assertEquals('"Input" is not numeric, is equal "something"', $e->getMessage());
+            self::assertEquals('"Input" is not numeric, is equal "something"', $e->getMessage());
         }
     }
 
@@ -104,19 +104,19 @@ class ValidatorTest extends Tests\TestCase
             . "username must have a length between 1 and 15\n"
             . "username must not contain whitespace";
 
-        $this->assertEquals($validator->__toString(), $ruleText);
+        self::assertEquals($validator->__toString(), $ruleText);
 
         $customRuleText = "Username must contain only letters, digits and underscore, \n"
             . "must have a length between 1 and 15";
 
         $validator->setError($customRuleText);
 
-        $this->assertEquals($validator->__toString(), $customRuleText);
+        self::assertEquals($validator->__toString(), $customRuleText);
 
-        $this->assertFalse($validator->validate('user#name'));
-        $this->assertFalse($validator('user#name'));
+        self::assertFalse($validator->validate('user#name'));
+        self::assertFalse($validator('user#name'));
 
-        $this->assertCount(1, $validator->getErrors());
+        self::assertCount(1, $validator->getErrors());
     }
 
     /**
@@ -139,7 +139,7 @@ class ValidatorTest extends Tests\TestCase
     {
         $exception = ValidatorException::exception('foo', 'bar');
 
-        $this->assertEqualsArray(['foo' => 'bar'], $exception->getErrors());
+        self::assertEqualsArray(['foo' => 'bar'], $exception->getErrors());
 
         throw $exception;
     }

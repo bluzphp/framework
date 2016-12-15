@@ -30,18 +30,20 @@ class StringInputTest extends Tests\TestCase
 
     /**
      * @dataProvider providerForPass
+     * @param $input
      */
     public function testString($input)
     {
-        $this->assertTrue($this->validator->validate($input));
+        self::assertTrue($this->validator->validate($input));
     }
 
     /**
      * @dataProvider providerForFail
+     * @param $input
      */
     public function testNotString($input)
     {
-        $this->assertFalse($this->validator->validate($input));
+        self::assertFalse($this->validator->validate($input));
     }
 
     /**

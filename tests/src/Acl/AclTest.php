@@ -30,7 +30,7 @@ class AclTest extends TestCase
     public function testAllow()
     {
         Proxy\Auth::setIdentity(new UserAdmin());
-        $this->assertTrue(Proxy\Acl::isAllowed('any', 'any'));
+        self::assertTrue(Proxy\Acl::isAllowed('any', 'any'));
     }
     /**
      * Test deny access
@@ -38,6 +38,6 @@ class AclTest extends TestCase
     public function testDeny()
     {
         Proxy\Auth::setIdentity(new UserGuest());
-        $this->assertFalse(Proxy\Acl::isAllowed('any', 'any'));
+        self::assertFalse(Proxy\Acl::isAllowed('any', 'any'));
     }
 }

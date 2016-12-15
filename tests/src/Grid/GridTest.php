@@ -50,8 +50,8 @@ class GridTest extends TestCase
 
         $grid = new ArrayGrid();
 
-        $this->assertEquals(8, $grid->total());
-        $this->assertEquals(4, $grid->pages());
+        self::assertEquals(8, $grid->total());
+        self::assertEquals(4, $grid->pages());
     }
 
     /**
@@ -62,7 +62,7 @@ class GridTest extends TestCase
         $grid = new ArrayGrid();
         $grid->setModule('module');
         $grid->setController('controller');
-        $this->assertEquals('/module/controller', $grid->reset());
+        self::assertEquals('/module/controller', $grid->reset());
     }
 
     /**
@@ -81,7 +81,7 @@ class GridTest extends TestCase
         $grid = new ArrayGrid();
         $grid->setOrders($orders);
 
-        $this->assertEqualsArray($orders, $grid->getOrders());
+        self::assertEqualsArray($orders, $grid->getOrders());
     }
 
     /**
@@ -90,7 +90,7 @@ class GridTest extends TestCase
     public function testGetPrefix()
     {
         $grid = new ArrayGrid();
-        $this->assertEquals('arr-', $grid->getPrefix());
+        self::assertEquals('arr-', $grid->getPrefix());
     }
 
     /**
@@ -117,7 +117,7 @@ class GridTest extends TestCase
     public function testGetDefaultLimit()
     {
         $grid = new ArrayGrid();
-        $this->assertEquals(4, $grid->getDefaultLimit());
+        self::assertEquals(4, $grid->getDefaultLimit());
     }
 
     /**
@@ -172,11 +172,11 @@ class GridTest extends TestCase
     {
         $grid = new ArrayGrid();
         $grid->addFilter('name', Grid::FILTER_NE, 'Smith');
-        $this->assertEquals(
+        self::assertEquals(
             '/index/index/arr-filter-id/ne-1',
             $grid->filter('id', Grid::FILTER_NE, 1)
         );
-        $this->assertEquals(
+        self::assertEquals(
             '/index/index/arr-filter-name/ne-Smith/arr-filter-id/ne-1',
             $grid->filter('id', Grid::FILTER_NE, 1, false)
         );
@@ -188,7 +188,7 @@ class GridTest extends TestCase
     public function testHelperWrongFilterColumnReturnNull()
     {
         $grid = new ArrayGrid();
-        $this->assertNull($grid->filter('not exist', Grid::FILTER_NE, 1));
+        self::assertNull($grid->filter('not exist', Grid::FILTER_NE, 1));
     }
 
     /**
@@ -197,7 +197,7 @@ class GridTest extends TestCase
     public function testHelperWrongFilterNameReturnNull()
     {
         $grid = new ArrayGrid();
-        $this->assertNull($grid->filter('id', 'not exist', 1));
+        self::assertNull($grid->filter('id', 'not exist', 1));
     }
 
     /**
@@ -206,7 +206,7 @@ class GridTest extends TestCase
     public function testHelperFirst()
     {
         $grid = new ArrayGrid();
-        $this->assertEquals('/', $grid->first());
+        self::assertEquals('/', $grid->first());
     }
 
     /**
@@ -215,7 +215,7 @@ class GridTest extends TestCase
     public function testHelperLast()
     {
         $grid = new ArrayGrid();
-        $this->assertEquals('/index/index/arr-page/3', $grid->last());
+        self::assertEquals('/index/index/arr-page/3', $grid->last());
     }
 
     /**
@@ -224,7 +224,7 @@ class GridTest extends TestCase
     public function testHelperLimit()
     {
         $grid = new ArrayGrid();
-        $this->assertEquals('/index/index/arr-limit/25', $grid->limit());
+        self::assertEquals('/index/index/arr-limit/25', $grid->limit());
     }
 
     /**
@@ -233,7 +233,7 @@ class GridTest extends TestCase
     public function testHelperNext()
     {
         $grid = new ArrayGrid();
-        $this->assertEquals('/index/index/arr-page/2', $grid->next());
+        self::assertEquals('/index/index/arr-page/2', $grid->next());
     }
 
     /**
@@ -243,7 +243,7 @@ class GridTest extends TestCase
     {
         $grid = new ArrayGrid();
         $grid->setPage(3);
-        $this->assertNull($grid->next());
+        self::assertNull($grid->next());
     }
 
     /**
@@ -252,9 +252,9 @@ class GridTest extends TestCase
     public function testHelperOrder()
     {
         $grid = new ArrayGrid();
-        $this->assertNull($grid->order('not exists'));
-        $this->assertEquals('/index/index/arr-order-name/asc', $grid->order('name'));
-        $this->assertEquals('/index/index/arr-order-name/asc', $grid->order('name', 'asc', 'asc', false));
+        self::assertNull($grid->order('not exists'));
+        self::assertEquals('/index/index/arr-order-name/asc', $grid->order('name'));
+        self::assertEquals('/index/index/arr-order-name/asc', $grid->order('name', 'asc', 'asc', false));
     }
 
     /**
@@ -264,7 +264,7 @@ class GridTest extends TestCase
     {
         $grid = new ArrayGrid();
         $grid->setOrder('name');
-        $this->assertEquals('/index/index/arr-order-name/desc', $grid->order('name'));
+        self::assertEquals('/index/index/arr-order-name/desc', $grid->order('name'));
     }
 
     /**
@@ -273,8 +273,8 @@ class GridTest extends TestCase
     public function testHelperPage()
     {
         $grid = new ArrayGrid();
-        $this->assertEquals('/index/index/arr-page/2', $grid->page(2));
-        $this->assertNull($grid->page(42));
+        self::assertEquals('/index/index/arr-page/2', $grid->page(2));
+        self::assertNull($grid->page(42));
     }
 
     /**
@@ -283,7 +283,7 @@ class GridTest extends TestCase
     public function testHelperPages()
     {
         $grid = new ArrayGrid();
-        $this->assertEquals(3, $grid->pages());
+        self::assertEquals(3, $grid->pages());
     }
 
     /**
@@ -293,7 +293,7 @@ class GridTest extends TestCase
     {
         $grid = new ArrayGrid();
         $grid->setPage(3);
-        $this->assertEquals('/index/index/arr-page/2', $grid->prev());
+        self::assertEquals('/index/index/arr-page/2', $grid->prev());
     }
 
     /**
@@ -302,7 +302,7 @@ class GridTest extends TestCase
     public function testHelperPrevReturnNull()
     {
         $grid = new ArrayGrid();
-        $this->assertNull($grid->prev());
+        self::assertNull($grid->prev());
     }
 
     /**
@@ -311,7 +311,7 @@ class GridTest extends TestCase
     public function testHelperReset()
     {
         $grid = new ArrayGrid();
-        $this->assertEquals('/', $grid->reset());
+        self::assertEquals('/', $grid->reset());
     }
 
     /**
@@ -320,6 +320,6 @@ class GridTest extends TestCase
     public function testHelperTotal()
     {
         $grid = new ArrayGrid();
-        $this->assertEquals(10, $grid->total());
+        self::assertEquals(10, $grid->total());
     }
 }

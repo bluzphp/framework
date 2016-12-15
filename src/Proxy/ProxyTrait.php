@@ -32,6 +32,10 @@ trait ProxyTrait
      */
     public static function __callStatic($method, $args)
     {
-        return static::getInstance()->$method(...$args);
+        if ($instance = static::getInstance()) {
+            return $instance->$method(...$args);
+        } else {
+            return false;
+        }
     }
 }

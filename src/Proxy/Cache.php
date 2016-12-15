@@ -12,9 +12,7 @@
 namespace Bluz\Proxy;
 
 use Bluz\Common\Exception\ComponentException;
-use Bluz\Common\Singleton;
-use Cache\Adapter\Common\CacheItem as Item;
-use Psr\Cache\CacheItemPoolInterface as Instance;
+use Cache\Taggable\TaggablePoolInterface as Instance;
 
 /**
  * Proxy to Cache
@@ -22,45 +20,28 @@ use Psr\Cache\CacheItemPoolInterface as Instance;
  * Example of usage
  *     use Bluz\Proxy\Cache;
  *
- *     if (!Cache::hasItem('some unique id')) {
+ *     if (!$result = Cache::get('some unique id')) {
  *          $result = 2*2;
- *          $item = Cache::getItem('some unique id');
- *          $item->set($result);
- *          Cache::save($item);
+ *          Cache::set('some unique id', $result);
  *     }
  *
  * @package  Bluz\Proxy
  * @author   Anton Shevchuk
  *
- * @method   static Instance getInstance()
+ * @method   static Instance|false getInstance()
  *
- * @method   static Item getItem($key)
- * @see      Instance::getItem()
- *
- * @method   static array|\Traversable getItems(array $keys = array())
- * @see      Instance::getItems()
- *
- * @method   static bool hasItem($key)
- * @see      Instance::hasItem()
- *
- * @method   static bool deleteItem($key)
- * @see      Instance::deleteItem()
- *
- * @method   static bool deleteItems(array $keys)
- * @see      Instance::deleteItems()
- *
- * @method   static bool save(Item $item)
- * @see      Instance::save()
+ * @method   static bool delete($key)
+ * @see      CacheItemPoolInterface::deleteItem()
  *
  * @method   static bool clear()
- * @see      Instance::clear()
+ * @see      CacheItemPoolInterface::clear()
  *
  * @method   static bool clearTags(array $tags)
  * @see      TaggablePoolInterface::clearTags()
  */
 class Cache
 {
-    use Singleton;
+    use ProxyTrait;
 
     const TTL_NO_EXPIRY = 0;
 
@@ -68,27 +49,6 @@ class Cache
      * @var array
      */
     protected static $pools = [];
-
-    /**
-     * Handle dynamic, static calls to the object.
-     *
-     * @param  string $method
-     * @param  array $args
-     * @return mixed
-     * @throws ComponentException
-     */
-    public static function __callStatic($method, $args)
-    {
-        if (false === static::getInstance()) {
-            throw new ComponentException(
-                "Class `Proxy\\Cache` is disabled, please use safe-methods.\n".
-                "For more information read documentation at https://github.com/bluzphp/framework/wiki/Cache"
-            );
-        }
-
-        return static::getInstance()->$method(...$args);
-    }
-
 
     /**
      * Init cache instance
@@ -134,12 +94,12 @@ class Cache
      */
     public static function get($key)
     {
-        if (!self::getInstance()) {
+        if (!$cache = self::getInstance()) {
             return false;
         }
 
-        if (self::hasItem($key)) {
-            $item = self::getItem($key);
+        if ($cache->hasItem($key)) {
+            $item = $cache->getItem($key);
             if ($item->isHit()) {
                 return $item->get();
             }
@@ -158,11 +118,11 @@ class Cache
      */
     public static function set($key, $data, $ttl = self::TTL_NO_EXPIRY, $tags = [])
     {
-        if (!self::getInstance()) {
+        if (!$cache = self::getInstance()) {
             return false;
         }
 
-        $item = self::getItem($key);
+        $item = $cache->getItem($key);
         $item->set($data);
 
         if (self::TTL_NO_EXPIRY !== $ttl) {
@@ -173,22 +133,7 @@ class Cache
             $item->setTags($tags);
         }
 
-        return self::save($item);
-    }
-
-    /**
-     * Delete cache item
-     *
-     * @param string $key
-     * @return bool
-     */
-    public static function delete($key)
-    {
-        if (!self::getInstance()) {
-            return false;
-        }
-
-        return self::deleteItem($key);
+        return $cache->save($item);
     }
 
     /**

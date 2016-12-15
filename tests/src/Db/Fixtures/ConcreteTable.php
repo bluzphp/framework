@@ -22,7 +22,7 @@ use Bluz\Db;
  */
 class ConcreteTable extends Bluz\Db\Table
 {
-    protected $table = 'foo';
+    protected $name = 'foo';
     protected $primary = ['bar', 'baz'];
     protected $rowClass = 'ConcreteRow';
 }

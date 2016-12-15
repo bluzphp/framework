@@ -47,7 +47,7 @@ class RegistryTest extends TestCase
 
         $this->registry->setFromArray($data);
 
-        $this->assertEquals('bar', $this->registry->get('foo'));
+        self::assertEquals('bar', $this->registry->get('foo'));
     }
 
     /**
@@ -55,11 +55,11 @@ class RegistryTest extends TestCase
      */
     public function testSetGet()
     {
-        $this->assertNull($this->registry->get('foo'));
+        self::assertNull($this->registry->get('foo'));
 
         $this->registry->set('foo', 'baz');
 
-        $this->assertEquals('baz', $this->registry->get('foo'));
+        self::assertEquals('baz', $this->registry->get('foo'));
     }
 
     /**
@@ -69,8 +69,8 @@ class RegistryTest extends TestCase
     {
         $this->registry->set('moo', 'maz');
 
-        $this->assertTrue($this->registry->contains('moo'));
-        $this->assertFalse($this->registry->contains('boo'));
+        self::assertTrue($this->registry->contains('moo'));
+        self::assertFalse($this->registry->contains('boo'));
     }
 
     /**
@@ -81,7 +81,7 @@ class RegistryTest extends TestCase
         $this->registry->set('moo', 'maz');
         $this->registry->delete('moo');
 
-        $this->assertNull($this->registry->get('moo'));
-        $this->assertFalse($this->registry->contains('moo'));
+        self::assertNull($this->registry->get('moo'));
+        self::assertFalse($this->registry->contains('moo'));
     }
 }

@@ -20,28 +20,33 @@ class AlphaTest extends Tests\TestCase
 {
     /**
      * @dataProvider providerForPass
+     * @param $validAlpha
+     * @param $additional
      */
     public function testValidAlphanumericCharsShouldReturnTrue($validAlpha, $additional)
     {
         $validator = new Alpha($additional);
-        $this->assertTrue($validator->validate($validAlpha));
-        $this->assertTrue($validator->assert($validAlpha));
+        self::assertTrue($validator->validate($validAlpha));
+        self::assertTrue($validator->assert($validAlpha));
     }
 
     /**
      * @dataProvider providerForFail
      * @expectedException \Bluz\Validator\Exception\ValidatorException
+     * @param $invalidAlpha
+     * @param $additional
      */
     public function testInvalidAlphanumericCharsShouldReturnFalse($invalidAlpha, $additional)
     {
         $validator = new Alpha($additional);
-        $this->assertFalse($validator->validate($invalidAlpha));
-        $this->assertFalse($validator->assert($invalidAlpha));
+        self::assertFalse($validator->validate($invalidAlpha));
+        self::assertFalse($validator->assert($invalidAlpha));
     }
 
     /**
      * @dataProvider providerForComponentException
      * @expectedException \Bluz\Validator\Exception\ComponentException
+     * @param $additional
      */
     public function testInvalidConstructorParamsShouldThrowComponentException($additional)
     {
@@ -50,11 +55,13 @@ class AlphaTest extends Tests\TestCase
 
     /**
      * @dataProvider providerAdditionalChars
+     * @param $additional
+     * @param $query
      */
     public function testAdditionalCharsShouldBeRespected($additional, $query)
     {
         $validator = new Alpha($additional);
-        $this->assertTrue($validator->validate($query));
+        self::assertTrue($validator->validate($query));
     }
 
     /**
@@ -63,10 +70,10 @@ class AlphaTest extends Tests\TestCase
     public function testTemplates()
     {
         $validator = new Alpha();
-        $this->assertNotEmpty($validator->__toString());
+        self::assertNotEmpty($validator->__toString());
 
         $validator = new Alpha('[]');
-        $this->assertNotEmpty($validator->__toString());
+        self::assertNotEmpty($validator->__toString());
     }
 
     /**

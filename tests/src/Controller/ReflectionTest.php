@@ -36,12 +36,12 @@ class ReflectionTest extends TestCase
         $reflection = new Reflection($controllerFile);
         $reflection->process();
 
-        $this->assertEqualsArray(['CLI', 'GET'], $reflection->getMethod());
-        $this->assertEquals(300, $reflection->getCache());
-        $this->assertEqualsArray(['a' => 'int', 'b' => 'float', 'c' => 'string'], $reflection->getParams());
-        $this->assertEquals('Test', $reflection->getPrivilege());
-        $this->assertEqualsArray(['Read', 'Write'], $reflection->getAcl());
-        $this->assertArrayHasSize($reflection->getRoute(), 2);
+        self::assertEqualsArray(['CLI', 'GET'], $reflection->getMethod());
+        self::assertEquals(300, $reflection->getCache());
+        self::assertEqualsArray(['a' => 'int', 'b' => 'float', 'c' => 'string'], $reflection->getParams());
+        self::assertEquals('Test', $reflection->getPrivilege());
+        self::assertEqualsArray(['Read', 'Write'], $reflection->getAcl());
+        self::assertArrayHasSize($reflection->getRoute(), 2);
     }
 
     /**
@@ -56,7 +56,7 @@ class ReflectionTest extends TestCase
 
         $data = var_export($reflection, true);
 
-        $this->assertStringStartsWith('Bluz\Controller\Reflection::__set_state', $data);
+        self::assertStringStartsWith('Bluz\Controller\Reflection::__set_state', $data);
     }
 
     /**
@@ -70,7 +70,7 @@ class ReflectionTest extends TestCase
         $reflection = new Reflection($controllerFile);
         $reflection->process();
 
-        $this->assertEqualsArray(['a' => null, 'b' => null, 'c' => null], $reflection->getParams());
+        self::assertEqualsArray(['a' => null, 'b' => null, 'c' => null], $reflection->getParams());
     }
 
     /**

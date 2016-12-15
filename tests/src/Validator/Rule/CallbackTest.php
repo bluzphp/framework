@@ -44,24 +44,24 @@ class CallbackTest extends Tests\TestCase
 
     public function testCallbackValidatorShouldReturnTrueIfCallbackReturnsTrue()
     {
-        $this->assertTrue($this->alwaysTrue->validate('foo-bar'));
+        self::assertTrue($this->alwaysTrue->validate('foo-bar'));
     }
 
     public function testCallbackValidatorShouldReturnFalseIfCallbackReturnsFalse()
     {
-        $this->assertFalse($this->alwaysFalse->validate('foo-bar'));
+        self::assertFalse($this->alwaysFalse->validate('foo-bar'));
     }
 
     public function testCallbackValidatorShouldAcceptArrayCallbackDefinitions()
     {
         $v = new Callback([$this, 'thisIsASampleCallbackUsedInsideThisTest']);
-        $this->assertTrue($v->validate('test'));
+        self::assertTrue($v->validate('test'));
     }
 
     public function testCallbackValidatorShouldAcceptFunctionNamesAsString()
     {
         $v = new Callback('is_string');
-        $this->assertTrue($v->validate('test'));
+        self::assertTrue($v->validate('test'));
     }
 
     /**

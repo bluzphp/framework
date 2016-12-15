@@ -48,7 +48,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function testCheckConnect()
     {
         $this->db->connect();
-        $this->assertInstanceOf('\Pdo', $this->db->handler());
+        self::assertInstanceOf('\Pdo', $this->db->handler());
     }
 
     /**
@@ -67,7 +67,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function testFetchOne()
     {
         $result = $this->db->fetchOne("SELECT COUNT(*) FROM test");
-        $this->assertEquals(42, $result);
+        self::assertEquals(42, $result);
     }
 
     /**
@@ -76,7 +76,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function testFetchRow()
     {
         $result = $this->db->fetchRow("SELECT * FROM test LIMIT 1");
-        $this->assertEquals(4, sizeof($result));
+        self::assertEquals(4, sizeof($result));
     }
 
     /**
@@ -85,7 +85,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function testFetchAll()
     {
         $result = $this->db->fetchAll("SELECT * FROM test LIMIT 10");
-        $this->assertEquals(10, sizeof($result));
+        self::assertEquals(10, sizeof($result));
     }
 
     /**
@@ -94,7 +94,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function testFetchColumn()
     {
         $result = $this->db->fetchColumn("SELECT id FROM test LIMIT 10");
-        $this->assertEquals(10, sizeof($result));
+        self::assertEquals(10, sizeof($result));
     }
 
     /**
@@ -104,9 +104,9 @@ class DbTest extends Bluz\Tests\TestCase
     {
         $result = $this->db->fetchGroup("SELECT status, id, name FROM test");
 
-        $this->assertArrayHasKey('active', $result);
-        $this->assertArrayHasKey('disable', $result);
-        $this->assertArrayHasKey('delete', $result);
+        self::assertArrayHasKey('active', $result);
+        self::assertArrayHasKey('disable', $result);
+        self::assertArrayHasKey('delete', $result);
     }
 
     /**
@@ -116,9 +116,9 @@ class DbTest extends Bluz\Tests\TestCase
     {
         $result = $this->db->fetchColumnGroup("SELECT status, COUNT(id) FROM test GROUP BY status");
 
-        $this->assertArrayHasKey('active', $result);
-        $this->assertArrayHasKey('disable', $result);
-        $this->assertArrayHasKey('delete', $result);
+        self::assertArrayHasKey('active', $result);
+        self::assertArrayHasKey('disable', $result);
+        self::assertArrayHasKey('delete', $result);
     }
 
     /**
@@ -127,7 +127,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function testFetchPairs()
     {
         $result = $this->db->fetchPairs("SELECT email, name FROM test LIMIT 10");
-        $this->assertEquals(10, sizeof($result));
+        self::assertEquals(10, sizeof($result));
     }
 
     /**
@@ -136,7 +136,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function testFetchObjectToStdClass()
     {
         $result = $this->db->fetchObject("SELECT * FROM test LIMIT 1");
-        $this->assertInstanceOf('\stdClass', $result);
+        self::assertInstanceOf('\stdClass', $result);
     }
 
     /**
@@ -145,7 +145,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function testFetchObjectToDeclaredClass()
     {
         $result = $this->db->fetchObject("SELECT * FROM test LIMIT 10", [], 'stdClass');
-        $this->assertInstanceOf('\stdClass', $result);
+        self::assertInstanceOf('\stdClass', $result);
     }
 
     /**
@@ -154,7 +154,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function testFetchObjectToInstance()
     {
         $result = $this->db->fetchObject("SELECT * FROM test LIMIT 1", [], new \stdClass());
-        $this->assertInstanceOf('\stdClass', $result);
+        self::assertInstanceOf('\stdClass', $result);
     }
 
     /**
@@ -163,8 +163,8 @@ class DbTest extends Bluz\Tests\TestCase
     public function testFetchObjectsToStdClass()
     {
         $result = $this->db->fetchObjects("SELECT * FROM test LIMIT 10");
-        $this->assertEquals(10, sizeof($result));
-        $this->assertInstanceOf('\stdClass', current($result));
+        self::assertEquals(10, sizeof($result));
+        self::assertInstanceOf('\stdClass', current($result));
     }
 
     /**
@@ -173,8 +173,8 @@ class DbTest extends Bluz\Tests\TestCase
     public function testFetchObjectsToDeclaredClass()
     {
         $result = $this->db->fetchObjects("SELECT * FROM test LIMIT 10", [], 'stdClass');
-        $this->assertEquals(10, sizeof($result));
-        $this->assertInstanceOf('\stdClass', current($result));
+        self::assertEquals(10, sizeof($result));
+        self::assertInstanceOf('\stdClass', current($result));
     }
 
     /**
@@ -185,7 +185,7 @@ class DbTest extends Bluz\Tests\TestCase
         $result = $this->db->transaction(function () {
             $this->db->query('SELECT * FROM test LIMIT 10');
         });
-        $this->assertTrue($result);
+        self::assertTrue($result);
     }
 
     /**
@@ -199,7 +199,7 @@ class DbTest extends Bluz\Tests\TestCase
             $this->db->query('DELETE FROM test LIMIT 1');
             $this->db->query('DELETE FROM notexiststable LIMIT 1');
         });
-        $this->assertFalse($result);
+        self::assertFalse($result);
     }
 
     /**
@@ -217,7 +217,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function testSelect()
     {
         $query = $this->db->select('test');
-        $this->assertInstanceOf('\Bluz\Db\Query\Select', $query);
+        self::assertInstanceOf('\Bluz\Db\Query\Select', $query);
     }
 
     /**
@@ -226,7 +226,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function testInsert()
     {
         $query = $this->db->insert('test');
-        $this->assertInstanceOf('\Bluz\Db\Query\Insert', $query);
+        self::assertInstanceOf('\Bluz\Db\Query\Insert', $query);
     }
 
     /**
@@ -235,7 +235,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function testUpdate()
     {
         $query = $this->db->update('test');
-        $this->assertInstanceOf('\Bluz\Db\Query\Update', $query);
+        self::assertInstanceOf('\Bluz\Db\Query\Update', $query);
     }
 
     /**
@@ -244,6 +244,6 @@ class DbTest extends Bluz\Tests\TestCase
     public function testDelete()
     {
         $query = $this->db->delete('test');
-        $this->assertInstanceOf('\Bluz\Db\Query\Delete', $query);
+        self::assertInstanceOf('\Bluz\Db\Query\Delete', $query);
     }
 }

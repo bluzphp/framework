@@ -34,18 +34,20 @@ class NoWhitespaceTest extends Tests\TestCase
 
     /**
      * @dataProvider providerForPass
+     * @param $input
      */
     public function testStringWithNoWhitespaceShouldPass($input)
     {
-        $this->assertTrue($this->validator->validate($input));
+        self::assertTrue($this->validator->validate($input));
     }
 
     /**
      * @dataProvider providerForFail
+     * @param $input
      */
     public function testStringWithWhitespaceShouldFail($input)
     {
-        $this->assertFalse($this->validator->validate($input));
+        self::assertFalse($this->validator->validate($input));
     }
 
     /**

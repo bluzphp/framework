@@ -48,7 +48,7 @@ class ContainerTest extends TestCase
     {
         $this->class->setFromArray($this->example);
 
-        $this->assertEqualsArray($this->example, $this->class->toArray());
+        self::assertEqualsArray($this->example, $this->class->toArray());
     }
 
     /**
@@ -61,10 +61,10 @@ class ContainerTest extends TestCase
 
         $result = $this->class->toArray();
 
-        $this->assertArrayHasKey('foo', $result);
-        $this->assertArrayHasKey('quz', $result);
-        $this->assertNull($result['foo']);
-        $this->assertNull($result['quz']);
+        self::assertArrayHasKey('foo', $result);
+        self::assertArrayHasKey('quz', $result);
+        self::assertNull($result['foo']);
+        self::assertNull($result['quz']);
     }
 
     /**
@@ -77,10 +77,10 @@ class ContainerTest extends TestCase
 
         $this->class->delete('quz');
 
-        $this->assertEquals('bar', $this->class->get('foo'));
-        $this->assertFalse($this->class->contains('quz'));
-        $this->assertFalse($this->class->contains('some other'));
-        $this->assertNull($this->class->get('quz'));
+        self::assertEquals('bar', $this->class->get('foo'));
+        self::assertFalse($this->class->contains('quz'));
+        self::assertFalse($this->class->contains('some other'));
+        self::assertNull($this->class->get('quz'));
     }
 
     /**
@@ -93,12 +93,12 @@ class ContainerTest extends TestCase
 
         unset($this->class->quz);
 
-        $this->assertEquals('bar', $this->class->foo);
-        $this->assertFalse(isset($this->class->quz));
-        $this->assertFalse(isset($this->class->some));
-        $this->assertTrue(empty($this->class->quz));
-        $this->assertTrue(empty($this->class->some));
-        $this->assertNull($this->class->quz);
+        self::assertEquals('bar', $this->class->foo);
+        self::assertFalse(isset($this->class->quz));
+        self::assertFalse(isset($this->class->some));
+        self::assertTrue(empty($this->class->quz));
+        self::assertTrue(empty($this->class->some));
+        self::assertNull($this->class->quz);
     }
 
     /**
@@ -111,12 +111,12 @@ class ContainerTest extends TestCase
 
         unset($this->class['quz']);
 
-        $this->assertEquals('bar', $this->class['foo']);
-        $this->assertFalse(isset($this->class['quz']));
-        $this->assertFalse(isset($this->class['some']));
-        $this->assertTrue(empty($this->class['quz']));
-        $this->assertTrue(empty($this->class['some']));
-        $this->assertNull($this->class['quz']);
+        self::assertEquals('bar', $this->class['foo']);
+        self::assertFalse(isset($this->class['quz']));
+        self::assertFalse(isset($this->class['some']));
+        self::assertTrue(empty($this->class['quz']));
+        self::assertTrue(empty($this->class['some']));
+        self::assertNull($this->class['quz']);
     }
 
     /**
@@ -126,6 +126,6 @@ class ContainerTest extends TestCase
     {
         $this->class->setFromArray($this->example);
 
-        $this->assertJsonStringEqualsJsonString(json_encode($this->example), json_encode($this->class));
+        self::assertJsonStringEqualsJsonString(json_encode($this->example), json_encode($this->class));
     }
 }

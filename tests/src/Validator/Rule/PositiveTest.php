@@ -34,21 +34,23 @@ class PositiveTest extends Tests\TestCase
 
     /**
      * @dataProvider providerForPass
+     * @param $input
      */
     public function testPositive($input)
     {
-        $this->assertTrue($this->validator->validate($input));
-        $this->assertTrue($this->validator->assert($input));
+        self::assertTrue($this->validator->validate($input));
+        self::assertTrue($this->validator->assert($input));
     }
 
     /**
      * @dataProvider providerForFail
      * @expectedException \Bluz\Validator\Exception\ValidatorException
+     * @param $input
      */
     public function testNotPositive($input)
     {
-        $this->assertFalse($this->validator->validate($input));
-        $this->assertFalse($this->validator->assert($input));
+        self::assertFalse($this->validator->validate($input));
+        self::assertFalse($this->validator->assert($input));
     }
 
     /**

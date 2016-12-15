@@ -20,21 +20,27 @@ class MaxTest extends Tests\TestCase
 {
     /**
      * @dataProvider providerForPass
+     * @param $maxValue
+     * @param $inclusive
+     * @param $input
      */
     public function testValidMaxInputShouldReturnTrue($maxValue, $inclusive, $input)
     {
         $max = new Max($maxValue, $inclusive);
-        $this->assertTrue($max->validate($input));
-        $this->assertNotEmpty($max->__toString());
+        self::assertTrue($max->validate($input));
+        self::assertNotEmpty($max->__toString());
     }
 
     /**
      * @dataProvider providerForFail
+     * @param $maxValue
+     * @param $inclusive
+     * @param $input
      */
     public function testInvalidMaxValueShouldReturnFalse($maxValue, $inclusive, $input)
     {
         $max = new Max($maxValue, $inclusive);
-        $this->assertFalse($max->validate($input));
+        self::assertFalse($max->validate($input));
     }
 
     /**

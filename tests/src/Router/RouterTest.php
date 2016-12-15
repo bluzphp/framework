@@ -34,7 +34,7 @@ class RouterTest extends TestCase
      */
     public function testRouterUrl($url, $module, $controller, $params = [])
     {
-        $this->assertEquals($url, Router::getUrl($module, $controller, $params));
+        self::assertEquals($url, Router::getUrl($module, $controller, $params));
     }
 
     /**
@@ -48,7 +48,7 @@ class RouterTest extends TestCase
      */
     public function testRouterUrlWithCustomControllerRoute($url, $module, $controller, $params = [])
     {
-        $this->assertEquals($url, Router::getUrl($module, $controller, $params));
+        self::assertEquals($url, Router::getUrl($module, $controller, $params));
     }
 
     /**
@@ -58,7 +58,7 @@ class RouterTest extends TestCase
     {
         $this->setRequestParams('/', [], [], Request::METHOD_GET);
 
-        $this->assertEquals('http://127.0.0.1/', Router::getFullUrl());
+        self::assertEquals('http://127.0.0.1/', Router::getFullUrl());
     }
 
     /**

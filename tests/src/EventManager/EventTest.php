@@ -29,15 +29,15 @@ class EventTest extends Bluz\Tests\TestCase
     {
         $event = new Event('test', 'target', ['foo'=>'bar']);
 
-        $this->assertEquals('test', $event->getName());
-        $this->assertEquals('target', $event->getTarget());
-        $this->assertEquals(['foo'=>'bar'], $event->getParams());
-        $this->assertEquals('bar', $event->getParam('foo'));
-        $this->assertNull($event->getParam('baz'));
-        $this->assertEquals('qux', $event->getParam('baz', 'qux'));
+        self::assertEquals('test', $event->getName());
+        self::assertEquals('target', $event->getTarget());
+        self::assertEquals(['foo'=>'bar'], $event->getParams());
+        self::assertEquals('bar', $event->getParam('foo'));
+        self::assertNull($event->getParam('baz'));
+        self::assertEquals('qux', $event->getParam('baz', 'qux'));
 
         $event->setParam('baz', 'qux');
-        $this->assertEquals('qux', $event->getParam('baz'));
+        self::assertEquals('qux', $event->getParam('baz'));
     }
 
     /**
@@ -50,13 +50,13 @@ class EventTest extends Bluz\Tests\TestCase
 
         $event = new Event('test', 'target', $params);
 
-        $this->assertEquals($params, $event->getParams());
-        $this->assertEquals('bar', $event->getParam('foo'));
-        $this->assertNull($event->getParam('baz'));
-        $this->assertEquals('qux', $event->getParam('baz', 'qux'));
+        self::assertEquals($params, $event->getParams());
+        self::assertEquals('bar', $event->getParam('foo'));
+        self::assertNull($event->getParam('baz'));
+        self::assertEquals('qux', $event->getParam('baz', 'qux'));
 
         $event->setParam('baz', 'qux');
-        $this->assertEquals('qux', $event->getParam('baz'));
+        self::assertEquals('qux', $event->getParam('baz'));
     }
 
     /**

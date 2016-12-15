@@ -18,7 +18,7 @@ use Bluz\Common\Helper;
  *
  * @method integer HelperFunction($argument)
  * @method integer Helper2Function($argument)
- * @method bool helperClass()
+ * @method bool helperClass($argument)
  *
  * @author   Anton Shevchuk
  * @created  14.01.14 11:48

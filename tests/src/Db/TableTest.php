@@ -41,14 +41,14 @@ class TableTest extends Bluz\Tests\TestCase
     public function testGetInstance()
     {
         // test that the method doesn't create new objects
-        $this->assertSame($this->table, Bluz\Tests\Db\Fixtures\ConcreteTable::getInstance());
+        self::assertSame($this->table, Bluz\Tests\Db\Fixtures\ConcreteTable::getInstance());
         
         // tests that instances are creating separately for each table class
-        $this->assertEquals(
+        self::assertEquals(
             'Bluz\Tests\Db\Fixtures\ConcreteTable',
             get_class(Bluz\Tests\Db\Fixtures\ConcreteTable::getInstance())
         );
-        $this->assertEquals(
+        self::assertEquals(
             'Bluz\Tests\Db\Fixtures\WrongKeysTable',
             get_class(Bluz\Tests\Db\Fixtures\WrongKeysTable::getInstance())
         );
@@ -69,7 +69,7 @@ class TableTest extends Bluz\Tests\TestCase
     public function testGetPrimaryKey()
     {
         $table = Bluz\Tests\Db\Fixtures\ConcreteTable::getInstance();
-        $this->assertEquals(['bar', 'baz'], $table->getPrimaryKey());
+        self::assertEquals(['bar', 'baz'], $table->getPrimaryKey());
     }
 
     /**
@@ -102,7 +102,7 @@ class TableTest extends Bluz\Tests\TestCase
             self::markTestSkipped('This test requires SQLite support in your environment');
         }
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
+        self::markTestIncomplete('This test has not been implemented yet.');
     }
 
     /**
@@ -111,7 +111,7 @@ class TableTest extends Bluz\Tests\TestCase
     public function testInsert()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
+        self::markTestIncomplete('This test has not been implemented yet.');
     }
 
     /**
@@ -120,7 +120,7 @@ class TableTest extends Bluz\Tests\TestCase
     public function testUpdate()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
+        self::markTestIncomplete('This test has not been implemented yet.');
     }
 
     /**
@@ -129,6 +129,6 @@ class TableTest extends Bluz\Tests\TestCase
     public function testDelete()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
+        self::markTestIncomplete('This test has not been implemented yet.');
     }
 }

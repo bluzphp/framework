@@ -20,23 +20,25 @@ class EmailTest extends Tests\TestCase
 {
     /**
      * @dataProvider providerForPass
+     * @param $validEmail
      */
     public function testValidEmailShouldPass($validEmail)
     {
         $validator = new Email();
-        $this->assertTrue($validator->validate($validEmail));
-        $this->assertTrue($validator->assert($validEmail));
+        self::assertTrue($validator->validate($validEmail));
+        self::assertTrue($validator->assert($validEmail));
     }
 
     /**
      * @dataProvider providerForFail
      * @expectedException \Bluz\Validator\Exception\ValidatorException
+     * @param $invalidEmail
      */
     public function testInvalidEmailsShouldFailValidation($invalidEmail)
     {
         $validator = new Email();
-        $this->assertFalse($validator->validate($invalidEmail));
-        $this->assertFalse($validator->assert($invalidEmail));
+        self::assertFalse($validator->validate($invalidEmail));
+        self::assertFalse($validator->assert($invalidEmail));
     }
 
     /**
@@ -45,8 +47,8 @@ class EmailTest extends Tests\TestCase
 //    public function testValidEmailWithDomainCheck()
 //    {
 //        $validator = new Email(true);
-//        $this->assertTrue($validator->validate('test@test.com'));
-//        $this->assertFalse($validator->validate('a@a.a'));
+//        self::assertTrue($validator->validate('test@test.com'));
+//        self::assertFalse($validator->validate('a@a.a'));
 //    }
 
     /**

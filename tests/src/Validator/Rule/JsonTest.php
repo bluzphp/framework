@@ -31,23 +31,26 @@ class JsonTest extends Tests\TestCase
         parent::setUp();
         $this->validator = new Json();
     }
+
     /**
      * @dataProvider providerForPass
+     * @param $input
      */
     public function testValidJsonsShouldReturnTrue($input)
     {
-        $this->assertTrue($this->validator->validate($input));
-        $this->assertTrue($this->validator->assert($input));
+        self::assertTrue($this->validator->validate($input));
+        self::assertTrue($this->validator->assert($input));
     }
 
     /**
      * @dataProvider providerForFail
      * @expectedException \Bluz\Validator\Exception\ValidatorException
+     * @param $input
      */
     public function testInvalidJsonsShouldThrowJsonException($input)
     {
-        $this->assertFalse($this->validator->validate($input));
-        $this->assertFalse($this->validator->assert($input));
+        self::assertFalse($this->validator->validate($input));
+        self::assertFalse($this->validator->assert($input));
     }
 
     /**

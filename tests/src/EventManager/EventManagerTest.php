@@ -46,7 +46,7 @@ class EventManagerTest extends Bluz\Tests\TestCase
             $counter++;
         });
         $this->eventManager->trigger('test');
-        $this->assertEquals(1, $counter);
+        self::assertEquals(1, $counter);
     }
 
     /**
@@ -65,7 +65,7 @@ class EventManagerTest extends Bluz\Tests\TestCase
             $counter++;
         });
         $this->eventManager->trigger('test');
-        $this->assertEquals(3, $counter);
+        self::assertEquals(3, $counter);
     }
 
     /**
@@ -81,7 +81,7 @@ class EventManagerTest extends Bluz\Tests\TestCase
             $counter++;
         });
         $this->eventManager->trigger('test');
-        $this->assertEquals(2, $counter);
+        self::assertEquals(2, $counter);
     }
 
     /**
@@ -98,7 +98,7 @@ class EventManagerTest extends Bluz\Tests\TestCase
             $counter *= 2;
         });
         $this->eventManager->trigger('test');
-        $this->assertEquals(1, $counter);
+        self::assertEquals(1, $counter);
     }
 
     /**
@@ -116,7 +116,7 @@ class EventManagerTest extends Bluz\Tests\TestCase
             $counter *= 2;
         });
         $this->eventManager->trigger('some:test');
-        $this->assertEquals(2, $counter);
+        self::assertEquals(2, $counter);
     }
 
     /**
@@ -137,7 +137,7 @@ class EventManagerTest extends Bluz\Tests\TestCase
 
         $result = $this->eventManager->trigger('test', $counter);
 
-        $this->assertEquals(2, $result);
+        self::assertEquals(2, $result);
     }
 
     /**
@@ -151,7 +151,7 @@ class EventManagerTest extends Bluz\Tests\TestCase
 
         $result = $this->eventManager->trigger('test', 10, ['plus'=>10]);
 
-        $this->assertEquals(20, $result);
+        self::assertEquals(20, $result);
     }
 
     /**

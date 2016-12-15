@@ -20,28 +20,33 @@ class AlphaNumericTest extends Tests\TestCase
 {
     /**
      * @dataProvider providerForPass
+     * @param $validAlphaNumeric
+     * @param $additional
      */
     public function testValidAlphaNumericCharsShouldReturnTrue($validAlphaNumeric, $additional)
     {
         $validator = new AlphaNumeric($additional);
-        $this->assertTrue($validator->validate($validAlphaNumeric));
-        $this->assertTrue($validator->assert($validAlphaNumeric));
+        self::assertTrue($validator->validate($validAlphaNumeric));
+        self::assertTrue($validator->assert($validAlphaNumeric));
     }
 
     /**
      * @dataProvider providerForFail
      * @expectedException \Bluz\Validator\Exception\ValidatorException
+     * @param $invalidAlphaNumeric
+     * @param $additional
      */
     public function testInvalidAlphaNumericCharsShouldReturnFalse($invalidAlphaNumeric, $additional)
     {
         $validator = new AlphaNumeric($additional);
-        $this->assertFalse($validator->validate($invalidAlphaNumeric));
-        $this->assertFalse($validator->assert($invalidAlphaNumeric));
+        self::assertFalse($validator->validate($invalidAlphaNumeric));
+        self::assertFalse($validator->assert($invalidAlphaNumeric));
     }
 
     /**
      * @dataProvider providerForComponentException
      * @expectedException \Bluz\Validator\Exception\ComponentException
+     * @param $additional
      */
     public function testInvalidConstructorParamsShouldThrowComponentException($additional)
     {
@@ -50,11 +55,13 @@ class AlphaNumericTest extends Tests\TestCase
 
     /**
      * @dataProvider providerAdditionalChars
+     * @param $additional
+     * @param $query
      */
     public function testAdditionalCharsShouldBeRespected($additional, $query)
     {
         $validator = new AlphaNumeric($additional);
-        $this->assertTrue($validator->validate($query));
+        self::assertTrue($validator->validate($query));
     }
 
     /**
@@ -63,10 +70,10 @@ class AlphaNumericTest extends Tests\TestCase
     public function testTemplates()
     {
         $validator = new AlphaNumeric();
-        $this->assertNotEmpty($validator->__toString());
+        self::assertNotEmpty($validator->__toString());
 
         $validator = new AlphaNumeric('[]');
-        $this->assertNotEmpty($validator->__toString());
+        self::assertNotEmpty($validator->__toString());
     }
 
     /**

@@ -36,8 +36,8 @@ class ValidatorBuilderTest extends Tests\TestCase
             );
             $validator->assert(['some' => 'something']);
         } catch (ValidatorException $e) {
-            $this->assertEquals('Invalid Arguments', $e->getMessage());
-            $this->assertArrayHasKey('some', $e->getErrors());
+            self::assertEquals('Invalid Arguments', $e->getMessage());
+            self::assertArrayHasKey('some', $e->getErrors());
         }
     }
 
@@ -56,8 +56,8 @@ class ValidatorBuilderTest extends Tests\TestCase
             );
             $validator->assert(['some' => ['something']]);
         } catch (ValidatorException $e) {
-            $this->assertEquals('Invalid Arguments', $e->getMessage());
-            $this->assertArrayHasKey('some', $e->getErrors());
+            self::assertEquals('Invalid Arguments', $e->getMessage());
+            self::assertArrayHasKey('some', $e->getErrors());
         }
     }
     /**
@@ -84,12 +84,12 @@ class ValidatorBuilderTest extends Tests\TestCase
             );
             $validator->assert(['foo' => 'something']);
         } catch (ValidatorException $e) {
-            $this->assertEquals('Invalid Arguments', $e->getMessage());
+            self::assertEquals('Invalid Arguments', $e->getMessage());
 
             $errors = $validator->getErrors();
 
-            $this->assertArrayHasKey('foo', $errors);
-            $this->assertArrayHasKey('bar', $errors);
+            self::assertArrayHasKey('foo', $errors);
+            self::assertArrayHasKey('bar', $errors);
         }
     }
 
@@ -120,8 +120,8 @@ class ValidatorBuilderTest extends Tests\TestCase
             'quz',
             Validator::numeric()
         );
-        $this->assertTrue($validator->validate($object));
-        $this->assertTrue($validator->assert($object));
+        self::assertTrue($validator->validate($object));
+        self::assertTrue($validator->assert($object));
     }
 
     /**
@@ -139,7 +139,7 @@ class ValidatorBuilderTest extends Tests\TestCase
             'bar',
             Validator::numeric()
         );
-        $this->assertFalse($validator->validate([]));
-        $this->assertFalse($validator->assert([]));
+        self::assertFalse($validator->validate([]));
+        self::assertFalse($validator->assert([]));
     }
 }

@@ -63,7 +63,7 @@ class QueryTest extends TestCase
             . ' ORDER BY u.id ASC, u.login ASC'
             . ' LIMIT 5 OFFSET 0';
 
-        $this->assertEquals($builder->getQuery(), $check);
+        self::assertEquals($builder->getQuery(), $check);
     }
 
     /**
@@ -88,9 +88,9 @@ class QueryTest extends TestCase
             . ' GROUP BY p.userId, MONTH(p.created)'
             . ' HAVING ((MONTH(p.created) = :month1) OR (MONTH(p.created) = :month2)) AND (p.userId <> 0)';
 
-        $this->assertEquals(2, $builder->getParameter(':month1'));
-        $this->assertEquals(4, $builder->getParameter(':month2'));
-        $this->assertEquals($builder->getQuery(), $check);
+        self::assertEquals(2, $builder->getParameter(':month1'));
+        self::assertEquals(4, $builder->getParameter(':month2'));
+        self::assertEquals($builder->getQuery(), $check);
     }
 
     /**
@@ -108,7 +108,7 @@ class QueryTest extends TestCase
         $check = 'SELECT u.*, p.*'
             . ' FROM users u INNER JOIN pages p ON p.userId = u.id';
 
-        $this->assertEquals($builder->getQuery(), $check);
+        self::assertEquals($builder->getQuery(), $check);
     }
 
     /**
@@ -126,7 +126,7 @@ class QueryTest extends TestCase
         $check = 'SELECT u.*, p.*'
             . ' FROM users u RIGHT JOIN pages p ON p.userId = u.id';
 
-        $this->assertEquals($builder->getQuery(), $check);
+        self::assertEquals($builder->getQuery(), $check);
     }
 
     /**
@@ -146,7 +146,7 @@ class QueryTest extends TestCase
             . ' FROM users u INNER JOIN pages p ON p.userId = u.id'
             . ' WHERE u.id = ? OR u.id = ?';
 
-        $this->assertEquals($check, (string) $builder);
+        self::assertEquals($check, (string) $builder);
     }
 
     /**
@@ -162,8 +162,8 @@ class QueryTest extends TestCase
         ;
         $check = 'INSERT INTO `test` SET `name` = "example", `email` = "example@domain.com"';
 
-        $this->assertEquals($builder->getQuery(), $check);
-        $this->assertGreaterThan(0, $builder->execute());
+        self::assertEquals($builder->getQuery(), $check);
+        self::assertGreaterThan(0, $builder->execute());
     }
 
     /**
@@ -183,8 +183,8 @@ class QueryTest extends TestCase
         ;
         $check = 'UPDATE `test` SET `status` = "disable" WHERE email = "example@domain.com"';
 
-        $this->assertEquals($builder->getQuery(), $check);
-        $this->assertEquals(0, $builder->execute());
+        self::assertEquals($builder->getQuery(), $check);
+        self::assertEquals(0, $builder->execute());
     }
 
     /**
@@ -200,7 +200,7 @@ class QueryTest extends TestCase
         ;
         $check = 'DELETE FROM `test` WHERE email = "example@domain.com" LIMIT 1';
 
-        $this->assertEquals($builder->getQuery(), $check);
-        $this->assertEquals(0, $builder->execute());
+        self::assertEquals($builder->getQuery(), $check);
+        self::assertEquals(0, $builder->execute());
     }
 }

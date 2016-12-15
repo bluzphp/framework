@@ -38,7 +38,7 @@ class RelationTest extends Bluz\Tests\TestCase
      */
     public function testRelationOneToOne()
     {
-        $this->markTestIncomplete(
+        self::markTestIncomplete(
             'This test has not been implemented yet.'
         );
     }
@@ -48,7 +48,7 @@ class RelationTest extends Bluz\Tests\TestCase
      */
     public function testRelationManyToMany()
     {
-        $this->markTestIncomplete(
+        self::markTestIncomplete(
             'This test has not been implemented yet.'
         );
     }

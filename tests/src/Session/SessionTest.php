@@ -47,11 +47,11 @@ class SessionTest extends TestCase
      */
     public function testSetGet()
     {
-        $this->assertNull($this->session->get('foo'));
+        self::assertNull($this->session->get('foo'));
 
         $this->session->set('foo', 'baz');
 
-        $this->assertEquals('baz', $this->session->get('foo'));
+        self::assertEquals('baz', $this->session->get('foo'));
     }
 
     /**
@@ -63,8 +63,8 @@ class SessionTest extends TestCase
     {
         $this->session->set('moo', 'maz');
 
-        $this->assertTrue($this->session->contains('moo'));
-        $this->assertFalse($this->session->contains('boo'));
+        self::assertTrue($this->session->contains('moo'));
+        self::assertFalse($this->session->contains('boo'));
     }
 
     /**
@@ -77,6 +77,6 @@ class SessionTest extends TestCase
         $this->session->set('moo', 'maz');
         $this->session->delete('moo');
 
-        $this->assertNull($this->session->get('moo'));
+        self::assertNull($this->session->get('moo'));
     }
 }

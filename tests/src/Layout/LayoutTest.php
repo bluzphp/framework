@@ -30,7 +30,7 @@ class LayoutTest extends TestCase
         $layout = new Layout();
         $layout->setContent('foo');
 
-        $this->assertEquals('foo', $layout->getContent());
+        self::assertEquals('foo', $layout->getContent());
     }
 
     /**
@@ -43,7 +43,7 @@ class LayoutTest extends TestCase
             return 'foo';
         });
 
-        $this->assertEquals('foo', $layout->getContent());
+        self::assertEquals('foo', $layout->getContent());
     }
 
     /**
@@ -56,7 +56,7 @@ class LayoutTest extends TestCase
             throw new \Exception('foo');
         });
 
-        $this->assertEquals('foo', $layout->getContent());
+        self::assertEquals('foo', $layout->getContent());
     }
 
     /**
@@ -68,7 +68,7 @@ class LayoutTest extends TestCase
 
         $layout->breadCrumbs(['foo' => 'bar']);
 
-        $this->assertEqualsArray(['foo' => 'bar'], $layout->breadCrumbs());
+        self::assertEqualsArray(['foo' => 'bar'], $layout->breadCrumbs());
     }
     /**
      * Helper Link
@@ -82,7 +82,7 @@ class LayoutTest extends TestCase
 
         $result = $layout->link();
 
-        $this->assertEquals(
+        self::assertEquals(
             '<link href="foo.css" rel="stylesheet" media="all"/>'.
             '<link href="favicon.ico" rel="shortcut icon"/>',
             str_replace(["\t", "\n", "\r"], '', $result)
@@ -101,7 +101,7 @@ class LayoutTest extends TestCase
 
         $result = $layout->meta();
 
-        $this->assertEquals(
+        self::assertEquals(
             '<meta name="keywords" content="foo, bar, baz, qux"/>'.
             '<meta name="description" content="foo bar baz qux"/>',
             str_replace(["\t", "\n", "\r"], '', $result)
@@ -131,7 +131,7 @@ class LayoutTest extends TestCase
 
         $result = $layout->meta();
 
-        $this->assertEquals(
+        self::assertEquals(
             '<meta name="keywords" content="foo, bar, baz, qux"/>'.
             '<meta name="description" content="foo bar baz qux"/>',
             str_replace(["\t", "\n", "\r"], '', $result)
@@ -151,6 +151,6 @@ class LayoutTest extends TestCase
 
         $result = $layout->title();
 
-        $this->assertEquals('baz :: foo :: bar', $result);
+        self::assertEquals('baz :: foo :: bar', $result);
     }
 }

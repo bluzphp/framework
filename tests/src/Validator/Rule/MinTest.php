@@ -20,21 +20,27 @@ class MinTest extends Tests\TestCase
 {
     /**
      * @dataProvider providerForPass
+     * @param $minValue
+     * @param $inclusive
+     * @param $input
      */
     public function testValidMinShouldReturnTrue($minValue, $inclusive, $input)
     {
         $min = new Min($minValue, $inclusive);
-        $this->assertTrue($min->validate($input));
-        $this->assertNotEmpty($min->__toString());
+        self::assertTrue($min->validate($input));
+        self::assertNotEmpty($min->__toString());
     }
 
     /**
      * @dataProvider providerForFail
+     * @param $minValue
+     * @param $inclusive
+     * @param $input
      */
     public function testInvalidMinShouldReturnFalse($minValue, $inclusive, $input)
     {
         $min = new Min($minValue, $inclusive);
-        $this->assertFalse($min->validate($input));
+        self::assertFalse($min->validate($input));
     }
 
     /**

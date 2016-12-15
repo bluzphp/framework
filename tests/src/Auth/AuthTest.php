@@ -37,7 +37,7 @@ class AuthTest extends TestCase
 
         Auth::setIdentity($adminIdentity);
 
-        $this->assertEquals($adminIdentity, Auth::getIdentity());
+        self::assertEquals($adminIdentity, Auth::getIdentity());
     }
 
     /**
@@ -52,7 +52,7 @@ class AuthTest extends TestCase
         Auth::setIdentity($adminIdentity);
         Auth::clearIdentity();
 
-        $this->assertNull(Auth::getIdentity());
+        self::assertNull(Auth::getIdentity());
     }
 
     /**
@@ -70,7 +70,7 @@ class AuthTest extends TestCase
 
         $_SERVER['HTTP_USER_AGENT'] = 'agent:cli';
 
-        $this->assertNull(Auth::getIdentity());
+        self::assertNull(Auth::getIdentity());
     }
 
     /**
@@ -80,6 +80,6 @@ class AuthTest extends TestCase
     {
         $authRow = Table::getInstance()->getAuthRow(Table::PROVIDER_EQUALS, 'admin');
 
-        $this->assertInstanceOf('\Bluz\Auth\AbstractRow', $authRow);
+        self::assertInstanceOf('\Bluz\Auth\AbstractRow', $authRow);
     }
 }

@@ -97,7 +97,7 @@ class ConfigTest extends TestCase
         $this->config->setEnvironment('testing');
         $this->config->init();
         $configWithEnvironment = $this->config->getData();
-        $this->assertNotEquals($configWithoutEnvironment, $configWithEnvironment);
+        self::assertNotEquals($configWithoutEnvironment, $configWithEnvironment);
     }
 
     /**
@@ -128,7 +128,7 @@ class ConfigTest extends TestCase
     {
         $this->config->setPath($this->path);
         $this->config->init();
-        $this->assertEquals(
+        self::assertEquals(
             ['application' => ['section1'=>'default', 'section2'=>[], 'section3'=>[]]],
             $this->config->getData()
         );
@@ -141,7 +141,7 @@ class ConfigTest extends TestCase
     {
         $this->config->setPath($this->path);
         $this->config->init();
-        $this->assertNull($this->config->getData('section_doesnt_exist'));
+        self::assertNull($this->config->getData('section_doesnt_exist'));
     }
 
     /**
@@ -151,7 +151,7 @@ class ConfigTest extends TestCase
     {
         $this->config->setPath($this->path);
         $this->config->init();
-        $this->assertEquals(
+        self::assertEquals(
             ['section1'=>'default', 'section2'=>[], 'section3'=>[]],
             $this->config->getData('application')
         );
@@ -165,7 +165,7 @@ class ConfigTest extends TestCase
         $this->config->setPath($this->path);
         $this->config->setEnvironment('testing');
         $this->config->init();
-        $this->assertEquals(1, $this->config->getData('application', 'section1'));
+        self::assertEquals(1, $this->config->getData('application', 'section1'));
     }
 
 
@@ -175,7 +175,7 @@ class ConfigTest extends TestCase
     public function testGetModuleData()
     {
         $this->config->setPath($this->path);
-        $this->assertEquals(
+        self::assertEquals(
             ['foo' => 'bar', 'qux' => 'bar'],
             $this->config->getModuleData('index')
         );
@@ -188,7 +188,7 @@ class ConfigTest extends TestCase
     public function testGetModuleDataByNotExistedModule()
     {
         $this->config->setPath($this->path);
-        $this->assertNull($this->config->getModuleData('module_doesnt_exist'));
+        self::assertNull($this->config->getModuleData('module_doesnt_exist'));
     }
 
     /**
@@ -197,7 +197,7 @@ class ConfigTest extends TestCase
     public function testGetModuleDataBySection()
     {
         $this->config->setPath($this->path);
-        $this->assertEquals('bar', $this->config->getModuleData('index', 'foo'));
+        self::assertEquals('bar', $this->config->getModuleData('index', 'foo'));
     }
 
 
@@ -207,7 +207,7 @@ class ConfigTest extends TestCase
     public function testGetModuleDataByNotExistedSection()
     {
         $this->config->setPath($this->path);
-        $this->assertNull($this->config->getModuleData('index', 'section_doesnt_exist'));
+        self::assertNull($this->config->getModuleData('index', 'section_doesnt_exist'));
     }
 
     /**
@@ -217,6 +217,6 @@ class ConfigTest extends TestCase
     {
         $this->config->setPath($this->path);
         $this->config->setEnvironment('testing');
-        $this->assertEquals('baz', $this->config->getModuleData('index', 'foo'));
+        self::assertEquals('baz', $this->config->getModuleData('index', 'foo'));
     }
 }

@@ -20,23 +20,27 @@ class DomainTest extends Tests\TestCase
 {
     /**
      * @dataProvider providerForPass
+     * @param $input
+     * @param bool $checkDns
      */
     public function testValidDomainsShouldReturnTrue($input, $checkDns = false)
     {
         $validator = new Domain($checkDns);
-        $this->assertTrue($validator->validate($input));
-        $this->assertTrue($validator->assert($input));
+        self::assertTrue($validator->validate($input));
+        self::assertTrue($validator->assert($input));
     }
 
     /**
      * @dataProvider providerForFail
      * @expectedException \Bluz\Validator\Exception\ValidatorException
+     * @param $input
+     * @param bool $checkDns
      */
     public function testValidDomainsShouldReturnFalse($input, $checkDns = false)
     {
         $validator = new Domain($checkDns);
-        $this->assertFalse($validator->validate($input));
-        $this->assertFalse($validator->assert($input));
+        self::assertFalse($validator->validate($input));
+        self::assertFalse($validator->assert($input));
     }
 
     /**

@@ -20,29 +20,34 @@ class IpTest extends Tests\TestCase
 {
     /**
      * @dataProvider providerForPass
+     * @param $input
+     * @param null $options
      */
     public function testValidIpsShouldReturnTrue($input, $options = null)
     {
         $validator = new Ip($options);
-        $this->assertTrue($validator->validate($input));
-        $this->assertTrue($validator->assert($input));
+        self::assertTrue($validator->validate($input));
+        self::assertTrue($validator->assert($input));
     }
 
     /**
      * @dataProvider providerForFail
      * @expectedException \Bluz\Validator\Exception\ValidatorException
+     * @param $input
+     * @param null $options
      */
     public function testInvalidIpsShouldReturnFalseAndThrowException($input, $options = null)
     {
         $validator = new Ip($options);
-        $this->assertFalse($validator->validate($input));
-        $this->assertNotEmpty($validator->__toString());
-        $this->assertFalse($validator->assert($input));
+        self::assertFalse($validator->validate($input));
+        self::assertNotEmpty($validator->__toString());
+        self::assertFalse($validator->assert($input));
     }
 
     /**
      * @dataProvider providerForComponentException
      * @expectedException \Bluz\Validator\Exception\ComponentException
+     * @param $range
      */
     public function testInvalidRangeShouldRaiseException($range)
     {
@@ -51,24 +56,28 @@ class IpTest extends Tests\TestCase
 
     /**
      * @dataProvider providerForIpBetweenRange
+     * @param $input
+     * @param $networkRange
      */
     public function testIpsBetweenRangeShouldReturnTrue($input, $networkRange)
     {
         $validator = new Ip($networkRange);
-        $this->assertTrue($validator->validate($input));
-        $this->assertTrue($validator->assert($input));
+        self::assertTrue($validator->validate($input));
+        self::assertTrue($validator->assert($input));
     }
 
     /**
      * @dataProvider providerForIpOutsideRange
      * @expectedException \Bluz\Validator\Exception\ValidatorException
+     * @param $input
+     * @param $networkRange
      */
     public function testIpsOutsideRangeShouldReturnFalse($input, $networkRange)
     {
         $validator = new Ip($networkRange);
-        $this->assertFalse($validator->validate($input));
-        $this->assertNotEmpty($validator->__toString());
-        $this->assertFalse($validator->assert($input));
+        self::assertFalse($validator->validate($input));
+        self::assertNotEmpty($validator->__toString());
+        self::assertFalse($validator->assert($input));
     }
 
     /**

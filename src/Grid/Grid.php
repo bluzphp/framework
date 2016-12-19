@@ -653,14 +653,10 @@ abstract class Grid
      */
     public function getFilter($column, $filter = null)
     {
-        if (isset($this->filters[$column])) {
-            if ($filter) {
-                return $this->filters[$column][$filter] ?? null;
-            } else {
-                return $this->filters[$column];
-            }
+        if (is_null($filter)) {
+            return $this->filters[$column] ?? null;
         } else {
-            return null;
+            return $this->filters[$column][$filter] ?? null;
         }
     }
 

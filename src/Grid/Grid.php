@@ -301,7 +301,7 @@ abstract class Grid
 
         foreach ($this->allowOrders as $column) {
             $order = Request::getParam($this->prefix . 'order-' . $column);
-            if ($order) {
+            if (!is_null($order)) {
                 $this->addOrder($column, $order);
             }
         }

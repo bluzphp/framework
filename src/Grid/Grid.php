@@ -495,15 +495,15 @@ abstract class Grid
      */
     public function addOrder($column, $order = Grid::ORDER_ASC)
     {
-        if (!in_array($column, $this->allowOrders)) {
-            throw new GridException('Wrong column order');
-        }
+        $order = strtolower($order);
 
-        if (strtolower($order) != Grid::ORDER_ASC
-            && strtolower($order) != Grid::ORDER_DESC
-        ) {
+        if (!in_array($column, $this->allowOrders)) {
+            throw new GridException('Column name is not allowed');
+        }
+        if ($order != Grid::ORDER_ASC && $order != Grid::ORDER_DESC) {
             throw new GridException('Order for column "' . $column . '" is incorrect');
         }
+
         $column = $this->applyAlias($column);
 
         $this->orders[$column] = $order;

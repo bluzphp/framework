@@ -71,6 +71,34 @@ class Request
     }
 
     /**
+     * Retrieve a member of the $_GET super global
+     *
+     * If no $key is passed, returns the entire $_GET array.
+     *
+     * @param  string $key
+     * @param  string $default Default value to use if key not found
+     * @return string Returns null if key does not exist
+     */
+    public static function getQuery($key = null, $default = null)
+    {
+        return RequestFactory::get($key, self::getInstance()->getQueryParams(), $default);
+    }
+
+    /**
+     * Retrieve a member of the $_POST super global
+     *
+     * If no $key is passed, returns the entire $_POST array.
+     *
+     * @param  string $key
+     * @param  string $default Default value to use if key not found
+     * @return string Returns null if key does not exist
+     */
+    public static function getPost($key = null, $default = null)
+    {
+        return RequestFactory::get($key, self::getInstance()->getParsedBody(), $default);
+    }
+
+    /**
      * Retrieve a member of the $_SERVER super global
      *
      * If no $key is passed, returns the entire $_SERVER array.
@@ -134,20 +162,12 @@ class Request
      */
     public static function getParam($key, $default = null)
     {
-        switch (true) {
-            case ($params = self::getInstance()->getQueryParams()) && isset($params[$key]):
-                return $params[$key];
-            case ($params = self::getInstance()->getParsedBody()) && isset($params[$key]):
-                return $params[$key];
-            case ($params = self::getInstance()->getCookieParams()) && isset($params[$key]):
-                return $params[$key];
-            case ($params = self::getInstance()->getServerParams()) && isset($params[$key]):
-                return $params[$key];
-            case isset($_ENV[$key]):
-                return $_ENV[$key];
-            default:
-                return $default;
-        }
+        return
+            self::getQuery($key) ??
+            self::getPost($key) ??
+            self::getCookie($key) ??
+            self::getServer($key) ??
+            $default;
     }
 
     /**

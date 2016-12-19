@@ -72,38 +72,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      * @param array  $params $_POST params
      * @param string $method HTTP method
      * @param array  $headers HTTP headers
-     * @return \Psr\Http\Message\ServerRequestInterface|ServerRequest
-     */
-    protected function prepareRequest(
-        $path = '',
-        $query = [],
-        $params = [],
-        $method = Request::METHOD_GET,
-        $headers = []
-    ) {
-        $uri = 'http://127.0.0.1/'. $path;
-
-        $request = new ServerRequest([], [], $uri, $method, 'php://input', $headers);
-
-        if (!empty($query)) {
-            $request = $request->withQueryParams($query);
-        }
-
-        if (!empty($params)) {
-            $request = $request->withParsedBody($params);
-        }
-
-        return $request;
-    }
-
-    /**
-     * Set new Request instance
-     *
-     * @param string $path Path part of URI http://host/module/controller/path
-     * @param array  $query $_GET params
-     * @param array  $params $_POST params
-     * @param string $method HTTP method
-     * @param array  $headers HTTP headers
+     * @param array $cookies
      * @return \Psr\Http\Message\ServerRequestInterface|ServerRequest
      */
     protected function setRequestParams(
@@ -111,9 +80,13 @@ class TestCase extends \PHPUnit_Framework_TestCase
         $query = [],
         $params = [],
         $method = Request::METHOD_GET,
-        $headers = []
+        $headers = [],
+        $cookies = []
     ) {
-        $request = $this->prepareRequest($path, $query, $params, $method, $headers);
+
+        $uri = 'http://127.0.0.1/'. $path;
+
+        $request = new ServerRequest([], [], $uri, $method, 'php://input', $headers, $cookies, $query, $params);
 
         Request::setInstance($request);
 

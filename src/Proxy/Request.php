@@ -95,7 +95,7 @@ class Request
      */
     public static function getPost($key = null, $default = null)
     {
-        return RequestFactory::get($key, self::getInstance()->getParsedBody(), $default);
+        return RequestFactory::get($key, (array)self::getInstance()->getParsedBody(), $default);
     }
 
     /**

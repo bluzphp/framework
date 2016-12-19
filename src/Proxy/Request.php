@@ -153,11 +153,11 @@ class Request
     
     /**
      * Access values contained in the superglobals as public members
-     * Order of precedence: 1. GET, 2. POST, 3. COOKIE, 4. SERVER, 5. ENV
+     * Order of precedence: 1. GET, 2. POST, 3. COOKIE, 4. SERVER
      *
      * @param  string $key
      * @param  null   $default
-     * @return mixed
+     * @return string|null
      * @link http://msdn.microsoft.com/en-us/library/system.web.httprequest.item.aspx
      */
     public static function getParam($key, $default = null)
@@ -203,15 +203,12 @@ class Request
     public static function getClientIp($checkProxy = true)
     {
         if ($checkProxy && self::getServer('HTTP_CLIENT_IP') != null) {
-            $ip = self::getServer('HTTP_CLIENT_IP');
+            return self::getServer('HTTP_CLIENT_IP');
+        } elseif ($checkProxy && self::getServer('HTTP_X_FORWARDED_FOR') != null) {
+            return self::getServer('HTTP_X_FORWARDED_FOR');
         } else {
-            if ($checkProxy && self::getServer('HTTP_X_FORWARDED_FOR') != null) {
-                $ip = self::getServer('HTTP_X_FORWARDED_FOR');
-            } else {
-                $ip = self::getServer('REMOTE_ADDR');
-            }
+            return self::getServer('REMOTE_ADDR');
         }
-        return $ip;
     }
 
     /**

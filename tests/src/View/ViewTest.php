@@ -342,8 +342,8 @@ class ViewTest extends TestCase
 
         $view->redactor('#editor');
 
-//        self::assertNotEmpty($view->headScript());
-//        self::assertNotEmpty($view->headStyle());
+        self::assertNotEmpty($view->headScript());
+        self::assertNotEmpty($view->headStyle());
     }
 
     /**

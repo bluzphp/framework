@@ -21,7 +21,7 @@ return
         /**
          * @var Grid\Grid $this
          */
-        if (!$this->checkFilterName($filter) or
+        if (!$this->checkFilterName($filter) ||
             !$this->checkFilterColumn($column)) {
             return null;
         }

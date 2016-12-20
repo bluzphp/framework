@@ -68,6 +68,8 @@ class ArraySourceTest extends TestCase
 
         self::assertEquals(2, $grid->pages());
         self::assertEquals(8, $grid->total());
+
+        self::assertEquals('/index/index/arr-filter-index/gt-1-ge-2-lt-10-le-9', $grid->first());
     }
 
     /**

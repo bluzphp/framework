@@ -21,12 +21,8 @@ return
         /**
          * @var Grid\Grid $this
          */
-        if (!in_array($column, $this->getAllowFilters()) &&
-            !array_key_exists($column, $this->getAllowFilters())
-        ) {
-            return null;
-        }
-        if (!$this->checkFilter($filter)) {
+        if (!$this->checkFilterName($filter) or
+            !$this->checkFilterColumn($column)) {
             return null;
         }
 

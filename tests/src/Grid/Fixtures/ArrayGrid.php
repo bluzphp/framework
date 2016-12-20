@@ -52,6 +52,7 @@ class ArrayGrid extends Grid
         $this->setDefaultLimit(4);
         $this->setAllowOrders(['name', 'email', 'id']);
         $this->setAllowFilters(['name', 'email', 'status', 'id']);
+        $this->addAlias('id', 'index');
 
         return $this;
     }

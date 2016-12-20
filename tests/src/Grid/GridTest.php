@@ -54,6 +54,31 @@ class GridTest extends TestCase
         self::assertEquals(4, $grid->pages());
     }
 
+
+
+    /**
+     * Process Request
+     */
+    public function testRequestWithAliases()
+    {
+        $request = Request::getInstance();
+
+        $request = $request->withQueryParams(
+            [
+                'arr-order-index' => 'desc',
+            ]
+        );
+
+        Request::setInstance($request);
+
+        $grid = new ArrayGrid();
+
+        self::assertEquals(
+            '/index/index/arr-order-index/desc/arr-filter-index/1',
+            $grid->filter('id', Grid::FILTER_EQ, 1)
+        );
+    }
+
     /**
      * Custom Module and Controller
      */
@@ -172,12 +197,17 @@ class GridTest extends TestCase
     {
         $grid = new ArrayGrid();
         $grid->addFilter('name', Grid::FILTER_NE, 'Smith');
+
         self::assertEquals(
-            '/index/index/arr-filter-id/ne-1',
+            '/index/index/arr-filter-index/ne-1',
             $grid->filter('id', Grid::FILTER_NE, 1)
         );
         self::assertEquals(
-            '/index/index/arr-filter-name/ne-Smith/arr-filter-id/ne-1',
+            '/index/index/arr-filter-name/ne-Smith/arr-filter-index/1',
+            $grid->filter('id', Grid::FILTER_EQ, 1, false)
+        );
+        self::assertEquals(
+            '/index/index/arr-filter-name/ne-Smith/arr-filter-index/ne-1',
             $grid->filter('id', Grid::FILTER_NE, 1, false)
         );
     }

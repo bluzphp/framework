@@ -190,10 +190,10 @@ class Controller implements \JsonSerializable
         $cacheKey = 'data.' . Cache::prepare($this->module . '.' . $this->controller)
             . '.' . md5(http_build_query($params));
 
-        if ($this->getReflection()->getCache()) {
-            if ($cached = Cache::get($cacheKey)) {
-                return $cached;
-            }
+        $cacheTime = $this->getReflection()->getCache();
+
+        if ($cacheTime && $cached = Cache::get($cacheKey)) {
+            return $cached;
         }
 
         /**
@@ -231,11 +231,11 @@ class Controller implements \JsonSerializable
                 break;
         }
 
-        if ($this->getReflection()->getCache()) {
+        if ($cacheTime) {
             Cache::set(
                 $cacheKey,
                 $this->getData(),
-                $this->getReflection()->getCache(),
+                $cacheTime,
                 ['system', 'data', Cache::prepare($this->module . '.' . $this->controller)]
             );
         }

@@ -21,7 +21,7 @@ return
         /**
          * @var Grid\Grid $this
          */
-        if (!in_array($column, $this->getAllowOrders())) {
+        if (!$this->checkOrderColumn($column)) {
             return null;
         }
 
@@ -29,9 +29,8 @@ return
 
         // change order
         if (null === $order) {
-            $alias = $this->applyAlias($column);
-            if (isset($orders[$alias])) {
-                $order = ($orders[$alias] == Grid\Grid::ORDER_ASC) ?
+            if (isset($orders[$column])) {
+                $order = ($orders[$column] == Grid\Grid::ORDER_ASC) ?
                     Grid\Grid::ORDER_DESC : Grid\Grid::ORDER_ASC;
             } else {
                 $order = $defaultOrder;

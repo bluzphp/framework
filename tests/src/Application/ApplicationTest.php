@@ -9,12 +9,12 @@
  */
 namespace Bluz\Tests\Application;
 
+use Bluz\Http\StatusCode;
 use Bluz\Proxy;
 use Bluz\Proxy\Request;
 use Bluz\Proxy\Response;
 use Bluz\Proxy\Router;
 use Bluz\Tests\TestCase;
-use Zend\Diactoros\ServerRequest;
 
 /**
  * ApplicationTest
@@ -64,8 +64,7 @@ class ApplicationTest extends TestCase
     public function testIndexController()
     {
         // setup Request
-        $request = new ServerRequest([], [], '', Request::METHOD_GET, 'php://input', ['Accept' => 'text/html']);
-        Request::setInstance($request);
+        self::setRequestParams('', [], [], Request::METHOD_GET, ['Accept' => 'text/html']);
 
         // run Application
         self::getApp()->process();
@@ -80,12 +79,83 @@ class ApplicationTest extends TestCase
     public function testErrorController()
     {
         // setup Request
-        $request = new ServerRequest([], [], uniqid('module'). '/'. uniqid('controller'), Request::METHOD_GET);
-        Request::setInstance($request);
+        self::setRequestParams(uniqid('module'). '/'. uniqid('controller'));
 
         // run Application
         self::getApp()->process();
         self::assertEquals(Router::getErrorModule(), self::getApp()->getModule());
         self::assertEquals(Router::getErrorController(), self::getApp()->getController());
+    }
+
+    /**
+     * Test call Error helper
+     */
+    public function testHelperError()
+    {
+        // setup Request
+        self::setRequestParams('test/throw-exception');
+
+        // run Application
+        self::getApp()->process();
+
+        self::assertEquals(Router::getErrorModule(), self::getApp()->getModule());
+        self::assertEquals(Router::getErrorController(), self::getApp()->getController());
+        self::assertEquals(Response::getStatusCode(), StatusCode::INTERNAL_SERVER_ERROR);
+        self::assertEquals(Response::getBody()->getData()->get('code'), 1024);
+        self::assertEquals(Response::getBody()->getData()->get('message'), 'Message');
+    }
+
+    /**
+     * Test call Forbidden helper
+     */
+    public function testHelperForbidden()
+    {
+        // setup Request
+        self::setRequestParams('test/throw-forbidden');
+
+        // run Application
+        self::getApp()->process();
+
+        self::assertEquals(Router::getErrorModule(), self::getApp()->getModule());
+        self::assertEquals(Router::getErrorController(), self::getApp()->getController());
+        self::assertEquals(Response::getStatusCode(), StatusCode::FORBIDDEN);
+        self::assertEquals(Response::getBody()->getData()->get('code'), StatusCode::FORBIDDEN);
+        self::assertEquals(Response::getBody()->getData()->get('message'), 'Forbidden');
+    }
+
+    /**
+     * Test call Redirect helper
+     */
+    public function testHelperRedirect()
+    {
+        // setup Request
+        self::setRequestParams('test/throw-redirect');
+
+        // run Application
+        self::getApp()->process();
+
+        self::assertEquals(Response::getStatusCode(), StatusCode::FOUND);
+        self::assertEquals(Response::getHeader('Location'), '/');
+    }
+
+    /**
+     * Test call Redirect helper
+     */
+    public function testHelperRedirectAjaxCall()
+    {
+        // setup Request
+        self::setRequestParams(
+            'test/throw-redirect',
+            [],
+            [],
+            Request::METHOD_POST,
+            ['X-Requested-With' => 'XMLHttpRequest']
+        );
+
+        // run Application
+        self::getApp()->process();
+
+        self::assertEquals(Response::getStatusCode(), StatusCode::NO_CONTENT);
+        self::assertEquals(Response::getHeader('Bluz-Redirect'), '/');
     }
 }

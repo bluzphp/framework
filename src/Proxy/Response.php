@@ -12,7 +12,6 @@
 namespace Bluz\Proxy;
 
 use Bluz\Application\Exception\RedirectException;
-use Bluz\Application\Exception\ReloadException;
 use Bluz\Common\Exception\ComponentException;
 use Bluz\Controller\Controller;
 use Bluz\Response\Response as Instance;
@@ -132,7 +131,7 @@ class Response
      * Reload current page please, be careful to avoid loop of reload
      *
      * @return void
-     * @throws ReloadException
+     * @throws RedirectException
      */
     public static function reload()
     {

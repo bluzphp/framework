@@ -1,5 +1,10 @@
 <?php
 /**
+ * @copyright Bluz PHP Team
+ * @link https://github.com/bluzphp/framework
+ */
+
+/**
  * Example of static route
  *
  * @author   Anton Shevchuk

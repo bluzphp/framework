@@ -55,7 +55,7 @@ class CliResponse extends Response
         // just print to console as key-value pair
         $output = [];
         array_walk_recursive($data, function ($value, $key) use (&$output) {
-            $output[] = $key .': '. $value;
+            $output[] = "$key: $value";
         });
 
         return join("\n", $output) . "\n";

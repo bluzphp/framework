@@ -96,7 +96,7 @@ class Table extends AbstractCrud
         $row = $this->getTable()->findRow($primary);
 
         if (!$row) {
-            throw new NotFoundException("Record not found");
+            throw new NotFoundException('Record not found');
         }
 
         return $row;

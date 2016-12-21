@@ -9,6 +9,7 @@
  */
 namespace Bluz\Tests\Proxy;
 
+use Bluz\Http\RequestMethod;
 use Bluz\Proxy\Request;
 use Bluz\Tests\TestCase;
 
@@ -25,7 +26,7 @@ class RequestTest extends TestCase
      */
     public function testQueryParams()
     {
-        $this->setRequestParams('/', ['foo' => 'bar']);
+        self::setRequestParams('/', ['foo' => 'bar']);
 
         self::assertEquals('bar', Request::getQuery('foo'));
         self::assertEquals('bar', Request::getParam('foo'));
@@ -36,7 +37,7 @@ class RequestTest extends TestCase
      */
     public function testParsedBodyParams()
     {
-        $this->setRequestParams('/', [], ['foo' => 'bar'], Request::METHOD_POST);
+        self::setRequestParams('/', [], ['foo' => 'bar'], RequestMethod::POST);
 
         self::assertEquals('bar', Request::getPost('foo'));
         self::assertEquals('bar', Request::getParam('foo'));
@@ -47,7 +48,7 @@ class RequestTest extends TestCase
      */
     public function testCookieParams()
     {
-        $this->setRequestParams('/', [], [], Request::METHOD_GET, [], ['foo' => 'bar']);
+        self::setRequestParams('/', [], [], RequestMethod::GET, [], ['foo' => 'bar']);
 
         self::assertEquals('bar', Request::getCookie('foo'));
         self::assertEquals('bar', Request::getParam('foo'));
@@ -58,7 +59,7 @@ class RequestTest extends TestCase
      */
     public function testGetParams()
     {
-        $this->setRequestParams('/', ['foo' => 'bar'], ['foo' => 'baz', 'baz' => 'qux']);
+        self::setRequestParams('/', ['foo' => 'bar'], ['foo' => 'baz', 'baz' => 'qux']);
 
         self::assertEqualsArray(['foo' => 'bar', 'baz' => 'qux'], Request::getParams());
     }
@@ -68,7 +69,7 @@ class RequestTest extends TestCase
      */
     public function testGetParamPriority()
     {
-        $this->setRequestParams('/', ['foo' => 'bar'], ['foo' => 'baz']);
+        self::setRequestParams('/', ['foo' => 'bar'], ['foo' => 'baz']);
 
         self::assertEquals('bar', Request::getQuery('foo'));
         self::assertEquals('baz', Request::getPost('foo'));
@@ -80,7 +81,7 @@ class RequestTest extends TestCase
      */
     public function testGetParamDefaultValue()
     {
-        $this->setRequestParams('/');
+        self::setRequestParams('/');
 
         self::assertEquals('bar', Request::getParam('foo', 'bar'));
     }

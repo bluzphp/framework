@@ -95,8 +95,8 @@ class Db
             empty($this->connect['user'])
         ) {
             throw new ConfigurationException(
-                "Database adapter is not configured.
-                Please check 'db' configuration section: required type, host, db name and user"
+                'Database adapter is not configured.
+                Please check `db` configuration section: required type, host, db name and user'
             );
         }
     }
@@ -138,7 +138,7 @@ class Db
 
                 $this->ok();
             } catch (\Exception $e) {
-                throw new DbException('Attempt connection to database is failed: '. $e->getMessage());
+                throw new DbException("Attempt connection to database is failed: {$e->getMessage()}");
             }
         }
         return $this;

@@ -16,6 +16,7 @@ use Bluz\Application\Exception\ForbiddenException;
 use Bluz\Application\Exception\NotImplementedException;
 use Bluz\Controller\ControllerException;
 use Bluz\Crud\AbstractCrud;
+use Bluz\Http\RequestMethod;
 use Bluz\Proxy\Acl;
 use Bluz\Proxy\Request;
 use Bluz\Proxy\Router;
@@ -31,7 +32,7 @@ abstract class AbstractMapper
     /**
      * @var string HTTP Method
      */
-    protected $method = Request::METHOD_GET;
+    protected $method = RequestMethod::GET;
 
     /**
      * @var string
@@ -140,7 +141,7 @@ abstract class AbstractMapper
      */
     public function head($module, $controller, $acl = null)
     {
-        $this->addMap('HEAD', $module, $controller, $acl);
+        $this->addMap(RequestMethod::HEAD, $module, $controller, $acl);
     }
 
     /**
@@ -152,7 +153,7 @@ abstract class AbstractMapper
      */
     public function get($module, $controller, $acl = null)
     {
-        $this->addMap('GET', $module, $controller, $acl);
+        $this->addMap(RequestMethod::GET, $module, $controller, $acl);
     }
 
     /**
@@ -164,7 +165,7 @@ abstract class AbstractMapper
      */
     public function post($module, $controller, $acl = null)
     {
-        $this->addMap('POST', $module, $controller, $acl);
+        $this->addMap(RequestMethod::POST, $module, $controller, $acl);
     }
 
     /**
@@ -176,7 +177,7 @@ abstract class AbstractMapper
      */
     public function patch($module, $controller, $acl = null)
     {
-        $this->addMap('PATCH', $module, $controller, $acl);
+        $this->addMap(RequestMethod::PATCH, $module, $controller, $acl);
     }
 
     /**
@@ -188,7 +189,7 @@ abstract class AbstractMapper
      */
     public function put($module, $controller, $acl = null)
     {
-        $this->addMap('PUT', $module, $controller, $acl);
+        $this->addMap(RequestMethod::PUT, $module, $controller, $acl);
     }
 
     /**
@@ -200,7 +201,7 @@ abstract class AbstractMapper
      */
     public function delete($module, $controller, $acl = null)
     {
-        $this->addMap('DELETE', $module, $controller, $acl);
+        $this->addMap(RequestMethod::DELETE, $module, $controller, $acl);
     }
 
     /**
@@ -212,7 +213,7 @@ abstract class AbstractMapper
      */
     public function options($module, $controller, $acl = null)
     {
-        $this->addMap('OPTIONS', $module, $controller, $acl);
+        $this->addMap(RequestMethod::OPTIONS, $module, $controller, $acl);
     }
 
     /**

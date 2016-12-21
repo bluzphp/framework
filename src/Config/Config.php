@@ -96,7 +96,7 @@ class Config
     protected function loadFile($path)
     {
         if (!is_file($path) && !is_readable($path)) {
-            throw new ConfigException('Configuration file `'.$path.'` not found');
+            throw new ConfigException("Configuration file `$path` not found");
         }
         return include $path;
     }
@@ -113,7 +113,7 @@ class Config
         $config = [];
 
         if (!is_dir($path)) {
-            throw new ConfigException('Configuration directory `'.$path.'` not found');
+            throw new ConfigException("Configuration directory `$path` not found");
         }
 
         $iterator = new \GlobIterator(
@@ -179,10 +179,10 @@ class Config
                 $this->init();
             }
 
-            if (isset($this->config['module.'. $module])) {
+            if (isset($this->config["module.$module"])) {
                 $this->modules[$module] = array_replace_recursive(
                     $this->modules[$module],
-                    $this->config['module.'. $module]
+                    $this->config["module.$module"]
                 );
             }
         }

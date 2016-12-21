@@ -48,6 +48,6 @@ abstract class AbstractRowEntity extends Row implements EntityInterface
     {
         $privileges = $this->getPrivileges();
 
-        return in_array($module.':'.$privilege, $privileges);
+        return in_array("$module:$privilege", $privileges);
     }
 }

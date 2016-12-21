@@ -13,6 +13,7 @@ namespace Bluz\Controller\Mapper;
 
 use Bluz\Application\Exception\ForbiddenException;
 use Bluz\Application\Exception\NotImplementedException;
+use Bluz\Http\RequestMethod;
 
 /**
  * Rest
@@ -43,7 +44,7 @@ class Rest extends AbstractMapper
         }
 
         // OPTIONS
-        if ('OPTIONS' == $this->method) {
+        if (RequestMethod::OPTIONS == $this->method) {
             $this->data = array_keys($this->map);
         }
 

@@ -11,6 +11,8 @@
  */
 namespace Bluz\Request;
 
+use Bluz\Http\RequestMethod;
+use Bluz\Proxy\Request;
 use Zend\Diactoros\ServerRequest;
 use Zend\Diactoros\ServerRequestFactory;
 
@@ -39,7 +41,7 @@ class RequestFactory extends ServerRequestFactory
             $server,
             $files,
             static::marshalUriFromServer($server, $headers),
-            static::get('REQUEST_METHOD', $server, 'GET'),
+            static::get('REQUEST_METHOD', $server, RequestMethod::GET),
             'php://input',
             $headers
         );
@@ -49,11 +51,11 @@ class RequestFactory extends ServerRequestFactory
         $input = file_get_contents('php://input');
 
         // support header like "application/json" and "application/json; charset=utf-8"
-        if ($contentType !== false && stristr($contentType, 'application/json')) {
+        if ($contentType !== false && stristr($contentType, Request::TYPE_JSON)) {
             $data = (array) json_decode($input);
         } else {
             switch ($request->getMethod()) {
-                case 'POST':
+                case RequestMethod::POST:
                     $data = $_POST;
                     break;
                 default:

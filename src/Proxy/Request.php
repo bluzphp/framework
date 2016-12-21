@@ -12,6 +12,7 @@
 namespace Bluz\Proxy;
 
 use Bluz\Common\Exception\ComponentException;
+use Bluz\Http\RequestMethod;
 use Bluz\Request\RequestFactory;
 use Psr\Http\Message\UriInterface;
 use Zend\Diactoros\ServerRequest as Instance;
@@ -39,19 +40,6 @@ use Zend\Diactoros\ServerRequest as Instance;
 class Request
 {
     use ProxyTrait;
-
-    /**
-     * @const string HTTP methods
-     */
-    const METHOD_OPTIONS = 'OPTIONS';
-    const METHOD_GET = 'GET';
-    const METHOD_HEAD = 'HEAD';
-    const METHOD_PATCH = 'PATCH';
-    const METHOD_POST = 'POST';
-    const METHOD_PUT = 'PUT';
-    const METHOD_DELETE = 'DELETE';
-    const METHOD_TRACE = 'TRACE';
-    const METHOD_CONNECT = 'CONNECT';
 
     /**
      * @const string HTTP content types
@@ -330,7 +318,7 @@ class Request
      */
     public static function isGet()
     {
-        return (self::getInstance()->getMethod() === self::METHOD_GET);
+        return (self::getInstance()->getMethod() === RequestMethod::GET);
     }
 
     /**
@@ -340,7 +328,7 @@ class Request
      */
     public static function isPost()
     {
-        return (self::getInstance()->getMethod() === self::METHOD_POST);
+        return (self::getInstance()->getMethod() === RequestMethod::POST);
     }
 
     /**
@@ -350,7 +338,7 @@ class Request
      */
     public static function isPut()
     {
-        return (self::getInstance()->getMethod() === self::METHOD_PUT);
+        return (self::getInstance()->getMethod() === RequestMethod::PUT);
     }
 
     /**
@@ -360,7 +348,7 @@ class Request
      */
     public static function isDelete()
     {
-        return (self::getInstance()->getMethod() === self::METHOD_DELETE);
+        return (self::getInstance()->getMethod() === RequestMethod::DELETE);
     }
 
     /**

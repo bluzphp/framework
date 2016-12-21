@@ -28,9 +28,9 @@ return
             // @codeCoverageIgnoreStart
             // exception message for developers
             return
-                '<div class="alert alert-error">' .
-                '<strong>Exception</strong>: ' .
-                $exception->getMessage() .
+                '<div class="alert alert-warning">' .
+                '<strong>Exception</strong>' .
+                '<p>'. $exception->getMessage() .'</p>'.
                 '</div>';
             // @codeCoverageIgnoreEnd
         } else {

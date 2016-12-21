@@ -45,7 +45,6 @@ abstract class Grid
 
     const FILTER_LIKE = 'like'; // like
     const FILTER_ENUM = 'enum'; // one from .., .., ..
-    const FILTER_NUM = 'num'; // ==, !=, >, >=, <, <=
 
     const FILTER_EQ = 'eq'; // equal to ..
     const FILTER_NE = 'ne'; // not equal to ..
@@ -143,6 +142,23 @@ abstract class Grid
      * @see Grid::$filters
      */
     protected $allowFilters = [];
+
+    /**
+     * List of allow filter names
+     *
+     * @var array
+     * @see Grid::$filters
+     */
+    protected $allowFilterNames = [
+        self::FILTER_LIKE,
+        self::FILTER_ENUM,
+        self::FILTER_EQ,
+        self::FILTER_NE,
+        self::FILTER_GT,
+        self::FILTER_GE,
+        self::FILTER_LT,
+        self::FILTER_LE
+    ];
 
     /**
      * List of aliases for columns in DB
@@ -346,13 +362,13 @@ abstract class Grid
     public function processSource()
     {
         if (null === $this->adapter) {
-            throw new GridException("Grid Adapter is not initiated, please update method init() and try again");
+            throw new GridException("Grid Adapter is not initiated, please update method `init()` and try again");
         }
 
         try {
             $this->data = $this->getAdapter()->process($this->getSettings());
         } catch (\Exception $e) {
-            throw new GridException("Grid Adapter can't process request: ". $e->getMessage());
+            throw new GridException("Grid Adapter can't process request: {$e->getMessage()}");
         }
 
         return $this;
@@ -536,11 +552,11 @@ abstract class Grid
     public function addOrder($column, $order = Grid::ORDER_ASC)
     {
         if (!$this->checkOrderColumn($column)) {
-            throw new GridException('Order for column "' . $column . '" is not allowed');
+            throw new GridException("Order for column `$column` is not allowed");
         }
 
         if (!$this->checkOrderName($order)) {
-            throw new GridException('Order name for column "' . $column . '" is incorrect');
+            throw new GridException("Order name for column `$column` is incorrect");
         }
 
         $this->orders[$column] = $order;
@@ -665,19 +681,7 @@ abstract class Grid
      */
     protected function checkFilterName($filter)
     {
-        if ($filter == self::FILTER_EQ ||
-            $filter == self::FILTER_NE ||
-            $filter == self::FILTER_GT ||
-            $filter == self::FILTER_GE ||
-            $filter == self::FILTER_LT ||
-            $filter == self::FILTER_LE ||
-            $filter == self::FILTER_NUM ||
-            $filter == self::FILTER_ENUM ||
-            $filter == self::FILTER_LIKE
-        ) {
-            return true;
-        }
-        return false;
+        return in_array($filter, $this->allowFilterNames);
     }
 
     /**
@@ -692,7 +696,7 @@ abstract class Grid
     public function addFilter($column, $filter, $value)
     {
         if (!$this->checkFilterColumn($column)) {
-            throw new GridException('Filter for column "' . $column . '" is not allowed');
+            throw new GridException("Filter for column `$column` is not allowed");
         }
         if (!$this->checkFilterName($filter)) {
             throw new GridException('Filter name is incorrect');

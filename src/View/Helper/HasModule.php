@@ -17,10 +17,11 @@ namespace Bluz\View\Helper;
  * @param  string $module
  * @return bool
  */
+use Bluz\Application\Application;
+
 return
     function ($module = null) {
-        $modulePath = dirname(realpath($_SERVER['DOCUMENT_ROOT'])) . DIRECTORY_SEPARATOR .
-            'application' . DIRECTORY_SEPARATOR .
+        $modulePath = Application::getInstance()->getPath() . DIRECTORY_SEPARATOR .
             'modules' . DIRECTORY_SEPARATOR . $module;
 
         return file_exists($modulePath);

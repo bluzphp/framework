@@ -15,7 +15,7 @@ use Bluz\Application\Application;
 use Bluz\Application\Exception\ForbiddenException;
 use Bluz\Application\Exception\NotAcceptableException;
 use Bluz\Application\Exception\NotAllowedException;
-use Bluz\Auth\AbstractRowEntity;
+use Bluz\Auth\EntityInterface;
 use Bluz\Common\Helper;
 use Bluz\Proxy\Acl;
 use Bluz\Proxy\Cache;
@@ -39,7 +39,7 @@ use Bluz\View\View;
  * @method void reload()
  * @method void useJson()
  * @method void useLayout($layout)
- * @method AbstractRowEntity user()
+ * @method EntityInterface user()
  */
 class Controller implements \JsonSerializable
 {

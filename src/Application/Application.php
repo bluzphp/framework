@@ -376,7 +376,7 @@ class Application
      */
     protected function preDispatch($module, $controller, $params = [])
     {
-        Logger::info("app:dispatch:pre: " . $module . '/' . $controller);
+        Logger::info("app:dispatch:pre: $module/$controller");
     }
 
     /**
@@ -417,7 +417,7 @@ class Application
      */
     protected function postDispatch($module, $controller, $params = [])
     {
-        Logger::info("<<<:dispatch:post: " . $module . '/' . $controller);
+        Logger::info("<<<:dispatch:post: $module/$controller");
     }
 
     /**

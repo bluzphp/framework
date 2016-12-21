@@ -9,9 +9,9 @@
  */
 namespace Bluz\Tests\Application;
 
+use Bluz\Http\RequestMethod;
 use Bluz\Http\StatusCode;
 use Bluz\Proxy;
-use Bluz\Proxy\Request;
 use Bluz\Proxy\Response;
 use Bluz\Proxy\Router;
 use Bluz\Tests\TestCase;
@@ -64,7 +64,7 @@ class ApplicationTest extends TestCase
     public function testIndexController()
     {
         // setup Request
-        self::setRequestParams('', [], [], Request::METHOD_GET, ['Accept' => 'text/html']);
+        self::setRequestParams('', [], [], RequestMethod::GET, ['Accept' => 'text/html']);
 
         // run Application
         self::getApp()->process();
@@ -148,7 +148,7 @@ class ApplicationTest extends TestCase
             'test/throw-redirect',
             [],
             [],
-            Request::METHOD_POST,
+            RequestMethod::POST,
             ['X-Requested-With' => 'XMLHttpRequest']
         );
 

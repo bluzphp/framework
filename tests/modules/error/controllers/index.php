@@ -93,7 +93,9 @@ return function ($code, $message = '') {
     Layout::title($title);
 
     return [
+        'code' => $code,
         'error' => $title,
-        'description' => $description
+        'description' => $description,
+        'message' => $message
     ];
 };

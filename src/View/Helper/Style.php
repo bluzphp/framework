@@ -31,9 +31,9 @@ return
             ) {
                 $style = $this->baseUrl($style);
             }
-            return "\t<link href=\"" . $style . "\" rel=\"stylesheet\" media=\"" . $media . "\"/>\n";
+            return "\t<link href=\"$style\" rel=\"stylesheet\" media=\"$media\"/>\n";
         } else {
-            return "\t<style type=\"text/css\" media=\"" . $media . "\">\n"
+            return "\t<style type=\"text/css\" media=\"$media\">\n"
             . $style . "\n"
             . "\t</style>";
         }

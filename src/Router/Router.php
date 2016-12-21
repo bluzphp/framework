@@ -95,47 +95,58 @@ class Router
         $reverse = Cache::get('router.reverse');
 
         if (!$routers || !$reverse) {
-            $routers = [];
-            $reverse = [];
-            $path = Application::getInstance()->getPath() . '/modules/*/controllers/*.php';
-            foreach (new \GlobIterator($path) as $file) {
-                /* @var \SplFileInfo $file */
-                $module = $file->getPathInfo()->getPathInfo()->getBasename();
-                $controller = $file->getBasename('.php');
-                $controllerInstance = new Controller($module, $controller);
-                $reflection = $controllerInstance->getReflection();
-                if ($routes = $reflection->getRoute()) {
-                    foreach ($routes as $route => $pattern) {
-                        if (!isset($reverse[$module])) {
-                            $reverse[$module] = [];
-                        }
-
-                        $reverse[$module][$controller] = ['route' => $route, 'params' => $reflection->getParams()];
-
-                        $rule = [
-                            $route => [
-                                'pattern' => $pattern,
-                                'module' => $module,
-                                'controller' => $controller,
-                                'params' => $reflection->getParams()
-                            ]
-                        ];
-
-                        // static routers should be first
-                        if (strpos($route, '$')) {
-                            $routers = array_merge($routers, $rule);
-                        } else {
-                            $routers = array_merge($rule, $routers);
-                        }
-                    }
-                }
-            }
+            list($routers, $reverse) = $this->initRouters();
             Cache::set('router.routers', $routers, Cache::TTL_NO_EXPIRY, ['system']);
             Cache::set('router.reverse', $reverse, Cache::TTL_NO_EXPIRY, ['system']);
         }
 
         $this->routers = $routers;
         $this->reverse = $reverse;
+    }
+
+    /**
+     * Initial routers data from controllers
+     *
+     * @return array
+     */
+    protected function initRouters()
+    {
+        $routers = [];
+        $reverse = [];
+        $path = Application::getInstance()->getPath() . '/modules/*/controllers/*.php';
+        foreach (new \GlobIterator($path) as $file) {
+            /* @var \SplFileInfo $file */
+            $module = $file->getPathInfo()->getPathInfo()->getBasename();
+            $controller = $file->getBasename('.php');
+            $controllerInstance = new Controller($module, $controller);
+            $reflection = $controllerInstance->getReflection();
+            if ($routes = $reflection->getRoute()) {
+                foreach ($routes as $route => $pattern) {
+                    if (!isset($reverse[$module])) {
+                        $reverse[$module] = [];
+                    }
+
+                    $reverse[$module][$controller] = ['route' => $route, 'params' => $reflection->getParams()];
+
+                    $rule = [
+                        $route => [
+                            'pattern' => $pattern,
+                            'module' => $module,
+                            'controller' => $controller,
+                            'params' => $reflection->getParams()
+                        ]
+                    ];
+
+                    // static routers should be first
+                    if (strpos($route, '$')) {
+                        $routers = array_merge($routers, $rule);
+                    } else {
+                        $routers = array_merge($rule, $routers);
+                    }
+                }
+            }
+        }
+        return [$routers, $reverse];
     }
 
     /**

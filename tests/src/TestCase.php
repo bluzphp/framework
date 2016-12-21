@@ -75,18 +75,40 @@ class TestCase extends \PHPUnit_Framework_TestCase
      * @param array $cookies
      * @return \Psr\Http\Message\ServerRequestInterface|ServerRequest
      */
-    protected function setRequestParams(
+    protected static function prepareRequest(
         $path = '',
         $query = [],
         $params = [],
-        $method = Request::METHOD_GET,
+        $method = Http\RequestMethod::GET,
+        $headers = [],
+        $cookies = []
+    ) {
+        $uri = 'http://127.0.0.1/'. $path;
+
+        return new ServerRequest([], [], $uri, $method, 'php://input', $headers, $cookies, $query, $params);
+    }
+
+    /**
+     * Set new Request instance
+     *
+     * @param string $path Path part of URI http://host/module/controller/path
+     * @param array  $query $_GET params
+     * @param array  $params $_POST params
+     * @param string $method HTTP method
+     * @param array  $headers HTTP headers
+     * @param array $cookies
+     * @return \Psr\Http\Message\ServerRequestInterface|ServerRequest
+     */
+    protected static function setRequestParams(
+        $path = '',
+        $query = [],
+        $params = [],
+        $method = Http\RequestMethod::GET,
         $headers = [],
         $cookies = []
     ) {
 
-        $uri = 'http://127.0.0.1/'. $path;
-
-        $request = new ServerRequest([], [], $uri, $method, 'php://input', $headers, $cookies, $query, $params);
+        $request = self::prepareRequest($path, $query, $params, $method, $headers, $cookies);
 
         Request::setInstance($request);
 

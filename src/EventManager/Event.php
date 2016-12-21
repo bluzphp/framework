@@ -87,12 +87,7 @@ class Event
     public function setParams($params)
     {
         if (!is_array($params) && !is_object($params)) {
-            throw new EventException(
-                sprintf(
-                    'Event parameters must be an array or object; received "%s"',
-                    gettype($params)
-                )
-            );
+            throw new EventException('Event parameters must be an array or object; received `'.gettype($params).'`');
         }
 
         $this->params = $params;

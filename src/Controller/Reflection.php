@@ -118,7 +118,7 @@ class Reflection
         // get all options by one regular expression
         if (preg_match_all('/\s*\*\s*\@([a-z0-9-_]+)\s+(.*).*\s+/i', $docComment, $matches)) {
             foreach ($matches[1] as $i => $key) {
-                $this->setOption($key, $matches[2][$i]);
+                $this->setOption($key, trim($matches[2][$i]));
             }
         }
 

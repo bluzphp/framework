@@ -15,6 +15,9 @@ namespace Bluz\Auth;
  * Interface EntityInterface
  *
  * @package Bluz\Auth
+ *
+ *
+ * @property integer $id
  */
 interface EntityInterface
 {

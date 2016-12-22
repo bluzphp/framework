@@ -23,6 +23,5 @@ return
     function ($module = null) {
         $modulePath = Application::getInstance()->getPath() . DIRECTORY_SEPARATOR .
             'modules' . DIRECTORY_SEPARATOR . $module;
-
         return file_exists($modulePath);
     };

@@ -6,9 +6,8 @@
  * @link https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
+declare(strict_types=1);
+
 namespace Bluz\Common;
 
 use Bluz\Common\Exception\CommonException;
@@ -23,54 +22,103 @@ use Bluz\Common\Exception\CommonException;
 trait Helper
 {
     /**
-     * @var array list of helpers
+     * @var array[] list of helpers
      */
-    protected $helpers = [];
+    protected static $helpers = [];
 
     /**
-     * @var array list of helpers paths
+     * @var array[] list of helpers paths
      */
-    protected $helpersPath = [];
+    protected static $helpersPath = [];
+
+    /**
+     * Add helper callable
+     *
+     * @param  string $name
+     * @param  string $path
+     * @return void
+     * @throws CommonException
+     */
+    private function addHelper(string $name, string $path)
+    {
+        $class = static::class;
+        $path = realpath($path);
+
+        if (!$path) {
+            throw new CommonException("Helper `$name` not found for class `$class`");
+        }
+
+        // create store of helpers
+        if (!isset(static::$helpers[$class])) {
+            static::$helpers[$class] = [];
+        }
+
+        $helper = include $path;
+
+        if (is_callable($helper)) {
+            static::$helpers[$class][$name] = $helper;
+        } else {
+            throw new CommonException("Helper `$name` not found in file `$path`");
+        }
+    }
+
+    /**
+     * Call helper
+     *
+     * @param string $name
+     * @param array $arguments
+     * @return mixed
+     * @throws CommonException
+     */
+    private function callHelper(string $name, array $arguments)
+    {
+        $class = static::class;
+        if (isset(static::$helpers[$class], static::$helpers[$class][$name])) {
+            /** @var \Closure $helper */
+            $helper = static::$helpers[$class][$name];
+            return $helper->call($this, ...$arguments);
+        } else {
+            throw new CommonException("Helper `$name` not registered for class `$class`");
+        }
+    }
 
     /**
      * Add helper path
      *
      * @param  string $path
-     * @return self
+     * @return void
+     * @throws CommonException
      */
-    public function addHelperPath($path)
+    public function addHelperPath(string $path)
     {
-        $path = rtrim(realpath($path), '/');
-        if (false !== $path && !in_array($path, $this->helpersPath)) {
-            $this->helpersPath[] = $path;
+        $class = static::class;
+        $path = realpath($path);
+
+        if (!$path) {
+            throw new CommonException("Invalid Helper path for class `$class`");
         }
 
-        return $this;
+        // create store of helpers
+        if (!isset(static::$helpersPath[$class])) {
+            static::$helpersPath[$class] = [];
+        }
+
+        if (!in_array($path, static::$helpersPath[$class])) {
+            static::$helpersPath[$class][] = $path;
+        }
     }
 
     /**
      * Set helpers path
      *
      * @param  array $helpersPath
-     * @return self
+     * @return void
      */
     public function setHelpersPath(array $helpersPath)
     {
         foreach ($helpersPath as $path) {
-            $this->addHelperPath((string)$path);
+            $this->addHelperPath($path);
         }
-        return $this;
-    }
-
-    /**
-     * Reset helpers path
-     *
-     * @return self
-     */
-    public function resetHelpersPath()
-    {
-        $this->helpersPath = [];
-        return $this;
     }
 
     /**
@@ -83,27 +131,24 @@ trait Helper
      */
     public function __call($method, $args)
     {
-        // Setup key
-        $key = static::class .':'. $method;
+        $class = static::class;
 
         // Call callable helper structure (function or class)
-        if (isset($this->helpers[$key]) && is_callable($this->helpers[$key])) {
-            return $this->helpers[$key](...$args);
+        if (isset(static::$helpers[$class], static::$helpers[$class][$method])) {
+            return $this->callHelper($method, $args);
+        }
+
+        if (!isset(static::$helpersPath[$class])) {
+            throw new CommonException("Helper path not found for class `$class`");
         }
 
         // Try to find helper file
-        foreach ($this->helpersPath as $helperPath) {
-            $helperPath = realpath($helperPath . '/' . ucfirst($method) . '.php');
-            if ($helperPath) {
-                $helperInclude = include $helperPath;
-                if (is_callable($helperInclude)) {
-                    $this->helpers[$key] = $helperInclude;
-                    return $this->helpers[$key](...$args);
-                } else {
-                    throw new CommonException("Helper '$method' not found in file '$helperPath'");
-                }
+        foreach (static::$helpersPath[$class] as $path) {
+            if (realpath($path . '/' . ucfirst($method) . '.php')) {
+                $this->addHelper($method, $path . '/' . ucfirst($method) . '.php');
+                return $this->callHelper($method, $args);
             }
         }
-        throw new CommonException("Helper '$method' not found for '" . __CLASS__ . "'");
+        throw new CommonException("Helper `$method` not found for `$class`");
     }
 }

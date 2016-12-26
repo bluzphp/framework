@@ -95,7 +95,7 @@ trait Helper
         $path = realpath($path);
 
         if (!$path) {
-            throw new CommonException("Invalid Helper path for class `$class`");
+            throw new CommonException("Invalid Helper path `$path` for class `$class`");
         }
 
         // create store of helpers

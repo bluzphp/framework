@@ -6,9 +6,8 @@
  * @link https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
+declare(strict_types=1);
+
 namespace Bluz\Validator\Rule;
 
 use Bluz\Validator\Exception\ComponentException;
@@ -128,7 +127,6 @@ class Ip extends AbstractRule
 
         if ($isAddressMask && $this->verifyAddress($input[1])) {
             $range['mask'] = sprintf('%032b', ip2long($input[1]));
-
             return ;
         }
 
@@ -136,7 +134,7 @@ class Ip extends AbstractRule
             throw new ComponentException('Invalid network mask');
         }
 
-        $range['mask'] = sprintf('%032b', ip2long(long2ip(~(pow(2, (32 - $input[1])) - 1))));
+        $range['mask'] = sprintf('%032b', ip2long(long2ip((string)~(pow(2, (32 - $input[1])) - 1))));
     }
 
     /**
@@ -218,7 +216,7 @@ class Ip extends AbstractRule
             if (isset($this->networkRange['max'])) {
                 $message .= '-' . $this->networkRange['max'];
             } else {
-                $message .= '/' . long2ip(bindec($this->networkRange['mask']));
+                $message .= '/' . long2ip((string)bindec($this->networkRange['mask']));
             }
             return __('{{name}} must be an IP address in the "%s" range', $message);
         } else {

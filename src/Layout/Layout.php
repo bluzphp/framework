@@ -6,9 +6,8 @@
  * @link https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
+declare(strict_types=1);
+
 namespace Bluz\Layout;
 
 use Bluz\Common\Container\RegularAccess;

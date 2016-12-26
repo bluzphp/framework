@@ -6,9 +6,8 @@
  * @link https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
+declare(strict_types=1);
+
 namespace Bluz\Grid\Source;
 
 use Bluz\Db;
@@ -63,7 +62,7 @@ class SqlSource extends AbstractSource
                     }
                     $where[] = $column .' '.
                         $this->filters[$filter].' '.
-                        Proxy\Db::quote($value);
+                        Proxy\Db::quote((string)$value);
                 }
             }
         }
@@ -109,7 +108,7 @@ class SqlSource extends AbstractSource
         // use transaction to avoid errors
         Proxy\Db::transaction(function () use (&$data, &$total, $dataSql, $totalSql) {
             $data = Proxy\Db::fetchAll($dataSql);
-            $total = Proxy\Db::fetchOne($totalSql);
+            $total = (int) Proxy\Db::fetchOne($totalSql);
         });
         
         $gridData = new Grid\Data($data);

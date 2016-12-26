@@ -6,9 +6,8 @@
  * @link https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
+declare(strict_types=1);
+
 namespace Bluz\Validator\Rule;
 
 /**
@@ -46,6 +45,7 @@ class Domain extends AbstractRule
      */
     public function validate($input) : bool
     {
+        $input = (string) $input;
         // check by regular expression
         if (preg_match("/^([a-z\d](-*[a-z\d])*)(\.([a-z\d](-*[a-z\d])*))*$/i", $input)
             && preg_match("/^.{1,253}$/", $input)

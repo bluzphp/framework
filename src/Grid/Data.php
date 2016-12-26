@@ -6,9 +6,8 @@
  * @link https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
+declare(strict_types=1);
+
 namespace Bluz\Grid;
 
 /**
@@ -30,9 +29,9 @@ class Data extends \ArrayIterator
      * @param  integer $total
      * @return self
      */
-    public function setTotal($total)
+    public function setTotal(int $total)
     {
-        $this->total = (int)$total;
+        $this->total = $total;
         return $this;
     }
 
@@ -41,7 +40,7 @@ class Data extends \ArrayIterator
      *
      * @return integer
      */
-    public function getTotal()
+    public function getTotal() : int
     {
         return $this->total;
     }

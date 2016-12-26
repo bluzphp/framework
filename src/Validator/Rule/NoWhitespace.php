@@ -6,9 +6,8 @@
  * @link https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
+declare(strict_types=1);
+
 namespace Bluz\Validator\Rule;
 
 /**
@@ -31,6 +30,6 @@ class NoWhitespace extends AbstractRule
      */
     public function validate($input) : bool
     {
-        return is_null($input) || !preg_match('/\s/', $input);
+        return is_null($input) || !preg_match('/\s/', (string) $input);
     }
 }

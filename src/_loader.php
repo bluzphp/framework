@@ -6,6 +6,8 @@
  * @link https://github.com/bluzphp/framework
  */
 
+declare(strict_types=1);
+
 /**
  * Files in this list is core of framework
  * use require_once it's really faster than use Loader for it

@@ -6,9 +6,8 @@
  * @link https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
+declare(strict_types=1);
+
 namespace Bluz\Db;
 
 use Bluz\Common\Exception\ConfigurationException;
@@ -183,11 +182,12 @@ class Db
      * </code>
      *
      * @param  string $value
+     * @param  int $type
      * @return string
      */
-    public function quote($value)
+    public function quote($value, $type = \PDO::PARAM_STR)
     {
-        return $this->handler()->quote($value);
+        return $this->handler()->quote($value, $type);
     }
 
     /**

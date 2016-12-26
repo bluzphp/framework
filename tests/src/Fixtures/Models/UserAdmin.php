@@ -32,7 +32,7 @@ class UserAdmin extends AbstractRowEntity
      *
      * @return array
      */
-    public function getPrivileges()
+    public function getPrivileges() : array
     {
         return [];
     }
@@ -55,7 +55,7 @@ class UserAdmin extends AbstractRowEntity
      * @param string $privilege
      * @return boolean
      */
-    public function hasPrivilege($module, $privilege)
+    public function hasPrivilege($module, $privilege) : bool
     {
         return true;
     }

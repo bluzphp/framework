@@ -6,9 +6,8 @@
  * @link https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
+declare(strict_types=1);
+
 namespace Bluz\Common;
 
 /**
@@ -88,7 +87,7 @@ trait Options
      *
      * @return array
      */
-    public function getOptions()
+    public function getOptions() : array
     {
         return $this->options;
     }
@@ -103,7 +102,7 @@ trait Options
      * @param  array $options
      * @return self
      */
-    public function setOptions($options)
+    public function setOptions(array $options = null)
     {
         // store options by default
         $this->options = (array) $options;

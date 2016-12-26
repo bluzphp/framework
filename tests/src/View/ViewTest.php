@@ -72,22 +72,6 @@ class ViewTest extends TestCase
     }
 
     /**
-     * Test Serialization
-     */
-    public function testSerialization()
-    {
-        $view = new View();
-
-        $view->foo = 'bar';
-        $view->baz = 'qux';
-
-        $view = unserialize(serialize($view));
-
-        self::assertEquals('bar', $view->foo);
-        self::assertEquals('qux', $view->baz);
-    }
-
-    /**
      * Test JSON serialization
      */
     public function testJson()

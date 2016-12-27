@@ -1,14 +1,7 @@
 language: php
-sudo: required
-dist: trusty
-group: edge
 php:
   - 7.0
   - 7.1
-  - hhvm-3.15
-matrix:
-  allow_failures:
-    - php: hhvm-3.15
 env:
   global:
     - secure: "j4ecD0iulpiUrRfhSFgFV6v99mgrYbiWFjvCouCzdtHHDYYpf/3/JOdYIn0EzPtjMUaI5FVtjisNpLmcMo+IAEuQAZqB1RAywxBXH41Eh3uuSYEbUFGs0r8d2NsCYWi/h+hGMZozw3ckpch78cniyNc1huMZ5kkbrv3cpMl80m4="
@@ -47,7 +40,7 @@ after_script:
   - php vendor/bin/coveralls -v
   # Scrutinizer
   - wget https://scrutinizer-ci.com/ocular.phar
-  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php ocular.phar code-coverage:upload --format=php-clover .reports/clover.xml; fi;'
+  - php ocular.phar code-coverage:upload --format=php-clover .reports/clover.xml
   # PHPDocumentor
   - bash .travis.sh
 notifications:

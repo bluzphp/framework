@@ -71,10 +71,7 @@ if (!function_exists('esc')) {
      */
     function esc($variable, int $flags = ENT_HTML5)
     {
-        if (!$variable) {
-            return '';
-        }
-        return htmlentities($variable, $flags, "UTF-8");
+        return htmlentities((string)$variable, $flags, "UTF-8");
     }
 }
 

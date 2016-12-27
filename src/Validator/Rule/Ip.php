@@ -6,14 +6,14 @@
  * @link https://github.com/bluzphp/framework
  */
 
-declare(strict_types=1);
-
 namespace Bluz\Validator\Rule;
 
 use Bluz\Validator\Exception\ComponentException;
 
 /**
  * Check for IP
+ *
+ * Strict mode disabled for this file, because function long2ip() was changed in PHP 7.1
  *
  * @package Bluz\Validator\Rule
  */
@@ -134,7 +134,7 @@ class Ip extends AbstractRule
             throw new ComponentException('Invalid network mask');
         }
 
-        $range['mask'] = sprintf('%032b', ip2long(long2ip((string)~(pow(2, (32 - $input[1])) - 1))));
+        $range['mask'] = sprintf('%032b', ip2long(long2ip(~(pow(2, (32 - $input[1])) - 1))));
     }
 
     /**

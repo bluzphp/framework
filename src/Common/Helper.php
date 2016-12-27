@@ -44,7 +44,7 @@ trait Helper
         $class = static::class;
         $path = realpath($path);
 
-        if (!$path) {
+        if (false === $path) {
             throw new CommonException("Helper `$name` not found for class `$class`");
         }
 
@@ -92,9 +92,9 @@ trait Helper
     public function addHelperPath(string $path)
     {
         $class = static::class;
-        $path = realpath($path);
+        $realPath = realpath($path);
 
-        if (!$path) {
+        if (false === $realPath) {
             throw new CommonException("Invalid Helper path `$path` for class `$class`");
         }
 
@@ -103,8 +103,8 @@ trait Helper
             static::$helpersPath[$class] = [];
         }
 
-        if (!in_array($path, static::$helpersPath[$class])) {
-            static::$helpersPath[$class][] = $path;
+        if (!in_array($realPath, static::$helpersPath[$class])) {
+            static::$helpersPath[$class][] = $realPath;
         }
     }
 

@@ -6,9 +6,8 @@
  * @link https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
+declare(strict_types=1);
+
 namespace Bluz\Auth;
 
 use Bluz\Db\Row;
@@ -23,17 +22,17 @@ abstract class AbstractRowEntity extends Row implements EntityInterface
     /**
      * Can entity login
      *
-     * @return bool
+     * @return void
      * @throws AuthException
      */
     abstract public function tryLogin();
 
     /**
-     * Get privileges
+     * Get user privileges
      *
      * @return array
      */
-    abstract public function getPrivileges();
+    abstract public function getPrivileges() : array;
 
     /**
      * Has role a privilege
@@ -42,7 +41,7 @@ abstract class AbstractRowEntity extends Row implements EntityInterface
      * @param  string $privilege
      * @return bool
      */
-    public function hasPrivilege($module, $privilege)
+    public function hasPrivilege($module, $privilege) : bool
     {
         $privileges = $this->getPrivileges();
 

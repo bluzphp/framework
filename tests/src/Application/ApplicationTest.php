@@ -83,6 +83,7 @@ class ApplicationTest extends TestCase
 
         // run Application
         self::getApp()->process();
+
         self::assertEquals(Router::getErrorModule(), self::getApp()->getModule());
         self::assertEquals(Router::getErrorController(), self::getApp()->getController());
     }

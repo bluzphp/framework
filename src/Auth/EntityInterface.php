@@ -6,9 +6,8 @@
  * @link https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
+declare(strict_types=1);
+
 namespace Bluz\Auth;
 
 /**
@@ -26,7 +25,7 @@ interface EntityInterface
      *
      * @return array
      */
-    public function getPrivileges();
+    public function getPrivileges() : array;
 
     /**
      * Has role a privilege
@@ -35,5 +34,5 @@ interface EntityInterface
      * @param  string $privilege
      * @return bool
      */
-    public function hasPrivilege($module, $privilege);
+    public function hasPrivilege($module, $privilege) : bool;
 }

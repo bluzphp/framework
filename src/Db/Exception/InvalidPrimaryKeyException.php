@@ -6,13 +6,12 @@
  * @link https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
+declare(strict_types=1);
+
 namespace Bluz\Db\Exception;
 
 /**
- * WrongPrimaryKeyException
+ * Invalid Primary Key Exception
  *
  * @package  Bluz\Db\Exception
  * @author   Eugene Zabolotniy

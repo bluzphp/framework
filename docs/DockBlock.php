@@ -3,6 +3,7 @@
  * An complex example of how to write "dockblock", based on PEAR standard
  *
  * PEAR standard you can find at http://pear.php.net/manual/tr/standards.sample.php
+ * PSR proposal you can find at https://github.com/phpDocumentor/fig-standards/tree/master/proposed
  *
  * Docblock comments start with "/**" at the top.  Notice how the "/"
  * lines up with the normal indenting and the asterisks on subsequent rows
@@ -51,9 +52,8 @@
  * @link      https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
+declare(strict_types=1);
+
 namespace Bluz;
 
 /**

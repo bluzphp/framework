@@ -75,10 +75,6 @@ class HelperTest extends TestCase
             $this->class->helper2Function(self::MAGIC_NUMBER),
             self::MAGIC_NUMBER
         );
-        self::assertEquals(
-            $this->class->helperClass(self::MAGIC_NUMBER),
-            self::MAGIC_NUMBER
-        );
     }
 
     /**
@@ -93,21 +89,6 @@ class HelperTest extends TestCase
         );
         self::assertEquals(
             $this->class->helper2Function(self::MAGIC_NUMBER),
-            self::MAGIC_NUMBER
-        );
-    }
-
-    /**
-     * test Reset Helper Path
-     * @expectedException \Bluz\Common\Exception\CommonException
-     */
-    public function testResetHelperPath()
-    {
-        $this->class->addHelperPath(dirname(__FILE__) .'/Fixtures/Helper');
-        $this->class->resetHelpersPath();
-
-        self::assertEquals(
-            $this->class->helperFunction(self::MAGIC_NUMBER),
             self::MAGIC_NUMBER
         );
     }

@@ -6,6 +6,8 @@
  * @link https://github.com/bluzphp/framework
  */
 
+declare(strict_types=1);
+
 /**
  * This is file required for poedit parser only
  * Please, don't use it for anything else

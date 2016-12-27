@@ -6,9 +6,8 @@
  * @link https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
+declare(strict_types=1);
+
 namespace Bluz\Grid;
 
 use Bluz\Common\Helper;
@@ -775,7 +774,7 @@ abstract class Grid
      * @return void
      * @throws GridException
      */
-    public function setPage($page = 1)
+    public function setPage(int $page = 1)
     {
         if ($page < 1) {
             throw new GridException('Wrong page number, should be greater than zero');
@@ -788,7 +787,7 @@ abstract class Grid
      *
      * @return integer
      */
-    public function getPage()
+    public function getPage() : int
     {
         return $this->page;
     }
@@ -800,7 +799,7 @@ abstract class Grid
      * @return void
      * @throws GridException
      */
-    public function setLimit($limit)
+    public function setLimit(int $limit)
     {
         if ($limit < 1) {
             throw new GridException('Wrong limit value, should be greater than zero');
@@ -813,7 +812,7 @@ abstract class Grid
      *
      * @return integer
      */
-    public function getLimit()
+    public function getLimit() : int
     {
         return $this->limit;
     }
@@ -825,7 +824,7 @@ abstract class Grid
      * @return void
      * @throws GridException
      */
-    public function setDefaultLimit($limit)
+    public function setDefaultLimit(int $limit)
     {
         if ($limit < 1) {
             throw new GridException('Wrong default limit value, should be greater than zero');
@@ -840,7 +839,7 @@ abstract class Grid
      *
      * @return integer
      */
-    public function getDefaultLimit()
+    public function getDefaultLimit() : int
     {
         return $this->defaultLimit;
     }

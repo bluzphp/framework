@@ -6,9 +6,8 @@
  * @link https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
+declare(strict_types=1);
+
 namespace Bluz\View;
 
 use Bluz\Application\Application;
@@ -93,16 +92,6 @@ class View implements ViewInterface, \JsonSerializable
     {
         // initial default helper path
         $this->addHelperPath(dirname(__FILE__) . '/Helper/');
-    }
-
-    /**
-     * List of packed properties
-     *
-     * @return string[]
-     */
-    public function __sleep()
-    {
-        return ['baseUrl', 'container', 'helpersPath', 'path', 'partialPath', 'template'];
     }
 
     /**

@@ -6,9 +6,8 @@
  * @link https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
+declare(strict_types=1);
+
 namespace Bluz\Controller;
 
 use Bluz\Common\Exception\ComponentException;
@@ -229,17 +228,23 @@ class Reflection
     protected function prepareCache($cache)
     {
         $num = (int)$cache;
-        $time = substr($cache, strpos($cache, ' '));
+
+        if ($pos = strpos($cache, ' ')) {
+            $time = substr($cache, $pos);
+        } else {
+            $time = 'min';
+        }
+
         switch ($time) {
             case 'day':
             case 'days':
-                return (int)$num * 60 * 60 *24;
+                return $num * 60 * 60 *24;
             case 'hour':
             case 'hours':
-                return (int)$num * 60 * 60;
+                return $num * 60 * 60;
             case 'min':
             default:
-                return (int)$num * 60;
+                return $num * 60;
         }
     }
 

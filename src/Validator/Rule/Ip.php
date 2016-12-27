@@ -6,15 +6,14 @@
  * @link https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
 namespace Bluz\Validator\Rule;
 
 use Bluz\Validator\Exception\ComponentException;
 
 /**
  * Check for IP
+ *
+ * Strict mode disabled for this file, because function long2ip() was changed in PHP 7.1
  *
  * @package Bluz\Validator\Rule
  */
@@ -128,7 +127,6 @@ class Ip extends AbstractRule
 
         if ($isAddressMask && $this->verifyAddress($input[1])) {
             $range['mask'] = sprintf('%032b', ip2long($input[1]));
-
             return ;
         }
 
@@ -218,7 +216,7 @@ class Ip extends AbstractRule
             if (isset($this->networkRange['max'])) {
                 $message .= '-' . $this->networkRange['max'];
             } else {
-                $message .= '/' . long2ip(bindec($this->networkRange['mask']));
+                $message .= '/' . long2ip((string)bindec($this->networkRange['mask']));
             }
             return __('{{name}} must be an IP address in the "%s" range', $message);
         } else {

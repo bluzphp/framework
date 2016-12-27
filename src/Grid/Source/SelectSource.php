@@ -6,9 +6,8 @@
  * @link https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
+declare(strict_types=1);
+
 namespace Bluz\Grid\Source;
 
 use Bluz\Db;
@@ -101,7 +100,7 @@ class SelectSource extends AbstractSource
         // use transaction to avoid errors
         Proxy\Db::transaction(function () use (&$data, &$total, $totalSql) {
             $data = $this->source->execute();
-            $total = Proxy\Db::fetchOne($totalSql);
+            $total = (int) Proxy\Db::fetchOne($totalSql);
         });
 
         $gridData = new Grid\Data($data);

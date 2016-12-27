@@ -6,6 +6,8 @@
  * @link https://github.com/bluzphp/framework
  */
 
+declare(strict_types=1);
+
 use Bluz\Translator\Translator;
 
 /**
@@ -69,7 +71,7 @@ if (!function_exists('esc')) {
      */
     function esc($variable, int $flags = ENT_HTML5)
     {
-        return htmlentities($variable, $flags, "UTF-8");
+        return htmlentities((string)$variable, $flags, "UTF-8");
     }
 }
 

@@ -6,9 +6,8 @@
  * @link https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
+declare(strict_types=1);
+
 namespace Bluz\Router;
 
 use Bluz\Application\Application;
@@ -95,7 +94,7 @@ class Router
         $reverse = Cache::get('router.reverse');
 
         if (!$routers || !$reverse) {
-            list($routers, $reverse) = $this->initRouters();
+            list($routers, $reverse) = $this->prepareRouterData();
             Cache::set('router.routers', $routers, Cache::TTL_NO_EXPIRY, ['system']);
             Cache::set('router.reverse', $reverse, Cache::TTL_NO_EXPIRY, ['system']);
         }
@@ -107,9 +106,9 @@ class Router
     /**
      * Initial routers data from controllers
      *
-     * @return array
+     * @return array[]
      */
-    protected function initRouters()
+    private function prepareRouterData()
     {
         $routers = [];
         $reverse = [];
@@ -421,7 +420,7 @@ class Router
                 $getParams[$key] = $value;
                 continue;
             }
-            $url .= '/' . urlencode($key) . '/' . urlencode($value);
+            $url .= '/' . urlencode((string)$key) . '/' . urlencode((string)$value);
         }
         if (!empty($getParams)) {
             $url .= '?' . http_build_query($getParams);

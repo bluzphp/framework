@@ -132,7 +132,7 @@ class ViewTest extends TestCase
 
         $result = $view->attributes(['foo' => 'bar', 'baz' => null, 'qux']);
 
-        self::assertEquals('foo="bar" qux="qux"', $result);
+        self::assertEquals('foo="bar" qux', $result);
     }
 
     /**
@@ -207,8 +207,8 @@ class ViewTest extends TestCase
         $result = $view->headScript();
 
         self::assertEquals(
-            '<script src="/foo.js"></script>'.
-            '<script src="/bar.js"></script>',
+            '<script src="/foo.js" ></script>'.
+            '<script src="/bar.js" ></script>',
             str_replace(["\t", "\n", "\r"], '', $result)
         );
     }
@@ -337,9 +337,9 @@ class ViewTest extends TestCase
     {
         $view = $this->getView();
 
-        $result = $view->script('foo.js');
+        $result = $view->script('foo.js', ['async']);
 
-        self::assertEquals('<script src="/foo.js"></script>', trim($result));
+        self::assertEquals('<script src="/foo.js" async></script>', trim($result));
     }
 
     /**
@@ -349,10 +349,10 @@ class ViewTest extends TestCase
     {
         $view = $this->getView();
 
-        $result = $view->script('alert("foo=bar")');
+        $result = $view->script('alert("foo=bar")', ['async']);
         $result = str_replace(["\t", "\n", "\r"], '', $result);
 
-        self::assertEquals('<script type="text/javascript"><!--alert("foo=bar")//--></script>', $result);
+        self::assertEquals('<script type="text/javascript" async><!--alert("foo=bar")//--></script>', $result);
     }
 
     /**

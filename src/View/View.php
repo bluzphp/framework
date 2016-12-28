@@ -42,7 +42,7 @@ use Bluz\Response\ResponseTrait;
  * @method string partialLoop($template, $data = [], $params = [])
  * @method string radio($name, $value = null, $checked = false, array $attributes = [])
  * @method string redactor($selector, array $settings = [])
- * @method string script(string $script)
+ * @method string script(string $script, array $attributes = [])
  * @method string select($name, array $options = [], $selected = null, array $attributes = [])
  * @method string style(string $style, $media = 'all')
  * @method string|null url(string $module, string $controller, array $params = [], bool $checkAccess = false)

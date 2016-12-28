@@ -16,13 +16,15 @@ use Bluz\View\View;
  * Generate HTML for <script> element
  *
  * @param  string $script
+ * @param  array  $attributes HTML attributes
  * @return string
  */
 return
-    function ($script) {
+    function ($script, array $attributes = []) {
         /**
          * @var View $this
          */
+        $attributes = $this->attributes($attributes);
         if ('.js' == substr($script, -3)) {
             if (strpos($script, 'http://') !== 0
                 && strpos($script, 'https://') !== 0
@@ -30,9 +32,9 @@ return
             ) {
                 $script = $this->baseUrl($script);
             }
-            return "<script src=\"$script\"></script>\n";
+            return "<script src=\"$script\" $attributes></script>\n";
         } else {
-            return "<script type=\"text/javascript\">\n"
+            return "<script type=\"text/javascript\" $attributes>\n"
             . "<!--\n"
             . "$script\n"
             . "//-->\n"

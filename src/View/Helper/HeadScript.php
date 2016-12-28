@@ -21,7 +21,7 @@ use Bluz\View\View;
  * @return string|null
  */
 return
-    function ($script = null) {
+    function ($script = null, array $attributes = []) {
         /**
          * @var View $this
          */
@@ -29,6 +29,6 @@ return
             return Layout::headScript($script);
         } else {
             // it's just alias to script() call
-            return $this->script($script);
+            return $this->script($script, $attributes);
         }
     };

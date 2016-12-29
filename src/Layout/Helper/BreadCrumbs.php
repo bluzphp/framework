@@ -12,13 +12,13 @@ namespace Bluz\Layout\Helper;
 
 use Bluz\Proxy\Registry;
 
+/**
+ * Set or Get Breadcrumbs
+ *
+ * @param  array $data
+ * @return array|null
+ */
 return
-    /**
-     * Set or Get Breadcrumbs
-     *
-     * @param  array $data
-     * @return array|null
-     */
     function (array $data = []) {
         if (sizeof($data)) {
             Registry::set('layout:breadcrumbs', $data);

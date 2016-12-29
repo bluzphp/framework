@@ -28,13 +28,12 @@ return
         }
         $result = [];
         foreach ($attributes as $key => $value) {
-            if (null === $value) {
+            if (is_null($value)) {
                 // skip empty values
                 //   input: [attribute=>null]
                 //   output: ''
                 continue;
-            }
-            if (is_int($key)) {
+            } elseif (is_int($key)) {
                 // allow non-associative keys
                 //   input: [checked, disabled]
                 //   output: 'checked disabled'

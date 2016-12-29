@@ -10,27 +10,34 @@ declare(strict_types=1);
 
 namespace Bluz\Layout\Helper;
 
+use Bluz\Layout\Layout;
 use Bluz\Proxy\Registry;
 
+/**
+ * Set or generate <script> code for <head>
+ *
+ * @param string $src
+ * @param array  $attributes
+ * @return null|string
+ */
 return
-    /**
-     * Set or generate <script> code for <head>
-     *
-     * @param  string $script
-     * @return string|null
-     */
-    function ($script = null) {
+    function ($src = null, array $attributes = []) {
+        /**
+         * @var Layout $this
+         */
         // it's stack for <head>
         $headScripts = Registry::get('layout:headScripts') ? : [];
 
-        if (null === $script) {
-            $headScripts = array_unique($headScripts);
+        if (is_null($src)) {
             // clear system vars
             Registry::set('layout:headScripts', []);
-            $headScripts = array_map([$this, 'script'], $headScripts);
-            return join("\n", $headScripts);
+            $tags = [];
+            foreach ($headScripts as $src => $attributes) {
+                $tags[] = $this->script($src, $attributes);
+            }
+            return join("\n", $tags);
         } else {
-            $headScripts[] = $script;
+            $headScripts[$src] = $attributes;
             Registry::set('layout:headScripts', $headScripts);
             return null;
         }

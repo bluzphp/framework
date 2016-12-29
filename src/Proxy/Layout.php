@@ -48,13 +48,14 @@ use Bluz\View\View;
  * @method   static void delete($key)
  * @see      RegularAccess::delete()
  *
- * @method   static string ahref(string $text, mixed $href, array $attributes = [])
- * @method   static array|null breadCrumbs(array $data = [])
- * @method   static string|null headScript(string $script = null)
- * @method   static string|null headStyle(string $style = null, $media = 'all')
- * @method   static string|null link(string $src = null, string $rel = 'stylesheet')
- * @method   static string|null meta(string $name = null, string $content = null)
- * @method   static string|null title(string $title = null, $position = 'replace', $separator = ' :: ')
+ * @method static string ahref(string $text, mixed $href, array $attributes = [])
+ * @method static array|null breadCrumbs(array $data = [])
+ * @method static string|null headScript(string $src = null, array $attributes = [])
+ * @method static string|null headScriptBlock(string $code = null)
+ * @method static string|null headStyle(string $href = null, string $media = 'all')
+ * @method static string|null link(string $src = null, string $rel = 'stylesheet')
+ * @method static string|null meta(string $name = null, string $content = null)
+ * @method static string|null title(string $title = null, $position = 'replace', $separator = ' :: ')
  */
 class Layout
 {

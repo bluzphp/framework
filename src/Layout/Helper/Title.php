@@ -13,21 +13,22 @@ namespace Bluz\Layout\Helper;
 use Bluz\Layout\Layout;
 use Bluz\Proxy\Registry;
 
+/**
+ * Set or generate <title> code for <head>
+ *
+ * @param  string $title
+ * @param  string $position
+ * @param  string $separator
+ * @return string|null
+ */
 return
-    /**
-     * Set or generate <title> code for <head>
-     *
-     * @param  string $title
-     * @param  string $position
-     * @param  string $separator
-     * @return string|null
-     */
     function ($title = null, $position = Layout::POS_REPLACE, $separator = ' :: ') {
         // it's stack for <title> tag
-        if (null === $title) {
-            return Registry::get('layout:title');
+        $oldTitle = Registry::get('layout:title');
+
+        if (is_null($title)) {
+            return $oldTitle;
         } else {
-            $oldTitle = Registry::get('layout:title');
             // switch statement for text position
             switch ($position) {
                 case Layout::POS_PREPEND:

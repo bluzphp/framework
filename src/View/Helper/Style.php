@@ -15,23 +15,20 @@ use Bluz\View\View;
 /**
  * Generate HTML for <style> or <link> element
  *
- * @param  string $style
+ * @param  string $href
  * @param  string $media
  * @return string
  */
 return
-    function ($style, $media = 'all') {
+    function ($href, $media = 'all') {
         /**
          * @var View $this
          */
-        if ('.css' == substr($style, -4)) {
-            if (strpos($style, 'http://') !== 0
-                && strpos($style, 'https://') !== 0
-            ) {
-                $style = $this->baseUrl($style);
-            }
-            return "<link href=\"$style\" rel=\"stylesheet\" media=\"$media\"/>\n";
-        } else {
-            return "<style type=\"text/css\" media=\"$media\">\n$style\n</style>\n";
+        if (strpos($href, 'http://') !== 0
+            && strpos($href, 'https://') !== 0
+            && strpos($href, '//') !== 0
+        ) {
+            $href = $this->baseUrl($href);
         }
+        return "<link href=\"$href\" rel=\"stylesheet\" media=\"$media\"/>\n";
     };

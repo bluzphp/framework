@@ -13,33 +13,31 @@ namespace Bluz\Layout\Helper;
 use Bluz\Layout\Layout;
 use Bluz\Proxy\Registry;
 
+/**
+ * Set or generate <style> code for <head>
+ *
+ * @param  string $href
+ * @param  string $media
+ * @return string|null
+ */
 return
-    /**
-     * Set or generate <style> code for <head>
-     *
-     * @param  string $style
-     * @param  string $media
-     * @return string|null
-     */
-    function ($style = null, $media = 'all') {
+    function ($href = null, $media = 'all') {
         /**
          * @var Layout $this
          */
         // it's stack for <head>
         $headStyle = Registry::get('layout:headStyle') ? : [];
 
-        if (null === $style) {
+        if (is_null($href)) {
             // clear system vars
             Registry::set('layout:headStyle', []);
-            array_walk(
-                $headStyle,
-                function (&$item, $key) {
-                    $item = $this->style($key, $item);
-                }
-            );
-            return join("\n", $headStyle);
+            $tags = [];
+            foreach ($headStyle as $href => $media) {
+                $tags[] = $this->style($href, $media);
+            }
+            return join("\n", $tags);
         } else {
-            $headStyle[$style] = $media;
+            $headStyle[$href] = $media;
             Registry::set('layout:headStyle', $headStyle);
             return null;
         }

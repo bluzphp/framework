@@ -324,10 +324,9 @@ class ViewTest extends TestCase
     {
         $view = $this->getView();
 
-        $view->redactor('#editor');
+        $result = $view->redactor('#editor');
 
-        self::assertNotEmpty($view->headScript());
-        self::assertNotEmpty($view->headStyle());
+        self::assertNotEmpty($result);
     }
 
     /**
@@ -345,14 +344,14 @@ class ViewTest extends TestCase
     /**
      * Helper Script inline
      */
-    public function testHelperScriptPlain()
+    public function testHelperScriptBlock()
     {
         $view = $this->getView();
 
-        $result = $view->script('alert("foo=bar")', ['async']);
+        $result = $view->scriptBlock('alert("foo=bar")');
         $result = str_replace(["\t", "\n", "\r"], '', $result);
 
-        self::assertEquals('<script type="text/javascript" async><!--alert("foo=bar")//--></script>', $result);
+        self::assertEquals('<script type="text/javascript"><!--alert("foo=bar")//--></script>', $result);
     }
 
     /**
@@ -478,11 +477,11 @@ class ViewTest extends TestCase
     /**
      * Helper Style inline
      */
-    public function testHelperStylePlain()
+    public function testHelperStyleBlock()
     {
         $view = $this->getView();
 
-        $result = $view->style('#my{color:red}');
+        $result = $view->styleBlock('#my{color:red}');
         $result = str_replace(["\t", "\n", "\r"], '', $result);
 
         self::assertEquals('<style type="text/css" media="all">#my{color:red}</style>', $result);

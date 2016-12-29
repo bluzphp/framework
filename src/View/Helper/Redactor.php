@@ -31,13 +31,12 @@ return
             'plugins' => ['imagemanager']
         ];
 
-
         $settings = array_replace_recursive($defaultSettings, $settings);
         $settings = json_encode($settings);
 
         $html = "";
-        $html .= $this->headStyle('redactor/redactor.css');
-        $html .= $this->headScript(
+        $html .= $this->style('redactor/redactor.css');
+        $html .= $this->scriptBlock(
             'require(["jquery", "redactor", "redactor.imagemanager"], function($) {
                 $("' . $selector . '").redactor(' . $settings . ');
             });'

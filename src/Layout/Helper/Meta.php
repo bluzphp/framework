@@ -10,49 +10,35 @@ declare(strict_types=1);
 
 namespace Bluz\View\Helper;
 
-use Bluz\Layout\Layout;
 use Bluz\Proxy\Registry;
 
+/**
+ * Set or generate <meta> code for <head>
+ *
+ * @param  string|array|null $name
+ * @param  string|null       $content
+ * @return string|null
+ */
 return
-    /**
-     * Set or generate <meta> code for <head>
-     *
-     * @param  string|array|null $name
-     * @param  string|null       $content
-     * @return string|null
-     */
     function ($name = null, $content = null) {
-        /**
-         * @var Layout $this
-         */
         // it's stack for <head>
         $meta = Registry::get('layout:meta') ? : [];
 
-        if ($name !== null && $content !== null) {
-            $meta[] = ['name' => $name, 'content' => $content];
-            Registry::set('layout:meta', $meta);
-            return null;
-        } elseif (is_array($name)) {
-            $meta[] = $name;
-            Registry::set('layout:meta', $meta);
-            return null;
-        } elseif (is_null($name) && is_null($content)) {
-            if (sizeof($meta)) {
-                // prepare to output
-                $meta = array_map(
-                    function ($attr) {
-                        return '<meta '. $this->attributes($attr) .'/>';
-                    },
-                    $meta
-                );
-                // clear system vars
-                Registry::set('layout:meta', []);
-                return join("\n", $meta);
-            } else {
-                return '';
+        if (is_null($name) && is_null($content)) {
+            // clear system vars
+            Registry::set('layout:meta', []);
+            // prepare to output
+            $tags = [];
+            foreach ($meta as $name => $content) {
+                $tags[] = '<meta name="'.$name.'" content="'. htmlspecialchars((string)$content, ENT_QUOTES) .'"/>';
             }
+            return join("\n", $tags);
+        } elseif (is_null($name)) {
+            // if exists only $content, do nothing
+            return null;
         } else {
-            // if exists only $name or $content
+            $meta[$name] = $content;
+            Registry::set('layout:meta', $meta);
             return null;
         }
     };

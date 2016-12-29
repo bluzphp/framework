@@ -17,18 +17,19 @@ use Bluz\View\View;
 /**
  * Set or generate <script> code for <head>
  *
- * @param  string $script
- * @return string|null
+ * @param  string $src
+ * @param  array $attributes
+ * @return null|string
  */
 return
-    function ($script = null) {
+    function ($src = null, array $attributes = []) {
         /**
          * @var View $this
          */
         if (Application::getInstance()->useLayout()) {
-            return Layout::headScript($script);
+            return Layout::headScript($src, $attributes);
         } else {
             // it's just alias to script() call
-            return $this->script($script);
+            return $this->script($src, $attributes);
         }
     };

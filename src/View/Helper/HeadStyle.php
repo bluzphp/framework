@@ -17,19 +17,19 @@ use Bluz\View\View;
 /**
  * Set or generate <style> code for <head>
  *
- * @param  string $style
+ * @param  string $href
  * @param  string $media
  * @return string|null
  */
 return
-    function ($style = null, $media = 'all') {
+    function ($href = null, $media = 'all') {
         /**
          * @var View $this
          */
         if (Application::getInstance()->useLayout()) {
-            return Layout::headStyle($style, $media);
+            return Layout::headStyle($href, $media);
         } else {
             // it's just alias to style() call
-            return $this->style($style);
+            return $this->style($href, $media);
         }
     };

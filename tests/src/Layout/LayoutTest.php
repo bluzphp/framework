@@ -109,33 +109,23 @@ class LayoutTest extends TestCase
     }
 
     /**
-     * Helper Meta with Array
+     * Helper Meta
      */
-    public function testHelperMetaArray()
+    public function testHelperMetaIsInvalid()
     {
         $layout = new Layout();
 
-        $layout->meta(
-            [
-                'name' => 'keywords',
-                'content' => 'foo, bar, baz, qux'
-            ]
-        );
+        self::assertNull($layout->meta(null, 'content'));
+    }
 
-        $layout->meta(
-            [
-                'name' => 'description',
-                'content' => 'foo bar baz qux'
-            ]
-        );
+    /**
+     * Helper Meta
+     */
+    public function testHelperMetaIsEmpty()
+    {
+        $layout = new Layout();
 
-        $result = $layout->meta();
-
-        self::assertEquals(
-            '<meta name="keywords" content="foo, bar, baz, qux"/>'.
-            '<meta name="description" content="foo bar baz qux"/>',
-            str_replace(["\t", "\n", "\r"], '', $result)
-        );
+        self::assertEmpty($layout->meta());
     }
 
     /**

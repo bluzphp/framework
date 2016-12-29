@@ -16,16 +16,17 @@ use Bluz\View\View;
 /**
  * Layout
  *
- * @package  Bluz\Layout
- * @author   Anton Shevchuk
- * @link     https://github.com/bluzphp/framework/wiki/Layout
+ * @package Bluz\Layout
+ * @author  Anton Shevchuk
+ * @link    https://github.com/bluzphp/framework/wiki/Layout
  *
- * @method   array|null  breadCrumbs(array $data = [])
- * @method   string|null headScript(string $script = null)
- * @method   string|null headStyle(string $style = null, $media = 'all')
- * @method   string|null link(string $src = null, string $rel = 'stylesheet')
- * @method   string|null meta(string $name = null, string $content = null)
- * @method   string|null title(string $title = null, $position = 'replace', $separator = ' :: ')
+ * @method array|null  breadCrumbs(array $data = [])
+ * @method string|null headScript(string $src = null, array $attributes = [])
+ * @method string|null headScriptBlock(string $code = null)
+ * @method string|null headStyle(string $href = null, string $media = 'all')
+ * @method string|null link(string $src = null, string $rel = 'stylesheet')
+ * @method string|null meta(string $name = null, string $content = null)
+ * @method string|null title(string $title = null, $position = 'replace', $separator = ' :: ')
  */
 class Layout extends View
 {

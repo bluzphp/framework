@@ -13,13 +13,13 @@ namespace Bluz\View\Helper;
 use Bluz\Layout\Layout;
 use Bluz\Proxy\Registry;
 
+/**
+ * Set or generate <link> code for <head>
+ *
+ * @param  array  $link
+ * @return string|null
+ */
 return
-    /**
-     * Set or generate <link> code for <head>
-     *
-     * @param  array  $link
-     * @return string|null
-     */
     function (array $link = null) {
         /**
          * @var Layout $this
@@ -28,17 +28,17 @@ return
         $links = Registry::get('layout:link') ? : [];
 
         if (is_null($link)) {
+            // clear system vars
+            Registry::set('layout:link', []);
             // prepare to output
-            $links = array_map(
+            $tags = array_map(
                 function ($attr) {
                     return '<link '. $this->attributes($attr) .'/>';
                 },
                 $links
             );
-            // clear system vars
-            Registry::set('layout:link', []);
-            $links = array_unique($links);
-            return join("\n", $links);
+            $tags = array_unique($tags);
+            return join("\n", $tags);
         } else {
             $links[] = $link;
             Registry::set('layout:link', $links);

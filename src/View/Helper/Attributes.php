@@ -28,19 +28,19 @@ return
         }
         $result = [];
         foreach ($attributes as $key => $value) {
-            if (null === $value) {
+            if (is_null($value)) {
                 // skip empty values
-                //  input: [attribute=>null]
-                //  output: ''
+                //   input: [attribute=>null]
+                //   output: ''
                 continue;
-            }
-            if (is_int($key)) {
+            } elseif (is_int($key)) {
                 // allow non-associative keys
-                //  input: [checked]
-                //  output: 'checked="checked"'
-                $key = $value;
+                //   input: [checked, disabled]
+                //   output: 'checked disabled'
+                $result[] = $value;
+            } else {
+                $result[] = $key . '="' . htmlspecialchars((string)$value, ENT_QUOTES) . '"';
             }
-            $result[] = $key . '="' . htmlspecialchars((string)$value, ENT_QUOTES) . '"';
         }
 
         return join(' ', $result);

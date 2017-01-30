@@ -60,12 +60,12 @@ class Response
     protected $cookies = [];
 
     /**
-     * @var mixed result can be Controller|Layout
+     * @var Controller
      */
     protected $body;
 
     /**
-     * @var string CLI|HTML|JSON
+     * @var string CLI|HTML|JSON|FILE
      */
     protected $type = 'HTML';
 
@@ -114,6 +114,14 @@ class Response
                     $this->getHeaders()
                 );
                 break;
+            case 'FILE' == $this->type:
+                // File attachment
+                $response= new AttachmentResponse(
+                    $this->body->getData()->get('FILE'),
+                    $this->getStatusCode(),
+                    $this->getHeaders()
+                );
+                break;
             case 'HTML' == $this->type:
             default:
                 // HTML response
@@ -142,6 +150,7 @@ class Response
                 $this->setHeader('Content-Type', 'application/json');
                 break;
             case 'CLI':
+            case 'FILE':
             case 'HTML':
             default:
                 break;

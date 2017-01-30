@@ -29,6 +29,7 @@ use Bluz\View\View;
  * @package  Bluz\Controller
  * @author   Anton Shevchuk
  *
+ * @method void attachment(string $file)
  * @method void denied()
  * @method void disableLayout()
  * @method void disableView()

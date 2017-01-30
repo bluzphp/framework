@@ -16,8 +16,8 @@ use Bluz\Proxy\Registry;
 /**
  * Set or generate <script> code for <head>
  *
- * @param string $src
- * @param array  $attributes
+ * @param  string $src
+ * @param  array  $attributes
  * @return null|string
  */
 return

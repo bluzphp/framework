@@ -23,6 +23,17 @@ trait ProxyTrait
     use Singleton;
 
     /**
+     * Set or replace instance
+     *
+     * @param  mixed $instance
+     * @return void
+     */
+    public static function setInstance($instance)
+    {
+        static::$instance = $instance;
+    }
+
+    /**
      * Handle dynamic, static calls to the object.
      *
      * @param  string $method

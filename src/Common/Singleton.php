@@ -25,17 +25,6 @@ trait Singleton
     protected static $instance;
 
     /**
-     * Set or replace instance
-     *
-     * @param  mixed $instance
-     * @return void
-     */
-    public static function setInstance($instance)
-    {
-        static::$instance = $instance;
-    }
-
-    /**
      * Get instance
      *
      * @return static
@@ -50,7 +39,7 @@ trait Singleton
      *
      * @return static
      */
-    protected static function initInstance()
+    private static function initInstance()
     {
         return new static;
     }
@@ -58,14 +47,21 @@ trait Singleton
     /**
      * Disabled by access level
      */
-    protected function __construct()
+    private function __construct()
     {
     }
 
     /**
      * Disabled by access level
      */
-    protected function __clone()
+    private function __clone()
+    {
+    }
+
+    /**
+     * Disabled by access level
+     */
+    private function __wakeup()
     {
     }
 }

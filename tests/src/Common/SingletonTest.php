@@ -38,13 +38,14 @@ class SingletonTest extends TestCase
     /**
      * Test Clone
      */
-    public function testProtectedMethods()
+    public function testPrivateMethods()
     {
         $result = ConcreteSingleton::getInstance();
 
         $reflection = new \ReflectionObject($result);
 
-        self::assertTrue($reflection->getMethod('__construct')->isProtected());
-        self::assertTrue($reflection->getMethod('__clone')->isProtected());
+        self::assertTrue($reflection->getMethod('__construct')->isPrivate());
+        self::assertTrue($reflection->getMethod('__clone')->isPrivate());
+        self::assertTrue($reflection->getMethod('__wakeup')->isPrivate());
     }
 }

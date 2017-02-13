@@ -42,6 +42,9 @@ class Cache
 {
     use ProxyTrait;
 
+    /**
+     * No expiry TTL value
+     */
     const TTL_NO_EXPIRY = 0;
 
     /**

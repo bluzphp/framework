@@ -48,4 +48,24 @@ class SingletonTest extends TestCase
         self::assertTrue($reflection->getMethod('__clone')->isPrivate());
         self::assertTrue($reflection->getMethod('__wakeup')->isPrivate());
     }
+
+    /**
+     * Test Construct Throw Error
+     *
+     * @expectedException \Error
+     */
+    public function testConstructThrowError()
+    {
+        new ConcreteSingleton();
+    }
+
+    /**
+     * Test Clone Throw Error
+     *
+     * @expectedException \Error
+     */
+    public function testCloneThrowError()
+    {
+        $result = clone ConcreteSingleton::getInstance();
+    }
 }

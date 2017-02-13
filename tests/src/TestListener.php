@@ -131,7 +131,7 @@ class TestListener implements PHPUnitTestListener
     {
         $time = sprintf('%0.3f sec', $time);
 
-        echo Colorize::text("\t[" . $test->count() . ']', 'white', null, true);
+        echo Colorize::text("\t[" . $test->getCount() . ']', 'white', null, true);
         echo Colorize::text("\t" . $time, 'green', null, true);
     }
 

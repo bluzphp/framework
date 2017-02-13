@@ -10,6 +10,11 @@
 namespace Bluz\Tests;
 
 use Bluz\Cli\Colorize;
+use PHPUnit\Framework\AssertionFailedError;
+use PHPUnit\Framework\Test;
+use PHPUnit\Framework\TestListener as PHPUnitTestListener;
+use PHPUnit\Framework\TestSuite;
+use PHPUnit\Framework\Warning;
 
 /**
  * Test Listener for format output
@@ -18,7 +23,7 @@ use Bluz\Cli\Colorize;
  *
  * @author   Anton Shevchuk
  */
-class TestListener implements \PHPUnit_Framework_TestListener
+class TestListener implements PHPUnitTestListener
 {
     /**
      * time of suite
@@ -28,12 +33,12 @@ class TestListener implements \PHPUnit_Framework_TestListener
     protected $timeSuite = 0;
     
     /**
-     * @param \PHPUnit_Framework_Test $test
+     * @param Test $test
      * @param \Exception $e
      * @param float $time
      * @return void
      */
-    public function addError(\PHPUnit_Framework_Test $test, \Exception $e, $time)
+    public function addError(Test $test, \Exception $e, $time)
     {
         echo "\t[";
         echo Colorize::text($e->getMessage(), "red", null, true);
@@ -43,12 +48,12 @@ class TestListener implements \PHPUnit_Framework_TestListener
     /**
      * A warning occurred.
      *
-     * @param \PHPUnit_Framework_Test  $test
-     * @param \PHPUnit_Framework_Warning $e
+     * @param Test  $test
+     * @param Warning $e
      * @param float $time
      * @return void
      */
-    public function addWarning(\PHPUnit_Framework_Test $test, \PHPUnit_Framework_Warning $e, $time)
+    public function addWarning(Test $test, Warning $e, $time)
     {
         echo "\t[";
         echo Colorize::text($e->getMessage(), "red", null, true);
@@ -56,12 +61,12 @@ class TestListener implements \PHPUnit_Framework_TestListener
     }
 
     /**
-     * @param \PHPUnit_Framework_Test $test
-     * @param \PHPUnit_Framework_AssertionFailedError $e
+     * @param Test $test
+     * @param AssertionFailedError $e
      * @param float $time
      * @return void
      */
-    public function addFailure(\PHPUnit_Framework_Test $test, \PHPUnit_Framework_AssertionFailedError $e, $time)
+    public function addFailure(Test $test, AssertionFailedError $e, $time)
     {
         echo "\t[";
         echo Colorize::text($e->getMessage(), "white", "red", true);
@@ -69,23 +74,23 @@ class TestListener implements \PHPUnit_Framework_TestListener
     }
 
     /**
-     * @param \PHPUnit_Framework_Test $test
+     * @param Test $test
      * @param \Exception $e
      * @param float $time
      * @return void
      */
-    public function addIncompleteTest(\PHPUnit_Framework_Test $test, \Exception $e, $time)
+    public function addIncompleteTest(Test $test, \Exception $e, $time)
     {
         // incomplete additional text
     }
 
     /**
-     * @param \PHPUnit_Framework_Test $test
+     * @param Test $test
      * @param \Exception $e
      * @param float $time
      * @return void
      */
-    public function addRiskyTest(\PHPUnit_Framework_Test $test, \Exception $e, $time)
+    public function addRiskyTest(Test $test, \Exception $e, $time)
     {
         echo "\t[";
         echo Colorize::text($e->getMessage(), 'yellow', null, true);
@@ -93,12 +98,12 @@ class TestListener implements \PHPUnit_Framework_TestListener
     }
 
     /**
-     * @param \PHPUnit_Framework_Test $test
+     * @param Test $test
      * @param \Exception $e
      * @param float $time
      * @return void
      */
-    public function addSkippedTest(\PHPUnit_Framework_Test $test, \Exception $e, $time)
+    public function addSkippedTest(Test $test, \Exception $e, $time)
     {
         // skipped additional text
         echo "\t[";
@@ -107,10 +112,10 @@ class TestListener implements \PHPUnit_Framework_TestListener
     }
 
     /**
-     * @param \PHPUnit_Framework_Test $test
+     * @param Test $test
      * @return void
      */
-    public function startTest(\PHPUnit_Framework_Test $test)
+    public function startTest(Test $test)
     {
         $name = sprintf('%-40.40s', $test->getName());
 
@@ -118,23 +123,23 @@ class TestListener implements \PHPUnit_Framework_TestListener
     }
 
     /**
-     * @param \PHPUnit_Framework_Test $test
+     * @param Test $test
      * @param float $time
      * @return void
      */
-    public function endTest(\PHPUnit_Framework_Test $test, $time)
+    public function endTest(Test $test, $time)
     {
         $time = sprintf('%0.3f sec', $time);
 
-        echo Colorize::text("\t[" . $test->getCount() . ']', 'white', null, true);
+        echo Colorize::text("\t[" . $test->count() . ']', 'white', null, true);
         echo Colorize::text("\t" . $time, 'green', null, true);
     }
 
     /**
-     * @param \PHPUnit_Framework_TestSuite $suite
+     * @param TestSuite $suite
      * @return void
      */
-    public function startTestSuite(\PHPUnit_Framework_TestSuite $suite)
+    public function startTestSuite(TestSuite $suite)
     {
         $this->timeSuite = microtime(1);
         echo "\n\n";
@@ -142,10 +147,10 @@ class TestListener implements \PHPUnit_Framework_TestListener
     }
 
     /**
-     * @param \PHPUnit_Framework_TestSuite $suite
+     * @param TestSuite $suite
      * @return void
      */
-    public function endTestSuite(\PHPUnit_Framework_TestSuite $suite)
+    public function endTestSuite(TestSuite $suite)
     {
         $time = sprintf('%0.3f sec', microtime(1) - $this->timeSuite);
         echo "\n";

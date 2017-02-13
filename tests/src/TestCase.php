@@ -24,7 +24,7 @@ use Zend\Diactoros\ServerRequest;
  * @author   Anton Shevchuk
  * @created  04.08.11 20:01
  */
-class TestCase extends \PHPUnit_Framework_TestCase
+class TestCase extends \PHPUnit\Framework\TestCase
 {
     /**
      * Application entity

@@ -32,7 +32,7 @@ script:
   # PHP Depend
   #- php vendor/bin/pdepend --jdepend-xml=.reports/jdepend.xml --jdepend-chart=.reports/dependencies.svg --overview-pyramid=.reports/pyramid.svg  ./src
   # CodeCeption
-  - php codeceptrun --coverage-xml ".reports/clover.xml"
+  - php codecept run --coverage-xml ".reports/clover.xml"
 after_script:
   # Coveralls
   - php vendor/bin/coveralls -v

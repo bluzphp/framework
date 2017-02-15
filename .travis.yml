@@ -15,15 +15,12 @@ install:
   - mysql -e 'CREATE DATABASE bluz;'
 before_script:
   # Database
-  - mysql -uroot bluz < tests/dump.sql
+  - mysql -uroot bluz < tests/_data/dump.sql
   # Directories
   - mkdir .reports
   - chmod a+w ./tests/cache
 script:
-  # PHPUnit tests
-  - php vendor/bin/phpunit --configuration ./phpunit.xml.dist --coverage-clover=.reports/clover.xml --coverage-xml=.reports/coverage
   # Code style
-  #- php vendor/bin/phpcs --report=xml --report-file=.reports/phpcs.xml
   - php vendor/bin/phpcs
   # Lines of code
   - php vendor/bin/phploc --log-xml=.reports/phploc.xml src

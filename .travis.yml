@@ -19,6 +19,10 @@ before_script:
   # Directories
   - mkdir .reports
   - chmod a+w ./tests/cache
+  # Codeception
+  - wget http://codeception.com/codecept.phar
+  # Scrutinizer
+  - wget https://scrutinizer-ci.com/ocular.phar
 script:
   # Code style
   - php vendor/bin/phpcs
@@ -32,14 +36,12 @@ script:
   # PHP Depend
   #- php vendor/bin/pdepend --jdepend-xml=.reports/jdepend.xml --jdepend-chart=.reports/dependencies.svg --overview-pyramid=.reports/pyramid.svg  ./src
   # CodeCeption
-  - php codecept run --coverage-xml ".reports/clover.xml"
+  - php codecept.phar run --coverage-xml ".reports/clover.xml"
 after_script:
   # Coveralls
   - php vendor/bin/coveralls -v
-  # Scrutinizer
-  - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --format=php-clover .reports/clover.xml
-  # PHPDocumentor
+  # Generate documentation
   - bash .travis.sh
 notifications:
   email: false

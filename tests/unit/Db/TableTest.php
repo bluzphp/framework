@@ -35,7 +35,7 @@ class TableTest extends TestCase
 
     /**
      * testGetInstance
-     * @covers Table::getInstance
+     * @covers \Bluz\Db\Table::getInstance
      */
     public function testGetInstance()
     {

@@ -37,7 +37,7 @@ class RowTest extends TestCase
     }
 
     /**
-     * @covers Row::__get
+     * @covers \Bluz\Db\Row::__get
      */
     public function testGet()
     {
@@ -45,7 +45,7 @@ class RowTest extends TestCase
     }
 
     /**
-     * @covers Row::__set
+     * @covers \Bluz\Db\Row::__set
      */
     public function testSet()
     {
@@ -90,7 +90,7 @@ class RowTest extends TestCase
     }
 
     /**
-     * @covers Row::getTable
+     * @covers \Bluz\Db\Row::getTable
      */
     public function testGetTable()
     {
@@ -99,7 +99,7 @@ class RowTest extends TestCase
     }
 
     /**
-     * @covers Row::getTable
+     * @covers \Bluz\Db\Row::getTable
      * @expectedException Bluz\Db\Exception\TableNotFoundException
      */
     public function testGetTableException()

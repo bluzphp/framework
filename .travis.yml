@@ -19,6 +19,7 @@ before_script:
   # Directories
   - mkdir .reports
   - chmod a+w ./tests/cache
+  - chmod a+w ./tests/_output
   # Codeception
   - wget http://codeception.com/codecept.phar
   # Scrutinizer

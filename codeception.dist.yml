@@ -25,3 +25,6 @@ modules:
             url: http://127.0.0.1:8000/
             depends: PhpBrowser
             part: Json
+coverage:
+    include:
+        - src/*

@@ -28,7 +28,7 @@ script:
   # Code style
   - php vendor/bin/phpcs
   # CodeCeption
-  - php codecept.phar run --coverage-xml
+  - php codecept.phar run --coverage --coverage-xml
 after_script:
   # Coveralls
   - php vendor/bin/coveralls -v

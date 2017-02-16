@@ -15,33 +15,25 @@ install:
   - mysql -e 'CREATE DATABASE bluz;'
 before_script:
   # Database
-  - mysql -uroot bluz < tests/dump.sql
+  - mysql -uroot bluz < tests/_data/dump.sql
   # Directories
   - mkdir .reports
   - chmod a+w ./tests/cache
+  - chmod a+w ./tests/_output
+  # Codeception
+  - wget http://codeception.com/codecept.phar
+  # Scrutinizer
+  - wget https://scrutinizer-ci.com/ocular.phar
 script:
-  # PHPUnit tests
-  - php vendor/bin/phpunit --configuration ./phpunit.xml.dist --coverage-clover=.reports/clover.xml --coverage-xml=.reports/coverage
   # Code style
-  #- php vendor/bin/phpcs --report=xml --report-file=.reports/phpcs.xml
   - php vendor/bin/phpcs
-  # Lines of code
-  - php vendor/bin/phploc --log-xml=.reports/phploc.xml src
-  # Mess detection
-  - php vendor/bin/phpmd ./src xml codesize,unusedcode,naming --reportfile .reports/phpmd.xml || true
-  # Duplicate code
-  #- php vendor/bin/phpcpd --log-pmd .reports/pmd-cpd.xml src
-  # works incorrect with latest PHP versions
-  # PHP Depend
-  #- php vendor/bin/pdepend --jdepend-xml=.reports/jdepend.xml --jdepend-chart=.reports/dependencies.svg --overview-pyramid=.reports/pyramid.svg  ./src
-
+  # CodeCeption
+  - php codecept.phar run --coverage-xml
 after_script:
   # Coveralls
   - php vendor/bin/coveralls -v
-  # Scrutinizer
-  - wget https://scrutinizer-ci.com/ocular.phar
-  - php ocular.phar code-coverage:upload --format=php-clover .reports/clover.xml
-  # PHPDocumentor
+  - php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml
+  # Generate documentation
   - bash .travis.sh
 notifications:
   email: false

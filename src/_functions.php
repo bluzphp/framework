@@ -33,16 +33,17 @@ if (!function_exists('debug')) {
     function debug(...$params)
     {
         // check definition
-        if (!getenv('BLUZ_DEBUG')) {
+        $debug = $_COOKIE['BLUZ_DEBUG']?:getenv('BLUZ_DEBUG');
+        if (!$debug) {
             return;
         }
 
-        ini_set('xdebug.var_display_max_children', 512);
+        ini_set('xdebug.var_display_max_children', '512');
 
         if ('cli' == PHP_SAPI) {
             if (extension_loaded('xdebug')) {
                 // try to enable CLI colors
-                ini_set('xdebug.cli_color', 1);
+                ini_set('xdebug.cli_color', '1');
                 xdebug_print_function_stack();
             } else {
                 debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);

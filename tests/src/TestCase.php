@@ -14,6 +14,7 @@ use Bluz\Http;
 use Bluz\Proxy;
 use Bluz\Proxy\Request;
 use Bluz\Request\RequestFactory;
+use Codeception\Test\Unit;
 use Zend\Diactoros\ServerRequest;
 
 /**
@@ -24,7 +25,7 @@ use Zend\Diactoros\ServerRequest;
  * @author   Anton Shevchuk
  * @created  04.08.11 20:01
  */
-class TestCase extends \PHPUnit_Framework_TestCase
+class TestCase extends Unit
 {
     /**
      * Application entity

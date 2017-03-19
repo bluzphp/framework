@@ -308,10 +308,10 @@ abstract class Grid
         $this->module = Request::getModule();
         $this->controller = Request::getController();
 
-        $page = Request::getParam($this->prefix . 'page', 1);
+        $page = (int) Request::getParam($this->prefix . 'page', 1);
         $this->setPage($page);
 
-        $limit = Request::getParam($this->prefix . 'limit', $this->limit);
+        $limit = (int) Request::getParam($this->prefix . 'limit', $this->limit);
         $this->setLimit($limit);
 
         foreach ($this->allowOrders as $column) {

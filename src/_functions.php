@@ -33,8 +33,7 @@ if (!function_exists('debug')) {
     function debug(...$params)
     {
         // check definition
-        $debug = $_COOKIE['BLUZ_DEBUG']?:getenv('BLUZ_DEBUG');
-        if (!$debug) {
+        if (!getenv('BLUZ_DEBUG') || !isset($_COOKIE['BLUZ_DEBUG'])) {
             return;
         }
 

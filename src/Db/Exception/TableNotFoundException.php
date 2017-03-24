@@ -22,5 +22,5 @@ class TableNotFoundException extends DbException
      * Exception message
      * @var string
      */
-    public $message = 'Relation not found';
+    public $message = 'Table not found';
 }

@@ -94,37 +94,6 @@ class ValidatorBuilderTest extends Tests\TestCase
     }
 
     /**
-     * Setup multi builder for object
-     */
-    public function testValidatorBuilderForRuleSetAndObject()
-    {
-        $object = new \stdClass();
-        $object->foo = 0;
-        $object->bar = 42;
-        $object->pass = 'always';
-
-        $validator = new ValidatorBuilder();
-        $validator->add(
-            'foo',
-            Validator::numeric()
-        );
-        $validator->add(
-            'bar',
-            Validator::required()
-        );
-        $validator->add(
-            'bar',
-            Validator::callback('is_int')
-        );
-        $validator->add(
-            'quz',
-            Validator::numeric()
-        );
-        self::assertTrue($validator->validate($object));
-        self::assertTrue($validator->assert($object));
-    }
-
-    /**
      * Setup multi builder for empty object
      * @expectedException \Bluz\Validator\Exception\ValidatorException
      */
@@ -139,6 +108,7 @@ class ValidatorBuilderTest extends Tests\TestCase
             'bar',
             Validator::numeric()
         );
+        $validator->validate([]);
         self::assertFalse($validator->validate([]));
         self::assertFalse($validator->assert([]));
     }

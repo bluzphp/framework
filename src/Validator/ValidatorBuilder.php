@@ -31,7 +31,12 @@ class ValidatorBuilder
     protected $validators = [];
 
     /**
-     * @var array list of validation errors
+     * list of validation errors
+     *
+     *   ['foo'] => ["error one", ...]
+     *   ['bar'] => ["error one", ...]
+     *
+     * @var array
      */
     protected $errors = [];
 
@@ -54,49 +59,39 @@ class ValidatorBuilder
     /**
      * Validate chain of rules
      *
-     * @param  array|object $input
+     * @param  array $input
      * @return bool
      */
     public function validate($input) : bool
     {
-        $this->errors = [];
-        $result = true;
-        // check be validators
+        $this->resetErrors();
+
         foreach ($this->validators as $key => $validators) {
-            if (!$this->validateItem($key, $input)) {
-                $result = false;
-            }
+            $this->validateItem($key, $input[$key] ?? null);
         }
-        return $result;
+
+        return !$this->hasErrors();
     }
 
     /**
      * Validate chain of rules for single item
      *
      * @param  string $key
-     * @param  array|object $input
+     * @param  mixed $value
      * @return bool
      */
-    public function validateItem($key, $input) : bool
+    public function validateItem($key, $value) : bool
     {
+        $validators = $this->validators[$key] ?? null;
+
         // w/out any rules element is valid
-        if (!isset($this->validators[$key])) {
+        if (is_null($validators)) {
             return true;
         }
 
-        $validators = $this->validators[$key];
-
-        // check be validators
-        // extract input from ...
-        if (is_array($input) && isset($input[$key])) {
-            // array
-            $value = $input[$key];
-        } elseif (is_object($input) && isset($input->{$key})) {
-            // object
-            $value = $input->{$key};
-        } else {
-            // ... oh, not exists key
-            // check chains for required
+        // w/out value
+        if (is_null($value)) {
+            // should check is required or not
             $required = false;
             foreach ($validators as $validator) {
                 /* @var Validator $validator */
@@ -107,8 +102,10 @@ class ValidatorBuilder
             }
 
             if ($required) {
+                // required
                 $value = '';
             } else {
+                // not required
                 return true;
             }
         }
@@ -122,10 +119,7 @@ class ValidatorBuilder
             }
 
             if (!$validator->validate($value)) {
-                if (!isset($this->errors[$key])) {
-                    $this->errors[$key] = [];
-                }
-                $this->errors[$key][] = $validator->getError();
+                $this->addError($key, $validator->getError());
                 return false;
             }
         }
@@ -150,12 +144,48 @@ class ValidatorBuilder
     }
 
     /**
+     * Add Error by field name
+     *
+     * @param  string $name
+     * @param  string $message
+     * @return void
+     */
+    protected function addError($name, $message)
+    {
+        if (isset($this->errors[$name])) {
+            $this->errors[$name][] = $message;
+        } else {
+            $this->errors[$name] = [$message];
+        }
+    }
+
+    /**
      * Get errors
      *
      * @return array
      */
-    public function getErrors()
+    public function getErrors() : array
     {
         return $this->errors;
+    }
+
+    /**
+     * Reset errors
+     *
+     * @return void
+     */
+    public function resetErrors()
+    {
+        $this->errors = [];
+    }
+
+    /**
+     * Has errors?
+     *
+     * @return bool
+     */
+    public function hasErrors() : bool
+    {
+        return (bool) sizeof($this->errors);
     }
 }

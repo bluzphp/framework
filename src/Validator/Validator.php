@@ -107,6 +107,8 @@ class Validator
     /**
      * Magic call for create new rule
      *
+     * @todo   create extension point for custom rules
+     *
      * @param  string $ruleName
      * @param  array  $arguments
      * @return Validator

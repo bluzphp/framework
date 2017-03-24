@@ -11,4 +11,5 @@ define('PATH_APPLICATION', PATH_ROOT . '/tests');
 define('PATH_VENDOR', PATH_ROOT . '/vendor');
 
 // init autoloader
-require_once PATH_ROOT . '/vendor/autoload.php';
+$loader = require PATH_ROOT . '/vendor/autoload.php';
+$loader->addPsr4('Bluz\\Tests\\', __DIR__ .'/src');

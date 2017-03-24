@@ -65,6 +65,17 @@ abstract class AbstractRule
     }
 
     /**
+     * Set error template
+     *
+     * @param  string $template
+     * @return void
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+    }
+
+    /**
      * Get error template
      *
      * @return string

@@ -71,7 +71,7 @@ trait Validator
     /**
      * Validate input data
      *
-     * @param  array|object $input
+     * @param  array $input
      * @return bool
      */
     public function validate($input) : bool
@@ -82,7 +82,7 @@ trait Validator
     /**
      * Assert input data
      *
-     * @param  array|object $input
+     * @param  array $input
      * @return bool
      */
     public function assert($input)

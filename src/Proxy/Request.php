@@ -245,7 +245,7 @@ class Request
 
             // nothing ...
             if (!$header) {
-                // @todo Do something for this
+                return null;
             }
 
             // make array if types

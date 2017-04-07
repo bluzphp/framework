@@ -243,6 +243,11 @@ class Request
             // get header from request
             $header = self::getHeader('accept');
 
+            // nothing ...
+            if (!$header) {
+                return null;
+            }
+
             // make array if types
             $header = explode(',', $header);
             $header = array_map('trim', $header);

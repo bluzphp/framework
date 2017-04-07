@@ -10,6 +10,6 @@ define('PATH_ROOT', realpath(dirname(__FILE__). '/../'));
 define('PATH_APPLICATION', PATH_ROOT . '/tests');
 define('PATH_VENDOR', PATH_ROOT . '/vendor');
 
-// init autoloader
+// Use composer autoload
 $loader = require PATH_ROOT . '/vendor/autoload.php';
 $loader->addPsr4('Bluz\\Tests\\', __DIR__ .'/src');

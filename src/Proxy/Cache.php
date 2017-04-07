@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Bluz\Proxy;
 
 use Bluz\Common\Exception\ComponentException;
+use Cache\Hierarchy\HierarchicalPoolInterface;
 use Cache\Taggable\TaggablePoolInterface as Instance;
 
 /**
@@ -34,9 +35,6 @@ use Cache\Taggable\TaggablePoolInterface as Instance;
  *
  * @method   static bool clear()
  * @see      CacheItemPoolInterface::clear()
- *
- * @method   static bool clearTags(array $tags)
- * @see      TaggablePoolInterface::clearTags()
  */
 class Cache
 {
@@ -146,5 +144,20 @@ class Cache
     public static function prepare($key)
     {
         return str_replace(['-', '/'], '_', $key);
+    }
+
+    /**
+     * Clear cache items by tags
+     *
+     * @see    TaggablePoolInterface::clearTags()
+     *
+     * @return bool
+     */
+    public static function clearTags(array $tags)
+    {
+        if (self::getInstance() instanceof HierarchicalPoolInterface) {
+            return self::getInstance()->clearTags($tags);
+        }
+        return false;
     }
 }

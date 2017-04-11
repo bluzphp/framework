@@ -20,16 +20,14 @@ before_script:
   - mkdir .reports
   - chmod a+w ./tests/cache
   - chmod a+w ./tests/_output
-  # Codeception
-  - wget http://codeception.com/codecept.phar
   # Scrutinizer
   - wget https://scrutinizer-ci.com/ocular.phar
 script:
-  # Code style
+  # Check code style
   - php vendor/bin/phpcs
-  # CodeCeption
-  - php codecept.phar run --coverage-xml
-after_script:
+  # Run CodeCeption tests
+  - php vendor/bin/codecept run --coverage-xml
+after_success:
   # Coveralls
   - php vendor/bin/coveralls -v
   - php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml

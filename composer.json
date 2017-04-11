@@ -12,6 +12,7 @@
         "zendframework/zend-diactoros": "~1.3"
     },
     "require-dev": {
+        "codeception/codeception": "~2.2",
         "satooshi/php-coveralls": "~1.0",
         "squizlabs/php_codesniffer": "~2.3",
         "phploc/phploc": "*",

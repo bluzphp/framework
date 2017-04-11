@@ -81,13 +81,9 @@ class Response
         $this->sendCookies();
 
         switch (true) {
-            case 'CLI' == $this->type:
-                // CLI response
-                $response = new CliResponse(
-                    $body->render('CLI'),
-                    $this->getStatusCode()
-                );
-                break;
+            case 'CLI' === $this->type:
+                // no CLI response
+                return;
             case is_null($body):
             case StatusCode::NO_CONTENT == $this->getStatusCode():
                 $response = new EmptyResponse($this->getStatusCode(), $this->getHeaders());
@@ -100,7 +96,7 @@ class Response
                     $this->getHeaders()
                 );
                 break;
-            case 'JSON' == $this->type:
+            case 'JSON' === $this->type:
                 // JSON response
                 // setup messages
                 if (Messages::count()) {
@@ -114,7 +110,7 @@ class Response
                     $this->getHeaders()
                 );
                 break;
-            case 'FILE' == $this->type:
+            case 'FILE' === $this->type:
                 // File attachment
                 $response= new AttachmentResponse(
                     $this->body->getData()->get('FILE'),
@@ -122,7 +118,7 @@ class Response
                     $this->getHeaders()
                 );
                 break;
-            case 'HTML' == $this->type:
+            case 'HTML' === $this->type:
             default:
                 // HTML response
                 $response = new HtmlResponse(

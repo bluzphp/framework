@@ -37,8 +37,8 @@ class ConfigTest extends TestCase
     protected function setUp()
     {
         $this->config = new Bluz\Config\Config();
-        $this->path = dirname(__FILE__) . '/Fixtures/';
-        $this->emptyConfigsDir = dirname(__FILE__) . '/Fixtures/emptyConfigsDir';
+        $this->path = __DIR__ . '/Fixtures/';
+        $this->emptyConfigsDir = __DIR__ . '/Fixtures/emptyConfigsDir';
     }
 
     /**

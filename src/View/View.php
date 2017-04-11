@@ -94,7 +94,7 @@ class View implements ViewInterface, \JsonSerializable
     public function __construct()
     {
         // initial default helper path
-        $this->addHelperPath(dirname(__FILE__) . '/Helper/');
+        $this->addHelperPath(__DIR__ . '/Helper/');
     }
 
     /**

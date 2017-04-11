@@ -45,7 +45,7 @@ class Layout extends View
     public function __construct()
     {
         // init layout helper path
-        $this->addHelperPath(dirname(__FILE__) . '/Helper/');
+        $this->addHelperPath(__DIR__ . '/Helper/');
 
         // init view helper path
         parent::__construct();

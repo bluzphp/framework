@@ -134,7 +134,7 @@ class Application
             Logger::info('app:init');
 
             // initial default helper path
-            $this->addHelperPath(dirname(__FILE__) . '/Helper/');
+            $this->addHelperPath(__DIR__ . '/Helper/');
 
             // init Config
             $this->initConfig();

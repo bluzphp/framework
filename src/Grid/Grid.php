@@ -188,7 +188,7 @@ abstract class Grid
         $this->processRequest();
 
         // initial default helper path
-        $this->addHelperPath(dirname(__FILE__) . '/Helper/');
+        $this->addHelperPath(__DIR__ . '/Helper/');
     }
 
     /**

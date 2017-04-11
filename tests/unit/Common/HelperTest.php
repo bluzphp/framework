@@ -53,7 +53,7 @@ class HelperTest extends TestCase
      */
     public function testInvalidHelperCall2()
     {
-        $this->class->addHelperPath(dirname(__FILE__) .'/Fixtures/Helper');
+        $this->class->addHelperPath(__DIR__ .'/Fixtures/Helper');
         $this->class->helperInvalidFunction(self::MAGIC_NUMBER);
     }
 
@@ -65,8 +65,8 @@ class HelperTest extends TestCase
      */
     public function testAddHelperPath()
     {
-        $this->class->addHelperPath(dirname(__FILE__) .'/Fixtures/Helper');
-        $this->class->addHelperPath(dirname(__FILE__) .'/Fixtures/Helper2');
+        $this->class->addHelperPath(__DIR__ .'/Fixtures/Helper');
+        $this->class->addHelperPath(__DIR__ .'/Fixtures/Helper2');
         self::assertEquals(
             $this->class->helperFunction(self::MAGIC_NUMBER),
             self::MAGIC_NUMBER
@@ -82,7 +82,7 @@ class HelperTest extends TestCase
      */
     public function testSetHelperPaths()
     {
-        $this->class->setHelpersPath([dirname(__FILE__) .'/Fixtures/Helper', dirname(__FILE__) .'/Fixtures/Helper2']);
+        $this->class->setHelpersPath([__DIR__ .'/Fixtures/Helper', __DIR__ .'/Fixtures/Helper2']);
         self::assertEquals(
             $this->class->helperFunction(self::MAGIC_NUMBER),
             self::MAGIC_NUMBER

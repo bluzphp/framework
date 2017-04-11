@@ -31,7 +31,7 @@ class ReflectionTest extends TestCase
      */
     public function testReflectionWithData()
     {
-        $controllerFile = dirname(__FILE__) .'/Fixtures/ConcreteWithData.php';
+        $controllerFile = __DIR__ .'/Fixtures/ConcreteWithData.php';
 
         $reflection = new Reflection($controllerFile);
         $reflection->process();
@@ -49,7 +49,7 @@ class ReflectionTest extends TestCase
      */
     public function testExportReflectionWithData()
     {
-        $controllerFile = dirname(__FILE__) .'/Fixtures/ConcreteWithData.php';
+        $controllerFile = __DIR__ .'/Fixtures/ConcreteWithData.php';
 
         $reflection = new Reflection($controllerFile);
         $reflection->process();
@@ -65,7 +65,7 @@ class ReflectionTest extends TestCase
      */
     public function testReflectionWithoutData()
     {
-        $controllerFile = dirname(__FILE__) .'/Fixtures/ConcreteWithoutData.php';
+        $controllerFile = __DIR__ .'/Fixtures/ConcreteWithoutData.php';
 
         $reflection = new Reflection($controllerFile);
         $reflection->process();
@@ -79,7 +79,7 @@ class ReflectionTest extends TestCase
      */
     public function testReflectionWithoutReturn()
     {
-        $controllerFile = dirname(__FILE__) .'/Fixtures/ConcreteWithoutReturn.php';
+        $controllerFile = __DIR__ .'/Fixtures/ConcreteWithoutReturn.php';
 
         $reflection = new Reflection($controllerFile);
         $reflection->process();

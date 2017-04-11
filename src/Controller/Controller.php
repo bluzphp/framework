@@ -95,7 +95,7 @@ class Controller implements \JsonSerializable
         $this->template = $controller . '.phtml';
 
         // initial default helper path
-        $this->addHelperPath(dirname(__FILE__) . '/Helper/');
+        $this->addHelperPath(__DIR__ . '/Helper/');
     }
 
     /**

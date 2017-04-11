@@ -18,7 +18,7 @@ declare(strict_types=1);
 // @codeCoverageIgnoreStart
 
 // add current directory to include path
-set_include_path(dirname(__FILE__) . PATH_SEPARATOR . get_include_path());
+set_include_path(__DIR__ . PATH_SEPARATOR . get_include_path());
 
 // traits
 require_once 'Common/Container/Container.php';

@@ -261,9 +261,7 @@ class Request
                 // check if there is a different quality
                 if (strpos($a, ';q=') or strpos($a, '; q=')) {
                     // divide "mime/type;q=X" into two parts: "mime/type" i "X"
-                    $res = preg_split('/;([ ]?)q=/', $a);
-                    $a = $res[0];
-                    $q = $res[1];
+                    list($a, $q) = preg_split('/;([ ]?)q=/', $a);
                 }
                 // remove other extension
                 if (strpos($a, ';')) {
@@ -362,6 +360,6 @@ class Request
      */
     public static function isXmlHttpRequest()
     {
-        return (self::getHeader('X-Requested-With') == 'XMLHttpRequest');
+        return (self::getHeader('X-Requested-With') === 'XMLHttpRequest');
     }
 }

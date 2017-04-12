@@ -154,9 +154,8 @@ class Session
     {
         if ($this->sessionExists()) {
             return session_regenerate_id((bool) $deleteOldSession);
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -176,14 +175,7 @@ class Session
      */
     public function sessionExists()
     {
-        $sid = defined('SID') ? constant('SID') : false;
-        if ($sid !== false && $this->getId()) {
-            return true;
-        }
-        if (headers_sent()) {
-            return true;
-        }
-        return false;
+        return session_status() === PHP_SESSION_ACTIVE;
     }
 
     /**
@@ -308,16 +300,16 @@ class Session
      */
     public function expireSessionCookie()
     {
-        if (ini_get("session.use_cookies")) {
+        if (ini_get('session.use_cookies')) {
             $params = session_get_cookie_params();
             setcookie(
                 $this->getName(),
                 '',
                 $_SERVER['REQUEST_TIME'] - 42000,
-                $params["path"],
-                $params["domain"],
-                $params["secure"],
-                $params["httponly"]
+                $params['path'],
+                $params['domain'],
+                $params['secure'],
+                $params['httponly']
             );
         }
     }
@@ -367,9 +359,8 @@ class Session
     {
         if ($this->contains($key)) {
             return $_SESSION[$this->namespace][$key];
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**

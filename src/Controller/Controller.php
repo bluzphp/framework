@@ -187,12 +187,12 @@ class Controller implements \JsonSerializable
         $module = $this->module;
         $controller = $this->controller;
 
-        $cacheKey = 'data.' . Cache::prepare($this->module . '.' . $this->controller)
-            . '.' . md5(http_build_query($params));
+        $cacheKey = 'data.' . $this->module . '.' . $this->controller . '.' . md5(http_build_query($params));
 
         $cacheTime = $this->getReflection()->getCache();
 
         if ($cacheTime && $cached = Cache::get($cacheKey)) {
+            $this->data = $cached;
             return $cached;
         }
 
@@ -281,7 +281,8 @@ class Controller implements \JsonSerializable
     protected function setReflection()
     {
         // cache for reflection data
-        $cacheKey = 'reflection.' . Cache::prepare($this->module . '.' . $this->controller);
+        $cacheKey = "reflection.{$this->module}.{$this->controller}";
+
         if (!$reflection = Cache::get($cacheKey)) {
             $reflection = new Reflection($this->getFile());
             $reflection->process();

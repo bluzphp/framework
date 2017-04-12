@@ -44,8 +44,7 @@ trait ProxyTrait
     {
         if ($instance = static::getInstance()) {
             return $instance->$method(...$args);
-        } else {
-            return false;
         }
+        return false;
     }
 }

@@ -188,8 +188,8 @@ class Config
 
         if (!is_null($section)) {
             return $this->modules[$module][$section] ?? null;
-        } else {
-            return $this->modules[$module];
         }
+
+        return $this->modules[$module];
     }
 }

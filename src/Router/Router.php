@@ -118,21 +118,21 @@ class Router
             $module = $file->getPathInfo()->getPathInfo()->getBasename();
             $controller = $file->getBasename('.php');
             $controllerInstance = new Controller($module, $controller);
-            $reflection = $controllerInstance->getReflection();
-            if ($routes = $reflection->getRoute()) {
+            $meta = $controllerInstance->getMeta();
+            if ($routes = $meta->getRoute()) {
                 foreach ($routes as $route => $pattern) {
                     if (!isset($reverse[$module])) {
                         $reverse[$module] = [];
                     }
 
-                    $reverse[$module][$controller] = ['route' => $route, 'params' => $reflection->getParams()];
+                    $reverse[$module][$controller] = ['route' => $route, 'params' => $meta->getParams()];
 
                     $rule = [
                         $route => [
                             'pattern' => $pattern,
                             'module' => $module,
                             'controller' => $controller,
-                            'params' => $reflection->getParams()
+                            'params' => $meta->getParams()
                         ]
                     ];
 
@@ -313,7 +313,7 @@ class Router
      * @param  array  $params
      * @return string
      */
-    public function getUrl($module = self::DEFAULT_MODULE, $controller = self::DEFAULT_CONTROLLER, $params = [])
+    public function getUrl($module = self::DEFAULT_MODULE, $controller = self::DEFAULT_CONTROLLER, array $params = [])
     {
         if (is_null($module)) {
             $module = Request::getModule();
@@ -344,7 +344,7 @@ class Router
     public function getFullUrl(
         $module = self::DEFAULT_MODULE,
         $controller = self::DEFAULT_CONTROLLER,
-        $params = []
+        array $params = []
     ) {
         $scheme = Request::getInstance()->getUri()->getScheme() . '://';
         $host = Request::getInstance()->getUri()->getHost();
@@ -380,7 +380,7 @@ class Router
         // clean optional params
         $url = preg_replace('/\{\$[a-z0-9-_]+\}/i', '', $url);
         // clean regular expression (.*)
-        $url = preg_replace('/\(\.\*\)/i', '', $url);
+        $url = preg_replace('/\(\.\*\)/', '', $url);
         // replace "//" with "/"
         $url = str_replace('//', '/', $url);
 

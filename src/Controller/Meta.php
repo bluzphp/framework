@@ -15,12 +15,12 @@ use Bluz\Common\Options;
 use Bluz\Proxy\Request;
 
 /**
- * Reflection
+ * Meta information from reflection of the function
  *
  * @package  Bluz\Controller
  * @author   Anton Shevchuk
  */
-class Reflection
+class Meta
 {
     use Options;
 
@@ -83,11 +83,11 @@ class Reflection
      * Set state required for working with var_export (used inside PHP File cache)
      *
      * @param  $array
-     * @return Reflection
+     * @return Meta
      */
     public static function __set_state($array)
     {
-        $instance = new Reflection($array['file']);
+        $instance = new Meta($array['file']);
         foreach ($array as $key => $value) {
             $instance->{$key} = $value;
         }
@@ -228,11 +228,10 @@ class Reflection
     protected function prepareCache($cache)
     {
         $num = (int)$cache;
+        $time = 'min';
 
         if ($pos = strpos($cache, ' ')) {
             $time = substr($cache, $pos);
-        } else {
-            $time = 'min';
         }
 
         switch ($time) {
@@ -419,16 +418,16 @@ class Reflection
             switch ($type) {
                 case 'int':
                 case 'integer':
-                    $pattern = str_replace("{\$" . $param . "}", "(?P<$param>[0-9]+)", $pattern);
+                    $pattern = str_replace("{\$$param}", "(?P<$param>[0-9]+)", $pattern);
                     break;
                 case 'float':
-                    $pattern = str_replace("{\$" . $param . "}", "(?P<$param>[0-9.,]+)", $pattern);
+                    $pattern = str_replace("{\$$param}", "(?P<$param>[0-9.,]+)", $pattern);
                     break;
                 case 'string':
                 case 'module':
                 case 'controller':
                     $pattern = str_replace(
-                        "{\$" . $param . "}",
+                        "{\$$param}",
                         "(?P<$param>[a-zA-Z0-9-_.]+)",
                         $pattern
                     );

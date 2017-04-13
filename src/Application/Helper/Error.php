@@ -12,7 +12,6 @@ namespace Bluz\Application\Helper;
 
 use Bluz\Application\Application;
 use Bluz\Controller\Controller;
-use Bluz\Http\StatusCode;
 use Bluz\Proxy\Response;
 use Bluz\Proxy\Router;
 

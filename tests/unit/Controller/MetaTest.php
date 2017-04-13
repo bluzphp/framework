@@ -9,7 +9,7 @@
  */
 namespace Bluz\Tests\Controller;
 
-use Bluz\Controller\Reflection;
+use Bluz\Controller\Meta;
 use Bluz\Tests\TestCase;
 
 /**
@@ -18,7 +18,7 @@ use Bluz\Tests\TestCase;
  * @author   Anton Shevchuk
  * @created  21.05.13 10:24
  */
-class ReflectionTest extends TestCase
+class MetaTest extends TestCase
 {
     /**
      * Test all reflection options
@@ -33,15 +33,15 @@ class ReflectionTest extends TestCase
     {
         $controllerFile = __DIR__ .'/Fixtures/ConcreteWithData.php';
 
-        $reflection = new Reflection($controllerFile);
-        $reflection->process();
+        $meta = new Meta($controllerFile);
+        $meta->process();
 
-        self::assertEqualsArray(['CLI', 'GET'], $reflection->getMethod());
-        self::assertEquals(300, $reflection->getCache());
-        self::assertEqualsArray(['a' => 'int', 'b' => 'float', 'c' => 'string'], $reflection->getParams());
-        self::assertEquals('Test', $reflection->getPrivilege());
-        self::assertEqualsArray(['Read', 'Write'], $reflection->getAcl());
-        self::assertArrayHasSize($reflection->getRoute(), 2);
+        self::assertEqualsArray(['CLI', 'GET'], $meta->getMethod());
+        self::assertEquals(300, $meta->getCache());
+        self::assertEqualsArray(['a' => 'int', 'b' => 'float', 'c' => 'string'], $meta->getParams());
+        self::assertEquals('Test', $meta->getPrivilege());
+        self::assertEqualsArray(['Read', 'Write'], $meta->getAcl());
+        self::assertArrayHasSize($meta->getRoute(), 2);
     }
 
     /**
@@ -51,12 +51,12 @@ class ReflectionTest extends TestCase
     {
         $controllerFile = __DIR__ .'/Fixtures/ConcreteWithData.php';
 
-        $reflection = new Reflection($controllerFile);
-        $reflection->process();
+        $meta = new Meta($controllerFile);
+        $meta->process();
 
-        $data = var_export($reflection, true);
+        $data = var_export($meta, true);
 
-        self::assertStringStartsWith('Bluz\Controller\Reflection::__set_state', $data);
+        self::assertStringStartsWith('Bluz\Controller\Meta::__set_state', $data);
     }
 
     /**
@@ -67,10 +67,10 @@ class ReflectionTest extends TestCase
     {
         $controllerFile = __DIR__ .'/Fixtures/ConcreteWithoutData.php';
 
-        $reflection = new Reflection($controllerFile);
-        $reflection->process();
+        $meta = new Meta($controllerFile);
+        $meta->process();
 
-        self::assertEqualsArray(['a' => null, 'b' => null, 'c' => null], $reflection->getParams());
+        self::assertEqualsArray(['a' => null, 'b' => null, 'c' => null], $meta->getParams());
     }
 
     /**
@@ -81,7 +81,7 @@ class ReflectionTest extends TestCase
     {
         $controllerFile = __DIR__ .'/Fixtures/ConcreteWithoutReturn.php';
 
-        $reflection = new Reflection($controllerFile);
-        $reflection->process();
+        $meta = new Meta($controllerFile);
+        $meta->process();
     }
 }

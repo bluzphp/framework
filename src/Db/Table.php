@@ -199,7 +199,7 @@ abstract class Table
     public function getColumns()
     {
         if (empty($this->columns)) {
-            $cacheKey = 'db.table.'. $this->name;
+            $cacheKey = "db.table.{$this->name}";
             $columns = Cache::get($cacheKey);
             if (!$columns) {
                 $connect = DbProxy::getOption('connect');

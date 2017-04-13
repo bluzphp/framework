@@ -130,14 +130,14 @@ class Application
         $this->environment = $environment;
 
         try {
-            // first log message
-            Logger::info('app:init');
-
             // initial default helper path
             $this->addHelperPath(__DIR__ . '/Helper/');
 
             // init Config
             $this->initConfig();
+
+            // first log message
+            Logger::info('app:init');
 
             // init Session, start inside class (if needed)
             Session::getInstance();
@@ -288,7 +288,7 @@ class Application
         }
 
         // switch to JSON response based on Accept header
-        if (Request::getAccept([Request::TYPE_HTML, Request::TYPE_JSON]) == Request::TYPE_JSON) {
+        if (Request::getAccept([Request::TYPE_HTML, Request::TYPE_JSON]) === Request::TYPE_JSON) {
             $this->layoutFlag = false;
             Response::switchType('JSON');
         }
@@ -383,8 +383,11 @@ class Application
      *
      * @param  string $module
      * @param  string $controller
-     * @param  array  $params
+     * @param  array $params
      * @return Controller
+     * @throws \Bluz\Application\Exception\ForbiddenException
+     * @throws \Bluz\Application\Exception\NotAllowedException
+     * @throws \Bluz\Application\Exception\NotAcceptableException
      */
     protected function doDispatch($module, $controller, $params = [])
     {

@@ -39,7 +39,7 @@ if (!function_exists('debug')) {
 
         ini_set('xdebug.var_display_max_children', '512');
 
-        if ('cli' == PHP_SAPI) {
+        if (PHP_SAPI === 'cli') {
             if (extension_loaded('xdebug')) {
                 // try to enable CLI colors
                 ini_set('xdebug.cli_color', '1');

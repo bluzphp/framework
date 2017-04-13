@@ -85,10 +85,9 @@ class HttpCacheControl
      */
     protected static function initInstance()
     {
-        if ('cli' === PHP_SAPI) {
+        if (PHP_SAPI === 'cli') {
             return new Nil();
-        } else {
-            return new Instance(Response::getInstance());
         }
+        return new Instance(Response::getInstance());
     }
 }

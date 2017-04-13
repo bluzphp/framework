@@ -98,6 +98,8 @@ class Cache
             return false;
         }
 
+        $key = self::prepare($key);
+
         if ($cache->hasItem($key)) {
             $item = $cache->getItem($key);
             if ($item->isHit()) {
@@ -122,6 +124,8 @@ class Cache
             return false;
         }
 
+        $key = self::prepare($key);
+
         $item = $cache->getItem($key);
         $item->set($data);
 
@@ -143,7 +147,7 @@ class Cache
      */
     public static function prepare($key)
     {
-        return str_replace(['-', '/'], '_', $key);
+        return str_replace(['-', '/', '\\', '@', ':'], '_', $key);
     }
 
     /**

@@ -67,9 +67,9 @@ class Controller implements \JsonSerializable
     protected $file;
 
     /**
-     * @var Reflection
+     * @var Meta
      */
-    protected $reflection;
+    protected $meta;
 
     /**
      * @var Data
@@ -105,7 +105,7 @@ class Controller implements \JsonSerializable
      */
     public function checkPrivilege()
     {
-        if ($privilege = $this->getReflection()->getPrivilege()) {
+        if ($privilege = $this->getMeta()->getPrivilege()) {
             if (!Acl::isAllowed($this->module, $privilege)) {
                 throw new ForbiddenException;
             }
@@ -119,10 +119,9 @@ class Controller implements \JsonSerializable
      */
     public function checkMethod()
     {
-        if ($this->getReflection()->getMethod()
-            && !in_array(Request::getMethod(), $this->getReflection()->getMethod())) {
-            Response::setHeader('Allow', join(',', $this->getReflection()->getMethod()));
-            throw new NotAllowedException;
+        if ($this->getMeta()->getMethod()
+            && !in_array(Request::getMethod(), $this->getMeta()->getMethod())) {
+            throw new NotAllowedException(implode(',', $this->getMeta()->getMethod()));
         }
     }
 
@@ -134,11 +133,11 @@ class Controller implements \JsonSerializable
     public function checkAccept()
     {
         // all ok for CLI
-        if (PHP_SAPI == 'cli') {
+        if (PHP_SAPI === 'cli') {
             return;
         }
 
-        $allowAccept = $this->getReflection()->getAccept();
+        $allowAccept = $this->getMeta()->getAccept();
 
         // some controllers hasn't @accept tag
         if (!$allowAccept) {
@@ -181,18 +180,18 @@ class Controller implements \JsonSerializable
      * @return Data
      * @throws ControllerException
      */
-    public function run($params = []) // : array
+    public function run(array $params = [])
     {
         // initial variables for use inside controller
         $module = $this->module;
         $controller = $this->controller;
 
-        $cacheKey = 'data.' . Cache::prepare($this->module . '.' . $this->controller)
-            . '.' . md5(http_build_query($params));
+        $cacheKey = "data.$module.$controller." . md5(http_build_query($params));
 
-        $cacheTime = $this->getReflection()->getCache();
+        $cacheTime = $this->getMeta()->getCache();
 
         if ($cacheTime && $cached = Cache::get($cacheKey)) {
+            $this->data = $cached;
             return $cached;
         }
 
@@ -206,7 +205,7 @@ class Controller implements \JsonSerializable
         }
 
         // process params
-        $params = $this->getReflection()->params($params);
+        $params = $this->getMeta()->params($params);
 
         // call Closure or Controller
         $result = $controllerClosure(...$params);
@@ -236,7 +235,7 @@ class Controller implements \JsonSerializable
                 $cacheKey,
                 $this->getData(),
                 $cacheTime,
-                ['system', 'data', Cache::prepare($this->module . '.' . $this->controller)]
+                ['system', 'data', Cache::prepare("$module.$controller")]
             );
         }
 
@@ -252,7 +251,7 @@ class Controller implements \JsonSerializable
     protected function setFile()
     {
         $path = Application::getInstance()->getPath();
-        $file = $path . '/modules/' . $this->module . '/controllers/' . $this->controller . '.php';
+        $file = "$path/modules/{$this->module}/controllers/{$this->controller}.php";
 
         if (!file_exists($file)) {
             throw new ControllerException("Controller file not found '{$this->module}/{$this->controller}'", 404);
@@ -278,34 +277,35 @@ class Controller implements \JsonSerializable
      * @return void
      * @throws \Bluz\Common\Exception\ComponentException
      */
-    protected function setReflection()
+    protected function setMeta()
     {
         // cache for reflection data
-        $cacheKey = 'reflection.' . Cache::prepare($this->module . '.' . $this->controller);
-        if (!$reflection = Cache::get($cacheKey)) {
-            $reflection = new Reflection($this->getFile());
-            $reflection->process();
+        $cacheKey = "meta.{$this->module}.{$this->controller}";
+
+        if (!$meta = Cache::get($cacheKey)) {
+            $meta = new Meta($this->getFile());
+            $meta->process();
 
             Cache::set(
                 $cacheKey,
-                $reflection,
+                $meta,
                 Cache::TTL_NO_EXPIRY,
-                ['system', 'reflection', Cache::prepare($this->module . '.' . $this->controller)]
+                ['system', 'meta', Cache::prepare($this->module . '.' . $this->controller)]
             );
         }
-        $this->reflection = $reflection;
+        $this->meta = $meta;
     }
     
     /**
-     * Get Reflection
-     * @return Reflection
+     * Get meta information
+     * @return Meta
      */
-    public function getReflection() // : Reflection
+    public function getMeta()
     {
-        if (!$this->reflection) {
-            $this->setReflection();
+        if (!$this->meta) {
+            $this->setMeta();
         }
-        return $this->reflection;
+        return $this->meta;
     }
 
     /**

@@ -119,8 +119,9 @@ class Response
      * @param  string      $controller
      * @param  array       $params
      * @return void
+     * @throws RedirectException
      */
-    public static function redirectTo($module = 'index', $controller = 'index', $params = [])
+    public static function redirectTo($module = 'index', $controller = 'index', array $params = [])
     {
         $url = Router::getUrl($module, $controller, $params);
         self::redirect($url);

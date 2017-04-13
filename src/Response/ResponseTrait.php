@@ -32,7 +32,7 @@ trait ResponseTrait
      * Render object as HTML or JSON
      *
      * @param  string $type
-     * @return mixed
+     * @return string
      */
     public function render($type = 'HTML')
     {

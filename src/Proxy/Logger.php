@@ -71,8 +71,7 @@ class Logger
     {
         if (Config::getData('logger')) {
             return new Instance();
-        } else {
-            return new Nil();
         }
+        return new Nil();
     }
 }

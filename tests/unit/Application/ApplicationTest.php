@@ -102,7 +102,7 @@ class ApplicationTest extends TestCase
         self::assertEquals(Router::getErrorModule(), self::getApp()->getModule());
         self::assertEquals(Router::getErrorController(), self::getApp()->getController());
         self::assertEquals(Response::getStatusCode(), StatusCode::INTERNAL_SERVER_ERROR);
-        self::assertEquals(Response::getBody()->getData()->get('code'), 1024);
+        self::assertEquals(Response::getBody()->getData()->get('code'), 500);
         self::assertEquals(Response::getBody()->getData()->get('message'), 'Message');
     }
 

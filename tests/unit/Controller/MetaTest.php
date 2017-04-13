@@ -56,7 +56,7 @@ class MetaTest extends TestCase
 
         $data = var_export($meta, true);
 
-        self::assertStringStartsWith('Bluz\Controller\Reflection::__set_state', $data);
+        self::assertStringStartsWith('Bluz\Controller\Meta::__set_state', $data);
     }
 
     /**

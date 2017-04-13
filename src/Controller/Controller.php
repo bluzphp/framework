@@ -121,8 +121,7 @@ class Controller implements \JsonSerializable
     {
         if ($this->getMeta()->getMethod()
             && !in_array(Request::getMethod(), $this->getMeta()->getMethod())) {
-            Response::setHeader('Allow', join(',', $this->getMeta()->getMethod()));
-            throw new NotAllowedException;
+            throw new NotAllowedException(implode(',', $this->getMeta()->getMethod()));
         }
     }
 

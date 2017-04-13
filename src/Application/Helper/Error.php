@@ -29,19 +29,9 @@ return
         Response::removeHeaders();
         Response::clearBody();
 
-        // cast to valid HTTP error code
-        // 500 - Internal Server Error
-        $statusCode = (
-                StatusCode::CONTINUE <= $exception->getCode()
-                && $exception->getCode() < 600
-            )
-            ? $exception->getCode()
-            : StatusCode::INTERNAL_SERVER_ERROR;
-        Response::setStatusCode($statusCode);
-
         $module = Router::getErrorModule();
         $controller = Router::getErrorController();
-        $params = ['code' => $exception->getCode(), 'message' => $exception->getMessage()];
+        $params = ['code' => $exception->getCode(), 'exception' => $exception];
 
         return $this->dispatch($module, $controller, $params);
     };

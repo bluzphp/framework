@@ -65,8 +65,8 @@ class DbTest extends Bluz\Tests\TestCase
      */
     public function testFetchOne()
     {
-        $result = $this->db->fetchOne("SELECT COUNT(*) FROM test");
-        self::assertEquals(42, $result);
+        $result = $this->db->fetchOne("SELECT id FROM test LIMIT 1");
+        self::assertTrue((bool) $result);
     }
 
     /**

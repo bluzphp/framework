@@ -31,7 +31,7 @@ class SelectSourceTest extends TestCase
         $grid->addFilter('id', Grid::FILTER_GT, 1);  // id > 1
         $grid->addFilter('email', Grid::FILTER_LIKE, '@');
         self::assertEquals(5, $grid->pages());
-        self::assertEquals(42, $grid->total());
+        self::assertEquals(41, $grid->total());
     }
 
     /**

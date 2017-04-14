@@ -35,6 +35,15 @@ CREATE TABLE `test` (
 
 /*Data for the table `test` */
 insert  into `test`(`id`,`name`,`email`,`status`) values
+  (1,'Lareina','et.rutrum@mi.org','delete'),
+  (2,'Aurelia','augue.porttitor@vitaevelit.com','active'),
+  (3,'Ivor','vitae.semper.egestas@egestas.edu','disable'),
+  (4,'Mikayla','Nunc.ullamcorper@orcisem.com','active'),
+  (5,'Nola','eget.lacus@tristique.org','delete'),
+  (6,'Angela','Etiam.imperdiet.dictum@rhoncusProinnisl.com','active'),
+  (7,'Dante','egestas.Aliquam.fringilla@Curabiturdictum.org','active'),
+  (8,'Sybill','mauris@sodales.com','disable'),
+  (9,'Quentin','molestie.in@felisNullatempor.org','disable'),
   (10,'Jonah','dictum@pharetra.ca','disable'),
   (11,'Connor','congue.In.scelerisque@Integervulputaterisus.ca','disable'),
   (12,'Jessica','imperdiet.ornare@iaculisnec.com','delete'),
@@ -66,17 +75,8 @@ insert  into `test`(`id`,`name`,`email`,`status`) values
   (38,'Allistair','amet.metus@Mauris.com','disable'),
   (39,'Alika','Lorem@velquam.com','active'),
   (40,'Wylie','dis.parturient@dolornonummy.edu','disable'),
-  (41,'Lareina','et.rutrum@mi.org','delete'),
-  (42,'Aurelia','augue.porttitor@vitaevelit.com','active'),
-  (43,'Ivor','vitae.semper.egestas@egestas.edu','disable'),
-  (44,'Mikayla','Nunc.ullamcorper@orcisem.com','active'),
-  (45,'Nola','eget.lacus@tristique.org','delete'),
-  (46,'Angela','Etiam.imperdiet.dictum@rhoncusProinnisl.com','active'),
-  (47,'Dante','egestas.Aliquam.fringilla@Curabiturdictum.org','active'),
-  (48,'Sybill','mauris@sodales.com','disable'),
-  (49,'Quentin','molestie.in@felisNullatempor.org','disable'),
-  (50,'Hyacinth','egestas.a@vestibulumnec.org','delete'),
-  (51,'Getman','getman@gov.ua','active')
+  (41,'Hyacinth','egestas.a@vestibulumnec.org','delete'),
+  (42,'Getman','getman@gov.ua','active')
   ;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

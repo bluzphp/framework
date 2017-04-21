@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace Bluz\Config;
 
+use Bluz\Common\Collection;
+
 /**
  * Config
  *
@@ -130,34 +132,22 @@ class Config
     /**
      * Return configuration by key
      *
-     * @param  string|null $key     Key of config
-     * @param  string|null $section Section of config
+     * @param array $keys
      * @return array|mixed
      * @throws ConfigException
      */
-    public function getData($key = null, $section = null)
+    public function getData(...$keys)
     {
         // configuration is missed
         if (is_null($this->config)) {
             throw new ConfigException('System configuration is missing');
         }
 
-        // return all configuration
-        if (is_null($key)) {
+        if (!count($keys)) {
             return $this->config;
         }
 
-        // return part of configuration
-        if (isset($this->config[$key])) {
-            // return section of configuration
-            if (!is_null($section)) {
-                return $this->config[$key][$section] ?? null;
-            } else {
-                return $this->config[$key];
-            }
-        } else {
-            return null;
-        }
+        return Collection::get($this->config, ...$keys);
     }
 
     /**
@@ -166,6 +156,7 @@ class Config
      * @param  string $module
      * @param  string $section
      * @return mixed
+     * @throws \Bluz\Config\ConfigException
      */
     public function getModuleData($module, $section = null)
     {

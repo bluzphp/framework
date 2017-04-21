@@ -136,15 +136,17 @@ class Router
                         ]
                     ];
 
-                    // static routers should be first
+                    // static routers should be first, than routes with variables `$...`
+                    // all routes begin with slash `/`
                     if (strpos($route, '$')) {
-                        $routers = array_merge($routers, $rule);
+                        $routers[] = $rule;
                     } else {
-                        $routers = array_merge($rule, $routers);
+                        array_unshift($routers, $rule);
                     }
                 }
             }
         }
+        $routers = array_merge(...$routers);
         return [$routers, $reverse];
     }
 
@@ -315,22 +317,14 @@ class Router
      */
     public function getUrl($module = self::DEFAULT_MODULE, $controller = self::DEFAULT_CONTROLLER, array $params = [])
     {
-        if (is_null($module)) {
-            $module = Request::getModule();
+        $module = $module ?? Request::getModule();
+        $controller = $controller ?? Request::getController();
+
+        if (isset($this->reverse[$module], $this->reverse[$module][$controller])) {
+            return $this->urlCustom($module, $controller, $params);
         }
 
-        if (is_null($controller)) {
-            $controller = Request::getController();
-        }
-
-        if (empty($this->routers)) {
-            return $this->urlRoute($module, $controller, $params);
-        } else {
-            if (isset($this->reverse[$module], $this->reverse[$module][$controller])) {
-                return $this->urlCustom($module, $controller, $params);
-            }
-            return $this->urlRoute($module, $controller, $params);
-        }
+        return $this->urlRoute($module, $controller, $params);
     }
 
     /**
@@ -403,12 +397,11 @@ class Router
         $url = $this->getBaseUrl();
 
         if (empty($params)) {
-            if ($controller == self::DEFAULT_CONTROLLER) {
-                if ($module == self::DEFAULT_MODULE) {
+            if ($controller === self::DEFAULT_CONTROLLER) {
+                if ($module === self::DEFAULT_MODULE) {
                     return $url;
-                } else {
-                    return $url . $module;
                 }
+                return $url . $module;
             }
         }
 

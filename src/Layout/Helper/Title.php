@@ -19,7 +19,7 @@ use Bluz\Proxy\Registry;
  * @param  string $title
  * @param  string $position
  * @param  string $separator
- * @return string|null
+ * @return string
  */
 return
     function ($title = null, $position = Layout::POS_REPLACE, $separator = ' :: ') {
@@ -28,21 +28,21 @@ return
 
         if (is_null($title)) {
             return $oldTitle;
-        } else {
-            // switch statement for text position
-            switch ($position) {
-                case Layout::POS_PREPEND:
-                    $result = $title . (!$oldTitle ? : $separator . $oldTitle);
-                    break;
-                case Layout::POS_APPEND:
-                    $result = (!$oldTitle ? : $oldTitle . $separator) . $title;
-                    break;
-                case Layout::POS_REPLACE:
-                default:
-                    $result = $title;
-                    break;
-            }
-            Registry::set('layout:title', $result);
-            return null;
         }
+
+        // switch statement for text position
+        switch ($position) {
+            case Layout::POS_PREPEND:
+                $result = $title . (!$oldTitle ? : $separator . $oldTitle);
+                break;
+            case Layout::POS_APPEND:
+                $result = (!$oldTitle ? : $oldTitle . $separator) . $title;
+                break;
+            case Layout::POS_REPLACE:
+            default:
+                $result = $title;
+                break;
+        }
+        Registry::set('layout:title', $result);
+        return $result;
     };

@@ -90,6 +90,7 @@ class View implements ViewInterface, \JsonSerializable
 
     /**
      * Create view instance, initial default helper path
+     * @throws \Bluz\Common\Exception\CommonException
      */
     public function __construct()
     {
@@ -110,7 +111,7 @@ class View implements ViewInterface, \JsonSerializable
                 || !is_file($this->path . '/' . $this->template)) {
                 throw new ViewException("Template '{$this->template}' not found");
             }
-            extract($this->container);
+            extract($this->container, EXTR_SKIP);
             require $this->path . '/' . $this->template;
         } catch (\Exception $e) {
             // clean output

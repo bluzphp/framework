@@ -44,6 +44,7 @@ class Config
      * Init instance
      *
      * @return Instance
+     * @throws \Bluz\Config\ConfigException
      */
     protected static function initInstance()
     {

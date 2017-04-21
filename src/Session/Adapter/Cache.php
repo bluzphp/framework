@@ -27,7 +27,7 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
      * @param  array $settings
      * @throws ConfigurationException
      */
-    public function __construct($settings = [])
+    public function __construct(array $settings = [])
     {
         if (!Proxy\Cache::getInstance()) {
             throw new ConfigurationException(
@@ -41,6 +41,7 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
      *
      * @param  string $id
      * @return bool|string
+     * @throws \Psr\Cache\InvalidArgumentException
      */
     public function read($id)
     {
@@ -53,6 +54,7 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
      * @param  string $id
      * @param  string $data
      * @return bool|void
+     * @throws \Psr\Cache\InvalidArgumentException
      */
     public function write($id, $data)
     {

@@ -97,7 +97,7 @@ return
                 $subOptions[] = $buildOption($subValue, $subText);
             }
             // build string from array
-            $subOptions = "\n" . join("\n", $subOptions) . "\n";
+            $subOptions = "\n" . implode("\n", $subOptions) . "\n";
 
             $result[] = '<optgroup ' . $this->attributes(['label' => $value]) . '>' . $subOptions . '</optgroup>';
         } else {
@@ -105,6 +105,6 @@ return
         }
     }
 
-        $result = "\n" . join("\n", $result) . "\n";
+        $result = "\n" . implode("\n", $result) . "\n";
         return '<select ' . $this->attributes($attributes) . '>' . $result . '</select>';
     };

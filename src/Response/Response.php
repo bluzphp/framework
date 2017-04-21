@@ -233,10 +233,9 @@ class Response
     public function getHeader($header)
     {
         if ($this->hasHeader($header)) {
-            return join(', ', $this->headers[$header]);
-        } else {
-            return '';
+            return implode(', ', $this->headers[$header]);
         }
+        return '';
     }
 
     /**
@@ -249,9 +248,8 @@ class Response
     {
         if ($this->hasHeader($header)) {
             return $this->headers[$header];
-        } else {
-            return [];
         }
+        return [];
     }
 
     /**

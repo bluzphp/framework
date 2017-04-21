@@ -371,7 +371,7 @@ abstract class Table
                             },
                             $keyValue
                         );
-                        $keyValue = join(',', $keyValue);
+                        $keyValue = implode(',', $keyValue);
                         $whereAndTerms[] = $self->name . '.' . $keyName . ' IN ('.$keyValue.')';
                     } elseif (is_null($keyValue)) {
                         $whereAndTerms[] = $self->name . '.' . $keyName . ' IS NULL';
@@ -500,7 +500,7 @@ abstract class Table
 
         $table = DbProxy::quoteIdentifier($self->name);
 
-        $sql = "INSERT INTO $table SET " . join(',', self::prepareStatement($data));
+        $sql = "INSERT INTO $table SET " . implode(',', self::prepareStatement($data));
         $result = DbProxy::query($sql, array_values($data));
         if (!$result) {
             return null;
@@ -554,8 +554,8 @@ abstract class Table
         $table = DbProxy::quoteIdentifier($self->name);
 
         $sql = "UPDATE $table"
-            . " SET " . join(',', self::prepareStatement($data))
-            . " WHERE " . join(' AND ', self::prepareStatement($where));
+            . " SET " . implode(',', self::prepareStatement($data))
+            . " WHERE " . implode(' AND ', self::prepareStatement($where));
 
         return DbProxy::query($sql, array_merge(array_values($data), array_values($where)));
     }
@@ -593,7 +593,7 @@ abstract class Table
         $table = DbProxy::quoteIdentifier($self->name);
 
         $sql = "DELETE FROM $table"
-            . " WHERE " . join(' AND ', self::prepareStatement($where));
+            . " WHERE " . implode(' AND ', self::prepareStatement($where));
         return DbProxy::query($sql, array_values($where));
     }
 

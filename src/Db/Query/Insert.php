@@ -45,7 +45,7 @@ class Insert extends AbstractBuilder
     {
         $query = "INSERT"
             . " INTO " . $this->sqlParts['from']['table']
-            . " SET " . join(", ", $this->sqlParts['set']);
+            . " SET " . implode(", ", $this->sqlParts['set']);
 
         return $query;
     }

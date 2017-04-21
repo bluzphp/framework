@@ -65,5 +65,5 @@ return
             $params['partialValue'] = $value;
             $result[] = $this->partial($template, $params);
         }
-        return join('', $result);
+        return implode('', $result);
     };

@@ -80,6 +80,6 @@ abstract class AbstractTable extends Table
         $alpha = range('a', 'z');
         shuffle($alpha);
         $secret = array_slice($alpha, 0, rand(5, 15));
-        return md5($id . join('', $secret));
+        return md5($id . implode('', $secret));
     }
 }

@@ -291,7 +291,7 @@ class Validator
     {
         $input = $this->getInput();
         if (is_array($input)) {
-            $input = join(', ', $input);
+            $input = implode(', ', $input);
         }
 
         $message = str_replace('{{name}}', $this->getName(), $message);
@@ -311,7 +311,7 @@ class Validator
         if ($this->error) {
             $output = $this->error;
         } else {
-            $output = join("\n", $this->rules);
+            $output = implode("\n", $this->rules);
         }
         return $this->prepareError($output);
     }

@@ -76,7 +76,7 @@ class Relations
     {
         $name = [$modelOne, $modelTwo];
         sort($name);
-        $name = join(':', $name);
+        $name = implode(':', $name);
         // create record in static variable
         self::$relations[$name] = $relations;
     }
@@ -92,7 +92,7 @@ class Relations
     {
         $name = [$modelOne, $modelTwo];
         sort($name);
-        $name = join(':', $name);
+        $name = implode(':', $name);
 
         return self::$relations[$name] ?? false;
     }

@@ -29,16 +29,15 @@ return
             Registry::set('layout:meta', []);
             // prepare to output
             $tags = [];
-            foreach ($meta as $name => $content) {
-                $tags[] = '<meta name="'.$name.'" content="'. htmlspecialchars((string)$content, ENT_QUOTES) .'"/>';
+            foreach ($meta as $aName => $aContent) {
+                $tags[] = '<meta name="'.$aName.'" content="'. htmlspecialchars((string)$aContent, ENT_QUOTES) .'"/>';
             }
-            return join("\n", $tags);
+            return implode("\n", $tags);
         } elseif (is_null($name)) {
             // if exists only $content, do nothing
             return null;
-        } else {
-            $meta[$name] = $content;
-            Registry::set('layout:meta', $meta);
-            return null;
         }
+        $meta[$name] = $content;
+        Registry::set('layout:meta', $meta);
+        return null;
     };

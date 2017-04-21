@@ -459,7 +459,7 @@ abstract class Grid
             foreach ($columnFilters as $filterName => $filterValue) {
                 $columnFilter[] = $filterName . '-' . $filterValue;
             }
-            $params[$this->prefix . 'filter-' . $column] = join('-', $columnFilter);
+            $params[$this->prefix . 'filter-' . $column] = implode('-', $columnFilter);
         }
         return $params;
     }

@@ -32,18 +32,18 @@ class Rest extends AbstractMapper
     {
         $params = $this->params;
 
-        if (sizeof($params)) {
+        if (count($params)) {
             $this->primary = explode('-', array_shift($params));
         }
-        if (sizeof($params)) {
+        if (count($params)) {
             $this->relation = array_shift($params);
         }
-        if (sizeof($params)) {
+        if (count($params)) {
             $this->relationId = array_shift($params);
         }
 
         // OPTIONS
-        if (RequestMethod::OPTIONS == $this->method) {
+        if (RequestMethod::OPTIONS === $this->method) {
             $this->data = array_keys($this->map);
         }
 

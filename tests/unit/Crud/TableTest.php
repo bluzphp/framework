@@ -99,7 +99,7 @@ class TableTest extends TestCase
     {
         $total = 0;
         $rows = $this->crudTable->readSet(0, 10, [], $total);
-        self::assertEquals(10, sizeof($rows));
+        self::assertEquals(10, count($rows));
         self::assertTrue($total > 0);
     }
 

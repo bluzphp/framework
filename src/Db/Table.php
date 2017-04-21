@@ -356,10 +356,10 @@ abstract class Table
         $whereClause = null;
         $whereParams = [];
 
-        if (sizeof($where) == 2 && is_string($where[0])) {
+        if (count($where) == 2 && is_string($where[0])) {
             $whereClause = $where[0];
             $whereParams = (array)$where[1];
-        } elseif (sizeof($where)) {
+        } elseif (count($where)) {
             $whereOrTerms = [];
             foreach ($where as $keyValueSets) {
                 $whereAndTerms = [];
@@ -389,7 +389,7 @@ abstract class Table
                 $whereOrTerms[] = '(' . implode(' AND ', $whereAndTerms) . ')';
             }
             $whereClause = '(' . implode(' OR ', $whereOrTerms) . ')';
-        } elseif (!sizeof($where)) {
+        } elseif (!count($where)) {
             throw new DbException(
                 "Method `Table::findWhere()` can't return all records from table,\n".
                 "please use `Table::fetchAll()` instead"
@@ -492,7 +492,7 @@ abstract class Table
 
         $data = static::filterColumns($data);
 
-        if (!sizeof($data)) {
+        if (!count($data)) {
             throw new DbException(
                 "Invalid field names of table `{$self->name}`. Please check use of `insert()` method"
             );
@@ -532,7 +532,7 @@ abstract class Table
      */
     public static function update(array $data, array $where)
     {
-        if (!sizeof($where)) {
+        if (!count($where)) {
             throw new DbException(
                 "Method `Table::update()` can't update all records in table,\n".
                 "please use `Db::query()` instead (of cause if you know what are you doing)"
@@ -545,7 +545,7 @@ abstract class Table
 
         $where = static::filterColumns($where);
 
-        if (!sizeof($data) || !sizeof($where)) {
+        if (!count($data) || !count($where)) {
             throw new DbException(
                 "Invalid field names of table `{$self->name}`. Please check use of `update()` method"
             );
@@ -573,7 +573,7 @@ abstract class Table
      */
     public static function delete(array $where)
     {
-        if (!sizeof($where)) {
+        if (!count($where)) {
             throw new DbException(
                 "Method `Table::delete()` can't delete all records in table,\n".
                 "please use `Db::query()` instead (of cause if you know what are you doing)"
@@ -584,7 +584,7 @@ abstract class Table
 
         $where = static::filterColumns($where);
 
-        if (!sizeof($where)) {
+        if (!count($where)) {
             throw new DbException(
                 "Invalid field names of table `{$self->name}`. Please check use of `delete()` method"
             );

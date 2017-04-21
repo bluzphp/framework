@@ -63,7 +63,7 @@ return
                 // convert one option to an array
                 $selected = [(string)$selected];
             }
-        } elseif (is_array($selected) && sizeof($selected) > 1) {
+        } elseif (is_array($selected) && count($selected) > 1) {
             $attributes['multiple'] = 'multiple';
         }
 

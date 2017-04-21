@@ -75,7 +75,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function testFetchRow()
     {
         $result = $this->db->fetchRow("SELECT * FROM test LIMIT 1");
-        self::assertEquals(4, sizeof($result));
+        self::assertEquals(4, count($result));
     }
 
     /**
@@ -84,7 +84,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function testFetchAll()
     {
         $result = $this->db->fetchAll("SELECT * FROM test LIMIT 10");
-        self::assertEquals(10, sizeof($result));
+        self::assertEquals(10, count($result));
     }
 
     /**
@@ -93,7 +93,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function testFetchColumn()
     {
         $result = $this->db->fetchColumn("SELECT id FROM test LIMIT 10");
-        self::assertEquals(10, sizeof($result));
+        self::assertEquals(10, count($result));
     }
 
     /**
@@ -126,7 +126,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function testFetchPairs()
     {
         $result = $this->db->fetchPairs("SELECT email, name FROM test LIMIT 10");
-        self::assertEquals(10, sizeof($result));
+        self::assertEquals(10, count($result));
     }
 
     /**
@@ -162,7 +162,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function testFetchObjectsToStdClass()
     {
         $result = $this->db->fetchObjects("SELECT * FROM test LIMIT 10");
-        self::assertEquals(10, sizeof($result));
+        self::assertEquals(10, count($result));
         self::assertInstanceOf('\stdClass', current($result));
     }
 
@@ -172,7 +172,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function testFetchObjectsToDeclaredClass()
     {
         $result = $this->db->fetchObjects("SELECT * FROM test LIMIT 10", [], 'stdClass');
-        self::assertEquals(10, sizeof($result));
+        self::assertEquals(10, count($result));
         self::assertInstanceOf('\stdClass', current($result));
     }
 

@@ -120,7 +120,7 @@ class Relations
         }
 
         // check many-to-many relations
-        if (sizeof($relations) == 1) {
+        if (count($relations) == 1) {
             $relations = Relations::getRelations($model, current($relations));
         }
 

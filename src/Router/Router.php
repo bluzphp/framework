@@ -497,14 +497,14 @@ class Router
         $raw = explode('/', $uri);
 
         // rewrite module from request
-        if (sizeof($raw)) {
+        if (count($raw)) {
             $this->setParam('_module', array_shift($raw));
         }
         // rewrite module from controller
-        if (sizeof($raw)) {
+        if (count($raw)) {
             $this->setParam('_controller', array_shift($raw));
         }
-        if ($size = sizeof($raw)) {
+        if ($size = count($raw)) {
             // save raw
             $this->rawParams = $raw;
 
@@ -516,7 +516,7 @@ class Router
             // remove tail
             if ($size % 2 == 1) {
                 array_pop($raw);
-                $size = sizeof($raw);
+                $size = count($raw);
             }
             // or use array_chunk and run another loop?
             for ($i = 0; $i < $size; $i = $i + 2) {

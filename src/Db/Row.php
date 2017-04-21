@@ -85,7 +85,7 @@ class Row implements \JsonSerializable, \ArrayAccess
         $this->clean = $this->toArray();
 
         // not clean data, but not modified
-        if (sizeof($data)) {
+        if (count($data)) {
             $this->setFromArray($data);
         }
         $this->afterRead();
@@ -166,9 +166,9 @@ class Row implements \JsonSerializable, \ArrayAccess
          * Otherwise check primary key updated or not, if it changed - INSERT
          * otherwise UPDATE
          */
-        if (!sizeof(array_filter($this->getPrimaryKey()))) {
+        if (!count(array_filter($this->getPrimaryKey()))) {
             $result = $this->doInsert();
-        } elseif (sizeof(array_diff_assoc($this->getPrimaryKey(), $this->clean))) {
+        } elseif (count(array_diff_assoc($this->getPrimaryKey(), $this->clean))) {
             $result = $this->doInsert();
         } else {
             $result = $this->doUpdate();
@@ -269,7 +269,7 @@ class Row implements \JsonSerializable, \ArrayAccess
          * Use the $diffData variable, so the UPDATE statement
          * includes SET terms only for data values that changed.
          */
-        if (sizeof($diffData) > 0) {
+        if (count($diffData) > 0) {
             $result = $table::update($diffData, $primaryKey);
         } else {
             $result = 0;

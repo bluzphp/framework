@@ -167,8 +167,8 @@ class TestCase extends Unit
     {
         self::assertEquals(
             $size,
-            sizeof($array),
-            $message ?: 'Failed asserting that array has size '.$size.' matches expected '.sizeof($array). '.'
+            count($array),
+            $message ?: 'Failed asserting that array has size '.$size.' matches expected '.count($array). '.'
         );
     }
 
@@ -183,10 +183,10 @@ class TestCase extends Unit
     {
         if (!$message) {
             $message = 'Failed asserting that array has key '.$key.' with size '.$size
-                . ' matches expected '.sizeof($array). '.';
+                . ' matches expected '.count($array). '.';
         }
 
         self::assertArrayHasKey($key, $array, $message);
-        self::assertEquals($size, sizeof($array[$key]), $message);
+        self::assertEquals($size, count($array[$key]), $message);
     }
 }

@@ -126,7 +126,7 @@ class Validator
             throw new ComponentException("Class for validator `$ruleName` not found");
         }
 
-        if (sizeof($arguments)) {
+        if (count($arguments)) {
             $reflection = new \ReflectionClass($ruleClass);
             $rule = $reflection->newInstanceArgs($arguments);
         } else {
@@ -215,7 +215,7 @@ class Validator
                 }
             }
         }
-        return sizeof($this->invalid) ? false : true;
+        return count($this->invalid) ? false : true;
     }
 
     /**
@@ -253,7 +253,7 @@ class Validator
     public function getError()
     {
         // nothing for valid
-        if (!sizeof($this->invalid)) {
+        if (!count($this->invalid)) {
             return false;
         }
 

@@ -90,7 +90,7 @@ class Length extends AbstractCompareRule
         if (is_string($input)) {
             return mb_strlen($input, mb_detect_encoding($input));
         } elseif (is_array($input) || $input instanceof Countable) {
-            return sizeof($input);
+            return count($input);
         } elseif (is_object($input)) {
             return count(get_object_vars($input));
         } else {

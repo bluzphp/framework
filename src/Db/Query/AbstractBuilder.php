@@ -129,7 +129,7 @@ abstract class AbstractBuilder
     public function setParameter($key, $value, $type = \PDO::PARAM_STR)
     {
         if (null == $key) {
-            $key = sizeof($this->params);
+            $key = count($this->params);
         }
 
         $this->params[$key] = $value;
@@ -279,7 +279,7 @@ abstract class AbstractBuilder
         $condition = array_shift($args);
         foreach ($args as &$value) {
             if (is_array($value)) {
-                $replace = join(',', array_fill(0, sizeof($value), ':REPLACE:'));
+                $replace = join(',', array_fill(0, count($value), ':REPLACE:'));
                 $condition = preg_replace('/\?/', $replace, $condition, 1);
                 foreach ($value as $part) {
                     $this->setParameter(null, $part);

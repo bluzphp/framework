@@ -66,7 +66,7 @@ class CacheControl
                 $parts[] = "$key=$value";
             }
         }
-        if (sizeof($parts)) {
+        if (count($parts)) {
             $this->response->setHeader('Cache-Control', implode(', ', $parts));
         }
     }

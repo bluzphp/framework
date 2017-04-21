@@ -20,7 +20,7 @@ use Bluz\Proxy\Registry;
  */
 return
     function (array $data = []) {
-        if (sizeof($data)) {
+        if (count($data)) {
             Registry::set('layout:breadcrumbs', $data);
             return null;
         } else {

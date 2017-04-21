@@ -43,7 +43,7 @@ class ApplicationTest extends TestCase
         //  - configs/default/
         //  - configs/testing/
         // hardcoded numbers of configuration items
-        self::assertEquals(14, sizeof(Proxy\Config::getData()));
+        self::assertEquals(14, count(Proxy\Config::getData()));
         self::assertEquals(["foo" => "bar"], Proxy\Config::getData("test"));
         self::assertEquals("bar", Proxy\Config::getData("test", "foo"));
     }

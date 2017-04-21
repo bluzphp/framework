@@ -126,7 +126,7 @@ class ArraySource extends AbstractSource
             array_multisort(...$funcArgs);
         }
 
-        $total = sizeof($data);
+        $total = count($data);
 
         // process pages
         $data = array_slice($data, ($settings['limit'] * ($settings['page'] - 1)), $settings['limit']);

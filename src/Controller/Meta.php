@@ -237,10 +237,10 @@ class Meta
         switch ($time) {
             case 'day':
             case 'days':
-                return $num * 60 * 60 *24;
+                return $num * 86400;
             case 'hour':
             case 'hours':
-                return $num * 60 * 60;
+                return $num * 3600;
             case 'min':
             default:
                 return $num * 60;

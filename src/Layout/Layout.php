@@ -33,6 +33,13 @@ class Layout extends View
     use RegularAccess;
 
     /**
+     * Constants for define positions
+     */
+    const POS_PREPEND = 'prepend';
+    const POS_REPLACE = 'replace';
+    const POS_APPEND = 'append';
+
+    /**
      * @var mixed content container, usually is instance of View
      */
     protected $content;
@@ -70,10 +77,7 @@ class Layout extends View
     public function setContent($content)
     {
         try {
-            if (is_callable($content)) {
-                $content = $content();
-            }
-            $this->content = $content;
+            $this->content = is_callable($content) ? $content() : $content;
         } catch (\Exception $e) {
             $this->content = $e->getMessage();
         }

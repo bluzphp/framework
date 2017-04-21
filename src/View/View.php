@@ -62,13 +62,6 @@ class View implements ViewInterface, \JsonSerializable
     use ResponseTrait;
 
     /**
-     * Constants for define positions
-     */
-    const POS_PREPEND = 'prepend';
-    const POS_REPLACE = 'replace';
-    const POS_APPEND = 'append';
-
-    /**
      * @var string base url
      */
     protected $baseUrl;

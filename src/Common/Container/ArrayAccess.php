@@ -35,9 +35,8 @@ trait ArrayAccess
     {
         if (is_null($offset)) {
             throw new \InvalidArgumentException('Class `Common\Container\ArrayAccess` support only associative arrays');
-        } else {
-            $this->doSetContainer($offset, $value);
         }
+        $this->doSetContainer($offset, $value);
     }
 
     /**

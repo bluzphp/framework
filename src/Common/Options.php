@@ -126,7 +126,6 @@ trait Options
      */
     protected function initOptions()
     {
-        return;
     }
 
     /**

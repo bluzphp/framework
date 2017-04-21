@@ -120,12 +120,12 @@ class CollectionTest extends TestCase
     public function testSetValue()
     {
         Collection::set($this->array, 'hello', 'city', 'Kharkiv', 'point');
-        Collection::set($this->array, 'hello', 'country', 'Ukraine', 'Kyev');
+        Collection::set($this->array, 'hello', 'country', 'Ukraine', 'Kyiv');
         Collection::set($this->array, 1, 0);
         Collection::set($this->array, 2, [42]);
 
         self::assertEquals('point', Collection::get($this->array, 'hello', 'city', 'Kharkiv'));
-        self::assertEquals('Kyev', Collection::get($this->array, 'hello', 'country', 'Ukraine'));
+        self::assertEquals('Kyiv', Collection::get($this->array, 'hello', 'country', 'Ukraine'));
         self::assertEquals(0, Collection::get($this->array, 1));
         self::assertEquals(42, Collection::get($this->array, 2, 0));
     }
@@ -144,5 +144,31 @@ class CollectionTest extends TestCase
     public function testSetWithoutValue()
     {
         Collection::set($this->array, 'hello');
+    }
+
+    /**
+     * Test for helper function array_set
+     */
+    public function testArraySetFunction()
+    {
+        array_set($this->array, 'hello', 'country', 'Ukraine', 'Kyev', 'Yes!');
+
+        self::assertTrue(isset($this->array['hello']['country']['Ukraine']['Kyev']));
+    }
+
+    /**
+     * Test for helper function array_has
+     */
+    public function testArrayHasFunction()
+    {
+        self::assertTrue(array_has($this->array, 'hello', 'country', 'Ukraine'));
+    }
+
+    /**
+     * Test for helper function array_get
+     */
+    public function testArrayGetFunction()
+    {
+        self::assertEquals(1, array_get($this->array, 'hello', 'country', 'Ukraine'));
     }
 }

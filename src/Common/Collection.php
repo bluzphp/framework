@@ -46,7 +46,7 @@ class Collection
      * @param array ...$keys
      * @return bool
      */
-    static public function has(array $array, ...$keys)
+    static public function has(array $array, ...$keys) : bool
     {
         $key = array_shift($keys);
 

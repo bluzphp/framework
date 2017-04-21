@@ -70,6 +70,17 @@ class Nil
     }
 
     /**
+     * Magic __isset
+     *
+     * @param  string $key
+     * @return false
+     */
+    public function __isset($key)
+    {
+        return false;
+    }
+
+    /**
      * Cast to empty string
      *
      * @return string

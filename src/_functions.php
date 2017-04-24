@@ -25,7 +25,8 @@ if (!function_exists('array_get')) {
      * @param array ...$keys
      * @return mixed|null
      */
-    function array_get(array $array, ...$keys) {
+    function array_get(array $array, ...$keys)
+    {
         return Collection::get($array, ...$keys);
     }
 }
@@ -36,7 +37,8 @@ if (!function_exists('array_has')) {
      * @param array ...$keys
      * @return mixed|null
      */
-    function array_has(array $array, ...$keys) {
+    function array_has(array $array, ...$keys)
+    {
         return Collection::has($array, ...$keys);
     }
 }
@@ -47,7 +49,8 @@ if (!function_exists('array_set')) {
      * @param array ...$keys
      * @return void
      */
-    function array_set(array &$array, ...$keys) {
+    function array_set(array &$array, ...$keys)
+    {
         Collection::set($array, ...$keys);
     }
 }

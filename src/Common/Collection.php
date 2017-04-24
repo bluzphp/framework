@@ -20,7 +20,7 @@ class Collection
      * @param array ...$keys
      * @return mixed|null
      */
-    static public function get(array $array, ...$keys)
+    public static function get(array $array, ...$keys)
     {
         $key = array_shift($keys);
 
@@ -46,7 +46,7 @@ class Collection
      * @param array ...$keys
      * @return bool
      */
-    static public function has(array $array, ...$keys) : bool
+    public static function has(array $array, ...$keys) : bool
     {
         $key = array_shift($keys);
 
@@ -73,7 +73,7 @@ class Collection
      * @return void
      * @throws \InvalidArgumentException
      */
-    static public function set(array &$array, ...$keys)
+    public static function set(array &$array, ...$keys)
     {
         if (count($keys) < 2) {
             throw new \InvalidArgumentException('Method `Collection::set()` is required minimum one key and value');

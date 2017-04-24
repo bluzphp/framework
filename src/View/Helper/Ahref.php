@@ -43,7 +43,7 @@ return
             $current .= sprintf('?%s', Request::getUri()->getQuery());
         }
 
-        if ($href == $current) {
+        if ($href === $current) {
             if (isset($attributes['class'])) {
                 $attributes['class'] .= ' active';
             } else {

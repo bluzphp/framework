@@ -65,7 +65,7 @@ class Cache
     /**
      * Get Cache Adapter
      *
-     * @param string $adapter
+     * @param  string $adapter
      * @return Instance|false
      * @throws ComponentException
      */
@@ -89,8 +89,9 @@ class Cache
     /**
      * Get value of cache item
      *
-     * @param string $key
+     * @param  string $key
      * @return mixed
+     * @throws \Psr\Cache\InvalidArgumentException
      */
     public static function get($key)
     {
@@ -112,11 +113,12 @@ class Cache
     /**
      * Set value of cache item
      *
-     * @param string $key
-     * @param mixed $data
-     * @param int $ttl
-     * @param array $tags
+     * @param  string $key
+     * @param  mixed  $data
+     * @param  int    $ttl
+     * @param  array  $tags
      * @return bool
+     * @throws \Psr\Cache\InvalidArgumentException
      */
     public static function set($key, $data, $ttl = self::TTL_NO_EXPIRY, $tags = [])
     {

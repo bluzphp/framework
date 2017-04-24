@@ -45,9 +45,9 @@ class MessagesTest extends TestCase
 
         self::assertEquals(3, Proxy\Messages::count());
 
-        self::assertInstanceOf('\stdClass', Proxy\Messages::pop(Messages::TYPE_ERROR));
-        self::assertInstanceOf('\stdClass', Proxy\Messages::pop(Messages::TYPE_NOTICE));
-        self::assertInstanceOf('\stdClass', Proxy\Messages::pop(Messages::TYPE_SUCCESS));
+        self::assertInstanceOf(\stdClass::class, Proxy\Messages::pop(Messages::TYPE_ERROR));
+        self::assertInstanceOf(\stdClass::class, Proxy\Messages::pop(Messages::TYPE_NOTICE));
+        self::assertInstanceOf(\stdClass::class, Proxy\Messages::pop(Messages::TYPE_SUCCESS));
     }
 
     /**

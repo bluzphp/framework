@@ -8,6 +8,7 @@
 
 declare(strict_types=1);
 
+use Bluz\Common\Collection;
 use Bluz\Translator\Translator;
 
 /**
@@ -16,6 +17,43 @@ use Bluz\Translator\Translator;
  *
  * @author   Anton Shevchuk
  */
+if (!function_exists('array_get')) {
+    /**
+     * Get value of array by keys
+     *
+     * @param $array
+     * @param array ...$keys
+     * @return mixed|null
+     */
+    function array_get(array $array, ...$keys)
+    {
+        return Collection::get($array, ...$keys);
+    }
+}
+
+if (!function_exists('array_has')) {
+    /**
+     * @param $array
+     * @param array ...$keys
+     * @return mixed|null
+     */
+    function array_has(array $array, ...$keys)
+    {
+        return Collection::has($array, ...$keys);
+    }
+}
+
+if (!function_exists('array_set')) {
+    /**
+     * @param $array
+     * @param array ...$keys
+     * @return void
+     */
+    function array_set(array &$array, ...$keys)
+    {
+        Collection::set($array, ...$keys);
+    }
+}
 
 if (!function_exists('debug')) {
     /**
@@ -71,7 +109,7 @@ if (!function_exists('esc')) {
      */
     function esc($variable, int $flags = ENT_HTML5)
     {
-        return htmlentities((string)$variable, $flags, "UTF-8");
+        return htmlentities((string)$variable, $flags, 'UTF-8');
     }
 }
 

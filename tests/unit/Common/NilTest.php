@@ -25,7 +25,7 @@ class NilTest extends TestCase
     /**
      * @var Nil
      */
-    protected $class;
+    protected $nil;
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -33,7 +33,7 @@ class NilTest extends TestCase
      */
     protected function setUp()
     {
-        $this->class = new Nil();
+        $this->nil = new Nil();
     }
 
     /**
@@ -43,13 +43,14 @@ class NilTest extends TestCase
     {
         // methods
         self::assertNull(Nil::call());
-        self::assertNull($this->class->call());
+        self::assertNull($this->nil->call());
 
         // properties
-        $this->class->foo = 'bar';
-        self::assertNull($this->class->foo);
+        $this->nil->foo = 'bar';
+        self::assertNull($this->nil->foo);
+        self::assertFalse(isset($this->nil->foo));
 
         // magic __toString
-        self::assertEmpty('' . $this->class);
+        self::assertEmpty('' . $this->nil);
     }
 }

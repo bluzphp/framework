@@ -73,6 +73,7 @@ class Response
      * send
      *
      * @throws NotAcceptableException
+     * @throws \InvalidArgumentException
      */
     public function send()
     {
@@ -85,11 +86,11 @@ class Response
                 // no CLI response
                 return;
             case is_null($body):
-            case StatusCode::NO_CONTENT == $this->getStatusCode():
+            case StatusCode::NO_CONTENT === $this->getStatusCode():
                 $response = new EmptyResponse($this->getStatusCode(), $this->getHeaders());
                 break;
-            case StatusCode::MOVED_PERMANENTLY == $this->getStatusCode():
-            case StatusCode::FOUND == $this->getStatusCode():
+            case StatusCode::MOVED_PERMANENTLY === $this->getStatusCode():
+            case StatusCode::FOUND === $this->getStatusCode():
                 $response = new RedirectResponse(
                     $this->getHeader('Location'),
                     $this->getStatusCode(),
@@ -232,10 +233,9 @@ class Response
     public function getHeader($header)
     {
         if ($this->hasHeader($header)) {
-            return join(', ', $this->headers[$header]);
-        } else {
-            return '';
+            return implode(', ', $this->headers[$header]);
         }
+        return '';
     }
 
     /**
@@ -248,9 +248,8 @@ class Response
     {
         if ($this->hasHeader($header)) {
             return $this->headers[$header];
-        } else {
-            return [];
         }
+        return [];
     }
 
     /**

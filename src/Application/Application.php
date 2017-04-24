@@ -87,7 +87,7 @@ class Application
             } else {
                 $reflection = new \ReflectionClass($this);
                 // 3 level up
-                $this->path = dirname(dirname(dirname($reflection->getFileName())));
+                $this->path = dirname($reflection->getFileName(), 3);
             }
         }
         return $this->path;

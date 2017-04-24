@@ -26,6 +26,5 @@ class CacheTest extends TestCase
     public function testDisabledTest()
     {
         self::assertFalse(Cache::getInstance());
-        self::assertFalse(Cache::getInstance());
     }
 }

@@ -20,19 +20,15 @@ use Bluz\Application\Application;
  */
 return
     function ($exception) {
-        /**
-         * @var \Exception $exception
-         */
-        if (Application::getInstance()->isDebug()) {
+        if ($exception && Application::getInstance()->isDebug()) {
             // @codeCoverageIgnoreStart
             // exception message for developers
             return
                 '<div class="alert alert-warning">' .
                 '<strong>Exception</strong>' .
-                '<p>'. $exception->getMessage() .'</p>'.
+                '<p>'. esc($exception->getMessage()) .'</p>'.
                 '</div>';
             // @codeCoverageIgnoreEnd
-        } else {
-            return '';
         }
+        return '';
     };

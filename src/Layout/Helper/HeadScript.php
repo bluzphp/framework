@@ -32,13 +32,12 @@ return
             // clear system vars
             Registry::set('layout:headScripts', []);
             $tags = [];
-            foreach ($headScripts as $src => $attributes) {
-                $tags[] = $this->script($src, $attributes);
+            foreach ($headScripts as $aSrc => $aData) {
+                $tags[] = $this->script($aSrc, $aData);
             }
-            return join("\n", $tags);
-        } else {
-            $headScripts[$src] = $attributes;
-            Registry::set('layout:headScripts', $headScripts);
-            return null;
+            return implode("\n", $tags);
         }
+        $headScripts[$src] = $attributes;
+        Registry::set('layout:headScripts', $headScripts);
+        return null;
     };

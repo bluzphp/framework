@@ -68,14 +68,14 @@ class Crud extends \Bluz\Crud\Table
         if ($limit) {
             $total = Db::fetchOne('SELECT FOUND_ROWS()');
         } else {
-            $total = sizeof($result);
+            $total = count($result);
         }
 
-        if (sizeof($result) < $total) {
+        if (count($result) < $total) {
             Response::setStatusCode(StatusCode::PARTIAL_CONTENT);
             Response::setHeader(
                 'Content-Range',
-                'items '.$offset.'-'.($offset+sizeof($result)).'/'. $total
+                'items '.$offset.'-'.($offset+count($result)).'/'. $total
             );
         }
 

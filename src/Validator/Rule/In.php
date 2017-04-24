@@ -76,7 +76,7 @@ class In extends AbstractRule
     public function getTemplate()
     {
         if (is_array($this->haystack)) {
-            $haystack = join(', ', $this->haystack);
+            $haystack = implode(', ', $this->haystack);
         } else {
             $haystack = $this->haystack;
         }

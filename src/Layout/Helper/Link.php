@@ -38,10 +38,9 @@ return
                 $links
             );
             $tags = array_unique($tags);
-            return join("\n", $tags);
-        } else {
-            $links[] = $link;
-            Registry::set('layout:link', $links);
-            return null;
+            return implode("\n", $tags);
         }
+        $links[] = $link;
+        Registry::set('layout:link', $links);
+        return null;
     };

@@ -237,10 +237,10 @@ class Meta
         switch ($time) {
             case 'day':
             case 'days':
-                return $num * 60 * 60 *24;
+                return $num * 86400;
             case 'hour':
             case 'hours':
-                return $num * 60 * 60;
+                return $num * 3600;
             case 'min':
             default:
                 return $num * 60;
@@ -254,7 +254,7 @@ class Meta
      */
     public function getAccept()
     {
-        return sizeof($this->accept)?$this->accept:null;
+        return count($this->accept)?$this->accept:null;
     }
 
     /**
@@ -286,7 +286,7 @@ class Meta
      */
     public function getAcl()
     {
-        return sizeof($this->acl)?$this->acl:null;
+        return count($this->acl)?$this->acl:null;
     }
 
     /**
@@ -307,7 +307,7 @@ class Meta
      */
     public function getMethod()
     {
-        return sizeof($this->method)?$this->method:null;
+        return count($this->method)?$this->method:null;
     }
 
     /**
@@ -378,7 +378,7 @@ class Meta
      */
     public function getRoute()
     {
-        return sizeof($this->route)?$this->route:null;
+        return count($this->route)?$this->route:null;
     }
 
     /**

@@ -44,10 +44,9 @@ return
             throw new ViewException("Template '{$__template}' not found");
         }
 
-        if (sizeof($__params)) {
-            extract($__params);
+        if (count($__params)) {
+            extract($__params, EXTR_SKIP);
         }
-        unset($__params);
 
         ob_start();
         try {

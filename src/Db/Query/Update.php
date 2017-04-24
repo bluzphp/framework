@@ -30,7 +30,7 @@ class Update extends AbstractBuilder
     public function getSql()
     {
         $query = "UPDATE " . $this->sqlParts['from']['table']
-            . " SET " . join(", ", $this->sqlParts['set'])
+            . " SET " . implode(", ", $this->sqlParts['set'])
             . ($this->sqlParts['where'] !== null ? " WHERE " . ((string) $this->sqlParts['where']) : "")
             . ($this->limit ? " LIMIT ". $this->limit : "")
         ;

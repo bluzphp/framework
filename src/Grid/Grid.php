@@ -450,7 +450,7 @@ abstract class Grid
 
         foreach ($filters as $column => $columnFilters) {
             $column = $this->applyAlias($column);
-            if (sizeof($columnFilters) == 1 && isset($columnFilters[self::FILTER_EQ])) {
+            if (count($columnFilters) == 1 && isset($columnFilters[self::FILTER_EQ])) {
                 $params[$this->prefix . 'filter-' . $column] = $columnFilters[self::FILTER_EQ];
                 continue;
             }
@@ -459,7 +459,7 @@ abstract class Grid
             foreach ($columnFilters as $filterName => $filterValue) {
                 $columnFilter[] = $filterName . '-' . $filterValue;
             }
-            $params[$this->prefix . 'filter-' . $column] = join('-', $columnFilter);
+            $params[$this->prefix . 'filter-' . $column] = implode('-', $columnFilter);
         }
         return $params;
     }
@@ -610,7 +610,7 @@ abstract class Grid
 
         // remove default order when another one is set
         if (is_array($default)
-            && sizeof($this->orders)
+            && count($this->orders)
             && isset($this->orders[key($default)])
             && $this->orders[key($default)] == reset($default)
         ) {

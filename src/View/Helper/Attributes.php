@@ -43,5 +43,5 @@ return
             }
         }
 
-        return join(' ', $result);
+        return implode(' ', $result);
     };

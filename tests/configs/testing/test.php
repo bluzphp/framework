@@ -4,6 +4,6 @@
  *
  * @return array
  */
-return array(
-    "foo" => "bar"
-);
+return [
+    'foo' => 'bar'
+];

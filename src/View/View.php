@@ -15,6 +15,7 @@ use Bluz\Auth\AbstractRowEntity;
 use Bluz\Common\Container;
 use Bluz\Common\Helper;
 use Bluz\Common\Options;
+use Bluz\Proxy\Logger;
 use Bluz\Response\ResponseTrait;
 
 /**
@@ -62,13 +63,6 @@ class View implements ViewInterface, \JsonSerializable
     use ResponseTrait;
 
     /**
-     * Constants for define positions
-     */
-    const POS_PREPEND = 'prepend';
-    const POS_REPLACE = 'replace';
-    const POS_APPEND = 'append';
-
-    /**
      * @var string base url
      */
     protected $baseUrl;
@@ -90,6 +84,7 @@ class View implements ViewInterface, \JsonSerializable
 
     /**
      * Create view instance, initial default helper path
+     * @throws \Bluz\Common\Exception\CommonException
      */
     public function __construct()
     {
@@ -110,17 +105,14 @@ class View implements ViewInterface, \JsonSerializable
                 || !is_file($this->path . '/' . $this->template)) {
                 throw new ViewException("Template '{$this->template}' not found");
             }
-            extract($this->container);
+            extract($this->container, EXTR_SKIP);
             require $this->path . '/' . $this->template;
         } catch (\Exception $e) {
             // clean output
             ob_end_clean();
-            // @codeCoverageIgnoreStart
-            if (Application::getInstance()->isDebug()) {
-                return $e->getMessage() ."\n<br/>". $e->getTraceAsString();
-            }
-            // @codeCoverageIgnoreEnd
-            // nothing for production
+            // save error to log
+            Logger::error($e->getMessage());
+            // nothing to output
             return '';
         }
         return ob_get_clean();

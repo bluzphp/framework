@@ -84,11 +84,11 @@ class Select extends AbstractBuilder
             $fromClauses[$from['alias']] = $fromClause;
         }
 
-        $query .= join(', ', $fromClauses)
+        $query .= implode(', ', $fromClauses)
             . ($this->sqlParts['where'] !== null ? " WHERE " . ((string) $this->sqlParts['where']) : "")
-            . ($this->sqlParts['groupBy'] ? " GROUP BY " . join(", ", $this->sqlParts['groupBy']) : "")
+            . ($this->sqlParts['groupBy'] ? " GROUP BY " . implode(", ", $this->sqlParts['groupBy']) : "")
             . ($this->sqlParts['having'] !== null ? " HAVING " . ((string) $this->sqlParts['having']) : "")
-            . ($this->sqlParts['orderBy'] ? " ORDER BY " . join(", ", $this->sqlParts['orderBy']) : "")
+            . ($this->sqlParts['orderBy'] ? " ORDER BY " . implode(", ", $this->sqlParts['orderBy']) : "")
             . ($this->limit ? " LIMIT ". $this->limit ." OFFSET ". $this->offset : "")
         ;
 

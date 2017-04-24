@@ -18,8 +18,8 @@ use Bluz\Auth\EntityInterface;
 use Bluz\Common\Helper;
 use Bluz\Proxy\Acl;
 use Bluz\Proxy\Cache;
+use Bluz\Proxy\Logger;
 use Bluz\Proxy\Request;
-use Bluz\Proxy\Response;
 use Bluz\Response\ResponseTrait;
 use Bluz\View\View;
 
@@ -105,10 +105,9 @@ class Controller implements \JsonSerializable
      */
     public function checkPrivilege()
     {
-        if ($privilege = $this->getMeta()->getPrivilege()) {
-            if (!Acl::isAllowed($this->module, $privilege)) {
-                throw new ForbiddenException;
-            }
+        $privilege = $this->getMeta()->getPrivilege();
+        if ($privilege && !Acl::isAllowed($this->module, $privilege)) {
+            throw new ForbiddenException;
         }
     }
 
@@ -119,9 +118,9 @@ class Controller implements \JsonSerializable
      */
     public function checkMethod()
     {
-        if ($this->getMeta()->getMethod()
-            && !in_array(Request::getMethod(), $this->getMeta()->getMethod())) {
-            throw new NotAllowedException(implode(',', $this->getMeta()->getMethod()));
+        $methods = $this->getMeta()->getMethod();
+        if ($methods && !in_array(Request::getMethod(), $methods)) {
+            throw new NotAllowedException(implode(',', $methods));
         }
     }
 
@@ -354,25 +353,31 @@ class Controller implements \JsonSerializable
             return '';
         }
 
-        // $view for use in closure
-        $view = new View();
+        try {
+            // $view for use in closure
+            $view = new View();
 
-        $path = Application::getInstance()->getPath();
+            $path = Application::getInstance()->getPath();
 
-        // setup additional helper path
-        $view->addHelperPath($path . '/layouts/helpers');
+            // setup additional helper path
+            $view->addHelperPath($path . '/layouts/helpers');
 
-        // setup additional partial path
-        $view->addPartialPath($path . '/layouts/partial');
+            // setup additional partial path
+            $view->addPartialPath($path . '/layouts/partial');
 
-        // setup default path
-        $view->setPath($path . '/modules/' . $this->module . '/views');
+            // setup default path
+            $view->setPath($path . '/modules/' . $this->module . '/views');
 
-        // setup template
-        $view->setTemplate($this->template);
+            // setup template
+            $view->setTemplate($this->template);
 
-        // setup data
-        $view->setFromArray($this->getData()->toArray());
-        return $view->render();
+            // setup data
+            $view->setFromArray($this->getData()->toArray());
+            return $view->render();
+        } catch (\Exception $e) {
+            // save log
+            Logger::error($e->getMessage());
+            return '';
+        }
     }
 }

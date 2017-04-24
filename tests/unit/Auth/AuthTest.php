@@ -14,6 +14,7 @@ use Bluz\Proxy\Session;
 use Bluz\Tests\Fixtures\Models\Auth\Table;
 use Bluz\Tests\Fixtures\Models\UserAdmin;
 use Bluz\Tests\TestCase;
+use Bluz\Auth\AbstractRow;
 
 /**
  * AuthTest
@@ -80,6 +81,6 @@ class AuthTest extends TestCase
     {
         $authRow = Table::getInstance()->getAuthRow(Table::PROVIDER_EQUALS, 'admin');
 
-        self::assertInstanceOf('\Bluz\Auth\AbstractRow', $authRow);
+        self::assertInstanceOf(AbstractRow::class, $authRow);
     }
 }

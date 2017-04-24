@@ -20,10 +20,9 @@ use Bluz\Proxy\Registry;
  */
 return
     function (array $data = []) {
-        if (sizeof($data)) {
-            Registry::set('layout:breadcrumbs', $data);
-            return null;
-        } else {
+        if (empty($data)) {
             return Registry::get('layout:breadcrumbs');
         }
+        Registry::set('layout:breadcrumbs', $data);
+        return null;
     };

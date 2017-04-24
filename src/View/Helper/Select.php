@@ -63,7 +63,7 @@ return
                 // convert one option to an array
                 $selected = [(string)$selected];
             }
-        } elseif (is_array($selected) && sizeof($selected) > 1) {
+        } elseif (is_array($selected) && count($selected) > 1) {
             $attributes['multiple'] = 'multiple';
         }
 
@@ -81,7 +81,7 @@ return
             return '<option ' . $this->attributes($option) . '>' . htmlspecialchars(
                 (string)$text,
                 ENT_QUOTES,
-                "UTF-8",
+                'UTF-8',
                 false
             ) . '</option>';
         };
@@ -97,7 +97,7 @@ return
                 $subOptions[] = $buildOption($subValue, $subText);
             }
             // build string from array
-            $subOptions = "\n" . join("\n", $subOptions) . "\n";
+            $subOptions = "\n" . implode("\n", $subOptions) . "\n";
 
             $result[] = '<optgroup ' . $this->attributes(['label' => $value]) . '>' . $subOptions . '</optgroup>';
         } else {
@@ -105,6 +105,6 @@ return
         }
     }
 
-        $result = "\n" . join("\n", $result) . "\n";
+        $result = "\n" . implode("\n", $result) . "\n";
         return '<select ' . $this->attributes($attributes) . '>' . $result . '</select>';
     };

@@ -46,9 +46,8 @@ trait Container
     {
         if ($this->doContainsContainer($key)) {
             return $this->container[$key];
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**

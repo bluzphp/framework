@@ -55,7 +55,7 @@ class Auth
     {
         if (!$this->identity) {
             // check user agent
-            if (Session::get('auth:agent') == Request::getServer('HTTP_USER_AGENT')) {
+            if (Session::get('auth:agent') === Request::getServer('HTTP_USER_AGENT')) {
                 $this->identity = Session::get('auth:identity');
             } else {
                 $this->clearIdentity();

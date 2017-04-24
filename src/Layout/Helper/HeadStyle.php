@@ -32,13 +32,12 @@ return
             // clear system vars
             Registry::set('layout:headStyle', []);
             $tags = [];
-            foreach ($headStyle as $href => $media) {
-                $tags[] = $this->style($href, $media);
+            foreach ($headStyle as $aHref => $aMedia) {
+                $tags[] = $this->style($aHref, $aMedia);
             }
-            return join("\n", $tags);
-        } else {
-            $headStyle[$href] = $media;
-            Registry::set('layout:headStyle', $headStyle);
-            return null;
+            return implode("\n", $tags);
         }
+        $headStyle[$href] = $media;
+        Registry::set('layout:headStyle', $headStyle);
+        return null;
     };

@@ -29,7 +29,7 @@ return
         /** @var View $this */
         if (true === $checked) {
             $attributes['checked'] = 'checked';
-        } elseif (false !== $checked && ($checked == $value)) {
+        } elseif (false !== $checked && ($checked === $value)) {
             $attributes['checked'] = 'checked';
         }
 

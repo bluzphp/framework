@@ -166,7 +166,7 @@ class Translator
      *
      * Example of usage plural form + sprintf
      * equal to sprintf(ngettext('%d comment', '%d comments', 4), 4)
-     *     Translator::translatePlural('%d comment', '%d comments', 4, 4)
+     *     Translator::translatePlural('%d comment', '%d comments', 4)
      *
      * Example of usage plural form + sprintf
      * equal to sprintf(ngettext('%d comment', '%d comments', 4), 4, 'Topic')

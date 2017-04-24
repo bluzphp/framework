@@ -186,6 +186,6 @@ class ValidatorBuilder
      */
     public function hasErrors() : bool
     {
-        return (bool) sizeof($this->errors);
+        return (bool) count($this->errors);
     }
 }

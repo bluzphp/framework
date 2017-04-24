@@ -186,6 +186,7 @@ class Session
      * exception if validation fails.
      *
      * @return void
+     * @throws \Bluz\Common\Exception\ComponentException
      * @throws SessionException
      */
     public function start()

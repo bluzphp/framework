@@ -91,15 +91,15 @@ class SqlSource extends AbstractSource
             // other
             $dataSql = $this->source;
             $totalSql = preg_replace('/SELECT\s(.*?)\sFROM/is', 'SELECT COUNT(*) FROM', $this->source, 1);
-            if (sizeof($where)) {
+            if (count($where)) {
                 $totalSql .= ' WHERE ' . (join(' AND ', $where));
             }
         }
 
-        if (sizeof($where)) {
+        if (count($where)) {
             $dataSql .= ' WHERE ' . (join(' AND ', $where));
         }
-        if (sizeof($orders)) {
+        if (count($orders)) {
             $dataSql .= ' ORDER BY ' . (join(', ', $orders));
         }
         $dataSql .= $limit;

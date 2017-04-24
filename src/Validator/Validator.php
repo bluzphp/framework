@@ -126,7 +126,7 @@ class Validator
             throw new ComponentException("Class for validator `$ruleName` not found");
         }
 
-        if (sizeof($arguments)) {
+        if (count($arguments)) {
             $reflection = new \ReflectionClass($ruleClass);
             $rule = $reflection->newInstanceArgs($arguments);
         } else {
@@ -215,7 +215,7 @@ class Validator
                 }
             }
         }
-        return sizeof($this->invalid) ? false : true;
+        return count($this->invalid) ? false : true;
     }
 
     /**
@@ -253,7 +253,7 @@ class Validator
     public function getError()
     {
         // nothing for valid
-        if (!sizeof($this->invalid)) {
+        if (!count($this->invalid)) {
             return false;
         }
 
@@ -291,7 +291,7 @@ class Validator
     {
         $input = $this->getInput();
         if (is_array($input)) {
-            $input = join(', ', $input);
+            $input = implode(', ', $input);
         }
 
         $message = str_replace('{{name}}', $this->getName(), $message);
@@ -311,7 +311,7 @@ class Validator
         if ($this->error) {
             $output = $this->error;
         } else {
-            $output = join("\n", $this->rules);
+            $output = implode("\n", $this->rules);
         }
         return $this->prepareError($output);
     }

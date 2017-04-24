@@ -23,7 +23,6 @@ return
     function ($controller = null) {
         if (is_null($controller)) {
             return Request::getController();
-        } else {
-            return Request::getController() == $controller;
         }
+        return Request::getController() === $controller;
     };

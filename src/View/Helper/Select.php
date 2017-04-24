@@ -81,7 +81,7 @@ return
             return '<option ' . $this->attributes($option) . '>' . htmlspecialchars(
                 (string)$text,
                 ENT_QUOTES,
-                "UTF-8",
+                'UTF-8',
                 false
             ) . '</option>';
         };

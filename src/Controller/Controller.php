@@ -18,8 +18,8 @@ use Bluz\Auth\EntityInterface;
 use Bluz\Common\Helper;
 use Bluz\Proxy\Acl;
 use Bluz\Proxy\Cache;
+use Bluz\Proxy\Logger;
 use Bluz\Proxy\Request;
-use Bluz\Proxy\Response;
 use Bluz\Response\ResponseTrait;
 use Bluz\View\View;
 
@@ -375,12 +375,9 @@ class Controller implements \JsonSerializable
             $view->setFromArray($this->getData()->toArray());
             return $view->render();
         } catch (\Exception $e) {
-            // @codeCoverageIgnoreStart
-            if (Application::getInstance()->isDebug()) {
-                return $e->getMessage();
-            }
+            // save log
+            Logger::error($e->getMessage());
             return '';
-            // @codeCoverageIgnoreEnd
         }
     }
 }

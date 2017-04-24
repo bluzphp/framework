@@ -28,8 +28,7 @@ return
          */
         if (Application::getInstance()->useLayout()) {
             return Layout::headScript($src, $attributes);
-        } else {
-            // it's just alias to script() call
-            return $this->script($src, $attributes);
         }
+        // it's just alias to script() call
+        return $this->script($src, $attributes);
     };

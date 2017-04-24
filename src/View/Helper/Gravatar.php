@@ -26,6 +26,6 @@ use Bluz\View\View;
  */
 return
     function ($email, $size = 80, $default = 'mm', $rate = 'g') {
-        $email = md5(strtolower(trim($email ?? "")));
+        $email = md5(strtolower(trim($email ?? '')));
         return "https://www.gravatar.com/avatar/$email?s=$size&d=$default&r=$rate";
     };

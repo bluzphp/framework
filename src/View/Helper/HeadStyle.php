@@ -28,8 +28,7 @@ return
          */
         if (Application::getInstance()->useLayout()) {
             return Layout::headStyle($href, $media);
-        } else {
-            // it's just alias to style() call
-            return $this->style($href, $media);
         }
+        // it's just alias to style() call
+        return $this->style($href, $media);
     };

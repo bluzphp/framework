@@ -45,9 +45,8 @@ return
         }
 
         if (count($__params)) {
-            extract($__params);
+            extract($__params, EXTR_SKIP);
         }
-        unset($__params);
 
         ob_start();
         try {

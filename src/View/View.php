@@ -15,6 +15,7 @@ use Bluz\Auth\AbstractRowEntity;
 use Bluz\Common\Container;
 use Bluz\Common\Helper;
 use Bluz\Common\Options;
+use Bluz\Proxy\Logger;
 use Bluz\Response\ResponseTrait;
 
 /**
@@ -109,12 +110,9 @@ class View implements ViewInterface, \JsonSerializable
         } catch (\Exception $e) {
             // clean output
             ob_end_clean();
-            // @codeCoverageIgnoreStart
-            if (Application::getInstance()->isDebug()) {
-                return $e->getMessage() ."\n<br/>". $e->getTraceAsString();
-            }
-            // @codeCoverageIgnoreEnd
-            // nothing for production
+            // save error to log
+            Logger::error($e->getMessage());
+            // nothing to output
             return '';
         }
         return ob_get_clean();

@@ -23,7 +23,6 @@ return
     function ($module = null) {
         if (is_null($module)) {
             return Request::getModule();
-        } else {
-            return Request::getModule() == $module;
         }
+        return Request::getModule() === $module;
     };

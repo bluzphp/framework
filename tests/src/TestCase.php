@@ -148,7 +148,7 @@ class TestCase extends Unit
      * @param array $actual
      * @param string $message
      */
-    protected function assertEqualsArray($expected, $actual, $message = null)
+    protected static function assertEqualsArray($expected, $actual, $message = null)
     {
         self::assertSame(
             array_diff($expected, $actual),
@@ -163,11 +163,11 @@ class TestCase extends Unit
      * @param integer $size
      * @param string $message
      */
-    protected function assertArrayHasSize($array, $size, $message = null)
+    protected static function assertArrayHasSize($array, $size, $message = null)
     {
-        self::assertEquals(
+        self::assertCount(
             $size,
-            count($array),
+            $array,
             $message ?: 'Failed asserting that array has size '.$size.' matches expected '.count($array). '.'
         );
     }
@@ -179,7 +179,7 @@ class TestCase extends Unit
      * @param integer $size
      * @param string $message
      */
-    protected function assertArrayHasKeyAndSize($array, $key, $size, $message = null)
+    protected static function assertArrayHasKeyAndSize($array, $key, $size, $message = null)
     {
         if (!$message) {
             $message = 'Failed asserting that array has key '.$key.' with size '.$size
@@ -187,6 +187,6 @@ class TestCase extends Unit
         }
 
         self::assertArrayHasKey($key, $array, $message);
-        self::assertEquals($size, count($array[$key]), $message);
+        self::assertCount($size, $array[$key], $message);
     }
 }

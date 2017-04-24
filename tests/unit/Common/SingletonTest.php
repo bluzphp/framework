@@ -30,7 +30,7 @@ class SingletonTest extends TestCase
         $result = ConcreteSingleton::getInstance();
         $result->foo = 'bar';
 
-        self::assertInstanceOf('\Bluz\Tests\Fixtures\Common\ConcreteSingleton', $result);
+        self::assertInstanceOf(ConcreteSingleton::class, $result);
         self::assertEquals(ConcreteSingleton::getInstance(), $result);
         self::assertEquals('bar', ConcreteSingleton::getInstance()->foo);
     }

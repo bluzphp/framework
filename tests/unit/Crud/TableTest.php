@@ -69,7 +69,7 @@ class TableTest extends TestCase
     {
         $row = $this->crudTable->readOne(null);
 
-        self::assertInstanceOf('\Bluz\Tests\Fixtures\Models\Test\Row', $row);
+        self::assertInstanceOf(Row::class, $row);
     }
 
     /**
@@ -79,7 +79,7 @@ class TableTest extends TestCase
     {
         $row = $this->crudTable->readOne(100);
 
-        self::assertInstanceOf('\Bluz\Tests\Fixtures\Models\Test\Row', $row);
+        self::assertInstanceOf(Row::class, $row);
         self::assertEquals(100, $row->id);
     }
 
@@ -99,7 +99,7 @@ class TableTest extends TestCase
     {
         $total = 0;
         $rows = $this->crudTable->readSet(0, 10, [], $total);
-        self::assertEquals(10, count($rows));
+        self::assertCount(10, $rows);
         self::assertTrue($total > 0);
     }
 

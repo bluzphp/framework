@@ -15,6 +15,7 @@ use Bluz\Proxy;
 use Bluz\Proxy\Response;
 use Bluz\Proxy\Router;
 use Bluz\Tests\TestCase;
+use Zend\Diactoros\ServerRequest;
 
 /**
  * ApplicationTest
@@ -30,8 +31,8 @@ class ApplicationTest extends TestCase
     public function testGettersOfPackages()
     {
         // cache disabled for testing
-        self::assertInstanceOf('\Zend\Diactoros\ServerRequest', self::getApp()->getRequest());
-        self::assertInstanceOf('\Bluz\Response\Response', self::getApp()->getResponse());
+        self::assertInstanceOf(ServerRequest::class, self::getApp()->getRequest());
+        self::assertInstanceOf(\Bluz\Response\Response::class, self::getApp()->getResponse());
     }
 
     /**
@@ -43,7 +44,7 @@ class ApplicationTest extends TestCase
         //  - configs/default/
         //  - configs/testing/
         // hardcoded numbers of configuration items
-        self::assertEquals(14, count(Proxy\Config::getData()));
+        self::assertCount(14, Proxy\Config::getData());
         self::assertEquals(["foo" => "bar"], Proxy\Config::getData("test"));
         self::assertEquals("bar", Proxy\Config::getData("test", "foo"));
     }

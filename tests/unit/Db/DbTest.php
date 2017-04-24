@@ -12,6 +12,10 @@ namespace Bluz\Tests\Db;
 use Bluz;
 use Bluz\Db;
 use Bluz\Proxy;
+use Bluz\Db\Query\Select;
+use Bluz\Db\Query\Insert;
+use Bluz\Db\Query\Update;
+use Bluz\Db\Query\Delete;
 
 /**
  * Test class for Db.
@@ -75,7 +79,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function testFetchRow()
     {
         $result = $this->db->fetchRow("SELECT * FROM test LIMIT 1");
-        self::assertEquals(4, count($result));
+        self::assertCount(4, $result);
     }
 
     /**
@@ -84,7 +88,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function testFetchAll()
     {
         $result = $this->db->fetchAll("SELECT * FROM test LIMIT 10");
-        self::assertEquals(10, count($result));
+        self::assertCount(10, $result);
     }
 
     /**
@@ -93,7 +97,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function testFetchColumn()
     {
         $result = $this->db->fetchColumn("SELECT id FROM test LIMIT 10");
-        self::assertEquals(10, count($result));
+        self::assertCount(10, $result);
     }
 
     /**
@@ -126,7 +130,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function testFetchPairs()
     {
         $result = $this->db->fetchPairs("SELECT email, name FROM test LIMIT 10");
-        self::assertEquals(10, count($result));
+        self::assertCount(10, $result);
     }
 
     /**
@@ -135,7 +139,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function testFetchObjectToStdClass()
     {
         $result = $this->db->fetchObject("SELECT * FROM test LIMIT 1");
-        self::assertInstanceOf('\stdClass', $result);
+        self::assertInstanceOf(\stdClass::class, $result);
     }
 
     /**
@@ -144,7 +148,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function testFetchObjectToDeclaredClass()
     {
         $result = $this->db->fetchObject("SELECT * FROM test LIMIT 10", [], 'stdClass');
-        self::assertInstanceOf('\stdClass', $result);
+        self::assertInstanceOf(\stdClass::class, $result);
     }
 
     /**
@@ -153,7 +157,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function testFetchObjectToInstance()
     {
         $result = $this->db->fetchObject("SELECT * FROM test LIMIT 1", [], new \stdClass());
-        self::assertInstanceOf('\stdClass', $result);
+        self::assertInstanceOf(\stdClass::class, $result);
     }
 
     /**
@@ -162,8 +166,8 @@ class DbTest extends Bluz\Tests\TestCase
     public function testFetchObjectsToStdClass()
     {
         $result = $this->db->fetchObjects("SELECT * FROM test LIMIT 10");
-        self::assertEquals(10, count($result));
-        self::assertInstanceOf('\stdClass', current($result));
+        self::assertCount(10, $result);
+        self::assertInstanceOf(\stdClass::class, current($result));
     }
 
     /**
@@ -172,8 +176,8 @@ class DbTest extends Bluz\Tests\TestCase
     public function testFetchObjectsToDeclaredClass()
     {
         $result = $this->db->fetchObjects("SELECT * FROM test LIMIT 10", [], 'stdClass');
-        self::assertEquals(10, count($result));
-        self::assertInstanceOf('\stdClass', current($result));
+        self::assertCount(10, $result);
+        self::assertInstanceOf(\stdClass::class, current($result));
     }
 
     /**
@@ -216,7 +220,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function testSelect()
     {
         $query = $this->db->select('test');
-        self::assertInstanceOf('\Bluz\Db\Query\Select', $query);
+        self::assertInstanceOf(Select::class, $query);
     }
 
     /**
@@ -225,7 +229,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function testInsert()
     {
         $query = $this->db->insert('test');
-        self::assertInstanceOf('\Bluz\Db\Query\Insert', $query);
+        self::assertInstanceOf(Insert::class, $query);
     }
 
     /**
@@ -234,7 +238,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function testUpdate()
     {
         $query = $this->db->update('test');
-        self::assertInstanceOf('\Bluz\Db\Query\Update', $query);
+        self::assertInstanceOf(Update::class, $query);
     }
 
     /**
@@ -243,6 +247,6 @@ class DbTest extends Bluz\Tests\TestCase
     public function testDelete()
     {
         $query = $this->db->delete('test');
-        self::assertInstanceOf('\Bluz\Db\Query\Delete', $query);
+        self::assertInstanceOf(Delete::class, $query);
     }
 }

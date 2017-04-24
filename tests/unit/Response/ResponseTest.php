@@ -102,7 +102,7 @@ class ResponseTest extends TestCase
         $this->response->setHeaders(['foo' => ['bar']]);
         $this->response->addHeaders(['foo' => ['baz'], 'baz' => ['qux']]);
 
-        self::assertEquals(2, count($this->response->getHeaders()));
+        self::assertCount(2, $this->response->getHeaders());
         self::assertArrayHasKeyAndSize($this->response->getHeaders(), 'foo', 2);
     }
 

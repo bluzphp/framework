@@ -24,7 +24,7 @@ class ValidatorTest extends Tests\TestCase
      */
     public function testStaticCreateShouldReturnNewValidator()
     {
-        self::assertInstanceOf('Bluz\Validator\Validator', Validator::create());
+        self::assertInstanceOf(Validator::class, Validator::create());
     }
 
     /**
@@ -32,11 +32,12 @@ class ValidatorTest extends Tests\TestCase
      */
     public function testStaticCallsShouldReturnNewValidator()
     {
-        self::assertInstanceOf('Bluz\Validator\Validator', Validator::arrayInput(function () {
+        self::assertInstanceOf(
+            Validator::class, Validator::arrayInput(function () {
             return true;
         }));
-        self::assertInstanceOf('Bluz\Validator\Validator', Validator::string());
-        self::assertInstanceOf('Bluz\Validator\Validator', Validator::notEmpty());
+        self::assertInstanceOf(Validator::class, Validator::string());
+        self::assertInstanceOf(Validator::class, Validator::notEmpty());
     }
 
     /**

@@ -9,22 +9,23 @@
  */
 namespace Bluz\Tests\Proxy;
 
-use Bluz\Proxy\Cache;
+use Bluz\Session\Session as Target;
+use Bluz\Proxy\Session as Proxy;
 use Bluz\Tests\TestCase;
 
 /**
- * CacheTest
+ * Proxy Test
  *
  * @package  Bluz\Tests\Proxy
  * @author   Anton Shevchuk
  */
-class CacheTest extends TestCase
+class SessionTest extends TestCase
 {
     /**
-     * Test disabled Cache
+     * Test instance
      */
-    public function testDisabledTest()
+    public function testProxyInstance()
     {
-        self::assertFalse(Cache::getInstance());
+        self::assertInstanceOf(Target::class, Proxy::getInstance());
     }
 }

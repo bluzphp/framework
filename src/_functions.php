@@ -113,6 +113,19 @@ if (!function_exists('esc')) {
     }
 }
 
+if (!function_exists('value')) {
+    /**
+     * Return the value for callable
+     *
+     * @param  mixed  $value
+     * @return mixed
+     */
+    function value($value)
+    {
+        return is_callable($value) ? $value() : $value;
+    }
+}
+
 // @codingStandardsIgnoreStart
 if (!function_exists('__')) {
     /**

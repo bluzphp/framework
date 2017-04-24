@@ -207,7 +207,7 @@ class DbTest extends Bluz\Tests\TestCase
 
     /**
      * Transaction fail
-     * @expectedException \Bluz\Db\Exception\DbException
+     * @expectedException \TypeError
      */
     public function testTransactionInvalidCallbackThrowException()
     {

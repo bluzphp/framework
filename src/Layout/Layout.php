@@ -77,7 +77,7 @@ class Layout extends View
     public function setContent($content)
     {
         try {
-            $this->content = is_callable($content) ? $content() : $content;
+            $this->content = value($content);
         } catch (\Exception $e) {
             $this->content = $e->getMessage();
         }

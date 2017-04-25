@@ -115,6 +115,48 @@ class CollectionTest extends TestCase
     }
 
     /**
+     * Test Add method for return values
+     */
+    public function testAddValue()
+    {
+        Collection::add($this->array, 'hello', 'city', 'Kyiv');
+        Collection::add($this->array, 'hello', 'city', 'Kharkiv');
+        Collection::add($this->array, 2, 4);
+        Collection::add($this->array, 3, 'd');
+
+        self::assertCount(2, Collection::get($this->array, 'hello', 'city'));
+        self::assertCount(4, Collection::get($this->array, 2));
+        self::assertCount(3, Collection::get($this->array, 3, 3));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testAddWithoutArguments()
+    {
+        Collection::add($this->array);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testAddWithoutValue()
+    {
+        Collection::add($this->array, 'hello');
+    }
+
+    /**
+     * Test for helper function array_set
+     */
+    public function testArrayAddFunction()
+    {
+        array_add($this->array, 'hello', 'city', 'Kyiv');
+        array_add($this->array, 'hello', 'city', 'Kharkiv');
+
+        self::assertCount(2, $this->array['hello']['city']);
+    }
+
+    /**
      * Test Set method for return values
      */
     public function testSetValue()
@@ -151,9 +193,9 @@ class CollectionTest extends TestCase
      */
     public function testArraySetFunction()
     {
-        array_set($this->array, 'hello', 'country', 'Ukraine', 'Kyev', 'Yes!');
+        array_set($this->array, 'hello', 'country', 'Ukraine', 'Kyiv', 'Yes!');
 
-        self::assertTrue(isset($this->array['hello']['country']['Ukraine']['Kyev']));
+        self::assertTrue(isset($this->array['hello']['country']['Ukraine']['Kyiv']));
     }
 
     /**

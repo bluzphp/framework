@@ -40,8 +40,5 @@ return
         }
 
         // run closure
-        if ($view instanceof \Closure) {
-            return $view();
-        }
-        return $view;
+        return value($view);
     };

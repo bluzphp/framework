@@ -43,6 +43,18 @@ if (!function_exists('array_has')) {
     }
 }
 
+if (!function_exists('array_add')) {
+    /**
+     * @param $array
+     * @param array ...$keys
+     * @return void
+     */
+    function array_add(array &$array, ...$keys)
+    {
+        Collection::add($array, ...$keys);
+    }
+}
+
 if (!function_exists('array_set')) {
     /**
      * @param $array
@@ -110,6 +122,19 @@ if (!function_exists('esc')) {
     function esc($variable, int $flags = ENT_HTML5)
     {
         return htmlentities((string)$variable, $flags, 'UTF-8');
+    }
+}
+
+if (!function_exists('value')) {
+    /**
+     * Return the value for callable
+     *
+     * @param  mixed  $value
+     * @return mixed
+     */
+    function value($value)
+    {
+        return is_callable($value) ? $value() : $value;
     }
 }
 

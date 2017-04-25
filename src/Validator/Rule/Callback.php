@@ -30,12 +30,8 @@ class Callback extends AbstractRule
      * @param  callable $callback
      * @throws \Bluz\Validator\Exception\ComponentException
      */
-    public function __construct($callback)
+    public function __construct(callable $callback)
     {
-        if (!is_callable($callback)) {
-            throw new ComponentException('Invalid callback function');
-        }
-
         $this->callback = $callback;
     }
 

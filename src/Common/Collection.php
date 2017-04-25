@@ -73,6 +73,31 @@ class Collection
      * @return void
      * @throws \InvalidArgumentException
      */
+    public static function add(array &$array, ...$keys)
+    {
+        if (count($keys) < 2) {
+            throw new \InvalidArgumentException('Method `Collection::add()` is required minimum one key and value');
+        }
+
+        $value = array_pop($keys);
+        while (count($keys) > 1) {
+            $key = array_shift($keys);
+            if (! isset($array[$key]) || ! is_array($array[$key])) {
+                $array[$key] = [];
+            }
+            $array = &$array[$key];
+        }
+        $array[array_shift($keys)][] = $value;
+    }
+
+    /**
+     * Set an element of array by key and sub-keys
+     *
+     * @param array $array
+     * @param array ...$keys
+     * @return void
+     * @throws \InvalidArgumentException
+     */
     public static function set(array &$array, ...$keys)
     {
         if (count($keys) < 2) {

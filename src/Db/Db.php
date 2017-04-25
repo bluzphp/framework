@@ -555,14 +555,11 @@ class Db
      * @return bool
      * @throws DbException
      */
-    public function transaction($process)
+    public function transaction(callable $process)
     {
-        if (!is_callable($process)) {
-            throw new DbException('First argument of transaction method should be callable');
-        }
         try {
             $this->handler()->beginTransaction();
-            call_user_func($process);
+            $process();
             $this->handler()->commit();
             return true;
         } catch (\PDOException $e) {

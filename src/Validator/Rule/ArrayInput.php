@@ -35,14 +35,8 @@ class ArrayInput extends AbstractRule
      * @param  callable $callback
      * @throws ComponentException
      */
-    public function __construct($callback)
+    public function __construct(callable $callback)
     {
-        if (!is_callable($callback)) {
-            throw new ComponentException(
-                __('"%s" is not a valid callable structure', $callback)
-            );
-        }
-
         $this->callback = $callback;
     }
 

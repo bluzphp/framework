@@ -65,7 +65,7 @@ class CallbackTest extends Tests\TestCase
     }
 
     /**
-     * @expectedException \Bluz\Validator\Exception\ComponentException
+     * @expectedException \TypeError
      */
     public function testInvalidCallbacksShouldRaiseComponentExceptionUponInstantiation()
     {

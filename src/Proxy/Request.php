@@ -164,8 +164,8 @@ class Request
      */
     public static function getParams()
     {
-        $query = (array) self::getInstance()->getQueryParams();
         $body = (array) self::getInstance()->getParsedBody();
+        $query = (array) self::getInstance()->getQueryParams();
 
         return array_merge($body, $query);
     }
@@ -189,13 +189,10 @@ class Request
      */
     public static function getClientIp($checkProxy = true)
     {
-        if ($checkProxy && self::getServer('HTTP_CLIENT_IP') != null) {
-            return self::getServer('HTTP_CLIENT_IP');
-        } elseif ($checkProxy && self::getServer('HTTP_X_FORWARDED_FOR') != null) {
-            return self::getServer('HTTP_X_FORWARDED_FOR');
-        } else {
-            return self::getServer('REMOTE_ADDR');
+        if ($checkProxy) {
+            $result = self::getServer('HTTP_CLIENT_IP') ?? self::getServer('HTTP_X_FORWARDED_FOR') ?? null;
         }
+        return $result ?? self::getServer('REMOTE_ADDR');
     }
 
     /**
@@ -203,7 +200,7 @@ class Request
      *
      * @return string
      */
-    public static function getModule()
+    public static function getModule() : string
     {
         return self::getParam('_module', Router::getDefaultModule());
     }
@@ -213,7 +210,7 @@ class Request
      *
      * @return string
      */
-    public static function getController()
+    public static function getController() : string
     {
         return self::getParam('_controller', Router::getDefaultController());
     }
@@ -223,7 +220,7 @@ class Request
      *
      * @return string
      */
-    public static function getMethod()
+    public static function getMethod() : string
     {
         return self::getParam('_method', self::getInstance()->getMethod());
     }
@@ -233,9 +230,9 @@ class Request
      *
      * @todo:  refactoring this method, accept types should be stored in static? variable
      * @param  array $allowTypes
-     * @return string
+     * @return string|null
      */
-    public static function getAccept($allowTypes = [])
+    public static function getAccept(array $allowTypes = [])
     {
         static $accept;
 
@@ -276,9 +273,9 @@ class Request
             $accept = $types;
         }
 
-        // if no parameter was passed, just return parsed data
+        // if no parameter was passed, just return first mime type from parsed data
         if (empty($allowTypes)) {
-            return $accept;
+            return current(array_keys($accept));
         }
 
         $mimeTypes = array_map('strtolower', $allowTypes);
@@ -298,7 +295,7 @@ class Request
      *
      * @return bool
      */
-    public static function isCli()
+    public static function isCli() : bool
     {
         return (PHP_SAPI === 'cli');
     }
@@ -308,7 +305,7 @@ class Request
      *
      * @return bool
      */
-    public static function isHttp()
+    public static function isHttp() : bool
     {
         return (PHP_SAPI !== 'cli');
     }
@@ -318,7 +315,7 @@ class Request
      *
      * @return bool
      */
-    public static function isGet()
+    public static function isGet() : bool
     {
         return (self::getInstance()->getMethod() === RequestMethod::GET);
     }
@@ -328,7 +325,7 @@ class Request
      *
      * @return bool
      */
-    public static function isPost()
+    public static function isPost() : bool
     {
         return (self::getInstance()->getMethod() === RequestMethod::POST);
     }
@@ -338,7 +335,7 @@ class Request
      *
      * @return bool
      */
-    public static function isPut()
+    public static function isPut() : bool
     {
         return (self::getInstance()->getMethod() === RequestMethod::PUT);
     }
@@ -348,7 +345,7 @@ class Request
      *
      * @return bool
      */
-    public static function isDelete()
+    public static function isDelete() : bool
     {
         return (self::getInstance()->getMethod() === RequestMethod::DELETE);
     }
@@ -358,7 +355,7 @@ class Request
      *
      * @return bool
      */
-    public static function isXmlHttpRequest()
+    public static function isXmlHttpRequest() : bool
     {
         return (self::getHeader('X-Requested-With') === 'XMLHttpRequest');
     }

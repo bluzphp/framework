@@ -43,6 +43,18 @@ if (!function_exists('array_has')) {
     }
 }
 
+if (!function_exists('array_add')) {
+    /**
+     * @param $array
+     * @param array ...$keys
+     * @return void
+     */
+    function array_add(array &$array, ...$keys)
+    {
+        Collection::add($array, ...$keys);
+    }
+}
+
 if (!function_exists('array_set')) {
     /**
      * @param $array

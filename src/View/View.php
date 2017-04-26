@@ -101,12 +101,12 @@ class View implements ViewInterface, \JsonSerializable
     {
         ob_start();
         try {
-            if (!file_exists($this->path . '/' . $this->template)
-                || !is_file($this->path . '/' . $this->template)) {
-                throw new ViewException("Template '{$this->template}' not found");
+            if (!file_exists($this->path . DIRECTORY_SEPARATOR . $this->template)
+                || !is_file($this->path . DIRECTORY_SEPARATOR . $this->template)) {
+                throw new ViewException("Template `{$this->template}` not found");
             }
             extract($this->container, EXTR_SKIP);
-            require $this->path . '/' . $this->template;
+            require $this->path . DIRECTORY_SEPARATOR . $this->template;
         } catch (\Exception $e) {
             // clean output
             ob_end_clean();
@@ -144,11 +144,10 @@ class View implements ViewInterface, \JsonSerializable
      * Add partial path for use inside partial and partialLoop helpers
      *
      * @param  string $path
-     * @return View
+     * @return void
      */
     public function addPartialPath($path)
     {
         $this->partialPath[] = $path;
-        return $this;
     }
 }

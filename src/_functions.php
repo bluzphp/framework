@@ -35,7 +35,7 @@ if (!function_exists('array_has')) {
     /**
      * @param $array
      * @param array ...$keys
-     * @return mixed|null
+     * @return bool
      */
     function array_has(array $array, ...$keys)
     {

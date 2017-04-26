@@ -37,7 +37,7 @@ class SqlSource extends AbstractSource
     public function setSource($source)
     {
         if (!is_string($source)) {
-            throw new Grid\GridException("Source of `SqlSource` should be string with SQL query");
+            throw new Grid\GridException('Source of `SqlSource` should be string with SQL query');
         }
         $this->source = $source;
 
@@ -47,7 +47,7 @@ class SqlSource extends AbstractSource
     /**
      * Process
      *
-     * @param  array $settings
+     * @param  array[] $settings
      * @return \Bluz\Grid\Data
      */
     public function process(array $settings = [])
@@ -57,7 +57,7 @@ class SqlSource extends AbstractSource
         if (!empty($settings['filters'])) {
             foreach ($settings['filters'] as $column => $filters) {
                 foreach ($filters as $filter => $value) {
-                    if ($filter == Grid\Grid::FILTER_LIKE) {
+                    if ($filter === Grid\Grid::FILTER_LIKE) {
                         $value = '%'.$value.'%';
                     }
                     $where[] = $column .' '.
@@ -83,7 +83,7 @@ class SqlSource extends AbstractSource
         // prepare query
         $type = Proxy\Db::getOption('connect', 'type');
 
-        if (strtolower($type) == 'mysql') {
+        if (strtolower($type) === 'mysql') {
             // MySQL
             $dataSql = preg_replace('/SELECT\s(.*?)\sFROM/is', 'SELECT SQL_CALC_FOUND_ROWS $1 FROM', $this->source, 1);
             $totalSql = 'SELECT FOUND_ROWS()';
@@ -92,15 +92,15 @@ class SqlSource extends AbstractSource
             $dataSql = $this->source;
             $totalSql = preg_replace('/SELECT\s(.*?)\sFROM/is', 'SELECT COUNT(*) FROM', $this->source, 1);
             if (count($where)) {
-                $totalSql .= ' WHERE ' . (join(' AND ', $where));
+                $totalSql .= ' WHERE ' . implode(' AND ', $where);
             }
         }
 
         if (count($where)) {
-            $dataSql .= ' WHERE ' . (join(' AND ', $where));
+            $dataSql .= ' WHERE ' . implode(' AND ', $where);
         }
         if (count($orders)) {
-            $dataSql .= ' ORDER BY ' . (join(', ', $orders));
+            $dataSql .= ' ORDER BY ' . implode(', ', $orders);
         }
         $dataSql .= $limit;
 

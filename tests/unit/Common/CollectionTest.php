@@ -150,10 +150,10 @@ class CollectionTest extends TestCase
      */
     public function testArrayAddFunction()
     {
-        array_add($this->array, 'hello', 'city', 'Kyiv');
-        array_add($this->array, 'hello', 'city', 'Kharkiv');
+        array_add($this->array, 'ukraine', 'city', 'Kyiv');
+        array_add($this->array, 'ukraine', 'city', 'Kharkiv');
 
-        self::assertCount(2, $this->array['hello']['city']);
+        self::assertCount(2, $this->array['ukraine']['city']);
     }
 
     /**

@@ -66,8 +66,8 @@ class ArraySourceTest extends TestCase
         $grid->addFilter('id', Grid::FILTER_LT, 10); // id < 10
         $grid->addFilter('id', Grid::FILTER_LE, 9);  // id <= 9
 
-        self::assertEquals(2, $grid->pages());
         self::assertEquals(8, $grid->total());
+        self::assertEquals(2, $grid->pages());
 
         self::assertEquals('/index/index/arr-filter-index/gt-1-ge-2-lt-10-le-9', $grid->first());
     }

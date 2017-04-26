@@ -47,7 +47,7 @@ class SelectSource extends AbstractSource
     /**
      * Process
      *
-     * @param  array $settings
+     * @param  array[] $settings
      * @return \Bluz\Grid\Data
      */
     public function process(array $settings = [])
@@ -56,7 +56,7 @@ class SelectSource extends AbstractSource
         if (!empty($settings['filters'])) {
             foreach ($settings['filters'] as $column => $filters) {
                 foreach ($filters as $filter => $value) {
-                    if ($filter == Grid\Grid::FILTER_LIKE) {
+                    if ($filter === Grid\Grid::FILTER_LIKE) {
                         $value = '%'.$value.'%';
                     }
                     $this->source->andWhere($column .' '. $this->filters[$filter] .' ?', $value);
@@ -79,7 +79,7 @@ class SelectSource extends AbstractSource
         // prepare query
         $type = Proxy\Db::getOption('connect', 'type');
 
-        if (strtolower($type) == 'mysql') {
+        if (strtolower($type) === 'mysql') {
             // MySQL
             $select = $this->source->getQueryPart('select');
             $this->source->select('SQL_CALC_FOUND_ROWS ' . current($select));

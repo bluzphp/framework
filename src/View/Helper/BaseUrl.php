@@ -38,5 +38,5 @@ return
             $file = ltrim($file, '/\\');
         }
 
-        return rtrim($this->baseUrl, '/') . '/' . $file;
+        return str_trim_end($this->baseUrl, '/') . $file;
     };

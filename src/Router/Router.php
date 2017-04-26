@@ -168,7 +168,7 @@ class Router
      */
     public function setBaseUrl($baseUrl)
     {
-        $this->baseUrl = rtrim($baseUrl, '/') . '/';
+        $this->baseUrl = str_trim_end($baseUrl, '/');
     }
 
     /**

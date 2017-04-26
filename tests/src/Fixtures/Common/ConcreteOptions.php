@@ -29,6 +29,11 @@ class ConcreteOptions
     public $foo;
 
     /**
+     * @var string
+     */
+    public $moo;
+
+    /**
      * @var mixed
      */
     public $fooBar;
@@ -43,6 +48,28 @@ class ConcreteOptions
     {
         $this->foo = $foo;
         return $this;
+    }
+
+    /**
+     * setMoo
+     *
+     * @param string $moo
+     * @return self
+     */
+    public function setMoo($moo)
+    {
+        $this->moo = $moo;
+        return $this;
+    }
+
+    /**
+     * getMoo
+     *
+     * @return string
+     */
+    public function getMoo()
+    {
+        return $this->moo . '-Moo';
     }
 
     /**

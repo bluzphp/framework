@@ -11,7 +11,7 @@ Easy to setup, easy to use.
 [![Dependency Status](https://www.versioneye.com/php/bluzphp:framework/badge.png)](https://www.versioneye.com/php/bluzphp:framework)
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bluzphp/framework/badges/quality-score.png?s=4fb36e6e0c742699777d2586ed14a0063a55ca62)](https://scrutinizer-ci.com/g/bluzphp/framework/)
-[![Coverage Status](https://img.shields.io/coveralls/bluzphp/framework/master.svg?style=flat-square)](https://coveralls.io/r/bluzphp/framework?branch=master)
+[![Coverage Status](https://img.shields.io/coveralls/bluzphp/framework/master.svg?style=flat)](https://coveralls.io/r/bluzphp/framework?branch=master)
 
 [![Latest Stable Version](https://poser.pugx.org/bluzphp/framework/v/stable.png)](https://packagist.org/packages/bluzphp/framework)
 [![Total Downloads](https://poser.pugx.org/bluzphp/framework/downloads.png)](https://packagist.org/packages/bluzphp/framework)

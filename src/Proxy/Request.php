@@ -54,7 +54,7 @@ class Request
      */
     protected static function initInstance()
     {
-        throw new ComponentException("Class `Proxy\\Request` required external initialization");
+        throw new ComponentException('Class `Proxy\\Request` required external initialization');
     }
 
     /**
@@ -140,7 +140,7 @@ class Request
     
     /**
      * Access values contained in the superglobals as public members
-     * Order of precedence: 1. GET, 2. POST, 3. COOKIE, 4. SERVER
+     * Order of precedence: 1. GET, 2. POST
      *
      * @param  string $key
      * @param  null   $default
@@ -152,8 +152,6 @@ class Request
         return
             self::getQuery($key) ??
             self::getPost($key) ??
-            self::getCookie($key) ??
-            self::getServer($key) ??
             $default;
     }
 
@@ -228,29 +226,27 @@ class Request
     /**
      * Get Accept MIME Type
      *
-     * @todo:  refactoring this method, accept types should be stored in static? variable
-     * @param  array $allowTypes
-     * @return string|null
+     * @return array
      */
-    public static function getAccept(array $allowTypes = [])
+    public static function getAccept() : array
     {
         static $accept;
 
         if (!$accept) {
+            // save to static variable
+            $accept = [];
+
             // get header from request
             $header = self::getHeader('accept');
 
             // nothing ...
             if (!$header) {
-                return null;
+                return $accept;
             }
 
             // make array if types
             $header = explode(',', $header);
             $header = array_map('trim', $header);
-
-            // result store
-            $types = [];
 
             foreach ($header as $a) {
                 // the default quality is 1.
@@ -267,22 +263,33 @@ class Request
 
                 // mime-type $a is accepted with the quality $q
                 // WARNING: $q == 0 means, that mime-type isn’t supported!
-                $types[$a] = (float) $q;
+                $accept[$a] = (float) $q;
             }
-            arsort($types);
-            $accept = $types;
+            arsort($accept);
         }
+        return $accept;
+    }
+
+    /**
+     * Check Accept header
+     *
+     * @param array $allowTypes
+     * @return string
+     */
+    public static function checkAccept(array $allowTypes = [])
+    {
+        $accept = self::getAccept();
 
         // if no parameter was passed, just return first mime type from parsed data
         if (empty($allowTypes)) {
             return current(array_keys($accept));
         }
 
-        $mimeTypes = array_map('strtolower', $allowTypes);
+        $allowTypes = array_map('strtolower', $allowTypes);
 
         // let’s check our supported types:
-        foreach ($accept as $mime => $q) {
-            if ($q && in_array($mime, $mimeTypes)) {
+        foreach ($accept as $mime => $quality) {
+            if ($quality && in_array($mime, $allowTypes)) {
                 return $mime;
             }
         }

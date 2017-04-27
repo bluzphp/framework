@@ -145,7 +145,7 @@ class Controller implements \JsonSerializable
         }
 
         // get Accept with high priority
-        $accept = Request::getAccept($allowAccept);
+        $accept = Request::checkAccept($allowAccept);
 
         // some controllers allow any type (*/*)
         // and client doesn't send Accept header

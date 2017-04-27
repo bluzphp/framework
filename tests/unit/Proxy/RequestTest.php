@@ -51,7 +51,6 @@ class RequestTest extends TestCase
         self::setRequestParams('/', [], [], RequestMethod::GET, [], ['foo' => 'bar']);
 
         self::assertEquals('bar', Request::getCookie('foo'));
-        self::assertEquals('bar', Request::getParam('foo'));
     }
 
     /**

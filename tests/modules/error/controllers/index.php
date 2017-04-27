@@ -88,7 +88,7 @@ return function ($code, $exception = null) {
     // check CLI or HTTP request
     if (Request::isHttp()) {
         // simple AJAX call, accept JSON
-        if (Request::getAccept(['application/json'])) {
+        if (Request::checkAccept(['application/json'])) {
             $this->useJson();
             Messages::addError($description);
             return [

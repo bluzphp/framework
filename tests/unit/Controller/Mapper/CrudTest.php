@@ -61,7 +61,7 @@ class CrudTest extends TestCase
 
     public function testGetPrimaryKey()
     {
-        self::setRequestParams('test/test', ['id' => 42], [], RequestMethod::GET);
+        self::setRequestParams('test/index', ['id' => 42], [], RequestMethod::GET);
         self::resetRouter();
 
         $crudMapper = new Crud();
@@ -81,12 +81,12 @@ class CrudTest extends TestCase
      */
     public function testMethod($method)
     {
-        self::setRequestParams('test/test', [], [], $method);
+        self::setRequestParams('test/index', [], [], $method);
         self::resetRouter();
 
         $crudMapper = new Crud();
         $crudMapper->setCrud(TableCrud::getInstance());
-        $crudMapper->addMap($method, 'test', 'test');
+        $crudMapper->addMap($method, 'test', 'index');
         $controller = $crudMapper->run();
 
         self::assertInstanceOf(Controller::class, $controller);
@@ -97,12 +97,12 @@ class CrudTest extends TestCase
      */
     public function testForbiddenMethod()
     {
-        self::setRequestParams('test/test', [], [], RequestMethod::GET);
+        self::setRequestParams('test/index', [], [], RequestMethod::GET);
         self::resetRouter();
 
         $crudMapper = new Crud();
         $crudMapper->setCrud(TableCrud::getInstance());
-        $crudMapper->addMap(RequestMethod::GET, 'test', 'test', 'Deny');
+        $crudMapper->addMap(RequestMethod::GET, 'test', 'index', 'Deny');
         $crudMapper->run();
     }
 

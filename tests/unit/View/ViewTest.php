@@ -179,7 +179,7 @@ class ViewTest extends TestCase
     {
         $view = $this->getView();
 
-        self::assertEmpty($view->dispatch('test', 'test'));
+        self::assertEmpty($view->dispatch('helper', 'dispatch'));
     }
 
     /**
@@ -362,20 +362,22 @@ class ViewTest extends TestCase
         $view = $this->getView();
 
         $result = $view->select(
-            "car",
+            'car',
             [
-                "none" => "No Car",
-                "class-A" => [
+                'none' => "No Car",
+                'class-A' => [
                     'citroen-c1' => 'Citroen C1',
                     'mercedes-benz-a200' => 'Mercedes Benz A200',
                 ],
-                "class-B" => [
+                'class-B' => [
                     'audi-a1' => 'Audi A1',
                     'citroen-c3' => 'Citroen C3',
                 ],
             ],
             null,
-            ["id"=>"car"]
+            [
+                'id' => 'car'
+            ]
         );
 
         $result = str_replace(["\t", "\n", "\r"], '', $result);
@@ -404,15 +406,17 @@ class ViewTest extends TestCase
         $view = $this->getView();
 
         $result = $view->select(
-            "car",
+            'car',
             [
-                "none" => "No Car",
+                'none' => 'No Car',
                 'citroen-c1' => 'Citroen C1',
                 'citroen-c3' => 'Citroen C3',
                 'citroen-c4' => 'Citroen C4',
             ],
             'citroen-c4',
-            ["id"=>"car"]
+            [
+                'id' => 'car'
+            ]
         );
 
         $result = str_replace(["\t", "\n", "\r"], '', $result);
@@ -436,7 +440,7 @@ class ViewTest extends TestCase
         $view = $this->getView();
 
         $result = $view->select(
-            "car",
+            'car',
             [
                 'citroen-c1' => 'Citroen C1',
                 'mercedes-benz-a200' => 'Mercedes Benz A200',

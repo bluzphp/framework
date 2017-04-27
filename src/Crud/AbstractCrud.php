@@ -174,7 +174,7 @@ abstract class AbstractCrud
             $className = $method->getDeclaringClass()->getName();
             $methodName = $method->getName();
 
-            if (__CLASS__ != $className && in_array($methodName, $allow)) {
+            if (__CLASS__ !== $className && in_array($methodName, $allow)) {
                 $available[] = $methodName;
             }
         }

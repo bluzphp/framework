@@ -32,7 +32,8 @@ namespace Bluz\Common;
  *       }
  *     }
  *
- *     $Foo = new Foo(['bar'=>123, 'baz'=>456]);
+ *     $Foo = new Foo();
+ *     $Foo->setOptions(['bar'=>123, 'baz'=>456]);
  *
  * @package  Bluz\Common
  * @author   Anton Shevchuk
@@ -48,21 +49,17 @@ trait Options
     /**
      * Get option by key
      *
-     * @param  string      $key
-     * @param  string|null $section
+     * @param  string $key
+     * @param  array  $keys
      * @return mixed
      */
-    public function getOption($key, $section = null)
+    public function getOption($key, ...$keys)
     {
-        if (isset($this->options[$key])) {
-            if (!is_null($section)) {
-                return $this->options[$key][$section] ?? null;
-            } else {
-                return $this->options[$key];
-            }
-        } else {
-            return null;
+        $method = 'get' . Line::toCamelCase($key);
+        if (method_exists($this, $method)) {
+            return $this->$method($key, ...$keys);
         }
+        return Collection::get($this->options, $key, ...$keys);
     }
 
     /**
@@ -74,7 +71,7 @@ trait Options
      */
     public function setOption($key, $value)
     {
-        $method = 'set' . $this->normalizeKey($key);
+        $method = 'set' . Line::toCamelCase($key);
         if (method_exists($this, $method)) {
             $this->$method($value);
         } else {
@@ -126,18 +123,5 @@ trait Options
      */
     protected function initOptions()
     {
-    }
-
-    /**
-     * Normalize key name
-     *
-     * @param  string $key
-     * @return string
-     */
-    private function normalizeKey($key)
-    {
-        $option = str_replace(['_', '-'], ' ', strtolower($key));
-        $option = str_replace(' ', '', ucwords($option));
-        return $option;
     }
 }

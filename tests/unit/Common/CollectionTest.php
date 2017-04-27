@@ -48,7 +48,7 @@ class CollectionTest extends TestCase
     /**
      * @return array
      */
-    public function dataForCorrectCheck()
+    public function dataForCorrectCheck() : array
     {
         return [
             ['hello'],
@@ -64,7 +64,7 @@ class CollectionTest extends TestCase
     /**
      * @return array
      */
-    public function dataForIncorrectCheck()
+    public function dataForIncorrectCheck() : array
     {
         return [
             ['hi'],
@@ -80,6 +80,7 @@ class CollectionTest extends TestCase
      * Test has class
      *
      * @dataProvider dataForCorrectCheck
+     * @param array $keys
      */
     public function testHasReturnTrue(...$keys)
     {
@@ -90,6 +91,7 @@ class CollectionTest extends TestCase
      * Test has class
      *
      * @dataProvider dataForIncorrectCheck
+     * @param array $keys
      */
     public function testHasReturnFalse(...$keys)
     {
@@ -108,6 +110,7 @@ class CollectionTest extends TestCase
 
     /**
      * @dataProvider dataForIncorrectCheck
+     * @param array $keys
      */
     public function testGetNul(...$keys)
     {

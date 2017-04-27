@@ -68,7 +68,7 @@ class Mailer
         $fromName = $this->getOption('from', 'name') ?: '';
 
         // setup options from config
-        $mail->SetFrom($fromEmail, $fromName, false);
+        $mail->setFrom($fromEmail, $fromName, false);
 
         // setup options
         if ($settings = $this->getOption('settings')) {
@@ -80,7 +80,7 @@ class Mailer
         // setup custom headers
         if ($headers = $this->getOption('headers')) {
             foreach ($headers as $header => $value) {
-                $mail->AddCustomHeader($header, $value);
+                $mail->addCustomHeader($header, $value);
             }
         }
 
@@ -103,7 +103,7 @@ class Mailer
             $mail->Subject = Translator::translate($template, $mail->Subject);
         }
 
-        if (!$mail->Send()) {
+        if (!$mail->send()) {
             // Why you don't use "Exception mode" of PHPMailer
             // Because we need our Exception in any case
             throw new MailerException('Error mail send: '. $mail->ErrorInfo);

@@ -9,6 +9,7 @@
 declare(strict_types=1);
 
 use Bluz\Common\Collection;
+use Bluz\Common\Line;
 use Bluz\Translator\Translator;
 
 /**
@@ -122,6 +123,33 @@ if (!function_exists('esc')) {
     function esc($variable, int $flags = ENT_HTML5)
     {
         return htmlentities((string)$variable, $flags, 'UTF-8');
+    }
+}
+
+if (!function_exists('str_trim_end')) {
+    /**
+     * Added symbol to end of string, trim it before
+     *
+     * @param  string $subject
+     * @param  string $symbols
+     * @return mixed
+     */
+    function str_trim_end($subject, $symbols)
+    {
+        return rtrim($subject, $symbols) . $symbols;
+    }
+}
+
+if (!function_exists('to_camel_case')) {
+    /**
+     * Convert string to camel case
+     *
+     * @param  string $subject
+     * @return string
+     */
+    function to_camel_case($subject)
+    {
+        return Line::toCamelCase($subject);
     }
 }
 

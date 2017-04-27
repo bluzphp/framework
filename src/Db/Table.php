@@ -202,7 +202,7 @@ abstract class Table
             $cacheKey = "db.table.{$this->name}";
             $columns = Cache::get($cacheKey);
             if (!$columns) {
-                $connect = DbProxy::getOption('connect');
+                $schema = DbProxy::getOption('connect', 'name');
 
                 $columns = DbProxy::fetchColumn(
                     '
@@ -210,7 +210,7 @@ abstract class Table
                     FROM INFORMATION_SCHEMA.COLUMNS
                     WHERE TABLE_SCHEMA = ?
                       AND TABLE_NAME = ?',
-                    [$connect['name'], $this->getName()]
+                    [$schema, $this->getName()]
                 );
                 Cache::set($cacheKey, $columns, Cache::TTL_NO_EXPIRY, ['system', 'db']);
             }

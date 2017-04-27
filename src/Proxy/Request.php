@@ -140,7 +140,7 @@ class Request
     
     /**
      * Access values contained in the superglobals as public members
-     * Order of precedence: 1. GET, 2. POST, 3. COOKIE, 4. SERVER
+     * Order of precedence: 1. GET, 2. POST
      *
      * @param  string $key
      * @param  null   $default

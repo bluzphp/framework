@@ -14,6 +14,7 @@ use Bluz\Http;
 use Bluz\Proxy;
 use Bluz\Proxy\Request;
 use Bluz\Request\RequestFactory;
+use Bluz\Router\Router;
 use Codeception\Test\Unit;
 use Zend\Diactoros\ServerRequest;
 
@@ -130,6 +131,18 @@ class TestCase extends Unit
         Proxy\Messages::popAll();
         Proxy\Request::setInstance(RequestFactory::fromGlobals());
         Proxy\Response::setInstance(new Bluz\Response\Response());
+    }
+
+    /**
+     * resetRouter
+     *
+     * @return void
+     */
+    protected static function resetRouter()
+    {
+        $router = new Router();
+        $router->setBaseUrl('/');
+        Proxy\Router::setInstance($router);
     }
 
     /**

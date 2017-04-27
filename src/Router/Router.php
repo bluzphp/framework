@@ -76,12 +76,12 @@ class Router
     protected $rawParams = [];
 
     /**
-     * @var array routers map
+     * @var array[] routers map
      */
     protected $routers = [];
 
     /**
-     * @var array reverse map
+     * @var array[] reverse map
      */
     protected $reverse = [];
 
@@ -519,7 +519,7 @@ class Router
                 $size = count($raw);
             }
             // or use array_chunk and run another loop?
-            for ($i = 0; $i < $size; $i = $i + 2) {
+            for ($i = 0; $i < $size; $i += 2) {
                 $this->setParam($raw[$i], $raw[$i + 1]);
             }
         }

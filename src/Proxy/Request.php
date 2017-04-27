@@ -152,8 +152,6 @@ class Request
         return
             self::getQuery($key) ??
             self::getPost($key) ??
-            self::getCookie($key) ??
-            self::getServer($key) ??
             $default;
     }
 

@@ -36,9 +36,7 @@ class Acl
     {
         if ($privilege) {
             $user = Auth::getIdentity();
-            if (!$user || !$user->hasPrivilege($module, $privilege)) {
-                return false;
-            }
+            return $user && $user->hasPrivilege($module, $privilege);
         }
         return true;
     }

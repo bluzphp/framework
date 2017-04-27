@@ -234,7 +234,7 @@ abstract class AbstractMapper
     public function getCrud()
     {
         if (!$this->crud) {
-            throw new ControllerException("`Crud` class is not exists or not initialized");
+            throw new ControllerException('`Crud` class is not exists or not initialized');
         }
         return $this->crud;
     }

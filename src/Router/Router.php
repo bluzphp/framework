@@ -315,8 +315,11 @@ class Router
      * @param  array  $params
      * @return string
      */
-    public function getUrl($module = self::DEFAULT_MODULE, $controller = self::DEFAULT_CONTROLLER, array $params = [])
-    {
+    public function getUrl(
+        $module = self::DEFAULT_MODULE,
+        $controller = self::DEFAULT_CONTROLLER,
+        array $params = []
+    ) {
         $module = $module ?? Request::getModule();
         $controller = $controller ?? Request::getController();
 
@@ -428,17 +431,9 @@ class Router
      */
     public function process()
     {
-        switch (true) {
-            // try process default router
-            case $this->processDefault():
-                break;
-            // try process custom routers
-            case $this->processCustom():
-                break;
-            // try process router
-            case $this->processRoute():
-                break;
-        }
+        $this->processDefault() || // try to process default router (homepage)
+        $this->processCustom() ||  //  or custom routers
+        $this->processRoute();     //  or default router schema
 
         $this->resetRequest();
         return $this;
@@ -449,7 +444,7 @@ class Router
      *
      * @return bool
      */
-    protected function processDefault()
+    protected function processDefault() : bool
     {
         $uri = $this->getCleanUri();
         return empty($uri);
@@ -460,7 +455,7 @@ class Router
      *
      * @return bool
      */
-    protected function processCustom()
+    protected function processCustom() : bool
     {
         $uri = '/' . $this->getCleanUri();
         foreach ($this->routers as $router) {
@@ -490,7 +485,7 @@ class Router
      *
      * @return bool
      */
-    protected function processRoute()
+    protected function processRoute() : bool
     {
         $uri = $this->getCleanUri();
         $uri = trim($uri, '/');

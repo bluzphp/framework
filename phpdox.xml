@@ -100,9 +100,9 @@
                 <!--<filter directory="${phpDox.project.source}" />-->
                 <!-- @directory - path of the phpunit config whitelist filter directory -->
                 <!--</source>-->
-                <source type="phpunit">
-                    <coverage path="tests/_output/coverage" />
-                </source>
+                <!--<source type="phpunit">-->
+                    <!--<coverage path="tests/_output/coverage" />-->
+                <!--</source>-->
 
             </enrich>
 

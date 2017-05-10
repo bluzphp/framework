@@ -30,11 +30,11 @@ script:
   # Mess detection
   - php vendor/bin/phpmd ./src xml codesize,unusedcode,naming --reportfile .reports/phpmd.xml || true
   # Run CodeCeption tests
-  - php vendor/bin/codecept run --coverage-xml=coverage/index.xml
+  - php vendor/bin/codecept run --coverage --coverage-xml
 after_success:
   # Coveralls
   - php vendor/bin/coveralls -v
-  - php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage/index.xml
+  - php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml
   # Generate documentation
   - bash .travis.sh
 notifications:

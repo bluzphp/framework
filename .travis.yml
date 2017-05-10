@@ -4,7 +4,7 @@ php:
   - 7.1
 env:
   global:
-    - secure: "A9MgF/c0LCUwmq6LSN2y2U9SxOSgqkorOtag5wUj3I1m2mNPekm3Zr10nWwRXAW5U1F38wBI2rrE6Sat3mzi792/BKMYi9Ls8vREtSRdwphOJLfcaTEvdTJxieVyz4TyXpajYu8sxgAVKb1JluAyS7ci9fht66axC96c/SCFtZQ="
+    - secure: "QKyI/QO6H6pFE04Iz/4IcSuttMdY3o85mD2BTNV2Y2SeSPxLfuukqPrxjANrTc4GfI1v7/bZM43uMl3aRa76+HRZ83ZsXR8uv1VZUgNHYuoq7jdZb18BitM36h0LbHzTbYetJLiYg7l3mnbAezTXPXHfpNIWvZcuyZzatyF/lng="
 before_install:
   - sudo sh -c "echo 'precedence ::ffff:0:0/96 100' >> /etc/gai.conf"
 install:

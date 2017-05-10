@@ -79,19 +79,19 @@
                 </source>
 
                 <!-- PHP Code Sniffer -->
-                <!--<source type="phpcs">-->
-                    <!--<file name=".reports/phpcs.xml" />-->
-                <!--</source>-->
+                <source type="phpcs">
+                    <file name=".reports/phpcs.xml" />
+                </source>
 
                 <!-- PHPLoc -->
-                <!--<source type="phploc">-->
-                    <!--<file name=".reports/phploc.xml" />-->
-                <!--</source>-->
+                <source type="phploc">
+                    <file name=".reports/phploc.xml" />
+                </source>
 
                 <!-- PHPMessDetector -->
-                <!--<source type="pmd">-->
-                    <!--<file name=".reports/phpmd.xml" />-->
-                <!--</source>-->
+                <source type="pmd">
+                    <file name=".reports/phpmd.xml" />
+                </source>
 
                 <!-- PHPUnit Coverage XML -->
                 <!-- <source type="phpunit">  -->
@@ -101,7 +101,7 @@
                 <!-- @directory - path of the phpunit config whitelist filter directory -->
                 <!--</source>-->
                 <source type="phpunit">
-                    <coverage path="tests/_output/coverage.xml" />
+                    <coverage path="tests/_output/coverage" />
                 </source>
 
             </enrich>

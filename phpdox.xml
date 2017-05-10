@@ -101,7 +101,7 @@
                 <!-- @directory - path of the phpunit config whitelist filter directory -->
                 <!--</source>-->
                 <source type="phpunit">
-                    <coverage path="tests/_output/coverage" />
+                    <coverage path="tests/_output/coverage.xml" />
                 </source>
 
             </enrich>

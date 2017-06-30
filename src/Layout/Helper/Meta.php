@@ -31,10 +31,8 @@ return
             // prepare to output
             $tags = [];
             foreach ($meta as $aName => $aContent) {
-                $tags[] = '<meta name="' . $aName . '" content="' . htmlspecialchars(
-                        (string)$aContent,
-                        ENT_QUOTES
-                    ) . '"/>';
+                $tags[] = '<meta name="' . $aName . '" ' .
+                    'content="' . htmlspecialchars((string)$aContent, ENT_QUOTES) . '"/>';
             }
             return implode("\n", $tags);
         } elseif (is_null($name)) {

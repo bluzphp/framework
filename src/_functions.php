@@ -138,7 +138,7 @@ if (!function_exists('str_trim_end')) {
      * @param  string $subject
      * @param  string $symbols
      *
-     * @return mixed
+     * @return string
      */
     function str_trim_end($subject, $symbols)
     {

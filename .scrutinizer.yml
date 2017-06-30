@@ -1,5 +1,10 @@
 checks:
-  php: true
+  php:
+      psr2_switch_declaration: true
+      psr2_class_declaration: true
+      no_short_open_tag: true
+      deprecated_code_usage: true
+      code_rating: true
 filter:
   excluded_paths:
     - vendor/
@@ -7,13 +12,14 @@ filter:
 tools:
   external_code_coverage:
     timeout: 600
+  php_analyzer: true
   php_code_sniffer: true
-  php_mess_detector: true
-  php_loc:
-    enabled: true
-    excluded_dirs: [vendor, tests]
-  php_pdepend: true
   php_cpd:
-    enabled: true
-    excluded_dirs: [vendor, tests]
+      enabled: true
+      excluded_dirs: [vendor, tests]
+  php_loc:
+      enabled: true
+      excluded_dirs: [vendor, tests]
+  php_mess_detector: true
+  php_pdepend: true
   sensiolabs_security_checker: true

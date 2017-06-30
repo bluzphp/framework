@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -113,7 +113,7 @@ class Response
                 break;
             case 'FILE' === $this->type:
                 // File attachment
-                $response= new AttachmentResponse(
+                $response = new AttachmentResponse(
                     $this->body->getData()->get('FILE'),
                     $this->getStatusCode(),
                     $this->getHeaders()
@@ -123,7 +123,7 @@ class Response
             default:
                 // HTML response
                 $response = new HtmlResponse(
-                    (string) $body,
+                    (string)$body,
                     $this->getStatusCode(),
                     $this->getHeaders()
                 );
@@ -185,11 +185,12 @@ class Response
      * Sets the status code of this response
      *
      * @param  integer $code the 3-digit integer result code to set.
+     *
      * @return void
      */
     public function setStatusCode($code)
     {
-        $this->code = (int) $code;
+        $this->code = (int)$code;
     }
 
     /**
@@ -228,6 +229,7 @@ class Response
      * a comma.
      *
      * @param  string $header case-insensitive header name.
+     *
      * @return string
      */
     public function getHeader($header)
@@ -242,6 +244,7 @@ class Response
      * Retrieves a header by the given case-insensitive name as an array of strings
      *
      * @param  string $header Case-insensitive header name.
+     *
      * @return string[]
      */
     public function getHeaderAsArray($header)
@@ -256,6 +259,7 @@ class Response
      * Checks if a header exists by the given case-insensitive name
      *
      * @param  string $header case-insensitive header name.
+     *
      * @return bool returns true if any header names match the given header
      *              name using a case-insensitive string comparison. Returns false if
      *              no matching header name is found in the message.
@@ -274,11 +278,12 @@ class Response
      *
      * @param  string          $header header name
      * @param  string|string[] $value  header value(s)
+     *
      * @return void
      */
     public function setHeader($header, $value)
     {
-        $this->headers[$header] = (array) $value;
+        $this->headers[$header] = (array)$value;
     }
 
     /**
@@ -289,6 +294,7 @@ class Response
      *
      * @param  string $header header name to add
      * @param  string $value  value of the header
+     *
      * @return void
      */
     public function addHeader($header, $value)
@@ -304,6 +310,7 @@ class Response
      * Remove a specific header by case-insensitive name.
      *
      * @param  string $header HTTP header to remove
+     *
      * @return void
      */
     public function removeHeader($header)
@@ -336,6 +343,7 @@ class Response
      * string or an array of strings.
      *
      * @param  array $headers Headers to set.
+     *
      * @return void
      */
     public function setHeaders(array $headers)
@@ -353,6 +361,7 @@ class Response
      * header is added.
      *
      * @param  array $headers Associative array of headers to add to the message
+     *
      * @return void
      */
     public function addHeaders(array $headers)
@@ -374,6 +383,7 @@ class Response
      * Set response body
      *
      * @param  mixed $body
+     *
      * @return void
      */
     public function setBody($body)
@@ -411,6 +421,7 @@ class Response
      * @param  string               $domain
      * @param  bool                 $secure
      * @param  bool                 $httpOnly
+     *
      * @return void
      */
     public function setCookie(
@@ -447,8 +458,8 @@ class Response
             'expire' => $expire,
             'path' => $path,
             'domain' => $domain,
-            'secure' => (bool) $secure,
-            'httpOnly' => (bool) $httpOnly
+            'secure' => (bool)$secure,
+            'httpOnly' => (bool)$httpOnly
         ];
     }
 
@@ -456,6 +467,7 @@ class Response
      * Get Cookie by name
      *
      * @param  string $name
+     *
      * @return array|null
      */
     public function getCookie($name)

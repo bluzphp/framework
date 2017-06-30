@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -56,6 +56,7 @@ class Relations
      * @param  string $keyOne
      * @param  string $modelTwo
      * @param  string $keyTwo
+     *
      * @return void
      */
     public static function setRelation($modelOne, $keyOne, $modelTwo, $keyTwo)
@@ -70,6 +71,7 @@ class Relations
      * @param  string $modelOne
      * @param  string $modelTwo
      * @param  array  $relations
+     *
      * @return void
      */
     public static function setRelations($modelOne, $modelTwo, $relations)
@@ -86,6 +88,7 @@ class Relations
      *
      * @param  string $modelOne
      * @param  string $modelTwo
+     *
      * @return array|false
      */
     public static function getRelations($modelOne, $modelTwo)
@@ -100,8 +103,9 @@ class Relations
     /**
      * findRelation
      *
-     * @param  Row $row
+     * @param  Row    $row
      * @param  string $relation
+     *
      * @return array
      * @throws Exception\RelationNotFoundException
      */
@@ -136,12 +140,13 @@ class Relations
      * @param  string $modelOne Table
      * @param  string $modelTwo Target table
      * @param  array  $keys     Keys from first table
+     *
      * @return array
      * @throws Exception\RelationNotFoundException
      */
     public static function findRelations($modelOne, $modelTwo, $keys)
     {
-        $keys = (array) $keys;
+        $keys = (array)$keys;
         if (!$relations = self::getRelations($modelOne, $modelTwo)) {
             throw new RelationNotFoundException("Relations between model `$modelOne` and `$modelTwo` is not defined");
         }
@@ -180,7 +185,7 @@ class Relations
                 $tableTwoName,
                 $tableThreeName,
                 $tableThreeName,
-                $tableTwoName.'.'.$relations[$modelTwo].'='.$tableThreeName.'.'.$relations[$modelThree]
+                $tableTwoName . '.' . $relations[$modelTwo] . '=' . $tableThreeName . '.' . $relations[$modelThree]
             );
 
             // relations between source table and third table
@@ -191,14 +196,14 @@ class Relations
                 $tableThreeName,
                 $tableOneName,
                 $tableOneName,
-                $tableThreeName.'.'.$relations[$modelThree].'='.$tableOneName.'.'.$relations[$modelOne]
+                $tableThreeName . '.' . $relations[$modelThree] . '=' . $tableOneName . '.' . $relations[$modelOne]
             );
 
             // set source keys
-            $tableTwoSelect->where($tableOneName.'.'. $relations[$modelOne] .' IN (?)', $keys);
+            $tableTwoSelect->where($tableOneName . '.' . $relations[$modelOne] . ' IN (?)', $keys);
         } else {
             // set source keys
-            $tableTwoSelect->where($relations[$modelTwo] .' IN (?)', $keys);
+            $tableTwoSelect->where($relations[$modelTwo] . ' IN (?)', $keys);
         }
         return $tableTwoSelect->execute();
     }
@@ -208,6 +213,7 @@ class Relations
      *
      * @param  string $model
      * @param  string $className
+     *
      * @return void
      */
     public static function addClassMap($model, $className)
@@ -219,6 +225,7 @@ class Relations
      * Get information about Model classes
      *
      * @param  string $model
+     *
      * @return string
      * @throws Exception\RelationNotFoundException
      */
@@ -226,7 +233,7 @@ class Relations
     {
         if (!isset(self::$modelClassMap[$model])) {
             // try to detect
-            $className = '\\Application\\'.$model.'\\Table';
+            $className = '\\Application\\' . $model . '\\Table';
 
             if (!class_exists($className)) {
                 throw new RelationNotFoundException("Related class for model `$model` not found");
@@ -241,6 +248,7 @@ class Relations
      *
      * @param  string $modelName
      * @param  array  $data
+     *
      * @return Row
      * @throws Exception\RelationNotFoundException
      */
@@ -256,6 +264,7 @@ class Relations
      * Fetch by Divider
      *
      * @param  array $input
+     *
      * @return array
      */
     public static function fetch($input)

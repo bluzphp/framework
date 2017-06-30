@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -18,7 +18,7 @@ use Zend\Diactoros\Stream;
  * Class AttachmentResponse
  *
  * @package Bluz\Response
- * @link http://www.marco-bunge.com/2016/09/01/file-downloads-with-zend-diactoros/
+ * @link    http://www.marco-bunge.com/2016/09/01/file-downloads-with-zend-diactoros/
  */
 class AttachmentResponse extends DiactorsResponse
 {
@@ -30,9 +30,10 @@ class AttachmentResponse extends DiactorsResponse
      * Produces a text response with a Content-Type of given file mime type and a default
      * status of 200.
      *
-     * @param string $file Valid file path
-     * @param int $status Integer status code for the response; 200 by default.
-     * @param array $headers Array of headers to use at initialization.
+     * @param string $file    Valid file path
+     * @param int    $status  Integer status code for the response; 200 by default.
+     * @param array  $headers Array of headers to use at initialization.
+     *
      * @internal param StreamInterface|string $text String or stream for the message body.
      */
     public function __construct($file, $status = 200, array $headers = [])

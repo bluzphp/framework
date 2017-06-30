@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Db;
 
 use Bluz;
@@ -56,6 +57,7 @@ class DbTest extends Bluz\Tests\TestCase
 
     /**
      * Initial Db with empty configuration
+     *
      * @expectedException \Bluz\Common\Exception\ConfigurationException
      */
     public function testCheckConnectException()
@@ -70,7 +72,7 @@ class DbTest extends Bluz\Tests\TestCase
     public function testFetchOne()
     {
         $result = $this->db->fetchOne("SELECT id FROM test LIMIT 1");
-        self::assertTrue((bool) $result);
+        self::assertTrue((bool)$result);
     }
 
     /**
@@ -185,9 +187,11 @@ class DbTest extends Bluz\Tests\TestCase
      */
     public function testTransactionTrue()
     {
-        $result = $this->db->transaction(function () {
-            $this->db->query('SELECT * FROM test LIMIT 10');
-        });
+        $result = $this->db->transaction(
+            function () {
+                $this->db->query('SELECT * FROM test LIMIT 10');
+            }
+        );
         self::assertTrue($result);
     }
 
@@ -196,17 +200,20 @@ class DbTest extends Bluz\Tests\TestCase
      */
     public function testTransactionFalse()
     {
-        $result = $this->db->transaction(function () {
-            $this->db->query('DELETE FROM test LIMIT 1');
-            $this->db->query('DELETE FROM test LIMIT 1');
-            $this->db->query('DELETE FROM test LIMIT 1');
-            $this->db->query('DELETE FROM notexiststable LIMIT 1');
-        });
+        $result = $this->db->transaction(
+            function () {
+                $this->db->query('DELETE FROM test LIMIT 1');
+                $this->db->query('DELETE FROM test LIMIT 1');
+                $this->db->query('DELETE FROM test LIMIT 1');
+                $this->db->query('DELETE FROM notexiststable LIMIT 1');
+            }
+        );
         self::assertFalse($result);
     }
 
     /**
      * Transaction fail
+     *
      * @expectedException \TypeError
      */
     public function testTransactionInvalidCallbackThrowException()

@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -29,14 +29,14 @@ use Zend\Diactoros\ServerRequest as Instance;
  * @package  Bluz\Proxy
  * @author   Anton Shevchuk
  *
- * @todo Proxy class should be clean
+ * @todo     Proxy class should be clean
  *
  * @method   static Instance getInstance()
  *
  * @method   static UriInterface getUri()
  * @see      \Zend\Diactoros\RequestTrait::getUri()
  */
-class Request
+final class Request
 {
     use ProxyTrait;
 
@@ -64,6 +64,7 @@ class Request
      *
      * @param  string $key
      * @param  string $default Default value to use if key not found
+     *
      * @return string Returns null if key does not exist
      */
     public static function getQuery($key = null, $default = null)
@@ -78,6 +79,7 @@ class Request
      *
      * @param  string $key
      * @param  string $default Default value to use if key not found
+     *
      * @return string Returns null if key does not exist
      */
     public static function getPost($key = null, $default = null)
@@ -92,6 +94,7 @@ class Request
      *
      * @param  string $key
      * @param  string $default Default value to use if key not found
+     *
      * @return string Returns null if key does not exist
      */
     public static function getServer($key = null, $default = null)
@@ -106,12 +109,14 @@ class Request
      *
      * @param  string $key
      * @param  string $default Default value to use if key not found
+     *
      * @return string Returns null if key does not exist
      */
     public static function getCookie($key = null, $default = null)
     {
         return RequestFactory::get($key, self::getInstance()->getCookieParams(), $default);
     }
+
     /**
      * Retrieve a member of the $_ENV super global
      *
@@ -119,6 +124,7 @@ class Request
      *
      * @param  string $key
      * @param  string $default Default value to use if key not found
+     *
      * @return string Returns null if key does not exist
      */
     public static function getEnv($key = null, $default = null)
@@ -131,19 +137,21 @@ class Request
      *
      * @param string $header
      * @param mixed  $default
+     *
      * @return string
      */
     public static function getHeader($header, $default = null)
     {
         return RequestFactory::getHeader($header, self::getInstance()->getHeaders(), $default);
     }
-    
+
     /**
      * Access values contained in the superglobals as public members
      * Order of precedence: 1. GET, 2. POST
      *
      * @param  string $key
      * @param  null   $default
+     *
      * @return string|null
      * @link http://msdn.microsoft.com/en-us/library/system.web.httprequest.item.aspx
      */
@@ -162,8 +170,8 @@ class Request
      */
     public static function getParams()
     {
-        $body = (array) self::getInstance()->getParsedBody();
-        $query = (array) self::getInstance()->getQueryParams();
+        $body = (array)self::getInstance()->getParsedBody();
+        $query = (array)self::getInstance()->getQueryParams();
 
         return array_merge($body, $query);
     }
@@ -172,6 +180,7 @@ class Request
      * Get uploaded file
      *
      * @param  string $name
+     *
      * @return \Zend\Diactoros\UploadedFile
      */
     public static function getFile($name)
@@ -183,6 +192,7 @@ class Request
      * Get the client's IP address
      *
      * @param  bool $checkProxy
+     *
      * @return string
      */
     public static function getClientIp($checkProxy = true)
@@ -198,7 +208,7 @@ class Request
      *
      * @return string
      */
-    public static function getModule() : string
+    public static function getModule(): string
     {
         return self::getParam('_module', Router::getDefaultModule());
     }
@@ -208,17 +218,17 @@ class Request
      *
      * @return string
      */
-    public static function getController() : string
+    public static function getController(): string
     {
         return self::getParam('_controller', Router::getDefaultController());
     }
-    
+
     /**
      * Get method
      *
      * @return string
      */
-    public static function getMethod() : string
+    public static function getMethod(): string
     {
         return self::getParam('_method', self::getInstance()->getMethod());
     }
@@ -228,7 +238,7 @@ class Request
      *
      * @return array
      */
-    public static function getAccept() : array
+    public static function getAccept(): array
     {
         static $accept;
 
@@ -263,7 +273,7 @@ class Request
 
                 // mime-type $a is accepted with the quality $q
                 // WARNING: $q == 0 means, that mime-type isn’t supported!
-                $accept[$a] = (float) $q;
+                $accept[$a] = (float)$q;
             }
             arsort($accept);
         }
@@ -274,6 +284,7 @@ class Request
      * Check Accept header
      *
      * @param array $allowTypes
+     *
      * @return string
      */
     public static function checkAccept(array $allowTypes = [])
@@ -296,13 +307,13 @@ class Request
         // no mime-type found
         return null;
     }
-    
+
     /**
      * Check CLI
      *
      * @return bool
      */
-    public static function isCli() : bool
+    public static function isCli(): bool
     {
         return (PHP_SAPI === 'cli');
     }
@@ -312,7 +323,7 @@ class Request
      *
      * @return bool
      */
-    public static function isHttp() : bool
+    public static function isHttp(): bool
     {
         return (PHP_SAPI !== 'cli');
     }
@@ -322,7 +333,7 @@ class Request
      *
      * @return bool
      */
-    public static function isGet() : bool
+    public static function isGet(): bool
     {
         return (self::getInstance()->getMethod() === RequestMethod::GET);
     }
@@ -332,7 +343,7 @@ class Request
      *
      * @return bool
      */
-    public static function isPost() : bool
+    public static function isPost(): bool
     {
         return (self::getInstance()->getMethod() === RequestMethod::POST);
     }
@@ -342,7 +353,7 @@ class Request
      *
      * @return bool
      */
-    public static function isPut() : bool
+    public static function isPut(): bool
     {
         return (self::getInstance()->getMethod() === RequestMethod::PUT);
     }
@@ -352,7 +363,7 @@ class Request
      *
      * @return bool
      */
-    public static function isDelete() : bool
+    public static function isDelete(): bool
     {
         return (self::getInstance()->getMethod() === RequestMethod::DELETE);
     }
@@ -362,7 +373,7 @@ class Request
      *
      * @return bool
      */
-    public static function isXmlHttpRequest() : bool
+    public static function isXmlHttpRequest(): bool
     {
         return (self::getHeader('X-Requested-With') === 'XMLHttpRequest');
     }

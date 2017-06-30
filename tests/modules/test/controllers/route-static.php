@@ -1,7 +1,7 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
@@ -10,6 +10,7 @@
  * @author   Anton Shevchuk
  * @created  12.06.12 13:08
  */
+
 namespace Application;
 
 /**

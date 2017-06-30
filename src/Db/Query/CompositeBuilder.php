@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -35,7 +35,7 @@ class CompositeBuilder implements \Countable
      */
     public function __construct(array $parts = [], $type = 'AND')
     {
-        $this->type = (strtoupper($type)=='OR')?'OR':'AND';
+        $this->type = (strtoupper($type) == 'OR') ? 'OR' : 'AND';
         $this->add($parts);
     }
 
@@ -43,11 +43,12 @@ class CompositeBuilder implements \Countable
      * Adds an expression to composite expression.
      *
      * @param  mixed $parts
+     *
      * @return CompositeBuilder
      */
     public function add($parts)
     {
-        foreach ((array) $parts as $part) {
+        foreach ((array)$parts as $part) {
             if (!empty($part) || ($part instanceof self && $part->count() > 0)) {
                 $this->parts[] = $part;
             }
@@ -84,7 +85,7 @@ class CompositeBuilder implements \Countable
     public function __toString()
     {
         if (count($this->parts) === 1) {
-            return (string) $this->parts[0];
+            return (string)$this->parts[0];
         }
         return '(' . implode(') ' . $this->type . ' (', $this->parts) . ')';
     }

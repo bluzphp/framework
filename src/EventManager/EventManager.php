@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -29,6 +29,7 @@ class EventManager
      * @param  string   $eventName
      * @param  callable $callback
      * @param  integer  $priority
+     *
      * @return EventManager
      */
     public function attach($eventName, $callback, $priority = 1)
@@ -49,6 +50,7 @@ class EventManager
      * @param  string        $event
      * @param  string|object $target
      * @param  array|object  $params
+     *
      * @return string|object
      */
     public function trigger($event, $target = null, $params = null)
@@ -77,6 +79,7 @@ class EventManager
      *
      * @param  array $listeners
      * @param  Event $event
+     *
      * @return EventManager
      */
     protected function fire($listeners, $event)

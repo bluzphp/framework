@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Respect\Validation\Rules;
 
 use Bluz\Tests;
@@ -14,13 +15,15 @@ use Bluz\Validator\Rule\Domain;
 
 /**
  * Class DomainTest
+ *
  * @package Respect\Validation\Rules
  */
 class DomainTest extends Tests\TestCase
 {
     /**
      * @dataProvider providerForPass
-     * @param $input
+     *
+     * @param      $input
      * @param bool $checkDns
      */
     public function testValidDomainsShouldReturnTrue($input, $checkDns = false)
@@ -33,7 +36,8 @@ class DomainTest extends Tests\TestCase
     /**
      * @dataProvider providerForFail
      * @expectedException \Bluz\Validator\Exception\ValidatorException
-     * @param $input
+     *
+     * @param      $input
      * @param bool $checkDns
      */
     public function testValidDomainsShouldReturnFalse($input, $checkDns = false)

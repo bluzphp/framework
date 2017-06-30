@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -28,6 +28,7 @@ abstract class AbstractFilterRule extends AbstractRule
      * Check input string
      *
      * @param  string $input
+     *
      * @return bool
      */
     abstract protected function validateClean($input);
@@ -36,6 +37,7 @@ abstract class AbstractFilterRule extends AbstractRule
      * Setup validation rule
      *
      * @param  string $additionalChars
+     *
      * @throws \Bluz\Validator\Exception\ComponentException
      */
     public function __construct($additionalChars = '')
@@ -50,6 +52,7 @@ abstract class AbstractFilterRule extends AbstractRule
      * Filter input data
      *
      * @param  string $input
+     *
      * @return string
      */
     protected function filter($input)
@@ -61,15 +64,16 @@ abstract class AbstractFilterRule extends AbstractRule
      * Check input data
      *
      * @param  mixed $input
+     *
      * @return bool
      */
-    public function validate($input) : bool
+    public function validate($input): bool
     {
         if (!is_scalar($input)) {
             return false;
         }
 
-        $cleanInput = $this->filter((string) $input);
+        $cleanInput = $this->filter((string)$input);
 
         return $cleanInput === '' || $this->validateClean($cleanInput);
     }

@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -20,6 +20,7 @@ use Bluz\View\ViewException;
  *
  * @param  string $__template
  * @param  array  $__params
+ *
  * @return string
  * @throws ViewException
  */
@@ -53,7 +54,7 @@ return
             require $__file;
         } catch (\Exception $e) {
             ob_end_clean();
-            throw new ViewException("Template '{$__template}' throw exception: ".$e->getMessage());
+            throw new ViewException("Template '{$__template}' throw exception: " . $e->getMessage());
         }
         return ob_get_clean();
     };

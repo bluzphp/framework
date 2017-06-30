@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Controller;
 
 use Bluz\Controller\Meta;
@@ -31,7 +32,7 @@ class MetaTest extends TestCase
      */
     public function testReflectionWithData()
     {
-        $controllerFile = __DIR__ .'/Fixtures/ConcreteWithData.php';
+        $controllerFile = __DIR__ . '/Fixtures/ConcreteWithData.php';
 
         $meta = new Meta($controllerFile);
         $meta->process();
@@ -49,7 +50,7 @@ class MetaTest extends TestCase
      */
     public function testExportReflectionWithData()
     {
-        $controllerFile = __DIR__ .'/Fixtures/ConcreteWithData.php';
+        $controllerFile = __DIR__ . '/Fixtures/ConcreteWithData.php';
 
         $meta = new Meta($controllerFile);
         $meta->process();
@@ -65,7 +66,7 @@ class MetaTest extends TestCase
      */
     public function testReflectionWithoutData()
     {
-        $controllerFile = __DIR__ .'/Fixtures/ConcreteWithoutData.php';
+        $controllerFile = __DIR__ . '/Fixtures/ConcreteWithoutData.php';
 
         $meta = new Meta($controllerFile);
         $meta->process();
@@ -75,11 +76,12 @@ class MetaTest extends TestCase
 
     /**
      * Test reflection without return structure
+     *
      * @expectedException \Bluz\Common\Exception\ComponentException
      */
     public function testReflectionWithoutReturn()
     {
-        $controllerFile = __DIR__ .'/Fixtures/ConcreteWithoutReturn.php';
+        $controllerFile = __DIR__ . '/Fixtures/ConcreteWithoutReturn.php';
 
         $meta = new Meta($controllerFile);
         $meta->process();

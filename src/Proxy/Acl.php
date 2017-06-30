@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -30,7 +30,7 @@ use Bluz\Acl\Acl as Instance;
  * @method   static bool isAllowed($module, $privilege)
  * @see      Instance::isAllowed()
  */
-class Acl
+final class Acl
 {
     use ProxyTrait;
 

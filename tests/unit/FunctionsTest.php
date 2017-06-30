@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests;
 
 use Bluz\Tests\TestCase;
@@ -27,7 +28,7 @@ class FunctionsTest extends TestCase
         self::assertEquals($output, str_trim_end($input, $symbol));
     }
 
-    public function dataForStrTrimEnd() : array
+    public function dataForStrTrimEnd(): array
     {
         return [
             ['foo/bar', '/', 'foo/bar/'],

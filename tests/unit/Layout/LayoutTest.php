@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Layout;
 
 use Bluz\Tests\TestCase;
@@ -39,9 +40,11 @@ class LayoutTest extends TestCase
     public function testSetCallableContent()
     {
         $layout = new Layout();
-        $layout->setContent(function () {
-            return 'foo';
-        });
+        $layout->setContent(
+            function () {
+                return 'foo';
+            }
+        );
 
         self::assertEquals('foo', $layout->getContent());
     }
@@ -52,9 +55,11 @@ class LayoutTest extends TestCase
     public function testSetInvalidCallableContent()
     {
         $layout = new Layout();
-        $layout->setContent(function () {
-            throw new \Exception('foo');
-        });
+        $layout->setContent(
+            function () {
+                throw new \Exception('foo');
+            }
+        );
 
         self::assertEquals('foo', $layout->getContent());
     }
@@ -70,6 +75,7 @@ class LayoutTest extends TestCase
 
         self::assertEqualsArray(['foo' => 'bar'], $layout->breadCrumbs());
     }
+
     /**
      * Helper Link
      */
@@ -77,13 +83,13 @@ class LayoutTest extends TestCase
     {
         $layout = new Layout();
 
-        $layout->link(['href'=>'foo.css', 'rel' => "stylesheet", 'media' => "all"]);
-        $layout->link(['href'=>'favicon.ico', 'rel' => 'shortcut icon']);
+        $layout->link(['href' => 'foo.css', 'rel' => "stylesheet", 'media' => "all"]);
+        $layout->link(['href' => 'favicon.ico', 'rel' => 'shortcut icon']);
 
         $result = $layout->link();
 
         self::assertEquals(
-            '<link href="foo.css" rel="stylesheet" media="all"/>'.
+            '<link href="foo.css" rel="stylesheet" media="all"/>' .
             '<link href="favicon.ico" rel="shortcut icon"/>',
             str_replace(["\t", "\n", "\r"], '', $result)
         );
@@ -102,7 +108,7 @@ class LayoutTest extends TestCase
         $result = $layout->meta();
 
         self::assertEquals(
-            '<meta name="keywords" content="foo, bar, baz, qux"/>'.
+            '<meta name="keywords" content="foo, bar, baz, qux"/>' .
             '<meta name="description" content="foo bar baz qux"/>',
             str_replace(["\t", "\n", "\r"], '', $result)
         );

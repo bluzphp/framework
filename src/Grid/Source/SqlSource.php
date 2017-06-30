@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -31,6 +31,7 @@ class SqlSource extends AbstractSource
      * Set SQL source
      *
      * @param  string $source
+     *
      * @return self
      * @throws \Bluz\Grid\GridException
      */
@@ -48,6 +49,7 @@ class SqlSource extends AbstractSource
      * Process
      *
      * @param  array[] $settings
+     *
      * @return \Bluz\Grid\Data
      */
     public function process(array $settings = [])
@@ -58,10 +60,10 @@ class SqlSource extends AbstractSource
             foreach ($settings['filters'] as $column => $filters) {
                 foreach ($filters as $filter => $value) {
                     if ($filter === Grid\Grid::FILTER_LIKE) {
-                        $value = '%'.$value.'%';
+                        $value = '%' . $value . '%';
                     }
-                    $where[] = $column .' '.
-                        $this->filters[$filter].' '.
+                    $where[] = $column . ' ' .
+                        $this->filters[$filter] . ' ' .
                         Proxy\Db::quote((string)$value);
                 }
             }
@@ -106,11 +108,13 @@ class SqlSource extends AbstractSource
 
         // run queries
         // use transaction to avoid errors
-        Proxy\Db::transaction(function () use (&$data, &$total, $dataSql, $totalSql) {
-            $data = Proxy\Db::fetchAll($dataSql);
-            $total = (int) Proxy\Db::fetchOne($totalSql);
-        });
-        
+        Proxy\Db::transaction(
+            function () use (&$data, &$total, $dataSql, $totalSql) {
+                $data = Proxy\Db::fetchAll($dataSql);
+                $total = (int)Proxy\Db::fetchOne($totalSql);
+            }
+        );
+
         $gridData = new Grid\Data($data);
         $gridData->setTotal($total);
         return $gridData;

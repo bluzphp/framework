@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -31,6 +31,7 @@ class SelectSource extends AbstractSource
      * Set Select source
      *
      * @param  Db\Query\Select $source
+     *
      * @throws \Bluz\Grid\GridException
      * @return self
      */
@@ -48,6 +49,7 @@ class SelectSource extends AbstractSource
      * Process
      *
      * @param  array[] $settings
+     *
      * @return \Bluz\Grid\Data
      */
     public function process(array $settings = [])
@@ -57,13 +59,13 @@ class SelectSource extends AbstractSource
             foreach ($settings['filters'] as $column => $filters) {
                 foreach ($filters as $filter => $value) {
                     if ($filter === Grid\Grid::FILTER_LIKE) {
-                        $value = '%'.$value.'%';
+                        $value = '%' . $value . '%';
                     }
-                    $this->source->andWhere($column .' '. $this->filters[$filter] .' ?', $value);
+                    $this->source->andWhere($column . ' ' . $this->filters[$filter] . ' ?', $value);
                 }
             }
         }
-        
+
         // process orders
         if (!empty($settings['orders'])) {
             // Obtain a list of columns
@@ -71,7 +73,7 @@ class SelectSource extends AbstractSource
                 $this->source->addOrderBy($column, $order);
             }
         }
-        
+
         // process pages
         $this->source->setLimit($settings['limit']);
         $this->source->setPage($settings['page']);
@@ -98,10 +100,12 @@ class SelectSource extends AbstractSource
 
         // run queries
         // use transaction to avoid errors
-        Proxy\Db::transaction(function () use (&$data, &$total, $totalSql) {
-            $data = $this->source->execute();
-            $total = (int) Proxy\Db::fetchOne($totalSql);
-        });
+        Proxy\Db::transaction(
+            function () use (&$data, &$total, $totalSql) {
+                $data = $this->source->execute();
+                $total = (int)Proxy\Db::fetchOne($totalSql);
+            }
+        );
 
         $gridData = new Grid\Data($data);
         $gridData->setTotal($total);

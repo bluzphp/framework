@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -33,6 +33,7 @@ class ArrayInput extends AbstractRule
      * Setup validation rule
      *
      * @param  callable $callback
+     *
      * @throws ComponentException
      */
     public function __construct(callable $callback)
@@ -44,9 +45,10 @@ class ArrayInput extends AbstractRule
      * Check input data
      *
      * @param  string $input
+     *
      * @return bool
      */
-    public function validate($input) : bool
+    public function validate($input): bool
     {
         if (!is_array($input)) {
             return false;

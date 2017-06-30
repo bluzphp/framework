@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -26,10 +26,11 @@ class Json extends AbstractRule
      * Check for valid JSON string
      *
      * @param  string $input
+     *
      * @return bool
      */
-    public function validate($input) : bool
+    public function validate($input): bool
     {
-        return (bool) (json_decode($input));
+        return (bool)(json_decode($input));
     }
 }

@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -29,6 +29,7 @@ trait Container
      *
      * @param  string $key
      * @param  mixed  $value
+     *
      * @return void
      */
     protected function doSetContainer($key, $value)
@@ -40,6 +41,7 @@ trait Container
      * Get value by key
      *
      * @param  string $key
+     *
      * @return mixed
      */
     protected function doGetContainer($key)
@@ -54,6 +56,7 @@ trait Container
      * Check contains key in container
      *
      * @param  string $key
+     *
      * @return bool
      */
     protected function doContainsContainer($key)
@@ -65,6 +68,7 @@ trait Container
      * Delete value by key
      *
      * @param  string $key
+     *
      * @return void
      */
     protected function doDeleteContainer($key)
@@ -76,6 +80,7 @@ trait Container
      * Sets all data in the row from an array
      *
      * @param  array $data
+     *
      * @return self
      */
     public function setFromArray(array $data)

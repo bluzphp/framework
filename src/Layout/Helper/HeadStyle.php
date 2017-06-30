@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -18,6 +18,7 @@ use Bluz\Proxy\Registry;
  *
  * @param  string $href
  * @param  string $media
+ *
  * @return string|null
  */
 return
@@ -26,7 +27,7 @@ return
          * @var Layout $this
          */
         // it's stack for <head>
-        $headStyle = Registry::get('layout:headStyle') ? : [];
+        $headStyle = Registry::get('layout:headStyle') ?: [];
 
         if (is_null($href)) {
             // clear system vars

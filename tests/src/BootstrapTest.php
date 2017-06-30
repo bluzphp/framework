@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests;
 
 use Bluz\Application\Application;
@@ -23,12 +24,14 @@ class BootstrapTest extends Application
 {
     /**
      * Dispatched module name
+     *
      * @var string
      */
     protected $dispatchModule;
 
     /**
      * Dispatched controller name
+     *
      * @var string
      */
     protected $dispatchController;
@@ -71,7 +74,8 @@ class BootstrapTest extends Application
     /**
      * @param string $module
      * @param string $controller
-     * @param array $params
+     * @param array  $params
+     *
      * @return \Bluz\Controller\Controller
      * @throws \Exception
      */
@@ -92,6 +96,7 @@ class BootstrapTest extends Application
      * setException
      *
      * @param \Exception $exception
+     *
      * @return void
      */
     public function setException($exception)

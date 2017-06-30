@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Config;
 
 use Bluz;
@@ -129,7 +130,7 @@ class ConfigTest extends TestCase
         $this->config->setPath($this->path);
         $this->config->init();
         self::assertEquals(
-            ['application' => ['section1'=>'default', 'section2'=>[], 'section3'=>[]]],
+            ['application' => ['section1' => 'default', 'section2' => [], 'section3' => []]],
             $this->config->getData()
         );
     }
@@ -152,7 +153,7 @@ class ConfigTest extends TestCase
         $this->config->setPath($this->path);
         $this->config->init();
         self::assertEquals(
-            ['section1'=>'default', 'section2'=>[], 'section3'=>[]],
+            ['section1' => 'default', 'section2' => [], 'section3' => []],
             $this->config->getData('application')
         );
     }

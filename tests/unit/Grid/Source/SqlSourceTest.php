@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/skeleton
+ * @link      https://github.com/bluzphp/skeleton
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Grid\Source;
 
 use Bluz\Grid\Grid;
@@ -36,6 +37,7 @@ class GridTest extends TestCase
 
     /**
      * SQL Source Exception
+     *
      * @expectedException \Bluz\Grid\GridException
      */
     public function testSqlSourceThrowsGridException()

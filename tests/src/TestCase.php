@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests;
 
 use Bluz;
@@ -69,12 +70,13 @@ class TestCase extends Unit
     /**
      * Set new Request instance
      *
-     * @param string $path Path part of URI http://host/module/controller/path
-     * @param array  $query $_GET params
-     * @param array  $params $_POST params
-     * @param string $method HTTP method
+     * @param string $path    Path part of URI http://host/module/controller/path
+     * @param array  $query   $_GET params
+     * @param array  $params  $_POST params
+     * @param string $method  HTTP method
      * @param array  $headers HTTP headers
-     * @param array $cookies
+     * @param array  $cookies
+     *
      * @return \Psr\Http\Message\ServerRequestInterface|ServerRequest
      */
     protected static function prepareRequest(
@@ -85,7 +87,7 @@ class TestCase extends Unit
         $headers = [],
         $cookies = []
     ) {
-        $uri = 'http://127.0.0.1/'. $path;
+        $uri = 'http://127.0.0.1/' . $path;
 
         return new ServerRequest([], [], $uri, $method, 'php://input', $headers, $cookies, $query, $params);
     }
@@ -93,12 +95,13 @@ class TestCase extends Unit
     /**
      * Set new Request instance
      *
-     * @param string $path Path part of URI http://host/module/controller/path
-     * @param array  $query $_GET params
-     * @param array  $params $_POST params
-     * @param string $method HTTP method
+     * @param string $path    Path part of URI http://host/module/controller/path
+     * @param array  $query   $_GET params
+     * @param array  $params  $_POST params
+     * @param string $method  HTTP method
      * @param array  $headers HTTP headers
-     * @param array $cookies
+     * @param array  $cookies
+     *
      * @return \Psr\Http\Message\ServerRequestInterface|ServerRequest
      */
     protected static function setRequestParams(
@@ -157,8 +160,8 @@ class TestCase extends Unit
     /**
      * Assert one-level Arrays is Equals
      *
-     * @param array $expected
-     * @param array $actual
+     * @param array  $expected
+     * @param array  $actual
      * @param string $message
      */
     protected static function assertEqualsArray($expected, $actual, $message = null)
@@ -172,31 +175,33 @@ class TestCase extends Unit
 
     /**
      * Assert Array Size
+     *
      * @param array|\ArrayObject $array
-     * @param integer $size
-     * @param string $message
+     * @param integer            $size
+     * @param string             $message
      */
     protected static function assertArrayHasSize($array, $size, $message = null)
     {
         self::assertCount(
             $size,
             $array,
-            $message ?: 'Failed asserting that array has size '.$size.' matches expected '.count($array). '.'
+            $message ?: 'Failed asserting that array has size ' . $size . ' matches expected ' . count($array) . '.'
         );
     }
 
     /**
      * Assert Array Key has Size
+     *
      * @param array|\ArrayObject $array
-     * @param string $key
-     * @param integer $size
-     * @param string $message
+     * @param string             $key
+     * @param integer            $size
+     * @param string             $message
      */
     protected static function assertArrayHasKeyAndSize($array, $key, $size, $message = null)
     {
         if (!$message) {
-            $message = 'Failed asserting that array has key '.$key.' with size '.$size
-                . ' matches expected '.count($array). '.';
+            $message = 'Failed asserting that array has key ' . $key . ' with size ' . $size
+                . ' matches expected ' . count($array) . '.';
         }
 
         self::assertArrayHasKey($key, $array, $message);

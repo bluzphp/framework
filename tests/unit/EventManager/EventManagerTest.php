@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests;
 
 use Bluz;
@@ -42,9 +43,12 @@ class EventManagerTest extends Bluz\Tests\TestCase
     public function testTriggerSimpleEvent()
     {
         $counter = 0;
-        $this->eventManager->attach('test', function () use (&$counter) {
-            $counter++;
-        });
+        $this->eventManager->attach(
+            'test',
+            function () use (&$counter) {
+                $counter++;
+            }
+        );
         $this->eventManager->trigger('test');
         self::assertEquals(1, $counter);
     }
@@ -55,15 +59,24 @@ class EventManagerTest extends Bluz\Tests\TestCase
     public function testTriggerThreeEvents()
     {
         $counter = 0;
-        $this->eventManager->attach('test', function () use (&$counter) {
-            $counter++;
-        });
-        $this->eventManager->attach('test', function () use (&$counter) {
-            $counter++;
-        });
-        $this->eventManager->attach('test', function () use (&$counter) {
-            $counter++;
-        });
+        $this->eventManager->attach(
+            'test',
+            function () use (&$counter) {
+                $counter++;
+            }
+        );
+        $this->eventManager->attach(
+            'test',
+            function () use (&$counter) {
+                $counter++;
+            }
+        );
+        $this->eventManager->attach(
+            'test',
+            function () use (&$counter) {
+                $counter++;
+            }
+        );
         $this->eventManager->trigger('test');
         self::assertEquals(3, $counter);
     }
@@ -74,12 +87,19 @@ class EventManagerTest extends Bluz\Tests\TestCase
     public function testTriggerTwoEventsWithPriority()
     {
         $counter = 0;
-        $this->eventManager->attach('test', function () use (&$counter) {
-            $counter *= 2;
-        }, 2);
-        $this->eventManager->attach('test', function () use (&$counter) {
-            $counter++;
-        });
+        $this->eventManager->attach(
+            'test',
+            function () use (&$counter) {
+                $counter *= 2;
+            },
+            2
+        );
+        $this->eventManager->attach(
+            'test',
+            function () use (&$counter) {
+                $counter++;
+            }
+        );
         $this->eventManager->trigger('test');
         self::assertEquals(2, $counter);
     }
@@ -90,13 +110,19 @@ class EventManagerTest extends Bluz\Tests\TestCase
     public function testTriggerTwoEventsWithAbort()
     {
         $counter = 0;
-        $this->eventManager->attach('test', function () use (&$counter) {
-            $counter++;
-            return false;
-        });
-        $this->eventManager->attach('test', function () use (&$counter) {
-            $counter *= 2;
-        });
+        $this->eventManager->attach(
+            'test',
+            function () use (&$counter) {
+                $counter++;
+                return false;
+            }
+        );
+        $this->eventManager->attach(
+            'test',
+            function () use (&$counter) {
+                $counter *= 2;
+            }
+        );
         $this->eventManager->trigger('test');
         self::assertEquals(1, $counter);
     }
@@ -108,13 +134,19 @@ class EventManagerTest extends Bluz\Tests\TestCase
     {
         $counter = 0;
         // namespace is first
-        $this->eventManager->attach('some', function () use (&$counter) {
-            $counter++;
-        });
+        $this->eventManager->attach(
+            'some',
+            function () use (&$counter) {
+                $counter++;
+            }
+        );
         // event is secondary
-        $this->eventManager->attach('some:test', function () use (&$counter) {
-            $counter *= 2;
-        });
+        $this->eventManager->attach(
+            'some:test',
+            function () use (&$counter) {
+                $counter *= 2;
+            }
+        );
         $this->eventManager->trigger('some:test');
         self::assertEquals(2, $counter);
     }
@@ -125,13 +157,25 @@ class EventManagerTest extends Bluz\Tests\TestCase
     public function testTriggerWithTarget()
     {
         // first
-        $this->eventManager->attach('test', function (/* @var Event */ $event) {
-            return $event->getTarget() + 1;
-        });
+        $this->eventManager->attach(
+            'test',
+            function (
+                /* @var Event */
+                $event
+            ) {
+                return $event->getTarget() + 1;
+            }
+        );
         // second
-        $this->eventManager->attach('test', function (/* @var Event */ $event) {
-            return $event->getTarget() + 1;
-        });
+        $this->eventManager->attach(
+            'test',
+            function (
+                /* @var Event */
+                $event
+            ) {
+                return $event->getTarget() + 1;
+            }
+        );
 
         $counter = 0;
 
@@ -145,17 +189,24 @@ class EventManagerTest extends Bluz\Tests\TestCase
      */
     public function testTriggerWithParams()
     {
-        $this->eventManager->attach('test', function (/* @var Event */ $event) {
-            return $event->getTarget() + $event->getParam('plus');
-        });
+        $this->eventManager->attach(
+            'test',
+            function (
+                /* @var Event */
+                $event
+            ) {
+                return $event->getTarget() + $event->getParam('plus');
+            }
+        );
 
-        $result = $this->eventManager->trigger('test', 10, ['plus'=>10]);
+        $result = $this->eventManager->trigger('test', 10, ['plus' => 10]);
 
         self::assertEquals(20, $result);
     }
 
     /**
      * Test wrong params
+     *
      * @expectedException Bluz\EventManager\EventException
      */
     public function testEventSetParamsException()

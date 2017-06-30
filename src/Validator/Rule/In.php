@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -31,7 +31,7 @@ class In extends AbstractRule
      * Setup validation rule
      *
      * @param string|array $haystack
-     * @param bool $identical
+     * @param bool         $identical
      */
     public function __construct($haystack, $identical = false)
     {
@@ -43,9 +43,10 @@ class In extends AbstractRule
      * Check input data
      *
      * @param  string $input
+     *
      * @return bool
      */
-    public function validate($input) : bool
+    public function validate($input): bool
     {
         if (is_array($this->haystack)) {
             return in_array($input, $this->haystack, $this->identical);

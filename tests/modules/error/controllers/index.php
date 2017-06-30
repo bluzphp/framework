@@ -10,6 +10,7 @@
 /**
  * @namespace
  */
+
 namespace Application;
 
 use Bluz\Controller\Controller;
@@ -22,8 +23,10 @@ use Bluz\Proxy\Request;
 
 /**
  * @route  /error/{$code}
- * @param  int $code
+ *
+ * @param  int        $code
  * @param  \Exception $exception
+ *
  * @return array|null
  */
 return function ($code, $exception = null) {

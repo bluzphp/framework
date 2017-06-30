@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -84,6 +84,7 @@ class Logger extends AbstractLogger
      *
      * @param  string $message
      * @param  array  $context
+     *
      * @return string
      */
     protected function interpolate($message, array $context = [])
@@ -103,6 +104,7 @@ class Logger extends AbstractLogger
      *
      * @param  string $message
      * @param  array  $context
+     *
      * @return void
      */
     public function info($message, array $context = [])
@@ -135,6 +137,7 @@ class Logger extends AbstractLogger
      * @param  mixed  $level
      * @param  string $message
      * @param  array  $context
+     *
      * @return void
      */
     public function log($level, $message, array $context = [])
@@ -146,6 +149,7 @@ class Logger extends AbstractLogger
      * Get logs records by level
      *
      * @param  $level
+     *
      * @return array
      */
     public function get($level)

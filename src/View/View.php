@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -84,6 +84,7 @@ class View implements ViewInterface, \JsonSerializable
 
     /**
      * Create view instance, initial default helper path
+     *
      * @throws \Bluz\Common\Exception\CommonException
      */
     public function __construct()
@@ -102,7 +103,8 @@ class View implements ViewInterface, \JsonSerializable
         ob_start();
         try {
             if (!file_exists($this->path . DIRECTORY_SEPARATOR . $this->template)
-                || !is_file($this->path . DIRECTORY_SEPARATOR . $this->template)) {
+                || !is_file($this->path . DIRECTORY_SEPARATOR . $this->template)
+            ) {
                 throw new ViewException("Template `{$this->template}` not found");
             }
             extract($this->container, EXTR_SKIP);
@@ -122,6 +124,7 @@ class View implements ViewInterface, \JsonSerializable
      * {@inheritdoc}
      *
      * @param  string $path
+     *
      * @return void
      */
     public function setPath($path)
@@ -133,6 +136,7 @@ class View implements ViewInterface, \JsonSerializable
      * {@inheritdoc}
      *
      * @param  string $file
+     *
      * @return void
      */
     public function setTemplate($file)
@@ -144,6 +148,7 @@ class View implements ViewInterface, \JsonSerializable
      * Add partial path for use inside partial and partialLoop helpers
      *
      * @param  string $path
+     *
      * @return void
      */
     public function addPartialPath($path)

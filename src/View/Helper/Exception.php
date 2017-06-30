@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -16,6 +16,7 @@ use Bluz\Application\Application;
  * Return Exception message
  *
  * @param  \Exception $exception
+ *
  * @return string
  */
 return
@@ -26,7 +27,7 @@ return
             return
                 '<div class="alert alert-warning">' .
                 '<strong>Exception</strong>' .
-                '<p>'. esc($exception->getMessage()) .'</p>'.
+                '<p>' . esc($exception->getMessage()) . '</p>' .
                 '</div>';
             // @codeCoverageIgnoreEnd
         }

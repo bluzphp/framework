@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -17,7 +17,9 @@ use Bluz\Proxy\Response;
 
 /**
  * Redirect helper can be declared inside Bootstrap
+ *
  * @param string $url
+ *
  * @return null
  */
 return
@@ -26,7 +28,7 @@ return
          * @var Application $this
          */
         $this->useLayout(false);
-        
+
         Response::removeHeaders();
         Response::clearBody();
 

@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests;
 
 use Bluz;
@@ -27,11 +28,11 @@ class EventTest extends Bluz\Tests\TestCase
      */
     public function testEventMethods()
     {
-        $event = new Event('test', 'target', ['foo'=>'bar']);
+        $event = new Event('test', 'target', ['foo' => 'bar']);
 
         self::assertEquals('test', $event->getName());
         self::assertEquals('target', $event->getTarget());
-        self::assertEquals(['foo'=>'bar'], $event->getParams());
+        self::assertEquals(['foo' => 'bar'], $event->getParams());
         self::assertEquals('bar', $event->getParam('foo'));
         self::assertNull($event->getParam('baz'));
         self::assertEquals('qux', $event->getParam('baz', 'qux'));
@@ -61,6 +62,7 @@ class EventTest extends Bluz\Tests\TestCase
 
     /**
      * Test trigger with wong params
+     *
      * @expectedException \Bluz\EventManager\EventException
      */
     public function testEventSetParamsException()

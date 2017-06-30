@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -23,6 +23,7 @@ class Collection
      *
      * @param array $array
      * @param array ...$keys
+     *
      * @return mixed|null
      */
     public static function get(array $array, ...$keys)
@@ -49,9 +50,10 @@ class Collection
      *
      * @param array $array
      * @param array ...$keys
+     *
      * @return bool
      */
-    public static function has(array $array, ...$keys) : bool
+    public static function has(array $array, ...$keys): bool
     {
         $key = array_shift($keys);
 
@@ -75,6 +77,7 @@ class Collection
      *
      * @param array $array
      * @param array ...$keys
+     *
      * @return void
      * @throws \InvalidArgumentException
      */
@@ -87,7 +90,7 @@ class Collection
         $value = array_pop($keys);
         while (count($keys) > 1) {
             $key = array_shift($keys);
-            if (! isset($array[$key]) || ! is_array($array[$key])) {
+            if (!isset($array[$key]) || !is_array($array[$key])) {
                 $array[$key] = [];
             }
             $array = &$array[$key];
@@ -100,6 +103,7 @@ class Collection
      *
      * @param array $array
      * @param array ...$keys
+     *
      * @return void
      * @throws \InvalidArgumentException
      */
@@ -112,7 +116,7 @@ class Collection
         $value = array_pop($keys);
         while (count($keys) > 1) {
             $key = array_shift($keys);
-            if (! isset($array[$key]) || ! is_array($array[$key])) {
+            if (!isset($array[$key]) || !is_array($array[$key])) {
                 $array[$key] = [];
             }
             $array = &$array[$key];

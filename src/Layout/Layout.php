@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -72,6 +72,7 @@ class Layout extends View
      * Set content
      *
      * @param  View|callable $content
+     *
      * @return void
      */
     public function setContent($content)

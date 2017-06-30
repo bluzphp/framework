@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -57,7 +57,7 @@ use Bluz\View\View;
  * @method static string|null meta(string $name = null, string $content = null)
  * @method static string|null title(string $title = null, $position = 'replace', $separator = ' :: ')
  */
-class Layout
+final class Layout
 {
     use ProxyTrait;
 

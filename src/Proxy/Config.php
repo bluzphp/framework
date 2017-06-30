@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -36,7 +36,7 @@ use Bluz\Config\Config as Instance;
  * @method   static mixed getModuleData($module, $section = null)
  * @see      Instance::getModuleData()
  */
-class Config
+final class Config
 {
     use ProxyTrait;
 

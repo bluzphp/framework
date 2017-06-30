@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -131,6 +131,7 @@ class Row implements \JsonSerializable, \ArrayAccess
      * Validate input data
      *
      * @param  array|object $data
+     *
      * @return bool
      */
     public function validate($data)
@@ -142,6 +143,7 @@ class Row implements \JsonSerializable, \ArrayAccess
      * Assert input data
      *
      * @param  array|object $data
+     *
      * @return bool
      */
     public function assert($data)
@@ -443,6 +445,7 @@ class Row implements \JsonSerializable, \ArrayAccess
      * Setup Table instance
      *
      * @param  Table $table
+     *
      * @return self
      */
     public function setTable(Table $table)
@@ -493,6 +496,7 @@ class Row implements \JsonSerializable, \ArrayAccess
      * Set relation
      *
      * @param  Row $row
+     *
      * @return Row
      */
     public function setRelation(Row $row)
@@ -506,6 +510,7 @@ class Row implements \JsonSerializable, \ArrayAccess
      * Get relation by model name
      *
      * @param  string $modelName
+     *
      * @return Row|false
      * @throws RelationNotFoundException
      */
@@ -523,6 +528,7 @@ class Row implements \JsonSerializable, \ArrayAccess
      * Get relations by model name
      *
      * @param  string $modelName
+     *
      * @return array
      * @throws RelationNotFoundException
      */

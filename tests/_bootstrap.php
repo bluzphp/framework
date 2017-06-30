@@ -6,10 +6,10 @@ error_reporting(E_ALL | E_STRICT);
 ini_set('display_errors', 1);
 
 // Paths
-define('PATH_ROOT', realpath(__DIR__. '/../'));
+define('PATH_ROOT', realpath(__DIR__ . '/../'));
 define('PATH_APPLICATION', PATH_ROOT . '/tests');
 define('PATH_VENDOR', PATH_ROOT . '/vendor');
 
 // Use composer autoload
 $loader = require PATH_ROOT . '/vendor/autoload.php';
-$loader->addPsr4('Bluz\\Tests\\', __DIR__ .'/src');
+$loader->addPsr4('Bluz\\Tests\\', __DIR__ . '/src');

@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -33,7 +33,7 @@ use Bluz\Translator\Translator as Instance;
  * @method   static string translatePlural($singular, $plural, $number, ...$text)
  * @see      Instance::translatePlural()
  */
-class Translator
+final class Translator
 {
     use ProxyTrait;
 

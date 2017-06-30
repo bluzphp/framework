@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -35,6 +35,7 @@ class ValidatorException extends BadRequestException
      *
      * @param  string $key
      * @param  string $error
+     *
      * @return self
      */
     public static function exception($key, $error)
@@ -49,6 +50,7 @@ class ValidatorException extends BadRequestException
      *
      * @param  string $key
      * @param  string $error
+     *
      * @return void
      */
     public function setError($key, $error)
@@ -60,6 +62,7 @@ class ValidatorException extends BadRequestException
      * Set errors
      *
      * @param  array $errors
+     *
      * @return void
      */
     public function setErrors($errors)

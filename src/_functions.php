@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -22,8 +22,9 @@ if (!function_exists('array_get')) {
     /**
      * Get value of array by keys
      *
-     * @param $array
+     * @param       $array
      * @param array ...$keys
+     *
      * @return mixed|null
      */
     function array_get(array $array, ...$keys)
@@ -34,8 +35,9 @@ if (!function_exists('array_get')) {
 
 if (!function_exists('array_has')) {
     /**
-     * @param $array
+     * @param       $array
      * @param array ...$keys
+     *
      * @return bool
      */
     function array_has(array $array, ...$keys)
@@ -46,8 +48,9 @@ if (!function_exists('array_has')) {
 
 if (!function_exists('array_add')) {
     /**
-     * @param $array
+     * @param       $array
      * @param array ...$keys
+     *
      * @return void
      */
     function array_add(array &$array, ...$keys)
@@ -58,8 +61,9 @@ if (!function_exists('array_add')) {
 
 if (!function_exists('array_set')) {
     /**
-     * @param $array
+     * @param       $array
      * @param array ...$keys
+     *
      * @return void
      */
     function array_set(array &$array, ...$keys)
@@ -118,6 +122,7 @@ if (!function_exists('esc')) {
      *
      * @param  string  $variable
      * @param  integer $flags
+     *
      * @return string
      */
     function esc($variable, int $flags = ENT_HTML5)
@@ -132,7 +137,8 @@ if (!function_exists('str_trim_end')) {
      *
      * @param  string $subject
      * @param  string $symbols
-     * @return mixed
+     *
+     * @return string
      */
     function str_trim_end($subject, $symbols)
     {
@@ -145,6 +151,7 @@ if (!function_exists('to_camel_case')) {
      * Convert string to camel case
      *
      * @param  string $subject
+     *
      * @return string
      */
     function to_camel_case($subject)
@@ -157,7 +164,8 @@ if (!function_exists('value')) {
     /**
      * Return the value for callable
      *
-     * @param  mixed  $value
+     * @param  mixed $value
+     *
      * @return mixed
      */
     function value($value)
@@ -183,6 +191,7 @@ if (!function_exists('__')) {
      *
      * @param  string   $message
      * @param  string[] $text [optional]
+     *
      * @return string
      */
     function __($message, ...$text)
@@ -208,7 +217,8 @@ if (!function_exists('_n')) {
      * @param  string   $singular
      * @param  string   $plural
      * @param  integer  $number
-     * @param  string[] $text      [optional]
+     * @param  string[] $text [optional]
+     *
      * @return string
      */
     function _n($singular, $plural, $number, ...$text)

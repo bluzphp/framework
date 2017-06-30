@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -30,9 +30,8 @@ class Delete extends AbstractBuilder
     public function getSql()
     {
         $query = "DELETE FROM " . $this->sqlParts['from']['table']
-            . ($this->sqlParts['where'] !== null ? " WHERE " . ((string) $this->sqlParts['where']) : "")
-            . ($this->limit ? " LIMIT ". $this->limit : "")
-        ;
+            . ($this->sqlParts['where'] !== null ? " WHERE " . ((string)$this->sqlParts['where']) : "")
+            . ($this->limit ? " LIMIT " . $this->limit : "");
 
         return $query;
     }
@@ -50,6 +49,7 @@ class Delete extends AbstractBuilder
      * </code>
      *
      * @param  string $table The table whose rows are subject to the update
+     *
      * @return Delete instance
      */
     public function delete($table)

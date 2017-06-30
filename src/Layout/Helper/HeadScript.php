@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -18,6 +18,7 @@ use Bluz\Proxy\Registry;
  *
  * @param  string $src
  * @param  array  $attributes
+ *
  * @return null|string
  */
 return
@@ -26,7 +27,7 @@ return
          * @var Layout $this
          */
         // it's stack for <head>
-        $headScripts = Registry::get('layout:headScripts') ? : [];
+        $headScripts = Registry::get('layout:headScripts') ?: [];
 
         if (is_null($src)) {
             // clear system vars

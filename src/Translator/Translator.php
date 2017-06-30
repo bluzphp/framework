@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -46,6 +46,7 @@ class Translator
      * Set domain
      *
      * @param  string $domain
+     *
      * @return self
      */
     public function setDomain($domain)
@@ -58,6 +59,7 @@ class Translator
      * Set locale
      *
      * @param  string $locale
+     *
      * @return self
      */
     public function setLocale($locale)
@@ -70,6 +72,7 @@ class Translator
      * Set path to l10n
      *
      * @param  string $path
+     *
      * @return self
      */
     public function setPath($path)
@@ -92,7 +95,7 @@ class Translator
         putenv('LANGUAGE=' . $this->locale);
 
         // Windows workaround
-        defined('LC_MESSAGES') ? : define('LC_MESSAGES', 6);
+        defined('LC_MESSAGES') ?: define('LC_MESSAGES', 6);
 
         setlocale(LC_MESSAGES, $this->locale);
 
@@ -110,7 +113,8 @@ class Translator
      * Add text domain for gettext
      *
      * @param  string $domain of text for gettext setup
-     * @param  string $path on filesystem
+     * @param  string $path   on filesystem
+     *
      * @return self
      * @throws ConfigurationException
      */
@@ -140,8 +144,9 @@ class Translator
      * equal to sprintf(gettext('Message to %s'), 'Username')
      *     Translator::translate('Message to %s', 'Username');
      *
-     * @param  string $message
+     * @param  string   $message
      * @param  string[] ...$text
+     *
      * @return string
      */
     public static function translate($message, ...$text)
@@ -172,10 +177,11 @@ class Translator
      * equal to sprintf(ngettext('%d comment', '%d comments', 4), 4, 'Topic')
      *     Translator::translatePlural('%d comment to %s', '%d comments to %s', 4, 'Topic')
      *
-     * @param  string  $singular
-     * @param  string  $plural
-     * @param  integer $number
-     * @param  string[]  ...$text
+     * @param  string   $singular
+     * @param  string   $plural
+     * @param  integer  $number
+     * @param  string[] ...$text
+     *
      * @return string
      * @link   http://docs.translatehouse.org/projects/localization-guide/en/latest/l10n/pluralforms.html
      */

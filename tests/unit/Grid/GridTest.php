@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/skeleton
+ * @link      https://github.com/bluzphp/skeleton
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Grid;
 
 use Bluz\Grid\Grid;
@@ -53,7 +54,6 @@ class GridTest extends TestCase
         self::assertEquals(8, $grid->total());
         self::assertEquals(4, $grid->pages());
     }
-
 
 
     /**

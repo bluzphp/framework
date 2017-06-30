@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/skeleton
+ * @link      https://github.com/bluzphp/skeleton
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Fixtures\Grid;
 
 use Bluz\Grid\Grid;
@@ -27,20 +28,21 @@ class SqlGrid extends Grid
 
     /**
      * Init SqlSource
+     *
      * @return self
      */
     public function init()
     {
-         // Array
-         $adapter = new SqlSource();
-         $adapter->setSource('SELECT * FROM test');
+        // Array
+        $adapter = new SqlSource();
+        $adapter->setSource('SELECT * FROM test');
 
-         $this->setAdapter($adapter);
-         $this->setDefaultLimit(10);
-         $this->setAllowOrders(['name', 'id', 'status']);
-         $this->setAllowFilters(['status', 'id', 'email']);
-         $this->setDefaultOrder('name', Grid::ORDER_DESC);
+        $this->setAdapter($adapter);
+        $this->setDefaultLimit(10);
+        $this->setAllowOrders(['name', 'id', 'status']);
+        $this->setAllowFilters(['status', 'id', 'email']);
+        $this->setDefaultOrder('name', Grid::ORDER_DESC);
 
-         return $this;
+        return $this;
     }
 }

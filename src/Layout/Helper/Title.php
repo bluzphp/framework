@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -19,6 +19,7 @@ use Bluz\Proxy\Registry;
  * @param  string $title
  * @param  string $position
  * @param  string $separator
+ *
  * @return string
  */
 return
@@ -33,10 +34,10 @@ return
         // switch statement for text position
         switch ($position) {
             case Layout::POS_PREPEND:
-                $result = $title . (!$oldTitle ? : $separator . $oldTitle);
+                $result = $title . (!$oldTitle ?: $separator . $oldTitle);
                 break;
             case Layout::POS_APPEND:
-                $result = (!$oldTitle ? : $oldTitle . $separator) . $title;
+                $result = (!$oldTitle ?: $oldTitle . $separator) . $title;
                 break;
             case Layout::POS_REPLACE:
             default:

@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -95,6 +95,7 @@ class Validator
      *
      * @param string $ruleName
      * @param array  $arguments
+     *
      * @return Validator
      */
     public static function __callStatic($ruleName, $arguments)
@@ -111,6 +112,7 @@ class Validator
      *
      * @param  string $ruleName
      * @param  array  $arguments
+     *
      * @return Validator
      * @throws Exception\ComponentException
      */
@@ -143,7 +145,7 @@ class Validator
      *
      * @return bool
      */
-    public function isRequired() : bool
+    public function isRequired(): bool
     {
         foreach ($this->rules as $rule) {
             if ($rule instanceof Required) {
@@ -157,6 +159,7 @@ class Validator
      * Set field Title
      *
      * @param string $name
+     *
      * @return Validator
      */
     public function setName($name)
@@ -189,9 +192,10 @@ class Validator
      * Callable
      *
      * @param mixed $input
+     *
      * @return bool
      */
-    public function __invoke($input) : bool
+    public function __invoke($input): bool
     {
         return $this->validate($input);
     }
@@ -201,9 +205,10 @@ class Validator
      *
      * @param mixed $input
      * @param bool  $all
+     *
      * @return bool
      */
-    public function validate($input, $all = false) : bool
+    public function validate($input, $all = false): bool
     {
         $this->input = $input;
         $this->invalid = []; // clean
@@ -222,13 +227,14 @@ class Validator
      * Assert
      *
      * @param  mixed $input
+     *
      * @return bool
      * @throws ValidatorException
      */
     public function assert($input)
     {
         if (!$this->validate($input)) {
-            throw new ValidatorException($this->getError()?:'');
+            throw new ValidatorException($this->getError() ?: '');
         }
         return true;
     }
@@ -237,6 +243,7 @@ class Validator
      * Set error template for complex rule
      *
      * @param  string $message
+     *
      * @return Validator
      */
     public function setError($message)
@@ -285,6 +292,7 @@ class Validator
      * Prepare error message for output
      *
      * @param  string $message
+     *
      * @return string
      */
     protected function prepareError($message)

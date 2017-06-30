@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -40,7 +40,7 @@ use Bluz\Registry\Registry as Instance;
  * @method   static void  delete($key)
  * @see      Instance::delete()
  */
-class Registry
+final class Registry
 {
     use ProxyTrait;
 

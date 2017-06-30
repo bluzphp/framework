@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -36,13 +36,13 @@ abstract class AbstractBuilder
      * @var array the array of SQL parts collected
      */
     protected $sqlParts = [
-        'select'  => [],
-        'from'    => [],
-        'join'    => [],
-        'set'     => [],
-        'where'   => null,
+        'select' => [],
+        'from' => [],
+        'join' => [],
+        'set' => [],
+        'where' => null,
         'groupBy' => [],
-        'having'  => null,
+        'having' => null,
         'orderBy' => []
     ];
 
@@ -65,7 +65,7 @@ abstract class AbstractBuilder
     {
         return Db::query($this->getSql(), $this->params, $this->types);
     }
-    
+
     /**
      * Return the complete SQL string formed by the current specifications
      *
@@ -124,6 +124,7 @@ abstract class AbstractBuilder
      * @param  string|int $key   The parameter position or name
      * @param  mixed      $value The parameter value
      * @param  integer    $type  PDO::PARAM_*
+     *
      * @return $this
      */
     public function setParameter($key, $value, $type = \PDO::PARAM_STR)
@@ -156,6 +157,7 @@ abstract class AbstractBuilder
      *
      * @param  array $params The query parameters to set
      * @param  array $types  The query parameters types to set
+     *
      * @return $this
      */
     public function setParameters(array $params, array $types = [])
@@ -170,6 +172,7 @@ abstract class AbstractBuilder
      * Gets a (previously set) query parameter of the query being constructed
      *
      * @param  mixed $key The key (index or name) of the bound parameter
+     *
      * @return mixed The value of the bound parameter.
      */
     public function getParameter($key)
@@ -196,6 +199,7 @@ abstract class AbstractBuilder
      * @param  string       $sqlPartName
      * @param  string|array $sqlPart
      * @param  bool         $append
+     *
      * @return $this
      */
     protected function addQueryPart($sqlPartName, $sqlPart, $append = false)
@@ -209,7 +213,8 @@ abstract class AbstractBuilder
 
         if ($append) {
             if ($sqlPartName == "orderBy" || $sqlPartName == "groupBy"
-                || $sqlPartName == "select" || $sqlPartName == "set") {
+                || $sqlPartName == "select" || $sqlPartName == "set"
+            ) {
                 foreach ((array)$sqlPart as $part) {
                     $this->sqlParts[$sqlPartName][] = $part;
                 }
@@ -231,6 +236,7 @@ abstract class AbstractBuilder
      * Get a query part by its name
      *
      * @param  string $queryPartName
+     *
      * @return mixed
      */
     public function getQueryPart($queryPartName)
@@ -242,6 +248,7 @@ abstract class AbstractBuilder
      * Reset single SQL part
      *
      * @param  string $queryPartName
+     *
      * @return $this
      */
     protected function resetQueryPart($queryPartName)
@@ -256,6 +263,7 @@ abstract class AbstractBuilder
      * setFromQueryPart
      *
      * @param  string $table
+     *
      * @return $this
      */
     protected function setFromQueryPart($table)
@@ -272,6 +280,7 @@ abstract class AbstractBuilder
      * </code>
      *
      * @param  array $args
+     *
      * @return string
      */
     protected function prepareCondition($args = [])

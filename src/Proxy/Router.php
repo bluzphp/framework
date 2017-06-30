@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -57,7 +57,7 @@ use Bluz\Router\Router as Instance;
  * @method   static string getErrorController()
  * @see      Instance::getErrorController()
  */
-class Router
+final class Router
 {
     use ProxyTrait;
 

@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -46,6 +46,7 @@ use Bluz\View\View;
  * @param  array        $options
  * @param  array|string $selected
  * @param  array        $attributes
+ *
  * @return string
  */
 return
@@ -70,6 +71,7 @@ return
         /**
          * @param  $value
          * @param  $text
+         *
          * @return string
          */
         $buildOption = function ($value, $text) use ($selected) {
@@ -85,7 +87,6 @@ return
                 false
             ) . '</option>';
         };
-
 
         $result = [];
     foreach ($options as $value => $text) {

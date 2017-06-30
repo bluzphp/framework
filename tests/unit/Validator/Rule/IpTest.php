@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
@@ -14,13 +15,15 @@ use Bluz\Validator\Rule\Ip;
 
 /**
  * Class IpTest
+ *
  * @package Bluz\Tests\Validator\Rule
  */
 class IpTest extends Tests\TestCase
 {
     /**
      * @dataProvider providerForPass
-     * @param $input
+     *
+     * @param      $input
      * @param null $options
      */
     public function testValidIpsShouldReturnTrue($input, $options = null)
@@ -33,7 +36,8 @@ class IpTest extends Tests\TestCase
     /**
      * @dataProvider providerForFail
      * @expectedException \Bluz\Validator\Exception\ValidatorException
-     * @param $input
+     *
+     * @param      $input
      * @param null $options
      */
     public function testInvalidIpsShouldReturnFalseAndThrowException($input, $options = null)
@@ -47,6 +51,7 @@ class IpTest extends Tests\TestCase
     /**
      * @dataProvider providerForComponentException
      * @expectedException \Bluz\Validator\Exception\ComponentException
+     *
      * @param $range
      */
     public function testInvalidRangeShouldRaiseException($range)
@@ -56,6 +61,7 @@ class IpTest extends Tests\TestCase
 
     /**
      * @dataProvider providerForIpBetweenRange
+     *
      * @param $input
      * @param $networkRange
      */
@@ -69,6 +75,7 @@ class IpTest extends Tests\TestCase
     /**
      * @dataProvider providerForIpOutsideRange
      * @expectedException \Bluz\Validator\Exception\ValidatorException
+     *
      * @param $input
      * @param $networkRange
      */

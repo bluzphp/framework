@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/skeleton
+ * @link      https://github.com/bluzphp/skeleton
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Fixtures\Models\Test;
 
 /**
@@ -31,12 +32,14 @@ class Table extends \Bluz\Db\Table
 
     /**
      * Primary key(s)
+     *
      * @var array
      */
     protected $primary = ['id'];
 
     /**
      * Class name
+     *
      * @var string
      */
     protected $rowClass = '\Bluz\Tests\Fixtures\Models\Test\Row';

@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -56,6 +56,7 @@ class Messages
      *
      * @param  string   $message
      * @param  string[] $text
+     *
      * @return void
      * @since  1.0.0 added $text
      */
@@ -69,6 +70,7 @@ class Messages
      *
      * @param  string   $message
      * @param  string[] $text
+     *
      * @return void
      * @since  1.0.0 added $text
      */
@@ -82,6 +84,7 @@ class Messages
      *
      * @param  string   $message
      * @param  string[] $text
+     *
      * @return void
      * @since  1.0.0 added $text
      */
@@ -96,6 +99,7 @@ class Messages
      * @param  string   $type One of error, notice or success
      * @param  string   $message
      * @param  string[] $text
+     *
      * @return void
      */
     protected function add($type, $message, ...$text)
@@ -108,6 +112,7 @@ class Messages
      * Pop a message
      *
      * @param  string $type
+     *
      * @return \stdClass|null
      */
     public function pop($type = null)

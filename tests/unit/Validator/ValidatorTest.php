@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Validator;
 
 use Bluz\Tests;
@@ -15,6 +16,7 @@ use Bluz\Validator\Validator;
 
 /**
  * Class ValidatorTest
+ *
  * @package Bluz\Tests\Validator
  */
 class ValidatorTest extends Tests\TestCase
@@ -33,9 +35,13 @@ class ValidatorTest extends Tests\TestCase
     public function testStaticCallsShouldReturnNewValidator()
     {
         self::assertInstanceOf(
-            Validator::class, Validator::arrayInput(function () {
-            return true;
-        }));
+            Validator::class,
+            Validator::arrayInput(
+                function () {
+                    return true;
+                }
+            )
+        );
         self::assertInstanceOf(Validator::class, Validator::string());
         self::assertInstanceOf(Validator::class, Validator::notEmpty());
     }
@@ -134,6 +140,7 @@ class ValidatorTest extends Tests\TestCase
 
     /**
      * Test ValidatorException
+     *
      * @expectedException \Bluz\Validator\Exception\ValidatorException
      */
     public function testValidatorException()

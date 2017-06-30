@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -15,6 +15,7 @@ namespace Bluz\View\Helper;
  *
  * @param  string $code
  * @param  string $media
+ *
  * @return string
  */
 return

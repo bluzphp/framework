@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -58,8 +58,9 @@ trait Validator
     /**
      * Add Validator for field
      *
-     * @param  string $name
+     * @param  string                      $name
      * @param  \Bluz\Validator\Validator[] $validators
+     *
      * @return Validator
      */
     protected function addValidator($name, ...$validators)
@@ -72,9 +73,10 @@ trait Validator
      * Validate input data
      *
      * @param  array $input
+     *
      * @return bool
      */
-    public function validate($input) : bool
+    public function validate($input): bool
     {
         return $this->getValidatorBuilder()->validate($input);
     }
@@ -83,6 +85,7 @@ trait Validator
      * Assert input data
      *
      * @param  array $input
+     *
      * @return bool
      */
     public function assert($input)

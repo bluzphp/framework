@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -41,8 +41,9 @@ trait From
      *         ->from('users', 'u')
      * </code>
      *
-     * @param  string $from   The table
-     * @param  string $alias  The alias of the table
+     * @param  string $from  The table
+     * @param  string $alias The alias of the table
+     *
      * @return $this
      */
     public function from($from, $alias)

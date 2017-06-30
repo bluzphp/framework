@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -91,7 +91,7 @@ use Bluz\Db\Query;
  * @method   static void disconnect()
  * @see      Instance::disconnect()
  */
-class Db
+final class Db
 {
     use ProxyTrait;
 

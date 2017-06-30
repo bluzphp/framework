@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -37,7 +37,7 @@ class Mailer
         if (!$this->getOption('from', 'email')) {
             throw new ConfigurationException(
                 "Missed `from.email` option in `mailer` configuration. <br/>\n" .
-                "Read more: <a href='https://github.com/bluzphp/framework/wiki/Mailer'>".
+                "Read more: <a href='https://github.com/bluzphp/framework/wiki/Mailer'>" .
                 "https://github.com/bluzphp/framework/wiki/Mailer</a>"
             );
         }
@@ -56,7 +56,7 @@ class Mailer
         if (!class_exists('\PHPMailer')) {
             throw new ComponentException(
                 "PHPMailer library is required for `Bluz\\Mailer` package. <br/>\n" .
-                "Read more: <a href='https://github.com/bluzphp/framework/wiki/Mailer'>".
+                "Read more: <a href='https://github.com/bluzphp/framework/wiki/Mailer'>" .
                 "https://github.com/bluzphp/framework/wiki/Mailer</a>"
             );
         }
@@ -93,6 +93,7 @@ class Mailer
      * @todo Add mail to queue
      *
      * @param  \PHPMailer $mail
+     *
      * @return bool
      * @throws MailerException
      */
@@ -106,7 +107,7 @@ class Mailer
         if (!$mail->send()) {
             // Why you don't use "Exception mode" of PHPMailer
             // Because we need our Exception in any case
-            throw new MailerException('Error mail send: '. $mail->ErrorInfo);
+            throw new MailerException('Error mail send: ' . $mail->ErrorInfo);
         }
 
         return true;

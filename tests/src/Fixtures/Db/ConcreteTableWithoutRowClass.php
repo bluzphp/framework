@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Fixtures\Db;
 
 use Bluz\Db\Table;
@@ -17,7 +18,7 @@ use Bluz\Db\Table;
  * @category Tests
  * @package  Bluz\Db
  *
- * @author Dmitriy Savchenko <login.was.here@gmail.com>
+ * @author   Dmitriy Savchenko <login.was.here@gmail.com>
  */
 class ConcreteTableWithoutRowClass extends Table
 {

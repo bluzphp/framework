@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -78,6 +78,7 @@ class Controller implements \JsonSerializable
 
     /**
      * One of HTML, JSON or empty string
+     *
      * @var string
      */
     protected $render = 'HTML';
@@ -176,6 +177,7 @@ class Controller implements \JsonSerializable
      * __invoke
      *
      * @param array $params
+     *
      * @return Data
      * @throws ControllerException
      */
@@ -261,6 +263,7 @@ class Controller implements \JsonSerializable
 
     /**
      * Get controller file path
+     *
      * @return string
      */
     protected function getFile() // : string
@@ -273,6 +276,7 @@ class Controller implements \JsonSerializable
 
     /**
      * Retrieve reflection for anonymous function
+     *
      * @return void
      * @throws \Bluz\Common\Exception\ComponentException
      */
@@ -294,9 +298,10 @@ class Controller implements \JsonSerializable
         }
         $this->meta = $meta;
     }
-    
+
     /**
      * Get meta information
+     *
      * @return Meta
      */
     public function getMeta()
@@ -309,8 +314,10 @@ class Controller implements \JsonSerializable
 
     /**
      * Assign key/value pair to Data object
+     *
      * @param  string $key
      * @param  mixed  $value
+     *
      * @return Controller
      */
     public function assign($key, $value)
@@ -318,7 +325,7 @@ class Controller implements \JsonSerializable
         $this->getData()->set($key, $value);
         return $this;
     }
-    
+
     /**
      * Get controller Data container
      *

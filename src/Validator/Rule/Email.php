@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -41,9 +41,10 @@ class Email extends AbstractRule
      * Check input data
      *
      * @param  mixed $input
+     *
      * @return bool
      */
-    public function validate($input) : bool
+    public function validate($input): bool
     {
         if (is_string($input) && filter_var($input, FILTER_VALIDATE_EMAIL)) {
             list(, $domain) = explode("@", $input, 2);

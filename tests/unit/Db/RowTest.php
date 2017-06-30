@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Db;
 
 use Bluz;
@@ -107,7 +108,7 @@ class RowTest extends TestCase
         $this->row = new Db\ConcreteRowWithInvalidTable();
         $this->row->getTable();
     }
-    
+
     /**
      * @todo Implement testGetRelation().
      */
@@ -116,7 +117,7 @@ class RowTest extends TestCase
         // Remove the following lines when you implement this test.
         self::markTestIncomplete('This test has not been implemented yet.');
     }
-    
+
     /**
      * @expectedException Bluz\Db\Exception\RelationNotFoundException
      */

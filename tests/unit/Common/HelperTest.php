@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Common;
 
 use Bluz\Tests\TestCase;
@@ -40,6 +41,7 @@ class HelperTest extends TestCase
 
     /**
      * Helper paths is not initialized, and helper file not found
+     *
      * @expectedException \Bluz\Common\Exception\CommonException
      */
     public function testInvalidHelperCall()
@@ -49,11 +51,12 @@ class HelperTest extends TestCase
 
     /**
      * Helper path initialized, but file consists some stuff, it's not callable
+     *
      * @expectedException \Bluz\Common\Exception\CommonException
      */
     public function testInvalidHelperCall2()
     {
-        $this->class->addHelperPath(__DIR__ .'/Fixtures/Helper');
+        $this->class->addHelperPath(__DIR__ . '/Fixtures/Helper');
         $this->class->helperInvalidFunction(self::MAGIC_NUMBER);
     }
 
@@ -65,8 +68,8 @@ class HelperTest extends TestCase
      */
     public function testAddHelperPath()
     {
-        $this->class->addHelperPath(__DIR__ .'/Fixtures/Helper');
-        $this->class->addHelperPath(__DIR__ .'/Fixtures/Helper2');
+        $this->class->addHelperPath(__DIR__ . '/Fixtures/Helper');
+        $this->class->addHelperPath(__DIR__ . '/Fixtures/Helper2');
         self::assertEquals(
             $this->class->helperFunction(self::MAGIC_NUMBER),
             self::MAGIC_NUMBER
@@ -82,7 +85,7 @@ class HelperTest extends TestCase
      */
     public function testSetHelperPaths()
     {
-        $this->class->setHelpersPath([__DIR__ .'/Fixtures/Helper', __DIR__ .'/Fixtures/Helper2']);
+        $this->class->setHelpersPath([__DIR__ . '/Fixtures/Helper', __DIR__ . '/Fixtures/Helper2']);
         self::assertEquals(
             $this->class->helperFunction(self::MAGIC_NUMBER),
             self::MAGIC_NUMBER

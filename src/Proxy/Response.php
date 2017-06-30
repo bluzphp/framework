@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -84,7 +84,7 @@ use Bluz\Response\Response as Instance;
  * @method   static void  send()
  * @see      Instance::send()
  */
-class Response
+final class Response
 {
     use ProxyTrait;
 
@@ -102,6 +102,7 @@ class Response
      * Redirect to URL
      *
      * @param  string $url
+     *
      * @return void
      * @throws RedirectException
      */
@@ -115,9 +116,10 @@ class Response
     /**
      * Redirect to controller
      *
-     * @param  string      $module
-     * @param  string      $controller
-     * @param  array       $params
+     * @param  string $module
+     * @param  string $controller
+     * @param  array  $params
+     *
      * @return void
      * @throws RedirectException
      */

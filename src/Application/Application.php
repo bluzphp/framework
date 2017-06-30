@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -107,6 +107,7 @@ class Application
      * Return/setup Layout Flag
      *
      * @param  bool|null $flag
+     *
      * @return bool
      */
     public function useLayout($flag = null)
@@ -114,7 +115,7 @@ class Application
         if (is_bool($flag)) {
             $this->layoutFlag = $flag;
         }
-        
+
         return $this->layoutFlag;
     }
 
@@ -122,6 +123,7 @@ class Application
      * Initialize system packages
      *
      * @param  string $environment
+     *
      * @throws ApplicationException
      * @return void
      */
@@ -172,14 +174,14 @@ class Application
 
         // setup configuration for current environment
         if ($debug = Config::getData('debug')) {
-            $this->debugFlag = (bool) $debug;
+            $this->debugFlag = (bool)$debug;
         }
 
         // initial php settings
         if ($ini = Config::getData('php')) {
             foreach ($ini as $key => $value) {
                 $result = ini_set($key, $value);
-                Logger::info('app:init:php:'.$key.':'.($result?:'---'));
+                Logger::info('app:init:php:' . $key . ':' . ($result ?: '---'));
             }
         }
     }
@@ -353,6 +355,7 @@ class Application
      * @param  string $module
      * @param  string $controller
      * @param  array  $params
+     *
      * @return Controller
      * @throws ApplicationException
      */
@@ -371,6 +374,7 @@ class Application
      * @param  string $module
      * @param  string $controller
      * @param  array  $params
+     *
      * @return void
      */
     protected function preDispatch($module, $controller, $params = [])
@@ -383,7 +387,8 @@ class Application
      *
      * @param  string $module
      * @param  string $controller
-     * @param  array $params
+     * @param  array  $params
+     *
      * @return Controller
      * @throws \Bluz\Application\Exception\ForbiddenException
      * @throws \Bluz\Application\Exception\NotAllowedException
@@ -415,6 +420,7 @@ class Application
      * @param  string $module
      * @param  string $controller
      * @param  array  $params
+     *
      * @return void
      */
     protected function postDispatch($module, $controller, $params = [])

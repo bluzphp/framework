@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/skeleton
+ * @link      https://github.com/bluzphp/skeleton
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Controller;
 
 use Bluz\Controller;
@@ -24,7 +25,7 @@ class ControllerTest extends TestCase
      * @var Controller\Controller
      */
     protected $controller;
-    
+
     /**
      * Create `index/index` controller
      */
@@ -32,7 +33,7 @@ class ControllerTest extends TestCase
     {
         $this->controller = self::getApp()->dispatch('index', 'index');
     }
-    
+
     /**
      * Close all
      */

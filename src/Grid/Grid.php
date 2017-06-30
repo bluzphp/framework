@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -202,6 +202,7 @@ abstract class Grid
      * Set source adapter
      *
      * @param Source\AbstractSource $adapter
+     *
      * @return void
      */
     public function setAdapter(Source\AbstractSource $adapter)
@@ -247,6 +248,7 @@ abstract class Grid
      * Set module
      *
      * @param string $module
+     *
      * @return void
      */
     public function setModule($module)
@@ -268,6 +270,7 @@ abstract class Grid
      * Set controller
      *
      * @param  string $controller
+     *
      * @return void
      */
     public function setController($controller)
@@ -308,10 +311,10 @@ abstract class Grid
         $this->module = Request::getModule();
         $this->controller = Request::getController();
 
-        $page = (int) Request::getParam($this->prefix . 'page', 1);
+        $page = (int)Request::getParam($this->prefix . 'page', 1);
         $this->setPage($page);
 
-        $limit = (int) Request::getParam($this->prefix . 'limit', $this->limit);
+        $limit = (int)Request::getParam($this->prefix . 'limit', $this->limit);
         $this->setLimit($limit);
 
         foreach ($this->allowOrders as $column) {
@@ -406,6 +409,7 @@ abstract class Grid
      * Setup params
      *
      * @param  $params
+     *
      * @return void
      */
     public function setParams($params)
@@ -417,6 +421,7 @@ abstract class Grid
      * Return params prepared for url builder
      *
      * @param  array $rewrite
+     *
      * @return array
      */
     public function getParams(array $rewrite = [])
@@ -468,6 +473,7 @@ abstract class Grid
      * Get Url
      *
      * @param  array $params
+     *
      * @return string
      */
     public function getUrl($params)
@@ -487,6 +493,7 @@ abstract class Grid
      * Add column name for allow order
      *
      * @param string $column
+     *
      * @return void
      */
     public function addAllowOrder($column)
@@ -498,6 +505,7 @@ abstract class Grid
      * Set allow orders
      *
      * @param  string[] $orders
+     *
      * @return void
      */
     public function setAllowOrders(array $orders = [])
@@ -522,6 +530,7 @@ abstract class Grid
      * Check order column
      *
      * @param  string $column
+     *
      * @return bool
      */
     protected function checkOrderColumn($column)
@@ -533,6 +542,7 @@ abstract class Grid
      * Check order name
      *
      * @param  string $order
+     *
      * @return bool
      */
     protected function checkOrderName($order)
@@ -545,6 +555,7 @@ abstract class Grid
      *
      * @param  string $column
      * @param  string $order
+     *
      * @return void
      * @throws GridException
      */
@@ -565,6 +576,7 @@ abstract class Grid
      * Add order rules
      *
      * @param  array $orders
+     *
      * @return void
      */
     public function addOrders(array $orders)
@@ -578,7 +590,8 @@ abstract class Grid
      * Set order
      *
      * @param  string $column
-     * @param  string $order  ASC or DESC
+     * @param  string $order ASC or DESC
+     *
      * @return void
      */
     public function setOrder($column, $order = Grid::ORDER_ASC)
@@ -591,6 +604,7 @@ abstract class Grid
      * Set orders
      *
      * @param  array $orders
+     *
      * @return void
      */
     public function setOrders(array $orders)
@@ -624,6 +638,7 @@ abstract class Grid
      * Add column name to allow filter it
      *
      * @param string $column
+     *
      * @return void
      */
     public function addAllowFilter($column)
@@ -635,6 +650,7 @@ abstract class Grid
      * Set allowed filters
      *
      * @param  string[] $filters
+     *
      * @return void
      */
     public function setAllowFilters(array $filters = [])
@@ -659,6 +675,7 @@ abstract class Grid
      * Check filter column
      *
      * @param  string $column
+     *
      * @return bool
      */
     protected function checkFilterColumn($column)
@@ -676,6 +693,7 @@ abstract class Grid
      * Check filter
      *
      * @param  string $filter
+     *
      * @return bool
      */
     protected function checkFilterName($filter)
@@ -689,6 +707,7 @@ abstract class Grid
      * @param  string $column name
      * @param  string $filter
      * @param  string $value
+     *
      * @return void
      * @throws GridException
      */
@@ -712,6 +731,7 @@ abstract class Grid
      *
      * @param  string $column
      * @param  string $filter
+     *
      * @return mixed
      */
     public function getFilter($column, $filter = null)
@@ -738,6 +758,7 @@ abstract class Grid
      *
      * @param  string $column
      * @param  string $alias
+     *
      * @return void
      */
     public function addAlias($column, $alias)
@@ -749,6 +770,7 @@ abstract class Grid
      * Get column name by alias
      *
      * @param  string $alias
+     *
      * @return string
      */
     protected function reverseAlias($alias)
@@ -760,6 +782,7 @@ abstract class Grid
      * Get alias by column name
      *
      * @param  string $column
+     *
      * @return string
      */
     protected function applyAlias($column)
@@ -771,6 +794,7 @@ abstract class Grid
      * Set page
      *
      * @param  integer $page
+     *
      * @return void
      * @throws GridException
      */
@@ -787,7 +811,7 @@ abstract class Grid
      *
      * @return integer
      */
-    public function getPage() : int
+    public function getPage(): int
     {
         return $this->page;
     }
@@ -796,6 +820,7 @@ abstract class Grid
      * Set limit per page
      *
      * @param  integer $limit
+     *
      * @return void
      * @throws GridException
      */
@@ -812,7 +837,7 @@ abstract class Grid
      *
      * @return integer
      */
-    public function getLimit() : int
+    public function getLimit(): int
     {
         return $this->limit;
     }
@@ -821,6 +846,7 @@ abstract class Grid
      * Set default limit
      *
      * @param  integer $limit
+     *
      * @return void
      * @throws GridException
      */
@@ -839,7 +865,7 @@ abstract class Grid
      *
      * @return integer
      */
-    public function getDefaultLimit() : int
+    public function getDefaultLimit(): int
     {
         return $this->defaultLimit;
     }
@@ -849,6 +875,7 @@ abstract class Grid
      *
      * @param  string $column
      * @param  string $order ASC or DESC
+     *
      * @return void
      * @throws GridException
      */

@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
@@ -14,6 +15,7 @@ use Bluz\Validator\Rule\Required;
 
 /**
  * Class RequiredTest
+ *
  * @package Bluz\Tests\Validator\Rule
  */
 class RequiredTest extends Tests\TestCase
@@ -34,6 +36,7 @@ class RequiredTest extends Tests\TestCase
 
     /**
      * @dataProvider providerForPass
+     *
      * @param $input
      */
     public function testRequired($input)
@@ -43,6 +46,7 @@ class RequiredTest extends Tests\TestCase
 
     /**
      * @dataProvider providerForFail
+     *
      * @param $input
      */
     public function testNotExists($input)

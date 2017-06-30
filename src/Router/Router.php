@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -164,6 +164,7 @@ class Router
      * Set the base URL.
      *
      * @param  string $baseUrl
+     *
      * @return void
      */
     public function setBaseUrl($baseUrl)
@@ -176,6 +177,7 @@ class Router
      *
      * @param  string $key
      * @param  mixed  $default Default value to use if key not found
+     *
      * @return mixed
      */
     public function getParam($key, $default = null)
@@ -190,6 +192,7 @@ class Router
      *
      * @param  string $key
      * @param  mixed  $value
+     *
      * @return void
      */
     public function setParam($key, $value)
@@ -237,6 +240,7 @@ class Router
      * Set default module
      *
      * @param  string $defaultModule
+     *
      * @return void
      */
     public function setDefaultModule($defaultModule)
@@ -258,6 +262,7 @@ class Router
      * Set default controller
      *
      * @param  string $defaultController
+     *
      * @return void
      */
     public function setDefaultController($defaultController)
@@ -279,6 +284,7 @@ class Router
      * Set error module
      *
      * @param  string $errorModule
+     *
      * @return void
      */
     public function setErrorModule($errorModule)
@@ -300,6 +306,7 @@ class Router
      * Set error controller
      *
      * @param  string $errorController
+     *
      * @return void
      */
     public function setErrorController($errorController)
@@ -313,6 +320,7 @@ class Router
      * @param  string $module
      * @param  string $controller
      * @param  array  $params
+     *
      * @return string
      */
     public function getUrl(
@@ -336,6 +344,7 @@ class Router
      * @param  string $module
      * @param  string $controller
      * @param  array  $params
+     *
      * @return string
      */
     public function getFullUrl(
@@ -355,6 +364,7 @@ class Router
      * @param  string $module
      * @param  string $controller
      * @param  array  $params
+     *
      * @return string
      */
     protected function urlCustom($module, $controller, $params)
@@ -393,6 +403,7 @@ class Router
      * @param  string $module
      * @param  string $controller
      * @param  array  $params
+     *
      * @return string
      */
     protected function urlRoute($module, $controller, $params)
@@ -444,7 +455,7 @@ class Router
      *
      * @return bool
      */
-    protected function processDefault() : bool
+    protected function processDefault(): bool
     {
         $uri = $this->getCleanUri();
         return empty($uri);
@@ -455,7 +466,7 @@ class Router
      *
      * @return bool
      */
-    protected function processCustom() : bool
+    protected function processCustom(): bool
     {
         $uri = '/' . $this->getCleanUri();
         foreach ($this->routers as $router) {
@@ -485,7 +496,7 @@ class Router
      *
      * @return bool
      */
-    protected function processRoute() : bool
+    protected function processRoute(): bool
     {
         $uri = $this->getCleanUri();
         $uri = trim($uri, '/');

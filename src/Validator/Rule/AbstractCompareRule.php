@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -27,9 +27,10 @@ abstract class AbstractCompareRule extends AbstractRule
      *
      * @param  mixed $what
      * @param  mixed $than
+     *
      * @return bool
      */
-    protected function less($what, $than) : bool
+    protected function less($what, $than): bool
     {
         if ($this->inclusive) {
             return $what <= $than;

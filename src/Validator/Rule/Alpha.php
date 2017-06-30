@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -21,9 +21,10 @@ class Alpha extends AbstractCtypeRule
      * Check for alphabetic character(s)
      *
      * @param  string $input
+     *
      * @return bool
      */
-    protected function validateClean($input) : bool
+    protected function validateClean($input): bool
     {
         return ctype_alpha($input);
     }

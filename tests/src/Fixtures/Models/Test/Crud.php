@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/skeleton
+ * @link      https://github.com/bluzphp/skeleton
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Fixtures\Models\Test;
 
 use Bluz\Http\StatusCode;
@@ -44,9 +45,10 @@ class Crud extends \Bluz\Crud\Table
     /**
      * {@inheritdoc}
      *
-     * @param int $offset
-     * @param int $limit
+     * @param int   $offset
+     * @param int   $limit
      * @param array $params
+     *
      * @return array|int|mixed
      */
     public function readSet($offset = 0, $limit = 10, $params = [], &$total = null)
@@ -75,7 +77,7 @@ class Crud extends \Bluz\Crud\Table
             Response::setStatusCode(StatusCode::PARTIAL_CONTENT);
             Response::setHeader(
                 'Content-Range',
-                'items '.$offset.'-'.($offset+count($result)).'/'. $total
+                'items ' . $offset . '-' . ($offset + count($result)) . '/' . $total
             );
         }
 

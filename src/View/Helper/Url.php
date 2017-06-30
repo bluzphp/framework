@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -24,6 +24,7 @@ use Bluz\View\ViewException;
  * @param  string $controller
  * @param  array  $params
  * @param  bool   $checkAccess
+ *
  * @return null|string
  * @throws ViewException
  */

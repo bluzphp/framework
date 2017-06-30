@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Common;
 
 use Bluz\Common\Line;
@@ -25,6 +26,7 @@ class LineTest extends TestCase
 
     /**
      * @dataProvider dataForStrTrimEnd
+     *
      * @param string $input
      * @param string $output
      */
@@ -34,7 +36,7 @@ class LineTest extends TestCase
         self::assertEquals($output, Line::toCamelCase($input));
     }
 
-    public function dataForStrTrimEnd() : array
+    public function dataForStrTrimEnd(): array
     {
         return [
             ['foo bar', 'FooBar'],

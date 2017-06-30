@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
@@ -14,12 +15,14 @@ use Bluz\Validator\Rule\Equals;
 
 /**
  * Class EqualsTest
+ *
  * @package Bluz\Tests\Validator\Rule
  */
 class EqualsTest extends Tests\TestCase
 {
     /**
      * @dataProvider providerForPass
+     *
      * @param $start
      * @param $input
      */
@@ -33,8 +36,9 @@ class EqualsTest extends Tests\TestCase
     /**
      * @dataProvider providerForFail
      * @expectedException \Bluz\Validator\Exception\ValidatorException
-     * @param $start
-     * @param $input
+     *
+     * @param      $start
+     * @param      $input
      * @param bool $identical
      */
     public function testStringsNotEqualsExpectedValueShouldNotPass($start, $input, $identical = false)

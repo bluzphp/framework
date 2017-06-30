@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -51,6 +51,7 @@ trait Options
      *
      * @param  string $key
      * @param  array  $keys
+     *
      * @return mixed
      */
     public function getOption($key, ...$keys)
@@ -67,6 +68,7 @@ trait Options
      *
      * @param  string $key
      * @param  string $value
+     *
      * @return void
      */
     public function setOption($key, $value)
@@ -84,7 +86,7 @@ trait Options
      *
      * @return array
      */
-    public function getOptions() : array
+    public function getOptions(): array
     {
         return $this->options;
     }
@@ -97,12 +99,13 @@ trait Options
      * - options can be null
      *
      * @param  array $options
+     *
      * @return self
      */
     public function setOptions(array $options = null)
     {
         // store options by default
-        $this->options = (array) $options;
+        $this->options = (array)$options;
 
         // apply options
         foreach ($this->options as $key => $value) {

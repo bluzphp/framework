@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -27,6 +27,7 @@ class Nil
      *
      * @param  string $method
      * @param  array  $args
+     *
      * @return null
      */
     public function __call($method, $args)
@@ -39,6 +40,7 @@ class Nil
      *
      * @param  string $method
      * @param  array  $args
+     *
      * @return null
      */
     public static function __callStatic($method, $args)
@@ -50,6 +52,7 @@ class Nil
      * Magic __get
      *
      * @param  string $key
+     *
      * @return null
      */
     public function __get($key)
@@ -62,6 +65,7 @@ class Nil
      *
      * @param  string $key
      * @param  mixed  $value
+     *
      * @return null
      */
     public function __set($key, $value)
@@ -73,6 +77,7 @@ class Nil
      * Magic __isset
      *
      * @param  string $key
+     *
      * @return false
      */
     public function __isset($key)

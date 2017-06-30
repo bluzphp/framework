@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -37,7 +37,7 @@ use Bluz\Mailer\Mailer as Instance;
  * @method   static bool send(\PHPMailer $mail)
  * @see      Instance::send()
  */
-class Mailer
+final class Mailer
 {
     use ProxyTrait;
 

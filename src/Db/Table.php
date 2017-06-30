@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -103,7 +103,7 @@ abstract class Table
 
         // setup default select query
         if (empty($this->select)) {
-            $this->select = "SELECT * ".
+            $this->select = "SELECT * " .
                 "FROM " . DbProxy::quoteIdentifier($this->name);
         }
 
@@ -139,6 +139,7 @@ abstract class Table
      * Set select query
      *
      * @param  string $select SQL query
+     *
      * @return Table
      */
     public function setSelectQuery($select)
@@ -223,6 +224,7 @@ abstract class Table
      * Filter columns for insert/update queries by table columns definition
      *
      * @param  array $data
+     *
      * @return array
      */
     public static function filterColumns($data)
@@ -236,6 +238,7 @@ abstract class Table
      *
      * @param  string $sql    SQL query with placeholders
      * @param  array  $params Params for query placeholders
+     *
      * @return array of rows results in FETCH_CLASS mode
      */
     public static function fetch($sql, $params = [])
@@ -282,6 +285,7 @@ abstract class Table
      *     Table::find([123, 'abc'], [234, 'def'], [345, 'ghi'])
      *
      * @param  mixed ...$keys The value(s) of the primary keys.
+     *
      * @return array
      * @throws InvalidPrimaryKeyException if wrong count of values passed
      */
@@ -322,6 +326,7 @@ abstract class Table
      * Find row by primary key
      *
      * @param  mixed $primaryKey
+     *
      * @return Row
      */
     public static function findRow($primaryKey)
@@ -345,6 +350,7 @@ abstract class Table
      *     Table::findWhere(['alias'=> ['foo', 'bar']]);
      *
      * @param  mixed ...$where
+     *
      * @return array
      * @throws \InvalidArgumentException
      * @throws Exception\DbException
@@ -372,7 +378,7 @@ abstract class Table
                             $keyValue
                         );
                         $keyValue = implode(',', $keyValue);
-                        $whereAndTerms[] = $self->name . '.' . $keyName . ' IN ('.$keyValue.')';
+                        $whereAndTerms[] = $self->name . '.' . $keyName . ' IN (' . $keyValue . ')';
                     } elseif (is_null($keyValue)) {
                         $whereAndTerms[] = $self->name . '.' . $keyName . ' IS NULL';
                     } else {
@@ -391,7 +397,7 @@ abstract class Table
             $whereClause = '(' . implode(' OR ', $whereOrTerms) . ')';
         } elseif (!count($where)) {
             throw new DbException(
-                "Method `Table::findWhere()` can't return all records from table,\n".
+                "Method `Table::findWhere()` can't return all records from table,\n" .
                 "please use `Table::fetchAll()` instead"
             );
         }
@@ -403,6 +409,7 @@ abstract class Table
      * Find row by where condition
      *
      * @param  array $whereList
+     *
      * @return Row
      */
     public static function findRowWhere($whereList)
@@ -415,6 +422,7 @@ abstract class Table
      * Prepare array for WHERE or SET statements
      *
      * @param  array $where
+     *
      * @return array
      * @throws \Bluz\Common\Exception\ConfigurationException
      */
@@ -453,7 +461,7 @@ abstract class Table
         $self = static::getInstance();
 
         $select = new Query\Select();
-        $select->select($self->name.'.*')
+        $select->select($self->name . '.*')
             ->from($self->name, $self->name)
             ->setFetchType($self->rowClass);
 
@@ -464,6 +472,7 @@ abstract class Table
      * Create Row instance
      *
      * @param  array $data
+     *
      * @return Row
      */
     public static function create(array $data = [])
@@ -483,6 +492,7 @@ abstract class Table
      * </code>
      *
      * @param  array $data Column-value pairs
+     *
      * @return string|null Primary key or null
      * @throws Exception\DbException
      */
@@ -527,6 +537,7 @@ abstract class Table
      *
      * @param  array $data  Column-value pairs.
      * @param  array $where An array of SQL WHERE clause(s)
+     *
      * @return integer The number of rows updated
      * @throws Exception\DbException
      */
@@ -534,7 +545,7 @@ abstract class Table
     {
         if (!count($where)) {
             throw new DbException(
-                "Method `Table::update()` can't update all records in table,\n".
+                "Method `Table::update()` can't update all records in table,\n" .
                 "please use `Db::query()` instead (of cause if you know what are you doing)"
             );
         }
@@ -568,6 +579,7 @@ abstract class Table
      * </code>
      *
      * @param  array $where An array of SQL WHERE clause(s)
+     *
      * @return integer The number of rows deleted
      * @throws Exception\DbException
      */
@@ -575,7 +587,7 @@ abstract class Table
     {
         if (!count($where)) {
             throw new DbException(
-                "Method `Table::delete()` can't delete all records in table,\n".
+                "Method `Table::delete()` can't delete all records in table,\n" .
                 "please use `Db::query()` instead (of cause if you know what are you doing)"
             );
         }
@@ -603,6 +615,7 @@ abstract class Table
      * @param  string $key
      * @param  string $model
      * @param  string $foreign
+     *
      * @return void
      */
     public function linkTo($key, $model, $foreign)
@@ -616,6 +629,7 @@ abstract class Table
      *
      * @param  string $model
      * @param  string $link
+     *
      * @return void
      */
     public function linkToMany($model, $link)

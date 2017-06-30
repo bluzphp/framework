@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -29,6 +29,7 @@ class Db
 
     /**
      * PDO connection settings
+     *
      * @var  array
      * @link http://php.net/manual/en/pdo.construct.php
      */
@@ -43,6 +44,7 @@ class Db
 
     /**
      * PDO connection flags
+     *
      * @var  array
      * @link http://php.net/manual/en/pdo.setattribute.php
      */
@@ -70,6 +72,7 @@ class Db
      * </code>
      *
      * @param  array $connect options
+     *
      * @return Db
      * @throws DbException
      */
@@ -104,6 +107,7 @@ class Db
      * Setup attributes for PDO connect
      *
      * @param  array $attributes
+     *
      * @return Db
      */
     public function setAttributes(array $attributes)
@@ -161,6 +165,7 @@ class Db
      *
      * @param  string $sql    SQL query with placeholders
      * @param  array  $params params for query placeholders
+     *
      * @return \PDOStatement
      */
     protected function prepare($sql, $params)
@@ -182,7 +187,8 @@ class Db
      * </code>
      *
      * @param  string $value
-     * @param  int $type
+     * @param  int    $type
+     *
      * @return string
      */
     public function quote($value, $type = \PDO::PARAM_STR)
@@ -194,6 +200,7 @@ class Db
      * Quote a string so it can be safely used as a table or column name
      *
      * @param  string $identifier
+     *
      * @return string
      */
     public function quoteIdentifier($identifier)
@@ -223,6 +230,7 @@ class Db
      *                        array (':name' => 'John', ':id' => '123')
      * @param  array  $types  Types of params (optional)
      *                        array (':name' => \PDO::PARAM_STR, ':id' => \PDO::PARAM_INT)
+     *
      * @return integer the number of rows
      */
     public function query($sql, $params = [], $types = [])
@@ -230,7 +238,7 @@ class Db
         $stmt = $this->handler()->prepare($sql);
         foreach ($params as $key => &$param) {
             $stmt->bindParam(
-                (is_int($key)?$key+1:":".$key),
+                (is_int($key) ? $key + 1 : ":" . $key),
                 $param,
                 $types[$key] ?? \PDO::PARAM_STR
             );
@@ -245,6 +253,7 @@ class Db
      * Create new query select builder
      *
      * @param array|string ...$select The selection expressions
+     *
      * @return Query\Select
      */
     public function select(...$select)
@@ -258,6 +267,7 @@ class Db
      * Create new query insert builder
      *
      * @param  string $table
+     *
      * @return Query\Insert
      */
     public function insert($table)
@@ -271,6 +281,7 @@ class Db
      * Create new query update builder
      *
      * @param  string $table
+     *
      * @return Query\Update
      */
     public function update($table)
@@ -284,6 +295,7 @@ class Db
      * Create new query update builder
      *
      * @param  string $table
+     *
      * @return Query\Delete
      */
     public function delete($table)
@@ -305,6 +317,7 @@ class Db
      *                         "SELECT * FROM users WHERE name = :name AND pass = :pass"
      * @param  array  $params  params for query placeholders (optional)
      *                         array (':name' => 'John', ':pass' => '123456')
+     *
      * @return string
      */
     public function fetchOne($sql, $params = [])
@@ -330,6 +343,7 @@ class Db
      *                         "SELECT * FROM users WHERE name = :name AND pass = :pass"
      * @param  array  $params  params for query placeholders (optional)
      *                         array (':name' => 'John', ':pass' => '123456')
+     *
      * @return array           array ('name' => 'John', 'email' => 'john@smith.com')
      */
     public function fetchRow($sql, $params = [])
@@ -353,6 +367,7 @@ class Db
      *                        "SELECT * FROM users WHERE ip = :ip"
      * @param  array  $params params for query placeholders (optional)
      *                        array (':ip' => '127.0.0.1')
+     *
      * @return array[]
      */
     public function fetchAll($sql, $params = [])
@@ -371,6 +386,7 @@ class Db
      *                        "SELECT id FROM users WHERE ip = :ip"
      * @param  array  $params params for query placeholders (optional)
      *                        array (':ip' => '127.0.0.1')
+     *
      * @return array
      */
     public function fetchColumn($sql, $params = [])
@@ -395,6 +411,7 @@ class Db
      *                        "SELECT ip, id FROM users"
      * @param  array  $params params for query placeholders (optional)
      * @param  mixed  $object
+     *
      * @return array
      */
     public function fetchGroup($sql, $params = [], $object = null)
@@ -419,6 +436,7 @@ class Db
      * @param  string $sql    SQL query with placeholders
      *                        "SELECT ip, id FROM users"
      * @param  array  $params params for query placeholders (optional)
+     *
      * @return array
      */
     public function fetchColumnGroup($sql, $params = [])
@@ -437,6 +455,7 @@ class Db
      *                        "SELECT id, username FROM users WHERE ip = :ip"
      * @param  array  $params params for query placeholders (optional)
      *                        array (':ip' => '127.0.0.1')
+     *
      * @return array
      */
     public function fetchPairs($sql, $params = [])
@@ -466,6 +485,7 @@ class Db
      * @param  array  $params params for query placeholders (optional)
      *                        array (':name' => 'John', ':pass' => '123456')
      * @param  mixed  $object
+     *
      * @return array
      */
     public function fetchObject($sql, $params = [], $object = 'stdClass')
@@ -494,6 +514,7 @@ class Db
      * @param  array  $params params for query placeholders (optional)
      *                        array (':name' => 'John', ':pass' => '123456')
      * @param  mixed  $object Class name or instance
+     *
      * @return array
      */
     public function fetchObjects($sql, $params = [], $object = null)
@@ -523,6 +544,7 @@ class Db
      *                        WHERE u.name = :name"
      * @param  array  $params params for query placeholders (optional)
      *                        array (':name' => 'John')
+     *
      * @return array
      */
     public function fetchRelations($sql, $params = [])
@@ -552,6 +574,7 @@ class Db
      * </code>
      *
      * @param  callable $process callable structure - closure function or class with __invoke() method
+     *
      * @return bool
      * @throws DbException
      */
@@ -581,8 +604,9 @@ class Db
     /**
      * Log queries by Application
      *
-     * @param  string $sql     SQL query for logs
+     * @param  string $sql SQL query for logs
      * @param  array  $context
+     *
      * @return void
      */
     protected function log($sql, array $context = [])

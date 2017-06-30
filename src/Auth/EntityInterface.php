@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -25,14 +25,15 @@ interface EntityInterface
      *
      * @return array
      */
-    public function getPrivileges() : array;
+    public function getPrivileges(): array;
 
     /**
      * Has role a privilege
      *
      * @param  string $module
      * @param  string $privilege
+     *
      * @return bool
      */
-    public function hasPrivilege($module, $privilege) : bool;
+    public function hasPrivilege($module, $privilege): bool;
 }

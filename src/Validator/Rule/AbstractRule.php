@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -34,17 +34,19 @@ abstract class AbstractRule
      * Check input data
      *
      * @param  mixed $input
+     *
      * @return bool
      */
-    abstract public function validate($input) : bool;
+    abstract public function validate($input): bool;
 
     /**
      * Invoke
      *
      * @param  mixed $input
+     *
      * @return bool
      */
-    public function __invoke($input) : bool
+    public function __invoke($input): bool
     {
         return $this->validate($input);
     }
@@ -53,6 +55,7 @@ abstract class AbstractRule
      * Assert
      *
      * @param  string $input
+     *
      * @return bool
      * @throws ValidatorException
      */
@@ -68,6 +71,7 @@ abstract class AbstractRule
      * Set error template
      *
      * @param  string $template
+     *
      * @return void
      */
     public function setTemplate($template)

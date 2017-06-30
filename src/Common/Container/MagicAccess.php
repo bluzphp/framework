@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -27,7 +27,8 @@ trait MagicAccess
      * Magic alias for set() regular method
      *
      * @param  string $key
-     * @param  mixed $value
+     * @param  mixed  $value
+     *
      * @return void
      */
     public function __set($key, $value)
@@ -39,6 +40,7 @@ trait MagicAccess
      * Magic alias for get() regular method
      *
      * @param  string $key
+     *
      * @return mixed
      */
     public function __get($key)
@@ -50,6 +52,7 @@ trait MagicAccess
      * Magic alias for contains() regular method
      *
      * @param  string $key
+     *
      * @return bool
      */
     public function __isset($key)
@@ -61,6 +64,7 @@ trait MagicAccess
      * Magic alias for delete() regular method
      *
      * @param  string $key
+     *
      * @return void
      */
     public function __unset($key)

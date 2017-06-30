@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -21,7 +21,8 @@ return
          * @var Grid\Grid $this
          */
         if (!$this->checkFilterName($filter) ||
-            !$this->checkFilterColumn($column)) {
+            !$this->checkFilterColumn($column)
+        ) {
             return null;
         }
 

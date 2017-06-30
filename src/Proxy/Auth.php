@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -35,7 +35,7 @@ use Bluz\Auth\EntityInterface;
  * @method   static void clearIdentity()
  * @see      Instance::clearIdentity()
  */
-class Auth
+final class Auth
 {
     use ProxyTrait;
 

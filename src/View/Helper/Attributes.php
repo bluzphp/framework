@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -18,7 +18,9 @@ use Bluz\View\View;
  * @author The-Who
  *
  * @var    View  $this
+ *
  * @param  array $attributes
+ *
  * @return string
  */
 return

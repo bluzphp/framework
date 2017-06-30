@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -24,6 +24,7 @@ class ArraySource extends AbstractSource
      * Set array source
      *
      * @param  array $source
+     *
      * @return self
      * @throws Grid\GridException
      */
@@ -41,6 +42,7 @@ class ArraySource extends AbstractSource
      * Process
      *
      * @param  array[] $settings
+     *
      * @return \Bluz\Grid\Data
      */
     public function process(array $settings = [])
@@ -72,9 +74,10 @@ class ArraySource extends AbstractSource
      *
      * @param  array $data
      * @param  array $settings
+     *
      * @return array
      */
-    private function applyFilters(array $data, array $settings) : array
+    private function applyFilters(array $data, array $settings): array
     {
         return array_filter(
             $data,
@@ -114,7 +117,7 @@ class ArraySource extends AbstractSource
                                 }
                                 break;
                             case Grid\Grid::FILTER_LIKE:
-                                if (!preg_match('/'.$value.'/', $row[$column])) {
+                                if (!preg_match('/' . $value . '/', $row[$column])) {
                                     return false;
                                 }
                                 break;
@@ -131,9 +134,10 @@ class ArraySource extends AbstractSource
      *
      * @param  array $data
      * @param  array $settings
+     *
      * @return array
      */
-    private function applyOrders(array $data, array $settings) : array
+    private function applyOrders(array $data, array $settings): array
     {
         // Create empty column stack
         $orders = [];
@@ -154,7 +158,7 @@ class ArraySource extends AbstractSource
             $funcArgs[] = $orders[$column];
             $funcArgs[] = ($order === Grid\Grid::ORDER_ASC) ? SORT_ASC : SORT_DESC;
         }
-        $funcArgs[] = & $data;
+        $funcArgs[] = &$data;
 
         // Sort the data with volume descending, edition ascending
         // Add $data as the last parameter, to sort by the common key

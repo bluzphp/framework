@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -17,12 +17,13 @@ use Bluz\Proxy\Registry;
  *
  * @param  string|array|null $name
  * @param  string|null       $content
+ *
  * @return string|null
  */
 return
     function ($name = null, $content = null) {
         // it's stack for <head>
-        $meta = Registry::get('layout:meta') ? : [];
+        $meta = Registry::get('layout:meta') ?: [];
 
         if (is_null($name) && is_null($content)) {
             // clear system vars
@@ -30,7 +31,10 @@ return
             // prepare to output
             $tags = [];
             foreach ($meta as $aName => $aContent) {
-                $tags[] = '<meta name="'.$aName.'" content="'. htmlspecialchars((string)$aContent, ENT_QUOTES) .'"/>';
+                $tags[] = '<meta name="' . $aName . '" content="' . htmlspecialchars(
+                        (string)$aContent,
+                        ENT_QUOTES
+                    ) . '"/>';
             }
             return implode("\n", $tags);
         } elseif (is_null($name)) {

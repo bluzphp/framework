@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Common;
 
 use Bluz\Common\Collection;
@@ -48,7 +49,7 @@ class CollectionTest extends TestCase
     /**
      * @return array
      */
-    public function dataForCorrectCheck() : array
+    public function dataForCorrectCheck(): array
     {
         return [
             ['hello'],
@@ -64,7 +65,7 @@ class CollectionTest extends TestCase
     /**
      * @return array
      */
-    public function dataForIncorrectCheck() : array
+    public function dataForIncorrectCheck(): array
     {
         return [
             ['hi'],
@@ -80,6 +81,7 @@ class CollectionTest extends TestCase
      * Test has class
      *
      * @dataProvider dataForCorrectCheck
+     *
      * @param array $keys
      */
     public function testHasReturnTrue(...$keys)
@@ -91,6 +93,7 @@ class CollectionTest extends TestCase
      * Test has class
      *
      * @dataProvider dataForIncorrectCheck
+     *
      * @param array $keys
      */
     public function testHasReturnFalse(...$keys)
@@ -110,6 +113,7 @@ class CollectionTest extends TestCase
 
     /**
      * @dataProvider dataForIncorrectCheck
+     *
      * @param array $keys
      */
     public function testGetNul(...$keys)

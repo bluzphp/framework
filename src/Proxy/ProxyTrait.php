@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -26,6 +26,7 @@ trait ProxyTrait
      * Set or replace instance
      *
      * @param  mixed $instance
+     *
      * @return void
      */
     public static function setInstance($instance)
@@ -37,7 +38,8 @@ trait ProxyTrait
      * Handle dynamic, static calls to the object.
      *
      * @param  string $method
-     * @param  array $args
+     * @param  array  $args
+     *
      * @return mixed
      */
     public static function __callStatic($method, $args)

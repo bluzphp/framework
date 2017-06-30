@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -38,9 +38,10 @@ class Date extends AbstractRule
      * Check input data
      *
      * @param  mixed $input
+     *
      * @return bool
      */
-    public function validate($input) : bool
+    public function validate($input): bool
     {
         if ($input instanceof DateTime) {
             return true;
@@ -53,7 +54,7 @@ class Date extends AbstractRule
         $dateFromFormat = DateTime::createFromFormat($this->format, $input);
 
         return $dateFromFormat
-               && $input === date($this->format, $dateFromFormat->getTimestamp());
+            && $input === date($this->format, $dateFromFormat->getTimestamp());
     }
 
     /**

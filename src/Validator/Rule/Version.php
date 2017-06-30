@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -27,12 +27,13 @@ class Version extends AbstractRule
      * Check for version format
      *
      * @param  string $input
+     *
      * @return bool
      */
-    public function validate($input) : bool
+    public function validate($input): bool
     {
         $pattern = '/^[0-9]+\.[0-9]+\.[0-9]+([+-][^+-][0-9A-Za-z-.]*)?$/';
 
-        return (bool) preg_match($pattern, $input);
+        return (bool)preg_match($pattern, $input);
     }
 }

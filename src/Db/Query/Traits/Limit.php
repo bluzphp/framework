@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -40,8 +40,9 @@ trait Limit
     /**
      * Sets the maximum number of results to retrieve/update/delete
      *
-     * @param  integer $limit  The maximum number of results to retrieve
+     * @param  integer $limit The maximum number of results to retrieve
      * @param  integer $offset
+     *
      * @return $this
      */
     public function limit($limit, $offset = 0)
@@ -55,11 +56,12 @@ trait Limit
      * Setup limit for the query
      *
      * @param  integer $limit
+     *
      * @return $this
      */
     public function setLimit($limit)
     {
-        $this->limit = (int) $limit;
+        $this->limit = (int)$limit;
         return $this;
     }
 
@@ -67,11 +69,12 @@ trait Limit
      * Setup offset for the query
      *
      * @param  integer $offset
+     *
      * @return $this
      */
     public function setOffset($offset)
     {
-        $this->offset = (int) $offset;
+        $this->offset = (int)$offset;
         return $this;
     }
 }

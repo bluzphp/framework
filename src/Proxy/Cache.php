@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -66,6 +66,7 @@ class Cache
      * Get Cache Adapter
      *
      * @param  string $adapter
+     *
      * @return Instance|false
      * @throws ComponentException
      */
@@ -90,6 +91,7 @@ class Cache
      * Get value of cache item
      *
      * @param  string $key
+     *
      * @return mixed
      * @throws \Psr\Cache\InvalidArgumentException
      */
@@ -117,6 +119,7 @@ class Cache
      * @param  mixed  $data
      * @param  int    $ttl
      * @param  array  $tags
+     *
      * @return bool
      * @throws \Psr\Cache\InvalidArgumentException
      */

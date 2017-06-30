@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -34,6 +34,7 @@ class Select extends AbstractBuilder
      * {@inheritdoc}
      *
      * @param  integer|string|object $fetchType
+     *
      * @return integer|string|array
      */
     public function execute($fetchType = null)
@@ -57,6 +58,7 @@ class Select extends AbstractBuilder
      * Setup fetch type, any of PDO, or any Class
      *
      * @param  string $fetchType
+     *
      * @return Select instance
      */
     public function setFetchType($fetchType)
@@ -85,12 +87,11 @@ class Select extends AbstractBuilder
         }
 
         $query .= implode(', ', $fromClauses)
-            . ($this->sqlParts['where'] !== null ? " WHERE " . ((string) $this->sqlParts['where']) : "")
+            . ($this->sqlParts['where'] !== null ? " WHERE " . ((string)$this->sqlParts['where']) : "")
             . ($this->sqlParts['groupBy'] ? " GROUP BY " . implode(", ", $this->sqlParts['groupBy']) : "")
-            . ($this->sqlParts['having'] !== null ? " HAVING " . ((string) $this->sqlParts['having']) : "")
+            . ($this->sqlParts['having'] !== null ? " HAVING " . ((string)$this->sqlParts['having']) : "")
             . ($this->sqlParts['orderBy'] ? " ORDER BY " . implode(", ", $this->sqlParts['orderBy']) : "")
-            . ($this->limit ? " LIMIT ". $this->limit ." OFFSET ". $this->offset : "")
-        ;
+            . ($this->limit ? " LIMIT " . $this->limit . " OFFSET " . $this->offset : "");
 
         return $query;
     }
@@ -109,6 +110,7 @@ class Select extends AbstractBuilder
      * </code>
      *
      * @param  string[] $select the selection expressions
+     *
      * @return Select instance
      */
     public function select(...$select)
@@ -130,6 +132,7 @@ class Select extends AbstractBuilder
      * </code>
      *
      * @param  string $select the selection expression
+     *
      * @return Select instance
      */
     public function addSelect($select)
@@ -153,6 +156,7 @@ class Select extends AbstractBuilder
      * @param  string $join      the table name to join
      * @param  string $alias     the alias of the join table
      * @param  string $condition the condition for the join
+     *
      * @return Select instance
      */
     public function join($fromAlias, $join, $alias, $condition = null)
@@ -176,6 +180,7 @@ class Select extends AbstractBuilder
      * @param  string $join      the table name to join
      * @param  string $alias     the alias of the join table
      * @param  string $condition the condition for the join
+     *
      * @return Select instance
      */
     public function innerJoin($fromAlias, $join, $alias, $condition = null)
@@ -186,9 +191,9 @@ class Select extends AbstractBuilder
             'join',
             [
                 $fromAlias => [
-                    'joinType'      => 'inner',
-                    'joinTable'     => $join,
-                    'joinAlias'     => $alias,
+                    'joinType' => 'inner',
+                    'joinTable' => $join,
+                    'joinAlias' => $alias,
                     'joinCondition' => $condition
                 ]
             ],
@@ -212,6 +217,7 @@ class Select extends AbstractBuilder
      * @param  string $join      the table name to join
      * @param  string $alias     the alias of the join table
      * @param  string $condition the condition for the join
+     *
      * @return Select instance
      */
     public function leftJoin($fromAlias, $join, $alias, $condition = null)
@@ -222,9 +228,9 @@ class Select extends AbstractBuilder
             'join',
             [
                 $fromAlias => [
-                    'joinType'      => 'left',
-                    'joinTable'     => $join,
-                    'joinAlias'     => $alias,
+                    'joinType' => 'left',
+                    'joinTable' => $join,
+                    'joinAlias' => $alias,
                     'joinCondition' => $condition
                 ]
             ],
@@ -248,6 +254,7 @@ class Select extends AbstractBuilder
      * @param  string $join      the table name to join
      * @param  string $alias     the alias of the join table
      * @param  string $condition the condition for the join
+     *
      * @return Select instance
      */
     public function rightJoin($fromAlias, $join, $alias, $condition = null)
@@ -258,9 +265,9 @@ class Select extends AbstractBuilder
             'join',
             [
                 $fromAlias => [
-                    'joinType'      => 'right',
-                    'joinTable'     => $join,
-                    'joinAlias'     => $alias,
+                    'joinType' => 'right',
+                    'joinTable' => $join,
+                    'joinAlias' => $alias,
                     'joinCondition' => $condition
                 ]
             ],
@@ -282,6 +289,7 @@ class Select extends AbstractBuilder
      * </code>
      *
      * @param  string[] $groupBy the grouping expression
+     *
      * @return Select instance
      */
     public function groupBy(...$groupBy)
@@ -307,6 +315,7 @@ class Select extends AbstractBuilder
      * </code>
      *
      * @param  string[] $groupBy the grouping expression
+     *
      * @return Select instance
      */
     public function addGroupBy(...$groupBy)
@@ -323,6 +332,7 @@ class Select extends AbstractBuilder
      * Replaces any previous having restrictions, if any
      *
      * @param  string[] $condition the query restriction predicates
+     *
      * @return Select
      */
     public function having(...$condition)
@@ -336,6 +346,7 @@ class Select extends AbstractBuilder
      * conjunction with any existing having restrictions
      *
      * @param  string[] $condition the query restriction predicates
+     *
      * @return Select
      */
     public function andHaving(...$condition)
@@ -357,6 +368,7 @@ class Select extends AbstractBuilder
      * disjunction with any existing having restrictions
      *
      * @param  string[] $condition the query restriction predicates
+     *
      * @return Select
      */
     public function orHaving(...$condition)
@@ -377,6 +389,7 @@ class Select extends AbstractBuilder
      * Setup offset like a page number, start from 1
      *
      * @param  integer $page
+     *
      * @return Select
      * @throws DbException
      */
@@ -393,7 +406,9 @@ class Select extends AbstractBuilder
      * Generate SQL string for JOINs
      *
      * @internal
+     *
      * @param  string $fromAlias alias of table
+     *
      * @return string
      */
     protected function getSQLForJoins($fromAlias)
@@ -404,7 +419,7 @@ class Select extends AbstractBuilder
             foreach ($this->sqlParts['join'][$fromAlias] as $join) {
                 $sql .= ' ' . strtoupper($join['joinType'])
                     . " JOIN " . $join['joinTable'] . ' ' . $join['joinAlias']
-                    . " ON " . ((string) $join['joinCondition']);
+                    . " ON " . ((string)$join['joinCondition']);
                 $sql .= $this->getSQLForJoins($join['joinAlias']);
             }
         }

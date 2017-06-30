@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -32,16 +32,17 @@ abstract class AbstractRowEntity extends Row implements EntityInterface
      *
      * @return array
      */
-    abstract public function getPrivileges() : array;
+    abstract public function getPrivileges(): array;
 
     /**
      * Has role a privilege
      *
      * @param  string $module
      * @param  string $privilege
+     *
      * @return bool
      */
-    public function hasPrivilege($module, $privilege) : bool
+    public function hasPrivilege($module, $privilege): bool
     {
         $privileges = $this->getPrivileges();
 

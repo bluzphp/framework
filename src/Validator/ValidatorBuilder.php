@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -42,8 +42,10 @@ class ValidatorBuilder
 
     /**
      * Add validator to builder
-     * @param string $name
+     *
+     * @param string      $name
      * @param Validator[] ...$validators
+     *
      * @return ValidatorBuilder
      */
     public function add($name, ...$validators)
@@ -60,9 +62,10 @@ class ValidatorBuilder
      * Validate chain of rules
      *
      * @param  array $input
+     *
      * @return bool
      */
-    public function validate($input) : bool
+    public function validate($input): bool
     {
         $this->resetErrors();
 
@@ -77,10 +80,11 @@ class ValidatorBuilder
      * Validate chain of rules for single item
      *
      * @param  string $key
-     * @param  mixed $value
+     * @param  mixed  $value
+     *
      * @return bool
      */
-    public function validateItem($key, $value) : bool
+    public function validateItem($key, $value): bool
     {
         $validators = $this->validators[$key] ?? null;
 
@@ -130,6 +134,7 @@ class ValidatorBuilder
      * Assert
      *
      * @param  mixed $input
+     *
      * @return bool
      * @throws ValidatorException
      */
@@ -148,6 +153,7 @@ class ValidatorBuilder
      *
      * @param  string $name
      * @param  string $message
+     *
      * @return void
      */
     protected function addError($name, $message)
@@ -164,7 +170,7 @@ class ValidatorBuilder
      *
      * @return array
      */
-    public function getErrors() : array
+    public function getErrors(): array
     {
         return $this->errors;
     }
@@ -184,8 +190,8 @@ class ValidatorBuilder
      *
      * @return bool
      */
-    public function hasErrors() : bool
+    public function hasErrors(): bool
     {
-        return (bool) count($this->errors);
+        return (bool)count($this->errors);
     }
 }

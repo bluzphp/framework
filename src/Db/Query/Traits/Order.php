@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -35,12 +35,13 @@ trait Order
      *
      * @param  string $sort  Sort expression
      * @param  string $order Sort direction (ASC or DESC)
+     *
      * @return $this
      */
     public function orderBy($sort, $order = 'ASC')
     {
         $order = strtoupper($order);
-        return $this->addQueryPart('orderBy', $sort .' '. ('ASC' == $order ? 'ASC' : 'DESC'), false);
+        return $this->addQueryPart('orderBy', $sort . ' ' . ('ASC' == $order ? 'ASC' : 'DESC'), false);
     }
 
     /**
@@ -48,11 +49,12 @@ trait Order
      *
      * @param  string $sort  Sort expression
      * @param  string $order Sort direction (ASC or DESC)
+     *
      * @return $this
      */
     public function addOrderBy($sort, $order = 'ASC')
     {
         $order = strtoupper($order);
-        return $this->addQueryPart('orderBy', $sort .' '. ('ASC' == $order ? 'ASC' : 'DESC'), true);
+        return $this->addQueryPart('orderBy', $sort . ' ' . ('ASC' == $order ? 'ASC' : 'DESC'), true);
     }
 }

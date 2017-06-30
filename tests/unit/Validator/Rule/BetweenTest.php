@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Validator\Rule;
 
 use \DateTime;
@@ -15,12 +16,14 @@ use Bluz\Validator\Rule\Between;
 
 /**
  * Class BetweenTest
+ *
  * @package Bluz\Tests\Validator\Rule
  */
 class BetweenTest extends Tests\TestCase
 {
     /**
      * @dataProvider providerForPass
+     *
      * @param $min
      * @param $max
      * @param $inclusive
@@ -36,6 +39,7 @@ class BetweenTest extends Tests\TestCase
     /**
      * @dataProvider providerForFail
      * @expectedException \Bluz\Validator\Exception\ValidatorException
+     *
      * @param $min
      * @param $max
      * @param $inclusive
@@ -52,6 +56,7 @@ class BetweenTest extends Tests\TestCase
     /**
      * @dataProvider providerForComponentException
      * @expectedException \Bluz\Validator\Exception\ComponentException
+     *
      * @param $min
      * @param $max
      */

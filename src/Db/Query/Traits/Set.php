@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -43,13 +43,14 @@ trait Set
      *
      * @param  string $key   The column to set
      * @param  string $value The value, expression, placeholder, etc
+     *
      * @return $this
      */
     public function set($key, $value)
     {
         $this->setParameter(null, $value, \PDO::PARAM_STR);
         $key = Db::quoteIdentifier($key);
-        return $this->addQueryPart('set', $key .' = ?', true);
+        return $this->addQueryPart('set', $key . ' = ?', true);
     }
 
     /**
@@ -67,6 +68,7 @@ trait Set
      * </code>
      *
      * @param  array $data
+     *
      * @return $this
      */
     public function setArray(array $data)

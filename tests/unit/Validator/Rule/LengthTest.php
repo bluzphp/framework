@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
@@ -14,12 +15,14 @@ use Bluz\Validator\Rule\Length;
 
 /**
  * Class LengthTest
+ *
  * @package Bluz\Tests\Validator\Rule
  */
 class LengthTest extends Tests\TestCase
 {
     /**
      * @dataProvider providerForPass
+     *
      * @param $string
      * @param $min
      * @param $max
@@ -32,6 +35,7 @@ class LengthTest extends Tests\TestCase
 
     /**
      * @dataProvider providerForFail
+     *
      * @param $string
      * @param $min
      * @param $max
@@ -44,6 +48,7 @@ class LengthTest extends Tests\TestCase
 
     /**
      * @dataProvider providerForFailInclusive
+     *
      * @param $string
      * @param $min
      * @param $max
@@ -58,6 +63,7 @@ class LengthTest extends Tests\TestCase
     /**
      * @dataProvider providerForComponentException
      * @expectedException \Bluz\Validator\Exception\ComponentException
+     *
      * @param $string
      * @param $min
      * @param $max
@@ -76,7 +82,7 @@ class LengthTest extends Tests\TestCase
             ['foobar', 1, 15],
             ['ççççç', 4, 6],
             [range(1, 20), 1, 30],
-            [(object) ['foo'=>'bar', 'bar'=>'baz'], 1, 2],
+            [(object)['foo' => 'bar', 'bar' => 'baz'], 1, 2],
             ['foobar', 1, null], //null is a valid max length, means "no maximum",
             ['foobar', null, 15] //null is a valid min length, means "no minimum"
         );
@@ -90,7 +96,7 @@ class LengthTest extends Tests\TestCase
         return array(
             [0, 1, 3],
             ['foobar', 1, 3],
-            [(object) ['foo'=>'bar', 'bar'=>'baz'], 3, 5],
+            [(object)['foo' => 'bar', 'bar' => 'baz'], 3, 5],
             [range(1, 50), 1, 30],
         );
     }

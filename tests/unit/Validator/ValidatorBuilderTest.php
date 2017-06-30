@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Validator;
 
 use Bluz\Tests;
@@ -17,6 +18,7 @@ use Bluz\Validator\ValidatorBuilder;
 
 /**
  * Class ValidatorBuilderTest
+ *
  * @package Bluz\Tests\Validator
  */
 class ValidatorBuilderTest extends Tests\TestCase
@@ -60,6 +62,7 @@ class ValidatorBuilderTest extends Tests\TestCase
             self::assertArrayHasKey('some', $e->getErrors());
         }
     }
+
     /**
      * Setup multi builder
      */
@@ -95,6 +98,7 @@ class ValidatorBuilderTest extends Tests\TestCase
 
     /**
      * Setup multi builder for empty object
+     *
      * @expectedException \Bluz\Validator\Exception\ValidatorException
      */
     public function testValidatorBuilderForEmptySet()

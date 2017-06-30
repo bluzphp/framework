@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
@@ -14,12 +15,14 @@ use Bluz\Validator\Rule\Min;
 
 /**
  * Class MinTest
+ *
  * @package Bluz\Tests\Validator\Rule
  */
 class MinTest extends Tests\TestCase
 {
     /**
      * @dataProvider providerForPass
+     *
      * @param $minValue
      * @param $inclusive
      * @param $input
@@ -33,6 +36,7 @@ class MinTest extends Tests\TestCase
 
     /**
      * @dataProvider providerForFail
+     *
      * @param $minValue
      * @param $inclusive
      * @param $input

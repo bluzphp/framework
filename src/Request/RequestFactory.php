@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -33,8 +33,8 @@ class RequestFactory extends ServerRequestFactory
         array $cookies = null,
         array $files = null
     ) {
-        $server  = static::normalizeServer($server ?: $_SERVER);
-        $files   = static::normalizeFiles($files ?: $_FILES);
+        $server = static::normalizeServer($server ?: $_SERVER);
+        $files = static::normalizeFiles($files ?: $_FILES);
         $headers = static::marshalHeaders($server);
         $request = new ServerRequest(
             $server,
@@ -51,7 +51,7 @@ class RequestFactory extends ServerRequestFactory
 
         // support header like "application/json" and "application/json; charset=utf-8"
         if ($contentType !== false && stristr($contentType, Request::TYPE_JSON)) {
-            $data = (array) json_decode($input);
+            $data = (array)json_decode($input);
         } else {
             switch ($request->getMethod()) {
                 case RequestMethod::POST:

@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -27,6 +27,7 @@ class Data extends \ArrayIterator
      * Set total rows
      *
      * @param  integer $total
+     *
      * @return self
      */
     public function setTotal(int $total)
@@ -40,7 +41,7 @@ class Data extends \ArrayIterator
      *
      * @return integer
      */
-    public function getTotal() : int
+    public function getTotal(): int
     {
         return $this->total;
     }

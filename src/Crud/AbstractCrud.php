@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -52,6 +52,7 @@ abstract class AbstractCrud
      * Get item by primary key(s)
      *
      * @param  mixed $primary
+     *
      * @return mixed
      * @throws NotImplementedException
      */
@@ -65,8 +66,9 @@ abstract class AbstractCrud
      *
      * @param  integer $offset
      * @param  integer $limit
-     * @param  array $params
-     * @param  null $total
+     * @param  array   $params
+     * @param  null    $total
+     *
      * @return mixed
      * @throws NotImplementedException
      */
@@ -79,6 +81,7 @@ abstract class AbstractCrud
      * Create new item
      *
      * @param  array $data
+     *
      * @return mixed
      * @throws NotImplementedException
      */
@@ -91,6 +94,7 @@ abstract class AbstractCrud
      * Create items
      *
      * @param  array $data
+     *
      * @return mixed
      * @throws NotImplementedException
      */
@@ -104,6 +108,7 @@ abstract class AbstractCrud
      *
      * @param  mixed $primary
      * @param  array $data
+     *
      * @return integer
      * @throws NotImplementedException
      */
@@ -116,6 +121,7 @@ abstract class AbstractCrud
      * Update items
      *
      * @param  array $data
+     *
      * @return integer
      * @throws NotImplementedException
      */
@@ -128,6 +134,7 @@ abstract class AbstractCrud
      * Delete item
      *
      * @param  mixed $primary
+     *
      * @return integer
      * @throws NotImplementedException
      */
@@ -140,6 +147,7 @@ abstract class AbstractCrud
      * Delete items
      *
      * @param  array $data
+     *
      * @return integer
      * @throws NotImplementedException
      */

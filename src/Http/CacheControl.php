@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -60,8 +60,8 @@ class CacheControl
             if (true === $value) {
                 $parts[] = $key;
             } else {
-                if (preg_match('#[^a-zA-Z0-9._-]#', (string) $value)) {
-                    $value = '"'.$value.'"';
+                if (preg_match('#[^a-zA-Z0-9._-]#', (string)$value)) {
+                    $value = '"' . $value . '"';
                 }
                 $parts[] = "$key=$value";
             }
@@ -111,11 +111,11 @@ class CacheControl
     public function getMaxAge()
     {
         if ($this->doContainsContainer('s-maxage')) {
-            return (int) $this->doGetContainer('s-maxage');
+            return (int)$this->doGetContainer('s-maxage');
         }
 
         if ($this->doContainsContainer('max-age')) {
-            return (int) $this->doGetContainer('max-age');
+            return (int)$this->doGetContainer('max-age');
         }
 
         if ($expires = $this->getExpires()) {
@@ -132,6 +132,7 @@ class CacheControl
      * This methods sets the Cache-Control max-age directive.
      *
      * @param  integer $value Number of seconds
+     *
      * @return void
      */
     public function setMaxAge($value)
@@ -146,6 +147,7 @@ class CacheControl
      * This methods sets the Cache-Control s-maxage directive.
      *
      * @param  integer $value Number of seconds
+     *
      * @return void
      */
     public function setSharedMaxAge($value)
@@ -178,18 +180,21 @@ class CacheControl
      * This method adjusts the Cache-Control/s-maxage directive.
      *
      * @param  integer $seconds Number of seconds
+     *
      * @return void
      */
     public function setTtl($seconds)
     {
         $this->setSharedMaxAge($this->getAge() + $seconds);
     }
+
     /**
      * Sets the response's time-to-live for private/client caches.
      *
      * This method adjusts the Cache-Control/max-age directive.
      *
      * @param  integer $seconds Number of seconds
+     *
      * @return void
      */
     public function setClientTtl($seconds)
@@ -212,12 +217,13 @@ class CacheControl
      *
      * @param  string $etag The ETag unique identifier
      * @param  bool   $weak Whether you want a weak ETag or not
+     *
      * @return void
      */
     public function setEtag($etag, $weak = false)
     {
         $etag = trim($etag, '"');
-        $this->response->setHeader('ETag', (true === $weak ? 'W/' : '') .'"'. $etag .'"');
+        $this->response->setHeader('ETag', (true === $weak ? 'W/' : '') . '"' . $etag . '"');
     }
 
     /**
@@ -228,7 +234,7 @@ class CacheControl
     public function getAge()
     {
         if ($age = $this->response->getHeader('Age')) {
-            return (int) $age;
+            return (int)$age;
         }
         return max(time() - date('U'), 0);
     }
@@ -237,6 +243,7 @@ class CacheControl
      * Set the age of the response
      *
      * @param  integer $age
+     *
      * @return void
      */
     public function setAge($age)
@@ -258,6 +265,7 @@ class CacheControl
      * Sets the Expires HTTP header with a DateTime instance
      *
      * @param  \DateTime|string $date A \DateTime instance or date as string
+     *
      * @return void
      */
     public function setExpires($date)
@@ -269,7 +277,7 @@ class CacheControl
         }
 
         $date->setTimezone(new \DateTimeZone('UTC'));
-        $this->response->setHeader('Expires', $date->format('D, d M Y H:i:s').' GMT');
+        $this->response->setHeader('Expires', $date->format('D, d M Y H:i:s') . ' GMT');
     }
 
     /**
@@ -286,6 +294,7 @@ class CacheControl
      * Sets the Last-Modified HTTP header with a DateTime instance or string
      *
      * @param  \DateTime|string $date A \DateTime instance or date as string
+     *
      * @return void
      */
     public function setLastModified($date)
@@ -297,7 +306,7 @@ class CacheControl
         }
 
         $date->setTimezone(new \DateTimeZone('UTC'));
-        $this->response->setHeader('Last-Modified', $date->format('D, d M Y H:i:s').' GMT');
+        $this->response->setHeader('Last-Modified', $date->format('D, d M Y H:i:s') . ' GMT');
     }
 
     /**

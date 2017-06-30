@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Validator\Rule;
 
 use \DateTime;
@@ -15,6 +16,7 @@ use Bluz\Validator\Rule\Date;
 
 /**
  * Class DateTest
+ *
  * @package Bluz\Tests\Validator\Rule
  */
 class DateTest extends Tests\TestCase
@@ -45,6 +47,7 @@ class DateTest extends Tests\TestCase
 
     /**
      * @dataProvider providerForPass
+     *
      * @param $format
      * @param $date
      */
@@ -57,6 +60,7 @@ class DateTest extends Tests\TestCase
 
     /**
      * @dataProvider providerForFail
+     *
      * @param $format
      * @param $date
      */
@@ -70,6 +74,7 @@ class DateTest extends Tests\TestCase
     /**
      * @dataProvider providerForFail
      * @expectedException \Bluz\Validator\Exception\ValidatorException
+     *
      * @param $format
      * @param $date
      */

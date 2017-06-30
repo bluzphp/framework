@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -25,8 +25,10 @@ trait RegularAccess
 {
     /**
      * Set key/value pair
+     *
      * @param  string $key
      * @param  mixed  $value
+     *
      * @return void
      */
     public function set($key, $value)
@@ -36,7 +38,9 @@ trait RegularAccess
 
     /**
      * Get value by key
+     *
      * @param  string $key
+     *
      * @return mixed
      */
     public function get($key)
@@ -46,7 +50,9 @@ trait RegularAccess
 
     /**
      * Check contains key in container
+     *
      * @param  string $key
+     *
      * @return bool
      */
     public function contains($key)
@@ -56,7 +62,9 @@ trait RegularAccess
 
     /**
      * Delete value by key
+     *
      * @param  string $key
+     *
      * @return void
      */
     public function delete($key)

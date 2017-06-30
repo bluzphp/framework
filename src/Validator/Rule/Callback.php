@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -28,6 +28,7 @@ class Callback extends AbstractRule
      * Setup validation rule
      *
      * @param  callable $callback
+     *
      * @throws \Bluz\Validator\Exception\ComponentException
      */
     public function __construct(callable $callback)
@@ -39,10 +40,11 @@ class Callback extends AbstractRule
      * Check input data
      *
      * @param  mixed $input
+     *
      * @return bool
      */
-    public function validate($input) : bool
+    public function validate($input): bool
     {
-        return (bool) call_user_func($this->callback, $input);
+        return (bool)call_user_func($this->callback, $input);
     }
 }

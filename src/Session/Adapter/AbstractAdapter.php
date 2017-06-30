@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -36,6 +36,7 @@ abstract class AbstractAdapter
      * Prepare Id - add prefix
      *
      * @param  string $id
+     *
      * @return string
      */
     protected function prepareId($id)
@@ -48,12 +49,13 @@ abstract class AbstractAdapter
      *
      * @param  string $savePath
      * @param  string $sessionName
+     *
      * @return bool|void
      */
     public function open($savePath, $sessionName)
     {
         $this->prefix = $sessionName . ':';
-        $this->ttl = (int) ini_get('session.gc_maxlifetime');
+        $this->ttl = (int)ini_get('session.gc_maxlifetime');
 
         // No more action necessary because connection is injected
         // in constructor and arguments are not applicable.
@@ -74,6 +76,7 @@ abstract class AbstractAdapter
      * Cleanup old sessions
      *
      * @param integer $maxLifetime
+     *
      * @return bool|void
      */
     public function gc($maxLifetime)

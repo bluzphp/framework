@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Db;
 
 use Bluz\Db\Table;
@@ -35,13 +36,14 @@ class TableTest extends TestCase
 
     /**
      * testGetInstance
+     *
      * @covers \Bluz\Db\Table::getInstance
      */
     public function testGetInstance()
     {
         // test that the method doesn't create new objects
         self::assertSame($this->table, Db\ConcreteTable::getInstance());
-        
+
         // tests that instances are creating separately for each table class
         self::assertEquals(
             'Bluz\Tests\Fixtures\Db\ConcreteTable',
@@ -74,6 +76,7 @@ class TableTest extends TestCase
     /**
      * @dataProvider getFindWrongData
      * @expectedException \Bluz\Db\Exception\InvalidPrimaryKeyException
+     *
      * @param $keyValues
      */
     public function testFindException($keyValues)

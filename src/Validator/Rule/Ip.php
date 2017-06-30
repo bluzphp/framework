@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 namespace Bluz\Validator\Rule;
@@ -33,6 +33,7 @@ class Ip extends AbstractRule
      * Setup validation rule
      *
      * @param mixed $options
+     *
      * @throws \Bluz\Validator\Exception\ComponentException
      */
     public function __construct($options = null)
@@ -49,13 +50,15 @@ class Ip extends AbstractRule
      * Parse IP range
      *
      * @param  string $input
+     *
      * @return array
      * @throws \Bluz\Validator\Exception\ComponentException
      */
     protected function parseRange($input)
     {
         if ($input === null || $input == '*' || $input == '*.*.*.*'
-            || $input == '0.0.0.0-255.255.255.255') {
+            || $input == '0.0.0.0-255.255.255.255'
+        ) {
             return null;
         }
 
@@ -99,7 +102,7 @@ class Ip extends AbstractRule
      * Parse range using wildcards
      *
      * @param string $input
-     * @param array $range
+     * @param array  $range
      */
     protected function parseRangeUsingWildcards($input, &$range)
     {
@@ -114,6 +117,7 @@ class Ip extends AbstractRule
      *
      * @param  string $input
      * @param  array  $range
+     *
      * @throws \Bluz\Validator\Exception\ComponentException
      * @link http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing
      */
@@ -127,7 +131,7 @@ class Ip extends AbstractRule
 
         if ($isAddressMask && $this->verifyAddress($input[1])) {
             $range['mask'] = sprintf('%032b', ip2long($input[1]));
-            return ;
+            return;
         }
 
         if ($isAddressMask || $input[1] < 8 || $input[1] > 30) {
@@ -141,9 +145,10 @@ class Ip extends AbstractRule
      * Check input data
      *
      * @param  string $input
+     *
      * @return bool
      */
-    public function validate($input) : bool
+    public function validate($input): bool
     {
         return $this->verifyAddress($input) && $this->verifyNetwork($input);
     }
@@ -152,11 +157,12 @@ class Ip extends AbstractRule
      * Verify IP address
      *
      * @param  string $address
+     *
      * @return bool
      */
     protected function verifyAddress($address)
     {
-        return (boolean) filter_var(
+        return (boolean)filter_var(
             $address,
             FILTER_VALIDATE_IP,
             [
@@ -169,6 +175,7 @@ class Ip extends AbstractRule
      * Verify Network by mask
      *
      * @param  string $input
+     *
      * @return bool
      */
     protected function verifyNetwork($input)
@@ -193,6 +200,7 @@ class Ip extends AbstractRule
      * Check subnet
      *
      * @param  string $input
+     *
      * @return bool
      */
     protected function belongsToSubnet($input)

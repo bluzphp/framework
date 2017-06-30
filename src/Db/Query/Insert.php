@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -25,6 +25,7 @@ class Insert extends AbstractBuilder
      * {@inheritdoc}
      *
      * @param  null $sequence
+     *
      * @return integer|string|array
      */
     public function execute($sequence = null)
@@ -64,6 +65,7 @@ class Insert extends AbstractBuilder
      * </code>
      *
      * @param  string $table The table into which the rows should be inserted
+     *
      * @return Insert instance
      */
     public function insert($table)

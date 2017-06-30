@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/skeleton
+ * @link      https://github.com/bluzphp/skeleton
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Crud;
 
 use Bluz\Proxy\Db;
@@ -85,6 +86,7 @@ class TableTest extends TestCase
 
     /**
      * Method readOne with invalid $primary should throw exception
+     *
      * @expectedException \Bluz\Application\Exception\NotFoundException
      */
     public function testReadOneWithInvalidPrimary()
@@ -127,7 +129,7 @@ class TableTest extends TestCase
             100,
             [
                 'name' => 'CrudTestTable',
-                'email' => uniqid('tableTest.', true) .'.'. date('His').'@test.com',
+                'email' => uniqid('tableTest.', true) . '.' . date('His') . '@test.com',
                 'status' => 'active'
             ]
         );
@@ -137,6 +139,7 @@ class TableTest extends TestCase
 
     /**
      * Method UpdateOne with invalid primary should throw exception
+     *
      * @expectedException \Bluz\Application\Exception\NotFoundException
      */
     public function testUpdateOneWithInvalidPrimary()
@@ -162,6 +165,7 @@ class TableTest extends TestCase
 
     /**
      * Method DeleteOne with invalid primary should throw exception
+     *
      * @expectedException \Bluz\Application\Exception\NotFoundException
      */
     public function testDeleteOneWithInvalidPrimary()

@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -17,7 +17,9 @@ use Bluz\Proxy\Router;
 
 /**
  * Reload helper can be declared inside Bootstrap
+ *
  * @param \Exception $exception
+ *
  * @return Controller
  */
 return

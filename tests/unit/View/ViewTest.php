@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\View;
 
 use Bluz\Router\Router;
@@ -101,7 +102,7 @@ class ViewTest extends TestCase
 
         return $view;
     }
-    
+
     /**
      * Helper Ahref
      */
@@ -207,7 +208,7 @@ class ViewTest extends TestCase
         $result = $view->headScript();
 
         self::assertEquals(
-            '<script src="/foo.js" ></script>'.
+            '<script src="/foo.js" ></script>' .
             '<script src="/bar.js" ></script>',
             str_replace(["\t", "\n", "\r"], '', $result)
         );
@@ -227,7 +228,7 @@ class ViewTest extends TestCase
         $result = $view->headStyle();
 
         self::assertEquals(
-            '<link href="/foo.css" rel="stylesheet" media="all"/>'.
+            '<link href="/foo.css" rel="stylesheet" media="all"/>' .
             '<link href="/bar.css" rel="stylesheet" media="all"/>',
             str_replace(["\t", "\n", "\r"], '', $result)
         );
@@ -383,16 +384,16 @@ class ViewTest extends TestCase
         $result = str_replace(["\t", "\n", "\r"], '', $result);
 
         self::assertEquals(
-            '<select id="car" name="car">'.
-            '<option value="none">No Car</option>'.
-            '<optgroup label="class-A">'.
-            '<option value="citroen-c1">Citroen C1</option>'.
-            '<option value="mercedes-benz-a200">Mercedes Benz A200</option>'.
-            '</optgroup>'.
-            '<optgroup label="class-B">'.
-            '<option value="audi-a1">Audi A1</option>'.
-            '<option value="citroen-c3">Citroen C3</option>'.
-            '</optgroup>'.
+            '<select id="car" name="car">' .
+            '<option value="none">No Car</option>' .
+            '<optgroup label="class-A">' .
+            '<option value="citroen-c1">Citroen C1</option>' .
+            '<option value="mercedes-benz-a200">Mercedes Benz A200</option>' .
+            '</optgroup>' .
+            '<optgroup label="class-B">' .
+            '<option value="audi-a1">Audi A1</option>' .
+            '<option value="citroen-c3">Citroen C3</option>' .
+            '</optgroup>' .
             '</select>',
             $result
         );
@@ -422,11 +423,11 @@ class ViewTest extends TestCase
         $result = str_replace(["\t", "\n", "\r"], '', $result);
 
         self::assertEquals(
-            '<select id="car" name="car">'.
-            '<option value="none">No Car</option>'.
-            '<option value="citroen-c1">Citroen C1</option>'.
-            '<option value="citroen-c3">Citroen C3</option>'.
-            '<option value="citroen-c4" selected="selected">Citroen C4</option>'.
+            '<select id="car" name="car">' .
+            '<option value="none">No Car</option>' .
+            '<option value="citroen-c1">Citroen C1</option>' .
+            '<option value="citroen-c3">Citroen C3</option>' .
+            '<option value="citroen-c4" selected="selected">Citroen C4</option>' .
             '</select>',
             $result
         );
@@ -456,11 +457,11 @@ class ViewTest extends TestCase
         $result = str_replace(["\t", "\n", "\r"], '', $result);
 
         self::assertEquals(
-            '<select name="car" multiple="multiple">'.
-            '<option value="citroen-c1" selected="selected">Citroen C1</option>'.
-            '<option value="mercedes-benz-a200">Mercedes Benz A200</option>'.
-            '<option value="audi-a1">Audi A1</option>'.
-            '<option value="citroen-c3" selected="selected">Citroen C3</option>'.
+            '<select name="car" multiple="multiple">' .
+            '<option value="citroen-c1" selected="selected">Citroen C1</option>' .
+            '<option value="mercedes-benz-a200">Mercedes Benz A200</option>' .
+            '<option value="audi-a1">Audi A1</option>' .
+            '<option value="citroen-c3" selected="selected">Citroen C3</option>' .
             '</select>',
             $result
         );

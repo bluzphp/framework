@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
@@ -14,12 +15,14 @@ use Bluz\Validator\Rule\Alpha;
 
 /**
  * Class AlphaTest
+ *
  * @package Bluz\Tests\Validator\Rule
  */
 class AlphaTest extends Tests\TestCase
 {
     /**
      * @dataProvider providerForPass
+     *
      * @param $validAlpha
      * @param $additional
      */
@@ -33,6 +36,7 @@ class AlphaTest extends Tests\TestCase
     /**
      * @dataProvider providerForFail
      * @expectedException \Bluz\Validator\Exception\ValidatorException
+     *
      * @param $invalidAlpha
      * @param $additional
      */
@@ -46,6 +50,7 @@ class AlphaTest extends Tests\TestCase
     /**
      * @dataProvider providerForComponentException
      * @expectedException \Bluz\Validator\Exception\ComponentException
+     *
      * @param $additional
      */
     public function testInvalidConstructorParamsShouldThrowComponentException($additional)
@@ -55,6 +60,7 @@ class AlphaTest extends Tests\TestCase
 
     /**
      * @dataProvider providerAdditionalChars
+     *
      * @param $additional
      * @param $query
      */

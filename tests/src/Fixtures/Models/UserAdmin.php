@@ -2,6 +2,7 @@
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Fixtures\Models;
 
 use Bluz\Auth\AbstractRowEntity;
@@ -32,7 +33,7 @@ class UserAdmin extends AbstractRowEntity
      *
      * @return array
      */
-    public function getPrivileges() : array
+    public function getPrivileges(): array
     {
         return [];
     }
@@ -41,6 +42,7 @@ class UserAdmin extends AbstractRowEntity
      * Check user role
      *
      * @param integer $roleId
+     *
      * @return boolean
      */
     public function hasRole($roleId)
@@ -53,9 +55,10 @@ class UserAdmin extends AbstractRowEntity
      *
      * @param string $module
      * @param string $privilege
+     *
      * @return boolean
      */
-    public function hasPrivilege($module, $privilege) : bool
+    public function hasPrivilege($module, $privilege): bool
     {
         return true;
     }

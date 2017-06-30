@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -38,7 +38,7 @@ class Meta
      * @var array list of Accept
      */
     protected $accept = [];
-    
+
     /**
      * @var array list of Acl
      */
@@ -83,6 +83,7 @@ class Meta
      * Set state required for working with var_export (used inside PHP File cache)
      *
      * @param  $array
+     *
      * @return Meta
      */
     public static function __set_state($array)
@@ -146,6 +147,7 @@ class Meta
      *  - set default value
      *
      * @param  array $requestParams
+     *
      * @return array
      */
     public function params($requestParams)
@@ -209,6 +211,7 @@ class Meta
      * Set Cache TTL
      *
      * @param  string $ttl
+     *
      * @return void
      */
     public function setCache($ttl)
@@ -220,6 +223,7 @@ class Meta
      * Prepare Cache
      *
      * @param  string $cache
+     *
      * @return integer
      */
     protected function prepareCache($cache)
@@ -251,20 +255,21 @@ class Meta
      */
     public function getAccept()
     {
-        return count($this->accept)?$this->accept:null;
+        return count($this->accept) ? $this->accept : null;
     }
 
     /**
      * Set accepted types
      *
      * @param  string $accept
+     *
      * @return void
      */
     public function setAccept($accept)
     {
         // allow accept map
         $acceptMap = [
-            'ANY'  => Request::TYPE_ANY,
+            'ANY' => Request::TYPE_ANY,
             'HTML' => Request::TYPE_HTML,
             'JSON' => Request::TYPE_JSON
         ];
@@ -275,7 +280,7 @@ class Meta
             $this->accept[] = $acceptMap[$accept];
         }
     }
-    
+
     /**
      * Get Acl privileges
      *
@@ -283,13 +288,14 @@ class Meta
      */
     public function getAcl()
     {
-        return count($this->acl)?$this->acl:null;
+        return count($this->acl) ? $this->acl : null;
     }
 
     /**
      * Set Acl privileges
      *
      * @param  string $acl
+     *
      * @return void
      */
     public function setAcl($acl)
@@ -304,13 +310,14 @@ class Meta
      */
     public function getMethod()
     {
-        return count($this->method)?$this->method:null;
+        return count($this->method) ? $this->method : null;
     }
 
     /**
      * Set HTTP Method
      *
      * @param  string $method
+     *
      * @return void
      */
     public function setMethod($method)
@@ -332,6 +339,7 @@ class Meta
      * Set param types
      *
      * @param  string $param
+     *
      * @return void
      */
     public function setParam($param)
@@ -361,6 +369,7 @@ class Meta
      * Set Privilege fo ACL allow only one privilege
      *
      * @param  string $privilege
+     *
      * @return void
      */
     public function setPrivilege($privilege)
@@ -375,13 +384,14 @@ class Meta
      */
     public function getRoute()
     {
-        return count($this->route)?$this->route:null;
+        return count($this->route) ? $this->route : null;
     }
 
     /**
      * Set Route
      *
      * @param  string $route
+     *
      * @return void
      */
     public function setRoute($route)
@@ -405,6 +415,7 @@ class Meta
      * Prepare Route pattern
      *
      * @param  string $route
+     *
      * @return string
      */
     protected function prepareRoutePattern($route)

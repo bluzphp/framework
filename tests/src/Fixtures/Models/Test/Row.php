@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/skeleton
+ * @link      https://github.com/bluzphp/skeleton
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Fixtures\Models\Test;
 
 use Bluz\Validator\Traits\Validator;
@@ -16,9 +17,9 @@ use Bluz\Validator\Validator as v;
  * Test Row
  *
  * @property integer $id
- * @property string $name
- * @property string $email
- * @property string $status enum('active','disable','delete')
+ * @property string  $name
+ * @property string  $email
+ * @property string  $status enum('active','disable','delete')
  *
  * @package  Bluz\Tests\Fixtures
  */

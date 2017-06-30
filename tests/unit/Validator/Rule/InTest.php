@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
@@ -14,13 +15,15 @@ use Bluz\Validator\Rule\In;
 
 /**
  * Class InTest
+ *
  * @package Bluz\Tests\Validator\Rule
  */
 class InTest extends Tests\TestCase
 {
     /**
      * @dataProvider providerForPass
-     * @param $input
+     *
+     * @param      $input
      * @param null $haystack
      * @param bool $strict
      */
@@ -34,8 +37,9 @@ class InTest extends Tests\TestCase
     /**
      * @dataProvider providerForFail
      * @expectedException \Bluz\Validator\Exception\ValidatorException
-     * @param $input
-     * @param $haystack
+     *
+     * @param      $input
+     * @param      $haystack
      * @param bool $strict
      */
     public function testInvalidInChecksShouldThrowInException($input, $haystack, $strict = false)

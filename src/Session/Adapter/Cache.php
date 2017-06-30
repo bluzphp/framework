@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -16,7 +16,7 @@ use Bluz\Proxy;
 /**
  * Cache session handler
  *
- * @todo Migrate to {@link https://github.com/php-cache/session-handler PSR-6 Session handler}
+ * @todo    Migrate to {@link https://github.com/php-cache/session-handler PSR-6 Session handler}
  * @package Bluz\Session\Adapter
  */
 class Cache extends AbstractAdapter implements \SessionHandlerInterface
@@ -25,6 +25,7 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
      * Check and setup Redis server
      *
      * @param  array $settings
+     *
      * @throws ConfigurationException
      */
     public function __construct(array $settings = [])
@@ -40,6 +41,7 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
      * Read session data
      *
      * @param  string $id
+     *
      * @return bool|string
      * @throws \Psr\Cache\InvalidArgumentException
      */
@@ -53,6 +55,7 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
      *
      * @param  string $id
      * @param  string $data
+     *
      * @return bool|void
      * @throws \Psr\Cache\InvalidArgumentException
      */
@@ -65,6 +68,7 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
      * Destroy a session
      *
      * @param  integer $id
+     *
      * @return bool|void
      */
     public function destroy($id)

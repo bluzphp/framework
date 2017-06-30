@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
@@ -14,12 +15,14 @@ use Bluz\Validator\Rule\Regexp;
 
 /**
  * Class RegexTest
+ *
  * @package Bluz\Tests\Validator\Rule
  */
 class RegexTest extends Tests\TestCase
 {
     /**
      * @dataProvider providerForPass
+     *
      * @param $expression
      * @param $input
      */
@@ -31,6 +34,7 @@ class RegexTest extends Tests\TestCase
 
     /**
      * @dataProvider providerForFail
+     *
      * @param $expression
      * @param $input
      */

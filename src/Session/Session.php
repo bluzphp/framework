@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -46,6 +46,7 @@ class Session
      * validation, an exception will be raised.
      *
      * @param  string $name
+     *
      * @throws SessionException
      * @return Session
      */
@@ -91,6 +92,7 @@ class Session
      * Set Namespace
      *
      * @param  string $namespace
+     *
      * @return Session
      */
     public function setNamespace($namespace)
@@ -115,6 +117,7 @@ class Session
      * Can safely be called in the middle of a session.
      *
      * @param  string $id
+     *
      * @return Session
      * @throws SessionException
      */
@@ -148,12 +151,13 @@ class Session
      * native ID generation Can safely be called in the middle of a session.
      *
      * @param  bool $deleteOldSession
+     *
      * @return bool
      */
     public function regenerateId($deleteOldSession = true)
     {
         if ($this->sessionExists()) {
-            return session_regenerate_id((bool) $deleteOldSession);
+            return session_regenerate_id((bool)$deleteOldSession);
         }
         return false;
     }
@@ -224,6 +228,7 @@ class Session
      * Set session save handler object
      *
      * @param  \SessionHandlerInterface $saveHandler
+     *
      * @return Session
      */
     public function setAdapter($saveHandler)
@@ -260,7 +265,7 @@ class Session
             }
             return true;
         } elseif (is_string($this->adapter)) {
-            $adapterClass = '\\Bluz\\Session\\Adapter\\'.ucfirst($this->adapter);
+            $adapterClass = '\\Bluz\\Session\\Adapter\\' . ucfirst($this->adapter);
             if (!class_exists($adapterClass) || !is_subclass_of($adapterClass, '\SessionHandlerInterface')) {
                 throw new ComponentException("Class for session adapter `{$this->adapter}` not found");
             }
@@ -279,6 +284,7 @@ class Session
      * cookie), regenerates the session ID, and restarts the session.
      *
      * @param  integer $ttl TTL in seconds
+     *
      * @return void
      */
     public function setSessionCookieLifetime($ttl)
@@ -319,6 +325,7 @@ class Session
      * Set session save path
      *
      * @param  string $savePath
+     *
      * @return Session
      * @throws ComponentException
      */
@@ -338,6 +345,7 @@ class Session
      *
      * @param  string $key
      * @param  mixed  $value
+     *
      * @return void
      */
     public function set($key, $value)
@@ -354,6 +362,7 @@ class Session
      * Get value by key
      *
      * @param  string $key
+     *
      * @return mixed
      */
     public function get($key)
@@ -368,6 +377,7 @@ class Session
      * Isset
      *
      * @param  string $key
+     *
      * @return bool
      */
     public function contains($key)
@@ -384,6 +394,7 @@ class Session
      * Unset
      *
      * @param  string $key
+     *
      * @return void
      */
     public function delete($key)

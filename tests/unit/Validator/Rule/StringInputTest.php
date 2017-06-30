@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
@@ -14,6 +15,7 @@ use Bluz\Validator\Rule\StringInput;
 
 /**
  * Class StringTest
+ *
  * @package Bluz\Tests\Validator\Rule
  */
 class StringInputTest extends Tests\TestCase
@@ -30,6 +32,7 @@ class StringInputTest extends Tests\TestCase
 
     /**
      * @dataProvider providerForPass
+     *
      * @param $input
      */
     public function testString($input)
@@ -39,6 +42,7 @@ class StringInputTest extends Tests\TestCase
 
     /**
      * @dataProvider providerForFail
+     *
      * @param $input
      */
     public function testNotString($input)

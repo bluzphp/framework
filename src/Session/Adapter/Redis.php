@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -34,6 +34,7 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
      * Check and setup Redis server
      *
      * @param  array $settings
+     *
      * @throws ComponentException
      * @throws ConfigurationException
      */
@@ -74,6 +75,7 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
      * Read session data
      *
      * @param  string $id
+     *
      * @return bool|string
      */
     public function read($id)
@@ -86,17 +88,19 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
      *
      * @param  string $id
      * @param  string $data
+     *
      * @return bool|void
      */
     public function write($id, $data)
     {
-        $this->handler->set($this->prepareId($id), $data, (int) $this->ttl);
+        $this->handler->set($this->prepareId($id), $data, (int)$this->ttl);
     }
 
     /**
      * Destroy a session
      *
      * @param  integer $id
+     *
      * @return bool|void
      */
     public function destroy($id)

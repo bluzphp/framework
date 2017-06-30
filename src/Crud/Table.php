@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -34,6 +34,7 @@ class Table extends AbstractCrud
      * Setup Table instance
      *
      * @param  Db\Table $table
+     *
      * @return self
      */
     public function setTable(Db\Table $table)
@@ -83,6 +84,7 @@ class Table extends AbstractCrud
      * Get record from Db or create new object
      *
      * @param  mixed $primary
+     *
      * @return Row
      * @throws NotFoundException
      */
@@ -104,10 +106,11 @@ class Table extends AbstractCrud
     /**
      * Get set of records
      *
-     * @param int $offset
-     * @param int $limit
+     * @param int   $offset
+     * @param int   $limit
      * @param array $params
-     * @param int $total
+     * @param int   $total
+     *
      * @return array|int|mixed
      * @throws ApplicationException
      */
@@ -137,13 +140,15 @@ class Table extends AbstractCrud
 
         // run queries
         // use transaction to avoid errors
-        Proxy\Db::transaction(function () use (&$result, &$total, $select, $totalSQL) {
-            $result = $select->execute();
+        Proxy\Db::transaction(
+            function () use (&$result, &$total, $select, $totalSQL) {
+                $result = $select->execute();
 
-            if (!is_null($total)) {
-                $total = Proxy\Db::fetchOne($totalSQL);
+                if (!is_null($total)) {
+                    $total = Proxy\Db::fetchOne($totalSQL);
+                }
             }
-        });
+        );
 
         return $result;
     }
@@ -152,6 +157,7 @@ class Table extends AbstractCrud
      * Create item
      *
      * @param  array $data
+     *
      * @return integer
      */
     public function createOne($data)
@@ -166,6 +172,7 @@ class Table extends AbstractCrud
      *
      * @param  mixed $primary
      * @param  array $data
+     *
      * @return integer
      * @throws NotFoundException
      */
@@ -185,6 +192,7 @@ class Table extends AbstractCrud
      * Delete item
      *
      * @param  mixed $primary
+     *
      * @return integer
      * @throws NotFoundException
      */

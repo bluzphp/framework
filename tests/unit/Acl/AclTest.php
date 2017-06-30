@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Acl;
 
 use Bluz\Proxy;
@@ -32,6 +33,7 @@ class AclTest extends TestCase
         Proxy\Auth::setIdentity(new UserAdmin());
         self::assertTrue(Proxy\Acl::isAllowed('any', 'any'));
     }
+
     /**
      * Test deny access
      */

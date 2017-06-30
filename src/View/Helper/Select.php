@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -46,6 +46,7 @@ use Bluz\View\View;
  * @param  array        $options
  * @param  array|string $selected
  * @param  array        $attributes
+ *
  * @return string
  */
 return
@@ -70,6 +71,7 @@ return
         /**
          * @param  $value
          * @param  $text
+         *
          * @return string
          */
         $buildOption = function ($value, $text) use ($selected) {
@@ -79,31 +81,31 @@ return
                 $option['selected'] = 'selected';
             }
             return '<option ' . $this->attributes($option) . '>' . htmlspecialchars(
-                (string)$text,
-                ENT_QUOTES,
-                'UTF-8',
-                false
-            ) . '</option>';
+                    (string)$text,
+                    ENT_QUOTES,
+                    'UTF-8',
+                    false
+                ) . '</option>';
         };
 
 
         $result = [];
-    foreach ($options as $value => $text) {
-        if (is_array($text)) {
-            // optgroup support
-            // create a list of sub-options
-            $subOptions = [];
-            foreach ($text as $subValue => $subText) {
-                $subOptions[] = $buildOption($subValue, $subText);
-            }
-            // build string from array
-            $subOptions = "\n" . implode("\n", $subOptions) . "\n";
+        foreach ($options as $value => $text) {
+            if (is_array($text)) {
+                // optgroup support
+                // create a list of sub-options
+                $subOptions = [];
+                foreach ($text as $subValue => $subText) {
+                    $subOptions[] = $buildOption($subValue, $subText);
+                }
+                // build string from array
+                $subOptions = "\n" . implode("\n", $subOptions) . "\n";
 
-            $result[] = '<optgroup ' . $this->attributes(['label' => $value]) . '>' . $subOptions . '</optgroup>';
-        } else {
-            $result[] = $buildOption($value, $text);
+                $result[] = '<optgroup ' . $this->attributes(['label' => $value]) . '>' . $subOptions . '</optgroup>';
+            } else {
+                $result[] = $buildOption($value, $text);
+            }
         }
-    }
 
         $result = "\n" . implode("\n", $result) . "\n";
         return '<select ' . $this->attributes($attributes) . '>' . $result . '</select>';

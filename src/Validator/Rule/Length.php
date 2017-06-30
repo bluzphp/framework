@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -36,6 +36,7 @@ class Length extends AbstractCompareRule
      * @param  integer|null $min
      * @param  integer|null $max
      * @param  bool         $inclusive
+     *
      * @throws \Bluz\Validator\Exception\ComponentException
      */
     public function __construct($min = null, $max = null, $inclusive = true)
@@ -67,9 +68,10 @@ class Length extends AbstractCompareRule
      * Check input data
      *
      * @param  string $input
+     *
      * @return bool
      */
-    public function validate($input) : bool
+    public function validate($input): bool
     {
         if (!$length = $this->extractLength($input)) {
             return false;
@@ -83,6 +85,7 @@ class Length extends AbstractCompareRule
      * Extract length
      *
      * @param  string|object $input
+     *
      * @return integer|false
      */
     protected function extractLength($input)

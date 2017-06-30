@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
@@ -14,12 +15,14 @@ use Bluz\Validator\Rule\Email;
 
 /**
  * Class EmailTest
+ *
  * @package Bluz\Tests\Validator\Rule
  */
 class EmailTest extends Tests\TestCase
 {
     /**
      * @dataProvider providerForPass
+     *
      * @param $validEmail
      */
     public function testValidEmailShouldPass($validEmail)
@@ -32,6 +35,7 @@ class EmailTest extends Tests\TestCase
     /**
      * @dataProvider providerForFail
      * @expectedException \Bluz\Validator\Exception\ValidatorException
+     *
      * @param $invalidEmail
      */
     public function testInvalidEmailsShouldFailValidation($invalidEmail)

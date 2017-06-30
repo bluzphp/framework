@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
@@ -14,6 +15,7 @@ use Bluz\Validator\Rule\CreditCard;
 
 /**
  * Class CreditCardTest
+ *
  * @package Bluz\Tests\Validator\Rule
  */
 class CreditCardTest extends Tests\TestCase
@@ -33,6 +35,7 @@ class CreditCardTest extends Tests\TestCase
 
     /**
      * @dataProvider providerForPass
+     *
      * @param $input
      */
     public function testValidCreditCardsShouldReturnTrue($input)
@@ -44,6 +47,7 @@ class CreditCardTest extends Tests\TestCase
     /**
      * @dataProvider providerForFail
      * @expectedException \Bluz\Validator\Exception\ValidatorException
+     *
      * @param $input
      */
     public function testInvalidCreditCardsShouldThrowCreditCardException($input)

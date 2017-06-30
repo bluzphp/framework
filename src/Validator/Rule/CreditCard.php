@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -27,9 +27,10 @@ class CreditCard extends AbstractRule
      * Check input data
      *
      * @param  string $input
+     *
      * @return bool
      */
-    public function validate($input) : bool
+    public function validate($input): bool
     {
         $input = preg_replace('([ \.-])', '', $input);
 
@@ -44,6 +45,7 @@ class CreditCard extends AbstractRule
      * Verify by Mod10
      *
      * @param  string $input
+     *
      * @return bool
      */
     private function verifyMod10($input)

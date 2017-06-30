@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
@@ -14,6 +15,7 @@ use Bluz\Validator\Rule\Slug;
 
 /**
  * Class SlugTest
+ *
  * @package Bluz\Tests\Validator\Rule
  */
 class SlugTest extends Tests\TestCase
@@ -34,6 +36,7 @@ class SlugTest extends Tests\TestCase
 
     /**
      * @dataProvider providerForPass
+     *
      * @param $input
      */
     public function testValidSlug($input)
@@ -45,6 +48,7 @@ class SlugTest extends Tests\TestCase
     /**
      * @dataProvider providerForFail
      * @expectedException \Bluz\Validator\Exception\ValidatorException
+     *
      * @param $input
      */
     public function testInvalidSlug($input)

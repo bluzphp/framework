@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -36,6 +36,7 @@ trait Helper
      *
      * @param  string $name
      * @param  string $path
+     *
      * @return void
      * @throws CommonException
      */
@@ -66,7 +67,8 @@ trait Helper
      * Call helper
      *
      * @param string $name
-     * @param array $arguments
+     * @param array  $arguments
+     *
      * @return mixed
      * @throws CommonException
      */
@@ -86,6 +88,7 @@ trait Helper
      * Add helper path
      *
      * @param  string $path
+     *
      * @return void
      * @throws CommonException
      */
@@ -112,6 +115,7 @@ trait Helper
      * Set helpers path
      *
      * @param  array $helpersPath
+     *
      * @return void
      */
     public function setHelpersPath(array $helpersPath)
@@ -126,6 +130,7 @@ trait Helper
      *
      * @param  string $method
      * @param  array  $args
+     *
      * @return mixed
      * @throws CommonException
      */

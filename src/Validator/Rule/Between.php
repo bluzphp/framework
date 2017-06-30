@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -35,6 +35,7 @@ class Between extends AbstractCompareRule
      * @param  mixed $min
      * @param  mixed $max
      * @param  bool  $inclusive
+     *
      * @throws \Bluz\Validator\Exception\ComponentException
      */
     public function __construct($min, $max, $inclusive = false)
@@ -56,9 +57,10 @@ class Between extends AbstractCompareRule
      * Check input data
      *
      * @param  numeric $input
+     *
      * @return bool
      */
-    public function validate($input) : bool
+    public function validate($input): bool
     {
         return $this->less($this->minValue, $input)
             && $this->less($input, $this->maxValue);

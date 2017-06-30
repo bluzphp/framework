@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -61,6 +61,7 @@ abstract class AbstractTable extends Table
      *
      * @param  string $provider
      * @param  string $foreignKey
+     *
      * @return AbstractRow
      */
     public function getAuthRow($provider, $foreignKey)
@@ -72,6 +73,7 @@ abstract class AbstractTable extends Table
      * Generate Secret token
      *
      * @param  integer $id
+     *
      * @return string
      */
     protected function generateSecret($id)

@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -41,15 +41,17 @@ class Domain extends AbstractRule
      * Check input data
      *
      * @param  string $input
+     *
      * @return bool
      */
-    public function validate($input) : bool
+    public function validate($input): bool
     {
-        $input = (string) $input;
+        $input = (string)$input;
         // check by regular expression
         if (preg_match("/^([a-z\d](-*[a-z\d])*)(\.([a-z\d](-*[a-z\d])*))*$/i", $input)
             && preg_match("/^.{1,253}$/", $input)
-            && preg_match("/^[^\.]{1,63}(\.[^\.]{1,63})*$/", $input)) {
+            && preg_match("/^[^\.]{1,63}(\.[^\.]{1,63})*$/", $input)
+        ) {
             // check by DNS record
             if ($this->checkDns) {
                 return checkdnsrr($input, "A");

@@ -1,7 +1,7 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
@@ -12,11 +12,14 @@
  * @author   dark
  * @created  18.12.13 18:39
  */
+
 namespace Application;
 
 /**
  * @route /test/route-with-other-params/{$alias}(.*)
+ *
  * @param $alias
+ *
  * @return bool
  */
 return function ($alias) {

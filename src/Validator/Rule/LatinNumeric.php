@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -21,11 +21,12 @@ class LatinNumeric extends AbstractFilterRule
      * Check for latin and numeric character(s)
      *
      * @param  mixed $input
+     *
      * @return bool
      */
-    public function validateClean($input) : bool
+    public function validateClean($input): bool
     {
-        return (bool) preg_match('/^[a-z0-9]+$/i', $input);
+        return (bool)preg_match('/^[a-z0-9]+$/i', $input);
     }
 
     /**

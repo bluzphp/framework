@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Translator;
 
 use Bluz\Tests\TestCase;
@@ -41,7 +42,7 @@ class TranslatorTest extends TestCase
         $translator = new Translator();
         $translator->setDomain('messages');
         $translator->setLocale('uk_UA');
-        $translator->setPath(PATH_APPLICATION .'/locale');
+        $translator->setPath(PATH_APPLICATION . '/locale');
 
         self::assertEquals('', $translator->translate(''));
         self::assertEquals('message', $translator->translate('message'));
@@ -55,7 +56,7 @@ class TranslatorTest extends TestCase
         $translator = new Translator();
         $translator->setDomain('messages');
         $translator->setLocale('uk_UA');
-        $translator->setPath(PATH_APPLICATION .'/locale');
+        $translator->setPath(PATH_APPLICATION . '/locale');
 
         self::assertEquals('', $translator->translatePlural('', '', 2));
         if (function_exists('ngettext')) {
@@ -73,7 +74,7 @@ class TranslatorTest extends TestCase
         $translator = new Translator();
         $translator->setDomain('messages');
         $translator->setLocale('uk_UA');
-        $translator->setPath(PATH_APPLICATION .'/locale');
+        $translator->setPath(PATH_APPLICATION . '/locale');
 
         if (function_exists('ngettext')) {
             self::assertEquals(

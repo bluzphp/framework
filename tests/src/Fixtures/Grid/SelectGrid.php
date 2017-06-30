@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/skeleton
+ * @link      https://github.com/bluzphp/skeleton
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Fixtures\Grid;
 
 use Bluz\Db\Query\Select;
@@ -28,23 +29,24 @@ class SelectGrid extends Grid
 
     /**
      * Init SelectSource
+     *
      * @return self
      */
     public function init()
     {
-         // Array
-         $adapter = new SelectSource();
+        // Array
+        $adapter = new SelectSource();
 
-         $select = new Select();
-         $select->select('*')->from('test', 't');
+        $select = new Select();
+        $select->select('*')->from('test', 't');
 
-         $adapter->setSource($select);
+        $adapter->setSource($select);
 
-         $this->setAdapter($adapter);
-         $this->setDefaultLimit(10);
-         $this->setAllowOrders(['name', 'id', 'status']);
-         $this->setAllowFilters(['status', 'id', 'email']);
+        $this->setAdapter($adapter);
+        $this->setDefaultLimit(10);
+        $this->setAllowOrders(['name', 'id', 'status']);
+        $this->setAllowFilters(['status', 'id', 'email']);
 
-         return $this;
+        return $this;
     }
 }

@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -37,9 +37,9 @@ class Event
      *
      * Accept a target and its parameters.
      *
-     * @param  string        $name Event name
+     * @param  string $name Event name
      * @param  string|object $target
-     * @param  array|object  $params
+     * @param  array|object $params
      */
     public function __construct($name, $target = null, $params = null)
     {
@@ -80,13 +80,16 @@ class Event
      * Overwrites parameters
      *
      * @param  array|object $params
+     *
      * @return Event
      * @throws EventException
      */
     public function setParams($params)
     {
         if (!is_array($params) && !is_object($params)) {
-            throw new EventException('Event parameters must be an array or object; received `'.gettype($params).'`');
+            throw new EventException(
+                'Event parameters must be an array or object; received `' . gettype($params) . '`'
+            );
         }
 
         $this->params = $params;
@@ -110,6 +113,7 @@ class Event
      *
      * @param  string|int $name
      * @param  mixed      $default
+     *
      * @return mixed
      */
     public function getParam($name, $default = null)
@@ -130,6 +134,7 @@ class Event
      * Set the event name
      *
      * @param  string $name
+     *
      * @return Event
      */
     public function setName($name)
@@ -142,6 +147,7 @@ class Event
      * Set the event target/context
      *
      * @param  null|string|object $target
+     *
      * @return Event
      */
     public function setTarget($target)
@@ -155,6 +161,7 @@ class Event
      *
      * @param  string|int $name
      * @param  mixed      $value
+     *
      * @return Event
      */
     public function setParam($name, $value)

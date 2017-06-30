@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Fixtures\Common;
 
 use Bluz\Common\Options;
@@ -42,6 +43,7 @@ class ConcreteOptions
      * setFoo
      *
      * @param string $foo
+     *
      * @return self
      */
     public function setFoo($foo)
@@ -54,6 +56,7 @@ class ConcreteOptions
      * setMoo
      *
      * @param string $moo
+     *
      * @return self
      */
     public function setMoo($moo)
@@ -76,6 +79,7 @@ class ConcreteOptions
      * setFooBar
      *
      * @param string $fooBar
+     *
      * @return self
      */
     public function setFooBar($fooBar)

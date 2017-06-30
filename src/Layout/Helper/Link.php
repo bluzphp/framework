@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -16,7 +16,8 @@ use Bluz\Proxy\Registry;
 /**
  * Set or generate <link> code for <head>
  *
- * @param  array  $link
+ * @param  array $link
+ *
  * @return string|null
  */
 return
@@ -25,7 +26,7 @@ return
          * @var Layout $this
          */
         // it's stack for <head>
-        $links = Registry::get('layout:link') ? : [];
+        $links = Registry::get('layout:link') ?: [];
 
         if (is_null($link)) {
             // clear system vars
@@ -33,7 +34,7 @@ return
             // prepare to output
             $tags = array_map(
                 function ($attr) {
-                    return '<link '. $this->attributes($attr) .'/>';
+                    return '<link ' . $this->attributes($attr) . '/>';
                 },
                 $links
             );

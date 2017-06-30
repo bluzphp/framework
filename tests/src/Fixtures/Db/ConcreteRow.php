@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Fixtures\Db;
 
 use Bluz\Db\Row;
@@ -17,7 +18,7 @@ use Bluz\Db\Row;
  * @category Tests
  * @package  Bluz\Db
  *
- * @author Eugene Zabolotniy <realbaziak@gmail.com>
+ * @author   Eugene Zabolotniy <realbaziak@gmail.com>
  */
 class ConcreteRow extends Row
 {

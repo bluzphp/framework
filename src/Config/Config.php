@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -45,6 +45,7 @@ class Config
      * Set path to configuration files
      *
      * @param  string $path
+     *
      * @return void
      * @throws ConfigException
      */
@@ -60,6 +61,7 @@ class Config
      * Set application environment
      *
      * @param  string $environment
+     *
      * @return void
      */
     public function setEnvironment($environment)
@@ -79,7 +81,7 @@ class Config
             throw new ConfigException('Configuration directory is not setup');
         }
 
-        $this->config = $this->loadFiles($this->path .'/configs/default');
+        $this->config = $this->loadFiles($this->path . '/configs/default');
 
         if ($this->environment) {
             $customConfig = $this->loadFiles($this->path . '/configs/' . $this->environment);
@@ -91,6 +93,7 @@ class Config
      * Load configuration file
      *
      * @param  string $path
+     *
      * @return array
      * @throws ConfigException
      */
@@ -106,6 +109,7 @@ class Config
      * Load configuration files to array
      *
      * @param  string $path
+     *
      * @return array
      * @throws ConfigException
      */
@@ -118,7 +122,7 @@ class Config
         }
 
         $iterator = new \GlobIterator(
-            $path .'/*.php',
+            $path . '/*.php',
             \FilesystemIterator::KEY_AS_FILENAME | \FilesystemIterator::CURRENT_AS_PATHNAME
         );
 
@@ -133,6 +137,7 @@ class Config
      * Return configuration by key
      *
      * @param array $keys
+     *
      * @return array|mixed
      * @throws ConfigException
      */
@@ -155,6 +160,7 @@ class Config
      *
      * @param  string $module
      * @param  string $section
+     *
      * @return mixed
      * @throws \Bluz\Config\ConfigException
      */
@@ -162,7 +168,7 @@ class Config
     {
         if (!isset($this->modules[$module])) {
             $this->modules[$module] = $this->loadFile(
-                $this->path .'/modules/'. $module .'/config.php'
+                $this->path . '/modules/' . $module . '/config.php'
             );
 
             if (is_null($this->config)) {

@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/skeleton
+ * @link      https://github.com/bluzphp/skeleton
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Controller\Mapper;
 
 use Bluz\Controller\Controller;
@@ -77,6 +78,7 @@ class CrudTest extends TestCase
 
     /**
      * @dataProvider dataMethods
+     *
      * @param string $method
      */
     public function testMethod($method)
@@ -109,7 +111,7 @@ class CrudTest extends TestCase
     /**
      * @return array
      */
-    public function dataMethods() : array
+    public function dataMethods(): array
     {
         return [
             RequestMethod::GET => [RequestMethod::GET],

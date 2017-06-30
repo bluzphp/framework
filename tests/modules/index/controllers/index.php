@@ -10,6 +10,7 @@
 /**
  * @namespace
  */
+
 namespace Application;
 
 /**

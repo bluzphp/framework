@@ -3,7 +3,7 @@
  * Bluz Framework Component
  *
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 declare(strict_types=1);
@@ -25,6 +25,7 @@ interface ViewInterface
      *     $view->setPath('/modules/users/views');
      *
      * @param  string $path
+     *
      * @return ViewInterface
      */
     public function setPath($path);
@@ -36,6 +37,7 @@ interface ViewInterface
      *     $view->setTemplate('index.phtml');
      *
      * @param  string $file
+     *
      * @return ViewInterface
      */
     public function setTemplate($file);
@@ -44,6 +46,7 @@ interface ViewInterface
      * Merge data from array
      *
      * @param  array $data
+     *
      * @return ViewInterface
      */
     public function setFromArray(array $data);

@@ -1,12 +1,13 @@
 <?php
 /**
  * @copyright Bluz PHP Team
- * @link https://github.com/bluzphp/framework
+ * @link      https://github.com/bluzphp/framework
  */
 
 /**
  * @namespace
  */
+
 namespace Bluz\Tests\Application;
 
 use Bluz\Http\RequestMethod;
@@ -80,7 +81,7 @@ class ApplicationTest extends TestCase
     public function testErrorController()
     {
         // setup Request
-        self::setRequestParams(uniqid('module'). '/'. uniqid('controller'));
+        self::setRequestParams(uniqid('module') . '/' . uniqid('controller'));
 
         // run Application
         self::getApp()->process();

@@ -13,7 +13,9 @@ tools:
   external_code_coverage:
     timeout: 600
   php_analyzer: true
-  php_code_sniffer: true
+  php_code_sniffer:
+    config:
+      standard: PSR2
   php_cpd:
       enabled: true
       excluded_dirs: [vendor, tests]

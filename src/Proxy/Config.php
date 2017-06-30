@@ -36,7 +36,7 @@ use Bluz\Config\Config as Instance;
  * @method   static mixed getModuleData($module, $section = null)
  * @see      Instance::getModuleData()
  */
-class Config
+final class Config
 {
     use ProxyTrait;
 

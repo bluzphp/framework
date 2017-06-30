@@ -37,7 +37,7 @@ use Bluz\EventManager\EventManager as Instance;
  * @method   static string|object trigger($event, $target = null, $params = null)
  * @see      Instance::trigger()
  */
-class EventManager
+final class EventManager
 {
     use ProxyTrait;
 

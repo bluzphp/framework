@@ -37,7 +37,7 @@ use Bluz\Mailer\Mailer as Instance;
  * @method   static bool send(\PHPMailer $mail)
  * @see      Instance::send()
  */
-class Mailer
+final class Mailer
 {
     use ProxyTrait;
 

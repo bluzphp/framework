@@ -57,7 +57,7 @@ use Bluz\Router\Router as Instance;
  * @method   static string getErrorController()
  * @see      Instance::getErrorController()
  */
-class Router
+final class Router
 {
     use ProxyTrait;
 

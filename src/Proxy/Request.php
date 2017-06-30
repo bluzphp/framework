@@ -36,7 +36,7 @@ use Zend\Diactoros\ServerRequest as Instance;
  * @method   static UriInterface getUri()
  * @see      \Zend\Diactoros\RequestTrait::getUri()
  */
-class Request
+final class Request
 {
     use ProxyTrait;
 

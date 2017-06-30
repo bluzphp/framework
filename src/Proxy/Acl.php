@@ -30,7 +30,7 @@ use Bluz\Acl\Acl as Instance;
  * @method   static bool isAllowed($module, $privilege)
  * @see      Instance::isAllowed()
  */
-class Acl
+final class Acl
 {
     use ProxyTrait;
 

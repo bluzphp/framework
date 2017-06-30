@@ -36,7 +36,7 @@ use Cache\Taggable\TaggablePoolInterface as Instance;
  * @method   static bool clear()
  * @see      CacheItemPoolInterface::clear()
  */
-class Cache
+final class Cache
 {
     use ProxyTrait;
 
@@ -115,10 +115,10 @@ class Cache
     /**
      * Set value of cache item
      *
-     * @param  string $key
-     * @param  mixed  $data
-     * @param  int    $ttl
-     * @param  array  $tags
+     * @param  string   $key
+     * @param  mixed    $data
+     * @param  int      $ttl
+     * @param  string[] $tags
      *
      * @return bool
      * @throws \Psr\Cache\InvalidArgumentException

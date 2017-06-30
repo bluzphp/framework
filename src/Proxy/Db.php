@@ -91,7 +91,7 @@ use Bluz\Db\Query;
  * @method   static void disconnect()
  * @see      Instance::disconnect()
  */
-class Db
+final class Db
 {
     use ProxyTrait;
 

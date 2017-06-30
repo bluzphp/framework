@@ -40,7 +40,7 @@ use Bluz\Registry\Registry as Instance;
  * @method   static void  delete($key)
  * @see      Instance::delete()
  */
-class Registry
+final class Registry
 {
     use ProxyTrait;
 

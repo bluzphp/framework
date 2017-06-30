@@ -48,7 +48,7 @@ use Bluz\Messages\Messages as Instance;
  * @method   static void reset()
  * @see      Instance::reset()
  */
-class Messages
+final class Messages
 {
     use ProxyTrait;
 

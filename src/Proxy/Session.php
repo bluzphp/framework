@@ -50,7 +50,7 @@ use Bluz\Session\Session as Instance;
  *
  * @method   static void  expireSessionCookie()
  */
-class Session
+final class Session
 {
     use ProxyTrait;
 

@@ -35,7 +35,7 @@ use Bluz\Auth\EntityInterface;
  * @method   static void clearIdentity()
  * @see      Instance::clearIdentity()
  */
-class Auth
+final class Auth
 {
     use ProxyTrait;
 

@@ -74,7 +74,7 @@ use Bluz\Http\CacheControl as Instance;
  * @method   static void setLastModified($date)
  * @see      Instance::setLastModified()
  */
-class HttpCacheControl
+final class HttpCacheControl
 {
     use ProxyTrait;
 

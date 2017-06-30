@@ -57,7 +57,7 @@ use Bluz\View\View;
  * @method static string|null meta(string $name = null, string $content = null)
  * @method static string|null title(string $title = null, $position = 'replace', $separator = ' :: ')
  */
-class Layout
+final class Layout
 {
     use ProxyTrait;
 

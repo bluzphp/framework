@@ -33,7 +33,7 @@ use Bluz\Translator\Translator as Instance;
  * @method   static string translatePlural($singular, $plural, $number, ...$text)
  * @see      Instance::translatePlural()
  */
-class Translator
+final class Translator
 {
     use ProxyTrait;
 

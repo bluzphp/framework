@@ -84,7 +84,7 @@ use Bluz\Response\Response as Instance;
  * @method   static void  send()
  * @see      Instance::send()
  */
-class Response
+final class Response
 {
     use ProxyTrait;
 

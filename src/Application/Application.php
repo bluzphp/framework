@@ -12,9 +12,14 @@ namespace Bluz\Application;
 
 use Bluz\Application\Exception\ApplicationException;
 use Bluz\Application\Exception\ForbiddenException;
+use Bluz\Application\Exception\NotAcceptableException;
+use Bluz\Application\Exception\NotAllowedException;
 use Bluz\Application\Exception\RedirectException;
 use Bluz\Common;
+use Bluz\Common\Exception\CommonException;
+use Bluz\Common\Exception\ComponentException;
 use Bluz\Controller\Controller;
+use Bluz\Controller\ControllerException;
 use Bluz\Proxy\Config;
 use Bluz\Proxy\Layout;
 use Bluz\Proxy\Logger;
@@ -26,6 +31,7 @@ use Bluz\Proxy\Session;
 use Bluz\Proxy\Translator;
 use Bluz\Request\RequestFactory;
 use Bluz\Response\Response as ResponseInstance;
+use Zend\Diactoros\ServerRequest;
 
 /**
  * Application
@@ -36,7 +42,7 @@ use Bluz\Response\Response as ResponseInstance;
  * @created  06.07.11 16:25
  *
  * @method Controller error(\Exception $exception)
- * @method Controller forbidden(ForbiddenException $exception)
+ * @method mixed forbidden(ForbiddenException $exception)
  * @method null redirect(string $url)
  */
 class Application
@@ -69,7 +75,7 @@ class Application
      *
      * @return string
      */
-    public function getEnvironment()
+    public function getEnvironment() : string
     {
         return $this->environment;
     }
@@ -79,7 +85,7 @@ class Application
      *
      * @return string
      */
-    public function getPath()
+    public function getPath() : string
     {
         if (!$this->path) {
             if (defined('PATH_APPLICATION')) {
@@ -98,7 +104,7 @@ class Application
      *
      * @return bool
      */
-    public function isDebug()
+    public function isDebug() : bool
     {
         return $this->debugFlag;
     }
@@ -110,7 +116,7 @@ class Application
      *
      * @return bool
      */
-    public function useLayout($flag = null)
+    public function useLayout($flag = null) : bool
     {
         if (is_bool($flag)) {
             $this->layoutFlag = $flag;
@@ -190,6 +196,7 @@ class Application
      * Initial Request instance
      *
      * @return void
+     * @throws \InvalidArgumentException
      */
     protected function initRequest()
     {
@@ -228,7 +235,7 @@ class Application
      *
      * @return \Bluz\Response\Response
      */
-    public function getResponse()
+    public function getResponse() : ResponseInstance
     {
         return Response::getInstance();
     }
@@ -238,7 +245,7 @@ class Application
      *
      * @return \Zend\Diactoros\ServerRequest
      */
-    public function getRequest()
+    public function getRequest() : ServerRequest
     {
         return Request::getInstance();
     }
@@ -247,6 +254,7 @@ class Application
      * Run application
      *
      * @return void
+     * @throws ApplicationException
      */
     public function run()
     {
@@ -263,6 +271,7 @@ class Application
      * - Because it deprecated ({@link http://tools.ietf.org/html/rfc6648})
      *
      * @return void
+     * @throws ApplicationException
      */
     public function process()
     {
@@ -357,75 +366,77 @@ class Application
      * @param  array  $params
      *
      * @return Controller
-     * @throws ApplicationException
+     * @throws ComponentException
+     * @throws CommonException
+     * @throws ControllerException
+     * @throws ForbiddenException
+     * @throws NotAcceptableException
+     * @throws NotAllowedException
      */
-    public function dispatch($module, $controller, $params = [])
+    public function dispatch($module, $controller, array $params = [])
     {
-        $this->preDispatch($module, $controller, $params);
-        $result = $this->doDispatch($module, $controller, $params);
-        $this->postDispatch($module, $controller, $params);
+        $instance = new Controller($module, $controller, $params);
 
-        return $result;
+        Logger::info("app:dispatch:>>>: $module/$controller");
+        $this->preDispatch($instance);
+
+        Logger::info("app:dispatch:===: $module/$controller");
+        $this->doDispatch($instance);
+
+        Logger::info("app:dispatch:<<<: $module/$controller");
+        $this->postDispatch($instance);
+
+        return $instance;
     }
 
     /**
      * Extension point: pre dispatch
      *
-     * @param  string $module
-     * @param  string $controller
-     * @param  array  $params
+     * @param  Controller $controller
      *
      * @return void
+     * @throws ComponentException
+     * @throws ForbiddenException
+     * @throws NotAcceptableException
+     * @throws NotAllowedException
      */
-    protected function preDispatch($module, $controller, $params = [])
+    protected function preDispatch($controller)
     {
-        Logger::info("app:dispatch:pre: $module/$controller");
+        // check HTTP method
+        $controller->checkHttpMethod();
+
+        // check ACL privileges
+        $controller->checkPrivilege();
+
+        // check HTTP Accept header
+        $controller->checkHttpAccept();
     }
 
     /**
      * Do dispatch
      *
-     * @param  string $module
-     * @param  string $controller
-     * @param  array  $params
+     * @param  Controller $controller
      *
-     * @return Controller
-     * @throws \Bluz\Application\Exception\ForbiddenException
-     * @throws \Bluz\Application\Exception\NotAllowedException
-     * @throws \Bluz\Application\Exception\NotAcceptableException
+     * @return void
+     * @throws ComponentException
+     * @throws ControllerException
      */
-    protected function doDispatch($module, $controller, $params = [])
+    protected function doDispatch($controller)
     {
-        // @TODO: try to find custom controller class
-
-        // create controller controller
-        $controllerInstance = new Controller($module, $controller);
-
-        // check HTTP Accept header
-        $controllerInstance->checkAccept();
-        // check HTTP method
-        $controllerInstance->checkMethod();
-        // check ACL privileges
-        $controllerInstance->checkPrivilege();
-
         // run controller
-        $controllerInstance->run($params);
-
-        return $controllerInstance;
+        $controller->run();
     }
 
     /**
      * Extension point: post dispatch
      *
-     * @param  string $module
-     * @param  string $controller
-     * @param  array  $params
+     * @param  Controller $controller
      *
      * @return void
      */
-    protected function postDispatch($module, $controller, $params = [])
+    protected function postDispatch($controller)
     {
-        Logger::info("<<<:dispatch:post: $module/$controller");
+        // nothing by default
     }
 
     /**

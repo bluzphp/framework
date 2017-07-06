@@ -11,15 +11,12 @@ declare(strict_types=1);
 namespace Bluz\Controller;
 
 use Bluz\Application\Application;
-use Bluz\Application\Exception\ForbiddenException;
-use Bluz\Application\Exception\NotAcceptableException;
-use Bluz\Application\Exception\NotAllowedException;
 use Bluz\Auth\EntityInterface;
+use Bluz\Common\Exception\CommonException;
+use Bluz\Common\Exception\ComponentException;
 use Bluz\Common\Helper;
-use Bluz\Proxy\Acl;
 use Bluz\Proxy\Cache;
 use Bluz\Proxy\Logger;
-use Bluz\Proxy\Request;
 use Bluz\Response\ResponseTrait;
 use Bluz\View\View;
 
@@ -30,6 +27,9 @@ use Bluz\View\View;
  * @author   Anton Shevchuk
  *
  * @method void attachment(string $file)
+ * @method void checkHttpAccept()
+ * @method void checkHttpMethod()
+ * @method void checkPrivilege()
  * @method void denied()
  * @method void disableLayout()
  * @method void disableView()
@@ -57,7 +57,17 @@ class Controller implements \JsonSerializable
     protected $controller;
 
     /**
-     * @var string
+     * @var array
+     */
+    protected $params;
+
+    /**
+     * @var string Cache key
+     */
+    protected $key;
+
+    /**
+     * @var string Template name, by default is equal to controller name
      */
     protected $template;
 
@@ -88,113 +98,101 @@ class Controller implements \JsonSerializable
      *
      * @param string $module
      * @param string $controller
+     * @param array  $params
+     *
+     * @throws CommonException
      */
-    public function __construct($module, $controller)
+    public function __construct($module, $controller, array $params = [])
     {
-        $this->module = $module;
-        $this->controller = $controller;
-        $this->template = $controller . '.phtml';
-
         // initial default helper path
         $this->addHelperPath(__DIR__ . '/Helper/');
+
+        $this->setModule($module);
+        $this->setController($controller);
+        $this->setParams($params);
+
+        $this->template = $controller . '.phtml';
+        $this->key = "data.$module.$controller." . md5(http_build_query($params));
     }
 
     /**
-     * Check `Privilege`
-     *
-     * @throws ForbiddenException
+     * @return string
      */
-    public function checkPrivilege()
+    public function getModule(): string
     {
-        $privilege = $this->getMeta()->getPrivilege();
-        if ($privilege && !Acl::isAllowed($this->module, $privilege)) {
-            throw new ForbiddenException;
-        }
+        return $this->module;
     }
 
     /**
-     * Check `Method`
-     *
-     * @throws NotAllowedException
+     * @param string $module
      */
-    public function checkMethod()
+    protected function setModule(string $module)
     {
-        $methods = $this->getMeta()->getMethod();
-        if ($methods && !in_array(Request::getMethod(), $methods)) {
-            throw new NotAllowedException(implode(',', $methods));
-        }
+        $this->module = $module;
     }
 
     /**
-     * Check `Accept`
-     *
-     * @throws NotAcceptableException
+     * @return string
      */
-    public function checkAccept()
+    public function getController(): string
     {
-        // all ok for CLI
-        if (PHP_SAPI === 'cli') {
-            return;
-        }
-
-        $allowAccept = $this->getMeta()->getAccept();
-
-        // some controllers hasn't @accept tag
-        if (!$allowAccept) {
-            // but by default allow just HTML output
-            $allowAccept = [Request::TYPE_HTML, Request::TYPE_ANY];
-        }
-
-        // get Accept with high priority
-        $accept = Request::checkAccept($allowAccept);
-
-        // some controllers allow any type (*/*)
-        // and client doesn't send Accept header
-        if (in_array(Request::TYPE_ANY, $allowAccept) && !$accept) {
-            // all OK, controller should realize logic for response
-            return;
-        }
-
-        // some controllers allow just selected types
-        // choose MIME type by browser accept header
-        // filtered by controller @accept
-        // switch statement for this logic
-        switch ($accept) {
-            case Request::TYPE_ANY:
-            case Request::TYPE_HTML:
-                // HTML response with layout
-                break;
-            case Request::TYPE_JSON:
-                // JSON response
-                $this->template = null;
-                break;
-            default:
-                throw new NotAcceptableException;
-        }
+        return $this->controller;
     }
 
     /**
-     * __invoke
-     *
+     * @param string $controller
+     */
+    protected function setController(string $controller)
+    {
+        $this->controller = $controller;
+    }
+
+    /**
+     * @return array
+     */
+    public function getParams(): array
+    {
+        return $this->params;
+    }
+
+    /**
      * @param array $params
+     */
+    protected function setParams(array $params)
+    {
+        $this->params = $params;
+    }
+
+    /**
+     * Run controller logic
      *
      * @return Data
+     * @throws ComponentException
      * @throws ControllerException
      */
-    public function run(array $params = [])
+    public function run(): Data
+    {
+        if (!$this->loadData()) {
+            $this->process();
+
+            $this->saveData();
+        }
+        return $this->data;
+    }
+
+    /**
+     * Controller run
+     *
+     * @return Data
+     * @throws ComponentException
+     * @throws ControllerException
+     */
+    protected function process(): Data
     {
         // initial variables for use inside controller
         $module = $this->module;
         $controller = $this->controller;
-
-        $cacheKey = "data.$module.$controller." . md5(http_build_query($params));
-
-        $cacheTime = $this->getMeta()->getCache();
-
-        if ($cacheTime && $cached = Cache::get($cacheKey)) {
-            $this->data = $cached;
-            return $cached;
-        }
+        $params = $this->params;
 
         /**
          * @var \closure $controllerClosure
@@ -231,15 +229,6 @@ class Controller implements \JsonSerializable
                 break;
         }
 
-        if ($cacheTime) {
-            Cache::set(
-                $cacheKey,
-                $this->getData(),
-                $cacheTime,
-                ['system', 'data', Cache::prepare("$module.$controller")]
-            );
-        }
-
         return $this->getData();
     }
 
@@ -249,7 +238,7 @@ class Controller implements \JsonSerializable
      * @return void
      * @throws ControllerException
      */
-    protected function setFile()
+    protected function findFile()
     {
         $path = Application::getInstance()->getPath();
         $file = "$path/modules/{$this->module}/controllers/{$this->controller}.php";
@@ -265,11 +254,12 @@ class Controller implements \JsonSerializable
      * Get controller file path
      *
      * @return string
+     * @throws ControllerException
      */
-    protected function getFile() // : string
+    protected function getFile(): string
     {
         if (!$this->file) {
-            $this->setFile();
+            $this->findFile();
         }
         return $this->file;
     }
@@ -278,9 +268,10 @@ class Controller implements \JsonSerializable
      * Retrieve reflection for anonymous function
      *
      * @return void
-     * @throws \Bluz\Common\Exception\ComponentException
+     * @throws ComponentException
+     * @throws ControllerException
      */
-    protected function setMeta()
+    protected function initMeta()
     {
         // cache for reflection data
         $cacheKey = "meta.{$this->module}.{$this->controller}";
@@ -293,7 +284,7 @@ class Controller implements \JsonSerializable
                 $cacheKey,
                 $meta,
                 Cache::TTL_NO_EXPIRY,
-                ['system', 'meta', Cache::prepare($this->module . '.' . $this->controller)]
+                ['system', 'meta']
             );
         }
         $this->meta = $meta;
@@ -303,11 +294,13 @@ class Controller implements \JsonSerializable
      * Get meta information
      *
      * @return Meta
+     * @throws ControllerException
+     * @throws ComponentException
      */
-    public function getMeta()
+    public function getMeta(): Meta
     {
         if (!$this->meta) {
-            $this->setMeta();
+            $this->initMeta();
         }
         return $this->meta;
     }
@@ -318,12 +311,11 @@ class Controller implements \JsonSerializable
      * @param  string $key
      * @param  mixed  $value
      *
-     * @return Controller
+     * @return void
      */
     public function assign($key, $value)
     {
         $this->getData()->set($key, $value);
-        return $this;
     }
 
     /**
@@ -331,12 +323,48 @@ class Controller implements \JsonSerializable
      *
      * @return Data
      */
-    public function getData()
+    public function getData(): Data
     {
         if (!$this->data) {
             $this->data = new Data();
         }
         return $this->data;
+    }
+
+    /**
+     * Load Data from cache
+     *
+     * @return bool
+     * @throws ComponentException
+     */
+    private function loadData(): bool
+    {
+        $cacheTime = $this->getMeta()->getCache();
+
+        if ($cacheTime && $cached = Cache::get($this->key)) {
+            $this->data = $cached;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Save Data to cache
+     *
+     * @return bool
+     * @throws ComponentException
+     */
+    private function saveData(): bool
+    {
+        if ($cacheTime = $this->getMeta()->getCache()) {
+            return Cache::set(
+                $this->key,
+                $this->getData(),
+                $cacheTime,
+                ['system', 'data']
+            );
+        }
+        return false;
     }
 
     /**

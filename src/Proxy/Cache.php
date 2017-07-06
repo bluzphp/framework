@@ -13,6 +13,7 @@ namespace Bluz\Proxy;
 use Bluz\Common\Exception\ComponentException;
 use Cache\Hierarchy\HierarchicalPoolInterface;
 use Cache\Taggable\TaggablePoolInterface as Instance;
+use Psr\Cache\InvalidArgumentException;
 
 /**
  * Proxy to Cache
@@ -77,12 +78,11 @@ final class Cache
         if ($config && $adapter && isset($config['enabled']) && $config['enabled']) {
             if (!isset($config['pools'][$adapter])) {
                 throw new ComponentException("Class `Proxy\\Cache` required configuration for `$adapter` adapter");
-            } else {
-                if (!isset(static::$pools[$adapter])) {
-                    static::$pools[$adapter] = $config['pools'][$adapter]();
-                }
-                return static::$pools[$adapter];
             }
+            if (!isset(static::$pools[$adapter])) {
+                static::$pools[$adapter] = $config['pools'][$adapter]();
+            }
+            return static::$pools[$adapter];
         }
         return false;
     }
@@ -93,7 +93,6 @@ final class Cache
      * @param  string $key
      *
      * @return mixed
-     * @throws \Psr\Cache\InvalidArgumentException
      */
     public static function get($key)
     {
@@ -103,12 +102,18 @@ final class Cache
 
         $key = self::prepare($key);
 
-        if ($cache->hasItem($key)) {
-            $item = $cache->getItem($key);
-            if ($item->isHit()) {
-                return $item->get();
+        try {
+            if ($cache->hasItem($key)) {
+                $item = $cache->getItem($key);
+                if ($item->isHit()) {
+                    return $item->get();
+                }
             }
+        } catch (InvalidArgumentException $e) {
+            // something going wrong
+            Logger::error($e->getMessage());
         }
+
         return false;
     }
 
@@ -121,7 +126,6 @@ final class Cache
      * @param  string[] $tags
      *
      * @return bool
-     * @throws \Psr\Cache\InvalidArgumentException
      */
     public static function set($key, $data, $ttl = self::TTL_NO_EXPIRY, $tags = [])
     {
@@ -130,19 +134,26 @@ final class Cache
         }
 
         $key = self::prepare($key);
+        try {
 
-        $item = $cache->getItem($key);
-        $item->set($data);
+            $item = $cache->getItem($key);
+            $item->set($data);
 
-        if (self::TTL_NO_EXPIRY !== $ttl) {
-            $item->expiresAfter($ttl);
+            if (self::TTL_NO_EXPIRY !== $ttl) {
+                $item->expiresAfter($ttl);
+            }
+
+            if (!empty($tags)) {
+                $item->setTags($tags);
+            }
+
+            return $cache->save($item);
+        } catch (InvalidArgumentException $e) {
+            // something going wrong
+            Logger::error($e->getMessage());
         }
 
-        if (!empty($tags)) {
-            $item->setTags($tags);
-        }
-
-        return $cache->save($item);
+        return false;
     }
 
     /**

@@ -82,7 +82,7 @@ class Meta
     /**
      * Set state required for working with var_export (used inside PHP File cache)
      *
-     * @param  $array
+     * @param  array $array
      *
      * @return Meta
      */
@@ -150,7 +150,7 @@ class Meta
      *
      * @return array
      */
-    public function params($requestParams)
+    public function params($requestParams): array
     {
         // apply type and default value for request params
         $params = [];
@@ -192,7 +192,7 @@ class Meta
      *
      * @return string
      */
-    public function getFile()
+    public function getFile(): string
     {
         return $this->file;
     }
@@ -202,7 +202,7 @@ class Meta
      *
      * @return integer
      */
-    public function getCache()
+    public function getCache(): int
     {
         return $this->cache;
     }
@@ -328,7 +328,7 @@ class Meta
     /**
      * Get all params
      *
-     * @return array
+     * @return array|null
      */
     public function getParams()
     {
@@ -358,7 +358,7 @@ class Meta
     /**
      * Get Privilege fo ACL
      *
-     * @return string
+     * @return string|null
      */
     public function getPrivilege()
     {

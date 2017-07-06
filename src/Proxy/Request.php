@@ -48,6 +48,11 @@ final class Request
     const TYPE_JSON = 'application/json';
 
     /**
+     * @var array|null Accepted type
+     */
+    static private $accept;
+
+    /**
      * Init instance
      *
      * @throws ComponentException
@@ -240,18 +245,17 @@ final class Request
      */
     public static function getAccept(): array
     {
-        static $accept;
 
-        if (!$accept) {
+        if (!static::$accept) {
             // save to static variable
-            $accept = [];
+            static::$accept = [];
 
             // get header from request
             $header = self::getHeader('accept');
 
             // nothing ...
             if (!$header) {
-                return $accept;
+                return static::$accept;
             }
 
             // make array if types
@@ -273,11 +277,21 @@ final class Request
 
                 // mime-type $a is accepted with the quality $q
                 // WARNING: $q == 0 means, that mime-type isn’t supported!
-                $accept[$a] = (float)$q;
+                static::$accept[$a] = (float)$q;
             }
-            arsort($accept);
+            arsort(static::$accept);
         }
-        return $accept;
+        return static::$accept;
+    }
+
+    /**
+     * Reset accept for tests
+     *
+     * @return void
+     */
+    public static function resetAccept()
+    {
+        static::$accept = null;
     }
 
     /**

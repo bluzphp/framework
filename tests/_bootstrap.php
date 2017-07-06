@@ -6,7 +6,7 @@ error_reporting(E_ALL | E_STRICT);
 ini_set('display_errors', 1);
 
 // Paths
-define('PATH_ROOT', realpath(__DIR__ . '/../'));
+define('PATH_ROOT', realpath(dirname(__DIR__)));
 define('PATH_APPLICATION', PATH_ROOT . '/tests');
 define('PATH_VENDOR', PATH_ROOT . '/vendor');
 

@@ -7,7 +7,6 @@
 /**
  * @namespace
  */
-
 namespace Bluz\Tests;
 
 use Bluz\Application\Application;
@@ -79,7 +78,7 @@ class BootstrapTest extends Application
      * @return \Bluz\Controller\Controller
      * @throws \Exception
      */
-    public function dispatch($module, $controller, $params = [])
+    public function dispatch($module, $controller, array $params = [])
     {
         $this->dispatchModule = $module;
         $this->dispatchController = $controller;

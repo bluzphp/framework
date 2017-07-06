@@ -133,6 +133,7 @@ class TestCase extends Unit
         Proxy\Auth::clearIdentity();
         Proxy\Messages::popAll();
         Proxy\Request::setInstance(RequestFactory::fromGlobals());
+        Proxy\Request::resetAccept();
         Proxy\Response::setInstance(new Bluz\Response\Response());
     }
 

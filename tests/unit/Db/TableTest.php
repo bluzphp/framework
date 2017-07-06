@@ -46,11 +46,11 @@ class TableTest extends TestCase
 
         // tests that instances are creating separately for each table class
         self::assertEquals(
-            'Bluz\Tests\Fixtures\Db\ConcreteTable',
+            Db\ConcreteTable::class,
             get_class(Db\ConcreteTable::getInstance())
         );
         self::assertEquals(
-            'Bluz\Tests\Fixtures\Db\WrongKeysTable',
+            Db\WrongKeysTable::class,
             get_class(Db\WrongKeysTable::getInstance())
         );
     }

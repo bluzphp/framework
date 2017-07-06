@@ -202,6 +202,7 @@ final class Request
      */
     public static function getClientIp($checkProxy = true)
     {
+        $result = null;
         if ($checkProxy) {
             $result = self::getServer('HTTP_CLIENT_IP') ?? self::getServer('HTTP_X_FORWARDED_FOR') ?? null;
         }
@@ -245,17 +246,16 @@ final class Request
      */
     public static function getAccept(): array
     {
-
-        if (!static::$accept) {
+        if (!self::$accept) {
             // save to static variable
-            static::$accept = [];
+            self::$accept = [];
 
             // get header from request
             $header = self::getHeader('accept');
 
             // nothing ...
             if (!$header) {
-                return static::$accept;
+                return self::$accept;
             }
 
             // make array if types
@@ -277,11 +277,11 @@ final class Request
 
                 // mime-type $a is accepted with the quality $q
                 // WARNING: $q == 0 means, that mime-type isn’t supported!
-                static::$accept[$a] = (float)$q;
+                self::$accept[$a] = (float)$q;
             }
-            arsort(static::$accept);
+            arsort(self::$accept);
         }
-        return static::$accept;
+        return self::$accept;
     }
 
     /**
@@ -291,7 +291,7 @@ final class Request
      */
     public static function resetAccept()
     {
-        static::$accept = null;
+        self::$accept = null;
     }
 
     /**
@@ -299,7 +299,7 @@ final class Request
      *
      * @param array $allowTypes
      *
-     * @return string
+     * @return string|false
      */
     public static function checkAccept(array $allowTypes = [])
     {
@@ -319,7 +319,7 @@ final class Request
             }
         }
         // no mime-type found
-        return null;
+        return false;
     }
 
     /**

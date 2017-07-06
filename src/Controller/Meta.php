@@ -328,7 +328,7 @@ class Meta
     /**
      * Get all params
      *
-     * @return array|null
+     * @return array
      */
     public function getParams()
     {
@@ -418,7 +418,7 @@ class Meta
      *
      * @return string
      */
-    protected function prepareRoutePattern($route)
+    protected function prepareRoutePattern($route): string
     {
         $pattern = str_replace('/', '\/', $route);
 

@@ -87,13 +87,6 @@ class Controller implements \JsonSerializable
     protected $data;
 
     /**
-     * One of HTML, JSON or empty string
-     *
-     * @var string
-     */
-    protected $render = 'HTML';
-
-    /**
      * Constructor of Statement
      *
      * @param string $module
@@ -110,8 +103,8 @@ class Controller implements \JsonSerializable
         $this->setModule($module);
         $this->setController($controller);
         $this->setParams($params);
+        $this->setTemplate($controller . '.phtml');
 
-        $this->template = $controller . '.phtml';
         $this->key = "data.$module.$controller." . md5(http_build_query($params));
     }
 
@@ -164,6 +157,22 @@ class Controller implements \JsonSerializable
     }
 
     /**
+     * @return string
+     */
+    protected function getTemplate(): string
+    {
+        return $this->template;
+    }
+
+    /**
+     * @param string $template
+     */
+    protected function setTemplate(string $template)
+    {
+        $this->template = $template;
+    }
+
+    /**
      * Run controller logic
      *
      * @return Data
@@ -174,7 +183,6 @@ class Controller implements \JsonSerializable
     {
         if (!$this->loadData()) {
             $this->process();
-
             $this->saveData();
         }
         return $this->data;
@@ -218,7 +226,7 @@ class Controller implements \JsonSerializable
                 break;
             case is_string($result):
                 // return string variable is equal to change view template
-                $this->template = $result;
+                $this->setTemplate($result);
                 break;
             case is_array($result):
                 // return associative array is equal to setup view data
@@ -336,6 +344,7 @@ class Controller implements \JsonSerializable
      *
      * @return bool
      * @throws ComponentException
+     * @throws ControllerException
      */
     private function loadData(): bool
     {
@@ -353,6 +362,7 @@ class Controller implements \JsonSerializable
      *
      * @return bool
      * @throws ComponentException
+     * @throws ControllerException
      */
     private function saveData(): bool
     {

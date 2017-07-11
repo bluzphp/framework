@@ -59,7 +59,7 @@ trait Container
      *
      * @return bool
      */
-    protected function doContainsContainer($key)
+    protected function doContainsContainer($key): bool
     {
         return array_key_exists($key, $this->container);
     }
@@ -96,7 +96,7 @@ trait Container
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return $this->container;
     }

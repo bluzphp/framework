@@ -35,6 +35,7 @@ class AttachmentResponse extends DiactorsResponse
      * @param array  $headers Array of headers to use at initialization.
      *
      * @internal param StreamInterface|string $text String or stream for the message body.
+     * @throws \InvalidArgumentException
      */
     public function __construct($file, $status = 200, array $headers = [])
     {

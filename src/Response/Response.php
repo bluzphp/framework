@@ -423,6 +423,7 @@ class Response
      * @param  bool                 $httpOnly
      *
      * @return void
+     * @throws \InvalidArgumentException
      */
     public function setCookie(
         $name,

@@ -50,17 +50,12 @@ class RequestFactory extends ServerRequestFactory
         $input = file_get_contents('php://input');
 
         // support header like "application/json" and "application/json; charset=utf-8"
-        if ($contentType !== false && stristr($contentType, Request::TYPE_JSON)) {
-            $data = (array)json_decode($input);
+        if (false !== $contentType && false !== stripos($contentType, Request::TYPE_JSON)) {
+            $data = (array) json_decode($input);
+        } elseif ($request->getMethod() === RequestMethod::POST) {
+            $data = $_POST;
         } else {
-            switch ($request->getMethod()) {
-                case RequestMethod::POST:
-                    $data = $_POST;
-                    break;
-                default:
-                    parse_str($input, $data);
-                    break;
-            }
+            parse_str($input, $data);
         }
 
         return $request

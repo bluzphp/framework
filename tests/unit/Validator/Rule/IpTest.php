@@ -18,7 +18,7 @@ use Bluz\Validator\Rule\Ip;
  *
  * @package Bluz\Tests\Validator\Rule
  */
-class IpTest extends Tests\TestCase
+class IpTest extends Tests\FrameworkTestCase
 {
     /**
      * @dataProvider providerForPass

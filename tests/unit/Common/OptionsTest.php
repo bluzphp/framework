@@ -10,7 +10,7 @@
 
 namespace Bluz\Tests\Common;
 
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 use Bluz\Tests\Fixtures\Common\ConcreteOptions;
 
 /**
@@ -21,7 +21,7 @@ use Bluz\Tests\Fixtures\Common\ConcreteOptions;
  * @author   Anton Shevchuk
  * @created  23.05.14 11:32
  */
-class OptionsTest extends TestCase
+class OptionsTest extends FrameworkTestCase
 {
     /**
      * @var ConcreteOptions

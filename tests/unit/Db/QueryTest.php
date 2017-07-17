@@ -14,7 +14,7 @@ use Bluz\Db\Query\Select;
 use Bluz\Db\Query\Insert;
 use Bluz\Db\Query\Update;
 use Bluz\Db\Query\Delete;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 use Bluz\Proxy;
 
 /**
@@ -24,7 +24,7 @@ use Bluz\Proxy;
  * @todo Separate to 4 tests for every builder
  * @todo Write tests for different DB type
  */
-class QueryTest extends TestCase
+class QueryTest extends FrameworkTestCase
 {
     /**
      * tearDown

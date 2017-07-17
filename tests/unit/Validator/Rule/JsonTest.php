@@ -18,7 +18,7 @@ use Bluz\Validator\Rule\Json;
  *
  * @package Bluz\Tests\Validator\Rule
  */
-class JsonTest extends Tests\TestCase
+class JsonTest extends Tests\FrameworkTestCase
 {
     /**
      * @var \Bluz\Validator\Rule\Json

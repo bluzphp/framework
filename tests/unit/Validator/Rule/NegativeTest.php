@@ -18,7 +18,7 @@ use Bluz\Validator\Rule\Negative;
  *
  * @package Bluz\Tests\Validator\Rule
  */
-class NegativeTest extends Tests\TestCase
+class NegativeTest extends Tests\FrameworkTestCase
 {
     /**
      * @var \Bluz\Validator\Rule\Negative

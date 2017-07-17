@@ -11,7 +11,7 @@
 namespace Bluz\Tests\Proxy;
 
 use Bluz\Proxy\Cache;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 
 /**
  * CacheTest
@@ -19,7 +19,7 @@ use Bluz\Tests\TestCase;
  * @package  Bluz\Tests\Proxy
  * @author   Anton Shevchuk
  */
-class CacheTest extends TestCase
+class CacheTest extends FrameworkTestCase
 {
     /**
      * Test disabled Cache

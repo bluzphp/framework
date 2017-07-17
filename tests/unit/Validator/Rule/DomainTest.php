@@ -18,7 +18,7 @@ use Bluz\Validator\Rule\Domain;
  *
  * @package Respect\Validation\Rules
  */
-class DomainTest extends Tests\TestCase
+class DomainTest extends Tests\FrameworkTestCase
 {
     /**
      * @dataProvider providerForPass

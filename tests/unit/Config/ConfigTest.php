@@ -12,9 +12,9 @@ namespace Bluz\Tests\Config;
 
 use Bluz;
 use Bluz\Config;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 
-class ConfigTest extends TestCase
+class ConfigTest extends FrameworkTestCase
 {
     /**
      * @var Config\Config

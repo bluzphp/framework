@@ -19,7 +19,7 @@ use Bluz\Validator\Rule\Date;
  *
  * @package Bluz\Tests\Validator\Rule
  */
-class DateTest extends Tests\TestCase
+class DateTest extends Tests\FrameworkTestCase
 {
     /**
      * @var Date

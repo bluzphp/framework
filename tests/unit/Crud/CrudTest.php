@@ -11,7 +11,7 @@
 namespace Bluz\Tests\Crud;
 
 use Bluz\Tests\Fixtures\Crud\EmptyCrud;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 
 /**
  * CrudTest
@@ -21,7 +21,7 @@ use Bluz\Tests\TestCase;
  * @author   Anton Shevchuk
  * @created  22.08.2014 16:13
  */
-class CrudTest extends TestCase
+class CrudTest extends FrameworkTestCase
 {
     /**
      * @covers \Bluz\Crud\AbstractCrud::readOne()

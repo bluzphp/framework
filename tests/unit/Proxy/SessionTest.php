@@ -12,7 +12,7 @@ namespace Bluz\Tests\Proxy;
 
 use Bluz\Session\Session as Target;
 use Bluz\Proxy\Session as Proxy;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 
 /**
  * Proxy Test
@@ -20,7 +20,7 @@ use Bluz\Tests\TestCase;
  * @package  Bluz\Tests\Proxy
  * @author   Anton Shevchuk
  */
-class SessionTest extends TestCase
+class SessionTest extends FrameworkTestCase
 {
     /**
      * Test instance

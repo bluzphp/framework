@@ -12,7 +12,7 @@ namespace Bluz\Tests\Proxy;
 
 use Bluz\Common\Nil as Target;
 use Bluz\Proxy\HttpCacheControl as Proxy;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 
 /**
  * Proxy Test
@@ -20,7 +20,7 @@ use Bluz\Tests\TestCase;
  * @package  Bluz\Tests\Proxy
  * @author   Anton Shevchuk
  */
-class HttpCacheControlTest extends TestCase
+class HttpCacheControlTest extends FrameworkTestCase
 {
     /**
      * Test instance

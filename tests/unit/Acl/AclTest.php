@@ -11,7 +11,7 @@
 namespace Bluz\Tests\Acl;
 
 use Bluz\Proxy;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 use Bluz\Tests\Fixtures\Models\UserAdmin;
 use Bluz\Tests\Fixtures\Models\UserGuest;
 
@@ -23,7 +23,7 @@ use Bluz\Tests\Fixtures\Models\UserGuest;
  * @author   Anton Shevchuk
  * @created  14.05.2014 11:09
  */
-class AclTest extends TestCase
+class AclTest extends FrameworkTestCase
 {
     /**
      * Test allow access

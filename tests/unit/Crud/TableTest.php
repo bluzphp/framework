@@ -14,7 +14,7 @@ use Bluz\Proxy\Db;
 use Bluz\Tests\Fixtures\Crud\TableCrud;
 use Bluz\Tests\Fixtures\Models\Test\Row;
 use Bluz\Tests\Fixtures\Models\Test\Table;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 
 /**
  * Crud TableTest
@@ -24,7 +24,7 @@ use Bluz\Tests\TestCase;
  * @author   Anton Shevchuk
  * @created  22.08.2014 16:13
  */
-class TableTest extends TestCase
+class TableTest extends FrameworkTestCase
 {
     /**
      * @var TableCrud

@@ -21,7 +21,7 @@ use Bluz\Validator\ValidatorBuilder;
  *
  * @package Bluz\Tests\Validator
  */
-class ValidatorBuilderTest extends Tests\TestCase
+class ValidatorBuilderTest extends Tests\FrameworkTestCase
 {
     /**
      * Setup simple builder

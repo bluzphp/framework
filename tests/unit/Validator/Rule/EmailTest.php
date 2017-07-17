@@ -18,7 +18,7 @@ use Bluz\Validator\Rule\Email;
  *
  * @package Bluz\Tests\Validator\Rule
  */
-class EmailTest extends Tests\TestCase
+class EmailTest extends Tests\FrameworkTestCase
 {
     /**
      * @dataProvider providerForPass

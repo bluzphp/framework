@@ -10,7 +10,7 @@
 
 namespace Bluz\Tests\Common;
 
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 use Bluz\Tests\Fixtures\Common\ConcreteSingleton;
 
 /**
@@ -21,7 +21,7 @@ use Bluz\Tests\Fixtures\Common\ConcreteSingleton;
  * @author   Anton Shevchuk
  * @created  12.08.2014 13:24
  */
-class SingletonTest extends TestCase
+class SingletonTest extends FrameworkTestCase
 {
     /**
      * Test GetInstance

@@ -12,7 +12,7 @@ namespace Bluz\Tests\Proxy;
 
 use Bluz\Config\Config as Target;
 use Bluz\Proxy\Config as Proxy;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 
 /**
  * Proxy Test
@@ -20,7 +20,7 @@ use Bluz\Tests\TestCase;
  * @package  Bluz\Tests\Proxy
  * @author   Anton Shevchuk
  */
-class ConfigTest extends TestCase
+class ConfigTest extends FrameworkTestCase
 {
     /**
      * Test instance

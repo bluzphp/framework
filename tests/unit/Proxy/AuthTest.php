@@ -12,7 +12,7 @@ namespace Bluz\Tests\Proxy;
 
 use Bluz\Auth\Auth as Target;
 use Bluz\Proxy\Auth as Proxy;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 
 /**
  * Proxy Test
@@ -20,7 +20,7 @@ use Bluz\Tests\TestCase;
  * @package  Bluz\Tests\Proxy
  * @author   Anton Shevchuk
  */
-class AuthTest extends TestCase
+class AuthTest extends FrameworkTestCase
 {
     /**
      * Test instance

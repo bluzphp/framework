@@ -11,7 +11,7 @@
 namespace Bluz\Tests\Response;
 
 use Bluz\Response\Response;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 
 /**
  * @package  Bluz\Tests\Http
@@ -19,7 +19,7 @@ use Bluz\Tests\TestCase;
  * @author   Anton Shevchuk
  * @created  22.08.2014 11:18
  */
-class ResponseTest extends TestCase
+class ResponseTest extends FrameworkTestCase
 {
     /**
      * @var Response

@@ -11,7 +11,7 @@
 namespace Bluz\Tests\View;
 
 use Bluz\Router\Router;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 use Bluz\View\View;
 
 /**
@@ -22,7 +22,7 @@ use Bluz\View\View;
  * @author   Anton Shevchuk
  * @created  11.08.2014 10:15
  */
-class ViewTest extends TestCase
+class ViewTest extends FrameworkTestCase
 {
     /**
      * Setup `test` table before the first test

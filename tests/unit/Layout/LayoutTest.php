@@ -10,7 +10,7 @@
 
 namespace Bluz\Tests\Layout;
 
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 use Bluz\Layout\Layout;
 
 /**
@@ -21,7 +21,7 @@ use Bluz\Layout\Layout;
  * @author   Anton Shevchuk
  * @created  22.08.2014 17:09
  */
-class LayoutTest extends TestCase
+class LayoutTest extends FrameworkTestCase
 {
     /**
      * Test Content

@@ -12,7 +12,7 @@ namespace Bluz\Tests\Messages;
 
 use Bluz\Messages\Messages;
 use Bluz\Proxy;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 
 /**
  * MessagesTest
@@ -22,7 +22,7 @@ use Bluz\Tests\TestCase;
  * @author   Anton Shevchuk
  * @created  08.08.2014 14:23
  */
-class MessagesTest extends TestCase
+class MessagesTest extends FrameworkTestCase
 {
     /**
      * setUp

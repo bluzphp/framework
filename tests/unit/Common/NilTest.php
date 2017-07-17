@@ -11,7 +11,7 @@
 namespace Bluz\Tests\Common;
 
 use Bluz\Common\Nil;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 
 /**
  * Tests for Nil
@@ -21,7 +21,7 @@ use Bluz\Tests\TestCase;
  * @author   Anton Shevchuk
  * @created  23.05.14 11:47
  */
-class NilTest extends TestCase
+class NilTest extends FrameworkTestCase
 {
     /**
      * @var Nil

@@ -18,7 +18,7 @@ use Bluz\Validator\Rule\CountryCode;
  *
  * @package Bluz\Tests\Validator\Rule
  */
-class CountryCodeTest extends Tests\TestCase
+class CountryCodeTest extends Tests\FrameworkTestCase
 {
     /**
      * @var CountryCode

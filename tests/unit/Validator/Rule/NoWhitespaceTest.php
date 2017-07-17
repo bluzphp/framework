@@ -18,7 +18,7 @@ use Bluz\Validator\Rule\NoWhitespace;
  *
  * @package Bluz\Tests\Validator\Rule
  */
-class NoWhitespaceTest extends Tests\TestCase
+class NoWhitespaceTest extends Tests\FrameworkTestCase
 {
     /**
      * @var NoWhitespace

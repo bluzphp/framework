@@ -12,7 +12,7 @@ namespace Bluz\Tests\Registry;
 
 use Bluz;
 use Bluz\Registry\Registry;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 
 /**
  * RegistryTest
@@ -22,7 +22,7 @@ use Bluz\Tests\TestCase;
  * @author   Anton Shevchuk
  * @created  14.05.2014 11:09
  */
-class RegistryTest extends TestCase
+class RegistryTest extends FrameworkTestCase
 {
     /**
      * @var Registry

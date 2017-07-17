@@ -12,7 +12,7 @@ namespace Bluz\Tests\Grid\Source;
 
 use Bluz\Grid\Grid;
 use Bluz\Grid\Source\SqlSource;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 use Bluz\Tests\Fixtures\Grid\SqlGrid;
 
 /**
@@ -20,7 +20,7 @@ use Bluz\Tests\Fixtures\Grid\SqlGrid;
  * @author   Anton Shevchuk
  * @created  07.08.14 14:37
  */
-class GridTest extends TestCase
+class GridTest extends FrameworkTestCase
 {
     /**
      * SQL Source

@@ -11,14 +11,14 @@
 namespace Bluz\Tests\Controller;
 
 use Bluz\Controller;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 
 /**
  * @package  Bluz\Tests
  * @author   Anton Shevchuk
  * @created  19.05.16 12:28
  */
-class ControllerTest extends TestCase
+class ControllerTest extends FrameworkTestCase
 {
 
     /**

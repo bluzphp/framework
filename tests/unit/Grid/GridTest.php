@@ -12,7 +12,7 @@ namespace Bluz\Tests\Grid;
 
 use Bluz\Grid\Grid;
 use Bluz\Proxy\Request;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 use Bluz\Tests\Fixtures\Grid\ArrayGrid;
 
 /**
@@ -20,7 +20,7 @@ use Bluz\Tests\Fixtures\Grid\ArrayGrid;
  * @author   Anton Shevchuk
  * @created  07.08.14 14:37
  */
-class GridTest extends TestCase
+class GridTest extends FrameworkTestCase
 {
     /**
      * Reset application

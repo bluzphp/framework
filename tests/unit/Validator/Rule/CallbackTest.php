@@ -18,7 +18,7 @@ use Bluz\Validator\Rule\Callback;
  *
  * @package Bluz\Tests\Validator\Rule
  */
-class CallbackTest extends Tests\TestCase
+class CallbackTest extends Tests\FrameworkTestCase
 {
     /**
      * @var \Bluz\Validator\Rule\Callback

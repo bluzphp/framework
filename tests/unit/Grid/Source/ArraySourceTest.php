@@ -12,7 +12,7 @@ namespace Bluz\Tests\Grid\Source;
 
 use Bluz\Grid\Grid;
 use Bluz\Grid\Source\ArraySource;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 use Bluz\Tests\Fixtures\Grid\ArrayGrid;
 
 /**
@@ -20,7 +20,7 @@ use Bluz\Tests\Fixtures\Grid\ArrayGrid;
  * @author   Anton Shevchuk
  * @created  07.08.14 14:37
  */
-class ArraySourceTest extends TestCase
+class ArraySourceTest extends FrameworkTestCase
 {
     /**
      * Array Source

@@ -18,7 +18,7 @@ use Bluz\Validator\Rule\Contains;
  *
  * @package Bluz\Tests\Validator\Rule
  */
-class ContainsTest extends Tests\TestCase
+class ContainsTest extends Tests\FrameworkTestCase
 {
     /**
      * @dataProvider providerForPass

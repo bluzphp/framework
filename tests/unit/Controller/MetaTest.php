@@ -11,7 +11,7 @@
 namespace Bluz\Tests\Controller;
 
 use Bluz\Controller\Meta;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 
 /**
  * ApplicationTest
@@ -19,7 +19,7 @@ use Bluz\Tests\TestCase;
  * @author   Anton Shevchuk
  * @created  21.05.13 10:24
  */
-class MetaTest extends TestCase
+class MetaTest extends FrameworkTestCase
 {
     /**
      * Test all reflection options

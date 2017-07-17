@@ -15,7 +15,7 @@ use Bluz\Controller\Mapper\Crud;
 use Bluz\Http\RequestMethod;
 use Bluz\Tests\Fixtures\Crud\TableCrud;
 use Bluz\Tests\Fixtures\Models\Test\Table;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 
 /**
  * Test for Controller Crud Mapper
@@ -23,7 +23,7 @@ use Bluz\Tests\TestCase;
  * @package  Bluz\Tests
  * @author   Anton Shevchuk
  */
-class CrudTest extends TestCase
+class CrudTest extends FrameworkTestCase
 {
     /**
      * @expectedException \Bluz\Controller\ControllerException

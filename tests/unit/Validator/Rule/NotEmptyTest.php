@@ -18,7 +18,7 @@ use Bluz\Validator\Rule\NotEmpty;
  *
  * @package Bluz\Tests\Validator\Rule
  */
-class NotEmptyTest extends Tests\TestCase
+class NotEmptyTest extends Tests\FrameworkTestCase
 {
     /**
      * @var NotEmpty

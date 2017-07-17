@@ -12,7 +12,7 @@ namespace Bluz\Tests\Crud;
 
 use Bluz\Http\CacheControl;
 use Bluz\Response\Response;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 
 /**
  * Crud TableTest
@@ -22,7 +22,7 @@ use Bluz\Tests\TestCase;
  * @author   Anton Shevchuk
  * @created  22.08.2014 16:13
  */
-class CacheControlTest extends TestCase
+class CacheControlTest extends FrameworkTestCase
 {
     /**
      * @var Response

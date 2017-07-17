@@ -18,7 +18,7 @@ use Bluz\Validator\Rule\Max;
  *
  * @package Bluz\Tests\Validator\Rule
  */
-class MaxTest extends Tests\TestCase
+class MaxTest extends Tests\FrameworkTestCase
 {
     /**
      * @dataProvider providerForPass

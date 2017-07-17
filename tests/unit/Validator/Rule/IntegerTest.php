@@ -18,7 +18,7 @@ use Bluz\Validator\Rule\Integer;
  *
  * @package Bluz\Tests\Validator\Rule
  */
-class IntegerTest extends Tests\TestCase
+class IntegerTest extends Tests\FrameworkTestCase
 {
     /**
      * @var \Bluz\Validator\Rule\Integer

@@ -11,7 +11,7 @@
 namespace Bluz\Tests\Common;
 
 use Bluz\Common\Collection;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 
 /**
  * Tests for Collection helpers
@@ -21,7 +21,7 @@ use Bluz\Tests\TestCase;
  * @author   Anton Shevchuk
  * @created  21.04.17 12:36
  */
-class CollectionTest extends TestCase
+class CollectionTest extends FrameworkTestCase
 {
     /**
      * @var array

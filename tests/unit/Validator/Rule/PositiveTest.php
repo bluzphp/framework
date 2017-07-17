@@ -18,7 +18,7 @@ use Bluz\Validator\Rule\Positive;
  *
  * @package Bluz\Tests\Validator\Rule
  */
-class PositiveTest extends Tests\TestCase
+class PositiveTest extends Tests\FrameworkTestCase
 {
     /**
      * @var \Bluz\Validator\Rule\Positive

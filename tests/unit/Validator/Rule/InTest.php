@@ -18,7 +18,7 @@ use Bluz\Validator\Rule\In;
  *
  * @package Bluz\Tests\Validator\Rule
  */
-class InTest extends Tests\TestCase
+class InTest extends Tests\FrameworkTestCase
 {
     /**
      * @dataProvider providerForPass

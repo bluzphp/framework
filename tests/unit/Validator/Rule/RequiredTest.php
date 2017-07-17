@@ -18,7 +18,7 @@ use Bluz\Validator\Rule\Required;
  *
  * @package Bluz\Tests\Validator\Rule
  */
-class RequiredTest extends Tests\TestCase
+class RequiredTest extends Tests\FrameworkTestCase
 {
     /**
      * @var Required

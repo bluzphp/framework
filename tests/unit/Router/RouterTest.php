@@ -12,7 +12,7 @@ namespace Bluz\Tests\Router;
 
 use Bluz\Http\RequestMethod;
 use Bluz\Proxy\Router;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 
 /**
  * RouterTest
@@ -22,7 +22,7 @@ use Bluz\Tests\TestCase;
  * @author   Anton Shevchuk
  * @created  12.08.2014 14:24
  */
-class RouterTest extends TestCase
+class RouterTest extends FrameworkTestCase
 {
     /**
      * testRouterUrl

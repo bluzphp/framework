@@ -10,7 +10,7 @@
 
 namespace Bluz\Tests\Translator;
 
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 use Bluz\Translator\Translator;
 
 /**
@@ -21,7 +21,7 @@ use Bluz\Translator\Translator;
  * @author   Anton Shevchuk
  * @created  22.08.2014 16:37
  */
-class TranslatorTest extends TestCase
+class TranslatorTest extends FrameworkTestCase
 {
     /**
      * Test Translator initialization

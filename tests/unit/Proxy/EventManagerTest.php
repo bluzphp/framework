@@ -23,6 +23,16 @@ use Bluz\Tests\FrameworkTestCase;
 class EventManagerTest extends FrameworkTestCase
 {
     /**
+     * setUp
+     *
+     * @return void
+     */
+    protected function setUp()
+    {
+        Proxy::resetInstance();
+    }
+
+    /**
      * Test instance
      */
     public function testProxyInstance()

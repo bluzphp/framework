@@ -32,7 +32,7 @@ class FrameworkTestCase extends Unit
     /**
      * Application entity
      *
-     * @var \Application\Tests\BootstrapTest
+     * @var \Bluz\Tests\BootstrapTest
      */
     static protected $app;
 

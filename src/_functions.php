@@ -164,7 +164,7 @@ if (!function_exists('value')) {
     /**
      * Return the value for callable
      *
-     * @param  mixed $value
+     * @param  callable|mixed $value
      *
      * @return mixed
      */

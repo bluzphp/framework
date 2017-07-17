@@ -10,7 +10,7 @@
 
 namespace Bluz\Tests\Proxy;
 
-use Bluz\Proxy\Cache;
+use Bluz\Proxy\Cache as Proxy;
 use Bluz\Tests\FrameworkTestCase;
 
 /**
@@ -22,10 +22,20 @@ use Bluz\Tests\FrameworkTestCase;
 class CacheTest extends FrameworkTestCase
 {
     /**
+     * setUp
+     *
+     * @return void
+     */
+    protected function setUp()
+    {
+        Proxy::resetInstance();
+    }
+
+    /**
      * Test disabled Cache
      */
     public function testDisabledTest()
     {
-        self::assertFalse(Cache::getInstance());
+        self::assertFalse(Proxy::getInstance());
     }
 }

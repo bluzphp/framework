@@ -23,6 +23,16 @@ use Bluz\Tests\FrameworkTestCase;
 class RequestTest extends FrameworkTestCase
 {
     /**
+     * setUp
+     *
+     * @return void
+     */
+    protected function setUp()
+    {
+        Request::resetInstance();
+    }
+
+    /**
      * Test $_GET variables
      */
     public function testQueryParams()

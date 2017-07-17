@@ -19,7 +19,7 @@ use Bluz\Validator\Rule\Between;
  *
  * @package Bluz\Tests\Validator\Rule
  */
-class BetweenTest extends Tests\TestCase
+class BetweenTest extends Tests\FrameworkTestCase
 {
     /**
      * @dataProvider providerForPass

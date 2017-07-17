@@ -18,7 +18,7 @@ use Bluz\Validator\Rule\CreditCard;
  *
  * @package Bluz\Tests\Validator\Rule
  */
-class CreditCardTest extends Tests\TestCase
+class CreditCardTest extends Tests\FrameworkTestCase
 {
     /**
      * @var CreditCard

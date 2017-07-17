@@ -18,7 +18,7 @@ use Bluz\Validator\Rule\Slug;
  *
  * @package Bluz\Tests\Validator\Rule
  */
-class SlugTest extends Tests\TestCase
+class SlugTest extends Tests\FrameworkTestCase
 {
     /**
      * @var \Bluz\Validator\Rule\Slug

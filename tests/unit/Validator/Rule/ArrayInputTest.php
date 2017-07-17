@@ -18,7 +18,7 @@ use Bluz\Validator\Rule\ArrayInput;
  *
  * @package Bluz\Tests\Validator\Rule
  */
-class ArrayInputTest extends Tests\TestCase
+class ArrayInputTest extends Tests\FrameworkTestCase
 {
     /**
      * @var \Bluz\Validator\Rule\StringInput

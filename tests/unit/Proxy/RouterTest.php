@@ -12,7 +12,7 @@ namespace Bluz\Tests\Proxy;
 
 use Bluz\Router\Router as Target;
 use Bluz\Proxy\Router as Proxy;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 
 /**
  * Proxy Test
@@ -20,13 +20,22 @@ use Bluz\Tests\TestCase;
  * @package  Bluz\Tests\Proxy
  * @author   Anton Shevchuk
  */
-class RouterTest extends TestCase
+class RouterTest extends FrameworkTestCase
 {
+    /**
+     * setUp
+     *
+     * @return void
+     */
+    protected function setUp()
+    {
+        Proxy::resetInstance();
+    }
 
     /**
-     * Test instance
+     * @expectedException \Bluz\Common\Exception\ComponentException
      */
-    public function testProxyInstance()
+    public function testLazyInitialInstanceShouldThrowError()
     {
         self::assertInstanceOf(Target::class, Proxy::getInstance());
     }

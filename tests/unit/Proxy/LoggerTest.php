@@ -12,7 +12,7 @@ namespace Bluz\Tests\Proxy;
 
 use Bluz\Logger\Logger as Target;
 use Bluz\Proxy\Logger as Proxy;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 
 /**
  * Proxy Test
@@ -20,8 +20,18 @@ use Bluz\Tests\TestCase;
  * @package  Bluz\Tests\Proxy
  * @author   Anton Shevchuk
  */
-class LoggerTest extends TestCase
+class LoggerTest extends FrameworkTestCase
 {
+    /**
+     * setUp
+     *
+     * @return void
+     */
+    protected function setUp()
+    {
+        Proxy::resetInstance();
+    }
+
     /**
      * Test instance
      */

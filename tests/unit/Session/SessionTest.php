@@ -11,7 +11,7 @@
 namespace Bluz\Tests\Session;
 
 use Bluz\Session\Session;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 
 /**
  * SessionTest
@@ -21,7 +21,7 @@ use Bluz\Tests\TestCase;
  * @author   Anton Shevchuk
  * @created  20.08.2014 13:00
  */
-class SessionTest extends TestCase
+class SessionTest extends FrameworkTestCase
 {
     /**
      * @var Session

@@ -21,7 +21,7 @@ use Bluz\EventManager\Event;
  * @author   Anton Shevchuk
  * @created  14.05.2014 11:57
  */
-class EventTest extends Bluz\Tests\TestCase
+class EventTest extends Bluz\Tests\FrameworkTestCase
 {
     /**
      * Complex test of event getters

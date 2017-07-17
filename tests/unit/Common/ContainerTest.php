@@ -10,7 +10,7 @@
 
 namespace Bluz\Tests\Common;
 
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 use Bluz\Tests\Fixtures\Common\ConcreteContainer;
 
 /**
@@ -21,7 +21,7 @@ use Bluz\Tests\Fixtures\Common\ConcreteContainer;
  * @author   Anton Shevchuk
  * @created  27.10.14 12:31
  */
-class ContainerTest extends TestCase
+class ContainerTest extends FrameworkTestCase
 {
     /**
      * @var ConcreteContainer

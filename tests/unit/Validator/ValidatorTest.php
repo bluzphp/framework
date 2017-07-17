@@ -19,7 +19,7 @@ use Bluz\Validator\Validator;
  *
  * @package Bluz\Tests\Validator
  */
-class ValidatorTest extends Tests\TestCase
+class ValidatorTest extends Tests\FrameworkTestCase
 {
     /**
      * Create new instance of validator

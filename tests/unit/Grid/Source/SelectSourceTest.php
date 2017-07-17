@@ -12,7 +12,7 @@ namespace Bluz\Tests\Grid\Source;
 
 use Bluz\Grid\Grid;
 use Bluz\Grid\Source\SelectSource;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 use Bluz\Tests\Fixtures\Grid\SelectGrid;
 
 /**
@@ -20,7 +20,7 @@ use Bluz\Tests\Fixtures\Grid\SelectGrid;
  * @author   Anton Shevchuk
  * @created  07.08.14 14:37
  */
-class SelectSourceTest extends TestCase
+class SelectSourceTest extends FrameworkTestCase
 {
     /**
      * Select Source

@@ -10,12 +10,12 @@
 
 namespace Bluz\Tests\Db;
 
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 
 /**
  * Test class for Db\Relations
  */
-class RelationTest extends TestCase
+class RelationTest extends FrameworkTestCase
 {
     /**
      * setUp

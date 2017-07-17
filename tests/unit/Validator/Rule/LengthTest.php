@@ -18,7 +18,7 @@ use Bluz\Validator\Rule\Length;
  *
  * @package Bluz\Tests\Validator\Rule
  */
-class LengthTest extends Tests\TestCase
+class LengthTest extends Tests\FrameworkTestCase
 {
     /**
      * @dataProvider providerForPass

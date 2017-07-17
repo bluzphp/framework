@@ -18,7 +18,7 @@ use Bluz\Validator\Rule\Equals;
  *
  * @package Bluz\Tests\Validator\Rule
  */
-class EqualsTest extends Tests\TestCase
+class EqualsTest extends Tests\FrameworkTestCase
 {
     /**
      * @dataProvider providerForPass

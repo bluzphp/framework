@@ -11,7 +11,7 @@
 namespace Bluz\Tests\Mailer;
 
 use Bluz\Mailer\Mailer;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 
 /**
  * MailerTest
@@ -21,7 +21,7 @@ use Bluz\Tests\TestCase;
  * @author   Anton Shevcuk
  * @created  19.08.2014 13:03
  */
-class MailerTest extends TestCase
+class MailerTest extends FrameworkTestCase
 {
     /**
      * @expectedException \Bluz\Common\Exception\ConfigurationException

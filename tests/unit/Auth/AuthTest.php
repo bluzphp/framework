@@ -14,7 +14,7 @@ use Bluz\Proxy\Auth;
 use Bluz\Proxy\Session;
 use Bluz\Tests\Fixtures\Models\Auth\Table;
 use Bluz\Tests\Fixtures\Models\UserAdmin;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 use Bluz\Auth\AbstractRow;
 
 /**
@@ -25,7 +25,7 @@ use Bluz\Auth\AbstractRow;
  * @author   Anton Shevchuk
  * @created  12.08.2014 11:12
  */
-class AuthTest extends TestCase
+class AuthTest extends FrameworkTestCase
 {
     /**
      * Test Auth works with Identity

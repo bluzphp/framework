@@ -18,7 +18,7 @@ use Bluz\Validator\Rule\Regexp;
  *
  * @package Bluz\Tests\Validator\Rule
  */
-class RegexTest extends Tests\TestCase
+class RegexTest extends Tests\FrameworkTestCase
 {
     /**
      * @dataProvider providerForPass

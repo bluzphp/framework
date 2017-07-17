@@ -18,7 +18,7 @@ use Bluz\Validator\Rule\Numeric;
  *
  * @package Bluz\Tests\Validator\Rule
  */
-class NumericTest extends Tests\TestCase
+class NumericTest extends Tests\FrameworkTestCase
 {
     /**
      * @var Numeric

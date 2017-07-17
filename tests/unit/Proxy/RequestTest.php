@@ -12,7 +12,7 @@ namespace Bluz\Tests\Proxy;
 
 use Bluz\Http\RequestMethod;
 use Bluz\Proxy\Request;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 
 /**
  * RequestTest
@@ -20,8 +20,18 @@ use Bluz\Tests\TestCase;
  * @package  Bluz\Tests\Proxy
  * @author   Anton Shevchuk
  */
-class RequestTest extends TestCase
+class RequestTest extends FrameworkTestCase
 {
+    /**
+     * setUp
+     *
+     * @return void
+     */
+    protected function setUp()
+    {
+        Request::resetInstance();
+    }
+
     /**
      * Test $_GET variables
      */

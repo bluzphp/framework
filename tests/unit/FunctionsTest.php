@@ -10,7 +10,7 @@
 
 namespace Bluz\Tests;
 
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 
 /**
  * FunctionsTest
@@ -18,7 +18,7 @@ use Bluz\Tests\TestCase;
  * @package  Bluz\Tests
  * @author   Anton Shevchuk
  */
-class FunctionsTest extends TestCase
+class FunctionsTest extends FrameworkTestCase
 {
     /**
      * @dataProvider dataForStrTrimEnd

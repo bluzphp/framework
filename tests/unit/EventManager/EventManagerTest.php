@@ -22,7 +22,7 @@ use Bluz\EventManager\EventManager;
  * @author   Anton Shevchuk
  * @created  14.05.2014 11:57
  */
-class EventManagerTest extends Bluz\Tests\TestCase
+class EventManagerTest extends Bluz\Tests\FrameworkTestCase
 {
     /**
      * @var EventManager

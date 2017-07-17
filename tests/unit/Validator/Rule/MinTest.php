@@ -18,7 +18,7 @@ use Bluz\Validator\Rule\Min;
  *
  * @package Bluz\Tests\Validator\Rule
  */
-class MinTest extends Tests\TestCase
+class MinTest extends Tests\FrameworkTestCase
 {
     /**
      * @dataProvider providerForPass

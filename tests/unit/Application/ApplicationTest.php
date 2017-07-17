@@ -15,7 +15,7 @@ use Bluz\Http\StatusCode;
 use Bluz\Proxy;
 use Bluz\Proxy\Response;
 use Bluz\Proxy\Router;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 use Zend\Diactoros\ServerRequest;
 
 /**
@@ -24,7 +24,7 @@ use Zend\Diactoros\ServerRequest;
  * @author   Anton Shevchuk
  * @created  21.05.13 10:24
  */
-class ApplicationTest extends TestCase
+class ApplicationTest extends FrameworkTestCase
 {
     /**
      * Check all getters of Application

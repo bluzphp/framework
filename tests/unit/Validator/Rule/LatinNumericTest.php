@@ -18,7 +18,7 @@ use Bluz\Validator\Rule\LatinNumeric;
  *
  * @package Bluz\Tests\Validator\Rule
  */
-class LatinNumericTest extends Tests\TestCase
+class LatinNumericTest extends Tests\FrameworkTestCase
 {
     /**
      * @dataProvider providerForPass

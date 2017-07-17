@@ -12,7 +12,7 @@ namespace Bluz\Tests\Proxy;
 
 use Bluz\Layout\Layout as Target;
 use Bluz\Proxy\Layout as Proxy;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 
 /**
  * Proxy Test
@@ -20,8 +20,18 @@ use Bluz\Tests\TestCase;
  * @package  Bluz\Tests\Proxy
  * @author   Anton Shevchuk
  */
-class LayoutTest extends TestCase
+class LayoutTest extends FrameworkTestCase
 {
+    /**
+     * setUp
+     *
+     * @return void
+     */
+    protected function setUp()
+    {
+        Proxy::resetInstance();
+    }
+
     /**
      * Test instance
      */

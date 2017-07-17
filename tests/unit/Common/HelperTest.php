@@ -10,7 +10,7 @@
 
 namespace Bluz\Tests\Common;
 
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 use Bluz\Tests\Fixtures\Common\ConcreteHelpers;
 
 /**
@@ -21,7 +21,7 @@ use Bluz\Tests\Fixtures\Common\ConcreteHelpers;
  * @author   Anton Shevchuk
  * @created  14.01.14 11:47
  */
-class HelperTest extends TestCase
+class HelperTest extends FrameworkTestCase
 {
     const MAGIC_NUMBER = 42;
 

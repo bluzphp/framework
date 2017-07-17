@@ -18,7 +18,7 @@ use Bluz\Validator\Rule\FloatInput;
  *
  * @package Bluz\Tests\Validator\Rule
  */
-class FloatInputTest extends Tests\TestCase
+class FloatInputTest extends Tests\FrameworkTestCase
 {
     /**
      * @var \Bluz\Validator\Rule\FloatInput

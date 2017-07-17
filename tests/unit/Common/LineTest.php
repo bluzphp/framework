@@ -11,7 +11,7 @@
 namespace Bluz\Tests\Common;
 
 use Bluz\Common\Line;
-use Bluz\Tests\TestCase;
+use Bluz\Tests\FrameworkTestCase;
 
 /**
  * Tests for Line helpers
@@ -21,7 +21,7 @@ use Bluz\Tests\TestCase;
  * @author   Anton Shevchuk
  * @created  21.04.17 12:36
  */
-class LineTest extends TestCase
+class LineTest extends FrameworkTestCase
 {
 
     /**

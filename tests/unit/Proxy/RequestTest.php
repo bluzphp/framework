@@ -22,11 +22,6 @@ use Bluz\Tests\FrameworkTestCase;
  */
 class RequestTest extends FrameworkTestCase
 {
-    /**
-     * setUp
-     *
-     * @return void
-     */
     protected function setUp()
     {
         Request::resetInstance();

@@ -26,38 +26,19 @@ use Zend\Diactoros\ServerRequest;
  */
 class ApplicationTest extends FrameworkTestCase
 {
-    /**
-     * Check all getters of Application
-     */
-    public function testGettersOfPackages()
+    public function testGetApplicationPath()
     {
-        // cache disabled for testing
+        self::assertEquals(dirname(__DIR__, 2), self::getApp()->getPath());
+    }
+
+    public function testGetRequestPackage()
+    {
         self::assertInstanceOf(ServerRequest::class, self::getApp()->getRequest());
+    }
+
+    public function testGetResponsePackage()
+    {
         self::assertInstanceOf(\Bluz\Response\Response::class, self::getApp()->getResponse());
-    }
-
-    /**
-     * Test Application Config
-     */
-    public function testGetConfigData()
-    {
-        // merged
-        //  - configs/default/
-        //  - configs/testing/
-        // hardcoded numbers of configuration items
-        self::assertCount(14, Proxy\Config::getData());
-        self::assertEquals(["foo" => "bar"], Proxy\Config::getData("test"));
-        self::assertEquals("bar", Proxy\Config::getData("test", "foo"));
-    }
-
-    /**
-     * Test Registry configuration setup
-     */
-    public function testRegistry()
-    {
-        self::assertEquals(["moo" => "baz"], Proxy\Config::getData("registry"));
-        self::assertEquals("baz", Proxy\Config::getData("registry", "moo"));
-        self::assertEquals("baz", Proxy\Registry::get('moo'));
     }
 
     /**

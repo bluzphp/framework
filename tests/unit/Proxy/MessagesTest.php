@@ -22,20 +22,12 @@ use Bluz\Tests\FrameworkTestCase;
  */
 class MessagesTest extends FrameworkTestCase
 {
-    /**
-     * setUp
-     *
-     * @return void
-     */
     protected function setUp()
     {
         Proxy::resetInstance();
     }
 
-    /**
-     * Test instance
-     */
-    public function testProxyInstance()
+    public function testGetProxyInstance()
     {
         self::assertInstanceOf(Target::class, Proxy::getInstance());
     }

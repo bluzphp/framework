@@ -22,11 +22,6 @@ use Bluz\Tests\FrameworkTestCase;
  */
 class RouterTest extends FrameworkTestCase
 {
-    /**
-     * setUp
-     *
-     * @return void
-     */
     protected function setUp()
     {
         Proxy::resetInstance();

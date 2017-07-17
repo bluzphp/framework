@@ -22,20 +22,12 @@ use Bluz\Tests\FrameworkTestCase;
  */
 class HttpCacheControlTest extends FrameworkTestCase
 {
-    /**
-     * setUp
-     *
-     * @return void
-     */
     protected function setUp()
     {
         Proxy::resetInstance();
     }
 
-    /**
-     * Test instance
-     */
-    public function testProxyInstanceReturnNilForCLI()
+    public function testGetProxyInstanceReturnNilForCLI()
     {
         self::assertInstanceOf(Target::class, Proxy::getInstance());
     }

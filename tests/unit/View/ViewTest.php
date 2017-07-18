@@ -195,6 +195,33 @@ class ViewTest extends FrameworkTestCase
     }
 
     /**
+     * Helper Gravatar
+     *  - should return URL to gravatar
+     */
+    public function testHelperGravatar()
+    {
+        $view = $this->getView();
+
+        self::assertEquals(
+            'https://www.gravatar.com/avatar/56887ad8e17c7c6f6f4f95caee8ad028?s=80&d=mm&r=g',
+            $view->gravatar('admin@bluzphp.github.com')
+        );
+    }
+
+    /**
+     * Helper Has Module
+     *  - should return true, if module directory is exists
+     *  - should return false, if directory not exists
+     */
+    public function testHelperHasModule()
+    {
+        $view = $this->getView();
+
+        self::assertTrue($view->hasModule('index'));
+        self::assertFalse($view->hasModule(uniqid('index', true)));
+    }
+
+    /**
      * Helper Script
      */
     public function testHelperHeadScript()

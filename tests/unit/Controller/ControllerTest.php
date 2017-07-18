@@ -11,6 +11,7 @@
 namespace Bluz\Tests\Controller;
 
 use Bluz\Controller;
+use Bluz\Proxy\Layout;
 use Bluz\Tests\FrameworkTestCase;
 
 /**
@@ -42,9 +43,9 @@ class ControllerTest extends FrameworkTestCase
     }
 
     /**
-     * @todo Implement testAcceptCheck().
+     * @todo Implement testHelperCheckHttpAccept().
      */
-    public function testAcceptCheck()
+    public function testHelperCheckHttpAccept()
     {
         // 12 tests:
         //   -/- -> ANY,JSON,HTML
@@ -57,17 +58,24 @@ class ControllerTest extends FrameworkTestCase
     }
 
     /**
-     * @todo Implement testMethodCheck().
+     * @todo Implement testHelperCheckMethod().
      */
-    public function testMethodCheck()
+    public function testHelperCheckMethod()
     {
         // Remove the following lines when you implement this test.
         self::markTestIncomplete('This test has not been implemented yet.');
     }
 
     /**
-     * Test Helper Denied
-     *
+     * @todo Implement testHelperCheckPrivilege().
+     */
+    public function testHelperCheckPrivilege()
+    {
+        // Remove the following lines when you implement this test.
+        self::markTestIncomplete('This test has not been implemented yet.');
+    }
+
+    /**
      * @expectedException \Bluz\Application\Exception\ForbiddenException
      */
     public function testHelperDenied()
@@ -75,12 +83,39 @@ class ControllerTest extends FrameworkTestCase
         $this->controller->denied();
     }
 
-    /**
-     * Test Helper User
-     */
+    public function testHelperDisableLayout()
+    {
+        self::assertTrue(self::getApp()->useLayout());
+        $this->controller->disableLayout();
+        self::assertFalse(self::getApp()->useLayout());
+    }
+
+    public function testHelperDisableView()
+    {
+        $this->controller->disableView();
+        self::assertNull($this->controller->getTemplate());
+    }
+
+    public function testHelperDispatch()
+    {
+        self::assertInstanceOf(Controller\Controller::class, $this->controller->dispatch('test', 'index'));
+    }
+
+    public function testHelperUseJson()
+    {
+        $this->controller->useJson();
+        self::assertFalse(self::getApp()->useLayout());
+    }
+
+    public function testHelperUseLayout()
+    {
+        $this->controller->useLayout('small.phtml');
+        self::assertTrue(self::getApp()->useLayout());
+        self::assertEquals(Layout::getTemplate(), 'small.phtml');
+    }
+
     public function testHelperUser()
     {
-        $result = $this->controller->user();
-        self::assertNull($result);
+        self::assertNull($this->controller->user());
     }
 }

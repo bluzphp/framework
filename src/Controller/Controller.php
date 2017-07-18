@@ -159,7 +159,7 @@ class Controller implements \JsonSerializable
     /**
      * @return string
      */
-    protected function getTemplate(): string
+    public function getTemplate()
     {
         return $this->template;
     }

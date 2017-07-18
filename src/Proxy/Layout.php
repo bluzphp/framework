@@ -36,8 +36,12 @@ use Bluz\View\View;
  * @see      Instance::setContent()
  * @method   static void setPath($path)
  * @see      View::setPath()
+ * @method   static string getPath()
+ * @see      View::getPath()
  * @method   static void setTemplate($file)
  * @see      View::setTemplate()
+ * @method   static string getTemplate()
+ * @see      View::getTemplate()
  *
  * @method   static void set($key, $value)
  * @see      RegularAccess::set()

@@ -25,5 +25,5 @@ return
          * @var Controller $this
          */
         Application::getInstance()->useLayout(false);
-        Response::switchType('JSON');
+        Response::setType('JSON');
     };

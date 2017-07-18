@@ -37,6 +37,7 @@ use Bluz\View\View;
  * @method void redirect(string $url)
  * @method void redirectTo(string $module, string $controller, array $params = [])
  * @method void reload()
+ * @method bool isAllowed($privilege)
  * @method void useJson()
  * @method void useLayout($layout)
  * @method EntityInterface user()
@@ -159,7 +160,7 @@ class Controller implements \JsonSerializable
     /**
      * @return string
      */
-    protected function getTemplate(): string
+    public function getTemplate()
     {
         return $this->template;
     }

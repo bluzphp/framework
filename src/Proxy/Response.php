@@ -78,8 +78,10 @@ use Bluz\Response\Response as Instance;
  * @method   static array getCookie()
  * @see      Instance::getCookie()
  *
- * @method   static switchType($type)
- * @see      Instance::switchType()
+ * @method   static string getType()
+ * @see      Instance::getType()
+ * @method   static void setType($type)
+ * @see      Instance::setType()
  *
  * @method   static void  send()
  * @see      Instance::send()

@@ -22,5 +22,5 @@ return
         /**
          * @var Controller $this
          */
-        $this->template = false;
+        $this->template = null;
     };

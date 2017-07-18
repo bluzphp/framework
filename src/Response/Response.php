@@ -135,11 +135,21 @@ class Response
     }
 
     /**
+     * Get response type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
      * Set Response Type, one of JSON, HTML or CLI
      *
      * @param $type
      */
-    public function switchType($type)
+    public function setType($type)
     {
         // switch statement by content type
         switch ($type) {
@@ -155,6 +165,7 @@ class Response
 
         $this->type = $type;
     }
+
 
     /**
      * Gets the HTTP protocol version as a string

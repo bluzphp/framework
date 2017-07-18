@@ -22,22 +22,18 @@ use Bluz\Tests\FrameworkTestCase;
  */
 class RegistryTest extends FrameworkTestCase
 {
-    /**
-     * setUp
-     *
-     * @return void
-     */
     protected function setUp()
     {
         Proxy::resetInstance();
     }
 
-    /**
-     * Test instance
-     */
-    public function testProxyInstance()
+    public function testGetProxyInstance()
     {
         self::assertInstanceOf(Target::class, Proxy::getInstance());
+    }
+
+    public function testGetDataFromRegistry()
+    {
         self::assertEquals('baz', Proxy::get('moo'));
     }
 }

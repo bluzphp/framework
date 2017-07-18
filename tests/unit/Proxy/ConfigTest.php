@@ -22,21 +22,24 @@ use Bluz\Tests\FrameworkTestCase;
  */
 class ConfigTest extends FrameworkTestCase
 {
-    /**
-     * setUp
-     *
-     * @return void
-     */
     protected function setUp()
     {
         Proxy::resetInstance();
     }
 
-    /**
-     * Test instance
-     */
-    public function testProxyInstance()
+    public function testGetProxyInstance()
     {
         self::assertInstanceOf(Target::class, Proxy::getInstance());
+    }
+
+    public function testGetConfigurationDataOfApplication()
+    {
+        // merged
+        //  - configs/default/
+        //  - configs/testing/
+        // hardcoded numbers of configuration items
+        self::assertCount(14, Proxy::getData());
+        self::assertEquals(['foo' => 'bar'], Proxy::getData('test'));
+        self::assertEquals('bar', Proxy::getData('test', 'foo'));
     }
 }

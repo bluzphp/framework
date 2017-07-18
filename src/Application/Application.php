@@ -301,7 +301,7 @@ class Application
         // switch to JSON response based on Accept header
         if (Request::checkAccept([Request::TYPE_HTML, Request::TYPE_JSON]) === Request::TYPE_JSON) {
             $this->layoutFlag = false;
-            Response::switchType('JSON');
+            Response::setType('JSON');
         }
     }
 

@@ -123,6 +123,16 @@ class View implements ViewInterface, \JsonSerializable
     /**
      * {@inheritdoc}
      *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @param  string $path
      *
      * @return void
@@ -137,9 +147,9 @@ class View implements ViewInterface, \JsonSerializable
      *
      * @return string
      */
-    public function getPath()
+    public function getTemplate()
     {
-        return $this->path;
+        return $this->template;
     }
 
     /**
@@ -152,16 +162,6 @@ class View implements ViewInterface, \JsonSerializable
     public function setTemplate($file)
     {
         $this->template = $file;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @return string
-     */
-    public function getTemplate()
-    {
-        return $this->template;
     }
 
     /**

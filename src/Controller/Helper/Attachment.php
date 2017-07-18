@@ -23,7 +23,7 @@ return
         /**
          * @var Controller $this
          */
-        Response::switchType('FILE');
+        Response::setType('FILE');
         $this->assign('FILE', $file);
         $this->disableLayout();
         $this->disableView();

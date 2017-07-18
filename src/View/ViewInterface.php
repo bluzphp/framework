@@ -19,6 +19,16 @@ namespace Bluz\View;
 interface ViewInterface
 {
     /**
+     * Get path to templates
+     *
+     * Example of usage
+     *     $view->getPath();
+     *
+     * @return ViewInterface
+     */
+    public function getPath();
+
+    /**
      * Setup path to templates
      *
      * Example of usage
@@ -31,14 +41,14 @@ interface ViewInterface
     public function setPath($path);
 
     /**
-     * Get path to templates
+     * Get template
      *
      * Example of usage
-     *     $view->getPath();
+     *     $view->getTemplate();
      *
      * @return ViewInterface
      */
-    public function getPath();
+    public function getTemplate();
 
     /**
      * Setup template
@@ -51,16 +61,6 @@ interface ViewInterface
      * @return ViewInterface
      */
     public function setTemplate($file);
-
-    /**
-     * Get template
-     *
-     * Example of usage
-     *     $view->getTemplate();
-     *
-     * @return ViewInterface
-     */
-    public function getTemplate();
 
     /**
      * Merge data from array

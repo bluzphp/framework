@@ -40,6 +40,16 @@ class ControllerTest extends FrameworkTestCase
      */
     public function tearDown()
     {
+        self::resetApp();
+    }
+
+    public function testHelperAttachment()
+    {
+        $this->controller->attachment('some.jpg');
+
+        self::assertNull($this->controller->getTemplate());
+        self::assertEquals('FILE', self::getApp()->getResponse()->getType());
+        self::assertFalse(self::getApp()->useLayout());
     }
 
     /**
@@ -99,6 +109,11 @@ class ControllerTest extends FrameworkTestCase
     public function testHelperDispatch()
     {
         self::assertInstanceOf(Controller\Controller::class, $this->controller->dispatch('test', 'index'));
+    }
+
+    public function testHelperIsAllowed()
+    {
+        self::assertFalse($this->controller->isAllowed('not-exists'));
     }
 
     public function testHelperUseJson()

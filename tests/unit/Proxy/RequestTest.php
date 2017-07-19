@@ -22,11 +22,6 @@ use Bluz\Tests\FrameworkTestCase;
  */
 class RequestTest extends FrameworkTestCase
 {
-    protected function setUp()
-    {
-        Request::resetInstance();
-    }
-
     /**
      * Test $_GET variables
      */

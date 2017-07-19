@@ -13,9 +13,6 @@ namespace Bluz\Tests;
 use Bluz;
 use Bluz\Http;
 use Bluz\Proxy;
-use Bluz\Proxy\Request;
-use Bluz\Request\RequestFactory;
-use Bluz\Router\Router;
 use Codeception\Test\Unit;
 use Zend\Diactoros\ServerRequest;
 
@@ -41,6 +38,7 @@ class FrameworkTestCase extends Unit
      */
     protected function setUp()
     {
+        self::getApp();
     }
 
     /**
@@ -115,7 +113,7 @@ class FrameworkTestCase extends Unit
 
         $request = self::prepareRequest($path, $query, $params, $method, $headers, $cookies);
 
-        Request::setInstance($request);
+        Proxy\Request::setInstance($request);
 
         return $request;
     }
@@ -126,27 +124,28 @@ class FrameworkTestCase extends Unit
     protected static function resetApp()
     {
         if (self::$app) {
-            self::$app->useLayout(true);
-            self::$app->resetRouter();
+            self::$app::resetInstance();
+            self::$app = null;
         }
 
-        Proxy\Auth::clearIdentity();
-        Proxy\Messages::popAll();
-        Proxy\Request::setInstance(RequestFactory::fromGlobals());
+        Proxy\Acl::resetInstance();
+        Proxy\Auth::resetInstance();
+        Proxy\Cache::resetInstance();
+        Proxy\Config::resetInstance();
+        Proxy\Db::resetInstance();
+        Proxy\EventManager::resetInstance();
+        Proxy\HttpCacheControl::resetInstance();
+        Proxy\Layout::resetInstance();
+        Proxy\Logger::resetInstance();
+        Proxy\Mailer::resetInstance();
+        Proxy\Messages::resetInstance();
+        Proxy\Registry::resetInstance();
+        Proxy\Request::resetInstance();
         Proxy\Request::resetAccept();
-        Proxy\Response::setInstance(new Bluz\Response\Response());
-    }
-
-    /**
-     * resetRouter
-     *
-     * @return void
-     */
-    protected static function resetRouter()
-    {
-        $router = new Router();
-        $router->setBaseUrl('/');
-        Proxy\Router::setInstance($router);
+        Proxy\Response::resetInstance();
+        Proxy\Router::resetInstance();
+        Proxy\Session::resetInstance();
+        Proxy\Translator::resetInstance();
     }
 
     /**

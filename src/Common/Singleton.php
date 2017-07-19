@@ -45,6 +45,16 @@ trait Singleton
     }
 
     /**
+     * Reset instance
+     *
+     * @return void
+     */
+    public static function resetInstance()
+    {
+        static::$instance = null;
+    }
+
+    /**
      * Disabled by access level
      */
     private function __construct()

@@ -21,7 +21,6 @@ use Bluz\Tests\FrameworkTestCase;
  */
 class ControllerTest extends FrameworkTestCase
 {
-
     /**
      * @var Controller\Controller
      */
@@ -33,14 +32,6 @@ class ControllerTest extends FrameworkTestCase
     public function setUp()
     {
         $this->controller = self::getApp()->dispatch('index', 'index');
-    }
-
-    /**
-     * Close all
-     */
-    public function tearDown()
-    {
-        self::resetApp();
     }
 
     public function testHelperAttachment()

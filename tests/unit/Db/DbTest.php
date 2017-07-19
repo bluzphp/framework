@@ -34,6 +34,8 @@ class DbTest extends Bluz\Tests\FrameworkTestCase
      */
     public function setUp()
     {
+        parent::setUp();
+
         $this->db = new Db\Db();
         $this->db->setOptions(Proxy\Config::getData('db'));
     }
@@ -43,6 +45,8 @@ class DbTest extends Bluz\Tests\FrameworkTestCase
      */
     public function tearDown()
     {
+        parent::tearDown();
+
         $this->db->disconnect();
     }
 
@@ -81,6 +85,7 @@ class DbTest extends Bluz\Tests\FrameworkTestCase
     public function testFetchRow()
     {
         $result = $this->db->fetchRow("SELECT * FROM test LIMIT 1");
+        codecept_debug($result);
         self::assertCount(4, $result);
     }
 

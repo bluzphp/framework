@@ -41,16 +41,6 @@ class BootstrapTest extends Application
     protected $exception;
 
     /**
-     * resetRouter
-     *
-     * @return void
-     */
-    public function resetRouter()
-    {
-        $this->initRouter();
-    }
-
-    /**
      * Get dispatched module name
      *
      * @return string

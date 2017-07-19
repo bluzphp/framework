@@ -13,6 +13,7 @@ namespace Bluz\Controller\Mapper;
 use Bluz\Application\Application;
 use Bluz\Application\Exception\ForbiddenException;
 use Bluz\Application\Exception\NotImplementedException;
+use Bluz\Controller\Controller;
 use Bluz\Controller\ControllerException;
 use Bluz\Crud\AbstractCrud;
 use Bluz\Http\RequestMethod;
@@ -87,31 +88,11 @@ abstract class AbstractMapper
     protected $map = [];
 
     /**
-     * Prepare request for processing
+     * @param AbstractCrud $crud
      */
-    public function __construct()
+    public function __construct(AbstractCrud $crud)
     {
-        // HTTP method
-        $method = Request::getMethod();
-        $this->method = strtoupper($method);
-
-        // get path
-        // %module% / %controller% / %id% / %relation% / %id%
-        $path = Router::getCleanUri();
-
-        $this->params = explode('/', rtrim($path, '/'));
-
-        // module
-        $this->module = array_shift($this->params);
-
-        // controller
-        $this->controller = array_shift($this->params);
-
-        $data = Request::getParams();
-
-        unset($data['_method'], $data['_module'], $data['_controller']);
-
-        $this->data = $data;
+        $this->crud = $crud;
     }
 
     /**
@@ -216,51 +197,74 @@ abstract class AbstractMapper
     }
 
     /**
-     * Set Crud
+     * Run
      *
-     * @param AbstractCrud $crud
-     */
-    public function setCrud($crud)
-    {
-        $this->crud = $crud;
-    }
-
-    /**
-     * Get crud instance
-     *
-     * @return AbstractCrud
+     * @return Controller
      * @throws ControllerException
+     * @throws ForbiddenException
+     * @throws NotImplementedException
      */
-    public function getCrud()
+    public function run()
     {
-        if (!$this->crud) {
-            throw new ControllerException('`Crud` class is not exists or not initialized');
-        }
-        return $this->crud;
+        $this->prepareRequest();
+        return $this->dispatch();
     }
 
     /**
-     * Return primary key
+     * Prepare request for processing
+     *
+     * @throws \Bluz\Controller\ControllerException
+     */
+    protected function prepareRequest()
+    {
+        // HTTP method
+        $method = Request::getMethod();
+        $this->method = strtoupper($method);
+
+        // get path
+        // %module% / %controller% / %id% / %relation% / %id%
+        $path = Router::getCleanUri();
+
+        $this->params = explode('/', rtrim($path, '/'));
+
+        // module
+        $this->module = array_shift($this->params);
+
+        // controller
+        $this->controller = array_shift($this->params);
+
+        $data = Request::getParams();
+
+        unset($data['_method'], $data['_module'], $data['_controller']);
+
+        $this->data = $data;
+
+        $primary = $this->crud->getPrimaryKey();
+        $this->primary = array_intersect_key($this->data, array_flip($primary));
+    }
+
+    /**
+     * Prepare params
      *
      * @return array
      */
-    public function getPrimaryKey()
+    protected function prepareParams(): array
     {
-        if (is_null($this->primary)) {
-            $primary = $this->getCrud()->getPrimaryKey();
-            $this->primary = array_intersect_key($this->data, array_flip($primary));
-        }
-        return $this->primary;
+        return [
+            'crud' => $this->crud,
+            'primary' => $this->primary,
+            'data' => $this->data
+        ];
     }
 
     /**
-     * Run REST controller
+     * Dispatch REST or CRUD controller
      *
      * @return mixed
      * @throws ForbiddenException
      * @throws NotImplementedException
      */
-    public function run()
+    protected function dispatch()
     {
         // check implementation
         if (!isset($this->map[$this->method])) {
@@ -280,11 +284,7 @@ abstract class AbstractMapper
         return Application::getInstance()->dispatch(
             $map['module'],
             $map['controller'],
-            [
-                'crud' => $this->getCrud(),
-                'primary' => $this->getPrimaryKey(),
-                'data' => $this->data
-            ]
+            $this->prepareParams()
         );
     }
 }

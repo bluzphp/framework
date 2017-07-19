@@ -11,22 +11,22 @@
 namespace Bluz\Tests\Controller\Mapper;
 
 use Bluz\Controller\Controller;
-use Bluz\Controller\Mapper\Crud;
+use Bluz\Controller\Mapper\Rest;
 use Bluz\Http\RequestMethod;
 use Bluz\Tests\Fixtures\Crud\TableCrud;
 use Bluz\Tests\Fixtures\Models\Test\Table;
 use Bluz\Tests\FrameworkTestCase;
 
 /**
- * Test for Controller Crud Mapper
+ * Test for Controller Rest Mapper
  *
  * @package  Bluz\Tests
  * @author   Anton Shevchuk
  */
-class CrudTest extends FrameworkTestCase
+class RestTest extends FrameworkTestCase
 {
     /**
-     * @var Crud
+     * @var Rest
      */
     protected $mapper;
 
@@ -35,7 +35,7 @@ class CrudTest extends FrameworkTestCase
         parent::setUp();
         $crudTable = TableCrud::getInstance();
         $crudTable->setTable(Table::getInstance());
-        $this->mapper = new Crud($crudTable);
+        $this->mapper = new Rest($crudTable);
     }
 
     public function tearDown()
@@ -46,16 +46,31 @@ class CrudTest extends FrameworkTestCase
 
     public function testCheckGetRequestWithPrimary()
     {
-        self::setRequestParams('test/mapper', ['id' => 42], [], RequestMethod::GET);
+        self::setRequestParams('test/mapper/42', [], [], RequestMethod::GET);
 
         $this->mapper->addMap(RequestMethod::GET, 'test', 'mapper');
 
         $controller = $this->mapper->run();
 
         $data = $controller->getData();
+
         self::assertArrayHasKey('primary', $data);
         self::assertArrayHasKey('id', $data['primary']);
         self::assertEquals(42, $data['primary']['id']);
+    }
+
+    public function testCheckGetRequestWithPrimaryAndRelation()
+    {
+        self::setRequestParams('test/mapper/42/relation/6', [], [], RequestMethod::GET);
+
+        $this->mapper->addMap(RequestMethod::GET, 'test', 'mapper');
+
+        $controller = $this->mapper->run();
+
+        $data = $controller->getData();
+
+        self::assertEquals('relation', $data['relation']);
+        self::assertEquals(6, $data['relationId']);
     }
 
     /**
@@ -70,6 +85,14 @@ class CrudTest extends FrameworkTestCase
         $controller = $this->mapper->run();
 
         self::assertInstanceOf(Controller::class, $controller);
+    }
+
+    /**
+     * @expectedException \Bluz\Application\Exception\NotImplementedException
+     */
+    public function testNotImplementedMethod()
+    {
+        $this->mapper->run();
     }
 
     /**

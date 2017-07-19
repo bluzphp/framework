@@ -22,4 +22,13 @@ use Bluz\Crud\Table;
  */
 class TableCrud extends Table
 {
+    /**
+     * Reset Table
+     *
+     * @return void
+     */
+    public function resetTable()
+    {
+        $this->table = null;
+    }
 }

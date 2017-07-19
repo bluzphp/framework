@@ -88,6 +88,13 @@ abstract class AbstractMapper
     protected $map = [];
 
     /**
+     * Prepare params
+     *
+     * @return array
+     */
+    abstract protected function prepareParams(): array;
+
+    /**
      * @param AbstractCrud $crud
      */
     public function __construct(AbstractCrud $crud)
@@ -241,20 +248,6 @@ abstract class AbstractMapper
 
         $primary = $this->crud->getPrimaryKey();
         $this->primary = array_intersect_key($this->data, array_flip($primary));
-    }
-
-    /**
-     * Prepare params
-     *
-     * @return array
-     */
-    protected function prepareParams(): array
-    {
-        return [
-            'crud' => $this->crud,
-            'primary' => $this->primary,
-            'data' => $this->data
-        ];
     }
 
     /**

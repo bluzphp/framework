@@ -18,4 +18,17 @@ namespace Bluz\Controller\Mapper;
  */
 class Crud extends AbstractMapper
 {
+    /**
+     * Prepare params
+     *
+     * @return array
+     */
+    protected function prepareParams(): array
+    {
+        return [
+            'crud' => $this->crud,
+            'primary' => $this->primary,
+            'data' => $this->data
+        ];
+    }
 }

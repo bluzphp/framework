@@ -10,8 +10,6 @@ declare(strict_types=1);
 
 namespace Bluz\Controller\Mapper;
 
-use Bluz\Application\Exception\ForbiddenException;
-use Bluz\Application\Exception\NotImplementedException;
 use Bluz\Http\RequestMethod;
 
 /**

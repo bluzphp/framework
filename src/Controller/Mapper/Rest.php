@@ -10,8 +10,6 @@ declare(strict_types=1);
 
 namespace Bluz\Controller\Mapper;
 
-use Bluz\Application\Exception\ForbiddenException;
-use Bluz\Application\Exception\NotImplementedException;
 use Bluz\Http\RequestMethod;
 
 /**
@@ -23,18 +21,21 @@ use Bluz\Http\RequestMethod;
 class Rest extends AbstractMapper
 {
     /**
-     * Run REST controller
+     * Process request
      *
-     * @return mixed
-     * @throws ForbiddenException
-     * @throws NotImplementedException
+     * @return void
      */
-    public function run()
+    protected function prepareRequest()
     {
+        parent::prepareRequest();
+
         $params = $this->params;
 
         if (count($params)) {
-            $this->primary = explode('-', array_shift($params));
+            $primaryKeys = $this->crud->getPrimaryKey();
+            $primaryValues = explode('-', array_shift($params));
+
+            $this->primary = array_combine($primaryKeys, $primaryValues);
         }
         if (count($params)) {
             $this->relation = array_shift($params);
@@ -47,8 +48,21 @@ class Rest extends AbstractMapper
         if (RequestMethod::OPTIONS === $this->method) {
             $this->data = array_keys($this->map);
         }
+    }
 
-        // dispatch controller
-        return parent::run();
+    /**
+     * Prepare params
+     *
+     * @return array
+     */
+    protected function prepareParams(): array
+    {
+        return [
+            'crud' => $this->crud,
+            'primary' => $this->primary,
+            'data' => $this->data,
+            'relation' => $this->relation,
+            'relationId' => $this->relationId
+        ];
     }
 }

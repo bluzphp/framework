@@ -57,7 +57,7 @@ class Table extends AbstractCrud
 
             // check class initialization
             if (!class_exists($tableClass) || !is_subclass_of($tableClass, '\\Bluz\\Db\\Table')) {
-                throw new ApplicationException("`Table` class is not exists or not initialized");
+                throw new ApplicationException('`Table` class is not exists or not initialized');
             }
 
             /**

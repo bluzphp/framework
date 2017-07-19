@@ -51,7 +51,7 @@ return
 
         ob_start();
         try {
-            require $__file;
+            include $__file;
         } catch (\Exception $e) {
             ob_end_clean();
             throw new ViewException("Template '{$__template}' throw exception: " . $e->getMessage());

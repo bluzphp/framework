@@ -22,15 +22,7 @@ use Bluz\Tests\FrameworkTestCase;
  */
 class RouterTest extends FrameworkTestCase
 {
-    protected function setUp()
-    {
-        Proxy::resetInstance();
-    }
-
-    /**
-     * @expectedException \Bluz\Common\Exception\ComponentException
-     */
-    public function testLazyInitialInstanceShouldThrowError()
+    public function testGetProxyInstance()
     {
         self::assertInstanceOf(Target::class, Proxy::getInstance());
     }

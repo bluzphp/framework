@@ -35,16 +35,6 @@ trait ProxyTrait
     }
 
     /**
-     * Reset instance
-     *
-     * @return void
-     */
-    public static function resetInstance()
-    {
-        static::$instance = null;
-    }
-
-    /**
      * Handle dynamic, static calls to the object.
      *
      * @param  string $method

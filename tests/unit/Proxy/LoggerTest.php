@@ -22,11 +22,6 @@ use Bluz\Tests\FrameworkTestCase;
  */
 class LoggerTest extends FrameworkTestCase
 {
-    protected function setUp()
-    {
-        Proxy::resetInstance();
-    }
-
     public function testGetProxyInstance()
     {
         self::assertInstanceOf(Target::class, Proxy::getInstance());

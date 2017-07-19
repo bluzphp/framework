@@ -26,6 +26,11 @@ use Zend\Diactoros\ServerRequest;
  */
 class ApplicationTest extends FrameworkTestCase
 {
+    public function testFullApplicationCircle()
+    {
+        self::markTestIncomplete('Need test for full circle of Application run');
+    }
+
     public function testGetApplicationPath()
     {
         self::assertEquals(dirname(__DIR__, 2), self::getApp()->getPath());
@@ -41,13 +46,36 @@ class ApplicationTest extends FrameworkTestCase
         self::assertInstanceOf(\Bluz\Response\Response::class, self::getApp()->getResponse());
     }
 
+    public function testPreProcessShouldDisableLayoutForAjaxRequests()
+    {
+        // setup Request
+        self::setRequestParams('', [], [], RequestMethod::GET, ['X-Requested-With' => 'XMLHttpRequest']);
+
+        // run Application
+        self::getApp()->process();
+
+        self::assertFalse(self::getApp()->useLayout());
+    }
+
+    public function testPreProcessShouldSwitchToJsonResponseForAcceptJsonHeader()
+    {
+        // setup Request
+        self::setRequestParams('', [], [], RequestMethod::GET, ['Accept' => Proxy\Request::TYPE_JSON]);
+
+        // run Application
+        self::getApp()->process();
+
+        self::assertFalse(self::getApp()->useLayout());
+        self::assertEquals('JSON', self::getApp()->getResponse()->getType());
+    }
+    
     /**
      * Test run Index Controller if Index Module
      */
     public function testIndexController()
     {
         // setup Request
-        self::setRequestParams('', [], [], RequestMethod::GET, ['Accept' => 'text/html']);
+        self::setRequestParams('', [], [], RequestMethod::GET, ['Accept' => Proxy\Request::TYPE_HTML]);
 
         // run Application
         self::getApp()->process();
@@ -62,7 +90,7 @@ class ApplicationTest extends FrameworkTestCase
     public function testErrorController()
     {
         // setup Request
-        self::setRequestParams(uniqid('module') . '/' . uniqid('controller'));
+        self::setRequestParams(uniqid('module', false) . '/' . uniqid('controller', false));
 
         // run Application
         self::getApp()->process();

@@ -63,7 +63,6 @@ class CrudTest extends FrameworkTestCase
     public function testGetPrimaryKey()
     {
         self::setRequestParams('test/index', ['id' => 42], [], RequestMethod::GET);
-        self::resetRouter();
 
         $crudMapper = new Crud();
         $table = TableCrud::getInstance();
@@ -84,7 +83,6 @@ class CrudTest extends FrameworkTestCase
     public function testMethod($method)
     {
         self::setRequestParams('test/index', [], [], $method);
-        self::resetRouter();
 
         $crudMapper = new Crud();
         $crudMapper->setCrud(TableCrud::getInstance());
@@ -100,7 +98,6 @@ class CrudTest extends FrameworkTestCase
     public function testForbiddenMethod()
     {
         self::setRequestParams('test/index', [], [], RequestMethod::GET);
-        self::resetRouter();
 
         $crudMapper = new Crud();
         $crudMapper->setCrud(TableCrud::getInstance());

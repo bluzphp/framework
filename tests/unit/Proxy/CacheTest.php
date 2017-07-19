@@ -21,11 +21,6 @@ use Bluz\Tests\FrameworkTestCase;
  */
 class CacheTest extends FrameworkTestCase
 {
-    protected function setUp()
-    {
-        Proxy::resetInstance();
-    }
-
     public function testGetProxyInstanceReturnFalse()
     {
         self::assertFalse(Proxy::getInstance());

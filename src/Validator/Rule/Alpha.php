@@ -38,8 +38,7 @@ class Alpha extends AbstractCtypeRule
     {
         if (empty($this->additionalChars)) {
             return __('{{name}} must contain only letters');
-        } else {
-            return __('{{name}} must contain only letters and "%s"', $this->additionalChars);
         }
+        return __('{{name}} must contain only letters and "%s"', $this->additionalChars);
     }
 }

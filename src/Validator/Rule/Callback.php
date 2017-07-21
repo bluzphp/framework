@@ -10,8 +10,6 @@ declare(strict_types=1);
 
 namespace Bluz\Validator\Rule;
 
-use Bluz\Validator\Exception\ComponentException;
-
 /**
  * Check input by callback
  *

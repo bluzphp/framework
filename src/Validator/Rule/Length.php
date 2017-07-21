@@ -96,9 +96,8 @@ class Length extends AbstractCompareRule
             return count($input);
         } elseif (is_object($input)) {
             return count(get_object_vars($input));
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -112,8 +111,7 @@ class Length extends AbstractCompareRule
             return __('{{name}} must have a length lower than %d', $this->maxValue);
         } elseif (!$this->maxValue) {
             return __('{{name}} must have a length greater than %d', $this->minValue);
-        } else {
-            return __('{{name}} must have a length between %d and %d', $this->minValue, $this->maxValue);
         }
+        return __('{{name}} must have a length between %d and %d', $this->minValue, $this->maxValue);
     }
 }

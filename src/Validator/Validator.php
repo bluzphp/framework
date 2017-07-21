@@ -118,7 +118,7 @@ class Validator
      */
     public function __call($ruleName, $arguments)
     {
-        if (in_array($ruleName, ['array', 'float', 'string'])) {
+        if (in_array($ruleName, ['array', 'float', 'string'], true)) {
             $ruleName .= 'Input';
         }
 
@@ -128,14 +128,7 @@ class Validator
             throw new ComponentException("Class for validator `$ruleName` not found");
         }
 
-        if (count($arguments)) {
-            $reflection = new \ReflectionClass($ruleClass);
-            $rule = $reflection->newInstanceArgs($arguments);
-        } else {
-            $rule = new $ruleClass();
-        }
-
-        $this->rules[] = $rule;
+        $this->rules[] = new $ruleClass(...$arguments);
 
         return $this;
     }
@@ -302,8 +295,11 @@ class Validator
             $input = implode(', ', $input);
         }
 
-        $message = str_replace('{{name}}', $this->getName(), $message);
-        $message = str_replace('{{input}}', esc($input), $message);
+        $message = str_replace(
+            ['{{name}}', '{{input}}'],
+            [$this->getName(), esc($input)],
+            $message
+        );
 
         return $message;
     }

@@ -54,6 +54,6 @@ class ArrayInput extends AbstractRule
             return false;
         }
         $filtered = array_filter($input, $this->callback);
-        return count($input) == count($filtered);
+        return count($input) === count($filtered);
     }
 }

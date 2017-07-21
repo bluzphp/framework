@@ -62,7 +62,7 @@ abstract class AbstractRule
     public function assert($input)
     {
         if (!$this->validate($input)) {
-            throw new ValidatorException();
+            throw new ValidatorException($this->getTemplate());
         }
         return true;
     }

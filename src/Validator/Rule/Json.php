@@ -31,6 +31,6 @@ class Json extends AbstractRule
      */
     public function validate($input): bool
     {
-        return (bool)(json_decode($input));
+        return (bool)json_decode($input);
     }
 }

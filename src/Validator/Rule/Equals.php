@@ -50,9 +50,8 @@ class Equals extends AbstractRule
     {
         if ($this->identical) {
             return $input === $this->compareTo;
-        } else {
-            return $input == $this->compareTo;
         }
+        return $input == $this->compareTo;
     }
 
     /**
@@ -64,8 +63,7 @@ class Equals extends AbstractRule
     {
         if ($this->identical) {
             return __('{{name}} must be identical as "%s"', $this->compareTo);
-        } else {
-            return __('{{name}} must be equals "%s"', $this->compareTo);
         }
+        return __('{{name}} must be equals "%s"', $this->compareTo);
     }
 }

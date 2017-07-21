@@ -47,14 +47,12 @@ class Email extends AbstractRule
     public function validate($input): bool
     {
         if (is_string($input) && filter_var($input, FILTER_VALIDATE_EMAIL)) {
-            list(, $domain) = explode("@", $input, 2);
+            list(, $domain) = explode('@', $input, 2);
             if ($this->checkDns) {
-                return checkdnsrr($domain, "MX") || checkdnsrr($domain, "A");
-            } else {
-                return true;
+                return checkdnsrr($domain, 'MX') || checkdnsrr($domain, 'A');
             }
-        } else {
-            return false;
+            return true;
         }
+        return false;
     }
 }

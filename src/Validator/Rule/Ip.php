@@ -56,8 +56,8 @@ class Ip extends AbstractRule
      */
     protected function parseRange($input)
     {
-        if ($input === null || $input == '*' || $input == '*.*.*.*'
-            || $input == '0.0.0.0-255.255.255.255'
+        if ($input === null || $input === '*' || $input === '*.*.*.*'
+            || $input === '0.0.0.0-255.255.255.255'
         ) {
             return null;
         }

@@ -6,6 +6,9 @@ php:
 env:
   global:
     - secure: "QKyI/QO6H6pFE04Iz/4IcSuttMdY3o85mD2BTNV2Y2SeSPxLfuukqPrxjANrTc4GfI1v7/bZM43uMl3aRa76+HRZ83ZsXR8uv1VZUgNHYuoq7jdZb18BitM36h0LbHzTbYetJLiYg7l3mnbAezTXPXHfpNIWvZcuyZzatyF/lng="
+matrix:
+  allow_failures:
+  - php: master
 before_install:
   # Prefer IPv4 over IPv6
   - sudo sh -c "echo 'precedence ::ffff:0:0/96 100' >> /etc/gai.conf"
@@ -30,7 +33,7 @@ script:
   # Mess detection
   #- php vendor/bin/phpmd ./src xml codesize,unusedcode,naming --reportfile .reports/phpmd.xml || true
   # Complexity of code
-  - php vendor/bin/phploc
+  - php vendor/bin/phploc ./src
   # Run CodeCeption tests
   - php vendor/bin/codecept run --coverage --coverage-xml
 after_success:

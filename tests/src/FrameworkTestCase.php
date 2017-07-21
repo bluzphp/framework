@@ -66,59 +66,6 @@ class FrameworkTestCase extends Unit
     }
 
     /**
-     * Set new Request instance
-     *
-     * @param string $path    Path part of URI http://host/module/controller/path
-     * @param array  $query   $_GET params
-     * @param array  $params  $_POST params
-     * @param string $method  HTTP method
-     * @param array  $headers HTTP headers
-     * @param array  $cookies
-     *
-     * @return \Psr\Http\Message\ServerRequestInterface|ServerRequest
-     */
-    protected static function prepareRequest(
-        $path = '',
-        $query = [],
-        $params = [],
-        $method = Http\RequestMethod::GET,
-        $headers = [],
-        $cookies = []
-    ) {
-        $uri = 'http://127.0.0.1/' . $path;
-
-        return new ServerRequest([], [], $uri, $method, 'php://input', $headers, $cookies, $query, $params);
-    }
-
-    /**
-     * Set new Request instance
-     *
-     * @param string $path    Path part of URI http://host/module/controller/path
-     * @param array  $query   $_GET params
-     * @param array  $params  $_POST params
-     * @param string $method  HTTP method
-     * @param array  $headers HTTP headers
-     * @param array  $cookies
-     *
-     * @return \Psr\Http\Message\ServerRequestInterface|ServerRequest
-     */
-    protected static function setRequestParams(
-        $path = '',
-        $query = [],
-        $params = [],
-        $method = Http\RequestMethod::GET,
-        $headers = [],
-        $cookies = []
-    ) {
-
-        $request = self::prepareRequest($path, $query, $params, $method, $headers, $cookies);
-
-        Proxy\Request::setInstance($request);
-
-        return $request;
-    }
-
-    /**
      * Reset layout and Request
      */
     protected static function resetApp()
@@ -206,5 +153,58 @@ class FrameworkTestCase extends Unit
 
         self::assertArrayHasKey($key, $array, $message);
         self::assertCount($size, $array[$key], $message);
+    }
+
+    /**
+     * Set new Request instance
+     *
+     * @param string $path    Path part of URI http://host/module/controller/path
+     * @param array  $query   $_GET params
+     * @param array  $params  $_POST params
+     * @param string $method  HTTP method
+     * @param array  $headers HTTP headers
+     * @param array  $cookies
+     *
+     * @return \Psr\Http\Message\ServerRequestInterface|ServerRequest
+     */
+    protected static function prepareRequest(
+        $path = '',
+        $query = [],
+        $params = [],
+        $method = Http\RequestMethod::GET,
+        $headers = [],
+        $cookies = []
+    ) {
+        $uri = 'http://127.0.0.1/' . $path;
+
+        return new ServerRequest([], [], $uri, $method, 'php://input', $headers, $cookies, $query, $params);
+    }
+
+    /**
+     * Set new Request instance
+     *
+     * @param string $path    Path part of URI http://host/module/controller/path
+     * @param array  $query   $_GET params
+     * @param array  $params  $_POST params
+     * @param string $method  HTTP method
+     * @param array  $headers HTTP headers
+     * @param array  $cookies
+     *
+     * @return \Psr\Http\Message\ServerRequestInterface|ServerRequest
+     */
+    protected static function setRequestParams(
+        $path = '',
+        $query = [],
+        $params = [],
+        $method = Http\RequestMethod::GET,
+        $headers = [],
+        $cookies = []
+    ) {
+
+        $request = self::prepareRequest($path, $query, $params, $method, $headers, $cookies);
+
+        Proxy\Request::setInstance($request);
+
+        return $request;
     }
 }

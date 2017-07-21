@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace Bluz\View;
 
-use Bluz\Application\Application;
 use Bluz\Auth\AbstractRowEntity;
 use Bluz\Common\Container;
 use Bluz\Common\Helper;
@@ -108,7 +107,7 @@ class View implements ViewInterface, \JsonSerializable
                 throw new ViewException("Template `{$this->template}` not found");
             }
             extract($this->container, EXTR_SKIP);
-            require $this->path . DIRECTORY_SEPARATOR . $this->template;
+            include $this->path . DIRECTORY_SEPARATOR . $this->template;
         } catch (\Exception $e) {
             // clean output
             ob_end_clean();

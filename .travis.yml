@@ -27,10 +27,10 @@ before_script:
 script:
   # Check code style
   #- php vendor/bin/phpcs --report=xml --report-file=.reports/phpcs.xml
-  # Lines of code
-  #- php vendor/bin/phploc --log-xml=.reports/phploc.xml src
   # Mess detection
   #- php vendor/bin/phpmd ./src xml codesize,unusedcode,naming --reportfile .reports/phpmd.xml || true
+  # Complexity of code
+  - php vendor/bin/phploc
   # Run CodeCeption tests
   - php vendor/bin/codecept run --coverage --coverage-xml
 after_success:

@@ -28,7 +28,12 @@ class ApplicationTest extends FrameworkTestCase
 {
     public function testFullApplicationCircle()
     {
-        self::markTestIncomplete('Need test for full circle of Application run');
+        self::getApp();
+        self::setRequestParams('', [], [], RequestMethod::GET, ['Accept' => Proxy\Request::TYPE_HTML]);
+        self::getApp()->run();
+
+        self::assertEquals(StatusCode::OK, Response::getStatusCode());
+        self::assertEquals('HTML', Response::getType());
     }
 
     public function testGetApplicationPath()

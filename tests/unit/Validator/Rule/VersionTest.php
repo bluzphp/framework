@@ -4,14 +4,10 @@
  * @link      https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
-use Bluz\Validator\Rule\Version;
+use Bluz\Validator\Rule\VersionRule as Rule;
 
 /**
  * Class VersionTest
@@ -21,34 +17,41 @@ use Bluz\Validator\Rule\Version;
 class VersionTest extends Tests\FrameworkTestCase
 {
     /**
+     * @var Rule
+     */
+    protected $rule;
+
+    protected function setUp()
+    {
+        $this->rule = new Rule;
+    }
+
+    /**
      * @dataProvider providerForPass
      *
      * @param $input
      */
-    public function testValidVersionShouldReturnTrue($input)
+    public function testValidVersionNumberShouldPass($input)
     {
-        $rule = new Version();
-        self::assertTrue($rule->validate($input));
-        self::assertTrue($rule->assert($input));
+        self::assertTrue($this->rule->validate($input));
+        self::assertNotEmpty($this->rule->__toString());
     }
 
     /**
      * @dataProvider providerForFail
-     * @expectedException \Bluz\Validator\Exception\ValidatorException
      *
      * @param $input
      */
-    public function testInvalidVersionShouldThrowException($input)
+    public function testInvalidVersionNumberShouldFail($input)
     {
-        $rule = new Version();
-        self::assertFalse($rule->validate($input));
-        self::assertFalse($rule->assert($input));
+        self::assertFalse($this->rule->validate($input));
+        self::assertNotEmpty($this->rule->__toString());
     }
 
     /**
      * @return array
      */
-    public function providerForPass()
+    public function providerForPass() : array
     {
         return array(
             ['1.0.0'],
@@ -64,7 +67,7 @@ class VersionTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail()
+    public function providerForFail() : array
     {
         return array(
             [''],

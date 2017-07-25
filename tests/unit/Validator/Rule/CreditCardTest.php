@@ -4,14 +4,10 @@
  * @link      https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
-use Bluz\Validator\Rule\CreditCard;
+use Bluz\Validator\Rule\CreditCardRule as Rule;
 
 /**
  * Class CreditCardTest
@@ -21,16 +17,16 @@ use Bluz\Validator\Rule\CreditCard;
 class CreditCardTest extends Tests\FrameworkTestCase
 {
     /**
-     * @var CreditCard
+     * @var Rule
      */
-    protected $validator;
+    protected $rule;
 
     /**
      * Setup validator instance
      */
     protected function setUp()
     {
-        $this->validator = new CreditCard;
+        $this->rule = new Rule;
     }
 
     /**
@@ -38,28 +34,27 @@ class CreditCardTest extends Tests\FrameworkTestCase
      *
      * @param $input
      */
-    public function testValidCreditCardsShouldReturnTrue($input)
+    public function testValidCreditCardsShouldPass($input)
     {
-        self::assertTrue($this->validator->validate($input));
-        self::assertTrue($this->validator->assert($input));
+        self::assertTrue($this->rule->validate($input));
+        self::assertNotEmpty($this->rule->__toString());
     }
 
     /**
      * @dataProvider providerForFail
-     * @expectedException \Bluz\Validator\Exception\ValidatorException
      *
      * @param $input
      */
-    public function testInvalidCreditCardsShouldThrowCreditCardException($input)
+    public function testInvalidCreditCardsShouldFail($input)
     {
-        self::assertFalse($this->validator->validate($input));
-        self::assertFalse($this->validator->assert($input));
+        self::assertFalse($this->rule->validate($input));
+        self::assertNotEmpty($this->rule->__toString());
     }
 
     /**
      * @return array
      */
-    public function providerForPass()
+    public function providerForPass() : array
     {
         return array(
             ['5376 7473 9720 8720'], // MasterCard
@@ -73,7 +68,7 @@ class CreditCardTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail()
+    public function providerForFail() : array
     {
         return array(
             [null],

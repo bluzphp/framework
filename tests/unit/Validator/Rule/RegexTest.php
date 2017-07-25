@@ -4,14 +4,10 @@
  * @link      https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
-use Bluz\Validator\Rule\Regexp;
+use Bluz\Validator\Rule\RegexpRule as Rule;
 
 /**
  * Class RegexTest
@@ -26,10 +22,11 @@ class RegexTest extends Tests\FrameworkTestCase
      * @param $expression
      * @param $input
      */
-    public function testValidRegexp($expression, $input)
+    public function testValidRegexpShouldPass($expression, $input)
     {
-        $v = new Regexp($expression);
-        self::assertTrue($v->validate($input));
+        $rule = new Rule($expression);
+        self::assertTrue($rule->validate($input));
+        self::assertNotEmpty($rule->__toString());
     }
 
     /**
@@ -38,16 +35,17 @@ class RegexTest extends Tests\FrameworkTestCase
      * @param $expression
      * @param $input
      */
-    public function testInvalidRegexp($expression, $input)
+    public function testInvalidRegexpShouldFail($expression, $input)
     {
-        $v = new Regexp($expression);
-        self::assertFalse($v->validate($input));
+        $rule = new Rule($expression);
+        self::assertFalse($rule->validate($input));
+        self::assertNotEmpty($rule->__toString());
     }
 
     /**
      * @return array
      */
-    public function providerForPass()
+    public function providerForPass() : array
     {
         return array(
             ['/^[a-z]+$/', 'foobar'],
@@ -58,7 +56,7 @@ class RegexTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail()
+    public function providerForFail() : array
     {
         return array(
             ['/^[a-z]+$/', 'foo bar'],

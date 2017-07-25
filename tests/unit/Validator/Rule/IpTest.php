@@ -4,14 +4,10 @@
  * @link      https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
-use Bluz\Validator\Rule\Ip;
+use Bluz\Validator\Rule\IpRule as Rule;
 
 /**
  * Class IpTest
@@ -26,26 +22,24 @@ class IpTest extends Tests\FrameworkTestCase
      * @param      $input
      * @param null $options
      */
-    public function testValidIpsShouldReturnTrue($input, $options = null)
+    public function testValidIpsShouldPass($input, $options = null)
     {
-        $validator = new Ip($options);
-        self::assertTrue($validator->validate($input));
-        self::assertTrue($validator->assert($input));
+        $rule = new Rule($options);
+        self::assertTrue($rule->validate($input));
+        self::assertNotEmpty($rule->__toString());
     }
 
     /**
      * @dataProvider providerForFail
-     * @expectedException \Bluz\Validator\Exception\ValidatorException
      *
      * @param      $input
      * @param null $options
      */
-    public function testInvalidIpsShouldReturnFalseAndThrowException($input, $options = null)
+    public function testInvalidIpsShouldFail($input, $options = null)
     {
-        $validator = new Ip($options);
-        self::assertFalse($validator->validate($input));
-        self::assertNotEmpty($validator->__toString());
-        self::assertFalse($validator->assert($input));
+        $rule = new Rule($options);
+        self::assertFalse($rule->validate($input));
+        self::assertNotEmpty($rule->__toString());
     }
 
     /**
@@ -56,7 +50,7 @@ class IpTest extends Tests\FrameworkTestCase
      */
     public function testInvalidRangeShouldRaiseException($range)
     {
-        new Ip($range);
+        new Rule($range);
     }
 
     /**
@@ -65,32 +59,30 @@ class IpTest extends Tests\FrameworkTestCase
      * @param $input
      * @param $networkRange
      */
-    public function testIpsBetweenRangeShouldReturnTrue($input, $networkRange)
+    public function testIpsBetweenRangeShouldPass($input, $networkRange)
     {
-        $validator = new Ip($networkRange);
-        self::assertTrue($validator->validate($input));
-        self::assertTrue($validator->assert($input));
+        $rule = new Rule($networkRange);
+        self::assertTrue($rule->validate($input));
+        self::assertNotEmpty($rule->__toString());
     }
 
     /**
      * @dataProvider providerForIpOutsideRange
-     * @expectedException \Bluz\Validator\Exception\ValidatorException
      *
      * @param $input
      * @param $networkRange
      */
-    public function testIpsOutsideRangeShouldReturnFalse($input, $networkRange)
+    public function testIpsOutsideRangeShouldFail($input, $networkRange)
     {
-        $validator = new Ip($networkRange);
-        self::assertFalse($validator->validate($input));
-        self::assertNotEmpty($validator->__toString());
-        self::assertFalse($validator->assert($input));
+        $rule = new Rule($networkRange);
+        self::assertFalse($rule->validate($input));
+        self::assertNotEmpty($rule->__toString());
     }
 
     /**
      * @return array
      */
-    public function providerForPass()
+    public function providerForPass() : array
     {
         return array(
             ['127.0.0.1'],
@@ -100,7 +92,7 @@ class IpTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail()
+    public function providerForFail() : array
     {
         return array(
             [null],
@@ -115,7 +107,7 @@ class IpTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForComponentException()
+    public function providerForComponentException() : array
     {
         return array(
             ['192.168'],
@@ -132,7 +124,7 @@ class IpTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForIpBetweenRange()
+    public function providerForIpBetweenRange() : array
     {
         return array(
             ['127.0.0.1', '127.*'],
@@ -159,7 +151,7 @@ class IpTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForIpOutsideRange()
+    public function providerForIpOutsideRange() : array
     {
         return array(
             ['127.0.0.1', '127.0.1.*'],

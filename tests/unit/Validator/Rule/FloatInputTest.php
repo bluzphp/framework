@@ -4,14 +4,10 @@
  * @link      https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
-use Bluz\Validator\Rule\FloatInput;
+use Bluz\Validator\Rule\FloatRule as Rule;
 
 /**
  * Class FloatTest
@@ -21,17 +17,16 @@ use Bluz\Validator\Rule\FloatInput;
 class FloatInputTest extends Tests\FrameworkTestCase
 {
     /**
-     * @var \Bluz\Validator\Rule\FloatInput
+     * @var Rule
      */
-    protected $validator;
+    protected $rule;
 
     /**
      * Setup validator instance
      */
     protected function setUp()
     {
-        parent::setUp();
-        $this->validator = new FloatInput();
+        $this->rule = new Rule();
     }
 
     /**
@@ -41,26 +36,25 @@ class FloatInputTest extends Tests\FrameworkTestCase
      */
     public function testFloatNumbersShouldPass($input)
     {
-        self::assertTrue($this->validator->validate($input));
-        self::assertTrue($this->validator->assert($input));
+        self::assertTrue($this->rule->validate($input));
+        self::assertNotEmpty($this->rule->__toString());
     }
 
     /**
      * @dataProvider providerForFail
-     * @expectedException \Bluz\Validator\Exception\ValidatorException
      *
      * @param $input
      */
     public function testNotFloatNumbersShouldFail($input)
     {
-        self::assertFalse($this->validator->validate($input));
-        self::assertFalse($this->validator->assert($input));
+        self::assertFalse($this->rule->validate($input));
+        self::assertNotEmpty($this->rule->__toString());
     }
 
     /**
      * @return array
      */
-    public function providerForPass()
+    public function providerForPass() : array
     {
         return array(
             [165],
@@ -78,7 +72,7 @@ class FloatInputTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail()
+    public function providerForFail() : array
     {
         return array(
             [null],

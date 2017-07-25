@@ -4,14 +4,10 @@
  * @link      https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
-use Bluz\Validator\Rule\Json;
+use Bluz\Validator\Rule\JsonRule as Rule;
 
 /**
  * Class JsonTest
@@ -21,17 +17,16 @@ use Bluz\Validator\Rule\Json;
 class JsonTest extends Tests\FrameworkTestCase
 {
     /**
-     * @var \Bluz\Validator\Rule\Json
+     * @var Rule
      */
-    protected $validator;
+    protected $rule;
 
     /**
      * Setup validator instance
      */
     protected function setUp()
     {
-        parent::setUp();
-        $this->validator = new Json();
+        $this->rule = new Rule();
     }
 
     /**
@@ -39,28 +34,27 @@ class JsonTest extends Tests\FrameworkTestCase
      *
      * @param $input
      */
-    public function testValidJsonsShouldReturnTrue($input)
+    public function testValidJsonsShouldPass($input)
     {
-        self::assertTrue($this->validator->validate($input));
-        self::assertTrue($this->validator->assert($input));
+        self::assertTrue($this->rule->validate($input));
+        self::assertNotEmpty($this->rule->__toString());
     }
 
     /**
      * @dataProvider providerForFail
-     * @expectedException \Bluz\Validator\Exception\ValidatorException
      *
      * @param $input
      */
-    public function testInvalidJsonsShouldThrowJsonException($input)
+    public function testInvalidJsonsShouldFail($input)
     {
-        self::assertFalse($this->validator->validate($input));
-        self::assertFalse($this->validator->assert($input));
+        self::assertFalse($this->rule->validate($input));
+        self::assertNotEmpty($this->rule->__toString());
     }
 
     /**
      * @return array
      */
-    public function providerForPass()
+    public function providerForPass() : array
     {
         return array(
             ['2'],
@@ -74,7 +68,7 @@ class JsonTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail()
+    public function providerForFail() : array
     {
         return array(
             [''],

@@ -4,14 +4,10 @@
  * @link      https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
-
 namespace Respect\Validation\Rules;
 
 use Bluz\Tests;
-use Bluz\Validator\Rule\Domain;
+use Bluz\Validator\Rule\DomainRule as Rule;
 
 /**
  * Class DomainTest
@@ -22,39 +18,61 @@ class DomainTest extends Tests\FrameworkTestCase
 {
     /**
      * @dataProvider providerForPass
-     *
-     * @param      $input
-     * @param bool $checkDns
+     * @param string $input
      */
-    public function testValidDomainsShouldReturnTrue($input, $checkDns = false)
+    public function testValidDomainsShouldPass($input)
     {
-        $validator = new Domain($checkDns);
-        self::assertTrue($validator->validate($input));
-        self::assertTrue($validator->assert($input));
+        $rule = new Rule();
+        self::assertTrue($rule->validate($input));
+        self::assertNotEmpty($rule->__toString());
     }
 
     /**
      * @dataProvider providerForFail
-     * @expectedException \Bluz\Validator\Exception\ValidatorException
-     *
-     * @param      $input
-     * @param bool $checkDns
+     * @param string $input
      */
-    public function testValidDomainsShouldReturnFalse($input, $checkDns = false)
+    public function testValidDomainsShouldFail($input)
     {
-        $validator = new Domain($checkDns);
-        self::assertFalse($validator->validate($input));
-        self::assertFalse($validator->assert($input));
+        $rule = new Rule();
+        self::assertFalse($rule->validate($input));
+        self::assertNotEmpty($rule->__toString());
+    }
+
+    /**
+     * @dataProvider providerRealDomainForPass
+     * @param string $input
+     */
+    public function testValidDomainWithDomainCheck($input)
+    {
+        self::markTestIncomplete('To slow to check it every time');
+
+        return;
+        $rule = new Rule(true);
+        self::assertTrue($rule->validate($input));
+        self::assertNotEmpty($rule->__toString());
+    }
+
+    /**
+     * @dataProvider providerRealDomainForFail
+     * @param string $input
+     */
+    public function testInvalidDomainWithDomainCheck($input)
+    {
+        self::markTestIncomplete('To slow to check it every time');
+
+        return;
+        $rule = new Rule(true);
+        self::assertFalse($rule->validate($input));
+        self::assertNotEmpty($rule->__toString());
     }
 
     /**
      * @return array
      */
-    public function providerForPass()
+    public function providerForPass() : array
     {
         return array(
             ['domain.local'],
-//            ['google.com', true],
             ['example.com'],
             ['xn--bcher-kva.com'],
             ['example-hyphen.com'],
@@ -64,16 +82,34 @@ class DomainTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail()
+    public function providerForFail() : array
     {
         return array(
             [null],
             [''],
-//            ['domain.local', true],
             ['-example-invalid.com'],
             ['example.invalid.-com'],
-//            ['1.2.3.256', true],
-//            ['1.2.3.4', true],
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function providerRealDomainForPass() : array
+    {
+        return array(
+            ['google.com'],
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function providerRealDomainForFail() : array
+    {
+        return array(
+            ['domain.local'],
+            ['1.2.3.4'],
         );
     }
 }

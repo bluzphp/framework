@@ -4,14 +4,10 @@
  * @link      https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
-use Bluz\Validator\Rule\In;
+use Bluz\Validator\Rule\InRule as Rule;
 
 /**
  * Class InTest
@@ -25,61 +21,53 @@ class InTest extends Tests\FrameworkTestCase
      *
      * @param      $input
      * @param null $haystack
-     * @param bool $strict
      */
-    public function testSuccessInValidatorCases($input, $haystack = null, $strict = false)
+    public function testSuccessInValidatorCases($input, $haystack = null)
     {
-        $v = new In($haystack, $strict);
-        self::assertTrue($v->validate($input));
-        self::assertTrue($v->assert($input));
+        $rule = new Rule($haystack);
+        self::assertTrue($rule->validate($input));
+        self::assertNotEmpty($rule->__toString());
     }
 
     /**
      * @dataProvider providerForFail
-     * @expectedException \Bluz\Validator\Exception\ValidatorException
      *
      * @param      $input
-     * @param      $haystack
-     * @param bool $strict
+     * @param null $haystack
      */
-    public function testInvalidInChecksShouldThrowInException($input, $haystack, $strict = false)
+    public function testInvalidInValidatorCases($input, $haystack = null)
     {
-        $v = new In($haystack, $strict);
-        self::assertFalse($v->validate($input));
-        self::assertNotEmpty($v->__toString());
-        self::assertFalse($v->assert($input));
+        $rule = new Rule($haystack);
+        self::assertFalse($rule->validate($input));
+        self::assertNotEmpty($rule->__toString());
     }
 
     /**
      * @return array
      */
-    public function providerForPass()
+    public function providerForPass() : array
     {
         return array(
             ['foo', ['foo', 'bar']],
+            ['foo', 'foo'],
             ['foo', 'barfoobaz'],
-            ['foo', 'foobarbaz'],
-            ['foo', 'barbazfoo'],
-            ['foo', 'foo', true],
+            ['foo', 'barbazFOO'],
             ['1', [1, 2, 3]],
-            ['1', ['1', 2, 3], true],
+            ['1', ['1', 2, 3]],
         );
     }
 
     /**
      * @return array
      */
-    public function providerForFail()
+    public function providerForFail() : array
     {
         return array(
             ['', 'barfoobaz'],
             ['', 42],
             ['bat', ['foo', 'bar']],
             ['foo', 'barfaabaz'],
-            ['foo', 'faabarbaz'],
-            ['foo', 'baabazfaa'],
-            ['Foo', 'barbazfoo', true],
-            ['1', [1, 2, 3], true],
+            [4, [1, 2, 3]],
         );
     }
 }

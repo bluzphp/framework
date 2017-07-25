@@ -4,14 +4,10 @@
  * @link      https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
-use Bluz\Validator\Rule\Condition;
+use Bluz\Validator\Rule\ConditionRule as Rule;
 
 /**
  * Class AlphaTest
@@ -26,32 +22,31 @@ class ConditionTest extends Tests\FrameworkTestCase
      * @param        $condition
      * @param string $input
      */
-    public function testValidAlphanumericCharsShouldReturnTrue($condition, $input = 'any')
+    public function testValidAlphanumericCharsShouldPass($condition, $input = 'any')
     {
-        $validator = new Condition($condition);
-        self::assertTrue($validator->validate($input));
-        self::assertTrue($validator->assert($input));
+        $rule = new Rule($condition);
+        self::assertTrue($rule->validate($input));
+        self::assertNotEmpty($rule->__toString());
     }
 
     /**
      * @dataProvider providerForFail
-     * @expectedException \Bluz\Validator\Exception\ValidatorException
      *
      * @param        $condition
      * @param string $input
      */
-    public function testInvalidAlphanumericCharsShouldReturnFalse($condition, $input = 'any')
+    public function testInvalidAlphanumericCharsShouldFail($condition, $input = 'any')
     {
 
-        $validator = new Condition($condition);
-        self::assertFalse($validator->validate($input));
-        self::assertFalse($validator->assert($input));
+        $rule = new Rule($condition);
+        self::assertFalse($rule->validate($input));
+        self::assertNotEmpty($rule->__toString());
     }
 
     /**
      * @return array
      */
-    public function providerForPass()
+    public function providerForPass() : array
     {
         return array(
             [(4 > 2), 'always'],
@@ -62,7 +57,7 @@ class ConditionTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail()
+    public function providerForFail() : array
     {
         return array(
             [(4 < 2), 'always'],

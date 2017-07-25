@@ -4,14 +4,10 @@
  * @link      https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
-use Bluz\Validator\Rule\AlphaNumeric;
+use Bluz\Validator\Rule\AlphaNumericRule as Rule;
 
 /**
  * Class AlphaNumericTest
@@ -26,25 +22,24 @@ class AlphaNumericTest extends Tests\FrameworkTestCase
      * @param $validAlphaNumeric
      * @param $additional
      */
-    public function testValidAlphaNumericCharsShouldReturnTrue($validAlphaNumeric, $additional)
+    public function testValidAlphaNumericCharsShouldPass($validAlphaNumeric, $additional)
     {
-        $validator = new AlphaNumeric($additional);
-        self::assertTrue($validator->validate($validAlphaNumeric));
-        self::assertTrue($validator->assert($validAlphaNumeric));
+        $rule = new Rule($additional);
+        self::assertTrue($rule->validate($validAlphaNumeric));
+        self::assertNotEmpty($rule->__toString());
     }
 
     /**
      * @dataProvider providerForFail
-     * @expectedException \Bluz\Validator\Exception\ValidatorException
      *
      * @param $invalidAlphaNumeric
      * @param $additional
      */
-    public function testInvalidAlphaNumericCharsShouldReturnFalse($invalidAlphaNumeric, $additional)
+    public function testInvalidAlphaNumericCharsShouldFail($invalidAlphaNumeric, $additional)
     {
-        $validator = new AlphaNumeric($additional);
-        self::assertFalse($validator->validate($invalidAlphaNumeric));
-        self::assertFalse($validator->assert($invalidAlphaNumeric));
+        $rule = new Rule($additional);
+        self::assertFalse($rule->validate($invalidAlphaNumeric));
+        self::assertNotEmpty($rule->__toString());
     }
 
     /**
@@ -53,9 +48,9 @@ class AlphaNumericTest extends Tests\FrameworkTestCase
      *
      * @param $additional
      */
-    public function testInvalidConstructorParamsShouldThrowComponentException($additional)
+    public function testInvalidConstructorParamsShouldRaiseComponentException($additional)
     {
-        new AlphaNumeric($additional);
+        new Rule($additional);
     }
 
     /**
@@ -66,8 +61,8 @@ class AlphaNumericTest extends Tests\FrameworkTestCase
      */
     public function testAdditionalCharsShouldBeRespected($additional, $query)
     {
-        $validator = new AlphaNumeric($additional);
-        self::assertTrue($validator->validate($query));
+        $rule = new Rule($additional);
+        self::assertTrue($rule->validate($query));
     }
 
     /**
@@ -75,17 +70,17 @@ class AlphaNumericTest extends Tests\FrameworkTestCase
      */
     public function testTemplates()
     {
-        $validator = new AlphaNumeric();
-        self::assertNotEmpty($validator->__toString());
+        $rule = new Rule();
+        self::assertNotEmpty($rule->__toString());
 
-        $validator = new AlphaNumeric('[]');
-        self::assertNotEmpty($validator->__toString());
+        $rule = new Rule('[]');
+        self::assertNotEmpty($rule->__toString());
     }
 
     /**
      * @return array
      */
-    public function providerForPass()
+    public function providerForPass() : array
     {
         return array(
             ['', ''],
@@ -110,7 +105,7 @@ class AlphaNumericTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail()
+    public function providerForFail() : array
     {
         return array(
             ['@#$', ''],
@@ -126,7 +121,7 @@ class AlphaNumericTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForComponentException()
+    public function providerForComponentException() : array
     {
         return array(
             [new \stdClass],
@@ -138,7 +133,7 @@ class AlphaNumericTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerAdditionalChars()
+    public function providerAdditionalChars() : array
     {
         return array(
             ['!@#$%^&*(){}', '!@#$%^&*(){} abc 123'],

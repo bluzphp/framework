@@ -4,14 +4,10 @@
  * @link      https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
-use Bluz\Validator\Rule\Callback;
+use Bluz\Validator\Rule\CallbackRule as Rule;
 
 /**
  * Class CallbackTest
@@ -21,12 +17,12 @@ use Bluz\Validator\Rule\Callback;
 class CallbackTest extends Tests\FrameworkTestCase
 {
     /**
-     * @var \Bluz\Validator\Rule\Callback
+     * @var Rule
      */
     private $alwaysTrue;
 
     /**
-     * @var \Bluz\Validator\Rule\Callback
+     * @var Rule
      */
     private $alwaysFalse;
 
@@ -35,39 +31,40 @@ class CallbackTest extends Tests\FrameworkTestCase
      */
     public function setUp()
     {
-        parent::setUp();
-        $this->alwaysTrue = new Callback(
+        $this->alwaysTrue = new Rule(
             function () {
                 return true;
             }
         );
-        $this->alwaysFalse = new Callback(
+        $this->alwaysFalse = new Rule(
             function () {
                 return false;
             }
         );
     }
 
-    public function testCallbackValidatorShouldReturnTrueIfCallbackReturnsTrue()
+    public function testCallbackValidatorShouldPassIfCallbackReturnsTrue()
     {
         self::assertTrue($this->alwaysTrue->validate('foo-bar'));
+        self::assertNotEmpty($this->alwaysFalse->__toString());
     }
 
-    public function testCallbackValidatorShouldReturnFalseIfCallbackReturnsFalse()
+    public function testCallbackValidatorShouldFailIfCallbackReturnsFalse()
     {
         self::assertFalse($this->alwaysFalse->validate('foo-bar'));
+        self::assertNotEmpty($this->alwaysFalse->__toString());
     }
 
     public function testCallbackValidatorShouldAcceptArrayCallbackDefinitions()
     {
-        $v = new Callback([$this, 'thisIsASampleCallbackUsedInsideThisTest']);
-        self::assertTrue($v->validate('test'));
+        $rule = new Rule([$this, 'thisIsASampleCallbackUsedInsideThisTest']);
+        self::assertTrue($rule->validate('test'));
     }
 
     public function testCallbackValidatorShouldAcceptFunctionNamesAsString()
     {
-        $v = new Callback('is_string');
-        self::assertTrue($v->validate('test'));
+        $rule = new Rule('is_string');
+        self::assertTrue($rule->validate('test'));
     }
 
     /**
@@ -75,7 +72,7 @@ class CallbackTest extends Tests\FrameworkTestCase
      */
     public function testInvalidCallbacksShouldRaiseComponentExceptionUponInstantiation()
     {
-        new Callback(new \stdClass);
+        new Rule(new \stdClass);
     }
 
     /**

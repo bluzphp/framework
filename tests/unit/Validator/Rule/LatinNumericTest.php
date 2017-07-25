@@ -4,14 +4,10 @@
  * @link      https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
-use Bluz\Validator\Rule\LatinNumeric;
+use Bluz\Validator\Rule\LatinNumericRule as Rule;
 
 /**
  * Class AlphaTest
@@ -26,25 +22,24 @@ class LatinNumericTest extends Tests\FrameworkTestCase
      * @param        $validAlpha
      * @param string $additional
      */
-    public function testValidAlphanumericCharsShouldReturnTrue($validAlpha, $additional = '')
+    public function testValidAlphanumericCharsShouldPass($validAlpha, $additional = '')
     {
-        $validator = new LatinNumeric($additional);
-        self::assertTrue($validator->validate($validAlpha));
-        self::assertTrue($validator->assert($validAlpha));
+        $rule = new Rule($additional);
+        self::assertTrue($rule->validate($validAlpha));
+        self::assertNotEmpty($rule->__toString());
     }
 
     /**
      * @dataProvider providerForFail
-     * @expectedException \Bluz\Validator\Exception\ValidatorException
      *
      * @param        $invalidAlpha
      * @param string $additional
      */
-    public function testInvalidAlphanumericCharsShouldReturnFalse($invalidAlpha, $additional = '')
+    public function testInvalidAlphanumericCharsShouldFail($invalidAlpha, $additional = '')
     {
-        $validator = new LatinNumeric($additional);
-        self::assertFalse($validator->validate($invalidAlpha));
-        self::assertFalse($validator->assert($invalidAlpha));
+        $rule = new Rule($additional);
+        self::assertFalse($rule->validate($invalidAlpha));
+        self::assertNotEmpty($rule->__toString());
     }
 
     /**
@@ -55,7 +50,7 @@ class LatinNumericTest extends Tests\FrameworkTestCase
      */
     public function testInvalidConstructorParamsShouldThrowComponentException($additional)
     {
-        new LatinNumeric($additional);
+        new Rule($additional);
     }
 
     /**
@@ -66,26 +61,27 @@ class LatinNumericTest extends Tests\FrameworkTestCase
      */
     public function testAdditionalCharsShouldBeRespected($additional, $query)
     {
-        $validator = new LatinNumeric($additional);
-        self::assertTrue($validator->validate($query));
+        $rule = new Rule($additional);
+        self::assertTrue($rule->validate($query));
+        self::assertNotEmpty($rule->__toString());
     }
 
     /**
-     * Check templates
+     * Check messages
      */
-    public function testTemplates()
+    public function testRuleDescriptionShouldBePresent()
     {
-        $validator = new LatinNumeric();
-        self::assertNotEmpty($validator->__toString());
+        $rule = new Rule();
+        self::assertNotEmpty($rule->__toString());
 
-        $validator = new LatinNumeric('[]');
-        self::assertNotEmpty($validator->__toString());
+        $rule = new Rule('[]');
+        self::assertNotEmpty($rule->__toString());
     }
 
     /**
      * @return array
      */
-    public function providerForPass()
+    public function providerForPass() : array
     {
         return array(
             [0],
@@ -102,7 +98,7 @@ class LatinNumericTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail()
+    public function providerForFail() : array
     {
         return array(
             [1e21],
@@ -118,7 +114,7 @@ class LatinNumericTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForComponentException()
+    public function providerForComponentException() : array
     {
         return array(
             [new \stdClass],
@@ -130,7 +126,7 @@ class LatinNumericTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerAdditionalChars()
+    public function providerAdditionalChars() : array
     {
         return array(
             ['!@#$%^&*(){} ', '!@#$%^&*(){} abc'],

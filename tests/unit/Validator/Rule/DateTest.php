@@ -4,15 +4,10 @@
  * @link      https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Validator\Rule;
 
-use \DateTime;
 use Bluz\Tests;
-use Bluz\Validator\Rule\Date;
+use Bluz\Validator\Rule\DateRule as Rule;
 
 /**
  * Class DateTest
@@ -22,27 +17,26 @@ use Bluz\Validator\Rule\Date;
 class DateTest extends Tests\FrameworkTestCase
 {
     /**
-     * @var Date
+     * @var Rule
      */
-    protected $validator;
+    protected $rule;
 
     /**
      * Setup validator instance
      */
     protected function setUp()
     {
-        parent::setUp();
-        $this->validator = new Date;
+        $this->rule = new Rule;
     }
 
-    public function testDateWithoutFormatShouldValidate()
+    public function testDateWithoutFormatShouldPass()
     {
-        self::assertTrue($this->validator->validate('today'));
+        self::assertTrue($this->rule->validate('today'));
     }
 
-    public function testDateTimeInstancesShouldAlwaysValidate()
+    public function testDateTimeInstancesShouldAlwaysValidAndPass()
     {
-        self::assertTrue($this->validator->validate(new DateTime('today')));
+        self::assertTrue($this->rule->validate(new \DateTime('today')));
     }
 
     /**
@@ -53,9 +47,9 @@ class DateTest extends Tests\FrameworkTestCase
      */
     public function testValidDateShouldPass($format, $date)
     {
-        $validator = new Date($format);
-        self::assertTrue($validator->validate($date));
-        self::assertNotEmpty($validator->__toString());
+        $rule = new Rule($format);
+        self::assertTrue($rule->validate($date));
+        self::assertNotEmpty($rule->__toString());
     }
 
     /**
@@ -66,28 +60,15 @@ class DateTest extends Tests\FrameworkTestCase
      */
     public function testInvalidateDateShouldFail($format, $date)
     {
-        $validator = new Date($format);
-        self::assertFalse($validator->validate($date));
-        self::assertNotEmpty($validator->__toString());
-    }
-
-    /**
-     * @dataProvider providerForFail
-     * @expectedException \Bluz\Validator\Exception\ValidatorException
-     *
-     * @param $format
-     * @param $date
-     */
-    public function testInvalidateDateThrowException($format, $date)
-    {
-        $validator = new Date($format);
-        $validator->assert($date);
+        $rule = new Rule($format);
+        self::assertFalse($rule->validate($date));
+        self::assertNotEmpty($rule->__toString());
     }
 
     /**
      * @return array
      */
-    public function providerForPass()
+    public function providerForPass() : array
     {
         return array(
             ['Y-m-d', '2009-09-09'],
@@ -98,7 +79,7 @@ class DateTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail()
+    public function providerForFail() : array
     {
         return array(
             [null, 'invalid date'],

@@ -10,8 +10,6 @@ declare(strict_types=1);
 
 namespace Bluz\Validator\Rule;
 
-use Bluz\Proxy\Translator;
-
 /**
  * Abstract validation rule
  *
@@ -36,7 +34,7 @@ abstract class AbstractRule implements RuleInterface
      */
     public function getDescription() : string
     {
-        return Translator::translate($this->description);
+        return __($this->description);
     }
 
     /**

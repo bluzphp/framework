@@ -62,7 +62,9 @@ class InStrictTest extends Tests\FrameworkTestCase
     public function providerForFail() : array
     {
         return array(
+            ['', 'barfoobaz'],
             ['foo', 'barbazFOO'],
+            ['', 42],
             [1, ['1', 2, 3]],
             ['1', [1, 2, 3]],
         );

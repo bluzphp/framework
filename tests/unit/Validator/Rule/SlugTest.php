@@ -4,14 +4,10 @@
  * @link      https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
-use Bluz\Validator\Rule\Slug;
+use Bluz\Validator\Rule\SlugRule as Rule;
 
 /**
  * Class SlugTest
@@ -21,17 +17,16 @@ use Bluz\Validator\Rule\Slug;
 class SlugTest extends Tests\FrameworkTestCase
 {
     /**
-     * @var \Bluz\Validator\Rule\Slug
+     * @var Rule
      */
-    protected $validator;
+    protected $rule;
 
     /**
      * Setup validator instance
      */
     protected function setUp()
     {
-        parent::setUp();
-        $this->validator = new Slug();
+        $this->rule = new Rule;
     }
 
     /**
@@ -39,25 +34,27 @@ class SlugTest extends Tests\FrameworkTestCase
      *
      * @param $input
      */
-    public function testValidSlug($input)
+    public function testValidSlugShouldPass($input)
     {
-        self::assertTrue($this->validator->validate($input));
-        self::assertTrue($this->validator->assert($input));
+        self::assertTrue($this->rule->validate($input));
+        self::assertNotEmpty($this->rule->__toString());
     }
 
     /**
      * @dataProvider providerForFail
-     * @expectedException \Bluz\Validator\Exception\ValidatorException
      *
      * @param $input
      */
-    public function testInvalidSlug($input)
+    public function testInvalidSlugShouldFail($input)
     {
-        self::assertFalse($this->validator->validate($input));
-        self::assertFalse($this->validator->assert($input));
+        self::assertFalse($this->rule->validate($input));
+        self::assertNotEmpty($this->rule->__toString());
     }
 
-    public function providerForPass()
+    /**
+     * @return array
+     */
+    public function providerForPass() : array
     {
         return array(
             ['o-rato-roeu-o-rei-de-roma'],
@@ -67,7 +64,10 @@ class SlugTest extends Tests\FrameworkTestCase
         );
     }
 
-    public function providerForFail()
+    /**
+     * @return array
+     */
+    public function providerForFail() : array
     {
         return array(
             [''],

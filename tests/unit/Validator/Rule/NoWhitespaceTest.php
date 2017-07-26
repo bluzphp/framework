@@ -4,14 +4,10 @@
  * @link      https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
-use Bluz\Validator\Rule\NoWhitespace;
+use Bluz\Validator\Rule\NoWhitespaceRule as Rule;
 
 /**
  * Class NoWhitespaceTest
@@ -21,17 +17,16 @@ use Bluz\Validator\Rule\NoWhitespace;
 class NoWhitespaceTest extends Tests\FrameworkTestCase
 {
     /**
-     * @var NoWhitespace
+     * @var Rule
      */
-    protected $validator;
+    protected $rule;
 
     /**
      * Setup validator instance
      */
     protected function setUp()
     {
-        parent::setUp();
-        $this->validator = new NoWhitespace;
+        $this->rule = new Rule;
     }
 
     /**
@@ -41,7 +36,8 @@ class NoWhitespaceTest extends Tests\FrameworkTestCase
      */
     public function testStringWithNoWhitespaceShouldPass($input)
     {
-        self::assertTrue($this->validator->validate($input));
+        self::assertTrue($this->rule->validate($input));
+        self::assertNotEmpty($this->rule->__toString());
     }
 
     /**
@@ -51,13 +47,14 @@ class NoWhitespaceTest extends Tests\FrameworkTestCase
      */
     public function testStringWithWhitespaceShouldFail($input)
     {
-        self::assertFalse($this->validator->validate($input));
+        self::assertFalse($this->rule->validate($input));
+        self::assertNotEmpty($this->rule->__toString());
     }
 
     /**
      * @return array
      */
-    public function providerForPass()
+    public function providerForPass() : array
     {
         return array(
             [''],
@@ -70,7 +67,7 @@ class NoWhitespaceTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail()
+    public function providerForFail() : array
     {
         return array(
             [' '],

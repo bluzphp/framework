@@ -4,15 +4,10 @@
  * @link      https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Validator\Rule;
 
-use \DateTime;
 use Bluz\Tests;
-use Bluz\Validator\Rule\Between;
+use Bluz\Validator\Rule\BetweenRule as Rule;
 
 /**
  * Class BetweenTest
@@ -26,31 +21,27 @@ class BetweenTest extends Tests\FrameworkTestCase
      *
      * @param $min
      * @param $max
-     * @param $inclusive
      * @param $input
      */
-    public function testValuesBetweenBoundsShouldPass($min, $max, $inclusive, $input)
+    public function testValuesBetweenBoundsShouldPass($min, $max, $input)
     {
-        $validator = new Between($min, $max, $inclusive);
-        self::assertTrue($validator->validate($input));
-        self::assertTrue($validator->assert($input));
+        $rule = new Rule($min, $max);
+        self::assertTrue($rule->validate($input));
+        self::assertNotEmpty($rule->__toString());
     }
 
     /**
      * @dataProvider providerForFail
-     * @expectedException \Bluz\Validator\Exception\ValidatorException
      *
      * @param $min
      * @param $max
-     * @param $inclusive
      * @param $input
      */
-    public function testValuesOutBoundsShouldRaiseException($min, $max, $inclusive, $input)
+    public function testValuesOutBoundsShouldFail($min, $max, $input)
     {
-        $validator = new Between($min, $max, $inclusive);
-        self::assertFalse($validator->validate($input));
-        self::assertNotEmpty($validator->__toString());
-        self::assertFalse($validator->assert($input));
+        $rule = new Rule($min, $max);
+        self::assertFalse($rule->validate($input));
+        self::assertNotEmpty($rule->__toString());
     }
 
     /**
@@ -62,27 +53,24 @@ class BetweenTest extends Tests\FrameworkTestCase
      */
     public function testInvalidConstructionParamsShouldRaiseException($min, $max)
     {
-        new Between($min, $max);
+        new Rule($min, $max);
     }
 
     /**
      * @return array
      */
-    public function providerForPass()
+    public function providerForPass() : array
     {
         return array(
-            [0, 1, true, 0],
-            [0, 1, true, 1],
-            [10, 20, false, 15],
-            [10, 20, true, 20],
-            [-10, 20, false, -5],
-            [-10, 20, false, 0],
-            ['a', 'z', false, 'j'],
+            [10, 20, 11],
+            [10, 20, 19],
+            [-10, 20, -5],
+            [-10, 20, 0],
+            ['a', 'z', 'j'],
             array(
-                new DateTime('yesterday'),
-                new DateTime('tomorrow'),
-                false,
-                new DateTime('now')
+                new \DateTime('yesterday'),
+                new \DateTime('tomorrow'),
+                new \DateTime('now')
             ),
         );
     }
@@ -90,24 +78,22 @@ class BetweenTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail()
+    public function providerForFail() : array
     {
         return array(
-            [10, 20, true, ''],
-            [10, 20, false, ''],
-            [0, 1, false, 0],
-            [0, 1, false, 1],
-            [0, 1, false, 2],
-            [0, 1, false, -1],
-            [10, 20, false, 999],
-            [10, 20, false, 20],
-            [-10, 20, false, -11],
-            ['a', 'j', false, 'z'],
+            [0, 1, -1],
+            [0, 1, 0],
+            [0, 1, 1],
+            [0, 1, 3],
+            [10, 20, ''],
+            [10, 20, 999],
+            [10, 20, 20],
+            [-10, 20, -11],
+            ['a', 'j', 'z'],
             array(
-                new DateTime('yesterday'),
-                new DateTime('now'),
-                false,
-                new DateTime('tomorrow')
+                new \DateTime('yesterday'),
+                new \DateTime('now'),
+                new \DateTime('tomorrow')
             ),
         );
     }
@@ -115,7 +101,7 @@ class BetweenTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForComponentException()
+    public function providerForComponentException() : array
     {
         return array(
             [10, 5],

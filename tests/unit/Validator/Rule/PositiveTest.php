@@ -4,14 +4,10 @@
  * @link      https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
-use Bluz\Validator\Rule\Positive;
+use Bluz\Validator\Rule\PositiveRule as Rule;
 
 /**
  * Class PositiveTest
@@ -21,17 +17,16 @@ use Bluz\Validator\Rule\Positive;
 class PositiveTest extends Tests\FrameworkTestCase
 {
     /**
-     * @var \Bluz\Validator\Rule\Positive
+     * @var Rule
      */
-    protected $validator;
+    protected $rule;
 
     /**
      * Setup validator instance
      */
     protected function setUp()
     {
-        parent::setUp();
-        $this->validator = new Positive();
+        $this->rule = new Rule;
     }
 
     /**
@@ -39,28 +34,27 @@ class PositiveTest extends Tests\FrameworkTestCase
      *
      * @param $input
      */
-    public function testPositive($input)
+    public function testPositiveNumbersShouldPass($input)
     {
-        self::assertTrue($this->validator->validate($input));
-        self::assertTrue($this->validator->assert($input));
+        self::assertTrue($this->rule->validate($input));
+        self::assertNotEmpty($this->rule->__toString());
     }
 
     /**
      * @dataProvider providerForFail
-     * @expectedException \Bluz\Validator\Exception\ValidatorException
      *
      * @param $input
      */
-    public function testNotPositive($input)
+    public function testNegativeNumbersShouldFail($input)
     {
-        self::assertFalse($this->validator->validate($input));
-        self::assertFalse($this->validator->assert($input));
+        self::assertFalse($this->rule->validate($input));
+        self::assertNotEmpty($this->rule->__toString());
     }
 
     /**
      * @return array
      */
-    public function providerForPass()
+    public function providerForPass() : array
     {
         return array(
             [16],
@@ -73,7 +67,7 @@ class PositiveTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail()
+    public function providerForFail() : array
     {
         return array(
             [null],

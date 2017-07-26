@@ -10,7 +10,8 @@ declare(strict_types=1);
 
 namespace Bluz\Validator\Traits;
 
-use Bluz\Validator\ValidatorBuilder;
+use Bluz\Validator\ValidatorChain;
+use Bluz\Validator\ValidatorForm;
 
 /**
  * Validator trait
@@ -38,35 +39,33 @@ use Bluz\Validator\ValidatorBuilder;
 trait Validator
 {
     /**
-     * @var ValidatorBuilder instance of ValidatorBuilder
+     * @var ValidatorForm instance
      */
-    protected $validatorBuilder;
+    private $validatorForm;
 
     /**
      * Get ValidatorBuilder
      *
-     * @return ValidatorBuilder
+     * @return ValidatorForm
      */
-    protected function getValidatorBuilder()
+    private function getValidatorForm()
     {
-        if (!$this->validatorBuilder) {
-            $this->validatorBuilder = new ValidatorBuilder();
+        if (!$this->validatorForm) {
+            $this->validatorForm = new ValidatorForm();
         }
-        return $this->validatorBuilder;
+        return $this->validatorForm;
     }
 
     /**
-     * Add Validator for field
+     * Add ValidatorChain
      *
-     * @param  string                      $name
-     * @param  \Bluz\Validator\Validator[] $validators
+     * @param  string $name
      *
-     * @return Validator
+     * @return ValidatorChain
      */
-    protected function addValidator($name, ...$validators)
+    protected function addValidator($name) : ValidatorChain
     {
-        $this->getValidatorBuilder()->add($name, ...$validators);
-        return $this;
+        return $this->getValidatorForm()->add($name);
     }
 
     /**
@@ -76,9 +75,9 @@ trait Validator
      *
      * @return bool
      */
-    public function validate($input): bool
+    public function validate($input) : bool
     {
-        return $this->getValidatorBuilder()->validate($input);
+        return $this->getValidatorForm()->validate($input);
     }
 
     /**
@@ -86,10 +85,10 @@ trait Validator
      *
      * @param  array $input
      *
-     * @return bool
+     * @throws \Bluz\Validator\Exception\ValidatorException
      */
     public function assert($input)
     {
-        return $this->getValidatorBuilder()->assert($input);
+        $this->getValidatorForm()->assert($input);
     }
 }

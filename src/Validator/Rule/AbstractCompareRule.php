@@ -34,8 +34,7 @@ abstract class AbstractCompareRule extends AbstractRule
     {
         if ($this->inclusive) {
             return $what <= $than;
-        } else {
-            return $what < $than;
         }
+        return $what < $than;
     }
 }

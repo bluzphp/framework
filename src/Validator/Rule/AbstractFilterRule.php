@@ -22,7 +22,7 @@ abstract class AbstractFilterRule extends AbstractRule
     /**
      * @var string additional chars
      */
-    protected $additionalChars = "";
+    protected $additionalChars = '';
 
     /**
      * Check input string

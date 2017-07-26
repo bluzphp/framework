@@ -4,14 +4,10 @@
  * @link      https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
-use Bluz\Validator\Rule\CountryCode;
+use Bluz\Validator\Rule\CountryCodeRule as Rule;
 
 /**
  * Class CountryCodeTest
@@ -21,17 +17,16 @@ use Bluz\Validator\Rule\CountryCode;
 class CountryCodeTest extends Tests\FrameworkTestCase
 {
     /**
-     * @var CountryCode
+     * @var Rule
      */
-    protected $validator;
+    protected $rule;
 
     /**
      * Setup validator instance
      */
     protected function setUp()
     {
-        parent::setUp();
-        $this->validator = new CountryCode;
+        $this->rule = new Rule;
     }
 
     /**
@@ -39,9 +34,10 @@ class CountryCodeTest extends Tests\FrameworkTestCase
      *
      * @param $input
      */
-    public function testValidCountryCodeShouldReturnTrue($input)
+    public function testValidCountryCodeShouldPass($input)
     {
-        self::assertTrue($this->validator->validate($input));
+        self::assertTrue($this->rule->validate($input));
+        self::assertNotEmpty($this->rule->__toString());
     }
 
     /**
@@ -49,15 +45,16 @@ class CountryCodeTest extends Tests\FrameworkTestCase
      *
      * @param $input
      */
-    public function testInvalidCountryCodeShouldReturnFalse($input)
+    public function testInvalidCountryCodeShouldFail($input)
     {
-        self::assertFalse($this->validator->validate($input));
+        self::assertFalse($this->rule->validate($input));
+        self::assertNotEmpty($this->rule->__toString());
     }
 
     /**
      * @return array
      */
-    public function providerForPass()
+    public function providerForPass() : array
     {
         return array(
             ['UA'],
@@ -67,7 +64,7 @@ class CountryCodeTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail()
+    public function providerForFail() : array
     {
         return array(
             [''],

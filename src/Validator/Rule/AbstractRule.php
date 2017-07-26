@@ -10,41 +10,44 @@ declare(strict_types=1);
 
 namespace Bluz\Validator\Rule;
 
-use Bluz\Translator\Translator;
-use Bluz\Validator\Exception\ValidatorException;
-
 /**
  * Abstract validation rule
  *
  * @package  Bluz\Validator\Rule
  * @author   Anton Shevchuk
  */
-abstract class AbstractRule
+abstract class AbstractRule implements RuleInterface
 {
     /**
-     * Template for error output
-     *   - {{name}} - name of field
-     *   - {{input}} - input value
-     *
+     * Message for error output
      * @var string
      */
-    protected $template = '{{name}} has invalid value {{input}}';
+    protected $description = 'is invalid';
 
     /**
-     * Check input data
-     *
-     * @param  mixed $input
-     *
-     * @return bool
+     * @inheritdoc
      */
     abstract public function validate($input): bool;
 
     /**
-     * Invoke
-     *
-     * @param  mixed $input
-     *
-     * @return bool
+     * @inheritdoc
+     */
+    public function getDescription() : string
+    {
+        return __($this->description);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setDescription(string $description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
      */
     public function __invoke($input): bool
     {
@@ -52,50 +55,10 @@ abstract class AbstractRule
     }
 
     /**
-     * Assert
-     *
-     * @param  string $input
-     *
-     * @return bool
-     * @throws ValidatorException
-     */
-    public function assert($input)
-    {
-        if (!$this->validate($input)) {
-            throw new ValidatorException();
-        }
-        return true;
-    }
-
-    /**
-     * Set error template
-     *
-     * @param  string $template
-     *
-     * @return void
-     */
-    public function setTemplate($template)
-    {
-        $this->template = $template;
-    }
-
-    /**
-     * Get error template
-     *
-     * @return string
-     */
-    public function getTemplate()
-    {
-        return Translator::translate($this->template);
-    }
-
-    /**
-     * Cast to string
-     *
-     * @return string
+     * @inheritdoc
      */
     public function __toString()
     {
-        return $this->getTemplate();
+        return $this->getDescription();
     }
 }

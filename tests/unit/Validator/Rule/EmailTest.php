@@ -4,14 +4,10 @@
  * @link      https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
-use Bluz\Validator\Rule\Email;
+use Bluz\Validator\Rule\EmailRule as Rule;
 
 /**
  * Class EmailTest
@@ -25,40 +21,42 @@ class EmailTest extends Tests\FrameworkTestCase
      *
      * @param $validEmail
      */
-    public function testValidEmailShouldPass($validEmail)
+    public function testValidEmailShouldPassValidation($validEmail)
     {
-        $validator = new Email();
-        self::assertTrue($validator->validate($validEmail));
-        self::assertTrue($validator->assert($validEmail));
+        $rule = new Rule();
+        self::assertTrue($rule->validate($validEmail));
+        self::assertNotEmpty($rule->__toString());
     }
 
     /**
      * @dataProvider providerForFail
-     * @expectedException \Bluz\Validator\Exception\ValidatorException
      *
      * @param $invalidEmail
      */
     public function testInvalidEmailsShouldFailValidation($invalidEmail)
     {
-        $validator = new Email();
-        self::assertFalse($validator->validate($invalidEmail));
-        self::assertFalse($validator->assert($invalidEmail));
+        $rule = new Rule();
+        self::assertFalse($rule->validate($invalidEmail));
+        self::assertNotEmpty($rule->__toString());
     }
 
     /**
      * Used small set for testing
      */
-//    public function testValidEmailWithDomainCheck()
-//    {
-//        $validator = new Email(true);
-//        self::assertTrue($validator->validate('test@test.com'));
-//        self::assertFalse($validator->validate('a@a.a'));
-//    }
+    public function testValidEmailWithDomainCheck()
+    {
+        self::markTestIncomplete('To slow to check it every time');
+
+        return;
+        $validator = new Rule(true);
+        self::assertTrue($validator->validate('test@test.com'));
+        self::assertFalse($validator->validate('a@a.a'));
+    }
 
     /**
      * @return array
      */
-    public function providerForPass()
+    public function providerForPass() : array
     {
         return array(
             ['test@test.com'],
@@ -71,7 +69,7 @@ class EmailTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail()
+    public function providerForFail() : array
     {
         return array(
             ['test@test'],

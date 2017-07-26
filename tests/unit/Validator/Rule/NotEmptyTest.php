@@ -4,14 +4,10 @@
  * @link      https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
-use Bluz\Validator\Rule\NotEmpty;
+use Bluz\Validator\Rule\NotEmptyRule as Rule;
 
 /**
  * Class NotEmptyTest
@@ -21,17 +17,16 @@ use Bluz\Validator\Rule\NotEmpty;
 class NotEmptyTest extends Tests\FrameworkTestCase
 {
     /**
-     * @var NotEmpty
+     * @var Rule
      */
-    protected $validator;
+    protected $rule;
 
     /**
      * Setup validator instance
      */
     protected function setUp()
     {
-        parent::setUp();
-        $this->validator = new NotEmpty;
+        $this->rule = new Rule;
     }
 
     /**
@@ -39,9 +34,10 @@ class NotEmptyTest extends Tests\FrameworkTestCase
      *
      * @param $input
      */
-    public function testStringNotEmpty($input)
+    public function testStringNotEmptyShouldPass($input)
     {
-        self::assertTrue($this->validator->validate($input));
+        self::assertTrue($this->rule->validate($input));
+        self::assertNotEmpty($this->rule->__toString());
     }
 
     /**
@@ -49,15 +45,16 @@ class NotEmptyTest extends Tests\FrameworkTestCase
      *
      * @param $input
      */
-    public function testStringEmpty($input)
+    public function testStringIsEmptyShouldFail($input)
     {
-        self::assertFalse($this->validator->validate($input));
+        self::assertFalse($this->rule->validate($input));
+        self::assertNotEmpty($this->rule->__toString());
     }
 
     /**
      * @return array
      */
-    public function providerForPass()
+    public function providerForPass() : array
     {
         return array(
             [1],
@@ -71,7 +68,7 @@ class NotEmptyTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail()
+    public function providerForFail() : array
     {
         return array(
             [''],

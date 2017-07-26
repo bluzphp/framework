@@ -4,14 +4,10 @@
  * @link      https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
-use Bluz\Validator\Rule\Equals;
+use Bluz\Validator\Rule\EqualsRule as Rule;
 
 /**
  * Class EqualsTest
@@ -28,47 +24,47 @@ class EqualsTest extends Tests\FrameworkTestCase
      */
     public function testStringsContainingExpectedValueShouldPass($start, $input)
     {
-        $validator = new Equals($start);
-        self::assertTrue($validator->validate($input));
-        self::assertTrue($validator->assert($input));
+        $rule = new Rule($start);
+        self::assertTrue($rule->validate($input));
+        self::assertNotEmpty($rule->__toString());
     }
 
     /**
      * @dataProvider providerForFail
-     * @expectedException \Bluz\Validator\Exception\ValidatorException
      *
      * @param      $start
      * @param      $input
-     * @param bool $identical
      */
-    public function testStringsNotEqualsExpectedValueShouldNotPass($start, $input, $identical = false)
+    public function testStringsNotEqualsExpectedValueShouldNotPass($start, $input)
     {
-        $validator = new Equals($start, $identical);
-        self::assertFalse($validator->validate($input));
-        self::assertNotEmpty($validator->__toString());
-        self::assertFalse($validator->assert($input));
+        $rule = new Rule($start);
+        self::assertFalse($rule->validate($input));
+        self::assertNotEmpty($rule->__toString());
     }
 
     /**
      * @return array
      */
-    public function providerForPass()
+    public function providerForPass() : array
     {
         return array(
+            ['', 0],
+            ['', null],
+            ['', false],
+            ['', ''],
             ['foo', 'foo'],
-            [10, "10"],
+            [10, '10'],
         );
     }
 
     /**
      * @return array
      */
-    public function providerForFail()
+    public function providerForFail() : array
     {
         return array(
             ['foo', ''],
             ['foo', 'bar'],
-            [10, "10", true],
         );
     }
 }

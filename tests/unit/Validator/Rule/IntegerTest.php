@@ -4,14 +4,10 @@
  * @link      https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
-use Bluz\Validator\Rule\Integer;
+use Bluz\Validator\Rule\IntegerRule as Rule;
 
 /**
  * Class IntegerTest
@@ -21,16 +17,16 @@ use Bluz\Validator\Rule\Integer;
 class IntegerTest extends Tests\FrameworkTestCase
 {
     /**
-     * @var \Bluz\Validator\Rule\Integer
+     * @var Rule
      */
-    protected $validator;
+    protected $rule;
 
     /**
      * Setup validator instance
      */
     protected function setUp()
     {
-        $this->validator = new Integer;
+        $this->rule = new Rule;
     }
 
     /**
@@ -38,9 +34,10 @@ class IntegerTest extends Tests\FrameworkTestCase
      *
      * @param $input
      */
-    public function testValidIntegersShouldReturnTrue($input)
+    public function testValidIntegersShouldPass($input)
     {
-        self::assertTrue($this->validator->validate($input));
+        self::assertTrue($this->rule->validate($input));
+        self::assertNotEmpty($this->rule->__toString());
     }
 
     /**
@@ -48,15 +45,16 @@ class IntegerTest extends Tests\FrameworkTestCase
      *
      * @param $input
      */
-    public function testInvalidIntegersShouldReturnFalse($input)
+    public function testInvalidIntegersShouldFail($input)
     {
-        self::assertFalse($this->validator->validate($input));
+        self::assertFalse($this->rule->validate($input));
+        self::assertNotEmpty($this->rule->__toString());
     }
 
     /**
      * @return array
      */
-    public function providerForPass()
+    public function providerForPass() : array
     {
         return array(
             [16],
@@ -69,7 +67,7 @@ class IntegerTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail()
+    public function providerForFail() : array
     {
         return array(
             [null],

@@ -2,13 +2,15 @@ language: php
 php:
   - 7.0
   - 7.1
+  - 7.2
   - master
 env:
   global:
     - secure: "QKyI/QO6H6pFE04Iz/4IcSuttMdY3o85mD2BTNV2Y2SeSPxLfuukqPrxjANrTc4GfI1v7/bZM43uMl3aRa76+HRZ83ZsXR8uv1VZUgNHYuoq7jdZb18BitM36h0LbHzTbYetJLiYg7l3mnbAezTXPXHfpNIWvZcuyZzatyF/lng="
 matrix:
   allow_failures:
-  - php: master
+    - php: 7.2
+    - php: master
 before_install:
   # Prefer IPv4 over IPv6
   - sudo sh -c "echo 'precedence ::ffff:0:0/96 100' >> /etc/gai.conf"
@@ -25,8 +27,6 @@ before_script:
   - mkdir .reports
   - chmod a+w ./tests/cache
   - chmod a+w ./tests/_output
-  # Scrutinizer
-  - wget https://scrutinizer-ci.com/ocular.phar
 script:
   # Check code style
   #- php vendor/bin/phpcs --report=xml --report-file=.reports/phpcs.xml
@@ -37,8 +37,9 @@ script:
   # Run CodeCeption tests
   - php vendor/bin/codecept run --coverage --coverage-xml
 after_success:
-  # Coveralls
+  # Upload coverage report
   - php vendor/bin/coveralls -v
+  - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml
   # Generate documentation
   - bash .travis.sh

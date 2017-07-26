@@ -11,7 +11,6 @@
 namespace Bluz\Tests\Fixtures\Models\Test;
 
 use Bluz\Validator\Traits\Validator;
-use Bluz\Validator\Validator as v;
 
 /**
  * Test Row
@@ -44,14 +43,14 @@ class Row extends \Bluz\Db\Row
      */
     public function beforeSave()
     {
-        $this->addValidator(
-            'name',
-            v::required()->notEmpty()->latin()
-        );
+        $this->addValidator('name')
+            ->required()
+            ->notEmpty()
+            ->latin();
 
-        $this->addValidator(
-            'email',
-            v::required()->notEmpty()->email()
-        );
+        $this->addValidator('email')
+            ->required()
+            ->notEmpty()
+            ->email();
     }
 }

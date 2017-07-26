@@ -4,14 +4,10 @@
  * @link      https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
-use Bluz\Validator\Rule\StringInput;
+use Bluz\Validator\Rule\StringRule as Rule;
 
 /**
  * Class StringTest
@@ -21,13 +17,13 @@ use Bluz\Validator\Rule\StringInput;
 class StringInputTest extends Tests\FrameworkTestCase
 {
     /**
-     * @var \Bluz\Validator\Rule\StringInput
+     * @var Rule
      */
-    protected $validator;
+    protected $rule;
 
     protected function setUp()
     {
-        $this->validator = new StringInput;
+        $this->rule = new Rule;
     }
 
     /**
@@ -35,9 +31,10 @@ class StringInputTest extends Tests\FrameworkTestCase
      *
      * @param $input
      */
-    public function testString($input)
+    public function testValidStringShouldPass($input)
     {
-        self::assertTrue($this->validator->validate($input));
+        self::assertTrue($this->rule->validate($input));
+        self::assertNotEmpty($this->rule->__toString());
     }
 
     /**
@@ -45,15 +42,16 @@ class StringInputTest extends Tests\FrameworkTestCase
      *
      * @param $input
      */
-    public function testNotString($input)
+    public function testInvalidStringShouldFail($input)
     {
-        self::assertFalse($this->validator->validate($input));
+        self::assertFalse($this->rule->validate($input));
+        self::assertNotEmpty($this->rule->__toString());
     }
 
     /**
      * @return array
      */
-    public function providerForPass()
+    public function providerForPass() : array
     {
         return array(
             [''],
@@ -64,7 +62,7 @@ class StringInputTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail()
+    public function providerForFail() : array
     {
         return array(
             [null],

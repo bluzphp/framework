@@ -4,14 +4,10 @@
  * @link      https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
-use Bluz\Validator\Rule\Contains;
+use Bluz\Validator\Rule\ContainsRule;
 
 /**
  * Class ContainsTest
@@ -28,53 +24,47 @@ class ContainsTest extends Tests\FrameworkTestCase
      */
     public function testStringsContainingExpectedValueShouldPass($start, $input)
     {
-        $validator = new Contains($start);
+        $validator = new ContainsRule($start);
         self::assertTrue($validator->validate($input));
-        self::assertTrue($validator->assert($input));
     }
 
     /**
      * @dataProvider providerForFail
-     * @expectedException \Bluz\Validator\Exception\ValidatorException
      *
      * @param      $start
      * @param      $input
-     * @param bool $identical
      */
-    public function testStringsNotContainsExpectedValueShouldNotPass($start, $input, $identical = false)
+    public function testStringsNotContainsExpectedValueShouldFail($start, $input)
     {
-        $validator = new Contains($start, $identical);
+        $validator = new ContainsRule($start);
         self::assertFalse($validator->validate($input));
         self::assertNotEmpty($validator->__toString());
-        self::assertFalse($validator->assert($input));
     }
 
     /**
      * @return array
      */
-    public function providerForPass()
+    public function providerForPass() : array
     {
         return array(
             ['foo', ['bar', 'foo']],
-            ['foo', 'barbazFOO'],
-            ['foo', 'barbazfoo'],
+            ['foo', 'barfoo'],
+            ['foo', 'barFOO'],
             ['foo', 'foobazfoo'],
-            ['1', [2, 3, 1]],
-            ['1', [2, 3, '1'], true],
+            ['1', [1, 2, 3]],
         );
     }
 
     /**
      * @return array
      */
-    public function providerForFail()
+    public function providerForFail() : array
     {
         return array(
             ['foo', ''],
-            ['bat', ['bar', 'foo']],
-            ['foo', 'barfaabaz'],
-            ['foo', 'barbazFOO', true],
-            ['foo', 'faabarbaz'],
+            ['foo', 'barf00'],
+            ['foo', ['bar', 'f00']],
+            ['4', [1, 2, 3]],
         );
     }
 }

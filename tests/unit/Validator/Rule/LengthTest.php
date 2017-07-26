@@ -4,14 +4,10 @@
  * @link      https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
-use Bluz\Validator\Rule\Length;
+use Bluz\Validator\Rule\LengthRule as Rule;
 
 /**
  * Class LengthTest
@@ -27,10 +23,11 @@ class LengthTest extends Tests\FrameworkTestCase
      * @param $min
      * @param $max
      */
-    public function testLengthInsideBoundsShouldReturnTrue($string, $min, $max)
+    public function testLengthInsideBoundsShouldPass($string, $min, $max)
     {
-        $validator = new Length($min, $max);
-        self::assertTrue($validator->validate($string));
+        $rule = new Rule($min, $max);
+        self::assertTrue($rule->validate($string));
+        self::assertNotEmpty($rule->__toString());
     }
 
     /**
@@ -40,43 +37,29 @@ class LengthTest extends Tests\FrameworkTestCase
      * @param $min
      * @param $max
      */
-    public function testLengthOutsideValidBoundsShouldThrowLengthException($string, $min, $max)
+    public function testLengthOutsideValidBoundsShouldFail($string, $min, $max)
     {
-        $validator = new Length($min, $max);
-        self::assertFalse($validator->validate($string));
-    }
-
-    /**
-     * @dataProvider providerForFailInclusive
-     *
-     * @param $string
-     * @param $min
-     * @param $max
-     */
-    public function testLengthOutsideBoundsShouldThrowLengthException($string, $min, $max)
-    {
-        $validator = new Length($min, $max, false);
-        self::assertFalse($validator->validate($string));
-        self::assertNotEmpty($validator->getTemplate());
+        $rule = new Rule($min, $max);
+        self::assertFalse($rule->validate($string));
+        self::assertNotEmpty($rule->__toString());
     }
 
     /**
      * @dataProvider providerForComponentException
      * @expectedException \Bluz\Validator\Exception\ComponentException
      *
-     * @param $string
      * @param $min
      * @param $max
      */
-    public function testInvalidConstructorParametersShouldThrowComponentExceptionUponInstantiation($string, $min, $max)
+    public function testInvalidConstructorParametersShouldThrowComponentExceptionUponInstantiation($min, $max)
     {
-        new Length($min, $max);
+        new Rule($min, $max);
     }
 
     /**
      * @return array
      */
-    public function providerForPass()
+    public function providerForPass() : array
     {
         return array(
             ['foobar', 1, 15],
@@ -91,7 +74,7 @@ class LengthTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail()
+    public function providerForFail() : array
     {
         return array(
             [0, 1, 3],
@@ -104,25 +87,12 @@ class LengthTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFailInclusive()
+    public function providerForComponentException() : array
     {
         return array(
-            [range(1, 20), 1, 20],
-            ['foobar', 1, 6],
-            ['foobar', 6, null], // null is a valid max length, means "no maximum",
-            ['foobar', null, 6]  // null is a valid min length, means "no minimum"
-        );
-    }
-
-    /**
-     * @return array
-     */
-    public function providerForComponentException()
-    {
-        return array(
-            ['foobar', 'a', 15],
-            ['foobar', 1, 'abc d'],
-            ['foobar', 10, 1],
+            ['a', 15],
+            [1, 'abc d'],
+            [10, 1],
         );
     }
 }

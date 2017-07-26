@@ -35,10 +35,13 @@ script:
   # Complexity of code
   - php vendor/bin/phploc ./src
   # Run CodeCeption tests
-  - if [$TRAVIS_PHP_VERSION == "7.0"]; then php vendor/bin/codecept run --coverage --coverage-xml; else php vendor/bin/codecept run; fi
-  - if [$TRAVIS_PHP_VERSION == "7.0"]; then php vendor/bin/coveralls -v; fi
+  - php vendor/bin/codecept run --coverage --coverage-xml
 after_success:
-  # Generate documentation and upload coverage report
+  # Upload coverage report
+  - php vendor/bin/coveralls -v
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml
+  # Generate documentation
   - bash .travis.sh
 notifications:
   email: false

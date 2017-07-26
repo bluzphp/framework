@@ -6,12 +6,6 @@ echo "-- Repo Tag: $TRAVIS_TAG"
 echo "-- PHP Version: $TRAVIS_PHP_VERSION"
 echo "-- PULL Request: $TRAVIS_PULL_REQUEST"
 
-if [ "$TRAVIS_REPO_SLUG" == "bluzphp/framework" ] && [ "$TRAVIS_PHP_VERSION" == "7.0" ]; then
-  echo "Send code coverage report"
-  wget https://scrutinizer-ci.com/ocular.phar
-  php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml
-fi
-
 if [ "$TRAVIS_REPO_SLUG" == "bluzphp/framework" ] && [ "$TRAVIS_TAG" != "" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_PHP_VERSION" == "7.0" ]; then
   echo "Generate Documentation"
   wget http://phpdox.de/releases/phpdox.phar

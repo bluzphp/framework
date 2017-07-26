@@ -36,6 +36,7 @@ script:
   - php vendor/bin/phploc ./src
   # Run CodeCeption tests
   - if ["$TRAVIS_PHP_VERSION" == "7.0"]; then php vendor/bin/codecept run --coverage --coverage-xml; else php vendor/bin/codecept run; fi
+  - if ["$TRAVIS_PHP_VERSION" == "7.0"]; then php vendor/bin/coveralls -v; fi
 after_success:
   # Generate documentation and upload coverage report
   - bash .travis.sh

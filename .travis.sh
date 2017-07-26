@@ -10,7 +10,6 @@ if [ "$TRAVIS_REPO_SLUG" == "bluzphp/framework" ] && [ "$TRAVIS_PHP_VERSION" == 
   echo "Send code coverage report"
   wget https://scrutinizer-ci.com/ocular.phar
   php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml
-  php vendor/bin/coveralls -v
 fi
 
 if [ "$TRAVIS_REPO_SLUG" == "bluzphp/framework" ] && [ "$TRAVIS_TAG" != "" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_PHP_VERSION" == "7.0" ]; then

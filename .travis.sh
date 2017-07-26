@@ -7,8 +7,12 @@ echo "-- PHP Version: $TRAVIS_PHP_VERSION"
 echo "-- PULL Request: $TRAVIS_PULL_REQUEST"
 
 if [ "$TRAVIS_REPO_SLUG" == "bluzphp/framework" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_PHP_VERSION" == "7.0" ]; then
+  echo "Send code coverage report"
+  wget https://scrutinizer-ci.com/ocular.phar
+  php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml
+  php vendor/bin/coveralls -v
 
-  echo "Generate"
+  echo "Generate Documentation"
   wget http://phpdox.de/releases/phpdox.phar
   php phpdox.phar
 
@@ -35,5 +39,4 @@ if [ "$TRAVIS_REPO_SLUG" == "bluzphp/framework" ] && [ "$TRAVIS_PULL_REQUEST" ==
   git push -fq origin > /dev/null
 
   echo -e "Published to github.io\n"
-
 fi

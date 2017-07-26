@@ -27,8 +27,6 @@ before_script:
   - mkdir .reports
   - chmod a+w ./tests/cache
   - chmod a+w ./tests/_output
-  # Scrutinizer
-  - wget https://scrutinizer-ci.com/ocular.phar
 script:
   # Check code style
   #- php vendor/bin/phpcs --report=xml --report-file=.reports/phpcs.xml
@@ -37,12 +35,9 @@ script:
   # Complexity of code
   - php vendor/bin/phploc ./src
   # Run CodeCeption tests
-  - php vendor/bin/codecept run --coverage --coverage-xml
+  - if ["$TRAVIS_PHP_VERSION" == "7.0"]; then php vendor/bin/codecept run --coverage --coverage-xml; else php vendor/bin/codecept run; fi
 after_success:
-  # Coveralls
-  - php vendor/bin/coveralls -v
-  - php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml
-  # Generate documentation
+  # Generate documentation and upload coverage report
   - bash .travis.sh
 notifications:
   email: false

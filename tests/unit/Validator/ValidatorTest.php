@@ -4,15 +4,13 @@
  * @link      https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Validator;
 
 use Bluz\Tests;
 use Bluz\Validator\Exception\ValidatorException;
+use Bluz\Validator\Rule\RuleInterface;
 use Bluz\Validator\Validator;
+use Bluz\Validator\ValidatorChain;
 
 /**
  * Class ValidatorTest
@@ -24,131 +22,45 @@ class ValidatorTest extends Tests\FrameworkTestCase
     /**
      * Create new instance of validator
      */
-    public function testStaticCreateShouldReturnNewValidator()
+    public function testStaticCreateShouldReturnNewValidatorChain()
     {
-        self::assertInstanceOf(Validator::class, Validator::create());
+        self::assertInstanceOf(ValidatorChain::class, Validator::create());
     }
 
     /**
-     * Every static call of exist Rule should be return a new instance of Validator
+     * Every static call of exist Rule should be return a new instance of Rule
      */
-    public function testStaticCallsShouldReturnNewValidator()
+    public function testStaticCallsShouldReturnNewValidatorRule()
     {
         self::assertInstanceOf(
-            Validator::class,
-            Validator::arrayInput(
+            RuleInterface::class,
+            Validator::array(
                 function () {
                     return true;
                 }
             )
         );
-        self::assertInstanceOf(Validator::class, Validator::string());
-        self::assertInstanceOf(Validator::class, Validator::notEmpty());
+        self::assertInstanceOf(RuleInterface::class, Validator::string());
+        self::assertInstanceOf(RuleInterface::class, Validator::notEmpty());
+    }
+
+    public function testStaticCallShouldCreateValidRule()
+    {
+        $validator = Validator::callback('is_int');
+
+        self::assertTrue($validator->validate(42));
+    }
+
+    public function testStaticCallShouldAllowInvokeIt()
+    {
+        self::assertTrue(Validator::callback('is_int')(42));
     }
 
     /**
      * @expectedException \Bluz\Validator\Exception\ComponentException
      */
-    public function testInvalidRuleClassShouldThrowComponentException()
+    public function testInvalidRuleClassShouldRaiseComponentException()
     {
         Validator::iDoNotExistSoIShouldThrowException();
-    }
-
-    /**
-     * Setup custom error text for one rule in chain
-     */
-    public function testSetCustomErrorTextForSingleValidatorShouldUseItAsErrorMessage()
-    {
-        try {
-            Validator::callback('is_int')
-                ->setName('Input')
-                ->setError('"{{name}}" is not numeric, is equal "{{input}}"')
-                ->assert('something');
-        } catch (\Exception $e) {
-            self::assertEquals('"Input" is not numeric, is equal "something"', $e->getMessage());
-        }
-    }
-
-    /**
-     * Setup custom error text for one rule in chain
-     */
-    public function testValidRules()
-    {
-        $validator = Validator::callback('is_int');
-
-        self::assertTrue($validator->validate(42));
-        self::assertTrue($validator->assert(42));
-    }
-
-    /**
-     * Setup custom error text for many rules in chain
-     */
-    public function testSetCustomErrorTextForValidatorChainShouldUseItAsErrorMessage()
-    {
-        try {
-            Validator::callback('is_int')
-                ->callback('is_numeric')
-                ->setName('Input')
-                ->setError('"{{name}}" is not numeric, is equal "{{input}}"')
-                ->assert('something');
-        } catch (\Exception $e) {
-            self::assertEquals('"Input" is not numeric, is equal "something"', $e->getMessage());
-        }
-    }
-
-    /**
-     * Complex test
-     */
-    public function testErrorTextValidationInComplex()
-    {
-        $validator = Validator::create()
-            ->setName('username')
-            ->alphaNumeric('_')
-            ->length(1, 15)
-            ->noWhitespace();
-
-        $ruleText = "username must contain only letters, digits and \"_\"\n"
-            . "username must have a length between 1 and 15\n"
-            . "username must not contain whitespace";
-
-        self::assertEquals($validator->__toString(), $ruleText);
-
-        $customRuleText = "Username must contain only letters, digits and underscore, \n"
-            . "must have a length between 1 and 15";
-
-        $validator->setError($customRuleText);
-
-        self::assertEquals($validator->__toString(), $customRuleText);
-
-        self::assertFalse($validator->validate('user#name'));
-        self::assertFalse($validator('user#name'));
-
-        self::assertCount(1, $validator->getErrors());
-    }
-
-    /**
-     * Complex test with exception
-     *
-     * @expectedException \Bluz\Validator\Exception\ValidatorException
-     */
-    public function testAssertComplexRuleValidation()
-    {
-        $validator = Validator::alphaNumeric('_')->length(1, 15)->noWhitespace();
-
-        $validator->assert('invalid user name');
-    }
-
-    /**
-     * Test ValidatorException
-     *
-     * @expectedException \Bluz\Validator\Exception\ValidatorException
-     */
-    public function testValidatorException()
-    {
-        $exception = ValidatorException::exception('foo', 'bar');
-
-        self::assertEqualsArray(['foo' => 'bar'], $exception->getErrors());
-
-        throw $exception;
     }
 }

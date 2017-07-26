@@ -10,18 +10,17 @@ declare(strict_types=1);
 
 namespace Bluz\Validator\Exception;
 
-use Bluz\Application\Exception\BadRequestException;
+use Bluz\Common\Container\ArrayAccess;
+use Bluz\Common\Container\Container;
 
 /**
- * Validator Exception
+ * Exception of Validator Chain
  *
  * @package  Bluz\Validator\Exception
  * @author   Anton Shevchuk
  */
-class ValidatorException extends BadRequestException
+class ValidatorFormException extends ValidatorException implements \ArrayAccess
 {
-    /**
-     * @var string exception message
-     */
-    protected $message = 'Invalid Arguments';
+    use Container;
+    use ArrayAccess;
 }

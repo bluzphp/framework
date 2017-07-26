@@ -11,7 +11,6 @@ declare(strict_types=1);
 namespace Bluz\Validator\Rule;
 
 use Bluz\Proxy\Translator;
-use Bluz\Validator\Exception\ValidatorRuleException;
 
 /**
  * Abstract validation rule
@@ -46,6 +45,7 @@ abstract class AbstractRule implements RuleInterface
     public function setDescription(string $description)
     {
         $this->description = $description;
+        return $this;
     }
 
     /**

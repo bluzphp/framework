@@ -10,8 +10,6 @@ declare(strict_types=1);
 
 namespace Bluz\Validator\Rule;
 
-use Bluz\Validator\Exception\ValidatorException;
-
 /**
  * Validator Rule Interface
  *
@@ -41,7 +39,7 @@ interface RuleInterface
      *
      * @param  string $description
      *
-     * @return void
+     * @return self
      */
     public function setDescription(string $description);
 

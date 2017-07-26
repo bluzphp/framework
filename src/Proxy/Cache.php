@@ -135,7 +135,6 @@ final class Cache
 
         $key = self::prepare($key);
         try {
-
             $item = $cache->getItem($key);
             $item->set($data);
 

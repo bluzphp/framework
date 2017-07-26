@@ -11,9 +11,7 @@ declare(strict_types=1);
 namespace Bluz\Validator;
 
 use Bluz\Validator\Exception\ComponentException;
-use Bluz\Validator\Exception\ValidatorException;
-use Bluz\Validator\Rule\AbstractRule;
-use Bluz\Validator\Rule\Required;
+use Bluz\Validator\Rule\RuleInterface;
 
 /**
  * Validator
@@ -22,72 +20,53 @@ use Bluz\Validator\Rule\Required;
  * @author   Anton Shevchuk
  * @link     https://github.com/Respect/Validation
  *
- * @method static Validator alpha($additionalCharacters = '')
- * @method static Validator alphaNumeric($additionalCharacters = '')
- * @method static Validator arrayInput($callback)
- * @method static Validator between($min, $max, $inclusive = false)
- * @method static Validator callback($callback)
- * @method static Validator condition($condition)
- * @method static Validator contains($containsValue, $identical = false)
- * @method static Validator countryCode()
- * @method static Validator creditCard()
- * @method static Validator date($format)
- * @method static Validator domain($checkDns = false)
- * @method static Validator email($checkDns = false)
- * @method static Validator equals($compareTo, $identical = false)
- * @method static Validator float()
- * @method static Validator in($haystack, $identical = false)
- * @method static Validator integer()
- * @method static Validator ip($options = null)
- * @method static Validator json()
- * @method static Validator latin($additionalCharacters = '')
- * @method static Validator latinNumeric($additionalCharacters = '')
- * @method static Validator length($min = null, $max = null, $inclusive = true)
- * @method static Validator max($maxValue, $inclusive = false)
- * @method static Validator min($minValue, $inclusive = false)
- * @method static Validator notEmpty()
- * @method static Validator noWhitespace()
- * @method static Validator numeric()
- * @method static Validator required()
- * @method static Validator regexp($expression)
- * @method static Validator slug()
- * @method static Validator string()
+ * @method static RuleInterface alpha($additionalCharacters = '')
+ * @method static RuleInterface alphaNumeric($additionalCharacters = '')
+ * @method static RuleInterface array($callback)
+ * @method static RuleInterface between($min, $max)
+ * @method static RuleInterface betweenInclusive($min, $max)
+ * @method static RuleInterface callback($callback)
+ * @method static RuleInterface condition($condition)
+ * @method static RuleInterface contains($containsValue)
+ * @method static RuleInterface containsStrict($containsValue)
+ * @method static RuleInterface countryCode()
+ * @method static RuleInterface creditCard()
+ * @method static RuleInterface date($format)
+ * @method static RuleInterface domain($checkDns = false)
+ * @method static RuleInterface email($checkDns = false)
+ * @method static RuleInterface equals($compareTo)
+ * @method static RuleInterface equalsStrict($compareTo)
+ * @method static RuleInterface float()
+ * @method static RuleInterface in($haystack)
+ * @method static RuleInterface inStrict($haystack)
+ * @method static RuleInterface integer()
+ * @method static RuleInterface ip($options = null)
+ * @method static RuleInterface json()
+ * @method static RuleInterface latin($additionalCharacters = '')
+ * @method static RuleInterface latinNumeric($additionalCharacters = '')
+ * @method static RuleInterface length($min = null, $max = null)
+ * @method static RuleInterface less($maxValue)
+ * @method static RuleInterface lessOrEqual($maxValue)
+ * @method static RuleInterface more($minValue)
+ * @method static RuleInterface moreOrEqual($minValue)
+ * @method static RuleInterface notEmpty()
+ * @method static RuleInterface noWhitespace()
+ * @method static RuleInterface numeric()
+ * @method static RuleInterface required()
+ * @method static RuleInterface regexp($expression)
+ * @method static RuleInterface slug()
+ * @method static RuleInterface string()
  */
 class Validator
 {
     /**
-     * @var AbstractRule[] list of validation rules
-     */
-    protected $rules = [];
-
-    /**
-     * @var AbstractRule[] list of invalid rules
-     */
-    protected $invalid = [];
-
-    /**
-     * @var string field name
-     */
-    protected $name;
-
-    /**
-     * @var string input data
-     */
-    protected $input;
-
-    /**
-     * @var string error text
-     */
-    protected $error;
-
-    /**
-     * Create new instance if Validator
+     * Create new instance if ValidatorChain
      *
-     * @return Validator
+     * @return ValidatorChain
      */
-    public static function create()
+    public static function create(): ValidatorChain
     {
-        return new static;
+        return new ValidatorChain();
     }
 
     /**
@@ -96,227 +75,33 @@ class Validator
      * @param string $ruleName
      * @param array  $arguments
      *
-     * @return Validator
+     * @return RuleInterface
+     * @throws Exception\ComponentException
      */
     public static function __callStatic($ruleName, $arguments)
     {
-        $validator = self::create();
-
-        return $validator->__call($ruleName, $arguments);
+        return self::rule($ruleName, $arguments);
     }
 
     /**
-     * Magic call for create new rule
+     * Create new rule by name
      *
      * @todo   create extension point for custom rules
      *
      * @param  string $ruleName
      * @param  array  $arguments
      *
-     * @return Validator
+     * @return RuleInterface
      * @throws Exception\ComponentException
      */
-    public function __call($ruleName, $arguments)
+    public static function rule($ruleName, $arguments) : RuleInterface
     {
-        if (in_array($ruleName, ['array', 'float', 'string'], true)) {
-            $ruleName .= 'Input';
-        }
-
-        $ruleClass = '\\Bluz\\Validator\\Rule\\' . ucfirst($ruleName);
+        $ruleClass = '\\Bluz\\Validator\\Rule\\' . ucfirst($ruleName) . 'Rule';
 
         if (!class_exists($ruleClass)) {
             throw new ComponentException("Class for validator `$ruleName` not found");
         }
 
-        $this->rules[] = new $ruleClass(...$arguments);
-
-        return $this;
-    }
-
-    /**
-     * Get required flag
-     *
-     * @return bool
-     */
-    public function isRequired(): bool
-    {
-        foreach ($this->rules as $rule) {
-            if ($rule instanceof Required) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Set field Title
-     *
-     * @param string $name
-     *
-     * @return Validator
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-        return $this;
-    }
-
-    /**
-     * Get field Title
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Get input data
-     *
-     * @return string
-     */
-    public function getInput()
-    {
-        return $this->input;
-    }
-
-    /**
-     * Callable
-     *
-     * @param mixed $input
-     *
-     * @return bool
-     */
-    public function __invoke($input): bool
-    {
-        return $this->validate($input);
-    }
-
-    /**
-     * Validate chain of rules
-     *
-     * @param mixed $input
-     * @param bool  $all
-     *
-     * @return bool
-     */
-    public function validate($input, $all = false): bool
-    {
-        $this->input = $input;
-        $this->invalid = []; // clean
-        foreach ($this->rules as $rule) {
-            if (!$rule->validate($this->input)) {
-                $this->invalid[] = $rule;
-                if (!$all) {
-                    break;
-                }
-            }
-        }
-        return count($this->invalid) ? false : true;
-    }
-
-    /**
-     * Assert
-     *
-     * @param  mixed $input
-     *
-     * @return bool
-     * @throws ValidatorException
-     */
-    public function assert($input)
-    {
-        if (!$this->validate($input)) {
-            throw new ValidatorException($this->getError() ?: '');
-        }
-        return true;
-    }
-
-    /**
-     * Set error template for complex rule
-     *
-     * @param  string $message
-     *
-     * @return Validator
-     */
-    public function setError($message)
-    {
-        $this->error = $message;
-        return $this;
-    }
-
-    /**
-     * Get error message
-     *
-     * @return false|string
-     */
-    public function getError()
-    {
-        // nothing for valid
-        if (!count($this->invalid)) {
-            return false;
-        }
-
-        // one custom message for all rules in chain
-        // or predefined message from last rule in chain
-        if ($this->error) {
-            $output = $this->error;
-        } else {
-            $output = end($this->invalid);
-        }
-        return $this->prepareError($output);
-    }
-
-    /**
-     * Get all errors
-     *
-     * @return string[]
-     */
-    public function getErrors()
-    {
-        $output = [];
-        foreach ($this->invalid as $rule) {
-            $output[] = $this->prepareError($rule);
-        }
-        return $output;
-    }
-
-    /**
-     * Prepare error message for output
-     *
-     * @param  string $message
-     *
-     * @return string
-     */
-    protected function prepareError($message)
-    {
-        $input = $this->getInput();
-        if (is_array($input)) {
-            $input = implode(', ', $input);
-        }
-
-        $message = str_replace(
-            ['{{name}}', '{{input}}'],
-            [$this->getName(), esc($input)],
-            $message
-        );
-
-        return $message;
-    }
-
-    /**
-     * Cast to string
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        // custom message for all chain of rules
-        if ($this->error) {
-            $output = $this->error;
-        } else {
-            $output = implode("\n", $this->rules);
-        }
-        return $this->prepareError($output);
+        return new $ruleClass(...$arguments);
     }
 }

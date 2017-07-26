@@ -96,7 +96,7 @@ class RowTest extends FrameworkTestCase
     public function testGetTable()
     {
         $table = $this->row->getTable();
-        self::assertTrue($table instanceof Table);
+        self::assertInstanceOf(Table::class, $table);
     }
 
     /**

@@ -19,12 +19,25 @@ use Bluz\Validator\ValidatorChain;
  */
 class ValidatorChainTest extends Tests\FrameworkTestCase
 {
+    public function testSetCustomDescriptionForCallbackRuleShouldUseItInChainDescription()
+    {
+        $chain = Validator::create()
+            ->callback('is_int', 'it should be custom one')
+            ->callback('is_numeric', 'it should be custom two')
+        ;
+        self::assertEqualsArray(
+            ['it should be custom one', 'it should be custom two'],
+            $chain->getDescription()
+        );
+    }
+
     public function testSetCustomDescriptionForRuleShouldUseItInChainDescription()
     {
         $chain = Validator::create()
             ->addRule(
                 Validator::callback('is_int')->setDescription('it should be custom one')
-            )->addRule(
+            )
+            ->addRule(
                 Validator::callback('is_numeric')->setDescription('it should be custom two')
             );
         self::assertEqualsArray(
@@ -39,7 +52,8 @@ class ValidatorChainTest extends Tests\FrameworkTestCase
             Validator::create()
                 ->addRule(
                     Validator::callback('is_int')->setDescription('it should be custom')
-                )->addRule(
+                )
+                ->addRule(
                     Validator::callback('is_numeric')->setDescription('it should be custom')
                 )
                 ->assert('something');

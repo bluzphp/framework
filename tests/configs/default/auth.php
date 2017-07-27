@@ -18,5 +18,11 @@ return [
     'twitter' => [
         'consumerKey' => '%%consumerKey%%',
         'consumerSecret' => '%%consumerSecret%%'
+    ],
+    'cookie' => [
+        'ttl' => 86400
+    ],
+    'token' => [
+        'ttl' => 3600
     ]
 ];

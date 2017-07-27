@@ -64,24 +64,8 @@ abstract class AbstractTable extends Table
      *
      * @return AbstractRow
      */
-    public function getAuthRow($provider, $foreignKey)
+    public static function getAuthRow($provider, $foreignKey)
     {
         return static::findRow(['provider' => $provider, 'foreignKey' => $foreignKey]);
-    }
-
-    /**
-     * Generate Secret token
-     *
-     * @param  integer $id
-     *
-     * @return string
-     */
-    protected function generateSecret($id)
-    {
-        // generate secret
-        $alpha = range('a', 'z');
-        shuffle($alpha);
-        $secret = array_slice($alpha, 0, random_int(5, 15));
-        return md5($id . implode('', $secret));
     }
 }

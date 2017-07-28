@@ -24,4 +24,9 @@ class UnauthorizedException extends ApplicationException
      * @var integer HTTP code
      */
     protected $code = StatusCode::UNAUTHORIZED;
+
+    /**
+     * @var string
+     */
+    protected $message = 'Unauthorized';
 }

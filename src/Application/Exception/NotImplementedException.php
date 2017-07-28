@@ -24,4 +24,9 @@ class NotImplementedException extends ApplicationException
      * @var integer HTTP code
      */
     protected $code = StatusCode::NOT_IMPLEMENTED;
+
+    /**
+     * @var string
+     */
+    protected $message = 'Not Implemented';
 }

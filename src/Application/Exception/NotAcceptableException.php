@@ -24,4 +24,9 @@ class NotAcceptableException extends ApplicationException
      * @var integer HTTP Code
      */
     protected $code = StatusCode::NOT_ACCEPTABLE;
+
+    /**
+     * @var string
+     */
+    protected $message = 'Not Acceptable';
 }

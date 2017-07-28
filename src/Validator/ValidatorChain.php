@@ -53,7 +53,6 @@ use Bluz\Validator\Rule\RuleInterface;
  * @method ValidatorChain noWhitespace()
  * @method ValidatorChain numeric()
  * @method ValidatorChain required()
- * @method ValidatorChain regexp($expression)
  * @method ValidatorChain slug()
  * @method ValidatorChain string()
  */
@@ -113,6 +112,24 @@ class ValidatorChain
     public function callback($callable, $description = null) : ValidatorChain
     {
         $rule = Validator::rule('callback', [$callable]);
+        if (null !== $description) {
+            $rule->setDescription($description);
+        }
+        $this->addRule($rule);
+        return $this;
+    }
+
+    /**
+     * Add Regexp Rule to ValidatorChain
+     *
+     * @param string      $expression
+     * @param string|null $description
+     *
+     * @return ValidatorChain
+     */
+    public function regexp($expression, $description = null) : ValidatorChain
+    {
+        $rule = Validator::rule('regexp', [$expression]);
         if (null !== $description) {
             $rule->setDescription($description);
         }
@@ -214,6 +231,14 @@ class ValidatorChain
     {
         $this->description = $message;
         return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function __invoke($input): bool
+    {
+        return $this->validate($input);
     }
 
     /**

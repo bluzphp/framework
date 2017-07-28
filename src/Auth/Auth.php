@@ -41,6 +41,10 @@ class Auth
     {
         // save identity to Auth
         $this->identity = $identity;
+        // regenerate session
+        if (PHP_SAPI !== 'cli') {
+            Session::regenerateId();
+        }
         // save identity to session
         Session::set('auth:identity', $identity);
         // save user agent to session

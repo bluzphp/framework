@@ -26,7 +26,6 @@ use Bluz\Validator\Rule\RuleInterface;
  * @method ValidatorChain array($callback)
  * @method ValidatorChain between($min, $max)
  * @method ValidatorChain betweenInclusive($min, $max)
- * @method ValidatorChain callback($callback)
  * @method ValidatorChain condition($condition)
  * @method ValidatorChain contains($containsValue)
  * @method ValidatorChain containsStrict($containsValue)
@@ -91,7 +90,7 @@ class ValidatorChain
     }
 
     /**
-     * addRule
+     * Add Rule to ValidatorChain
      *
      * @param RuleInterface $rule
      *
@@ -100,6 +99,24 @@ class ValidatorChain
     public function addRule($rule) : ValidatorChain
     {
         $this->rules[] = $rule;
+        return $this;
+    }
+
+    /**
+     * Add Callback Rule to ValidatorChain
+     *
+     * @param mixed       $callable
+     * @param string|null $description
+     *
+     * @return ValidatorChain
+     */
+    public function callback($callable, $description = null) : ValidatorChain
+    {
+        $rule = Validator::rule('callback', [$callable]);
+        if (null !== $description) {
+            $rule->setDescription($description);
+        }
+        $this->addRule($rule);
         return $this;
     }
 

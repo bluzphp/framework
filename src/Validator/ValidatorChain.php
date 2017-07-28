@@ -113,7 +113,7 @@ class ValidatorChain
     public function callback($callable, $description = null) : ValidatorChain
     {
         $rule = Validator::rule('callback', [$callable]);
-        if ($description) {
+        if (null !== $description) {
             $rule->setDescription($description);
         }
         $this->addRule($rule);

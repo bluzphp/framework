@@ -684,9 +684,8 @@ abstract class Grid
             array_key_exists($column, $this->getAllowFilters())
         ) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -736,11 +735,10 @@ abstract class Grid
      */
     public function getFilter($column, $filter = null)
     {
-        if (is_null($filter)) {
+        if (null === $filter) {
             return $this->filters[$column] ?? null;
-        } else {
-            return $this->filters[$column][$filter] ?? null;
         }
+        return $this->filters[$column][$filter] ?? null;
     }
 
     /**

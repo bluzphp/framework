@@ -34,10 +34,10 @@ return
 
         if (Request::isXmlHttpRequest()) {
             Response::setStatusCode(StatusCode::NO_CONTENT);
-            Response::setHeader('Bluz-Redirect', $url);
+            Response::setHeader('Bluz-Redirect', (string)$url);
         } else {
             Response::setStatusCode(StatusCode::FOUND);
-            Response::setHeader('Location', $url);
+            Response::setHeader('Location', (string)$url);
         }
 
         return null;

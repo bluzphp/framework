@@ -52,8 +52,9 @@ class CreditCardRule extends AbstractRule
     {
         $sum = 0;
         $input = strrev($input);
-        for ($i = 0; $i < strlen($input); $i++) {
-            $current = substr($input, $i, 1);
+        $inputLen = strlen($input);
+        for ($i = 0; $i < $inputLen; $i++) {
+            $current = $input[$i];
             if ($i % 2 == 1) {
                 $current *= 2;
                 if ($current > 9) {

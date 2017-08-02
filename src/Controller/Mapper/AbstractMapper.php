@@ -267,10 +267,8 @@ abstract class AbstractMapper
         $map = $this->map[$this->method];
 
         // check permissions
-        if (isset($map['acl'])) {
-            if (!Acl::isAllowed($this->module, $map['acl'])) {
-                throw new ForbiddenException;
-            }
+        if (isset($map['acl']) && !Acl::isAllowed($this->module, $map['acl'])) {
+            throw new ForbiddenException;
         }
 
         // dispatch controller

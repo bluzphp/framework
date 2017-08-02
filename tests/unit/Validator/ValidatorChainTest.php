@@ -60,6 +60,18 @@ class ValidatorChainTest extends Tests\FrameworkTestCase
         );
     }
 
+    public function testSetCustomDescriptionForRegexpRuleShouldUseItInChainDescription()
+    {
+        $chain = Validator::create()
+            ->regexp('[0-9]+', 'it should be custom one')
+            ->regexp('[a-z]+', 'it should be custom two')
+        ;
+        self::assertEqualsArray(
+            ['it should be custom one', 'it should be custom two'],
+            $chain->getDescription()
+        );
+    }
+
     public function testSetCustomDescriptionForRuleShouldUseItInChainDescription()
     {
         $chain = Validator::create()

@@ -149,7 +149,7 @@ class ValidatorChain
         $this->error = null; // clean
         foreach ($this->rules as $rule) {
             if (!$rule->validate($input)) {
-                $this->error = $rule->getDescription();
+                $this->setError($rule->getDescription());
                 return false;
             }
         }

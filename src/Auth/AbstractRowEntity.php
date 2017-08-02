@@ -20,14 +20,6 @@ use Bluz\Db\Row;
 abstract class AbstractRowEntity extends Row implements EntityInterface
 {
     /**
-     * Can entity login
-     *
-     * @return void
-     * @throws AuthException
-     */
-    abstract public function tryLogin();
-
-    /**
      * Get user privileges
      *
      * @return array
@@ -46,6 +38,6 @@ abstract class AbstractRowEntity extends Row implements EntityInterface
     {
         $privileges = $this->getPrivileges();
 
-        return in_array("$module:$privilege", $privileges);
+        return in_array("$module:$privilege", $privileges, true);
     }
 }

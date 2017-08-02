@@ -138,7 +138,7 @@ class IpRule extends AbstractRule
             throw new ComponentException('Invalid network mask');
         }
 
-        $range['mask'] = sprintf('%032b', ip2long(long2ip(~(pow(2, (32 - $input[1])) - 1))));
+        $range['mask'] = sprintf('%032b', ip2long(long2ip(~(2 ** (32 - $input[1]) - 1))));
     }
 
     /**

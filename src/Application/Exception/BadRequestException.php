@@ -24,4 +24,9 @@ class BadRequestException extends ApplicationException
      * @var integer HTTP Code
      */
     protected $code = StatusCode::BAD_REQUEST;
+
+    /**
+     * @var string
+     */
+    protected $message = 'Bad Request';
 }

@@ -24,4 +24,9 @@ class NotFoundException extends ApplicationException
      * @var integer HTTP Code
      */
     protected $code = StatusCode::NOT_FOUND;
+
+    /**
+     * @var string
+     */
+    protected $message = 'Not Found';
 }

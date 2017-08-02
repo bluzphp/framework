@@ -130,8 +130,8 @@ class Messages
                 return $message;
             }
         } else {
-            foreach ($this->types as $type) {
-                if ($message = $this->pop($type)) {
+            foreach ($this->types as $aType) {
+                if ($message = $this->pop($aType)) {
                     return $message;
                 }
             }

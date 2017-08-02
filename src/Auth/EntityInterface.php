@@ -17,6 +17,7 @@ namespace Bluz\Auth;
  *
  * @property integer $id
  * @property string  $login
+ * @property string  $email
  */
 interface EntityInterface
 {

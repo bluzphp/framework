@@ -19,11 +19,52 @@ use Bluz\Validator\ValidatorChain;
  */
 class ValidatorChainTest extends Tests\FrameworkTestCase
 {
+    public function testRunValidationWithValidDataShouldPass()
+    {
+        $validatorChain = Validator::create()->alphaNumeric('_')->length(1, 15)->noWhitespace();
+        self::assertTrue($validatorChain->validate('username'));
+    }
+
+    public function testEvalValidationWithValidDataShouldPass()
+    {
+        $validatorChain = Validator::create()->alphaNumeric('_')->length(1, 15)->noWhitespace();
+        self::assertTrue($validatorChain('username'));
+        self::assertTrue($validatorChain('user_name'));
+    }
+
+    public function testRunValidationWithInvalidDataShouldFail()
+    {
+        $validatorChain = Validator::create()->alphaNumeric('_')->length(1, 15)->noWhitespace();
+        self::assertFalse($validatorChain->validate('invalid username'));
+    }
+
+    /**
+     * Complex test with exception
+     *
+     * @expectedException \Bluz\Validator\Exception\ValidatorException
+     */
+    public function testAssertInvalidDataShouldRaiseException()
+    {
+        Validator::create()->alphaNumeric('_')->length(1, 15)->noWhitespace()->assert('invalid username');
+    }
+
     public function testSetCustomDescriptionForCallbackRuleShouldUseItInChainDescription()
     {
         $chain = Validator::create()
             ->callback('is_int', 'it should be custom one')
             ->callback('is_numeric', 'it should be custom two')
+        ;
+        self::assertEqualsArray(
+            ['it should be custom one', 'it should be custom two'],
+            $chain->getDescription()
+        );
+    }
+
+    public function testSetCustomDescriptionForRegexpRuleShouldUseItInChainDescription()
+    {
+        $chain = Validator::create()
+            ->regexp('[0-9]+', 'it should be custom one')
+            ->regexp('[a-z]+', 'it should be custom two')
         ;
         self::assertEqualsArray(
             ['it should be custom one', 'it should be custom two'],
@@ -106,27 +147,5 @@ class ValidatorChainTest extends Tests\FrameworkTestCase
 
         self::assertFalse($validator->validate('user#name'));
         self::assertNotEmpty($validator->getError());
-    }
-
-    public function testRunValidationWithValidDataShouldPass()
-    {
-        $validatorChain = Validator::create()->alphaNumeric('_')->length(1, 15)->noWhitespace();
-        self::assertTrue($validatorChain->validate('username'));
-    }
-
-    public function testRunValidationWithInvalidDataShouldFail()
-    {
-        $validatorChain = Validator::create()->alphaNumeric('_')->length(1, 15)->noWhitespace();
-        self::assertFalse($validatorChain->validate('invalid username'));
-    }
-
-    /**
-     * Complex test with exception
-     *
-     * @expectedException \Bluz\Validator\Exception\ValidatorException
-     */
-    public function testAssertInvalidDataShouldRaiseException()
-    {
-        Validator::create()->alphaNumeric('_')->length(1, 15)->noWhitespace()->assert('invalid username');
     }
 }

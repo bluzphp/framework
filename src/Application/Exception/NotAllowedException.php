@@ -24,4 +24,9 @@ class NotAllowedException extends ApplicationException
      * @var integer HTTP Code
      */
     protected $code = StatusCode::METHOD_NOT_ALLOWED;
+
+    /**
+     * @var string
+     */
+    protected $message = 'Method Not Allowed';
 }

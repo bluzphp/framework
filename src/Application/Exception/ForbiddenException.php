@@ -24,4 +24,9 @@ class ForbiddenException extends ApplicationException
      * @var integer HTTP Code
      */
     protected $code = StatusCode::FORBIDDEN;
+
+    /**
+     * @var string
+     */
+    protected $message = 'Forbidden';
 }

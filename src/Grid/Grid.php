@@ -70,7 +70,7 @@ abstract class Grid
     /**
      * @var string unique prefix of grid
      */
-    protected $prefix;
+    protected $prefix = '';
 
     /**
      * @var string location of Grid
@@ -179,8 +179,6 @@ abstract class Grid
 
         if ($this->getUid()) {
             $this->prefix = $this->getUid() . '-';
-        } else {
-            $this->prefix = '';
         }
 
         $this->init();
@@ -218,7 +216,7 @@ abstract class Grid
      */
     public function getAdapter()
     {
-        if (null == $this->adapter) {
+        if (null === $this->adapter) {
             throw new GridException('Grid adapter is not initialized');
         }
         return $this->adapter;
@@ -364,13 +362,13 @@ abstract class Grid
     public function processSource()
     {
         if (null === $this->adapter) {
-            throw new GridException("Grid Adapter is not initiated, please update method `init()` and try again");
+            throw new GridException('Grid Adapter is not initiated, please update method `init()` and try again');
         }
 
         try {
             $this->data = $this->getAdapter()->process($this->getSettings());
         } catch (\Exception $e) {
-            throw new GridException("Grid Adapter can't process request: {$e->getMessage()}");
+            throw new GridException('Grid Adapter can\'t process request: '. $e->getMessage());
         }
 
         return $this;
@@ -626,7 +624,7 @@ abstract class Grid
         if (is_array($default)
             && count($this->orders)
             && isset($this->orders[key($default)])
-            && $this->orders[key($default)] == reset($default)
+            && $this->orders[key($default)] === reset($default)
         ) {
             unset($this->orders[key($default)]);
         }
@@ -684,9 +682,8 @@ abstract class Grid
             array_key_exists($column, $this->getAllowFilters())
         ) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -736,11 +733,10 @@ abstract class Grid
      */
     public function getFilter($column, $filter = null)
     {
-        if (is_null($filter)) {
+        if (null === $filter) {
             return $this->filters[$column] ?? null;
-        } else {
-            return $this->filters[$column][$filter] ?? null;
         }
+        return $this->filters[$column][$filter] ?? null;
     }
 
     /**

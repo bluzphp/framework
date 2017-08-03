@@ -18,11 +18,6 @@ namespace Bluz\Controller\Mapper;
  */
 class Crud extends AbstractMapper
 {
-    /**
-     * Prepare params
-     *
-     * @return array
-     */
     protected function prepareParams(): array
     {
         return [

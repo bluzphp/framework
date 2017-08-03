@@ -58,7 +58,7 @@ abstract class Table
     /**
      * @var string default SQL query for select
      */
-    protected $select = "";
+    protected $select = '';
 
     /**
      * @var array the primary key column or columns (only as array).
@@ -81,30 +81,28 @@ abstract class Table
     private function __construct()
     {
         $tableClass = static::class;
+        $namespace = class_namespace($tableClass);
 
         // autodetect model name
         if (!$this->model) {
-            $model = substr($tableClass, strpos($tableClass, '\\') + 1);
-            $model = substr($model, 0, strpos($model, '\\', 2));
-            $this->model = $model;
+            $this->model = substr($namespace, strrpos($namespace, '\\') + 1);
         }
 
         // autodetect table name - camelCase to uppercase
         if (!$this->name) {
-            $table = preg_replace('/(?<=\\w)(?=[A-Z])/', "_$1", $this->model);
+            $table = preg_replace('/(?<=\\w)(?=[A-Z])/', '_$1', $this->model);
             $this->name = strtolower($table);
         }
 
         // autodetect row class
         if (!$this->rowClass) {
-            $rowClass = substr($tableClass, 0, strrpos($tableClass, '\\', 1) + 1);
-            $this->rowClass = $rowClass . 'Row';
+            $this->rowClass = $namespace . '\\Row';
         }
 
         // setup default select query
         if (empty($this->select)) {
-            $this->select = "SELECT * " .
-                "FROM " . DbProxy::quoteIdentifier($this->name);
+            $this->select = 'SELECT * ' .
+                'FROM ' . DbProxy::quoteIdentifier($this->name);
         }
 
         Relations::addClassMap($this->model, $tableClass);
@@ -167,7 +165,7 @@ abstract class Table
     public function getPrimaryKey()
     {
         if (!is_array($this->primary)) {
-            throw new InvalidPrimaryKeyException("The primary key must be set as an array");
+            throw new InvalidPrimaryKeyException('The primary key must be set as an array');
         }
         return $this->primary;
     }
@@ -359,10 +357,9 @@ abstract class Table
     {
         $self = static::getInstance();
 
-        $whereClause = null;
         $whereParams = [];
 
-        if (count($where) == 2 && is_string($where[0])) {
+        if (count($where) === 2 && is_string($where[0])) {
             $whereClause = $where[0];
             $whereParams = (array)$where[1];
         } elseif (count($where)) {
@@ -395,7 +392,7 @@ abstract class Table
                 $whereOrTerms[] = '(' . implode(' AND ', $whereAndTerms) . ')';
             }
             $whereClause = '(' . implode(' OR ', $whereOrTerms) . ')';
-        } elseif (!count($where)) {
+        } else {
             throw new DbException(
                 "Method `Table::findWhere()` can't return all records from table,\n" .
                 "please use `Table::fetchAll()` instead"

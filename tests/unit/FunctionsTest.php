@@ -10,8 +10,6 @@
 
 namespace Bluz\Tests;
 
-use Bluz\Tests\FrameworkTestCase;
-
 /**
  * FunctionsTest
  *
@@ -20,6 +18,14 @@ use Bluz\Tests\FrameworkTestCase;
  */
 class FunctionsTest extends FrameworkTestCase
 {
+    /**
+     * @dataProvider dataForClassNamespace
+     */
+    public function testClassNamespaceFunction($input, $output)
+    {
+        self::assertEquals($output, class_namespace($input));
+    }
+
     /**
      * @dataProvider dataForStrTrimEnd
      */
@@ -37,6 +43,16 @@ class FunctionsTest extends FrameworkTestCase
             ['faabar/bar', '/bar/', 'f/bar/'],
             ['foo/bar/', '/1', 'foo/bar/1'],
             ['foo/bar/1/1/1/1/', '/1', 'foo/bar/1'],
+        ];
+    }
+
+    public function dataForClassNamespace(): array
+    {
+        return [
+            ['Application\\Library\\Some\\Class\\Interface', 'Application\\Library\\Some\\Class'],
+            ['Application\\Pages\\Crud', 'Application\\Pages'],
+            ['Application\\Pages\\Row', 'Application\\Pages'],
+            ['Application\\Pages\\Table', 'Application\\Pages'],
         ];
     }
 }

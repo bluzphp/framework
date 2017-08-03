@@ -74,6 +74,15 @@ class TableTest extends FrameworkTestCase
     }
 
     /**
+     * Get Model name
+     */
+    public function testGetModel()
+    {
+        $table = Db\ConcreteTable::getInstance();
+        self::assertEquals('Db', $table->getModel());
+    }
+
+    /**
      * @dataProvider getFindWrongData
      * @expectedException \Bluz\Db\Exception\InvalidPrimaryKeyException
      *
@@ -81,7 +90,7 @@ class TableTest extends FrameworkTestCase
      */
     public function testFindException($keyValues)
     {
-        $this->table->find(...$keyValues);
+        $this->table::find(...$keyValues);
     }
 
     /**

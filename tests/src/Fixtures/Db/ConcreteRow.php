@@ -22,5 +22,5 @@ use Bluz\Db\Row;
  */
 class ConcreteRow extends Row
 {
-    protected $tableClass = 'Bluz\Tests\Fixtures\Db\ConcreteTable';
+    protected $tableClass = ConcreteTable::class;
 }

@@ -47,7 +47,7 @@ class EventManager
     /**
      * Trigger event
      *
-     * @param  string        $event
+     * @param  string|Event  $event
      * @param  string|object $target
      * @param  array|object  $params
      *
@@ -59,7 +59,7 @@ class EventManager
             $event = new Event($event, $target, $params);
         }
 
-        if (strstr($event->getName(), ':')) {
+        if (false !== strpos($event->getName(), ':')) {
             $namespace = substr($event->getName(), 0, strpos($event->getName(), ':'));
 
             if (isset($this->listeners[$namespace])) {
@@ -87,7 +87,7 @@ class EventManager
         ksort($listeners);
         foreach ($listeners as $list) {
             foreach ($list as $listener) {
-                $result = call_user_func($listener, $event);
+                $result = $listener($event);
                 if (null === $result) {
                     // continue;
                 } elseif (false === $result) {

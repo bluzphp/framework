@@ -35,12 +35,11 @@ class Table extends AbstractCrud
      *
      * @param  Db\Table $table
      *
-     * @return self
+     * @return void
      */
     public function setTable(Db\Table $table)
     {
         $this->table = $table;
-        return $this;
     }
 
     /**
@@ -52,22 +51,30 @@ class Table extends AbstractCrud
     public function getTable()
     {
         if (!$this->table) {
-            $crudClass = static::class;
-            $tableClass = substr($crudClass, 0, strrpos($crudClass, '\\', 1) + 1) . 'Table';
-
-            // check class initialization
-            if (!class_exists($tableClass) || !is_subclass_of($tableClass, '\\Bluz\\Db\\Table')) {
-                throw new ApplicationException('`Table` class is not exists or not initialized');
-            }
-
-            /**
-             * @var Db\Table $tableClass
-             */
-            $table = $tableClass::getInstance();
-
-            $this->setTable($table);
+            $this->initTable();
         }
         return $this->table;
+    }
+
+    /**
+     * Init table instance for manipulation
+     *
+     * @return void
+     * @throws ApplicationException
+     */
+    protected function initTable()
+    {
+        $tableClass = class_namespace(static::class) . '\\Table';
+
+        // check class initialization
+        if (!class_exists($tableClass) || !is_subclass_of($tableClass, Db\Table::class)) {
+            throw new ApplicationException('`Table` class is not exists or not initialized');
+        }
+
+        /**
+         * @var Db\Table $tableClass
+         */
+        $this->setTable($tableClass::getInstance());
     }
 
     /**
@@ -91,10 +98,10 @@ class Table extends AbstractCrud
     public function readOne($primary)
     {
         if (!$primary) {
-            return $this->getTable()->create();
+            return $this->getTable()::create();
         }
 
-        $row = $this->getTable()->findRow($primary);
+        $row = $this->getTable()::findRow($primary);
 
         if (!$row) {
             throw new NotFoundException('Record not found');
@@ -116,7 +123,7 @@ class Table extends AbstractCrud
      */
     public function readSet($offset = 0, $limit = 10, $params = [], &$total = null)
     {
-        $select = $this->getTable()->select();
+        $select = $this->getTable()::select();
 
         // switch statement for DB type
         $type = Proxy\Db::getOption('connect', 'type');
@@ -162,7 +169,7 @@ class Table extends AbstractCrud
      */
     public function createOne($data)
     {
-        $row = $this->getTable()->create();
+        $row = $this->getTable()::create();
         $row->setFromArray($data);
         return $row->save();
     }
@@ -178,7 +185,7 @@ class Table extends AbstractCrud
      */
     public function updateOne($primary, $data)
     {
-        $row = $this->getTable()->findRow($primary);
+        $row = $this->getTable()::findRow($primary);
 
         if (!$row) {
             throw new NotFoundException('Record not found');
@@ -198,7 +205,7 @@ class Table extends AbstractCrud
      */
     public function deleteOne($primary)
     {
-        $row = $this->getTable()->findRow($primary);
+        $row = $this->getTable()::findRow($primary);
 
         if (!$row) {
             throw new NotFoundException('Record not found');

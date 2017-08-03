@@ -357,7 +357,6 @@ abstract class Table
     {
         $self = static::getInstance();
 
-        $whereClause = null;
         $whereParams = [];
 
         if (count($where) === 2 && is_string($where[0])) {

@@ -69,12 +69,6 @@ class ValidatorForm
             $this->validateItem($key, $input[$key] ?? null);
         }
 
-        // strict rules
-//        $missed = array_keys(array_diff_key($input, $this->validators));
-//        foreach ($missed as $key) {
-//            $this->setError($key, 'This field is not defined');
-//        }
-
         return !$this->hasErrors();
     }
 

@@ -16,10 +16,10 @@ namespace Bluz\Common;
  * @package  Bluz\Common
  * @author   Anton Shevchuk
  */
-class Line
+class Str
 {
     /**
-     * Convert string to camel case
+     * Convert string to CamelCase
      *
      * @param  string $subject
      *

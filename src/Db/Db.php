@@ -34,12 +34,12 @@ class Db
      * @link http://php.net/manual/en/pdo.construct.php
      */
     protected $connect = [
-        "type" => "mysql",
-        "host" => "localhost",
-        "name" => "",
-        "user" => "root",
-        "pass" => "",
-        "options" => []
+        'type' => 'mysql',
+        'host' => 'localhost',
+        'name' => '',
+        'user' => 'root',
+        'pass' => '',
+        'options' => []
     ];
 
     /**
@@ -73,6 +73,7 @@ class Db
      *
      * @param  array $connect options
      *
+     * @throws ConfigurationException
      * @return Db
      * @throws DbException
      */
@@ -91,9 +92,9 @@ class Db
      */
     private function checkConnect()
     {
-        if (empty($this->connect['type']) or
-            empty($this->connect['host']) or
-            empty($this->connect['name']) or
+        if (empty($this->connect['type']) ||
+            empty($this->connect['host']) ||
+            empty($this->connect['name']) ||
             empty($this->connect['user'])
         ) {
             throw new ConfigurationException(
@@ -124,12 +125,12 @@ class Db
      */
     public function connect()
     {
-        if (empty($this->handler)) {
+        if (null ===$this->handler) {
             try {
                 $this->checkConnect();
-                $this->log("Connect to " . $this->connect['host']);
+                $this->log('Connect to ' . $this->connect['host']);
                 $this->handler = new \PDO(
-                    $this->connect['type'] . ":host=" . $this->connect['host'] . ";dbname=" . $this->connect['name'],
+                    $this->connect['type'] . ':host=' . $this->connect['host'] . ';dbname=' . $this->connect['name'],
                     $this->connect['user'],
                     $this->connect['pass'],
                     $this->connect['options']
@@ -154,7 +155,7 @@ class Db
      */
     public function handler()
     {
-        if (empty($this->handler)) {
+        if (null ===$this->handler) {
             $this->connect();
         }
         return $this->handler;
@@ -238,7 +239,7 @@ class Db
         $stmt = $this->handler()->prepare($sql);
         foreach ($params as $key => &$param) {
             $stmt->bindParam(
-                (is_int($key) ? $key + 1 : ":" . $key),
+                (is_int($key) ? $key + 1 : ':' . $key),
                 $param,
                 $types[$key] ?? \PDO::PARAM_STR
             );
@@ -256,7 +257,7 @@ class Db
      *
      * @return Query\Select
      */
-    public function select(...$select)
+    public function select(...$select) : Query\Select
     {
         $query = new Query\Select();
         $query->select(...$select);
@@ -270,7 +271,7 @@ class Db
      *
      * @return Query\Insert
      */
-    public function insert($table)
+    public function insert($table) : Query\Insert
     {
         $query = new Query\Insert();
         $query->insert($table);
@@ -284,7 +285,7 @@ class Db
      *
      * @return Query\Update
      */
-    public function update($table)
+    public function update($table) : Query\Update
     {
         $query = new Query\Update();
         $query->update($table);
@@ -298,7 +299,7 @@ class Db
      *
      * @return Query\Delete
      */
-    public function delete($table)
+    public function delete($table) : Query\Delete
     {
         $query = new Query\Delete();
         $query->delete($table);
@@ -598,7 +599,7 @@ class Db
      */
     protected function ok()
     {
-        Logger::info("<<<");
+        Logger::info('<<<');
     }
 
     /**

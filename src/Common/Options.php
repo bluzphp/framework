@@ -56,7 +56,7 @@ trait Options
      */
     public function getOption($key, ...$keys)
     {
-        $method = 'get' . Line::toCamelCase($key);
+        $method = 'get' . Str::toCamelCase($key);
         if (method_exists($this, $method)) {
             return $this->$method($key, ...$keys);
         }
@@ -73,7 +73,7 @@ trait Options
      */
     public function setOption($key, $value)
     {
-        $method = 'set' . Line::toCamelCase($key);
+        $method = 'set' . Str::toCamelCase($key);
         if (method_exists($this, $method)) {
             $this->$method($value);
         } else {

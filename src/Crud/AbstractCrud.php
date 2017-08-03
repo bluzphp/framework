@@ -155,38 +155,4 @@ abstract class AbstractCrud
     {
         throw new NotImplementedException();
     }
-
-    /**
-     * Get realized methods
-     *
-     * @return array
-     */
-    public function getMethods()
-    {
-        $reflection = new \ReflectionObject($this);
-        $methods = $reflection->getMethods(\ReflectionMethod::IS_PUBLIC);
-
-        $available = [];
-        $allow = [
-            'readOne',
-            'readSet',
-            'createOne',
-            'createSet',
-            'updateOne',
-            'updateSet',
-            'deleteOne',
-            'deleteSet',
-        ];
-
-        foreach ($methods as $method) {
-            $className = $method->getDeclaringClass()->getName();
-            $methodName = $method->getName();
-
-            if (__CLASS__ !== $className && in_array($methodName, $allow)) {
-                $available[] = $methodName;
-            }
-        }
-
-        return $available;
-    }
 }

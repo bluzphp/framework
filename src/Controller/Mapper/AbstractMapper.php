@@ -271,10 +271,12 @@ abstract class AbstractMapper
         $link->setParams($this->prepareParams());
 
         // dispatch controller
-        return Application::getInstance()->dispatch(
+        $result = Application::getInstance()->dispatch(
             $link->getModule(),
             $link->getController(),
             $link->getParams()
         );
+
+        return $result;
     }
 }

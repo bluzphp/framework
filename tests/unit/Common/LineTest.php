@@ -10,7 +10,7 @@
 
 namespace Bluz\Tests\Common;
 
-use Bluz\Common\Line;
+use Bluz\Common\Str;
 use Bluz\Tests\FrameworkTestCase;
 
 /**
@@ -33,7 +33,7 @@ class LineTest extends FrameworkTestCase
     public function testToCamelCase($input, $output)
     {
         self::assertEquals($output, to_camel_case($input));
-        self::assertEquals($output, Line::toCamelCase($input));
+        self::assertEquals($output, Str::toCamelCase($input));
     }
 
     public function dataForStrTrimEnd(): array

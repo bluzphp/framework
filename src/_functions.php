@@ -9,7 +9,7 @@
 declare(strict_types=1);
 
 use Bluz\Common\Collection;
-use Bluz\Common\Line;
+use Bluz\Common\Str;
 use Bluz\Translator\Translator;
 
 /**
@@ -156,7 +156,21 @@ if (!function_exists('to_camel_case')) {
      */
     function to_camel_case($subject)
     {
-        return Line::toCamelCase($subject);
+        return Str::toCamelCase($subject);
+    }
+}
+
+if (!function_exists('class_namespace')) {
+    /**
+     * Get namespace of class
+     *
+     * @param  string $class
+     *
+     * @return string
+     */
+    function class_namespace($class)
+    {
+        return substr($class, 0, strrpos($class, '\\'));
     }
 }
 

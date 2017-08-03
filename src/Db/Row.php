@@ -144,11 +144,10 @@ class Row implements \JsonSerializable, \ArrayAccess
      *
      * @param  array|object $data
      *
-     * @return bool
+     * @return void
      */
     public function assert($data)
     {
-        return true;
     }
 
     /**
@@ -336,9 +335,7 @@ class Row implements \JsonSerializable, \ArrayAccess
     {
         $primary = array_flip($this->getTable()->getPrimaryKey());
 
-        $array = array_intersect_key($this->toArray(), $primary);
-
-        return $array;
+        return array_intersect_key($this->toArray(), $primary);
     }
 
     /**
@@ -470,16 +467,15 @@ class Row implements \JsonSerializable, \ArrayAccess
             $tableClass = $this->tableClass;
         } else {
             // try to guess table class
-            $rowClass = get_class($this);
             /**
              * @var string $tableClass is child of \Bluz\Db\Table
              */
-            $tableClass = substr($rowClass, 0, strrpos($rowClass, '\\', 1) + 1) . 'Table';
+            $tableClass = class_namespace(static::class) . '\\Table';
         }
 
         // check class initialization
-        if (!class_exists($tableClass) || !is_subclass_of($tableClass, '\\Bluz\\Db\\Table')) {
-            throw new TableNotFoundException("`Table` class is not exists or not initialized");
+        if (!class_exists($tableClass) || !is_subclass_of($tableClass, Table::class)) {
+            throw new TableNotFoundException('`Table` class is not exists or not initialized');
         }
 
         /**
@@ -490,6 +486,16 @@ class Row implements \JsonSerializable, \ArrayAccess
         $this->setTable($table);
 
         return $table;
+    }
+
+    /**
+     * initTable
+     *
+     * @return void
+     */
+    protected function initTable()
+    {
+
     }
 
     /**

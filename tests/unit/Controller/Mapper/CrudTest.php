@@ -79,7 +79,7 @@ class CrudTest extends FrameworkTestCase
     {
         self::setRequestParams('test/index', [], [], RequestMethod::GET);
 
-        $this->mapper->addMap(RequestMethod::GET, 'test', 'index', 'Deny');
+        $this->mapper->addMap(RequestMethod::GET, 'test', 'index')->acl('Deny');
         $this->mapper->run();
     }
 

@@ -61,4 +61,19 @@ class ValidatorFormTest extends Tests\FrameworkTestCase
         $validator->add('bar')->numeric();
         $validator->assert([]);
     }
+
+    /**
+     * @ expectedException \Bluz\Validator\Exception\ValidatorException
+     */
+    public function testAssertUnexpectedDataShouldRaiseException()
+    {
+//        try {
+//            $validator = new ValidatorForm();
+//            $validator->add('bar')->required();
+//            $validator->assert(['foo' => 42, 'bar' => 'something']);
+//        } catch (ValidatorException $e) {
+//            self::assertEqualsArray(['foo' => 'This field is not defined'], $e->getErrors());
+//            throw $e;
+//        }
+    }
 }

@@ -64,9 +64,16 @@ class ValidatorForm
     {
         $this->resetErrors();
 
+        // run chains
         foreach ($this->validators as $key => $validators) {
             $this->validateItem($key, $input[$key] ?? null);
         }
+
+        // strict rules
+//        $missed = array_keys(array_diff_key($input, $this->validators));
+//        foreach ($missed as $key) {
+//            $this->setError($key, 'This field is not defined');
+//        }
 
         return !$this->hasErrors();
     }
@@ -79,22 +86,16 @@ class ValidatorForm
      *
      * @return bool
      */
-    public function validateItem($key, $value): bool
+    protected function validateItem($key, $value): bool
     {
-        $validatorsChain = $this->validators[$key] ?? null;
-
-        // w/out any rules element is valid
-        if (is_null($validatorsChain)) {
-            return true;
-        }
-
         // run validators chain
-        if ($validatorsChain->validate($value)) {
-            return true;
+        $result = $this->validators[$key]->validate($value);
+
+        if (!$result) {
+            $this->setError($key, $this->validators[$key]->getError());
         }
 
-        $this->setError($key, $validatorsChain->getError());
-        return false;
+        return $result;
     }
 
     /**

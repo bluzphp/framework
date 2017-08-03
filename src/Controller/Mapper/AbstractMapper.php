@@ -76,14 +76,14 @@ abstract class AbstractMapper
 
     /**
      * [
-     *     METHOD => [
+     *     METHOD => Link {
      *         'module' => 'module',
      *         'controller' => 'controller',
      *         'acl' => 'privilege',
-     *     ],
+     *     },
      * ]
      *
-     * @var array
+     * @var Link[]
      */
     protected $map = [];
 
@@ -108,15 +108,11 @@ abstract class AbstractMapper
      * @param string $method
      * @param string $module
      * @param string $controller
-     * @param String $acl
+     * @return Link
      */
-    public function addMap($method, $module, $controller, $acl = null)
+    public function addMap($method, $module, $controller)
     {
-        $this->map[strtoupper($method)] = [
-            'module' => $module,
-            'controller' => $controller,
-            'acl' => $acl
-        ];
+        return $this->map[strtoupper($method)] = new Link($module, $controller);
     }
 
     /**
@@ -124,11 +120,11 @@ abstract class AbstractMapper
      *
      * @param string $module
      * @param string $controller
-     * @param String $acl
+     * @return Link
      */
-    public function head($module, $controller, $acl = null)
+    public function head($module, $controller) : Link
     {
-        $this->addMap(RequestMethod::HEAD, $module, $controller, $acl);
+        return $this->addMap(RequestMethod::HEAD, $module, $controller);
     }
 
     /**
@@ -136,11 +132,11 @@ abstract class AbstractMapper
      *
      * @param string $module
      * @param string $controller
-     * @param String $acl
+     * @return Link
      */
-    public function get($module, $controller, $acl = null)
+    public function get($module, $controller) : Link
     {
-        $this->addMap(RequestMethod::GET, $module, $controller, $acl);
+        return $this->addMap(RequestMethod::GET, $module, $controller);
     }
 
     /**
@@ -148,11 +144,11 @@ abstract class AbstractMapper
      *
      * @param string $module
      * @param string $controller
-     * @param String $acl
+     * @return Link
      */
-    public function post($module, $controller, $acl = null)
+    public function post($module, $controller) : Link
     {
-        $this->addMap(RequestMethod::POST, $module, $controller, $acl);
+        return $this->addMap(RequestMethod::POST, $module, $controller);
     }
 
     /**
@@ -160,11 +156,11 @@ abstract class AbstractMapper
      *
      * @param string $module
      * @param string $controller
-     * @param String $acl
+     * @return Link
      */
-    public function patch($module, $controller, $acl = null)
+    public function patch($module, $controller) : Link
     {
-        $this->addMap(RequestMethod::PATCH, $module, $controller, $acl);
+        return $this->addMap(RequestMethod::PATCH, $module, $controller);
     }
 
     /**
@@ -172,11 +168,11 @@ abstract class AbstractMapper
      *
      * @param string $module
      * @param string $controller
-     * @param String $acl
+     * @return Link
      */
-    public function put($module, $controller, $acl = null)
+    public function put($module, $controller) : Link
     {
-        $this->addMap(RequestMethod::PUT, $module, $controller, $acl);
+        return $this->addMap(RequestMethod::PUT, $module, $controller);
     }
 
     /**
@@ -184,11 +180,11 @@ abstract class AbstractMapper
      *
      * @param string $module
      * @param string $controller
-     * @param String $acl
+     * @return Link
      */
-    public function delete($module, $controller, $acl = null)
+    public function delete($module, $controller) : Link
     {
-        $this->addMap(RequestMethod::DELETE, $module, $controller, $acl);
+        return $this->addMap(RequestMethod::DELETE, $module, $controller);
     }
 
     /**
@@ -196,11 +192,11 @@ abstract class AbstractMapper
      *
      * @param string $module
      * @param string $controller
-     * @param String $acl
+     * @return Link
      */
-    public function options($module, $controller, $acl = null)
+    public function options($module, $controller) : Link
     {
-        $this->addMap(RequestMethod::OPTIONS, $module, $controller, $acl);
+        return $this->addMap(RequestMethod::OPTIONS, $module, $controller);
     }
 
     /**
@@ -211,7 +207,7 @@ abstract class AbstractMapper
      * @throws ForbiddenException
      * @throws NotImplementedException
      */
-    public function run()
+    public function run() : Controller
     {
         $this->prepareRequest();
         return $this->dispatch();
@@ -264,18 +260,21 @@ abstract class AbstractMapper
             throw new NotImplementedException;
         }
 
-        $map = $this->map[$this->method];
+        $link = $this->map[$this->method];
 
         // check permissions
-        if (isset($map['acl']) && !Acl::isAllowed($this->module, $map['acl'])) {
+        if (!Acl::isAllowed($this->module, $link->getAcl())) {
             throw new ForbiddenException;
         }
 
+        // setup params
+        $link->setParams($this->prepareParams());
+
         // dispatch controller
         return Application::getInstance()->dispatch(
-            $map['module'],
-            $map['controller'],
-            $this->prepareParams()
+            $link->getModule(),
+            $link->getController(),
+            $link->getParams()
         );
     }
 }

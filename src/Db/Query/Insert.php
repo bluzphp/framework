@@ -42,7 +42,7 @@ class Insert extends AbstractBuilder
      *
      * @return string
      */
-    public function getSql()
+    public function getSql() : string
     {
         $query = "INSERT"
             . " INTO " . $this->sqlParts['from']['table']

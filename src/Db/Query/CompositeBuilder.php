@@ -35,7 +35,8 @@ class CompositeBuilder implements \Countable
      */
     public function __construct(array $parts = [], $type = 'AND')
     {
-        $this->type = (strtoupper($type) == 'OR') ? 'OR' : 'AND';
+        $type = strtoupper($type);
+        $this->type = $type === 'OR' ? 'OR' : 'AND';
         $this->add($parts);
     }
 

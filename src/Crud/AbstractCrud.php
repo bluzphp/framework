@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Bluz\Crud;
 
 use Bluz\Application\Exception\NotImplementedException;
+use Bluz\Db\Row;
 
 /**
  * Crud
@@ -25,6 +26,11 @@ abstract class AbstractCrud
      * Default limit for READ SET of elements
      */
     const DEFAULT_LIMIT = 10;
+
+    /**
+     * @var array Fields for action
+     */
+    protected $fields = [];
 
     /**
      * Get CRUD Instance
@@ -58,7 +64,7 @@ abstract class AbstractCrud
      */
     public function readOne($primary)
     {
-        throw new NotImplementedException();
+        throw new NotImplementedException;
     }
 
     /**
@@ -74,7 +80,7 @@ abstract class AbstractCrud
      */
     public function readSet($offset = 0, $limit = self::DEFAULT_LIMIT, $params = [], &$total = null)
     {
-        throw new NotImplementedException();
+        throw new NotImplementedException;
     }
 
     /**
@@ -87,7 +93,7 @@ abstract class AbstractCrud
      */
     public function createOne($data)
     {
-        throw new NotImplementedException();
+        throw new NotImplementedException;
     }
 
     /**
@@ -100,7 +106,7 @@ abstract class AbstractCrud
      */
     public function createSet($data)
     {
-        throw new NotImplementedException();
+        throw new NotImplementedException;
     }
 
     /**
@@ -114,7 +120,7 @@ abstract class AbstractCrud
      */
     public function updateOne($primary, $data)
     {
-        throw new NotImplementedException();
+        throw new NotImplementedException;
     }
 
     /**
@@ -127,7 +133,7 @@ abstract class AbstractCrud
      */
     public function updateSet($data)
     {
-        throw new NotImplementedException();
+        throw new NotImplementedException;
     }
 
     /**
@@ -140,7 +146,7 @@ abstract class AbstractCrud
      */
     public function deleteOne($primary)
     {
-        throw new NotImplementedException();
+        throw new NotImplementedException;
     }
 
     /**
@@ -153,6 +159,60 @@ abstract class AbstractCrud
      */
     public function deleteSet($data)
     {
-        throw new NotImplementedException();
+        throw new NotImplementedException;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFields(): array
+    {
+        return $this->fields;
+    }
+
+    /**
+     * Setup data filters
+     *
+     * @param array $fields
+     */
+    public function setFields(array $fields)
+    {
+        $this->fields = $fields;
+    }
+
+    /**
+     * Filter input Fields
+     *
+     * @param array $data Request
+     *
+     * @return array
+     */
+    protected function filterData($data) : array
+    {
+        if (empty($this->getFields())) {
+            return $data;
+        }
+        return array_intersect_key($data, array_flip($this->getFields()));
+    }
+
+    /**
+     * Filter output Row
+     *
+     * @param Row $row from database
+     *
+     * @return Row
+     */
+    protected function filterRow($row)
+    {
+        if (empty($this->getFields())) {
+            return $row;
+        }
+        $fields = array_keys($row->toArray());
+        $toDelete = array_diff($fields, $this->getFields());
+
+        foreach ($toDelete as $field) {
+            unset($row->$field);
+        }
+        return $row;
     }
 }

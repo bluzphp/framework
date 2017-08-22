@@ -103,6 +103,8 @@ class Table extends AbstractCrud
 
         $row = $this->getTable()::findRow($primary);
 
+        $row = $this->filterRow($row);
+
         if (!$row) {
             throw new NotFoundException('Record not found');
         }
@@ -124,6 +126,19 @@ class Table extends AbstractCrud
     public function readSet($offset = 0, $limit = 10, $params = [], &$total = null)
     {
         $select = $this->getTable()::select();
+
+        // select only required fields
+        if (count($this->getFields())) {
+            $fields = $this->getFields();
+            $name = $this->getTable()->getName();
+            $fields = array_map(
+                function ($field) use ($name) {
+                    return $name .'.'. $field;
+                },
+                $fields
+            );
+            $select->select(implode(', ', $fields));
+        }
 
         // switch statement for DB type
         $type = Proxy\Db::getOption('connect', 'type');
@@ -170,6 +185,9 @@ class Table extends AbstractCrud
     public function createOne($data)
     {
         $row = $this->getTable()::create();
+
+        $data = $this->filterData($data);
+
         $row->setFromArray($data);
         return $row->save();
     }
@@ -190,6 +208,8 @@ class Table extends AbstractCrud
         if (!$row) {
             throw new NotFoundException('Record not found');
         }
+
+        $data = $this->filterData($data);
 
         $row->setFromArray($data);
         return $row->save();

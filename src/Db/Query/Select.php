@@ -72,7 +72,7 @@ class Select extends AbstractBuilder
      *
      * @return string
      */
-    public function getSql()
+    public function getSql() : string
     {
         $query = "SELECT " . implode(', ', $this->sqlParts['select']) . " FROM ";
 

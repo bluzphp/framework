@@ -46,13 +46,13 @@ trait Where
      *      ;
      * </code>
      *
-     * @param  string[] ...$condition optional the query restriction predicates
+     * @param  string[] ...$conditions optional the query restriction predicates
      *
      * @return $this
      */
-    public function where(...$condition)
+    public function where(...$conditions)
     {
-        $condition = $this->prepareCondition($condition);
+        $condition = $this->prepareCondition($conditions);
 
         return $this->addQueryPart('where', $condition, false);
     }
@@ -71,17 +71,17 @@ trait Where
      *         ->andWhere('u.is_active = ?', 1);
      * </code>
      *
-     * @param  string[] ...$condition Optional the query restriction predicates
+     * @param  string[] ...$conditions Optional the query restriction predicates
      *
      * @return $this
      */
-    public function andWhere(...$condition)
+    public function andWhere(...$conditions)
     {
-        $condition = $this->prepareCondition($condition);
+        $condition = $this->prepareCondition($conditions);
 
         $where = $this->getQueryPart('where');
 
-        if ($where instanceof CompositeBuilder && $where->getType() == 'AND') {
+        if ($where instanceof CompositeBuilder && $where->getType() === 'AND') {
             $where->add($condition);
         } else {
             $where = new CompositeBuilder([$where, $condition]);
@@ -103,17 +103,17 @@ trait Where
      *         ->orWhere('u.id = ?', 2);
      * </code>
      *
-     * @param  string[] ...$condition Optional the query restriction predicates
+     * @param  string[] ...$conditions Optional the query restriction predicates
      *
      * @return $this
      */
-    public function orWhere(...$condition)
+    public function orWhere(...$conditions)
     {
-        $condition = $this->prepareCondition($condition);
+        $condition = $this->prepareCondition($conditions);
 
         $where = $this->getQueryPart('where');
 
-        if ($where instanceof CompositeBuilder && $where->getType() == 'OR') {
+        if ($where instanceof CompositeBuilder && $where->getType() === 'OR') {
             $where->add($condition);
         } else {
             $where = new CompositeBuilder([$where, $condition], 'OR');

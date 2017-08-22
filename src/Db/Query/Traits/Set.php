@@ -25,7 +25,7 @@ use Bluz\Proxy\Db;
  * @author   Anton Shevchuk
  *
  * @method   Insert|Update addQueryPart(string $sqlPartName, mixed $sqlPart, $append = false)
- * @method   Insert|Update setParameter(string $key, mixed $value, $type = \PDO::PARAM_STR)
+ * @method   Insert|Update setParameter(string|null $key, mixed $value, $type = \PDO::PARAM_STR)
  */
 trait Set
 {

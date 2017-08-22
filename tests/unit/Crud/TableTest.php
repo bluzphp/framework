@@ -85,6 +85,20 @@ class TableTest extends FrameworkTestCase
     }
 
     /**
+     * Method readOne with $primary should return instance of row
+     * Data should filtered by fields
+     */
+    public function testReadOneWithFilter()
+    {
+        $this->crudTable->setFields(['name', 'email']);
+
+        $row = $this->crudTable->readOne(100);
+
+        self::assertInstanceOf(Row::class, $row);
+        self::assertEqualsArray(['name' => 'CrudTestTable', 'email' => 'table@test.com'], $row->toArray());
+    }
+
+    /**
      * Method readOne with invalid $primary should throw exception
      *
      * @expectedException \Bluz\Application\Exception\NotFoundException
@@ -103,6 +117,19 @@ class TableTest extends FrameworkTestCase
         $rows = $this->crudTable->readSet(0, 10, [], $total);
         self::assertCount(10, $rows);
         self::assertTrue($total > 0);
+    }
+
+    /**
+     * Method readSet should return array of rows
+     */
+    public function testReadSetWithFilters()
+    {
+        $this->crudTable->setFields(['name', 'email']);
+
+        $rows = $this->crudTable->readSet();
+
+        self::assertCount(10, $rows);
+        self::assertCount(2, $rows[0]->toArray());
     }
 
     /**

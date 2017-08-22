@@ -12,7 +12,11 @@ namespace Bluz\Controller\Mapper;
 
 use Bluz\Application\Application;
 use Bluz\Application\Exception\ForbiddenException;
+use Bluz\Application\Exception\NotAcceptableException;
+use Bluz\Application\Exception\NotAllowedException;
 use Bluz\Application\Exception\NotImplementedException;
+use Bluz\Common\Exception\CommonException;
+use Bluz\Common\Exception\ComponentException;
 use Bluz\Controller\Controller;
 use Bluz\Controller\ControllerException;
 use Bluz\Crud\AbstractCrud;
@@ -80,6 +84,7 @@ abstract class AbstractMapper
      *         'module' => 'module',
      *         'controller' => 'controller',
      *         'acl' => 'privilege',
+     *         'fields' => ['id', ... ]
      *     },
      * ]
      *
@@ -110,7 +115,7 @@ abstract class AbstractMapper
      * @param string $controller
      * @return Link
      */
-    public function addMap($method, $module, $controller)
+    public function addMap($method, $module, $controller) : Link
     {
         return $this->map[strtoupper($method)] = new Link($module, $controller);
     }
@@ -250,7 +255,12 @@ abstract class AbstractMapper
      * Dispatch REST or CRUD controller
      *
      * @return mixed
+     * @throws ComponentException
+     * @throws CommonException
+     * @throws ControllerException
      * @throws ForbiddenException
+     * @throws NotAllowedException
+     * @throws NotAcceptableException
      * @throws NotImplementedException
      */
     protected function dispatch()
@@ -267,14 +277,13 @@ abstract class AbstractMapper
             throw new ForbiddenException;
         }
 
-        // setup params
-        $link->setParams($this->prepareParams());
+        $this->crud->setFields($link->getFields());
 
         // dispatch controller
         $result = Application::getInstance()->dispatch(
             $link->getModule(),
             $link->getController(),
-            $link->getParams()
+            $this->prepareParams()
         );
 
         return $result;

@@ -80,7 +80,7 @@ abstract class AbstractBuilder
      *
      * @return string The SQL query string
      */
-    abstract public function getSql();
+    abstract public function getSql() : string;
 
     /**
      * Return the complete SQL string formed for use
@@ -97,12 +97,11 @@ abstract class AbstractBuilder
      *
      * @return string
      */
-    public function getQuery()
+    public function getQuery() : string
     {
         $sql = $this->getSql();
 
-        $sql = str_replace('%', '%%', $sql);
-        $sql = str_replace('?', '"%s"', $sql);
+        $sql = str_replace(['%', '?'], ['%%', '"%s"'], $sql);
 
         // replace mask by data
         return vsprintf($sql, $this->getParameters());
@@ -121,7 +120,7 @@ abstract class AbstractBuilder
      *         ->setParameter(':user_id', 1);
      * </code>
      *
-     * @param  string|int $key   The parameter position or name
+     * @param  string|int|null $key   The parameter position or name
      * @param  mixed      $value The parameter value
      * @param  integer    $type  PDO::PARAM_*
      *
@@ -129,7 +128,7 @@ abstract class AbstractBuilder
      */
     public function setParameter($key, $value, $type = \PDO::PARAM_STR)
     {
-        if (null == $key) {
+        if (null === $key) {
             $key = count($this->params);
         }
 
@@ -185,7 +184,7 @@ abstract class AbstractBuilder
      *
      * @return array The currently defined query parameters
      */
-    public function getParameters()
+    public function getParameters() : array
     {
         return $this->params;
     }
@@ -212,8 +211,8 @@ abstract class AbstractBuilder
         }
 
         if ($append) {
-            if ($sqlPartName == "orderBy" || $sqlPartName == "groupBy"
-                || $sqlPartName == "select" || $sqlPartName == "set"
+            if ($sqlPartName === 'orderBy' || $sqlPartName === 'groupBy'
+                || $sqlPartName === 'select' || $sqlPartName === 'set'
             ) {
                 foreach ((array)$sqlPart as $part) {
                     $this->sqlParts[$sqlPartName][] = $part;

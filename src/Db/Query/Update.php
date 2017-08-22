@@ -27,7 +27,7 @@ class Update extends AbstractBuilder
      *
      * @return string
      */
-    public function getSql()
+    public function getSql() : string
     {
         $query = "UPDATE " . $this->sqlParts['from']['table']
             . " SET " . implode(", ", $this->sqlParts['set'])

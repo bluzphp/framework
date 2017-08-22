@@ -29,11 +29,6 @@ class Link
     protected $controller;
 
     /**
-     * @var array
-     */
-    protected $params;
-
-    /**
      * @var string
      */
     protected $acl;
@@ -113,22 +108,6 @@ class Link
     protected function setController(string $controller)
     {
         $this->controller = $controller;
-    }
-
-    /**
-     * @return array
-     */
-    public function getParams(): array
-    {
-        return $this->params;
-    }
-
-    /**
-     * @param array $params
-     */
-    public function setParams(array $params)
-    {
-        $this->params = $params;
     }
 
     /**

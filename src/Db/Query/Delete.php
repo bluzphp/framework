@@ -27,7 +27,7 @@ class Delete extends AbstractBuilder
      *
      * @return string
      */
-    public function getSql()
+    public function getSql() : string
     {
         $query = "DELETE FROM " . $this->sqlParts['from']['table']
             . ($this->sqlParts['where'] !== null ? " WHERE " . ((string)$this->sqlParts['where']) : "")

@@ -41,7 +41,7 @@ class Link
     /**
      * @var array
      */
-    protected $filters = [];
+    protected $fields = [];
 
     /**
      * Constructor of Link
@@ -73,13 +73,13 @@ class Link
     /**
      * Set filters for data
      *
-     * @param array $filters
+     * @param array $fields
      *
      * @return Link
      */
-    public function filter(array $filters) : Link
+    public function fields(array $fields) : Link
     {
-        $this->setFilters($filters);
+        $this->setFields($fields);
         return $this;
     }
 
@@ -150,18 +150,18 @@ class Link
     /**
      * @return array
      */
-    public function getFilters(): array
+    public function getFields(): array
     {
-        return $this->filters;
+        return $this->fields;
     }
 
     /**
      * Setup data filters
      *
-     * @param array $filters
+     * @param array $fields
      */
-    protected function setFilters(array $filters)
+    protected function setFields(array $fields)
     {
-        $this->filters = $filters;
+        $this->fields = $fields;
     }
 }

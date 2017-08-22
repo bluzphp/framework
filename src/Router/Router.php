@@ -354,8 +354,9 @@ class Router
     ) {
         $scheme = Request::getUri()->getScheme() . '://';
         $host = Request::getUri()->getHost();
-        if (!in_array(Request::getUri()->getPort(), [80, 443], true)) {
-            $host .= ':' . Request::getUri()->getPort();
+        $port = Request::getUri()->getPort();
+        if ($port && !in_array($port, [80, 443], true)) {
+            $host .= ':' . $port;
         }
         $url = $this->getUrl($module, $controller, $params);
         return $scheme . $host . $url;

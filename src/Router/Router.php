@@ -352,8 +352,11 @@ class Router
         $controller = self::DEFAULT_CONTROLLER,
         array $params = []
     ) {
-        $scheme = Request::getInstance()->getUri()->getScheme() . '://';
-        $host = Request::getInstance()->getUri()->getHost();
+        $scheme = Request::getUri()->getScheme() . '://';
+        $host = Request::getUri()->getHost();
+        if (!in_array(Request::getUri()->getPort(), [80, 443], true)) {
+            $host .= ':' . Request::getUri()->getPort();
+        }
         $url = $this->getUrl($module, $controller, $params);
         return $scheme . $host . $url;
     }

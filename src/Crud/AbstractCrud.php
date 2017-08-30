@@ -20,17 +20,20 @@ use Bluz\Db\Row;
  * @author   Anton Shevchuk
  * @link     https://github.com/bluzphp/framework/wiki/Crud
  */
-abstract class AbstractCrud
+abstract class AbstractCrud implements CrudInterface
 {
     /**
-     * Default limit for READ SET of elements
-     */
-    const DEFAULT_LIMIT = 10;
-
-    /**
      * @var array Fields for action
+     * @todo should be different for Create, Read and Update
      */
     protected $fields = [];
+
+    /**
+     * Return primary key signature
+     *
+     * @return array
+     */
+    abstract public function getPrimaryKey();
 
     /**
      * Get CRUD Instance
@@ -43,23 +46,12 @@ abstract class AbstractCrud
         if (null === $instance) {
             $instance = new static();
         }
-
         return $instance;
     }
 
     /**
-     * Return primary key signature
+     * @inheritdoc
      *
-     * @return array
-     */
-    abstract public function getPrimaryKey();
-
-    /**
-     * Get item by primary key(s)
-     *
-     * @param  mixed $primary
-     *
-     * @return mixed
      * @throws NotImplementedException
      */
     public function readOne($primary)
@@ -68,27 +60,18 @@ abstract class AbstractCrud
     }
 
     /**
-     * Get collection of items
+     * @inheritdoc
      *
-     * @param  integer $offset
-     * @param  integer $limit
-     * @param  array   $params
-     * @param  null    $total
-     *
-     * @return mixed
      * @throws NotImplementedException
      */
-    public function readSet($offset = 0, $limit = self::DEFAULT_LIMIT, $params = [], &$total = null)
+    public function readSet($offset = 0, $limit = self::DEFAULT_LIMIT, $params = [])
     {
         throw new NotImplementedException;
     }
 
     /**
-     * Create new item
+     * @inheritdoc
      *
-     * @param  array $data
-     *
-     * @return mixed
      * @throws NotImplementedException
      */
     public function createOne($data)
@@ -97,11 +80,8 @@ abstract class AbstractCrud
     }
 
     /**
-     * Create items
+     * @inheritdoc
      *
-     * @param  array $data
-     *
-     * @return mixed
      * @throws NotImplementedException
      */
     public function createSet($data)
@@ -110,12 +90,8 @@ abstract class AbstractCrud
     }
 
     /**
-     * Update item
+     * @inheritdoc
      *
-     * @param  mixed $primary
-     * @param  array $data
-     *
-     * @return integer
      * @throws NotImplementedException
      */
     public function updateOne($primary, $data)
@@ -124,11 +100,8 @@ abstract class AbstractCrud
     }
 
     /**
-     * Update items
+     * @inheritdoc
      *
-     * @param  array $data
-     *
-     * @return integer
      * @throws NotImplementedException
      */
     public function updateSet($data)
@@ -137,11 +110,8 @@ abstract class AbstractCrud
     }
 
     /**
-     * Delete item
+     * @inheritdoc
      *
-     * @param  mixed $primary
-     *
-     * @return integer
      * @throws NotImplementedException
      */
     public function deleteOne($primary)
@@ -150,11 +120,8 @@ abstract class AbstractCrud
     }
 
     /**
-     * Delete items
+     * @inheritdoc
      *
-     * @param  array $data
-     *
-     * @return integer
      * @throws NotImplementedException
      */
     public function deleteSet($data)
@@ -162,19 +129,11 @@ abstract class AbstractCrud
         throw new NotImplementedException;
     }
 
-    /**
-     * @return array
-     */
     public function getFields(): array
     {
         return $this->fields;
     }
 
-    /**
-     * Setup data filters
-     *
-     * @param array $fields
-     */
     public function setFields(array $fields)
     {
         $this->fields = $fields;

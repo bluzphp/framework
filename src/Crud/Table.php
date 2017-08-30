@@ -12,6 +12,7 @@ namespace Bluz\Crud;
 
 use Bluz\Application\Exception\ApplicationException;
 use Bluz\Application\Exception\NotFoundException;
+use Bluz\Common\Singleton;
 use Bluz\Db;
 use Bluz\Db\Row;
 use Bluz\Proxy;
@@ -103,11 +104,11 @@ class Table extends AbstractCrud
 
         $row = $this->getTable()::findRow($primary);
 
-        $row = $this->filterRow($row);
-
         if (!$row) {
             throw new NotFoundException('Record not found');
         }
+
+        $row = $this->filterRow($row);
 
         return $row;
     }
@@ -118,12 +119,11 @@ class Table extends AbstractCrud
      * @param int   $offset
      * @param int   $limit
      * @param array $params
-     * @param int   $total
      *
-     * @return array|int|mixed
+     * @return array[Row[], integer]
      * @throws ApplicationException
      */
-    public function readSet($offset = 0, $limit = 10, $params = [], &$total = null)
+    public function readSet($offset = 0, $limit = 10, $params = [])
     {
         $select = $this->getTable()::select();
 
@@ -160,19 +160,19 @@ class Table extends AbstractCrud
         $select->setLimit($limit);
         $select->setOffset($offset);
 
+        $result = [];
+        $total = 0;
+
         // run queries
         // use transaction to avoid errors
         Proxy\Db::transaction(
             function () use (&$result, &$total, $select, $totalSQL) {
                 $result = $select->execute();
-
-                if (!is_null($total)) {
-                    $total = Proxy\Db::fetchOne($totalSQL);
-                }
+                $total = Proxy\Db::fetchOne($totalSQL);
             }
         );
 
-        return $result;
+        return [$result, $total];
     }
 
     /**
@@ -180,7 +180,7 @@ class Table extends AbstractCrud
      *
      * @param  array $data
      *
-     * @return integer
+     * @return mixed
      */
     public function createOne($data)
     {

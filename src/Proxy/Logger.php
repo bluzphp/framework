@@ -67,7 +67,7 @@ final class Logger
      *
      * @return Instance|Nil
      */
-    protected static function initInstance()
+    private static function initInstance()
     {
         if (Config::getData('logger')) {
             return new Instance();

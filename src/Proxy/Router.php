@@ -66,7 +66,7 @@ final class Router
      *
      * @throws ComponentException
      */
-    protected static function initInstance()
+    private static function initInstance()
     {
         throw new ComponentException("Class `Proxy\\Router` required external initialization");
     }

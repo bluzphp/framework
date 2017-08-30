@@ -83,7 +83,7 @@ final class HttpCacheControl
      *
      * @return Instance|Nil
      */
-    protected static function initInstance()
+    private static function initInstance()
     {
         if (PHP_SAPI === 'cli') {
             return new Nil();

@@ -17,16 +17,15 @@ use Bluz\Proxy\Registry;
  * Set or generate <title> code for <head>
  *
  * @param  string $title
+ * @param  string $separator
  *
  * @return string
  */
 return
-    function ($title = null) {
+    function ($title, $separator = ' :: ') {
         // it's stack for <title> tag
-        if (is_null($title)) {
-            return Registry::get('layout:title');
-        }
-
-        Registry::set('layout:title', $title);
-        return $title;
+        $oldTitle = Registry::get('layout:title');
+        $result = (!$oldTitle ?: $oldTitle . $separator) . $title;
+        Registry::set('layout:title', $result);
+        return $result;
     };

@@ -26,18 +26,13 @@ use Bluz\View\View;
  * @method string|null headStyle(string $href = null, string $media = 'all')
  * @method string|null link(string $src = null, string $rel = 'stylesheet')
  * @method string|null meta(string $name = null, string $content = null)
- * @method string|null title(string $title = null, $position = 'replace', $separator = ' :: ')
+ * @method string|null title(string $title = null)
+ * @method string titleAppend(string $title, string $separator = ' :: ')
+ * @method string titlePrepend(string $title, string $separator = ' :: ')
  */
 class Layout extends View
 {
     use RegularAccess;
-
-    /**
-     * Constants for define positions
-     */
-    const POS_PREPEND = 'prepend';
-    const POS_REPLACE = 'replace';
-    const POS_APPEND = 'append';
 
     /**
      * @var mixed content container, usually is instance of View

@@ -30,18 +30,18 @@ class ValidatorTest extends Tests\FrameworkTestCase
     /**
      * Every static call of exist Rule should be return a new instance of Rule
      */
-    public function testStaticCallsShouldReturnNewValidatorRule()
+    public function testStaticCallsShouldReturnNewValidatorChain()
     {
         self::assertInstanceOf(
-            RuleInterface::class,
+            ValidatorChain::class,
             Validator::array(
                 function () {
                     return true;
                 }
             )
         );
-        self::assertInstanceOf(RuleInterface::class, Validator::string());
-        self::assertInstanceOf(RuleInterface::class, Validator::notEmpty());
+        self::assertInstanceOf(ValidatorChain::class, Validator::string());
+        self::assertInstanceOf(ValidatorChain::class, Validator::notEmpty());
     }
 
     public function testStaticCallShouldCreateValidRule()

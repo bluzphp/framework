@@ -60,6 +60,13 @@ use Bluz\Validator\Rule\RuleInterface;
 class Validator
 {
     /**
+     * @var array[] list of rules namespaces
+     */
+    protected static $rulesNamespaces = [
+        '\\Bluz\\Validator\\Rule\\'
+    ];
+
+    /**
      * Create new instance if ValidatorChain
      *
      * @return ValidatorChain
@@ -80,15 +87,12 @@ class Validator
      */
     public static function __callStatic($ruleName, $arguments)
     {
-        //return self::rule($ruleName, $arguments);
         $validatorChain = self::create();
         return $validatorChain->$ruleName(...$arguments);
     }
 
     /**
      * Create new rule by name
-     *
-     * @todo   create extension point for custom rules
      *
      * @param  string $ruleName
      * @param  array  $arguments
@@ -98,12 +102,28 @@ class Validator
      */
     public static function rule($ruleName, $arguments) : RuleInterface
     {
-        $ruleClass = '\\Bluz\\Validator\\Rule\\' . ucfirst($ruleName) . 'Rule';
+        $ruleName = ucfirst($ruleName) . 'Rule';
 
-        if (!class_exists($ruleClass)) {
-            throw new ComponentException("Class for validator `$ruleName` not found");
+
+        foreach (static::$rulesNamespaces as $ruleNamespace) {
+            $ruleClass = $ruleNamespace . $ruleName;
+            if (class_exists($ruleClass)) {
+                return new $ruleClass(...$arguments);
+            }
         }
 
-        return new $ruleClass(...$arguments);
+        throw new ComponentException("Class for validator `$ruleName` not found");
+    }
+
+    /**
+     * Add rules path
+     *
+     * @param  string $path
+     *
+     * @return void
+     */
+    public static function addRuleNamespace(string $path)
+    {
+        static::$rulesNamespaces[] = rtrim($path, '\\') . '\\';
     }
 }

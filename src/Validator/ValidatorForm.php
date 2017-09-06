@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Bluz\Validator;
 
-use Bluz\Validator\Exception\ValidatorException;
+use Bluz\Validator\Exception\ValidatorFormException;
 
 /**
  * Validator Builder
@@ -97,17 +97,16 @@ class ValidatorForm
      *
      * @param  mixed $input
      *
-     * @return bool
-     * @throws ValidatorException
+     * @return void
+     * @throws ValidatorFormException
      */
     public function assert($input)
     {
         if (!$this->validate($input)) {
-            $exception = new ValidatorException();
+            $exception = new ValidatorFormException();
             $exception->setErrors($this->getErrors());
             throw $exception;
         }
-        return true;
     }
 
     /**

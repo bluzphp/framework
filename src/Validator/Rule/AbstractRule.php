@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace Bluz\Validator\Rule;
 
+use Bluz\Validator\Exception\ValidatorException;
+
 /**
  * Abstract validation rule
  *
@@ -27,7 +29,33 @@ abstract class AbstractRule implements RuleInterface
     /**
      * @inheritdoc
      */
-    abstract public function validate($input): bool;
+    abstract public function validate($input) : bool;
+
+    /**
+     * @inheritdoc
+     */
+    public function assert($input)
+    {
+        if (!$this->validate($input)) {
+            throw new ValidatorException($this->description);
+        }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function __invoke($input) : bool
+    {
+        return $this->validate($input);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function __toString() : string
+    {
+        return $this->getDescription();
+    }
 
     /**
      * @inheritdoc
@@ -40,25 +68,9 @@ abstract class AbstractRule implements RuleInterface
     /**
      * @inheritdoc
      */
-    public function setDescription(string $description)
+    public function setDescription(string $description) : RuleInterface
     {
         $this->description = $description;
         return $this;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function __invoke($input): bool
-    {
-        return $this->validate($input);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function __toString()
-    {
-        return $this->getDescription();
     }
 }

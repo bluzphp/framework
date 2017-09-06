@@ -56,6 +56,12 @@ class ValidatorTest extends Tests\FrameworkTestCase
         self::assertTrue(Validator::callback('is_int')(42));
     }
 
+    public function testStaticAddRuleNamespace()
+    {
+        Validator::addRuleNamespace('\\Bluz\\Tests\\Fixtures\\Validator\\Rule\\');
+        self::assertInstanceOf(ValidatorChain::class, Validator::custom());
+    }
+
     /**
      * @expectedException \Bluz\Validator\Exception\ComponentException
      */

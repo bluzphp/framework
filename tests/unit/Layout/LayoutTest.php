@@ -142,11 +142,33 @@ class LayoutTest extends FrameworkTestCase
         $layout = new Layout();
 
         $layout->title('foo');
-        $layout->title('bar', Layout::POS_APPEND);
-        $layout->title('baz', Layout::POS_PREPEND);
 
-        $result = $layout->title();
+        self::assertEquals('foo', $layout->title());
+    }
 
-        self::assertEquals('baz :: foo :: bar', $result);
+    /**
+     * Helper TitleAppend
+     */
+    public function testHelperTitleAppend()
+    {
+        $layout = new Layout();
+
+        $layout->title('foo');
+        $layout->titleAppend('bar');
+
+        self::assertEquals('foo :: bar :: baz', $layout->titleAppend('baz'));
+    }
+
+    /**
+     * Helper TitleAppend
+     */
+    public function testHelperTitlePrepend()
+    {
+        $layout = new Layout();
+
+        $layout->title('foo');
+        $layout->titlePrepend('bar');
+
+        self::assertEquals('baz :: bar :: foo', $layout->titlePrepend('baz'));
     }
 }

@@ -10,6 +10,7 @@
 
 namespace Bluz\Tests\Fixtures\Crud;
 
+use Bluz\Common\Singleton;
 use Bluz\Crud\AbstractCrud;
 
 /**

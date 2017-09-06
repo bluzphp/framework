@@ -21,20 +21,20 @@ class ValidatorChainTest extends Tests\FrameworkTestCase
 {
     public function testRunValidationWithValidDataShouldPass()
     {
-        $validatorChain = Validator::create()->alphaNumeric('_')->length(1, 15)->noWhitespace();
+        $validatorChain = Validator::alphaNumeric('_')->length(1, 15)->noWhitespace();
         self::assertTrue($validatorChain->validate('username'));
     }
 
     public function testEvalValidationWithValidDataShouldPass()
     {
-        $validatorChain = Validator::create()->alphaNumeric('_')->length(1, 15)->noWhitespace();
+        $validatorChain = Validator::alphaNumeric('_')->length(1, 15)->noWhitespace();
         self::assertTrue($validatorChain('username'));
         self::assertTrue($validatorChain('user_name'));
     }
 
     public function testRunValidationWithInvalidDataShouldFail()
     {
-        $validatorChain = Validator::create()->alphaNumeric('_')->length(1, 15)->noWhitespace();
+        $validatorChain = Validator::alphaNumeric('_')->length(1, 15)->noWhitespace();
         self::assertFalse($validatorChain->validate('invalid username'));
     }
 
@@ -45,7 +45,7 @@ class ValidatorChainTest extends Tests\FrameworkTestCase
      */
     public function testAssertInvalidDataShouldRaiseException()
     {
-        Validator::create()->alphaNumeric('_')->length(1, 15)->noWhitespace()->assert('invalid username');
+        Validator::alphaNumeric('_')->length(1, 15)->noWhitespace()->assert('invalid username');
     }
 
     public function testSetCustomDescriptionForCallbackRuleShouldUseItInChainDescription()
@@ -74,13 +74,8 @@ class ValidatorChainTest extends Tests\FrameworkTestCase
 
     public function testSetCustomDescriptionForRuleShouldUseItInChainDescription()
     {
-        $chain = Validator::create()
-            ->addRule(
-                Validator::callback('is_int')->setDescription('it should be custom one')
-            )
-            ->addRule(
-                Validator::callback('is_numeric')->setDescription('it should be custom two')
-            );
+        $chain = Validator::callback('is_int', 'it should be custom one')
+            ->callback('is_numeric', 'it should be custom two');
         self::assertEqualsArray(
             ['it should be custom one', 'it should be custom two'],
             $chain->getDescription()
@@ -90,8 +85,7 @@ class ValidatorChainTest extends Tests\FrameworkTestCase
     public function testSetCustomDescriptionForSingleRuleShouldUseItAsErrorMessage()
     {
         try {
-            Validator::create()
-                ->callback('is_int', 'it should be custom')
+            Validator::callback('is_int', 'it should be custom')
                 ->callback('is_numeric', 'it should be custom')
                 ->assert('something');
         } catch (\Exception $e) {

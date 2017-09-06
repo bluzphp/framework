@@ -29,8 +29,7 @@ class CrudTest extends FrameworkTestCase
      */
     public function testNotImplementedReadOneMethodThrowException()
     {
-        $crud = new EmptyCrud();
-        $crud->readOne('any');
+        EmptyCrud::getInstance()->readOne('any');
     }
 
     /**
@@ -39,8 +38,7 @@ class CrudTest extends FrameworkTestCase
      */
     public function testNotImplementedReadSetMethodThrowException()
     {
-        $crud = new EmptyCrud();
-        $crud->readSet();
+        EmptyCrud::getInstance()->readSet();
     }
 
     /**
@@ -49,8 +47,7 @@ class CrudTest extends FrameworkTestCase
      */
     public function testNotImplementedCreateOneMethodThrowException()
     {
-        $crud = new EmptyCrud();
-        $crud->createOne([]);
+        EmptyCrud::getInstance()->createOne([]);
     }
 
     /**
@@ -59,8 +56,7 @@ class CrudTest extends FrameworkTestCase
      */
     public function testNotImplementedCreateSetMethodThrowException()
     {
-        $crud = new EmptyCrud();
-        $crud->createSet([]);
+        EmptyCrud::getInstance()->createSet([]);
     }
 
     /**
@@ -69,8 +65,7 @@ class CrudTest extends FrameworkTestCase
      */
     public function testNotImplementedUpdateOneMethodThrowException()
     {
-        $crud = new EmptyCrud();
-        $crud->updateOne('any', []);
+        EmptyCrud::getInstance()->updateOne('any', []);
     }
 
     /**
@@ -79,8 +74,7 @@ class CrudTest extends FrameworkTestCase
      */
     public function testNotImplementedUpdateSetMethodThrowException()
     {
-        $crud = new EmptyCrud();
-        $crud->updateSet([]);
+        EmptyCrud::getInstance()->updateSet([]);
     }
 
     /**
@@ -89,8 +83,7 @@ class CrudTest extends FrameworkTestCase
      */
     public function testNotImplementedDeleteOneMethodThrowException()
     {
-        $crud = new EmptyCrud();
-        $crud->deleteOne('any');
+        EmptyCrud::getInstance()->deleteOne('any');
     }
 
     /**
@@ -99,7 +92,6 @@ class CrudTest extends FrameworkTestCase
      */
     public function testNotImplementedDeleteSetMethodThrowException()
     {
-        $crud = new EmptyCrud();
-        $crud->deleteSet([]);
+        EmptyCrud::getInstance()->deleteSet([]);
     }
 }

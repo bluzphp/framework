@@ -59,25 +59,20 @@ use Bluz\View\View;
  * @method static string|null headStyle(string $href = null, string $media = 'all')
  * @method static string|null link(string $src = null, string $rel = 'stylesheet')
  * @method static string|null meta(string $name = null, string $content = null)
- * @method static string|null title(string $title = null, $position = 'replace', $separator = ' :: ')
+ * @method static string|null title(string $title = null)
+ * @method static string titleAppend(string $title, string $separator = ' :: ')
+ * @method static string titlePrepend(string $title, string $separator = ' :: ')
  */
 final class Layout
 {
     use ProxyTrait;
 
     /**
-     * Constants for define positions
-     */
-    const POS_PREPEND = Instance::POS_PREPEND;
-    const POS_REPLACE = Instance::POS_REPLACE;
-    const POS_APPEND = Instance::POS_APPEND;
-
-    /**
      * Init instance
      *
      * @return Instance
      */
-    protected static function initInstance()
+    private static function initInstance()
     {
         $instance = new Instance();
         $instance->setOptions(Config::getData('layout'));

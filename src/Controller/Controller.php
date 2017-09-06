@@ -234,6 +234,7 @@ class Controller implements \JsonSerializable
                 $this->getData()->setFromArray($result);
                 break;
             case ($result instanceof Controller):
+                // return Controller - just extract data from it
                 $this->getData()->setFromArray($result->getData()->toArray());
                 break;
         }

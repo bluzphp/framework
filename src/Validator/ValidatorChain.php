@@ -56,7 +56,7 @@ use Bluz\Validator\Rule\RuleInterface;
  * @method ValidatorChain slug()
  * @method ValidatorChain string()
  */
-class ValidatorChain
+class ValidatorChain implements ValidatorInterface
 {
     /**
      * @var string description of rules chain
@@ -171,6 +171,22 @@ class ValidatorChain
     }
 
     /**
+     * @inheritdoc
+     */
+    public function __invoke($input) : bool
+    {
+        return $this->validate($input);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function __toString() : string
+    {
+        return implode("\n", $this->getDescription());
+    }
+
+    /**
      * Get required flag
      *
      * @return bool
@@ -231,21 +247,5 @@ class ValidatorChain
     {
         $this->description = $message;
         return $this;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function __invoke($input): bool
-    {
-        return $this->validate($input);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function __toString()
-    {
-        return implode("\n", $this->getDescription());
     }
 }

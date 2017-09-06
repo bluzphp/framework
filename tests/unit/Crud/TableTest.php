@@ -36,7 +36,7 @@ class TableTest extends FrameworkTestCase
      */
     public function setUp()
     {
-        $this->crudTable = new TableCrud();
+        $this->crudTable = TableCrud::getInstance();
         $this->crudTable->setTable(Table::getInstance());
 
         Db::query(
@@ -113,8 +113,7 @@ class TableTest extends FrameworkTestCase
      */
     public function testReadSet()
     {
-        $total = 0;
-        $rows = $this->crudTable->readSet(0, 10, [], $total);
+        list($rows, $total) = $this->crudTable->readSet(0, 10, []);
         self::assertCount(10, $rows);
         self::assertTrue($total > 0);
     }
@@ -126,7 +125,7 @@ class TableTest extends FrameworkTestCase
     {
         $this->crudTable->setFields(['name', 'email']);
 
-        $rows = $this->crudTable->readSet();
+        list($rows) = $this->crudTable->readSet();
 
         self::assertCount(10, $rows);
         self::assertCount(2, $rows[0]->toArray());

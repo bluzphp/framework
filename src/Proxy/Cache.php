@@ -49,7 +49,7 @@ final class Cache
     /**
      * @var array
      */
-    protected static $pools = [];
+    private static $pools = [];
 
     /**
      * Init cache instance
@@ -57,7 +57,7 @@ final class Cache
      * @return Instance|false
      * @throws ComponentException
      */
-    protected static function initInstance()
+    private static function initInstance()
     {
         $adapter = Config::getData('cache', 'adapter');
         return self::getAdapter($adapter);

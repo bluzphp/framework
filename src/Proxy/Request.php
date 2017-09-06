@@ -57,7 +57,7 @@ final class Request
      *
      * @throws ComponentException
      */
-    protected static function initInstance()
+    private static function initInstance()
     {
         throw new ComponentException('Class `Proxy\\Request` required external initialization');
     }

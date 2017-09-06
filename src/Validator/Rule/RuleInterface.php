@@ -10,22 +10,22 @@ declare(strict_types=1);
 
 namespace Bluz\Validator\Rule;
 
+use Bluz\Validator\ValidatorInterface;
+
 /**
  * Validator Rule Interface
  *
  * @package  Bluz\Validator\Rule
  * @author   Anton Shevchuk
  */
-interface RuleInterface
+interface RuleInterface extends ValidatorInterface
 {
     /**
-     * Check input data
+     * Cast to string
      *
-     * @param  mixed $input
-     *
-     * @return bool
+     * @return string
      */
-    public function validate($input): bool;
+    public function __toString() : string;
 
     /**
      * Get error template
@@ -41,21 +41,5 @@ interface RuleInterface
      *
      * @return self
      */
-    public function setDescription(string $description);
-
-    /**
-     * Invoke
-     *
-     * @param  mixed $input
-     *
-     * @return bool
-     */
-    public function __invoke($input): bool;
-
-    /**
-     * Cast to string
-     *
-     * @return string
-     */
-    public function __toString();
+    public function setDescription(string $description) : RuleInterface;
 }

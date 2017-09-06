@@ -46,7 +46,7 @@ final class Config
      * @return Instance
      * @throws \Bluz\Config\ConfigException
      */
-    protected static function initInstance()
+    private static function initInstance()
     {
         $instance = new Instance();
         $instance->setPath(Application::getInstance()->getPath());

@@ -49,7 +49,7 @@ final class Registry
      *
      * @return Instance
      */
-    protected static function initInstance()
+    private static function initInstance()
     {
         $instance = new Instance();
         if ($data = Config::getData('registry')) {

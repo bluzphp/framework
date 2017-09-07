@@ -38,4 +38,27 @@ class ValidatorFormException extends ValidatorException
     {
         $this->errors = $errors;
     }
+
+    /**
+     * Add Error by field name
+     *
+     * @param  string $name
+     * @param  string $message
+     *
+     * @return void
+     */
+    public function setError($name, $message)
+    {
+        $this->errors[$name] = $message;
+    }
+
+    /**
+     * Has errors?
+     *
+     * @return bool
+     */
+    public function hasErrors() : bool
+    {
+        return (bool)count($this->errors);
+    }
 }

@@ -7,7 +7,7 @@
 namespace Bluz\Tests\Validator;
 
 use Bluz\Tests;
-use Bluz\Validator\Exception\ValidatorException;
+use Bluz\Validator\Exception\ValidatorFormException;
 use Bluz\Validator\ValidatorForm;
 
 /**
@@ -25,7 +25,7 @@ class ValidatorFormTest extends Tests\FrameworkTestCase
                 ->callback('is_int')
                 ->setDescription('is not numeric');
             $validator->assert(['some' => 'something']);
-        } catch (ValidatorException $e) {
+        } catch (ValidatorFormException $e) {
             self::assertEquals('Invalid Arguments', $e->getMessage());
             self::assertArrayHasKey('some', $e->getErrors());
             self::assertEquals('is not numeric', $e->getErrors()['some']);
@@ -40,7 +40,7 @@ class ValidatorFormTest extends Tests\FrameworkTestCase
             $validator->add('bar')->required()->callback('is_int');
             $validator->add('quz')->required()->callback('is_int');
             $validator->assert(['foo' => 42, 'bar' => 'something']);
-        } catch (ValidatorException $e) {
+        } catch (ValidatorFormException $e) {
             self::assertEquals('Invalid Arguments', $e->getMessage());
 
             $errors = $validator->getErrors();
@@ -60,20 +60,5 @@ class ValidatorFormTest extends Tests\FrameworkTestCase
         $validator->add('foo')->required();
         $validator->add('bar')->numeric();
         $validator->assert([]);
-    }
-
-    /**
-     * @ expectedException \Bluz\Validator\Exception\ValidatorException
-     */
-    public function testAssertUnexpectedDataShouldRaiseException()
-    {
-//        try {
-//            $validator = new ValidatorForm();
-//            $validator->add('bar')->required();
-//            $validator->assert(['foo' => 42, 'bar' => 'something']);
-//        } catch (ValidatorException $e) {
-//            self::assertEqualsArray(['foo' => 'This field is not defined'], $e->getErrors());
-//            throw $e;
-//        }
     }
 }

@@ -55,7 +55,7 @@ abstract class AbstractFilterRule extends AbstractRule
      *
      * @return string
      */
-    protected function filter($input)
+    protected function filter($input) : string
     {
         return str_replace(str_split($this->additionalChars), '', $input);
     }

@@ -21,7 +21,7 @@ class VersionRule extends AbstractRule
     /**
      * @var string error template
      */
-    protected $description = 'must be a version';
+    protected $description = 'must be a valid version number';
 
     /**
      * Check for version format

@@ -22,7 +22,7 @@ class ArrayRule extends AbstractRule
     /**
      * @var string error template
      */
-    protected $description = 'must be a array';
+    protected $description = 'must be an array';
 
     /**
      * @var callable Callback for check input array

@@ -12,7 +12,7 @@ namespace Bluz\Proxy;
 
 use Bluz\Common\Exception\ComponentException;
 use Cache\Hierarchy\HierarchicalPoolInterface;
-use Cache\Taggable\TaggablePoolInterface as Instance;
+use Cache\TagInterop\TaggableCacheItemPoolInterface as Instance;
 use Psr\Cache\InvalidArgumentException;
 
 /**
@@ -32,10 +32,10 @@ use Psr\Cache\InvalidArgumentException;
  * @method   static Instance|false getInstance()
  *
  * @method   static bool delete($key)
- * @see      CacheItemPoolInterface::deleteItem()
+ * @see      Instance::deleteItem()
  *
  * @method   static bool clear()
- * @see      CacheItemPoolInterface::clear()
+ * @see      Instance::clear()
  */
 final class Cache
 {
@@ -158,6 +158,8 @@ final class Cache
     /**
      * Prepare key
      *
+     * @param  string $key
+     *
      * @return string
      */
     public static function prepare($key)
@@ -166,16 +168,35 @@ final class Cache
     }
 
     /**
+     * Clear cache items by tag
+     *
+     * @see    TaggableCacheItemPoolInterface::invalidateTag()
+     *
+     * @param string $tag
+     *
+     * @return bool
+     */
+    public static function clearTag($tag)
+    {
+        if (self::getInstance() instanceof HierarchicalPoolInterface) {
+            return self::getInstance()->invalidateTag($tag);
+        }
+        return false;
+    }
+
+    /**
      * Clear cache items by tags
      *
-     * @see    TaggablePoolInterface::clearTags()
+     * @see    TaggableCacheItemPoolInterface::invalidateTags()
+     *
+     * @param array $tags
      *
      * @return bool
      */
     public static function clearTags(array $tags)
     {
         if (self::getInstance() instanceof HierarchicalPoolInterface) {
-            return self::getInstance()->clearTags($tags);
+            return self::getInstance()->invalidateTags($tags);
         }
         return false;
     }

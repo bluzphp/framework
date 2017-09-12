@@ -102,12 +102,23 @@ class ValidatorChain implements ValidatorInterface
     }
 
     /**
+     * Get required flag
+     *
+     * @return bool
+     */
+    public function isRequired() : bool
+    {
+        return array_key_exists('required', $this->rules);
+    }
+
+    /**
      * Add Callback Rule to ValidatorChain
      *
      * @param mixed       $callable
      * @param string|null $description
      *
      * @return ValidatorChain
+     * @throws \Bluz\Validator\Exception\ComponentException
      */
     public function callback($callable, $description = null) : ValidatorChain
     {
@@ -126,6 +137,7 @@ class ValidatorChain implements ValidatorInterface
      * @param string|null $description
      *
      * @return ValidatorChain
+     * @throws \Bluz\Validator\Exception\ComponentException
      */
     public function regexp($expression, $description = null) : ValidatorChain
     {
@@ -186,15 +198,6 @@ class ValidatorChain implements ValidatorInterface
         return implode("\n", $this->getDescription());
     }
 
-    /**
-     * Get required flag
-     *
-     * @return bool
-     */
-    public function isRequired() : bool
-    {
-        return array_key_exists('required', $this->rules);
-    }
 
     /**
      * Get error message

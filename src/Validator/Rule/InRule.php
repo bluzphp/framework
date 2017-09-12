@@ -70,6 +70,6 @@ class InRule extends AbstractRule
         } else {
             $haystack = $this->haystack;
         }
-        return __('must be in %s', $haystack);
+        return __('must be in "%s"', $haystack);
     }
 }

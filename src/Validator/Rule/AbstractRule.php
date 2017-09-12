@@ -29,11 +29,6 @@ abstract class AbstractRule implements RuleInterface
     /**
      * @inheritdoc
      */
-    abstract public function validate($input) : bool;
-
-    /**
-     * @inheritdoc
-     */
     public function assert($input)
     {
         if (!$this->validate($input)) {

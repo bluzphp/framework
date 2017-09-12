@@ -127,7 +127,7 @@ class ValidatorChainTest extends Tests\FrameworkTestCase
             ->noWhitespace();
 
         $ruleText = "must contain only letters, digits and \"_\"\n"
-            . "must have a length between 1 and 15\n"
+            . "must have a length between \"1\" and \"15\"\n"
             . "must not contain whitespace";
 
         self::assertEquals($validator->__toString(), $ruleText);

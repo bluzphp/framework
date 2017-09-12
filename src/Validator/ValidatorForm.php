@@ -18,7 +18,7 @@ use Bluz\Validator\Exception\ValidatorFormException;
  * @package  Bluz\Validator
  * @author   Anton Shevchuk
  */
-class ValidatorForm
+class ValidatorForm implements ValidatorInterface
 {
     /**
      * Stack of validators
@@ -31,14 +31,14 @@ class ValidatorForm
     protected $validators = [];
 
     /**
-     * list of validation errors
+     * Exception with list of validation errors
      *
      *   ['foo'] => "some field error"
      *   ['bar'] => "some field error"
      *
-     * @var array
+     * @var ValidatorFormException
      */
-    protected $errors = [];
+    protected $exception;
 
     /**
      * Add chain to form
@@ -62,7 +62,7 @@ class ValidatorForm
      */
     public function validate($input) : bool
     {
-        $this->resetErrors();
+        $this->exception = new ValidatorFormException();
 
         // run chains
         foreach ($this->validators as $key => $validators) {
@@ -86,7 +86,7 @@ class ValidatorForm
         $result = $this->validators[$key]->validate($value);
 
         if (!$result) {
-            $this->setError($key, $this->validators[$key]->getError());
+            $this->exception->setError($key, $this->validators[$key]->getError());
         }
 
         return $result;
@@ -103,33 +103,16 @@ class ValidatorForm
     public function assert($input)
     {
         if (!$this->validate($input)) {
-            $exception = new ValidatorFormException();
-            $exception->setErrors($this->getErrors());
-            throw $exception;
+            throw $this->exception;
         }
     }
 
     /**
-     * Add Error by field name
-     *
-     * @param  string $name
-     * @param  string $message
-     *
-     * @return void
+     * @inheritdoc
      */
-    protected function setError($name, $message)
+    public function __invoke($input) : bool
     {
-        $this->errors[$name] = $message;
-    }
-
-    /**
-     * Reset errors
-     *
-     * @return void
-     */
-    protected function resetErrors()
-    {
-        $this->errors = [];
+        return $this->validate($input);
     }
 
     /**
@@ -139,7 +122,7 @@ class ValidatorForm
      */
     public function getErrors() : array
     {
-        return $this->errors;
+        return $this->exception->getErrors();
     }
 
     /**
@@ -149,6 +132,6 @@ class ValidatorForm
      */
     public function hasErrors() : bool
     {
-        return (bool)count($this->errors);
+        return $this->exception->hasErrors();
     }
 }

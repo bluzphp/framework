@@ -161,7 +161,8 @@ class ValidatorChain implements ValidatorInterface
         $this->error = null; // clean
         foreach ($this->rules as $rule) {
             if (!$rule->validate($input)) {
-                $this->setError($rule->getDescription());
+                // apply custom description or use description from rule
+                $this->setError($this->description ?? $rule->getDescription());
                 return false;
             }
         }
@@ -198,7 +199,6 @@ class ValidatorChain implements ValidatorInterface
         return implode("\n", $this->getDescription());
     }
 
-
     /**
      * Get error message
      *
@@ -206,9 +206,6 @@ class ValidatorChain implements ValidatorInterface
      */
     public function getError()
     {
-        if ($this->description) {
-            return $this->description;
-        }
         return $this->error;
     }
 
@@ -232,10 +229,12 @@ class ValidatorChain implements ValidatorInterface
      */
     public function getDescription() : array
     {
+        // apply custom description
         if ($this->description) {
             return [$this->description];
         }
 
+        // eject description from rules
         return array_map('strval', $this->rules);
     }
 

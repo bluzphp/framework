@@ -24,4 +24,48 @@ class ValidatorException extends BadRequestException
      * @var string exception message
      */
     protected $message = 'Invalid Arguments';
+
+    /**
+     * @var array of error's messages
+     */
+    protected $errors = [];
+
+    /**
+     * @return array
+     */
+    public function getErrors(): array
+    {
+        return $this->errors;
+    }
+
+    /**
+     * @param array $errors
+     */
+    public function setErrors(array $errors)
+    {
+        $this->errors = $errors;
+    }
+
+    /**
+     * Add Error by field name
+     *
+     * @param  string $name
+     * @param  string $message
+     *
+     * @return void
+     */
+    public function setError($name, $message)
+    {
+        $this->errors[$name] = $message;
+    }
+
+    /**
+     * Has errors?
+     *
+     * @return bool
+     */
+    public function hasErrors() : bool
+    {
+        return (bool)count($this->errors);
+    }
 }

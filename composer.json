@@ -7,16 +7,16 @@
         "ext-PDO": "*",
         "ext-pdo_mysql": "*",
         "ext-json": "*",
-        "cache/cache": "~0.3",
+        "cache/cache": "~1.0",
         "psr/log": "~1.0",
-        "zendframework/zend-diactoros": "~1.3"
+        "zendframework/zend-diactoros": "~1.6"
     },
     "require-dev": {
         "codeception/codeception": "~2.3",
         "satooshi/php-coveralls": "~1.0",
         "squizlabs/php_codesniffer": "~2.3",
-        "phploc/phploc": "*",
-        "phpmd/phpmd": "*"
+        "phploc/phploc": "~4.0",
+        "phpmd/phpmd": "~2.6"
     },
     "suggest": {
         "ext-gettext": "required by Bluz\\Translator (https://github.com/bluzphp/framework/wiki/Translator)",

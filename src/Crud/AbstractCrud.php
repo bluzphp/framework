@@ -129,11 +129,17 @@ abstract class AbstractCrud implements CrudInterface
         throw new NotImplementedException;
     }
 
+    /**
+     * @return array
+     */
     public function getFields(): array
     {
         return $this->fields;
     }
 
+    /**
+     * @param array $fields
+     */
     public function setFields(array $fields)
     {
         $this->fields = $fields;

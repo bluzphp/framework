@@ -7,7 +7,7 @@
 namespace Bluz\Tests\Validator;
 
 use Bluz\Tests;
-use Bluz\Validator\Exception\ValidatorFormException;
+use Bluz\Validator\Exception\ValidatorException;
 use Bluz\Validator\ValidatorForm;
 
 /**
@@ -17,7 +17,7 @@ use Bluz\Validator\ValidatorForm;
  */
 class ValidatorFormTest extends Tests\FrameworkTestCase
 {
-    public function testSetCustomDescriptionOfValidatorChainShouldBeInValidatorFormException()
+    public function testSetCustomDescriptionOfValidatorChainShouldBeInValidatorException()
     {
         $validator = new ValidatorForm();
         try {
@@ -25,7 +25,7 @@ class ValidatorFormTest extends Tests\FrameworkTestCase
                 ->callback('is_int')
                 ->setDescription('is not numeric');
             $validator->assert(['some' => 'something']);
-        } catch (ValidatorFormException $e) {
+        } catch (ValidatorException $e) {
             self::assertEquals('Invalid Arguments', $e->getMessage());
             self::assertArrayHasKey('some', $e->getErrors());
             self::assertEquals('is not numeric', $e->getErrors()['some']);
@@ -40,7 +40,7 @@ class ValidatorFormTest extends Tests\FrameworkTestCase
             $validator->add('bar')->required()->callback('is_int');
             $validator->add('quz')->required()->callback('is_int');
             $validator->assert(['foo' => 42, 'bar' => 'something']);
-        } catch (ValidatorFormException $e) {
+        } catch (ValidatorException $e) {
             self::assertEquals('Invalid Arguments', $e->getMessage());
 
             $errors = $validator->getErrors();

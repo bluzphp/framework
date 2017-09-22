@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Bluz\Validator;
 
-use Bluz\Validator\Exception\ValidatorFormException;
+use Bluz\Validator\Exception\ValidatorException;
 
 /**
  * Validator Builder
@@ -36,7 +36,7 @@ class ValidatorForm implements ValidatorInterface
      *   ['foo'] => "some field error"
      *   ['bar'] => "some field error"
      *
-     * @var ValidatorFormException
+     * @var ValidatorException
      */
     protected $exception;
 
@@ -62,7 +62,7 @@ class ValidatorForm implements ValidatorInterface
      */
     public function validate($input) : bool
     {
-        $this->exception = new ValidatorFormException();
+        $this->exception = new ValidatorException();
 
         // run chains
         foreach ($this->validators as $key => $validators) {
@@ -98,7 +98,7 @@ class ValidatorForm implements ValidatorInterface
      * @param  mixed $input
      *
      * @return void
-     * @throws ValidatorFormException
+     * @throws ValidatorException
      */
     public function assert($input)
     {

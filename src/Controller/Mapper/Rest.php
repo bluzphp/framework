@@ -28,7 +28,8 @@ class Rest extends AbstractMapper
 
         if (count($params)) {
             $primaryKeys = $this->crud->getPrimaryKey();
-            $primaryValues = explode('-', array_shift($params));
+
+            $primaryValues = explode('-', array_shift($params), count($primaryKeys));
 
             $this->primary = array_combine($primaryKeys, $primaryValues);
         }

@@ -10,6 +10,12 @@
 namespace Bluz\Tests;
 
 use Bluz\Application\Application;
+use Bluz\Application\Exception\ForbiddenException;
+use Bluz\Application\Exception\RedirectException;
+use Bluz\Controller\Controller;
+use Bluz\Proxy\Layout;
+use Bluz\Proxy\Request;
+use Bluz\Proxy\Response;
 
 /**
  * Bootstrap
@@ -61,27 +67,6 @@ class BootstrapTest extends Application
     }
 
     /**
-     * @param string $module
-     * @param string $controller
-     * @param array  $params
-     *
-     * @return \Bluz\Controller\Controller
-     * @throws \Exception
-     */
-    public function dispatch($module, $controller, array $params = [])
-    {
-        $this->dispatchModule = $module;
-        $this->dispatchController = $controller;
-
-        try {
-            return parent::dispatch($module, $controller, $params);
-        } catch (\Exception $e) {
-            $this->setException($e);
-            throw $e;
-        }
-    }
-
-    /**
      * setException
      *
      * @param \Exception $exception
@@ -91,6 +76,9 @@ class BootstrapTest extends Application
     public function setException($exception)
     {
         $this->exception = $exception;
+
+        codecept_debug(' ## '. $exception->getCode());
+        codecept_debug(' ## '. $exception->getMessage());
     }
 
     /**
@@ -101,5 +89,50 @@ class BootstrapTest extends Application
     public function getException()
     {
         return $this->exception;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function doProcess()
+    {
+        $module = Request::getModule();
+        $controller = Request::getController();
+        $params = Request::getParams();
+
+        // try to dispatch controller
+        try {
+            codecept_debug('');
+            codecept_debug(' >> '. $module .'/'. $controller);
+
+            // dispatch controller
+            $result = $this->dispatch($module, $controller, $params);
+        } catch (ForbiddenException $e) {
+            $this->setException($e);
+            $result = $this->forbidden($e);
+        } catch (RedirectException $e) {
+            $this->setException($e);
+            // redirect to URL
+            $result = $this->redirect($e->getUrl());
+        } catch (\Exception $e) {
+            $this->setException($e);
+            $result = $this->error($e);
+        }
+
+        if ($result instanceof Controller) {
+            $this->dispatchModule = $result->getModule();
+            $this->dispatchController = $result->getController();
+            codecept_debug(' << '. $this->getModule() .'/'. $this->getController());
+        }
+
+        // setup layout, if needed
+        if ($this->useLayout()) {
+            // render view to layout
+            // needed for headScript and headStyle helpers
+            Layout::setContent($result->render());
+            Response::setBody(Layout::getInstance());
+        } else {
+            Response::setBody($result);
+        }
     }
 }

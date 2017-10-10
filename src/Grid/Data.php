@@ -28,12 +28,11 @@ class Data extends \ArrayIterator
      *
      * @param  integer $total
      *
-     * @return self
+     * @return void
      */
     public function setTotal(int $total)
     {
         $this->total = $total;
-        return $this;
     }
 
     /**

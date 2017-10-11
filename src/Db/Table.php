@@ -195,10 +195,11 @@ abstract class Table
      *
      * @return array
      */
-    public function getColumns()
+    public static function getColumns()
     {
-        if (empty($this->columns)) {
-            $cacheKey = "db.table.{$this->name}";
+        $self = static::getInstance();
+        if (empty($self->columns)) {
+            $cacheKey = "db.table.{$self->name}";
             $columns = Cache::get($cacheKey);
             if (!$columns) {
                 $schema = DbProxy::getOption('connect', 'name');
@@ -209,13 +210,13 @@ abstract class Table
                     FROM INFORMATION_SCHEMA.COLUMNS
                     WHERE TABLE_SCHEMA = ?
                       AND TABLE_NAME = ?',
-                    [$schema, $this->getName()]
+                    [$schema, $self->getName()]
                 );
                 Cache::set($cacheKey, $columns, Cache::TTL_NO_EXPIRY, ['system', 'db']);
             }
-            $this->columns = $columns;
+            $self->columns = $columns;
         }
-        return $this->columns;
+        return $self->columns;
     }
 
     /**
@@ -227,8 +228,7 @@ abstract class Table
      */
     public static function filterColumns($data)
     {
-        $self = static::getInstance();
-        return array_intersect_key($data, array_flip($self->getColumns()));
+        return array_intersect_key($data, array_flip(static::getColumns()));
     }
 
     /**

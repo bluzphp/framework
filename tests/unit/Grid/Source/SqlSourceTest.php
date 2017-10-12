@@ -20,7 +20,7 @@ use Bluz\Tests\Fixtures\Grid\SqlGrid;
  * @author   Anton Shevchuk
  * @created  07.08.14 14:37
  */
-class GridTest extends FrameworkTestCase
+class SqlSourceTest extends FrameworkTestCase
 {
     /**
      * SQL Source

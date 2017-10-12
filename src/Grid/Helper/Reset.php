@@ -20,5 +20,5 @@ return
         /**
          * @var Grid\Grid $this
          */
-        return $this->getUrl([]);
+        return $this->getUrl(['page' => 1, 'filters' => []]);
     };

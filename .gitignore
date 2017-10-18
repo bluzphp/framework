@@ -1,6 +1,7 @@
 .DS_Store
 .idea
-vendor/*
+vendor
+composer.lock
 composer.phar
-phpdoc.dist.xml
-phpunit.xml
+codecept.phar
+codeception.yml

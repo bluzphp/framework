@@ -28,7 +28,9 @@ return
                 '<div class="alert alert-warning">' .
                 '<strong>Exception</strong>' .
                 '<p>' . esc($exception->getMessage()) . '</p>' .
-                '</div>';
+                '</div>' .
+                '<pre>' . $exception->getTraceAsString() . '</pre>'
+                ;
             // @codeCoverageIgnoreEnd
         }
         return '';

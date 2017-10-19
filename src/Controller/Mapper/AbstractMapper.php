@@ -256,7 +256,6 @@ abstract class AbstractMapper
         unset($data['_method'], $data['_module'], $data['_controller']);
 
         $this->data = array_merge($data, $this->data);
-//        var_dump($this->data);
 
         $primary = $this->crud->getPrimaryKey();
         $this->primary = array_intersect_key($this->data, array_flip($primary));

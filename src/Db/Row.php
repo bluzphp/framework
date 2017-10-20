@@ -523,11 +523,7 @@ class Row implements \JsonSerializable, \ArrayAccess
     public function getRelation($modelName)
     {
         $relations = $this->getRelations($modelName);
-        if (!empty($relations)) {
-            return current($relations);
-        } else {
-            return false;
-        }
+        return empty($relations) ? false : current($relations);
     }
 
     /**

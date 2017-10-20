@@ -139,6 +139,6 @@ final class Response
      */
     public static function reload()
     {
-        self::redirect(Request::getUri());
+        self::redirect(Request::getUri()->__toString());
     }
 }

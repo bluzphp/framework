@@ -576,16 +576,16 @@ class Db
      *
      * @param  callable $process callable structure - closure function or class with __invoke() method
      *
-     * @return bool
+     * @return mixed|bool
      * @throws DbException
      */
     public function transaction(callable $process)
     {
         try {
             $this->handler()->beginTransaction();
-            $process();
+            $result = $process();
             $this->handler()->commit();
-            return true;
+            return $result ?? true;
         } catch (\PDOException $e) {
             $this->handler()->rollBack();
             return false;

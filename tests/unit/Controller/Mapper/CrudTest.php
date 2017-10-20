@@ -63,10 +63,28 @@ class CrudTest extends FrameworkTestCase
      *
      * @param string $method
      */
-    public function testMethod($method)
+    public function testMethods($method)
     {
         self::setRequestParams('test/index', [], [], $method);
         $this->mapper->addMap($method, 'test', 'index');
+        $controller = $this->mapper->run();
+
+        self::assertInstanceOf(Controller::class, $controller);
+    }
+
+    /**
+     * @dataProvider dataMethods
+     *
+     * @param string $method
+     */
+    public function testMethodsAliases($method)
+    {
+        self::setRequestParams('test/index', [], [], $method);
+
+        $alias = strtolower($method);
+
+        $this->mapper->$alias('test', 'index');
+
         $controller = $this->mapper->run();
 
         self::assertInstanceOf(Controller::class, $controller);
@@ -89,11 +107,13 @@ class CrudTest extends FrameworkTestCase
     public function dataMethods(): array
     {
         return [
+            RequestMethod::HEAD => [RequestMethod::HEAD],
             RequestMethod::GET => [RequestMethod::GET],
             RequestMethod::POST => [RequestMethod::POST],
             RequestMethod::PATCH => [RequestMethod::PATCH],
             RequestMethod::PUT => [RequestMethod::PUT],
             RequestMethod::DELETE => [RequestMethod::DELETE],
+            RequestMethod::OPTIONS => [RequestMethod::OPTIONS],
         ];
     }
 }

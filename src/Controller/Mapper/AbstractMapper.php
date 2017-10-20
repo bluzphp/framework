@@ -121,6 +121,16 @@ abstract class AbstractMapper
     }
 
     /**
+     * Add param to data, for example - setup foreign keys on fly
+     *
+     * @return void
+     */
+    public function addParam($name, $value)
+    {
+        $this->data[$name] = $value;
+    }
+
+    /**
      * Add mapping for HEAD method
      *
      * @param string $module
@@ -245,7 +255,7 @@ abstract class AbstractMapper
 
         unset($data['_method'], $data['_module'], $data['_controller']);
 
-        $this->data = $data;
+        $this->data = array_merge($data, $this->data);
 
         $primary = $this->crud->getPrimaryKey();
         $this->primary = array_intersect_key($this->data, array_flip($primary));

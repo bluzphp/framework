@@ -58,7 +58,6 @@ class FrameworkTestCase extends Unit
     {
         if (!self::$app) {
             $env = getenv('BLUZ_ENV') ?: 'testing';
-
             self::$app = BootstrapTest::getInstance();
             self::$app->init($env);
         }

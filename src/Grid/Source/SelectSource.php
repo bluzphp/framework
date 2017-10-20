@@ -32,7 +32,7 @@ class SelectSource extends AbstractSource
      *
      * @param  Db\Query\Select $source
      *
-     * @throws \Bluz\Grid\GridException
+     * @throws Grid\GridException
      * @return self
      */
     public function setSource($source)

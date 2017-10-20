@@ -66,6 +66,10 @@ class ValidatorForm implements ValidatorInterface
 
         // run chains
         foreach ($this->validators as $key => $validators) {
+            // skip validation for non required elements
+            if (!isset($input[$key]) && !$validators->isRequired()) {
+                continue;
+            }
             $this->validateItem($key, $input[$key] ?? null);
         }
 

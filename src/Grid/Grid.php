@@ -454,6 +454,7 @@ abstract class Grid
         $filters = $rewrite['filters'] ?? $this->getFilters();
 
         foreach ($filters as $column => $columnFilters) {
+            /** @var array $columnFilters */
             $column = $this->applyAlias($column);
             if (count($columnFilters) === 1 && isset($columnFilters[self::FILTER_EQ])) {
                 $params[$this->prefix . 'filter-' . $column] = $columnFilters[self::FILTER_EQ];
@@ -596,7 +597,7 @@ abstract class Grid
      * @return void
      * @throws GridException
      */
-    public function setOrder($column, $order = Grid::ORDER_ASC)
+    public function setOrder($column, $order = self::ORDER_ASC)
     {
         $this->orders = [];
         $this->addOrder($column, $order);

@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Bluz\Validator;
 
 use Bluz\Validator\Exception\ValidatorException;
+use Bluz\Validator\Rule\RequiredRule;
 use Bluz\Validator\Rule\RuleInterface;
 
 /**
@@ -108,7 +109,12 @@ class ValidatorChain implements ValidatorInterface
      */
     public function isRequired() : bool
     {
-        return array_key_exists('required', $this->rules);
+        foreach ($this->rules as $rule) {
+            if ($rule instanceof RequiredRule) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

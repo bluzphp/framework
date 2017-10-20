@@ -32,6 +32,24 @@ class ValidatorFormTest extends Tests\FrameworkTestCase
         }
     }
 
+    public function testAssertOptionalAndRequiredFields()
+    {
+        $validator = new ValidatorForm();
+        try {
+            $validator->add('foo')->callback('is_int');
+            $validator->add('bar')->required()->callback('is_int');
+            $validator->assert([]);
+        } catch (ValidatorException $e) {
+            self::assertEquals('Invalid Arguments', $e->getMessage());
+
+            $errors = $validator->getErrors();
+
+            self::assertEqualsArray($errors, $e->getErrors());
+            self::assertArrayNotHasKey('foo', $errors);
+            self::assertArrayHasKey('bar', $errors);
+        }
+    }
+
     public function testAssertInvalidDataShouldRaiseExceptionWithErrorsMessages()
     {
         $validator = new ValidatorForm();
@@ -44,8 +62,8 @@ class ValidatorFormTest extends Tests\FrameworkTestCase
             self::assertEquals('Invalid Arguments', $e->getMessage());
 
             $errors = $validator->getErrors();
-
             self::assertEqualsArray($errors, $e->getErrors());
+            self::assertArrayNotHasKey('foo', $errors);
             self::assertArrayHasKey('bar', $errors);
             self::assertArrayHasKey('quz', $errors);
         }

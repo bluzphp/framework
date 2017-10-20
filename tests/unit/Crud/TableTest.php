@@ -36,6 +36,7 @@ class TableTest extends FrameworkTestCase
      */
     public function setUp()
     {
+        parent::setUp();
         $this->crudTable = TableCrud::getInstance();
         $this->crudTable->setTable(Table::getInstance());
 
@@ -53,6 +54,7 @@ class TableTest extends FrameworkTestCase
         Db::query(
             'DELETE FROM `test` WHERE `name` = "CrudTestTable"'
         );
+        parent::tearDown();
     }
 
     /**

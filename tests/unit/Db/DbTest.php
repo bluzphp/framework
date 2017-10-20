@@ -75,7 +75,7 @@ class DbTest extends Bluz\Tests\FrameworkTestCase
      */
     public function testFetchOne()
     {
-        $result = $this->db->fetchOne("SELECT id FROM test LIMIT 1");
+        $result = $this->db->fetchOne('SELECT id FROM test LIMIT 1');
         self::assertTrue((bool)$result);
     }
 
@@ -84,7 +84,7 @@ class DbTest extends Bluz\Tests\FrameworkTestCase
      */
     public function testFetchRow()
     {
-        $result = $this->db->fetchRow("SELECT * FROM test LIMIT 1");
+        $result = $this->db->fetchRow('SELECT * FROM test LIMIT 1');
         self::assertCount(4, $result);
     }
 
@@ -93,7 +93,7 @@ class DbTest extends Bluz\Tests\FrameworkTestCase
      */
     public function testFetchAll()
     {
-        $result = $this->db->fetchAll("SELECT * FROM test LIMIT 10");
+        $result = $this->db->fetchAll('SELECT * FROM test LIMIT 10');
         self::assertCount(10, $result);
     }
 
@@ -102,7 +102,7 @@ class DbTest extends Bluz\Tests\FrameworkTestCase
      */
     public function testFetchColumn()
     {
-        $result = $this->db->fetchColumn("SELECT id FROM test LIMIT 10");
+        $result = $this->db->fetchColumn('SELECT id FROM test LIMIT 10');
         self::assertCount(10, $result);
     }
 
@@ -111,7 +111,7 @@ class DbTest extends Bluz\Tests\FrameworkTestCase
      */
     public function testFetchGroup()
     {
-        $result = $this->db->fetchGroup("SELECT status, id, name FROM test");
+        $result = $this->db->fetchGroup('SELECT status, id, name FROM test');
 
         self::assertArrayHasKey('active', $result);
         self::assertArrayHasKey('disable', $result);
@@ -123,7 +123,7 @@ class DbTest extends Bluz\Tests\FrameworkTestCase
      */
     public function testFetchColumnGroup()
     {
-        $result = $this->db->fetchColumnGroup("SELECT status, COUNT(id) FROM test GROUP BY status");
+        $result = $this->db->fetchColumnGroup('SELECT status, COUNT(id) FROM test GROUP BY status');
 
         self::assertArrayHasKey('active', $result);
         self::assertArrayHasKey('disable', $result);
@@ -135,7 +135,7 @@ class DbTest extends Bluz\Tests\FrameworkTestCase
      */
     public function testFetchPairs()
     {
-        $result = $this->db->fetchPairs("SELECT email, name FROM test LIMIT 10");
+        $result = $this->db->fetchPairs('SELECT email, name FROM test LIMIT 10');
         self::assertCount(10, $result);
     }
 
@@ -144,7 +144,7 @@ class DbTest extends Bluz\Tests\FrameworkTestCase
      */
     public function testFetchObjectToStdClass()
     {
-        $result = $this->db->fetchObject("SELECT * FROM test LIMIT 1");
+        $result = $this->db->fetchObject('SELECT * FROM test LIMIT 1');
         self::assertInstanceOf(\stdClass::class, $result);
     }
 
@@ -153,7 +153,7 @@ class DbTest extends Bluz\Tests\FrameworkTestCase
      */
     public function testFetchObjectToDeclaredClass()
     {
-        $result = $this->db->fetchObject("SELECT * FROM test LIMIT 10", [], 'stdClass');
+        $result = $this->db->fetchObject('SELECT * FROM test LIMIT 10', [], 'stdClass');
         self::assertInstanceOf(\stdClass::class, $result);
     }
 
@@ -162,7 +162,7 @@ class DbTest extends Bluz\Tests\FrameworkTestCase
      */
     public function testFetchObjectToInstance()
     {
-        $result = $this->db->fetchObject("SELECT * FROM test LIMIT 1", [], new \stdClass());
+        $result = $this->db->fetchObject('SELECT * FROM test LIMIT 1', [], new \stdClass());
         self::assertInstanceOf(\stdClass::class, $result);
     }
 
@@ -171,7 +171,7 @@ class DbTest extends Bluz\Tests\FrameworkTestCase
      */
     public function testFetchObjectsToStdClass()
     {
-        $result = $this->db->fetchObjects("SELECT * FROM test LIMIT 10");
+        $result = $this->db->fetchObjects('SELECT * FROM test LIMIT 10');
         self::assertCount(10, $result);
         self::assertInstanceOf(\stdClass::class, current($result));
     }
@@ -181,7 +181,7 @@ class DbTest extends Bluz\Tests\FrameworkTestCase
      */
     public function testFetchObjectsToDeclaredClass()
     {
-        $result = $this->db->fetchObjects("SELECT * FROM test LIMIT 10", [], 'stdClass');
+        $result = $this->db->fetchObjects('SELECT * FROM test LIMIT 10', [], 'stdClass');
         self::assertCount(10, $result);
         self::assertInstanceOf(\stdClass::class, current($result));
     }

@@ -31,8 +31,8 @@ class QueryTest extends FrameworkTestCase
      */
     public function tearDown()
     {
-        parent::tearDown();
         Proxy\Db::delete('test')->where('email = ?', 'example@domain.com')->execute();
+        parent::tearDown();
     }
 
     /**
@@ -78,7 +78,7 @@ class QueryTest extends FrameworkTestCase
             ->having('MONTH(p.created) = :month1')
             ->orHaving('MONTH(p.created) = :month2')
             ->andHaving('p.userId <> 0')
-            ->setParameters([':month1' => 2, ':month2' => 4]);;
+            ->setParameters([':month1' => 2, ':month2' => 4]);
 
         $check = 'SELECT p.*'
             . ' FROM pages p'

@@ -152,7 +152,7 @@ class ApplicationTest extends FrameworkTestCase
         self::getApp()->process();
 
         self::assertEquals(Response::getStatusCode(), StatusCode::FOUND);
-        self::assertEquals(Response::getHeader('Location'), '/');
+        self::assertEquals(Response::getHeader('Location'), Router::getFullUrl());
     }
 
     /**
@@ -173,6 +173,6 @@ class ApplicationTest extends FrameworkTestCase
         self::getApp()->process();
 
         self::assertEquals(Response::getStatusCode(), StatusCode::NO_CONTENT);
-        self::assertEquals(Response::getHeader('Bluz-Redirect'), '/');
+        self::assertEquals(Response::getHeader('Bluz-Redirect'), Router::getFullUrl());
     }
 }

@@ -157,7 +157,9 @@ class Session
     public function regenerateId($deleteOldSession = true)
     {
         if ($this->sessionExists()) {
-            return session_regenerate_id((bool)$deleteOldSession);
+            if (session_id() !== '') {
+                return session_regenerate_id((bool)$deleteOldSession);
+            }
         }
         return false;
     }
@@ -189,19 +191,21 @@ class Session
      * {@link isValid()} once session_start() is called, and raises an
      * exception if validation fails.
      *
-     * @return void
+     * @return bool
      * @throws \Bluz\Common\Exception\ComponentException
      * @throws SessionException
      */
     public function start()
     {
         if ($this->sessionExists()) {
-            return;
+            return true;
         }
 
-        $this->initAdapter();
+        if ($this->initAdapter()) {
+            return session_start();
+        }
 
-        session_start();
+        throw new ComponentException('Invalid adapter settings');
     }
 
     /**
@@ -258,13 +262,14 @@ class Session
      */
     protected function initAdapter()
     {
-        if (is_null($this->adapter) || $this->adapter === 'files') {
+        if (null === $this->adapter || 'files' === $this->adapter) {
             // try to apply settings
             if ($settings = $this->getOption('settings', 'files')) {
                 $this->setSavePath($settings['save_path']);
             }
             return true;
-        } elseif (is_string($this->adapter)) {
+        }
+        if (is_string($this->adapter)) {
             $adapterClass = '\\Bluz\\Session\\Adapter\\' . ucfirst($this->adapter);
             if (!class_exists($adapterClass) || !is_subclass_of($adapterClass, '\SessionHandlerInterface')) {
                 throw new ComponentException("Class for session adapter `{$this->adapter}` not found");
@@ -272,9 +277,9 @@ class Session
             $settings = $this->getOption('settings', $this->adapter) ?: [];
 
             $this->adapter = new $adapterClass($settings);
+            return session_set_save_handler($this->adapter);
         }
-
-        return session_set_save_handler($this->adapter);
+        return true;
     }
 
     /**

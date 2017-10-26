@@ -25,8 +25,8 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
      */
     protected $settings = [
         'host' => '127.0.0.1',
-        'port' => '6379',
-        'timeout' => null,
+        'port' => 6379,
+        'timeout' => 0,
         'persistence' => false,
     ];
 
@@ -43,32 +43,50 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
         // check Redis extension
         if (!extension_loaded('redis')) {
             throw new ComponentException(
-                "Redis extension not installed/enabled.
+                'Redis extension not installed/enabled.
                 Install and/or enable Redis extension [http://pecl.php.net/package/redis].
-                See phpinfo() for more information"
+                See phpinfo() for more information'
             );
         }
 
         // check Redis settings
         if (!is_array($settings) || empty($settings)) {
             throw new ConfigurationException(
-                "Redis configuration is missed. Please check 'session' configuration section"
+                'Redis configuration is missed. Please check `session` configuration section'
             );
         }
 
+        // Update settings
         $this->settings = array_replace_recursive($this->settings, $settings);
+    }
+
+    /**
+     * Initialize session
+     *
+     * @param  string $savePath
+     * @param  string $sessionName
+     *
+     * @return bool
+     */
+    public function open($savePath, $sessionName)
+    {
+        parent::open($savePath, $sessionName);
 
         $this->handler = new \Redis();
+
         if ($this->settings['persistence']) {
             $this->handler->pconnect($this->settings['host'], $this->settings['port'], $this->settings['timeout']);
         } else {
             $this->handler->connect($this->settings['host'], $this->settings['port'], $this->settings['timeout']);
         }
+
         if (isset($this->settings['options'])) {
             foreach ($this->settings['options'] as $key => $value) {
                 $this->handler->setOption($key, $value);
             }
         }
+
+        return true;
     }
 
     /**
@@ -76,11 +94,11 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
      *
      * @param  string $id
      *
-     * @return bool|string
+     * @return string
      */
     public function read($id)
     {
-        return $this->handler->get($this->prepareId($id));
+        return $this->handler->get($this->prepareId($id)) ?: '';
     }
 
     /**
@@ -89,11 +107,11 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
      * @param  string $id
      * @param  string $data
      *
-     * @return bool|void
+     * @return bool
      */
     public function write($id, $data)
     {
-        $this->handler->set($this->prepareId($id), $data, (int)$this->ttl);
+        return $this->handler->set($this->prepareId($id), $data, (int)$this->ttl);
     }
 
     /**
@@ -101,10 +119,11 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
      *
      * @param  integer $id
      *
-     * @return bool|void
+     * @return bool
      */
     public function destroy($id)
     {
         $this->handler->del($this->prepareId($id));
+        return true;
     }
 }

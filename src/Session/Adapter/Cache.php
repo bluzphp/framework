@@ -32,7 +32,7 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
     {
         if (!Proxy\Cache::getInstance()) {
             throw new ConfigurationException(
-                "Cache configuration is missed or disabled. Please check 'cache' configuration section"
+                'Cache configuration is missed or disabled. Please check `cache` configuration section'
             );
         }
     }
@@ -42,12 +42,12 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
      *
      * @param  string $id
      *
-     * @return bool|string
+     * @return string
      * @throws \Psr\Cache\InvalidArgumentException
      */
     public function read($id)
     {
-        return Proxy\Cache::get($this->prepareId($id));
+        return Proxy\Cache::get($this->prepareId($id)) ?: '';
     }
 
     /**
@@ -56,12 +56,12 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
      * @param  string $id
      * @param  string $data
      *
-     * @return bool|void
+     * @return bool
      * @throws \Psr\Cache\InvalidArgumentException
      */
     public function write($id, $data)
     {
-        Proxy\Cache::set($this->prepareId($id), $data, $this->ttl);
+        return Proxy\Cache::set($this->prepareId($id), $data, $this->ttl);
     }
 
     /**
@@ -69,10 +69,10 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
      *
      * @param  integer $id
      *
-     * @return bool|void
+     * @return bool
      */
     public function destroy($id)
     {
-        Proxy\Cache::delete($this->prepareId($id));
+        return Proxy\Cache::delete($this->prepareId($id));
     }
 }

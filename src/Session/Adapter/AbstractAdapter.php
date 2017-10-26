@@ -50,7 +50,7 @@ abstract class AbstractAdapter
      * @param  string $savePath
      * @param  string $sessionName
      *
-     * @return bool|void
+     * @return bool
      */
     public function open($savePath, $sessionName)
     {
@@ -59,17 +59,20 @@ abstract class AbstractAdapter
 
         // No more action necessary because connection is injected
         // in constructor and arguments are not applicable.
+
+        return true;
     }
 
     /**
      * Close the session
      *
-     * @return bool|void
+     * @return bool
      */
     public function close()
     {
         $this->handler = null;
         unset($this->handler);
+        return true;
     }
 
     /**
@@ -77,10 +80,11 @@ abstract class AbstractAdapter
      *
      * @param integer $maxLifetime
      *
-     * @return bool|void
+     * @return bool
      */
     public function gc($maxLifetime)
     {
         // no action necessary because using EXPIRE
+        return true;
     }
 }

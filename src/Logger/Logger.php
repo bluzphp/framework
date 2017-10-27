@@ -87,7 +87,7 @@ class Logger extends AbstractLogger
      *
      * @return string
      */
-    protected function interpolate($message, array $context = [])
+    protected function interpolate($message, array $context = []) : string
     {
         // build a replacement array with braces around the context keys
         $replace = [];
@@ -119,10 +119,10 @@ class Logger extends AbstractLogger
         $curMemory = memory_get_usage();
 
         $key = sprintf(
-            "%f :: %f :: %d",
-            ($curTimer - $this->startTime),
-            ($curTimer - $this->timer),
-            ($curMemory - $this->memory)
+            '%f :: %f :: %d',
+            $curTimer - $this->startTime,
+            $curTimer - $this->timer,
+            $curMemory - $this->memory
         );
 
         $this->info[$key] = $message;

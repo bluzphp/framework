@@ -26,4 +26,19 @@ class LoggerTest extends FrameworkTestCase
     {
         self::assertInstanceOf(Target::class, Proxy::getInstance());
     }
+
+    public function testExeptionsLogger()
+    {
+        try {
+            throw new \Exception('Message');
+        } catch (\Exception $e) {
+            Proxy::exception($e);
+        }
+
+        $errors = Proxy::get('error');
+        $error = current($errors);
+
+        self::assertArrayHasSize($errors, 1);
+        self::assertEquals('Message ['. __FILE__ .':33]', $error);
+    }
 }

@@ -28,6 +28,7 @@ return
                 '<div class="alert alert-warning">' .
                 '<strong>Exception</strong>' .
                 '<p>' . esc($exception->getMessage()) . '</p>' .
+                '<code>' . $exception->getFile() . ':' . $exception->getLine() .'</code>' .
                 '</div>' .
                 '<pre>' . $exception->getTraceAsString() . '</pre>'
                 ;

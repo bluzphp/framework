@@ -74,4 +74,20 @@ final class Logger
         }
         return new Nil();
     }
+
+    /**
+     * exception
+     *
+     * @param \Exception $exception
+     *
+     * @return void
+     */
+    public static function exception($exception)
+    {
+        self::getInstance()->error(
+            $exception->getMessage() . ' [' .
+            $exception->getFile() . ':' .
+            $exception->getLine() . ']'
+        );
+    }
 }

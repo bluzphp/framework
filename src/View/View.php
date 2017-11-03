@@ -109,12 +109,10 @@ class View implements ViewInterface, \JsonSerializable
             extract($this->container, EXTR_SKIP);
             include $this->path . DIRECTORY_SEPARATOR . $this->template;
         } catch (\Exception $e) {
-            // clean output
-            ob_end_clean();
             // save error to log
-            Logger::error($e->getMessage());
-            // nothing to output
-            return '';
+            Logger::exception($e);
+            // clean output
+            ob_clean();
         }
         return ob_get_clean();
     }

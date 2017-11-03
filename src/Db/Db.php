@@ -588,6 +588,7 @@ class Db
             return $result ?? true;
         } catch (\PDOException $e) {
             $this->handler()->rollBack();
+            Logger::error($e->getMessage());
             return false;
         }
     }

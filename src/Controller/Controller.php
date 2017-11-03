@@ -423,7 +423,7 @@ class Controller implements \JsonSerializable
             return $view->render();
         } catch (\Exception $e) {
             // save log
-            Logger::error($e->getMessage());
+            Logger::exception($e);
             return '';
         }
     }

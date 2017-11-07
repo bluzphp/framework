@@ -12,6 +12,7 @@ namespace Bluz\Tests\Db;
 
 use Bluz\Db\Table;
 use Bluz\Tests\Fixtures\Db;
+use Bluz\Tests\Fixtures\Models\Test\Table as TestTable;
 use Bluz\Tests\FrameworkTestCase;
 
 /**
@@ -94,14 +95,36 @@ class TableTest extends FrameworkTestCase
     }
 
     /**
+     * Get Meta Information
+     */
+    public function testGetMetaInformation()
+    {
+        $meta = TestTable::getMeta();
+        self::assertArrayHasSize($meta, 6);
+        self::assertArrayHasKey('id', $meta);
+        self::assertArrayHasKey('name', $meta);
+        self::assertEqualsArray(['DATA_TYPE' => 'int', 'COLUMN_DEFAULT' => '', 'COLUMN_KEY' => 'PRI'], $meta['id']);
+    }
+
+    /**
+     * Get Meta Information
+     */
+    public function testGetColumns()
+    {
+        $columns = TestTable::getColumns();
+        self::assertArrayHasSize($columns, 6);
+        self::assertEqualsArray(['id', 'name', 'email', 'status', 'created', 'updated'], $columns);
+    }
+
+    /**
      * @return array
      */
     public function getFindWrongData()
     {
-        return array(
+        return [
             [[1]],
             [[1, 2, 3]]
-        );
+        ];
     }
 
     /**
@@ -109,7 +132,7 @@ class TableTest extends FrameworkTestCase
      */
     public function testFind()
     {
-        if (!class_exists('PDO') || !in_array('sqlite', \PDO::getAvailableDrivers())) {
+        if (!class_exists('PDO') || !in_array('sqlite', \PDO::getAvailableDrivers(), false)) {
             self::markTestSkipped('This test requires SQLite support in your environment');
         }
         // Remove the following lines when you implement this test.

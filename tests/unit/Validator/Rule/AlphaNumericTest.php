@@ -82,7 +82,7 @@ class AlphaNumericTest extends Tests\FrameworkTestCase
      */
     public function providerForPass() : array
     {
-        return array(
+        return [
             ['', ''],
             ['foobar', ''],
             ['foobar', 'foobar'],
@@ -99,7 +99,7 @@ class AlphaNumericTest extends Tests\FrameworkTestCase
             ["\tdef", ''],
             ["\nabc \t", ''],
             [0, ''],
-        );
+        ];
     }
 
     /**
@@ -107,7 +107,7 @@ class AlphaNumericTest extends Tests\FrameworkTestCase
      */
     public function providerForFail() : array
     {
-        return array(
+        return [
             ['@#$', ''],
             ['_', ''],
             ['dgç', ''],
@@ -115,7 +115,7 @@ class AlphaNumericTest extends Tests\FrameworkTestCase
             [null, ''],
             [new \stdClass, ''],
             [[], ''],
-        );
+        ];
     }
 
     /**
@@ -123,11 +123,11 @@ class AlphaNumericTest extends Tests\FrameworkTestCase
      */
     public function providerForComponentException() : array
     {
-        return array(
+        return [
             [new \stdClass],
             [[]],
             [0x2]
-        );
+        ];
     }
 
     /**
@@ -135,9 +135,9 @@ class AlphaNumericTest extends Tests\FrameworkTestCase
      */
     public function providerAdditionalChars() : array
     {
-        return array(
+        return [
             ['!@#$%^&*(){}', '!@#$%^&*(){} abc 123'],
             ['[]?+=/\\-_|"\',<>.', "[]?+=/\\-_|\"',<>. \t \n abc 123"],
-        );
+        ];
     }
 }

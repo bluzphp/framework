@@ -56,7 +56,7 @@ class FloatInputTest extends Tests\FrameworkTestCase
      */
     public function providerForPass() : array
     {
-        return array(
+        return [
             [165],
             [1],
             [0],
@@ -66,7 +66,7 @@ class FloatInputTest extends Tests\FrameworkTestCase
             [165.0],
             ['165.7'],
             [1e12],
-        );
+        ];
     }
 
     /**
@@ -74,12 +74,12 @@ class FloatInputTest extends Tests\FrameworkTestCase
      */
     public function providerForFail() : array
     {
-        return array(
+        return [
             [null],
             [''],
             ['a'],
             [' '],
             ['Foo'],
-        );
+        ];
     }
 }

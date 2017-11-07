@@ -48,10 +48,10 @@ class ConditionTest extends Tests\FrameworkTestCase
      */
     public function providerForPass() : array
     {
-        return array(
-            [(4 > 2), 'always'],
-            [(is_int(42)), 'always'],
-        );
+        return [
+            [4 > 2, 'always'],
+            [is_int(42), 'always'],
+        ];
     }
 
     /**
@@ -59,9 +59,9 @@ class ConditionTest extends Tests\FrameworkTestCase
      */
     public function providerForFail() : array
     {
-        return array(
-            [(4 < 2), 'always'],
-            [(is_int(42.0204)), 'always'],
-        );
+        return [
+            [4 < 2, 'always'],
+            [is_int(42.0204), 'always'],
+        ];
     }
 }

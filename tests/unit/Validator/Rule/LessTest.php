@@ -60,10 +60,10 @@ class LessTest extends Tests\FrameworkTestCase
      */
     public function providerForFail() : array
     {
-        return array(
+        return [
             [-200, 0],
             [0, 0],
             [200, 250],
-        );
+        ];
     }
 }

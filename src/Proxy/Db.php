@@ -73,6 +73,9 @@ use Bluz\Db\Query;
  * @method   static array fetchColumnGroup($sql, $params = [])
  * @see      Instance::fetchColumnGroup()
  *
+ * @method   static array fetchUniqueGroup($sql, $params = [])
+ * @see      Instance::fetchUniqueGroup()
+ *
  * @method   static array fetchPairs($sql, $params = [])
  * @see      Instance::fetchPairs()
  *

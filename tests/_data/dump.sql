@@ -26,10 +26,12 @@ VALUES
 
 /*Table structure for table `test` */
 CREATE TABLE `test` (
-  `id`     BIGINT(20) NOT NULL                  AUTO_INCREMENT,
-  `name`   VARCHAR(255)                         DEFAULT NULL,
-  `email`  VARCHAR(512)                         DEFAULT NULL,
-  `status` ENUM ('active', 'disable', 'delete') DEFAULT NULL,
+  `id`      INT(11) NOT NULL                     AUTO_INCREMENT,
+  `name`    VARCHAR(255)                         DEFAULT NULL,
+  `email`   VARCHAR(512)                         DEFAULT NULL,
+  `status`  ENUM ('active', 'disable', 'delete') DEFAULT NULL,
+  `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  `updated` TIMESTAMP,
   PRIMARY KEY (`id`)
 )
   ENGINE = InnoDB

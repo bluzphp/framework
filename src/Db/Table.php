@@ -51,9 +51,9 @@ abstract class Table
     protected $model;
 
     /**
-     * @var array table columns
+     * @var array table meta
      */
-    protected $columns = [];
+    protected $meta = [];
 
     /**
      * @var string default SQL query for select
@@ -191,32 +191,43 @@ abstract class Table
     }
 
     /**
-     * Return information about tables columns
+     * Return information about table columns
+     *
+     * @return array
+     */
+    public static function getMeta()
+    {
+        $self = static::getInstance();
+        if (empty($self->meta)) {
+            $cacheKey = "db.table.{$self->name}";
+            $meta = Cache::get($cacheKey);
+            if (!$meta) {
+                $schema = DbProxy::getOption('connect', 'name');
+
+                $meta = DbProxy::fetchUniqueGroup(
+                    '
+                    SELECT COLUMN_NAME, DATA_TYPE, COLUMN_DEFAULT, COLUMN_KEY
+                    FROM INFORMATION_SCHEMA.COLUMNS
+                    WHERE TABLE_SCHEMA = ?
+                      AND TABLE_NAME = ?',
+                    [$schema, $self->getName()]
+                );
+                Cache::set($cacheKey, $meta, Cache::TTL_NO_EXPIRY, ['system', 'db']);
+            }
+            $self->meta = $meta;
+        }
+        return $self->meta;
+    }
+
+    /**
+     * Return names of table columns
      *
      * @return array
      */
     public static function getColumns()
     {
         $self = static::getInstance();
-        if (empty($self->columns)) {
-            $cacheKey = "db.table.{$self->name}";
-            $columns = Cache::get($cacheKey);
-            if (!$columns) {
-                $schema = DbProxy::getOption('connect', 'name');
-
-                $columns = DbProxy::fetchColumn(
-                    '
-                    SELECT COLUMN_NAME
-                    FROM INFORMATION_SCHEMA.COLUMNS
-                    WHERE TABLE_SCHEMA = ?
-                      AND TABLE_NAME = ?',
-                    [$schema, $self->getName()]
-                );
-                Cache::set($cacheKey, $columns, Cache::TTL_NO_EXPIRY, ['system', 'db']);
-            }
-            $self->columns = $columns;
-        }
-        return $self->columns;
+        return array_keys($self::getMeta());
     }
 
     /**
@@ -491,6 +502,7 @@ abstract class Table
      * @param  array $data Column-value pairs
      *
      * @return string|null Primary key or null
+     * @throws \Bluz\Common\Exception\ConfigurationException
      * @throws Exception\DbException
      */
     public static function insert(array $data)
@@ -536,6 +548,7 @@ abstract class Table
      * @param  array $where An array of SQL WHERE clause(s)
      *
      * @return integer The number of rows updated
+     * @throws \Bluz\Common\Exception\ConfigurationException
      * @throws Exception\DbException
      */
     public static function update(array $data, array $where)

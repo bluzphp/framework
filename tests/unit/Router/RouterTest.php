@@ -69,7 +69,7 @@ class RouterTest extends FrameworkTestCase
      */
     public function providerForDefaultRoutes()
     {
-        return array(
+        return [
             ['/test/test', 'test', 'test', []],
             ['/test/test/foo/bar', 'test', 'test', ['foo' => 'bar']],
             ['/test/test?foo%5B0%5D=bar&foo%5B1%5D=baz', 'test', 'test', ['foo' => ['bar', 'baz']]],
@@ -79,7 +79,7 @@ class RouterTest extends FrameworkTestCase
             ['/index/test', null, 'test', []],
             ['/index/test', 'index', 'test', []],
             ['/index/test/foo/bar', 'index', 'test', ['foo' => 'bar']],
-        );
+        ];
     }
 
     /**
@@ -87,12 +87,12 @@ class RouterTest extends FrameworkTestCase
      */
     public function providerForCustomRoutes()
     {
-        return array(
+        return [
             ['/another-route.html', 'test', 'route-static'],
             ['/another-route.html?foo%5B0%5D=bar&foo%5B1%5D=baz', 'test', 'route-static', ['foo' => ['bar', 'baz']]],
             ['/test/param/42/', 'test', 'route-with-param', ['a' => 42]],
             ['/foo-bar-baz/', 'test', 'route-with-params', ['a' => 'foo', 'b' => 'bar', 'c' => 'baz']],
             ['/test/route-with-other-params/about', 'test', 'route-with-other-params', ['alias' => 'about']],
-        );
+        ];
     }
 }

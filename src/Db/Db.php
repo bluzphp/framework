@@ -450,6 +450,26 @@ class Db
     }
 
     /**
+     * Returns an array containing all of the result set rows
+     *
+     * Group by first unique column
+     *
+     * @param  string $sql    SQL query with placeholders
+     *                        "SELECT email, name, sex FROM users"
+     * @param  array  $params params for query placeholders (optional)
+     *
+     * @return array
+     */
+    public function fetchUniqueGroup($sql, $params = [])
+    {
+        $stmt = $this->prepare($sql, $params);
+        $result = $stmt->fetchAll(\PDO::FETCH_UNIQUE | \PDO::FETCH_ASSOC | \PDO::FETCH_GROUP);
+
+        $this->ok();
+        return $result;
+    }
+
+    /**
      * Returns a key-value array
      *
      * @param  string $sql    SQL query with placeholders

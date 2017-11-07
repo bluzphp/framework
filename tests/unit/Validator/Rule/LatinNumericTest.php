@@ -83,7 +83,7 @@ class LatinNumericTest extends Tests\FrameworkTestCase
      */
     public function providerForPass() : array
     {
-        return array(
+        return [
             [0],
             [123456789],
             ['1234567890'],
@@ -92,7 +92,7 @@ class LatinNumericTest extends Tests\FrameworkTestCase
             ['foobar_', '_'],
             ['google.com.ua', '.'],
             ['foobar foobar', ' ']
-        );
+        ];
     }
 
     /**
@@ -100,7 +100,7 @@ class LatinNumericTest extends Tests\FrameworkTestCase
      */
     public function providerForFail() : array
     {
-        return array(
+        return [
             [1e21],
             ['@#$'],
             ['_'],
@@ -108,7 +108,7 @@ class LatinNumericTest extends Tests\FrameworkTestCase
             [null],
             [new \stdClass],
             [[]],
-        );
+        ];
     }
 
     /**
@@ -116,11 +116,11 @@ class LatinNumericTest extends Tests\FrameworkTestCase
      */
     public function providerForComponentException() : array
     {
-        return array(
+        return [
             [new \stdClass],
             [[]],
             [0x2]
-        );
+        ];
     }
 
     /**
@@ -128,9 +128,9 @@ class LatinNumericTest extends Tests\FrameworkTestCase
      */
     public function providerAdditionalChars() : array
     {
-        return array(
+        return [
             ['!@#$%^&*(){} ', '!@#$%^&*(){} abc'],
             ['[]?+=/\\-_|"\',<>. ', "[]?+=/\\-_|\"',<>. abc"],
-        );
+        ];
     }
 }

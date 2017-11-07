@@ -47,11 +47,11 @@ class ContainsStrictTest extends Tests\FrameworkTestCase
      */
     public function providerForPass() : array
     {
-        return array(
+        return [
             ['foo', ['bar', 'foo']],
             ['foo', 'barfoo'],
             [1, [1, 2, 3]],
-        );
+        ];
     }
 
     /**
@@ -59,10 +59,10 @@ class ContainsStrictTest extends Tests\FrameworkTestCase
      */
     public function providerForFail() : array
     {
-        return array(
+        return [
             ['foo', ['bar', 'Foo']],
             ['foo', 'barFoo'],
             ['1', [1, 2, 3]],
-        );
+        ];
     }
 }

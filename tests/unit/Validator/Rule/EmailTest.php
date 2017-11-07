@@ -58,12 +58,12 @@ class EmailTest extends Tests\FrameworkTestCase
      */
     public function providerForPass() : array
     {
-        return array(
+        return [
             ['test@test.com'],
             ['mail+mail@gmail.com'],
             ['mail.email@e.test.com'],
             ['a@a.a']
-        );
+        ];
     }
 
     /**
@@ -71,7 +71,7 @@ class EmailTest extends Tests\FrameworkTestCase
      */
     public function providerForFail() : array
     {
-        return array(
+        return [
             ['test@test'],
             ['test'],
             ['test@тест.рф'],
@@ -83,6 +83,6 @@ class EmailTest extends Tests\FrameworkTestCase
             ['test@test..com'],
             ['test@test.com.'],
             ['.test@test.com']
-        );
+        ];
     }
 }

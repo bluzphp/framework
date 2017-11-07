@@ -70,10 +70,10 @@ class DateTest extends Tests\FrameworkTestCase
      */
     public function providerForPass() : array
     {
-        return array(
+        return [
             ['Y-m-d', '2009-09-09'],
             ['d/m/Y', '23/05/1987'],
-        );
+        ];
     }
 
     /**
@@ -81,11 +81,11 @@ class DateTest extends Tests\FrameworkTestCase
      */
     public function providerForFail() : array
     {
-        return array(
+        return [
             [null, 'invalid date'],
             ['Y-m-d', '2009-09-00'],
             ['y-m-d', '2009-09-09'],
             ['y-m-d', new \stdClass],
-        );
+        ];
     }
 }

@@ -70,9 +70,9 @@ class JsonTest extends Tests\FrameworkTestCase
      */
     public function providerForFail() : array
     {
-        return array(
+        return [
             [''],
             ['{foo:bar}'],
-        );
+        ];
     }
 }

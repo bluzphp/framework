@@ -85,7 +85,7 @@ class DbTest extends Bluz\Tests\FrameworkTestCase
     public function testFetchRow()
     {
         $result = $this->db->fetchRow('SELECT * FROM test LIMIT 1');
-        self::assertCount(4, $result);
+        self::assertCount(6, $result);
     }
 
     /**
@@ -128,6 +128,19 @@ class DbTest extends Bluz\Tests\FrameworkTestCase
         self::assertArrayHasKey('active', $result);
         self::assertArrayHasKey('disable', $result);
         self::assertArrayHasKey('delete', $result);
+    }
+
+    /**
+     * fetchUniqueGroup
+     */
+    public function testFetchUniqueGroup()
+    {
+        $result = $this->db->fetchUniqueGroup('SELECT id, name, status FROM test');
+
+        self::assertArrayHasSize($result, 42);
+        self::assertArrayHasKey('1', $result);
+        self::assertArrayHasKey('name', $result[1]);
+        self::assertArrayHasKey('status', $result[1]);
     }
 
     /**

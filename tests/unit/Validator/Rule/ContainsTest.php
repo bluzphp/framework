@@ -46,13 +46,13 @@ class ContainsTest extends Tests\FrameworkTestCase
      */
     public function providerForPass() : array
     {
-        return array(
+        return [
             ['foo', ['bar', 'foo']],
             ['foo', 'barfoo'],
             ['foo', 'barFOO'],
             ['foo', 'foobazfoo'],
             ['1', [1, 2, 3]],
-        );
+        ];
     }
 
     /**
@@ -60,11 +60,11 @@ class ContainsTest extends Tests\FrameworkTestCase
      */
     public function providerForFail() : array
     {
-        return array(
+        return [
             ['foo', ''],
             ['foo', 'barf00'],
             ['foo', ['bar', 'f00']],
             ['4', [1, 2, 3]],
-        );
+        ];
     }
 }

@@ -71,12 +71,12 @@ class DomainTest extends Tests\FrameworkTestCase
      */
     public function providerForPass() : array
     {
-        return array(
+        return [
             ['domain.local'],
             ['example.com'],
             ['xn--bcher-kva.com'],
             ['example-hyphen.com'],
-        );
+        ];
     }
 
     /**
@@ -84,12 +84,12 @@ class DomainTest extends Tests\FrameworkTestCase
      */
     public function providerForFail() : array
     {
-        return array(
+        return [
             [null],
             [''],
             ['-example-invalid.com'],
             ['example.invalid.-com'],
-        );
+        ];
     }
 
     /**
@@ -97,9 +97,9 @@ class DomainTest extends Tests\FrameworkTestCase
      */
     public function providerRealDomainForPass() : array
     {
-        return array(
+        return [
             ['google.com'],
-        );
+        ];
     }
 
     /**
@@ -107,9 +107,9 @@ class DomainTest extends Tests\FrameworkTestCase
      */
     public function providerRealDomainForFail() : array
     {
-        return array(
+        return [
             ['domain.local'],
             ['1.2.3.4'],
-        );
+        ];
     }
 }

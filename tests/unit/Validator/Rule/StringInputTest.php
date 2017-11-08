@@ -53,10 +53,10 @@ class StringInputTest extends Tests\FrameworkTestCase
      */
     public function providerForPass() : array
     {
-        return array(
+        return [
             [''],
             ['165.7'],
-        );
+        ];
     }
 
     /**

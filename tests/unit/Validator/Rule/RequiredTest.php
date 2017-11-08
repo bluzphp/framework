@@ -70,10 +70,10 @@ class RequiredTest extends Tests\FrameworkTestCase
      */
     public function providerForFail() : array
     {
-        return array(
+        return [
             [''],
             [false],
             [null]
-        );
+        ];
     }
 }

@@ -117,11 +117,11 @@ class LatinTest extends Tests\FrameworkTestCase
      */
     public function providerForComponentException() : array
     {
-        return array(
+        return [
             [new \stdClass],
             [[]],
             [0x2]
-        );
+        ];
     }
 
     /**
@@ -129,9 +129,9 @@ class LatinTest extends Tests\FrameworkTestCase
      */
     public function providerAdditionalChars() : array
     {
-        return array(
+        return [
             ['!@#$%^&*(){} ', '!@#$%^&*(){} abc'],
             ['[]?+=/\\-_|"\',<>. ', "[]?+=/\\-_|\"',<>. abc"],
-        );
+        ];
     }
 }

@@ -84,9 +84,9 @@ class IpTest extends Tests\FrameworkTestCase
      */
     public function providerForPass() : array
     {
-        return array(
+        return [
             ['127.0.0.1'],
-        );
+        ];
     }
 
     /**

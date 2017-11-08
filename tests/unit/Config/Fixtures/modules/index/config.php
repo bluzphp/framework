@@ -5,7 +5,7 @@
  * @author   Anton Shevchuk
  * @created  19.09.2014 15:09
  */
-return array(
+return [
     'foo' => 'bar',
     'qux' => 'bar'
-);
+];

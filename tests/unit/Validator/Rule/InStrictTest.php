@@ -47,13 +47,13 @@ class InStrictTest extends Tests\FrameworkTestCase
      */
     public function providerForPass() : array
     {
-        return array(
+        return [
             ['foo', 'foo'],
             ['foo', ['foo', 'bar']],
             ['foo', 'barfoobaz'],
             [1, [1, 2, 3]],
             ['1', ['1', 2, 3]],
-        );
+        ];
     }
 
     /**
@@ -61,12 +61,12 @@ class InStrictTest extends Tests\FrameworkTestCase
      */
     public function providerForFail() : array
     {
-        return array(
+        return [
             ['', 'barfoobaz'],
             ['foo', 'barbazFOO'],
             ['', 42],
             [1, ['1', 2, 3]],
             ['1', [1, 2, 3]],
-        );
+        ];
     }
 }

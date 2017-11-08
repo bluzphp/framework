@@ -28,10 +28,10 @@ class ContainerTest extends FrameworkTestCase
      */
     protected $class;
 
-    protected $example = array(
+    protected $example = [
         'foo' => 'bar',
         'quz' => 'qux'
-    );
+    ];
 
     /**
      * Sets up the fixture, for example, opens a network connection.

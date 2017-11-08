@@ -42,5 +42,5 @@ class Table extends \Bluz\Db\Table
      *
      * @var string
      */
-    protected $rowClass = '\Bluz\Tests\Fixtures\Models\Test\Row';
+    protected $rowClass = Row::class;
 }

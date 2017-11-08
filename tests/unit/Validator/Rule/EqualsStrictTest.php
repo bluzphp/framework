@@ -47,12 +47,12 @@ class EqualsStrictTest extends Tests\FrameworkTestCase
      */
     public function providerForPass() : array
     {
-        return array(
+        return [
             ['', ''],
             ['foo', 'foo'],
             [10, 10],
             ['10', '10'],
-        );
+        ];
     }
 
     /**
@@ -60,13 +60,13 @@ class EqualsStrictTest extends Tests\FrameworkTestCase
      */
     public function providerForFail() : array
     {
-        return array(
+        return [
             ['', 0],
             ['', null],
             ['', false],
             ['foo', ''],
             ['foo', 'Foo'],
             [10, '10'],
-        );
+        ];
     }
 }

@@ -25,6 +25,8 @@ use Bluz\Response\ResponseTrait;
  * @author   ErgallM
  * @link     https://github.com/bluzphp/framework/wiki/View
  *
+ * @see \Bluz\View\Helper\
+ *
  * @method string ahref(string $text, mixed $href, array $attributes = [])
  * @method string api(string $module, string $method, $params = [])
  * @method string attributes(array $attributes = [])

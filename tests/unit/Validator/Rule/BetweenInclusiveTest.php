@@ -49,16 +49,16 @@ class BetweenInclusiveTest extends Tests\FrameworkTestCase
      */
     public function providerForPass() : array
     {
-        return array(
+        return [
             [10, 20, 10],
             [10, 20, 20],
             ['a', 'z', 'z'],
-            array(
+            [
                 new \DateTime('yesterday'),
                 new \DateTime('tomorrow'),
                 new \DateTime('tomorrow')
-            ),
-        );
+            ],
+        ];
     }
 
     /**
@@ -66,15 +66,15 @@ class BetweenInclusiveTest extends Tests\FrameworkTestCase
      */
     public function providerForFail() : array
     {
-        return array(
+        return [
             [0, 1, -1],
             [0, 1, 3],
             ['a', 'j', 'z'],
-            array(
+            [
                 new \DateTime('yesterday'),
                 new \DateTime('now'),
                 new \DateTime('tomorrow')
-            ),
-        );
+            ],
+        ];
     }
 }

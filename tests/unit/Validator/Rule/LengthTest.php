@@ -89,10 +89,10 @@ class LengthTest extends Tests\FrameworkTestCase
      */
     public function providerForComponentException() : array
     {
-        return array(
+        return [
             ['a', 15],
             [1, 'abc d'],
             [10, 1],
-        );
+        ];
     }
 }

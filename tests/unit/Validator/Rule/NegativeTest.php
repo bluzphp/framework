@@ -56,11 +56,11 @@ class NegativeTest extends Tests\FrameworkTestCase
      */
     public function providerForPass() : array
     {
-        return array(
+        return [
             ['-1.44'],
             [-1e-5],
             [-10],
-        );
+        ];
     }
 
     /**

@@ -61,18 +61,18 @@ class BetweenTest extends Tests\FrameworkTestCase
      */
     public function providerForPass() : array
     {
-        return array(
+        return [
             [10, 20, 11],
             [10, 20, 19],
             [-10, 20, -5],
             [-10, 20, 0],
             ['a', 'z', 'j'],
-            array(
+            [
                 new \DateTime('yesterday'),
                 new \DateTime('tomorrow'),
                 new \DateTime('now')
-            ),
-        );
+            ],
+        ];
     }
 
     /**
@@ -80,7 +80,7 @@ class BetweenTest extends Tests\FrameworkTestCase
      */
     public function providerForFail() : array
     {
-        return array(
+        return [
             [0, 1, -1],
             [0, 1, 0],
             [0, 1, 1],
@@ -90,12 +90,12 @@ class BetweenTest extends Tests\FrameworkTestCase
             [10, 20, 20],
             [-10, 20, -11],
             ['a', 'j', 'z'],
-            array(
+            [
                 new \DateTime('yesterday'),
                 new \DateTime('now'),
                 new \DateTime('tomorrow')
-            ),
-        );
+            ],
+        ];
     }
 
     /**
@@ -103,10 +103,10 @@ class BetweenTest extends Tests\FrameworkTestCase
      */
     public function providerForComponentException() : array
     {
-        return array(
+        return [
             [10, 5],
             [10, null],
             [null, 5],
-        );
+        ];
     }
 }

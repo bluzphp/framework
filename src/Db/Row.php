@@ -296,6 +296,9 @@ class Row implements \JsonSerializable, \ArrayAccess
      * Delete existing row
      *
      * @return integer The number of deleted rows
+     * @throws Exception\DbException
+     * @throws Exception\TableNotFoundException
+     * @throws Exception\InvalidPrimaryKeyException
      */
     public function delete()
     {
@@ -328,8 +331,9 @@ class Row implements \JsonSerializable, \ArrayAccess
     /**
      * Retrieves an associative array of primary keys, if it exists
      *
-     * @throws InvalidPrimaryKeyException
      * @return array
+     * @throws InvalidPrimaryKeyException
+     * @throws Exception\TableNotFoundException
      */
     protected function getPrimaryKey()
     {

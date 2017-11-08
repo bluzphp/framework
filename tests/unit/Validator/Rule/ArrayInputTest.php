@@ -53,12 +53,12 @@ class ArrayInputTest extends Tests\FrameworkTestCase
      */
     public function providerForPass() : array
     {
-        return array(
+        return [
             [[]],
             [[1, 2, 3]],
             [['1', '2', '3']],
             [['1.2', '2e10']],
-        );
+        ];
     }
 
     /**
@@ -66,12 +66,12 @@ class ArrayInputTest extends Tests\FrameworkTestCase
      */
     public function providerForFail() : array
     {
-        return array(
+        return [
             [null],
             [150],
             ['abc'],
             [['abc']],
             [['abc', 1, 2, 3]],
-        );
+        ];
     }
 }

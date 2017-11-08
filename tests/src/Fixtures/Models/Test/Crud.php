@@ -51,7 +51,7 @@ class Crud extends \Bluz\Crud\Table
      *
      * @return array|int|mixed
      */
-    public function readSet($offset = 0, $limit = 10, $params = [], &$total = null)
+    public function readSet($offset = 0, $limit = 10, $params = [])
     {
         $select = Db::select('*')
             ->from('test', 't');
@@ -65,10 +65,10 @@ class Crud extends \Bluz\Crud\Table
             $select->setOffset($offset);
         }
 
-        $result = $select->execute('\\Bluz\\Tests\\Fixtures\\Models\\Test\\Row');
+        $result = $select->execute(Row::class);
 
         if ($limit) {
-            $total = Db::fetchOne('SELECT FOUND_ROWS()');
+            $total = (int) Db::fetchOne('SELECT FOUND_ROWS()');
         } else {
             $total = count($result);
         }
@@ -81,6 +81,6 @@ class Crud extends \Bluz\Crud\Table
             );
         }
 
-        return $result;
+        return [$result, $total];
     }
 }

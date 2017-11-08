@@ -47,10 +47,10 @@ class RegexTest extends Tests\FrameworkTestCase
      */
     public function providerForPass() : array
     {
-        return array(
+        return [
             ['/^[a-z]+$/', 'foobar'],
             ['/^[a-z]+$/i', 'FooBar'],
-        );
+        ];
     }
 
     /**
@@ -58,9 +58,9 @@ class RegexTest extends Tests\FrameworkTestCase
      */
     public function providerForFail() : array
     {
-        return array(
+        return [
             ['/^[a-z]+$/', 'foo bar'],
             ['/^w+$/', 'foo bar'],
-        );
+        ];
     }
 }

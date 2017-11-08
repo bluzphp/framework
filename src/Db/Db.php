@@ -74,14 +74,13 @@ class Db
      * @param  array $connect options
      *
      * @throws ConfigurationException
-     * @return Db
+     * @return void
      * @throws DbException
      */
     public function setConnect(array $connect)
     {
         $this->connect = array_merge($this->connect, $connect);
         $this->checkConnect();
-        return $this;
     }
 
     /**
@@ -109,53 +108,63 @@ class Db
      *
      * @param  array $attributes
      *
-     * @return Db
+     * @return void
      */
     public function setAttributes(array $attributes)
     {
         $this->attributes = $attributes;
-        return $this;
     }
 
     /**
      * Connect to Db
      *
-     * @return Db
+     * @return bool
      * @throws DbException
      */
-    public function connect()
+    public function connect() : bool
     {
-        if (null ===$this->handler) {
-            try {
-                $this->checkConnect();
-                $this->log('Connect to ' . $this->connect['host']);
-                $this->handler = new \PDO(
-                    $this->connect['type'] . ':host=' . $this->connect['host'] . ';dbname=' . $this->connect['name'],
-                    $this->connect['user'],
-                    $this->connect['pass'],
-                    $this->connect['options']
-                );
+        try {
+            $this->checkConnect();
+            $this->log('Connect to ' . $this->connect['host']);
+            $this->handler = new \PDO(
+                $this->connect['type'] . ':host=' . $this->connect['host'] . ';dbname=' . $this->connect['name'],
+                $this->connect['user'],
+                $this->connect['pass'],
+                $this->connect['options']
+            );
 
-                foreach ($this->attributes as $attribute => $value) {
-                    $this->handler->setAttribute($attribute, $value);
-                }
-
-                $this->ok();
-            } catch (\Exception $e) {
-                throw new DbException("Attempt connection to database is failed: {$e->getMessage()}");
+            foreach ($this->attributes as $attribute => $value) {
+                $this->handler->setAttribute($attribute, $value);
             }
+
+            $this->ok();
+        } catch (\Exception $e) {
+            throw new DbException("Attempt connection to database is failed: {$e->getMessage()}");
         }
-        return $this;
+        return true;
+    }
+
+    /**
+     * Disconnect PDO and clean default adapter
+     *
+     * @return void
+     */
+    public function disconnect()
+    {
+        if ($this->handler) {
+            $this->handler = null;
+        }
     }
 
     /**
      * Return PDO handler
      *
      * @return \PDO
+     * @throws DbException
      */
-    public function handler()
+    public function handler() : \PDO
     {
-        if (null ===$this->handler) {
+        if (null === $this->handler) {
             $this->connect();
         }
         return $this->handler;
@@ -167,9 +176,13 @@ class Db
      * @param  string $sql    SQL query with placeholders
      * @param  array  $params params for query placeholders
      *
+     * @todo Switch to PDO::activeQueryString() when it will be possible
+     * @link https://wiki.php.net/rfc/debugging_pdo_prepared_statement_emulation
+     *
      * @return \PDOStatement
+     * @throws DbException
      */
-    protected function prepare($sql, $params)
+    protected function prepare($sql, $params) : \PDOStatement
     {
         $stmt = $this->handler()->prepare($sql);
         $stmt->execute($params);
@@ -191,8 +204,9 @@ class Db
      * @param  int    $type
      *
      * @return string
+     * @throws DbException
      */
-    public function quote($value, $type = \PDO::PARAM_STR)
+    public function quote($value, $type = \PDO::PARAM_STR) : string
     {
         return $this->handler()->quote($value, $type);
     }
@@ -204,7 +218,7 @@ class Db
      *
      * @return string
      */
-    public function quoteIdentifier($identifier)
+    public function quoteIdentifier($identifier) : string
     {
         // switch statement for DB type
         switch ($this->connect['type']) {
@@ -233,6 +247,7 @@ class Db
      *                        array (':name' => \PDO::PARAM_STR, ':id' => \PDO::PARAM_INT)
      *
      * @return integer the number of rows
+     * @throws DbException
      */
     public function query($sql, $params = [], $types = [])
     {
@@ -320,6 +335,7 @@ class Db
      *                         array (':name' => 'John', ':pass' => '123456')
      *
      * @return string
+     * @throws DbException
      */
     public function fetchOne($sql, $params = [])
     {
@@ -346,6 +362,7 @@ class Db
      *                         array (':name' => 'John', ':pass' => '123456')
      *
      * @return array           array ('name' => 'John', 'email' => 'john@smith.com')
+     * @throws DbException
      */
     public function fetchRow($sql, $params = [])
     {
@@ -370,6 +387,7 @@ class Db
      *                        array (':ip' => '127.0.0.1')
      *
      * @return array[]
+     * @throws DbException
      */
     public function fetchAll($sql, $params = [])
     {
@@ -389,6 +407,7 @@ class Db
      *                        array (':ip' => '127.0.0.1')
      *
      * @return array
+     * @throws DbException
      */
     public function fetchColumn($sql, $params = [])
     {
@@ -414,6 +433,7 @@ class Db
      * @param  mixed  $object
      *
      * @return array
+     * @throws DbException
      */
     public function fetchGroup($sql, $params = [], $object = null)
     {
@@ -439,6 +459,7 @@ class Db
      * @param  array  $params params for query placeholders (optional)
      *
      * @return array
+     * @throws DbException
      */
     public function fetchColumnGroup($sql, $params = [])
     {
@@ -459,6 +480,7 @@ class Db
      * @param  array  $params params for query placeholders (optional)
      *
      * @return array
+     * @throws DbException
      */
     public function fetchUniqueGroup($sql, $params = [])
     {
@@ -478,6 +500,7 @@ class Db
      *                        array (':ip' => '127.0.0.1')
      *
      * @return array
+     * @throws DbException
      */
     public function fetchPairs($sql, $params = [])
     {
@@ -508,6 +531,7 @@ class Db
      * @param  mixed  $object
      *
      * @return array
+     * @throws DbException
      */
     public function fetchObject($sql, $params = [], $object = 'stdClass')
     {
@@ -537,6 +561,7 @@ class Db
      * @param  mixed  $object Class name or instance
      *
      * @return array
+     * @throws DbException
      */
     public function fetchObjects($sql, $params = [], $object = null)
     {
@@ -567,6 +592,7 @@ class Db
      *                        array (':name' => 'John')
      *
      * @return array
+     * @throws DbException
      */
     public function fetchRelations($sql, $params = [])
     {
@@ -640,17 +666,5 @@ class Db
         $log = vsprintf($sql, $context);
 
         Logger::info($log);
-    }
-
-    /**
-     * Disconnect PDO and clean default adapter
-     *
-     * @return void
-     */
-    public function disconnect()
-    {
-        if ($this->handler) {
-            $this->handler = null;
-        }
     }
 }

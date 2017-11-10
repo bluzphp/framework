@@ -101,7 +101,7 @@ class Meta
      * @return void
      * @throws ComponentException
      */
-    public function process()
+    public function process() : void
     {
         /** @var \Closure|object $closure */
         $closure = include $this->file;
@@ -150,7 +150,7 @@ class Meta
      *
      * @return array
      */
-    public function params($requestParams): array
+    public function params($requestParams) : array
     {
         // apply type and default value for request params
         $params = [];
@@ -192,7 +192,7 @@ class Meta
      *
      * @return string
      */
-    public function getFile(): string
+    public function getFile() : string
     {
         return $this->file;
     }
@@ -202,7 +202,7 @@ class Meta
      *
      * @return integer
      */
-    public function getCache(): int
+    public function getCache() : int
     {
         return $this->cache;
     }
@@ -214,7 +214,7 @@ class Meta
      *
      * @return void
      */
-    public function setCache($ttl)
+    public function setCache($ttl) : void
     {
         $this->cache = $this->prepareCache($ttl);
     }
@@ -226,7 +226,7 @@ class Meta
      *
      * @return integer
      */
-    protected function prepareCache($cache)
+    protected function prepareCache($cache) : int
     {
         $num = (int)$cache;
         $time = 'min';
@@ -253,7 +253,7 @@ class Meta
      *
      * @return array|null
      */
-    public function getAccept()
+    public function getAccept() : ?array
     {
         return count($this->accept) ? $this->accept : null;
     }
@@ -265,7 +265,7 @@ class Meta
      *
      * @return void
      */
-    public function setAccept($accept)
+    public function setAccept($accept) : void
     {
         // allow accept map
         $acceptMap = [
@@ -286,7 +286,7 @@ class Meta
      *
      * @return array|null
      */
-    public function getAcl()
+    public function getAcl() : ?array
     {
         return count($this->acl) ? $this->acl : null;
     }
@@ -298,7 +298,7 @@ class Meta
      *
      * @return void
      */
-    public function setAcl($acl)
+    public function setAcl($acl) : void
     {
         $this->acl[] = $acl;
     }
@@ -308,7 +308,7 @@ class Meta
      *
      * @return array|null
      */
-    public function getMethod()
+    public function getMethod() : ?array
     {
         return count($this->method) ? $this->method : null;
     }
@@ -320,7 +320,7 @@ class Meta
      *
      * @return void
      */
-    public function setMethod($method)
+    public function setMethod($method) : void
     {
         $this->method[] = strtoupper($method);
     }
@@ -330,7 +330,7 @@ class Meta
      *
      * @return array
      */
-    public function getParams()
+    public function getParams() : array
     {
         return $this->params;
     }
@@ -342,7 +342,7 @@ class Meta
      *
      * @return void
      */
-    public function setParam($param)
+    public function setParam($param) : void
     {
         // prepare params data
         // setup param types
@@ -360,7 +360,7 @@ class Meta
      *
      * @return string|null
      */
-    public function getPrivilege()
+    public function getPrivilege() : ?string
     {
         return $this->privilege;
     }
@@ -372,7 +372,7 @@ class Meta
      *
      * @return void
      */
-    public function setPrivilege($privilege)
+    public function setPrivilege($privilege) : void
     {
         $this->privilege = $privilege;
     }
@@ -382,7 +382,7 @@ class Meta
      *
      * @return array|null
      */
-    public function getRoute()
+    public function getRoute() : ?array
     {
         return count($this->route) ? $this->route : null;
     }
@@ -394,7 +394,7 @@ class Meta
      *
      * @return void
      */
-    public function setRoute($route)
+    public function setRoute($route) : void
     {
         $this->route[$route] = null;
     }
@@ -404,7 +404,7 @@ class Meta
      *
      * @return void
      */
-    protected function initRoute()
+    protected function initRoute() : void
     {
         foreach ($this->route as $route => &$pattern) {
             $pattern = $this->prepareRoutePattern($route);

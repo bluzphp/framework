@@ -44,7 +44,7 @@ final class Cache
     /**
      * No expiry TTL value
      */
-    const TTL_NO_EXPIRY = 0;
+    public const TTL_NO_EXPIRY = 0;
 
     /**
      * @var array

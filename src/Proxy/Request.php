@@ -43,9 +43,9 @@ final class Request
     /**
      * @const string HTTP content types
      */
-    const TYPE_ANY = '*/*';
-    const TYPE_HTML = 'text/html';
-    const TYPE_JSON = 'application/json';
+    public const TYPE_ANY = '*/*';
+    public const TYPE_HTML = 'text/html';
+    public const TYPE_JSON = 'application/json';
 
     /**
      * @var array|null Accepted type

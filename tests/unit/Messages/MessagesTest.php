@@ -46,9 +46,9 @@ class MessagesTest extends FrameworkTestCase
 
         self::assertEquals(3, Proxy\Messages::count());
 
-        self::assertInstanceOf(\stdClass::class, Proxy\Messages::pop(Messages::TYPE_ERROR));
-        self::assertInstanceOf(\stdClass::class, Proxy\Messages::pop(Messages::TYPE_NOTICE));
-        self::assertInstanceOf(\stdClass::class, Proxy\Messages::pop(Messages::TYPE_SUCCESS));
+        self::assertInstanceOf(\stdClass::class, Proxy\Messages::pop('error'));
+        self::assertInstanceOf(\stdClass::class, Proxy\Messages::pop('notice'));
+        self::assertInstanceOf(\stdClass::class, Proxy\Messages::pop('success'));
     }
 
     /**
@@ -60,13 +60,13 @@ class MessagesTest extends FrameworkTestCase
         Proxy\Messages::addNotice('notice %1$s %2$s %1$s', 'a', 'b');
         Proxy\Messages::addSuccess('success %01.2f', 1.020304);
 
-        $error = Proxy\Messages::pop(Messages::TYPE_ERROR);
+        $error = Proxy\Messages::pop('error');
         self::assertEquals('error 1 2 3', $error->text);
 
-        $notice = Proxy\Messages::pop(Messages::TYPE_NOTICE);
+        $notice = Proxy\Messages::pop('notice');
         self::assertEquals('notice a b a', $notice->text);
 
-        $success = Proxy\Messages::pop(Messages::TYPE_SUCCESS);
+        $success = Proxy\Messages::pop('success');
         self::assertEquals('success 1.02', $success->text);
     }
 
@@ -76,9 +76,9 @@ class MessagesTest extends FrameworkTestCase
     public function testMessagesEmpty()
     {
         self::assertEquals(0, Proxy\Messages::count());
-        self::assertNull(Proxy\Messages::pop(Messages::TYPE_ERROR));
-        self::assertNull(Proxy\Messages::pop(Messages::TYPE_NOTICE));
-        self::assertNull(Proxy\Messages::pop(Messages::TYPE_SUCCESS));
+        self::assertNull(Proxy\Messages::pop('error'));
+        self::assertNull(Proxy\Messages::pop('notice'));
+        self::assertNull(Proxy\Messages::pop('success'));
     }
 
     /**

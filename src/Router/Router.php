@@ -30,10 +30,10 @@ class Router
     /**
      * Or should be as properties?
      */
-    const DEFAULT_MODULE = 'index';
-    const DEFAULT_CONTROLLER = 'index';
-    const ERROR_MODULE = 'error';
-    const ERROR_CONTROLLER = 'index';
+    private const DEFAULT_MODULE = 'index';
+    private const DEFAULT_CONTROLLER = 'index';
+    private const ERROR_MODULE = 'error';
+    private const ERROR_CONTROLLER = 'index';
 
     /**
      * @var string base URL

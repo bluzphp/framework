@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace Bluz\Tests\Fixtures\Db;
 
 use Bluz\Db\Row;
+use Bluz\Db\Traits\RowRelations;
 
 /**
  * Concrete realization of Table class.
@@ -16,9 +17,20 @@ use Bluz\Db\Row;
  * @category Tests
  * @package  Bluz\Db
  *
+ * @property mixed someValue
+ *
  * @author   Eugene Zabolotniy <realbaziak@gmail.com>
  */
 class ConcreteRow extends Row
 {
-    protected $tableClass = ConcreteTable::class;
+    use RowRelations;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct(array $data = [])
+    {
+        parent::__construct($data);
+        $this->setTable(ConcreteTable::getInstance());
+    }
 }

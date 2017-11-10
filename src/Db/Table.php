@@ -10,8 +10,10 @@ declare(strict_types=1);
 
 namespace Bluz\Db;
 
+use Bluz\Common\Instance;
 use Bluz\Db\Exception\DbException;
 use Bluz\Db\Exception\InvalidPrimaryKeyException;
+use Bluz\Db\Traits\TableRelations;
 use Bluz\Proxy\Cache;
 use Bluz\Proxy\Db as DbProxy;
 
@@ -38,8 +40,11 @@ use Bluz\Proxy\Db as DbProxy;
  * @author   Anton Shevchuk
  * @link     https://github.com/bluzphp/framework/wiki/Db-Table
  */
-abstract class Table
+abstract class Table implements TableInterface
 {
+    use Instance;
+    use TableRelations;
+
     /**
      * @var string the table name
      */
@@ -119,50 +124,12 @@ abstract class Table
     }
 
     /**
-     * Get Table instance
-     *
-     * @return static
-     */
-    public static function getInstance()
-    {
-        static $instance;
-        if (null === $instance) {
-            $instance = new static();
-        }
-
-        return $instance;
-    }
-
-    /**
-     * Set select query
-     *
-     * @param  string $select SQL query
-     *
-     * @return Table
-     */
-    public function setSelectQuery($select)
-    {
-        $this->select = $select;
-        return $this;
-    }
-
-    /**
-     * Get select query
-     *
-     * @return string
-     */
-    public function getSelectQuery()
-    {
-        return $this->select;
-    }
-
-    /**
      * Get primary key(s)
      *
      * @return array
      * @throws InvalidPrimaryKeyException if primary key was not set or has wrong format
      */
-    public function getPrimaryKey()
+    public function getPrimaryKey() : array
     {
         if (!is_array($this->primary)) {
             throw new InvalidPrimaryKeyException('The primary key must be set as an array');
@@ -175,7 +142,7 @@ abstract class Table
      *
      * @return string
      */
-    public function getName()
+    public function getName() : string
     {
         return $this->name;
     }
@@ -185,7 +152,7 @@ abstract class Table
      *
      * @return string
      */
-    public function getModel()
+    public function getModel() : string
     {
         return $this->model;
     }
@@ -237,7 +204,7 @@ abstract class Table
      *
      * @return array
      */
-    public static function filterColumns($data)
+    protected static function filterColumns($data) : array
     {
         return array_intersect_key($data, array_flip(static::getColumns()));
     }
@@ -248,73 +215,30 @@ abstract class Table
      * @param  string $sql    SQL query with placeholders
      * @param  array  $params Params for query placeholders
      *
-     * @return array of rows results in FETCH_CLASS mode
+     * @return RowInterface[] of rows results in FETCH_CLASS mode
      */
-    public static function fetch($sql, $params = [])
+    protected static function fetch($sql, $params = []) : array
     {
         $self = static::getInstance();
         return DbProxy::fetchObjects($sql, $params, $self->rowClass);
     }
 
     /**
-     * Fetch all rows from table
-     * Be carefully with this method, can be very slow
+     * {@inheritdoc}
      *
-     * @return array of rows results in FETCH_CLASS mode
-     */
-    public static function fetchAll()
-    {
-        $self = static::getInstance();
-        return DbProxy::fetchObjects($self->select, [], $self->rowClass);
-    }
-
-    /**
-     * Fetches rows by primary key.  The argument specifies one or more primary
-     * key value(s).  To find multiple rows by primary key, the argument must
-     * be an array.
-     *
-     * This method accepts a variable number of arguments.  If the table has a
-     * multi-column primary key, the number of arguments must be the same as
-     * the number of columns in the primary key.  To find multiple rows in a
-     * table with a multi-column primary key, each argument must be an array
-     * with the same number of elements.
-     *
-     * The find() method always returns a array
-     *
-     * Row by primary key, return array
-     *     Table::find(123);
-     *
-     * Row by compound primary key, return array
-     *     Table::find([123, 'abc']);
-     *
-     * Multiple rows by primary key
-     *     Table::find(123, 234, 345);
-     *
-     * Multiple rows by compound primary key
-     *     Table::find([123, 'abc'], [234, 'def'], [345, 'ghi'])
-     *
-     * @param  mixed ...$keys The value(s) of the primary keys.
-     *
-     * @return array
+     * @throws DbException
      * @throws InvalidPrimaryKeyException if wrong count of values passed
+     * @throws \InvalidArgumentException
      */
-    public static function find(...$keys)
+    public static function find(...$keys) : array
     {
         $keyNames = array_values(static::getInstance()->getPrimaryKey());
         $whereList = [];
         foreach ($keys as $keyValues) {
             $keyValues = (array)$keyValues;
-            if (count($keyValues) < count($keyNames)) {
+            if (count($keyValues) !== count($keyNames)) {
                 throw new InvalidPrimaryKeyException(
-                    "Too few columns for the primary key.\n" .
-                    "Please check " . static::class . " initialization or usage.\n" .
-                    "Settings described at https://github.com/bluzphp/framework/wiki/Db-Table"
-                );
-            }
-
-            if (count($keyValues) > count($keyNames)) {
-                throw new InvalidPrimaryKeyException(
-                    "Too many columns for the primary key.\n" .
+                    "Invalid columns for the primary key.\n" .
                     "Please check " . static::class . " initialization or usage.\n" .
                     "Settings described at https://github.com/bluzphp/framework/wiki/Db-Table"
                 );
@@ -332,39 +256,12 @@ abstract class Table
     }
 
     /**
-     * Find row by primary key
+     * {@inheritdoc}
      *
-     * @param  mixed $primaryKey
-     *
-     * @return Row
-     */
-    public static function findRow($primaryKey)
-    {
-        if (!$primaryKey) {
-            return null;
-        }
-        $result = static::find($primaryKey);
-        return current($result);
-    }
-
-    /**
-     * Find rows by WHERE
-     *     // WHERE alias = 'foo'
-     *     Table::findWhere(['alias'=>'foo']);
-     *     // WHERE alias = 'foo' OR 'alias' = 'bar'
-     *     Table::findWhere(['alias'=>'foo'], ['alias'=>'bar']);
-     *     // WHERE (alias = 'foo' AND userId = 2) OR ('alias' = 'bar' AND userId = 4)
-     *     Table::findWhere(['alias'=>'foo', 'userId'=> 2], ['alias'=>'foo', 'userId'=>4]);
-     *     // WHERE alias IN ('foo', 'bar')
-     *     Table::findWhere(['alias'=> ['foo', 'bar']]);
-     *
-     * @param  mixed ...$where
-     *
-     * @return array
      * @throws \InvalidArgumentException
      * @throws Exception\DbException
      */
-    public static function findWhere(...$where)
+    public static function findWhere(...$where) : array
     {
         $self = static::getInstance();
 
@@ -405,25 +302,36 @@ abstract class Table
             $whereClause = '(' . implode(' OR ', $whereOrTerms) . ')';
         } else {
             throw new DbException(
-                "Method `Table::findWhere()` can't return all records from table,\n" .
-                "please use `Table::fetchAll()` instead"
+                "Method `Table::findWhere()` can't return all records from table"
             );
         }
 
-        return static::fetch($self->select . ' WHERE ' . $whereClause, $whereParams);
+        return self::fetch($self->select . ' WHERE ' . $whereClause, $whereParams);
     }
 
     /**
-     * Find row by where condition
+     * {@inheritdoc}
      *
-     * @param  array $whereList
-     *
-     * @return Row
+     * @throws DbException
+     * @throws \InvalidArgumentException
+     * @throws InvalidPrimaryKeyException
      */
-    public static function findRowWhere($whereList)
+    public static function findRow($primaryKey) : ?RowInterface
+    {
+        $result = static::find($primaryKey);
+        return current($result) ?: null;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @throws DbException
+     * @throws \InvalidArgumentException
+     */
+    public static function findRowWhere(array $whereList) : ?RowInterface
     {
         $result = static::findWhere($whereList);
-        return current($result);
+        return current($result) ?: null;
     }
 
     /**
@@ -434,7 +342,7 @@ abstract class Table
      * @return array
      * @throws \Bluz\Common\Exception\ConfigurationException
      */
-    private static function prepareStatement($where)
+    private static function prepareStatement(array $where) : array
     {
         $keys = array_keys($where);
         foreach ($keys as &$key) {
@@ -464,7 +372,7 @@ abstract class Table
      *
      * @return Query\Select
      */
-    public static function select()
+    public static function select() : Query\Select
     {
         $self = static::getInstance();
 
@@ -477,13 +385,9 @@ abstract class Table
     }
 
     /**
-     * Create Row instance
-     *
-     * @param  array $data
-     *
-     * @return Row
+     * {@inheritdoc}
      */
-    public static function create(array $data = [])
+    public static function create(array $data = []) : RowInterface
     {
         $rowClass = static::getInstance()->rowClass;
         /** @var Row $row */
@@ -493,15 +397,8 @@ abstract class Table
     }
 
     /**
-     * Insert new record to table and return last insert Id
+     * {@inheritdoc}
      *
-     * <code>
-     *     Table::insert(['login' => 'Man', 'email' => 'man@example.com'])
-     * </code>
-     *
-     * @param  array $data Column-value pairs
-     *
-     * @return string|null Primary key or null
      * @throws \Bluz\Common\Exception\ConfigurationException
      * @throws Exception\DbException
      */
@@ -538,71 +435,57 @@ abstract class Table
     }
 
     /**
-     * Updates existing rows
+     * {@inheritdoc}
      *
-     * <code>
-     *     Table::insert(['login' => 'Man', 'email' => 'man@domain.com'], ['id' => 42])
-     * </code>
-     *
-     * @param  array $data  Column-value pairs.
-     * @param  array $where An array of SQL WHERE clause(s)
-     *
-     * @return integer The number of rows updated
      * @throws \Bluz\Common\Exception\ConfigurationException
      * @throws Exception\DbException
      */
-    public static function update(array $data, array $where)
+    public static function update(array $data, array $where) : int
     {
-        if (!count($where)) {
-            throw new DbException(
-                "Method `Table::update()` can't update all records in table,\n" .
-                "please use `Db::query()` instead (of cause if you know what are you doing)"
-            );
-        }
-
         $self = static::getInstance();
 
         $data = static::filterColumns($data);
 
-        $where = static::filterColumns($where);
-
-        if (!count($data) || !count($where)) {
+        if (!count($data)) {
             throw new DbException(
                 "Invalid field names of table `{$self->name}`. Please check use of `update()` method"
             );
         }
 
+        $where = static::filterColumns($where);
+
+        if (!count($where)) {
+            throw new DbException(
+                "Method `Table::update()` can't update all records in the table `{$self->name}`,\n" .
+                "please use `Db::query()` instead (of cause if you know what are you doing)"
+            );
+        }
+
         $table = DbProxy::quoteIdentifier($self->name);
 
-        $sql = "UPDATE $table"
-            . " SET " . implode(',', self::prepareStatement($data))
+        $sql = "UPDATE $table SET " . implode(',', self::prepareStatement($data))
             . " WHERE " . implode(' AND ', self::prepareStatement($where));
 
         return DbProxy::query($sql, array_merge(array_values($data), array_values($where)));
     }
 
     /**
-     * Deletes existing rows
+     * {@inheritdoc}
      *
-     * <code>
-     *     Table::delete(['login' => 'Man'])
-     * </code>
-     *
-     * @param  array $where An array of SQL WHERE clause(s)
-     *
-     * @return integer The number of rows deleted
-     * @throws Exception\DbException
+     * @throws \Bluz\Common\Exception\ConfigurationException
+     * @throws \Bluz\Db\Exception\DbException
      */
-    public static function delete(array $where)
+    public static function delete(array $where) : int
     {
+        $self = static::getInstance();
+
         if (!count($where)) {
             throw new DbException(
-                "Method `Table::delete()` can't delete all records in table,\n" .
+                "Method `Table::delete()` can't delete all records in the table `{$self->name}`,\n" .
                 "please use `Db::query()` instead (of cause if you know what are you doing)"
             );
         }
 
-        $self = static::getInstance();
 
         $where = static::filterColumns($where);
 
@@ -614,36 +497,7 @@ abstract class Table
 
         $table = DbProxy::quoteIdentifier($self->name);
 
-        $sql = "DELETE FROM $table"
-            . " WHERE " . implode(' AND ', self::prepareStatement($where));
+        $sql = "DELETE FROM $table WHERE " . implode(' AND ', self::prepareStatement($where));
         return DbProxy::query($sql, array_values($where));
-    }
-
-    /**
-     * Setup relation "one to one" or "one to many"
-     *
-     * @param  string $key
-     * @param  string $model
-     * @param  string $foreign
-     *
-     * @return void
-     */
-    public function linkTo($key, $model, $foreign)
-    {
-        Relations::setRelation($this->model, $key, $model, $foreign);
-    }
-
-    /**
-     * Setup relation "many to many"
-     * [table1-key] [table1_key-table2-table3_key] [table3-key]
-     *
-     * @param  string $model
-     * @param  string $link
-     *
-     * @return void
-     */
-    public function linkToMany($model, $link)
-    {
-        Relations::setRelations($this->model, $model, [$link]);
     }
 }

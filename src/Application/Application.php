@@ -133,7 +133,7 @@ class Application
      * @throws ApplicationException
      * @return void
      */
-    public function init($environment = 'production')
+    public function init($environment = 'production') : void
     {
         $this->environment = $environment;
 
@@ -174,7 +174,7 @@ class Application
      *
      * @return void
      */
-    protected function initConfig()
+    protected function initConfig() : void
     {
         Config::getInstance();
 
@@ -198,7 +198,7 @@ class Application
      * @return void
      * @throws \InvalidArgumentException
      */
-    protected function initRequest()
+    protected function initRequest() : void
     {
         $request = RequestFactory::fromGlobals();
 
@@ -210,7 +210,7 @@ class Application
      *
      * @return void
      */
-    protected function initResponse()
+    protected function initResponse() : void
     {
         $response = new ResponseInstance();
 
@@ -222,7 +222,7 @@ class Application
      *
      * @return void
      */
-    protected function initRouter()
+    protected function initRouter() : void
     {
         $router = new \Bluz\Router\Router();
         $router->setOptions(Config::getData('router'));
@@ -256,7 +256,7 @@ class Application
      * @return void
      * @throws ApplicationException
      */
-    public function run()
+    public function run() : void
     {
         $this->process();
         $this->render();
@@ -273,7 +273,7 @@ class Application
      * @return void
      * @throws ApplicationException
      */
-    public function process()
+    public function process() : void
     {
         $this->preProcess();
         $this->doProcess();
@@ -289,7 +289,7 @@ class Application
      * @return void
      * @throws ApplicationException
      */
-    protected function preProcess()
+    protected function preProcess() : void
     {
         Router::process();
 
@@ -315,7 +315,7 @@ class Application
      *
      * @return void
      */
-    protected function doProcess()
+    protected function doProcess() : void
     {
         $module = Request::getModule();
         $controller = Request::getController();
@@ -350,7 +350,7 @@ class Application
      *
      * @return void
      */
-    protected function postProcess()
+    protected function postProcess() : void
     {
         // nothing
     }
@@ -373,7 +373,7 @@ class Application
      * @throws NotAcceptableException
      * @throws NotAllowedException
      */
-    public function dispatch($module, $controller, array $params = [])
+    public function dispatch($module, $controller, array $params = []) : Controller
     {
         $instance = new Controller($module, $controller, $params);
 
@@ -400,7 +400,7 @@ class Application
      * @throws NotAcceptableException
      * @throws NotAllowedException
      */
-    protected function preDispatch($controller)
+    protected function preDispatch($controller) : void
     {
         // check HTTP method
         $controller->checkHttpMethod();
@@ -421,7 +421,7 @@ class Application
      * @throws ComponentException
      * @throws ControllerException
      */
-    protected function doDispatch($controller)
+    protected function doDispatch($controller) : void
     {
         // run controller
         $controller->run();
@@ -434,7 +434,7 @@ class Application
      *
      * @return void
      */
-    protected function postDispatch($controller)
+    protected function postDispatch($controller) : void
     {
         // nothing by default
     }
@@ -444,7 +444,7 @@ class Application
      *
      * @return void
      */
-    public function render()
+    public function render() : void
     {
         Response::send();
     }
@@ -454,7 +454,7 @@ class Application
      *
      * @return void
      */
-    public function end()
+    public function end() : void
     {
         // nothing
     }

@@ -26,7 +26,7 @@ interface EntityInterface
      *
      * @return array
      */
-    public function getPrivileges(): array;
+    public function getPrivileges() : array;
 
     /**
      * Has role a privilege
@@ -36,5 +36,5 @@ interface EntityInterface
      *
      * @return bool
      */
-    public function hasPrivilege($module, $privilege): bool;
+    public function hasPrivilege($module, $privilege) : bool;
 }

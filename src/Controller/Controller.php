@@ -120,7 +120,7 @@ class Controller implements \JsonSerializable
     /**
      * @param string $module
      */
-    protected function setModule(string $module)
+    protected function setModule(string $module) : void
     {
         $this->module = $module;
     }
@@ -128,7 +128,7 @@ class Controller implements \JsonSerializable
     /**
      * @return string
      */
-    public function getController(): string
+    public function getController() : string
     {
         return $this->controller;
     }
@@ -136,7 +136,7 @@ class Controller implements \JsonSerializable
     /**
      * @param string $controller
      */
-    protected function setController(string $controller)
+    protected function setController(string $controller) : void
     {
         $this->controller = $controller;
     }
@@ -144,7 +144,7 @@ class Controller implements \JsonSerializable
     /**
      * @return array
      */
-    public function getParams(): array
+    public function getParams() : array
     {
         return $this->params;
     }
@@ -152,7 +152,7 @@ class Controller implements \JsonSerializable
     /**
      * @param array $params
      */
-    protected function setParams(array $params)
+    protected function setParams(array $params) : void
     {
         $this->params = $params;
     }
@@ -160,7 +160,7 @@ class Controller implements \JsonSerializable
     /**
      * @return string
      */
-    public function getTemplate()
+    public function getTemplate() : ?string
     {
         return $this->template;
     }
@@ -168,7 +168,7 @@ class Controller implements \JsonSerializable
     /**
      * @param string $template
      */
-    protected function setTemplate(string $template)
+    protected function setTemplate(string $template) : void
     {
         $this->template = $template;
     }
@@ -180,7 +180,7 @@ class Controller implements \JsonSerializable
      * @throws ComponentException
      * @throws ControllerException
      */
-    public function run(): Data
+    public function run() : Data
     {
         if (!$this->loadData()) {
             $this->process();
@@ -196,7 +196,7 @@ class Controller implements \JsonSerializable
      * @throws ComponentException
      * @throws ControllerException
      */
-    protected function process(): Data
+    protected function process() : Data
     {
         // initial variables for use inside controller
         $module = $this->module;
@@ -248,7 +248,7 @@ class Controller implements \JsonSerializable
      * @return void
      * @throws ControllerException
      */
-    protected function findFile()
+    protected function findFile() : void
     {
         $path = Application::getInstance()->getPath();
         $file = "$path/modules/{$this->module}/controllers/{$this->controller}.php";
@@ -266,7 +266,7 @@ class Controller implements \JsonSerializable
      * @return string
      * @throws ControllerException
      */
-    protected function getFile(): string
+    protected function getFile() : string
     {
         if (!$this->file) {
             $this->findFile();
@@ -281,7 +281,7 @@ class Controller implements \JsonSerializable
      * @throws ComponentException
      * @throws ControllerException
      */
-    protected function initMeta()
+    protected function initMeta() : void
     {
         // cache for reflection data
         $cacheKey = "meta.{$this->module}.{$this->controller}";
@@ -307,7 +307,7 @@ class Controller implements \JsonSerializable
      * @throws ControllerException
      * @throws ComponentException
      */
-    public function getMeta(): Meta
+    public function getMeta() : Meta
     {
         if (!$this->meta) {
             $this->initMeta();
@@ -323,7 +323,7 @@ class Controller implements \JsonSerializable
      *
      * @return void
      */
-    public function assign($key, $value)
+    public function assign($key, $value) : void
     {
         $this->getData()->set($key, $value);
     }
@@ -333,7 +333,7 @@ class Controller implements \JsonSerializable
      *
      * @return Data
      */
-    public function getData(): Data
+    public function getData() : Data
     {
         if (!$this->data) {
             $this->data = new Data();
@@ -348,7 +348,7 @@ class Controller implements \JsonSerializable
      * @throws ComponentException
      * @throws ControllerException
      */
-    private function loadData(): bool
+    private function loadData() : bool
     {
         $cacheTime = $this->getMeta()->getCache();
 
@@ -366,7 +366,7 @@ class Controller implements \JsonSerializable
      * @throws ComponentException
      * @throws ControllerException
      */
-    private function saveData(): bool
+    private function saveData() : bool
     {
         if ($cacheTime = $this->getMeta()->getCache()) {
             return Cache::set(

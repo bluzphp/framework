@@ -37,7 +37,7 @@ class Auth
      *
      * @return void
      */
-    public function setIdentity(EntityInterface $identity)
+    public function setIdentity(EntityInterface $identity) : void
     {
         // save identity to Auth
         $this->identity = $identity;
@@ -56,7 +56,7 @@ class Auth
      *
      * @return EntityInterface|null
      */
-    public function getIdentity()
+    public function getIdentity() : ?EntityInterface
     {
         if (!$this->identity) {
             // check user agent
@@ -74,7 +74,7 @@ class Auth
      *
      * @return void
      */
-    public function clearIdentity()
+    public function clearIdentity() : void
     {
         $this->identity = null;
         Session::delete('auth:identity');

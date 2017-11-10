@@ -24,7 +24,7 @@ class RowTest extends FrameworkTestCase
 {
 
     /**
-     * @var Row
+     * @var Db\ConcreteRow
      */
     protected $row;
 

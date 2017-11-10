@@ -18,10 +18,10 @@ use Bluz\Db\Table;
  * @package  Bluz\Auth
  * @author   Anton Shevchuk
  *
- * @method   static AbstractRow findRow($primaryKey)
+ * @method   static ?AbstractRow findRow($primaryKey)
  * @see      Table::findRow()
  *
- * @method   static AbstractRow findRowWhere($whereList)
+ * @method   static ?AbstractRow findRowWhere($whereList)
  * @see      Table::findRowWhere()
  */
 abstract class AbstractTable extends Table
@@ -29,8 +29,8 @@ abstract class AbstractTable extends Table
     /**
      * Types
      */
-    const TYPE_ACCESS = 'access';
-    const TYPE_REQUEST = 'request';
+    public const TYPE_ACCESS = 'access';
+    public const TYPE_REQUEST = 'request';
 
     /**
      * Providers
@@ -38,13 +38,13 @@ abstract class AbstractTable extends Table
      *  - token - token with ttl
      *  - cookie - cookie token with ttl
      */
-    const PROVIDER_COOKIE = 'cookie';
-    const PROVIDER_EQUALS = 'equals';
-    const PROVIDER_FACEBOOK = 'facebook';
-    const PROVIDER_GOOGLE = 'google';
-    const PROVIDER_LDAP = 'ldap';
-    const PROVIDER_TOKEN = 'token';
-    const PROVIDER_TWITTER = 'twitter';
+    public const PROVIDER_COOKIE = 'cookie';
+    public const PROVIDER_EQUALS = 'equals';
+    public const PROVIDER_FACEBOOK = 'facebook';
+    public const PROVIDER_GOOGLE = 'google';
+    public const PROVIDER_LDAP = 'ldap';
+    public const PROVIDER_TOKEN = 'token';
+    public const PROVIDER_TWITTER = 'twitter';
 
     /**
      * @var string Table

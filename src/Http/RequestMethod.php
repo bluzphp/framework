@@ -21,13 +21,13 @@ class RequestMethod
     /**
      * @const string HTTP methods
      */
-    const OPTIONS = 'OPTIONS';
-    const GET = 'GET';
-    const HEAD = 'HEAD';
-    const PATCH = 'PATCH';
-    const POST = 'POST';
-    const PUT = 'PUT';
-    const DELETE = 'DELETE';
-    const TRACE = 'TRACE';
-    const CONNECT = 'CONNECT';
+    public const OPTIONS = 'OPTIONS';
+    public const GET = 'GET';
+    public const HEAD = 'HEAD';
+    public const PATCH = 'PATCH';
+    public const POST = 'POST';
+    public const PUT = 'PUT';
+    public const DELETE = 'DELETE';
+    public const TRACE = 'TRACE';
+    public const CONNECT = 'CONNECT';
 }

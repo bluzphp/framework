@@ -12,7 +12,6 @@ namespace Bluz\Crud;
 
 use Bluz\Application\Exception\ApplicationException;
 use Bluz\Application\Exception\NotFoundException;
-use Bluz\Common\Singleton;
 use Bluz\Db;
 use Bluz\Db\Row;
 use Bluz\Proxy;
@@ -26,64 +25,14 @@ use Bluz\Proxy;
  */
 class Table extends AbstractCrud
 {
-    /**
-     * @var \Bluz\Db\Table instance of Db\Table
-     */
-    protected $table;
+    use Db\Traits\TableProperty;
 
     /**
-     * Setup Table instance
+     * {@inheritdoc}
      *
-     * @param  Db\Table $table
-     *
-     * @return void
+     * @throws \Bluz\Db\Exception\InvalidPrimaryKeyException
      */
-    public function setTable(Db\Table $table)
-    {
-        $this->table = $table;
-    }
-
-    /**
-     * Return table instance for manipulation
-     *
-     * @return Db\Table
-     * @throws ApplicationException
-     */
-    public function getTable()
-    {
-        if (!$this->table) {
-            $this->initTable();
-        }
-        return $this->table;
-    }
-
-    /**
-     * Init table instance for manipulation
-     *
-     * @return void
-     * @throws ApplicationException
-     */
-    protected function initTable()
-    {
-        $tableClass = class_namespace(static::class) . '\\Table';
-
-        // check class initialization
-        if (!class_exists($tableClass) || !is_subclass_of($tableClass, Db\Table::class)) {
-            throw new ApplicationException('`Table` class is not exists or not initialized');
-        }
-
-        /**
-         * @var Db\Table $tableClass
-         */
-        $this->setTable($tableClass::getInstance());
-    }
-
-    /**
-     * Get primary key
-     *
-     * @return array
-     */
-    public function getPrimaryKey()
+    public function getPrimaryKey() : array
     {
         return $this->getTable()->getPrimaryKey();
     }
@@ -93,7 +42,8 @@ class Table extends AbstractCrud
      *
      * @param  mixed $primary
      *
-     * @return Row
+     * @return Db\RowInterface
+     * @throws \Bluz\Db\Exception\TableNotFoundException
      * @throws NotFoundException
      */
     public function readOne($primary)

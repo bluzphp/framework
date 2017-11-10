@@ -24,7 +24,7 @@ abstract class AbstractRowEntity extends Row implements EntityInterface
      *
      * @return array
      */
-    abstract public function getPrivileges(): array;
+    abstract public function getPrivileges() : array;
 
     /**
      * Has role a privilege
@@ -34,7 +34,7 @@ abstract class AbstractRowEntity extends Row implements EntityInterface
      *
      * @return bool
      */
-    public function hasPrivilege($module, $privilege): bool
+    public function hasPrivilege($module, $privilege) : bool
     {
         $privileges = $this->getPrivileges();
 

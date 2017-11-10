@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Bluz\Crud;
 
 use Bluz\Application\Exception\NotImplementedException;
+use Bluz\Common\Instance;
 use Bluz\Db\Row;
 
 /**
@@ -22,6 +23,8 @@ use Bluz\Db\Row;
  */
 abstract class AbstractCrud implements CrudInterface
 {
+    use Instance;
+
     /**
      * @var array Fields for action
      * @todo should be different for Create, Read and Update
@@ -33,21 +36,7 @@ abstract class AbstractCrud implements CrudInterface
      *
      * @return array
      */
-    abstract public function getPrimaryKey();
-
-    /**
-     * Get CRUD Instance
-     *
-     * @return static
-     */
-    public static function getInstance()
-    {
-        static $instance;
-        if (null === $instance) {
-            $instance = new static();
-        }
-        return $instance;
-    }
+    abstract public function getPrimaryKey() : array;
 
     /**
      * @inheritdoc
@@ -132,7 +121,7 @@ abstract class AbstractCrud implements CrudInterface
     /**
      * @return array
      */
-    public function getFields(): array
+    public function getFields() : array
     {
         return $this->fields;
     }
@@ -140,7 +129,7 @@ abstract class AbstractCrud implements CrudInterface
     /**
      * @param array $fields
      */
-    public function setFields(array $fields)
+    public function setFields(array $fields) : void
     {
         $this->fields = $fields;
     }
@@ -167,7 +156,7 @@ abstract class AbstractCrud implements CrudInterface
      *
      * @return Row
      */
-    protected function filterRow($row)
+    protected function filterRow($row) : Row
     {
         if (empty($this->getFields())) {
             return $row;

@@ -39,18 +39,18 @@ abstract class Grid
     use Options;
     use Helper;
 
-    const ORDER_ASC = 'asc';
-    const ORDER_DESC = 'desc';
+    public const ORDER_ASC = 'asc';
+    public const ORDER_DESC = 'desc';
 
-    const FILTER_LIKE = 'like'; // like
-    const FILTER_ENUM = 'enum'; // one from .., .., ..
+    public const FILTER_LIKE = 'like'; // like
+    public const FILTER_ENUM = 'enum'; // one from .., .., ..
 
-    const FILTER_EQ = 'eq'; // equal to ..
-    const FILTER_NE = 'ne'; // not equal to ..
-    const FILTER_GT = 'gt'; // greater than ..
-    const FILTER_GE = 'ge'; // greater than .. or equal
-    const FILTER_LT = 'lt'; // less than ..
-    const FILTER_LE = 'le'; // less than .. or equal
+    public const FILTER_EQ = 'eq'; // equal to ..
+    public const FILTER_NE = 'ne'; // not equal to ..
+    public const FILTER_GT = 'gt'; // greater than ..
+    public const FILTER_GE = 'ge'; // greater than .. or equal
+    public const FILTER_LT = 'lt'; // less than ..
+    public const FILTER_LE = 'le'; // less than .. or equal
 
     /**
      * @var Source\AbstractSource instance of Source

@@ -25,9 +25,9 @@ class Messages
 {
     use Options;
 
-    const TYPE_ERROR = 'error';
-    const TYPE_SUCCESS = 'success';
-    const TYPE_NOTICE = 'notice';
+    private const TYPE_ERROR = 'error';
+    private const TYPE_SUCCESS = 'success';
+    private const TYPE_NOTICE = 'notice';
 
     /**
      * @var array list of messages types

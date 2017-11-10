@@ -49,7 +49,7 @@ class Config
      * @return void
      * @throws ConfigException
      */
-    public function setPath($path)
+    public function setPath($path) : void
     {
         if (!is_dir($path)) {
             throw new ConfigException('Configuration directory is not exists');
@@ -64,7 +64,7 @@ class Config
      *
      * @return void
      */
-    public function setEnvironment($environment)
+    public function setEnvironment($environment) : void
     {
         $this->environment = $environment;
     }
@@ -75,7 +75,7 @@ class Config
      * @return void
      * @throws ConfigException
      */
-    public function init()
+    public function init() : void
     {
         if (!$this->path) {
             throw new ConfigException('Configuration directory is not setup');
@@ -113,7 +113,7 @@ class Config
      * @return array
      * @throws ConfigException
      */
-    protected function loadFiles($path)
+    protected function loadFiles($path) : array
     {
         $config = [];
 
@@ -144,7 +144,7 @@ class Config
     public function getData(...$keys)
     {
         // configuration is missed
-        if (is_null($this->config)) {
+        if (null === $this->config) {
             throw new ConfigException('System configuration is missing');
         }
 
@@ -171,7 +171,7 @@ class Config
                 $this->path . '/modules/' . $module . '/config.php'
             );
 
-            if (is_null($this->config)) {
+            if (null === $this->config) {
                 $this->init();
             }
 
@@ -183,7 +183,7 @@ class Config
             }
         }
 
-        if (!is_null($section)) {
+        if (null !== $section) {
             return $this->modules[$module][$section] ?? null;
         }
 

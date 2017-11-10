@@ -363,7 +363,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    protected function afterRead()
+    protected function afterRead() : void
     {
     }
 
@@ -373,7 +373,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    protected function beforeSave()
+    protected function beforeSave() : void
     {
     }
 
@@ -383,7 +383,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    protected function afterSave()
+    protected function afterSave() : void
     {
     }
 
@@ -393,7 +393,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    protected function beforeInsert()
+    protected function beforeInsert() : void
     {
     }
 
@@ -403,7 +403,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    protected function afterInsert()
+    protected function afterInsert() : void
     {
     }
 
@@ -413,7 +413,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    protected function beforeUpdate()
+    protected function beforeUpdate() : void
     {
     }
 
@@ -423,7 +423,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    protected function afterUpdate()
+    protected function afterUpdate() : void
     {
     }
 
@@ -433,7 +433,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    protected function beforeDelete()
+    protected function beforeDelete() : void
     {
     }
 
@@ -443,7 +443,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    protected function afterDelete()
+    protected function afterDelete() : void
     {
     }
 }

@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace Bluz\Auth;
+namespace Bluz\Auth\Model;
 
 use Bluz\Db\Row;
 
@@ -28,6 +28,6 @@ use Bluz\Db\Row;
  * @property string  $updated
  * @property string  $expired
  */
-class AbstractRow extends Row
+abstract class AbstractRow extends Row
 {
 }

@@ -43,7 +43,7 @@ use Zend\Diactoros\ServerRequest;
  *
  * @method Controller error(\Exception $exception)
  * @method mixed forbidden(ForbiddenException $exception)
- * @method null redirect(string $url)
+ * @method null redirect(RedirectException $url)
  */
 class Application
 {
@@ -321,16 +321,17 @@ class Application
         $controller = Request::getController();
         $params = Request::getParams();
 
-        // try to dispatch controller
         try {
-            // dispatch controller
+            // try to dispatch controller
             $result = $this->dispatch($module, $controller, $params);
         } catch (ForbiddenException $e) {
+            // dispatch default error controller
             $result = $this->forbidden($e);
         } catch (RedirectException $e) {
-            // redirect to URL
-            $result = $this->redirect($e->getUrl());
+            // should return `null` for disable output and setup redirect headers
+            $result = $this->redirect($e);
         } catch (\Exception $e) {
+            // dispatch default error controller
             $result = $this->error($e);
         }
 

@@ -203,7 +203,7 @@ abstract class Grid
      *
      * @return void
      */
-    public function setAdapter(Source\AbstractSource $adapter)
+    public function setAdapter(Source\AbstractSource $adapter) : void
     {
         $this->adapter = $adapter;
     }
@@ -249,7 +249,7 @@ abstract class Grid
      *
      * @return void
      */
-    public function setModule($module)
+    public function setModule(string $module) : void
     {
         $this->module = $module;
     }
@@ -259,7 +259,7 @@ abstract class Grid
      *
      * @return string
      */
-    public function getModule()
+    public function getModule() : ?string
     {
         return $this->module;
     }
@@ -271,7 +271,7 @@ abstract class Grid
      *
      * @return void
      */
-    public function setController($controller)
+    public function setController(string $controller) : void
     {
         $this->controller = $controller;
     }
@@ -281,7 +281,7 @@ abstract class Grid
      *
      * @return string
      */
-    public function getController()
+    public function getController() : ?string
     {
         return $this->controller;
     }
@@ -302,10 +302,10 @@ abstract class Grid
      * hash support
      * - http://domain.com/pages/grid/#/page/2/order-created/desc/order-alias/asc/
      *
-     * @return Grid
+     * @return void
      * @throws GridException
      */
-    public function processRequest()
+    public function processRequest() : void
     {
         $this->module = Request::getModule();
         $this->controller = Request::getController();
@@ -327,7 +327,7 @@ abstract class Grid
             $alias = $this->applyAlias($column);
             $filter = Request::getParam($this->prefix . 'filter-' . $alias);
 
-            if (!is_null($filter)) {
+            if (null !== $filter) {
                 $filter = trim($filter, ' -');
                 if (strpos($filter, '-')) {
                     /**
@@ -350,17 +350,15 @@ abstract class Grid
                 }
             }
         }
-
-        return $this;
     }
 
     /**
      * Process source
      *
-     * @return self
+     * @return void
      * @throws GridException
      */
-    public function processSource()
+    public function processSource() : void
     {
         if (null === $this->adapter) {
             throw new GridException('Grid Adapter is not initiated, please update method `init()` and try again');
@@ -371,8 +369,6 @@ abstract class Grid
         } catch (\Exception $e) {
             throw new GridException('Grid Adapter can\'t process request: '. $e->getMessage());
         }
-
-        return $this;
     }
 
     /**
@@ -381,7 +377,7 @@ abstract class Grid
      * @return Data
      * @throws \Bluz\Grid\GridException
      */
-    public function getData()
+    public function getData() : Data
     {
         if (!$this->data) {
             $this->processSource();
@@ -394,7 +390,7 @@ abstract class Grid
      *
      * @return array
      */
-    public function getSettings()
+    public function getSettings() : array
     {
         $settings = [
             'page' => $this->getPage(),
@@ -412,7 +408,7 @@ abstract class Grid
      *
      * @return void
      */
-    public function setParams($params)
+    public function setParams($params) : void
     {
         $this->params = $params;
     }
@@ -424,7 +420,7 @@ abstract class Grid
      *
      * @return array
      */
-    public function getParams(array $rewrite = [])
+    public function getParams(array $rewrite = []) : array
     {
         $params = $this->params;
 
@@ -477,7 +473,7 @@ abstract class Grid
      *
      * @return string
      */
-    public function getUrl($params)
+    public function getUrl($params) : string
     {
         // prepare params
         $params = $this->getParams($params);
@@ -497,7 +493,7 @@ abstract class Grid
      *
      * @return void
      */
-    public function addAllowOrder($column)
+    public function addAllowOrder($column) : void
     {
         $this->allowOrders[] = $column;
     }
@@ -509,7 +505,7 @@ abstract class Grid
      *
      * @return void
      */
-    public function setAllowOrders(array $orders = [])
+    public function setAllowOrders(array $orders = []) : void
     {
         $this->allowOrders = [];
         foreach ($orders as $column) {
@@ -522,7 +518,7 @@ abstract class Grid
      *
      * @return array
      */
-    public function getAllowOrders()
+    public function getAllowOrders() : array
     {
         return $this->allowOrders;
     }
@@ -534,7 +530,7 @@ abstract class Grid
      *
      * @return bool
      */
-    protected function checkOrderColumn($column)
+    protected function checkOrderColumn($column) : bool
     {
         return in_array($column, $this->getAllowOrders());
     }
@@ -546,7 +542,7 @@ abstract class Grid
      *
      * @return bool
      */
-    protected function checkOrderName($order)
+    protected function checkOrderName($order) : bool
     {
         return ($order === self::ORDER_ASC || $order === self::ORDER_DESC);
     }
@@ -560,7 +556,7 @@ abstract class Grid
      * @return void
      * @throws GridException
      */
-    public function addOrder($column, $order = self::ORDER_ASC)
+    public function addOrder($column, $order = self::ORDER_ASC) : void
     {
         if (!$this->checkOrderColumn($column)) {
             throw new GridException("Order for column `$column` is not allowed");
@@ -581,7 +577,7 @@ abstract class Grid
      * @return void
      * @throws GridException
      */
-    public function addOrders(array $orders)
+    public function addOrders(array $orders) : void
     {
         foreach ($orders as $column => $order) {
             $this->addOrder($column, $order);
@@ -597,7 +593,7 @@ abstract class Grid
      * @return void
      * @throws GridException
      */
-    public function setOrder($column, $order = self::ORDER_ASC)
+    public function setOrder($column, $order = self::ORDER_ASC) : void
     {
         $this->orders = [];
         $this->addOrder($column, $order);
@@ -611,7 +607,7 @@ abstract class Grid
      * @return void
      * @throws GridException
      */
-    public function setOrders(array $orders)
+    public function setOrders(array $orders) : void
     {
         $this->orders = [];
         $this->addOrders($orders);
@@ -622,7 +618,7 @@ abstract class Grid
      *
      * @return array
      */
-    public function getOrders()
+    public function getOrders() : array
     {
         $default = $this->getDefaultOrder();
 
@@ -645,7 +641,7 @@ abstract class Grid
      *
      * @return void
      */
-    public function addAllowFilter($column)
+    public function addAllowFilter($column) : void
     {
         $this->allowFilters[] = $column;
     }
@@ -657,7 +653,7 @@ abstract class Grid
      *
      * @return void
      */
-    public function setAllowFilters(array $filters = [])
+    public function setAllowFilters(array $filters = []) : void
     {
         $this->allowFilters = [];
         foreach ($filters as $column) {
@@ -670,7 +666,7 @@ abstract class Grid
      *
      * @return array
      */
-    public function getAllowFilters()
+    public function getAllowFilters() : array
     {
         return $this->allowFilters;
     }
@@ -682,10 +678,10 @@ abstract class Grid
      *
      * @return bool
      */
-    protected function checkFilterColumn($column)
+    protected function checkFilterColumn($column) : bool
     {
         if (array_key_exists($column, $this->getAllowFilters()) ||
-            in_array($column, $this->getAllowFilters())
+            in_array($column, $this->getAllowFilters(), false)
         ) {
             return true;
         }
@@ -699,9 +695,9 @@ abstract class Grid
      *
      * @return bool
      */
-    protected function checkFilterName($filter)
+    protected function checkFilterName($filter) : bool
     {
-        return in_array($filter, $this->allowFilterNames);
+        return in_array($filter, $this->allowFilterNames, false);
     }
 
     /**
@@ -714,7 +710,7 @@ abstract class Grid
      * @return void
      * @throws GridException
      */
-    public function addFilter($column, $filter, $value)
+    public function addFilter($column, $filter, $value) : void
     {
         if (!$this->checkFilterColumn($column)) {
             throw new GridException("Filter for column `$column` is not allowed");
@@ -737,7 +733,7 @@ abstract class Grid
      *
      * @return mixed
      */
-    public function getFilter($column, $filter = null)
+    public function getFilter($column, $filter = null) : ?string
     {
         if (null === $filter) {
             return $this->filters[$column] ?? null;
@@ -750,7 +746,7 @@ abstract class Grid
      *
      * @return array
      */
-    public function getFilters()
+    public function getFilters() : array
     {
         return $this->filters;
     }
@@ -763,7 +759,7 @@ abstract class Grid
      *
      * @return void
      */
-    public function addAlias($column, $alias)
+    public function addAlias($column, $alias) : void
     {
         $this->aliases[$column] = $alias;
     }
@@ -775,7 +771,7 @@ abstract class Grid
      *
      * @return string
      */
-    protected function reverseAlias($alias)
+    protected function reverseAlias($alias) : string
     {
         return array_search($alias, $this->aliases) ?: $alias;
     }
@@ -787,7 +783,7 @@ abstract class Grid
      *
      * @return string
      */
-    protected function applyAlias($column)
+    protected function applyAlias($column) : string
     {
         return $this->aliases[$column] ?? $column;
     }
@@ -800,7 +796,7 @@ abstract class Grid
      * @return void
      * @throws GridException
      */
-    public function setPage(int $page = 1)
+    public function setPage(int $page = 1) : void
     {
         if ($page < 1) {
             throw new GridException('Wrong page number, should be greater than zero');
@@ -813,7 +809,7 @@ abstract class Grid
      *
      * @return integer
      */
-    public function getPage(): int
+    public function getPage() : int
     {
         return $this->page;
     }
@@ -826,7 +822,7 @@ abstract class Grid
      * @return void
      * @throws GridException
      */
-    public function setLimit(int $limit)
+    public function setLimit(int $limit) : void
     {
         if ($limit < 1) {
             throw new GridException('Wrong limit value, should be greater than zero');
@@ -839,7 +835,7 @@ abstract class Grid
      *
      * @return integer
      */
-    public function getLimit(): int
+    public function getLimit() : int
     {
         return $this->limit;
     }
@@ -852,7 +848,7 @@ abstract class Grid
      * @return void
      * @throws GridException
      */
-    public function setDefaultLimit(int $limit)
+    public function setDefaultLimit(int $limit) : void
     {
         if ($limit < 1) {
             throw new GridException('Wrong default limit value, should be greater than zero');
@@ -867,7 +863,7 @@ abstract class Grid
      *
      * @return integer
      */
-    public function getDefaultLimit(): int
+    public function getDefaultLimit() : int
     {
         return $this->defaultLimit;
     }
@@ -881,7 +877,7 @@ abstract class Grid
      * @return void
      * @throws GridException
      */
-    public function setDefaultOrder($column, $order = self::ORDER_ASC)
+    public function setDefaultOrder($column, $order = self::ORDER_ASC) : void
     {
         $this->setOrder($column, $order);
 
@@ -893,7 +889,7 @@ abstract class Grid
      *
      * @return array
      */
-    public function getDefaultOrder()
+    public function getDefaultOrder() : ?array
     {
         return $this->defaultOrder;
     }

@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Bluz\View;
 
-use Bluz\Auth\AbstractRowEntity;
+use Bluz\Auth\AbstractIdentity;
 use Bluz\Common\Container;
 use Bluz\Common\Helper;
 use Bluz\Common\Options;
@@ -51,7 +51,7 @@ use Bluz\Response\ResponseTrait;
  * @method string style(string $href, $media = 'all')
  * @method string styleBlock(string $code, $media = 'all')
  * @method string|null url(string $module, string $controller, array $params = [], bool $checkAccess = false)
- * @method AbstractRowEntity|null user()
+ * @method AbstractIdentity|null user()
  * @method void widget($module, $widget, $params = [])
  */
 class View implements ViewInterface, \JsonSerializable
@@ -124,7 +124,7 @@ class View implements ViewInterface, \JsonSerializable
      *
      * @return string
      */
-    public function getPath()
+    public function getPath() : ?string
     {
         return $this->path;
     }
@@ -136,7 +136,7 @@ class View implements ViewInterface, \JsonSerializable
      *
      * @return void
      */
-    public function setPath($path)
+    public function setPath($path) : void
     {
         $this->path = $path;
     }
@@ -146,7 +146,7 @@ class View implements ViewInterface, \JsonSerializable
      *
      * @return string
      */
-    public function getTemplate()
+    public function getTemplate() : ?string
     {
         return $this->template;
     }
@@ -158,7 +158,7 @@ class View implements ViewInterface, \JsonSerializable
      *
      * @return void
      */
-    public function setTemplate($file)
+    public function setTemplate($file) : void
     {
         $this->template = $file;
     }
@@ -170,7 +170,7 @@ class View implements ViewInterface, \JsonSerializable
      *
      * @return void
      */
-    public function addPartialPath($path)
+    public function addPartialPath($path) : void
     {
         $this->partialPath[] = $path;
     }

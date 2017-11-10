@@ -29,7 +29,7 @@ trait TableRelations
      *
      * @return void
      */
-    public function linkTo($key, $model, $foreign)
+    public function linkTo($key, $model, $foreign) : void
     {
         Relations::setRelation($this->model, $key, $model, $foreign);
     }
@@ -43,7 +43,7 @@ trait TableRelations
      *
      * @return void
      */
-    public function linkToMany($model, $link)
+    public function linkToMany($model, $link) : void
     {
         Relations::setRelations($this->model, $model, [$link]);
     }

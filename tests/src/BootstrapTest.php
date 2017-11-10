@@ -104,7 +104,6 @@ class BootstrapTest extends Application
         try {
             codecept_debug('');
             codecept_debug(' >> '. $module .'/'. $controller);
-
             // dispatch controller
             $result = $this->dispatch($module, $controller, $params);
         } catch (ForbiddenException $e) {
@@ -112,8 +111,7 @@ class BootstrapTest extends Application
             $result = $this->forbidden($e);
         } catch (RedirectException $e) {
             $this->setException($e);
-            // redirect to URL
-            $result = $this->redirect($e->getUrl());
+            $result = $this->redirect($e);
         } catch (\Exception $e) {
             $this->setException($e);
             $result = $this->error($e);

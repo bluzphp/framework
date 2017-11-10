@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Bluz\Application\Helper;
 
 use Bluz\Application\Application;
+use Bluz\Application\Exception\RedirectException;
 use Bluz\Http\StatusCode;
 use Bluz\Proxy\Request;
 use Bluz\Proxy\Response;
@@ -18,12 +19,12 @@ use Bluz\Proxy\Response;
 /**
  * Redirect helper can be declared inside Bootstrap
  *
- * @param string $url
+ * @param RedirectException $exception
  *
  * @return null
  */
 return
-    function ($url) {
+    function ($exception) {
         /**
          * @var Application $this
          */
@@ -34,10 +35,10 @@ return
 
         if (Request::isXmlHttpRequest()) {
             Response::setStatusCode(StatusCode::NO_CONTENT);
-            Response::setHeader('Bluz-Redirect', (string)$url);
+            Response::setHeader('Bluz-Redirect', (string) $exception->getUrl());
         } else {
             Response::setStatusCode(StatusCode::FOUND);
-            Response::setHeader('Location', (string)$url);
+            Response::setHeader('Location', (string) $exception->getUrl());
         }
 
         return null;

@@ -94,7 +94,7 @@ class Config
      *
      * @param  string $path
      *
-     * @return array
+     * @return mixed
      * @throws ConfigException
      */
     protected function loadFile($path)

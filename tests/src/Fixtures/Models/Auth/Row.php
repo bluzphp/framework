@@ -10,7 +10,7 @@
 
 namespace Bluz\Tests\Fixtures\Models\Auth;
 
-use Bluz\Auth\AbstractRow;
+use Bluz\Auth\Model\AbstractRow;
 
 /**
  * Auth Row

@@ -10,16 +10,15 @@
 
 namespace Bluz\Tests\Fixtures\Models\Auth;
 
-use Bluz\Application;
-use Bluz\Auth\AbstractTable;
+use Bluz\Auth\Model\AbstractTable;
 
 /**
  * Auth Table
  *
  * @package  Bluz\Tests\Fixtures\Models\Auth
  *
- * @method   static Row findRow($primaryKey)
- * @method   static Row findRowWhere($whereList)
+ * @method   static ?Row findRow($primaryKey)
+ * @method   static ?Row findRowWhere($whereList)
  */
 class Table extends AbstractTable
 {

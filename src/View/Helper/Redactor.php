@@ -34,13 +34,12 @@ return
         ];
 
         $settings = array_replace_recursive($defaultSettings, $settings);
-        $settings = json_encode($settings);
 
         $html = '';
         $html .= $this->style('redactor/redactor.css');
         $html .= $this->scriptBlock(
             'require(["jquery", "redactor", "redactor.imagemanager"], function($) {
-                $("' . $selector . '").redactor(' . $settings . ');
+                $("' . $selector . '").redactor(' . json_encode($settings) . ');
             });'
         );
         return $html;

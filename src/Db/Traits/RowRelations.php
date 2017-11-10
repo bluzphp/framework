@@ -14,6 +14,7 @@ use Bluz\Db\Relations;
 use Bluz\Db\Row;
 use Bluz\Db\Exception\RelationNotFoundException;
 use Bluz\Db\Exception\TableNotFoundException;
+use Bluz\Db\RowInterface;
 
 /**
  * RowRelations
@@ -36,7 +37,7 @@ trait RowRelations
      * @return void
      * @throws TableNotFoundException
      */
-    public function setRelation(Row $row)
+    public function setRelation(Row $row) : void
     {
         $modelName = $row->getTable()->getModel();
         $this->relations[$modelName] = [$row];
@@ -47,14 +48,14 @@ trait RowRelations
      *
      * @param  string $modelName
      *
-     * @return Row|false
+     * @return RowInterface
      * @throws RelationNotFoundException
      * @throws TableNotFoundException
      */
-    public function getRelation($modelName)
+    public function getRelation($modelName) : ?RowInterface
     {
         $relations = $this->getRelations($modelName);
-        return empty($relations) ? false : current($relations);
+        return empty($relations) ? null : current($relations);
     }
 
     /**
@@ -62,11 +63,11 @@ trait RowRelations
      *
      * @param  string $modelName
      *
-     * @return array
+     * @return RowInterface[]
      * @throws RelationNotFoundException
      * @throws TableNotFoundException
      */
-    public function getRelations($modelName)
+    public function getRelations($modelName) : array
     {
         if (!isset($this->relations[$modelName])) {
             $this->relations[$modelName] = Relations::findRelation($this, $modelName);

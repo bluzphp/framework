@@ -26,18 +26,18 @@ class Auth
     use Options;
 
     /**
-     * @var EntityInterface Instance of EntityInterface
+     * @var IdentityInterface Instance of EntityInterface
      */
     protected $identity;
 
     /**
      * Setup identity
      *
-     * @param  EntityInterface $identity
+     * @param  IdentityInterface $identity
      *
      * @return void
      */
-    public function setIdentity(EntityInterface $identity) : void
+    public function setIdentity(IdentityInterface $identity) : void
     {
         // save identity to Auth
         $this->identity = $identity;
@@ -54,9 +54,9 @@ class Auth
     /**
      * Return identity if user agent is correct
      *
-     * @return EntityInterface|null
+     * @return IdentityInterface|null
      */
-    public function getIdentity() : ?EntityInterface
+    public function getIdentity() : ?IdentityInterface
     {
         if (!$this->identity) {
             // check user agent

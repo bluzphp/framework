@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace Bluz\Proxy;
 
 use Bluz\Auth\Auth as Instance;
-use Bluz\Auth\EntityInterface;
+use Bluz\Auth\IdentityInterface;
 
 /**
  * Proxy to Auth
@@ -26,10 +26,10 @@ use Bluz\Auth\EntityInterface;
  *
  * @method   static Instance getInstance()
  *
- * @method   static void setIdentity(EntityInterface $identity)
+ * @method   static void setIdentity(IdentityInterface $identity)
  * @see      Instance::setIdentity()
  *
- * @method   static EntityInterface getIdentity()
+ * @method   static IdentityInterface getIdentity()
  * @see      Instance::getIdentity()
  *
  * @method   static void clearIdentity()

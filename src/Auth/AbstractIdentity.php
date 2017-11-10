@@ -16,23 +16,28 @@ use Bluz\Db\Row;
  * Abstract class for Users\Row
  *
  * @package Bluz\Auth
+ *
+ * @property integer $id
+ * @property string  $login
+ * @property string  $email
  */
-abstract class AbstractRowEntity extends Row implements EntityInterface
+abstract class AbstractIdentity extends Row implements IdentityInterface
 {
     /**
-     * Get user privileges
-     *
-     * @return array
+     * {@inheritdoc}
      */
     abstract public function getPrivileges() : array;
 
     /**
-     * Has role a privilege
-     *
-     * @param  string $module
-     * @param  string $privilege
-     *
-     * @return bool
+     * {@inheritdoc}
+     */
+    public function getId() : ?int
+    {
+        return $this->id ?? null;
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function hasPrivilege($module, $privilege) : bool
     {

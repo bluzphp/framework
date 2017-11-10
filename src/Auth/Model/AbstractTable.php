@@ -8,8 +8,9 @@
 
 declare(strict_types=1);
 
-namespace Bluz\Auth;
+namespace Bluz\Auth\Model;
 
+use Bluz\Db\RowInterface;
 use Bluz\Db\Table;
 
 /**
@@ -18,10 +19,10 @@ use Bluz\Db\Table;
  * @package  Bluz\Auth
  * @author   Anton Shevchuk
  *
- * @method   static ?AbstractRow findRow($primaryKey)
+ * @method   static AbstractRow findRow($primaryKey)
  * @see      Table::findRow()
  *
- * @method   static ?AbstractRow findRowWhere($whereList)
+ * @method   static AbstractRow findRowWhere($whereList)
  * @see      Table::findRowWhere()
  */
 abstract class AbstractTable extends Table
@@ -34,8 +35,8 @@ abstract class AbstractTable extends Table
 
     /**
      * Providers
-     *  - equals - login+password
-     *  - token - token with ttl
+     *  - equals - login + password
+     *  - token  - token with ttl
      *  - cookie - cookie token with ttl
      */
     public const PROVIDER_COOKIE = 'cookie';
@@ -62,9 +63,12 @@ abstract class AbstractTable extends Table
      * @param  string $provider
      * @param  string $foreignKey
      *
-     * @return AbstractRow
+     * @return RowInterface
+     * @throws \InvalidArgumentException
+     * @throws \Bluz\Db\Exception\DbException
+     * @throws \Bluz\Db\Exception\InvalidPrimaryKeyException
      */
-    public static function getAuthRow($provider, $foreignKey)
+    public static function getAuthRow($provider, $foreignKey) : ?RowInterface
     {
         return static::findRow(['provider' => $provider, 'foreignKey' => $foreignKey]);
     }

@@ -14,22 +14,25 @@ namespace Bluz\Auth;
  * Interface EntityInterface
  *
  * @package Bluz\Auth
- *
- * @property integer $id
- * @property string  $login
- * @property string  $email
  */
-interface EntityInterface
+interface IdentityInterface
 {
     /**
-     * Get user privileges
+     * Get an ID that can uniquely identify a user
+     *
+     * @return integer
+     */
+    public function getId() : ?int;
+
+    /**
+     * Get user's privileges
      *
      * @return array
      */
     public function getPrivileges() : array;
 
     /**
-     * Has role a privilege
+     * Has it privilege?
      *
      * @param  string $module
      * @param  string $privilege

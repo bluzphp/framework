@@ -250,10 +250,10 @@ class Relations
      * @param  string $modelName
      * @param  array  $data
      *
-     * @return Row
+     * @return RowInterface
      * @throws Exception\RelationNotFoundException
      */
-    public static function createRow($modelName, $data) : Row
+    public static function createRow($modelName, $data) : RowInterface
     {
         $tableClass = self::getModelClass($modelName);
 

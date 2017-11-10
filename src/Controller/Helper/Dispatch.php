@@ -16,9 +16,9 @@ use Bluz\Controller\Controller;
 /**
  * Dispatch controller
  *
- * @param       $module
- * @param       $controller
- * @param array $params
+ * @param string $module
+ * @param string $controller
+ * @param array  $params
  *
  * @return Controller
  */

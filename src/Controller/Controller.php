@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace Bluz\Controller;
 
 use Bluz\Application\Application;
-use Bluz\Auth\EntityInterface;
+use Bluz\Auth\IdentityInterface;
 use Bluz\Common\Exception\CommonException;
 use Bluz\Common\Exception\ComponentException;
 use Bluz\Common\Helper;
@@ -40,7 +40,7 @@ use Bluz\View\View;
  * @method bool isAllowed($privilege)
  * @method void useJson()
  * @method void useLayout($layout)
- * @method EntityInterface user()
+ * @method IdentityInterface user()
  */
 class Controller implements \JsonSerializable
 {

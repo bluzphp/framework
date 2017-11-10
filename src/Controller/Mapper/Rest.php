@@ -20,7 +20,7 @@ use Bluz\Http\RequestMethod;
  */
 class Rest extends AbstractMapper
 {
-    protected function prepareRequest()
+    protected function prepareRequest() : void
     {
         parent::prepareRequest();
 

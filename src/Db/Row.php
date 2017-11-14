@@ -267,6 +267,8 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
 
         $table = $this->getTable();
 
+        $diffData = $table::filterColumns($diffData);
+
         /**
          * Execute the UPDATE (this may throw an exception)
          * Do this only if data values were changed.

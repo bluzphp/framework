@@ -206,7 +206,7 @@ abstract class Table implements TableInterface
      *
      * @return array
      */
-    protected static function filterColumns($data) : array
+    public static function filterColumns($data) : array
     {
         return array_intersect_key($data, array_flip(static::getColumns()));
     }

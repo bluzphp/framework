@@ -25,7 +25,7 @@ class ResponseTest extends FrameworkTestCase
     /**
      * Test Helper Redirect
      *
-     * @expectedException \Bluz\Application\Exception\RedirectException
+     * @expectedException \Bluz\Http\Exception\RedirectException
      */
     public function testHelperRedirect()
     {
@@ -35,7 +35,7 @@ class ResponseTest extends FrameworkTestCase
     /**
      * Test Helper RedirectTo
      *
-     * @expectedException \Bluz\Application\Exception\RedirectException
+     * @expectedException \Bluz\Http\Exception\RedirectException
      */
     public function testHelperRedirectTo()
     {
@@ -45,7 +45,7 @@ class ResponseTest extends FrameworkTestCase
     /**
      * Test Helper Reload
      *
-     * @expectedException \Bluz\Application\Exception\RedirectException
+     * @expectedException \Bluz\Http\Exception\RedirectException
      */
     public function testHelperReload()
     {

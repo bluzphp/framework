@@ -11,9 +11,10 @@ declare(strict_types=1);
 namespace Bluz\Crud;
 
 use Bluz\Application\Exception\ApplicationException;
-use Bluz\Application\Exception\NotFoundException;
+use Bluz\Db\Exception\InvalidPrimaryKeyException;
+use Bluz\Db\Exception\TableNotFoundException;
+use Bluz\Http\Exception\NotFoundException;
 use Bluz\Db;
-use Bluz\Db\Row;
 use Bluz\Proxy;
 
 /**
@@ -30,7 +31,8 @@ class Table extends AbstractCrud
     /**
      * {@inheritdoc}
      *
-     * @throws \Bluz\Db\Exception\InvalidPrimaryKeyException
+     * @throws InvalidPrimaryKeyException
+     * @throws TableNotFoundException
      */
     public function getPrimaryKey() : array
     {
@@ -43,7 +45,7 @@ class Table extends AbstractCrud
      * @param  mixed $primary
      *
      * @return Db\RowInterface
-     * @throws \Bluz\Db\Exception\TableNotFoundException
+     * @throws TableNotFoundException
      * @throws NotFoundException
      */
     public function readOne($primary)
@@ -131,6 +133,7 @@ class Table extends AbstractCrud
      * @param  array $data
      *
      * @return mixed
+     * @throws TableNotFoundException
      */
     public function createOne($data)
     {
@@ -150,6 +153,7 @@ class Table extends AbstractCrud
      *
      * @return integer
      * @throws NotFoundException
+     * @throws TableNotFoundException
      */
     public function updateOne($primary, $data)
     {
@@ -158,7 +162,6 @@ class Table extends AbstractCrud
         if (!$row) {
             throw new NotFoundException('Record not found');
         }
-
         $data = $this->filterData($data);
 
         $row->setFromArray($data);
@@ -172,6 +175,7 @@ class Table extends AbstractCrud
      *
      * @return integer
      * @throws NotFoundException
+     * @throws TableNotFoundException
      */
     public function deleteOne($primary)
     {

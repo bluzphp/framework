@@ -11,10 +11,10 @@ declare(strict_types=1);
 namespace Bluz\Application;
 
 use Bluz\Application\Exception\ApplicationException;
-use Bluz\Application\Exception\ForbiddenException;
-use Bluz\Application\Exception\NotAcceptableException;
-use Bluz\Application\Exception\NotAllowedException;
-use Bluz\Application\Exception\RedirectException;
+use Bluz\Http\Exception\ForbiddenException;
+use Bluz\Http\Exception\NotAcceptableException;
+use Bluz\Http\Exception\NotAllowedException;
+use Bluz\Http\Exception\RedirectException;
 use Bluz\Common;
 use Bluz\Common\Exception\CommonException;
 use Bluz\Common\Exception\ComponentException;

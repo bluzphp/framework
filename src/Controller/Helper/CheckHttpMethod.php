@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Bluz\Controller\Helper;
 
-use Bluz\Application\Exception\NotAllowedException;
+use Bluz\Http\Exception\NotAllowedException;
 use Bluz\Controller\Controller;
 use Bluz\Proxy\Request;
 

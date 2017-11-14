@@ -10,8 +10,8 @@ declare(strict_types=1);
 
 namespace Bluz\View\Helper;
 
-use Bluz\Application\Exception\ForbiddenException;
 use Bluz\Controller\Controller;
+use Bluz\Http\Exception\ForbiddenException;
 use Bluz\Proxy\Request;
 use Bluz\Proxy\Router;
 use Bluz\View\View;

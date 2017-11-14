@@ -8,17 +8,17 @@
 
 declare(strict_types=1);
 
-namespace Bluz\Application\Exception;
+namespace Bluz\Http\Exception;
 
 use Bluz\Http\StatusCode;
 
 /**
  * Redirect Exception
  *
- * @package  Bluz\Application\Exception
+ * @package  Bluz\Http\Exception
  * @author   Anton Shevchuk
  */
-class RedirectException extends ApplicationException
+class RedirectException extends HttpException
 {
     /**
      * Redirect HTTP code

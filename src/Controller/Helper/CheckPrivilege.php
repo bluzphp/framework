@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Bluz\Controller\Helper;
 
-use Bluz\Application\Exception\ForbiddenException;
+use Bluz\Http\Exception\ForbiddenException;
 use Bluz\Controller\Controller;
 use Bluz\Proxy\Acl;
 

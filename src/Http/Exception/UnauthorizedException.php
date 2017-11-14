@@ -8,25 +8,20 @@
 
 declare(strict_types=1);
 
-namespace Bluz\Application\Exception;
+namespace Bluz\Http\Exception;
 
 use Bluz\Http\StatusCode;
 
 /**
  * Unauthorized Exception
  *
- * @package  Bluz\Application\Exception
+ * @package  Bluz\Http\Exception
  * @author   Anton Shevchuk
  */
-class UnauthorizedException extends ApplicationException
+class UnauthorizedException extends HttpException
 {
     /**
      * @var integer HTTP code
      */
     protected $code = StatusCode::UNAUTHORIZED;
-
-    /**
-     * @var string
-     */
-    protected $message = 'Unauthorized';
 }

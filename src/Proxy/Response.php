@@ -10,9 +10,9 @@ declare(strict_types=1);
 
 namespace Bluz\Proxy;
 
-use Bluz\Application\Exception\RedirectException;
 use Bluz\Common\Exception\ComponentException;
 use Bluz\Controller\Controller;
+use Bluz\Http\Exception\RedirectException;
 use Bluz\Response\Response as Instance;
 
 /**

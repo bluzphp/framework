@@ -8,25 +8,20 @@
 
 declare(strict_types=1);
 
-namespace Bluz\Application\Exception;
+namespace Bluz\Http\Exception;
 
 use Bluz\Http\StatusCode;
 
 /**
  * NotFound Exception
  *
- * @package  Bluz\Application\Exception
+ * @package  Bluz\Http\Exception
  * @author   Anton Shevchuk
  */
-class NotFoundException extends ApplicationException
+class NotFoundException extends HttpException
 {
     /**
      * @var integer HTTP Code
      */
     protected $code = StatusCode::NOT_FOUND;
-
-    /**
-     * @var string
-     */
-    protected $message = 'Not Found';
 }

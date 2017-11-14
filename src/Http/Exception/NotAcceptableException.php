@@ -8,25 +8,20 @@
 
 declare(strict_types=1);
 
-namespace Bluz\Application\Exception;
+namespace Bluz\Http\Exception;
 
 use Bluz\Http\StatusCode;
 
 /**
  * Not Acceptable Exception
  *
- * @package  Bluz\Application\Exception
+ * @package  Bluz\Http\Exception
  * @author   Anton Shevchuk
  */
-class NotAcceptableException extends ApplicationException
+class NotAcceptableException extends HttpException
 {
     /**
      * @var integer HTTP Code
      */
     protected $code = StatusCode::NOT_ACCEPTABLE;
-
-    /**
-     * @var string
-     */
-    protected $message = 'Not Acceptable';
 }

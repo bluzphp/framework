@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace Bluz\Application\Helper;
 
 use Bluz\Application\Application;
-use Bluz\Application\Exception\ForbiddenException;
+use Bluz\Http\Exception\ForbiddenException;
 use Bluz\Controller\Controller;
 
 /**

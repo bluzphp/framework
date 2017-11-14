@@ -8,25 +8,20 @@
 
 declare(strict_types=1);
 
-namespace Bluz\Application\Exception;
+namespace Bluz\Http\Exception;
 
 use Bluz\Http\StatusCode;
 
 /**
  * BadRequest Exception
  *
- * @package  Bluz\Application\Exception
+ * @package  Bluz\Http\Exception
  * @author   Anton Shevchuk
  */
-class BadRequestException extends ApplicationException
+class BadRequestException extends HttpException
 {
     /**
      * @var integer HTTP Code
      */
     protected $code = StatusCode::BAD_REQUEST;
-
-    /**
-     * @var string
-     */
-    protected $message = 'Bad Request';
 }

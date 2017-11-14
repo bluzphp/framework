@@ -8,25 +8,20 @@
 
 declare(strict_types=1);
 
-namespace Bluz\Application\Exception;
+namespace Bluz\Http\Exception;
 
 use Bluz\Http\StatusCode;
 
 /**
  * Not Allowed Exception
  *
- * @package  Bluz\Application\Exception
+ * @package  Bluz\Http\Exception
  * @author   Anton Shevchuk
  */
-class NotAllowedException extends ApplicationException
+class NotAllowedException extends HttpException
 {
     /**
      * @var integer HTTP Code
      */
     protected $code = StatusCode::METHOD_NOT_ALLOWED;
-
-    /**
-     * @var string
-     */
-    protected $message = 'Method Not Allowed';
 }

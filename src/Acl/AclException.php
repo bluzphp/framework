@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Bluz\Acl;
 
-use Bluz\Application\Exception\ForbiddenException;
+use Bluz\Http\Exception\ForbiddenException;
 
 /**
  * Acl Exception

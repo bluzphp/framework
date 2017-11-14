@@ -18,12 +18,6 @@ use Bluz\Db\Table;
  *
  * @package  Bluz\Auth
  * @author   Anton Shevchuk
- *
- * @method   static AbstractRow findRow($primaryKey)
- * @see      Table::findRow()
- *
- * @method   static AbstractRow findRowWhere($whereList)
- * @see      Table::findRowWhere()
  */
 abstract class AbstractTable extends Table
 {

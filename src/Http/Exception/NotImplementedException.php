@@ -8,25 +8,20 @@
 
 declare(strict_types=1);
 
-namespace Bluz\Application\Exception;
+namespace Bluz\Http\Exception;
 
 use Bluz\Http\StatusCode;
 
 /**
  * NotImplemented Exception
  *
- * @package  Bluz\Application\Exception
+ * @package  Bluz\Http\Exception
  * @author   Anton Shevchuk
  */
-class NotImplementedException extends ApplicationException
+class NotImplementedException extends HttpException
 {
     /**
      * @var integer HTTP code
      */
     protected $code = StatusCode::NOT_IMPLEMENTED;
-
-    /**
-     * @var string
-     */
-    protected $message = 'Not Implemented';
 }

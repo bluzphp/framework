@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace Bluz\Application\Helper;
 
 use Bluz\Application\Application;
-use Bluz\Application\Exception\RedirectException;
+use Bluz\Http\Exception\RedirectException;
 use Bluz\Http\StatusCode;
 use Bluz\Proxy\Request;
 use Bluz\Proxy\Response;

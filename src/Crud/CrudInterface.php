@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Bluz\Crud;
 
-use Bluz\Application\Exception\NotImplementedException;
+use Bluz\Http\Exception\NotImplementedException;
 
 /**
  * Crud

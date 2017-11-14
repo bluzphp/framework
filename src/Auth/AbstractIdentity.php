@@ -33,7 +33,7 @@ abstract class AbstractIdentity extends Row implements IdentityInterface
      */
     public function getId() : ?int
     {
-        return $this->id ?? null;
+        return $this->id ? (int)$this->id : null;
     }
 
     /**

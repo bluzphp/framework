@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Bluz\Validator\Exception;
 
-use Bluz\Application\Exception\BadRequestException;
+use Bluz\Http\Exception\BadRequestException;
 
 /**
  * Validator Exception

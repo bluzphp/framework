@@ -10,9 +10,9 @@
 namespace Bluz\Tests;
 
 use Bluz\Application\Application;
-use Bluz\Application\Exception\ForbiddenException;
-use Bluz\Application\Exception\RedirectException;
 use Bluz\Controller\Controller;
+use Bluz\Http\Exception\ForbiddenException;
+use Bluz\Http\Exception\RedirectException;
 use Bluz\Proxy\Layout;
 use Bluz\Proxy\Request;
 use Bluz\Proxy\Response;

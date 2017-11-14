@@ -177,7 +177,6 @@ final class Request
     {
         $body = (array)self::getInstance()->getParsedBody();
         $query = (array)self::getInstance()->getQueryParams();
-
         return array_merge($body, $query);
     }
 

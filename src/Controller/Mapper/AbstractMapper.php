@@ -11,15 +11,15 @@ declare(strict_types=1);
 namespace Bluz\Controller\Mapper;
 
 use Bluz\Application\Application;
-use Bluz\Application\Exception\ForbiddenException;
-use Bluz\Application\Exception\NotAcceptableException;
-use Bluz\Application\Exception\NotAllowedException;
-use Bluz\Application\Exception\NotImplementedException;
 use Bluz\Common\Exception\CommonException;
 use Bluz\Common\Exception\ComponentException;
 use Bluz\Controller\Controller;
 use Bluz\Controller\ControllerException;
 use Bluz\Crud\AbstractCrud;
+use Bluz\Http\Exception\ForbiddenException;
+use Bluz\Http\Exception\NotAcceptableException;
+use Bluz\Http\Exception\NotAllowedException;
+use Bluz\Http\Exception\NotImplementedException;
 use Bluz\Http\RequestMethod;
 use Bluz\Proxy\Acl;
 use Bluz\Proxy\Request;
@@ -265,6 +265,7 @@ abstract class AbstractMapper
         $this->data = array_merge($data, $this->data);
 
         $primary = $this->crud->getPrimaryKey();
+
         $this->primary = array_intersect_key($this->data, array_flip($primary));
     }
 

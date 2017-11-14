@@ -21,6 +21,13 @@ interface RowInterface
     public function __construct(array $data = []);
 
     /**
+     * Returns the column/value data as an array
+     *
+     * @return array
+     */
+    public function toArray() : array;
+
+    /**
      * Sets all data in the row from an array
      *
      * @param  array $data

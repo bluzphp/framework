@@ -90,12 +90,9 @@ class MessagesTest extends FrameworkTestCase
         Proxy\Messages::addNotice('notice');
         Proxy\Messages::addSuccess('success');
 
-        $counter = 0;
-        while (Proxy\Messages::pop()) {
-            $counter++;
-        }
-
-        self::assertEquals(3, $counter);
+        self::assertNotEmpty(Proxy\Messages::pop('error'));
+        self::assertNotEmpty(Proxy\Messages::pop('notice'));
+        self::assertNotEmpty(Proxy\Messages::pop('success'));
     }
 
     /**

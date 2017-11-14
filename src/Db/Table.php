@@ -118,8 +118,10 @@ abstract class Table implements TableInterface
     /**
      * Initialization hook.
      * Subclasses may override this method
+     *
+     * @return void
      */
-    public function init()
+    public function init() : void
     {
     }
 
@@ -162,7 +164,7 @@ abstract class Table implements TableInterface
      *
      * @return array
      */
-    public static function getMeta()
+    public static function getMeta() : array
     {
         $self = static::getInstance();
         if (empty($self->meta)) {
@@ -191,7 +193,7 @@ abstract class Table implements TableInterface
      *
      * @return array
      */
-    public static function getColumns()
+    public static function getColumns() : array
     {
         $self = static::getInstance();
         return array_keys($self::getMeta());
@@ -234,6 +236,7 @@ abstract class Table implements TableInterface
     {
         $keyNames = array_values(static::getInstance()->getPrimaryKey());
         $whereList = [];
+
         foreach ($keys as $keyValues) {
             $keyValues = (array)$keyValues;
             if (count($keyValues) !== count($keyNames)) {

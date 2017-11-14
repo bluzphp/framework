@@ -53,7 +53,7 @@ class Collection
      *
      * @return bool
      */
-    public static function has(array $array, ...$keys): bool
+    public static function has(array $array, ...$keys) : bool
     {
         $key = array_shift($keys);
 
@@ -81,7 +81,7 @@ class Collection
      * @return void
      * @throws \InvalidArgumentException
      */
-    public static function add(array &$array, ...$keys)
+    public static function add(array &$array, ...$keys) : void
     {
         if (count($keys) < 2) {
             throw new \InvalidArgumentException('Method `Collection::add()` is required minimum one key and value');
@@ -107,7 +107,7 @@ class Collection
      * @return void
      * @throws \InvalidArgumentException
      */
-    public static function set(array &$array, ...$keys)
+    public static function set(array &$array, ...$keys) : void
     {
         if (count($keys) < 2) {
             throw new \InvalidArgumentException('Method `Collection::set()` is required minimum one key and value');

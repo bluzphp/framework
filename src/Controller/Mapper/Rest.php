@@ -46,7 +46,7 @@ class Rest extends AbstractMapper
         }
     }
 
-    protected function prepareParams(): array
+    protected function prepareParams() : array
     {
         return [
             'crud' => $this->crud,

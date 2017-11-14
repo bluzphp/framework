@@ -59,7 +59,7 @@ class Relations
      *
      * @return void
      */
-    public static function setRelation($modelOne, $keyOne, $modelTwo, $keyTwo)
+    public static function setRelation($modelOne, $keyOne, $modelTwo, $keyTwo) : void
     {
         $relations = [$modelOne => $keyOne, $modelTwo => $keyTwo];
         self::setRelations($modelOne, $modelTwo, $relations);
@@ -74,7 +74,7 @@ class Relations
      *
      * @return void
      */
-    public static function setRelations($modelOne, $modelTwo, $relations)
+    public static function setRelations($modelOne, $modelTwo, $relations) : void
     {
         $name = [$modelOne, $modelTwo];
         sort($name);
@@ -217,7 +217,7 @@ class Relations
      *
      * @return void
      */
-    public static function addClassMap($model, $className)
+    public static function addClassMap($model, $className) : void
     {
         self::$modelClassMap[$model] = $className;
     }

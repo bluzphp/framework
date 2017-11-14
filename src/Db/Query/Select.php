@@ -393,7 +393,7 @@ class Select extends AbstractBuilder
      * @return Select
      * @throws DbException
      */
-    public function setPage($page = 1)
+    public function setPage(int $page = 1)
     {
         if (!$this->limit) {
             throw new DbException("Please setup limit for use method `setPage`");

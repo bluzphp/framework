@@ -23,12 +23,12 @@ use Bluz\Db\Exception\TableNotFoundException;
  *     namespace Application\Users;
  *     class Row extends \Bluz\Db\Row
  *     {
- *        public function beforeInsert()
+ *        public function beforeInsert() : void
  *        {
  *            $this->created = gmdate('Y-m-d H:i:s');
  *        }
  *
- *        public function beforeUpdate()
+ *        public function beforeUpdate() : void
  *        {
  *            $this->updated = gmdate('Y-m-d H:i:s');
  *        }
@@ -113,7 +113,6 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
     public function __debugInfo()
     {
         return [
-            'TABLE' => $this->getTable()->getName(),
             'DATA::CLEAN' => $this->clean,
             'DATA::RAW' => $this->container,
             'RELATIONS' => $this->relations ?? []
@@ -139,7 +138,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    public function assert($data)
+    public function assert($data) : void
     {
         return;
     }
@@ -194,7 +193,6 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
         $this->beforeInsert();
 
         $data = $this->toArray();
-
         /**
          * Execute validator logic
          * Can throw ValidatorException

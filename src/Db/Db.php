@@ -77,7 +77,7 @@ class Db
      * @return void
      * @throws DbException
      */
-    public function setConnect(array $connect)
+    public function setConnect(array $connect) : void
     {
         $this->connect = array_merge($this->connect, $connect);
         $this->checkConnect();
@@ -89,7 +89,7 @@ class Db
      * @return void
      * @throws ConfigurationException
      */
-    private function checkConnect()
+    private function checkConnect() : void
     {
         if (empty($this->connect['type']) ||
             empty($this->connect['host']) ||
@@ -110,7 +110,7 @@ class Db
      *
      * @return void
      */
-    public function setAttributes(array $attributes)
+    public function setAttributes(array $attributes) : void
     {
         $this->attributes = $attributes;
     }
@@ -149,7 +149,7 @@ class Db
      *
      * @return void
      */
-    public function disconnect()
+    public function disconnect() : void
     {
         if ($this->handler) {
             $this->handler = null;
@@ -182,7 +182,7 @@ class Db
      * @return \PDOStatement
      * @throws DbException
      */
-    protected function prepare($sql, $params) : \PDOStatement
+    protected function prepare(string $sql, array $params = []) : \PDOStatement
     {
         $stmt = $this->handler()->prepare($sql);
         $stmt->execute($params);
@@ -206,7 +206,7 @@ class Db
      * @return string
      * @throws DbException
      */
-    public function quote($value, $type = \PDO::PARAM_STR) : string
+    public function quote(string $value, int $type = \PDO::PARAM_STR) : string
     {
         return $this->handler()->quote($value, $type);
     }
@@ -218,7 +218,7 @@ class Db
      *
      * @return string
      */
-    public function quoteIdentifier($identifier) : string
+    public function quoteIdentifier(string $identifier) : string
     {
         // switch statement for DB type
         switch ($this->connect['type']) {
@@ -249,7 +249,7 @@ class Db
      * @return integer the number of rows
      * @throws DbException
      */
-    public function query($sql, $params = [], $types = [])
+    public function query($sql, array $params = [], array $types = []) : int
     {
         $stmt = $this->handler()->prepare($sql);
         foreach ($params as $key => &$param) {
@@ -286,7 +286,7 @@ class Db
      *
      * @return Query\Insert
      */
-    public function insert($table) : Query\Insert
+    public function insert(string $table) : Query\Insert
     {
         $query = new Query\Insert();
         $query->insert($table);
@@ -300,7 +300,7 @@ class Db
      *
      * @return Query\Update
      */
-    public function update($table) : Query\Update
+    public function update(string $table) : Query\Update
     {
         $query = new Query\Update();
         $query->update($table);
@@ -314,7 +314,7 @@ class Db
      *
      * @return Query\Delete
      */
-    public function delete($table) : Query\Delete
+    public function delete(string $table) : Query\Delete
     {
         $query = new Query\Delete();
         $query->delete($table);
@@ -337,7 +337,7 @@ class Db
      * @return string
      * @throws DbException
      */
-    public function fetchOne($sql, $params = [])
+    public function fetchOne(string $sql, array $params = []) : string
     {
         $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetch(\PDO::FETCH_COLUMN);
@@ -364,7 +364,7 @@ class Db
      * @return array           array ('name' => 'John', 'email' => 'john@smith.com')
      * @throws DbException
      */
-    public function fetchRow($sql, $params = [])
+    public function fetchRow(string $sql, array $params = []) : array
     {
         $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
@@ -389,7 +389,7 @@ class Db
      * @return array[]
      * @throws DbException
      */
-    public function fetchAll($sql, $params = [])
+    public function fetchAll(string $sql, array $params = []) : array
     {
         $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -409,7 +409,7 @@ class Db
      * @return array
      * @throws DbException
      */
-    public function fetchColumn($sql, $params = [])
+    public function fetchColumn(string $sql, array $params = []) : array
     {
         $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetchAll(\PDO::FETCH_COLUMN);
@@ -435,7 +435,7 @@ class Db
      * @return array
      * @throws DbException
      */
-    public function fetchGroup($sql, $params = [], $object = null)
+    public function fetchGroup(string $sql, array $params = [], $object = null) : array
     {
         $stmt = $this->prepare($sql, $params);
 
@@ -461,7 +461,7 @@ class Db
      * @return array
      * @throws DbException
      */
-    public function fetchColumnGroup($sql, $params = [])
+    public function fetchColumnGroup(string $sql, array $params = []) : array
     {
         $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetchAll(\PDO::FETCH_COLUMN | \PDO::FETCH_GROUP);
@@ -482,7 +482,7 @@ class Db
      * @return array
      * @throws DbException
      */
-    public function fetchUniqueGroup($sql, $params = [])
+    public function fetchUniqueGroup(string $sql, array $params = []) : array
     {
         $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetchAll(\PDO::FETCH_UNIQUE | \PDO::FETCH_ASSOC | \PDO::FETCH_GROUP);
@@ -502,7 +502,7 @@ class Db
      * @return array
      * @throws DbException
      */
-    public function fetchPairs($sql, $params = [])
+    public function fetchPairs(string $sql, array $params = []) : array
     {
         $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetchAll(\PDO::FETCH_KEY_PAIR);
@@ -530,10 +530,10 @@ class Db
      *                        array (':name' => 'John', ':pass' => '123456')
      * @param  mixed  $object
      *
-     * @return array
+     * @return mixed
      * @throws DbException
      */
-    public function fetchObject($sql, $params = [], $object = 'stdClass')
+    public function fetchObject(string $sql, array $params = [], $object = 'stdClass')
     {
         $stmt = $this->prepare($sql, $params);
 
@@ -563,7 +563,7 @@ class Db
      * @return array
      * @throws DbException
      */
-    public function fetchObjects($sql, $params = [], $object = null)
+    public function fetchObjects(string $sql, array $params = [], $object = null) : array
     {
         $stmt = $this->prepare($sql, $params);
 
@@ -594,7 +594,7 @@ class Db
      * @return array
      * @throws DbException
      */
-    public function fetchRelations($sql, $params = [])
+    public function fetchRelations(string $sql, array $params = []) : array
     {
         $stmt = $this->prepare($sql, $params);
 
@@ -644,7 +644,7 @@ class Db
      *
      * @return void
      */
-    protected function ok()
+    protected function ok() : void
     {
         Logger::info('<<<');
     }
@@ -657,7 +657,7 @@ class Db
      *
      * @return void
      */
-    protected function log($sql, array $context = [])
+    protected function log(string $sql, array $context = []) : void
     {
         $sql = str_replace('%', '%%', $sql);
         $sql = preg_replace('/\?/', '"%s"', $sql, count($context));

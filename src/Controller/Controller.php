@@ -112,7 +112,7 @@ class Controller implements \JsonSerializable
     /**
      * @return string
      */
-    public function getModule(): string
+    public function getModule() : string
     {
         return $this->module;
     }

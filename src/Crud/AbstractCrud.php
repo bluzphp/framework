@@ -10,9 +10,9 @@ declare(strict_types=1);
 
 namespace Bluz\Crud;
 
-use Bluz\Application\Exception\NotImplementedException;
 use Bluz\Common\Instance;
-use Bluz\Db\Row;
+use Bluz\Db\RowInterface;
+use Bluz\Http\Exception\NotImplementedException;
 
 /**
  * Crud
@@ -39,7 +39,7 @@ abstract class AbstractCrud implements CrudInterface
     abstract public function getPrimaryKey() : array;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @throws NotImplementedException
      */
@@ -49,7 +49,7 @@ abstract class AbstractCrud implements CrudInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @throws NotImplementedException
      */
@@ -59,7 +59,7 @@ abstract class AbstractCrud implements CrudInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @throws NotImplementedException
      */
@@ -69,7 +69,7 @@ abstract class AbstractCrud implements CrudInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @throws NotImplementedException
      */
@@ -79,7 +79,7 @@ abstract class AbstractCrud implements CrudInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @throws NotImplementedException
      */
@@ -89,7 +89,7 @@ abstract class AbstractCrud implements CrudInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @throws NotImplementedException
      */
@@ -99,7 +99,7 @@ abstract class AbstractCrud implements CrudInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @throws NotImplementedException
      */
@@ -109,7 +109,7 @@ abstract class AbstractCrud implements CrudInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @throws NotImplementedException
      */
@@ -152,11 +152,11 @@ abstract class AbstractCrud implements CrudInterface
     /**
      * Filter output Row
      *
-     * @param Row $row from database
+     * @param RowInterface $row from database
      *
-     * @return Row
+     * @return RowInterface
      */
-    protected function filterRow($row) : Row
+    protected function filterRow(RowInterface $row) : RowInterface
     {
         if (empty($this->getFields())) {
             return $row;

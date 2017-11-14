@@ -170,9 +170,14 @@ abstract class Grid
      * Grid constructor
      *
      * @param array $options
+     *
+     * @throws \Bluz\Common\Exception\CommonException
      */
     public function __construct($options = null)
     {
+        // initial default helper path
+        $this->addHelperPath(__DIR__ . '/Helper/');
+
         if ($options) {
             $this->setOptions($options);
         }
@@ -184,17 +189,14 @@ abstract class Grid
         $this->init();
 
         $this->processRequest();
-
-        // initial default helper path
-        $this->addHelperPath(__DIR__ . '/Helper/');
     }
 
     /**
      * Initialize Grid
      *
-     * @return Grid
+     * @return void
      */
-    abstract public function init();
+    abstract public function init() : void;
 
     /**
      * Set source adapter
@@ -214,7 +216,7 @@ abstract class Grid
      * @return Source\AbstractSource
      * @throws GridException
      */
-    public function getAdapter()
+    public function getAdapter() : Source\AbstractSource
     {
         if (null === $this->adapter) {
             throw new GridException('Grid adapter is not initialized');
@@ -227,7 +229,7 @@ abstract class Grid
      *
      * @return string
      */
-    public function getUid()
+    public function getUid() : string
     {
         return $this->uid;
     }
@@ -237,7 +239,7 @@ abstract class Grid
      *
      * @return string
      */
-    public function getPrefix()
+    public function getPrefix() : string
     {
         return $this->prefix;
     }
@@ -319,7 +321,7 @@ abstract class Grid
         foreach ($this->allowOrders as $column) {
             $alias = $this->applyAlias($column);
             $order = Request::getParam($this->prefix . 'order-' . $alias);
-            if (!is_null($order)) {
+            if (null !== $order) {
                 $this->addOrder($column, $order);
             }
         }
@@ -337,7 +339,7 @@ abstract class Grid
                      * - http://domain.com/users/grid/users-filter-login/eq-admin   - login == admin
                      */
                     while ($filter) {
-                        list($filterName, $filterValue, $filter) = array_pad(explode('-', $filter, 3), 3, null);
+                        [$filterName, $filterValue, $filter] = array_pad(explode('-', $filter, 3), 3, null);
                         $this->addFilter($column, $filterName, $filterValue);
                     }
                 } else {
@@ -365,7 +367,12 @@ abstract class Grid
         }
 
         try {
-            $this->data = $this->getAdapter()->process($this->getSettings());
+            $this->data = $this->getAdapter()->process(
+                $this->getPage(),
+                $this->getLimit(),
+                $this->getFilters(),
+                $this->getOrders()
+            );
         } catch (\Exception $e) {
             throw new GridException('Grid Adapter can\'t process request: '. $e->getMessage());
         }
@@ -383,22 +390,6 @@ abstract class Grid
             $this->processSource();
         }
         return $this->data;
-    }
-
-    /**
-     * Get settings
-     *
-     * @return array
-     */
-    public function getSettings() : array
-    {
-        $settings = [
-            'page' => $this->getPage(),
-            'limit' => $this->getLimit(),
-            'orders' => $this->getOrders(),
-            'filters' => $this->getFilters()
-        ];
-        return $settings;
     }
 
     /**
@@ -532,7 +523,7 @@ abstract class Grid
      */
     protected function checkOrderColumn($column) : bool
     {
-        return in_array($column, $this->getAllowOrders());
+        return in_array($column, $this->getAllowOrders(), true);
     }
 
     /**
@@ -680,12 +671,8 @@ abstract class Grid
      */
     protected function checkFilterColumn($column) : bool
     {
-        if (array_key_exists($column, $this->getAllowFilters()) ||
-            in_array($column, $this->getAllowFilters(), false)
-        ) {
-            return true;
-        }
-        return false;
+        return array_key_exists($column, $this->getAllowFilters()) ||
+            in_array($column, $this->getAllowFilters(), false);
     }
 
     /**
@@ -773,7 +760,7 @@ abstract class Grid
      */
     protected function reverseAlias($alias) : string
     {
-        return array_search($alias, $this->aliases) ?: $alias;
+        return array_search($alias, $this->aliases, true) ?: $alias;
     }
 
     /**

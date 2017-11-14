@@ -12,6 +12,7 @@ namespace Bluz\Grid\Source;
 
 use Bluz\Db;
 use Bluz\Grid;
+use Bluz\Grid\Data;
 use Bluz\Proxy;
 
 /**
@@ -19,68 +20,37 @@ use Bluz\Proxy;
  *
  * @package  Bluz\Grid
  * @author   Anton Shevchuk
+ *
+ * @method   string getSource() SQL query
  */
 class SqlSource extends AbstractSource
 {
-    /**
-     * @var string SQL
-     */
-    protected $source;
-
     /**
      * Set SQL source
      *
      * @param  string $source
      *
-     * @return self
+     * @return void
      * @throws \Bluz\Grid\GridException
      */
-    public function setSource($source)
+    public function setSource($source) : void
     {
         if (!is_string($source)) {
             throw new Grid\GridException('Source of `SqlSource` should be string with SQL query');
         }
-        $this->source = $source;
-
-        return $this;
+        parent::setSource($source);
     }
 
     /**
-     * Process
-     *
-     * @param  array[] $settings
-     *
-     * @return \Bluz\Grid\Data
+     * {@inheritdoc}
      */
-    public function process(array $settings = [])
+    public function process(int $page, int $limit, array $filters = [], array $orders = []) : Data
     {
         // process filters
-        $where = [];
-        if (!empty($settings['filters'])) {
-            foreach ($settings['filters'] as $column => $filters) {
-                foreach ($filters as $filter => $value) {
-                    if ($filter === Grid\Grid::FILTER_LIKE) {
-                        $value = '%' . $value . '%';
-                    }
-                    $where[] = $column . ' ' .
-                        $this->filters[$filter] . ' ' .
-                        Proxy\Db::quote((string)$value);
-                }
-            }
-        }
+        $filters = $this->applyFilters($filters);
 
         // process orders
-        $orders = [];
-        if (!empty($settings['orders'])) {
-            // Obtain a list of columns
-            foreach ($settings['orders'] as $column => $order) {
-                $column = Proxy\Db::quoteIdentifier($column);
-                $orders[] = $column . ' ' . $order;
-            }
-        }
-
-        // process pages
-        $limit = ' LIMIT ' . ($settings['page'] - 1) * $settings['limit'] . ', ' . $settings['limit'];
+        $orders = $this->applyOrders($orders);
 
         // prepare query
         $type = Proxy\Db::getOption('connect', 'type');
@@ -93,18 +63,19 @@ class SqlSource extends AbstractSource
             // other
             $dataSql = $this->source;
             $totalSql = preg_replace('/SELECT\s(.*?)\sFROM/is', 'SELECT COUNT(*) FROM', $this->source, 1);
-            if (count($where)) {
-                $totalSql .= ' WHERE ' . implode(' AND ', $where);
+            if (count($filters)) {
+                $totalSql .= ' WHERE ' . implode(' AND ', $filters);
             }
         }
 
-        if (count($where)) {
-            $dataSql .= ' WHERE ' . implode(' AND ', $where);
+        if (count($filters)) {
+            $dataSql .= ' WHERE ' . implode(' AND ', $filters);
         }
         if (count($orders)) {
             $dataSql .= ' ORDER BY ' . implode(', ', $orders);
         }
-        $dataSql .= $limit;
+        // process pages
+        $dataSql .= ' LIMIT ' . ($page - 1) * $limit . ', ' . $limit;
 
         // run queries
         // use transaction to avoid errors
@@ -115,8 +86,49 @@ class SqlSource extends AbstractSource
             }
         );
 
-        $gridData = new Grid\Data($data);
+        $gridData = new Data($data);
         $gridData->setTotal($total);
         return $gridData;
+    }
+
+    /**
+     * Apply filters to SQL query
+     *
+     * @param  array[] $settings
+     *
+     * @return array
+     */
+    private function applyFilters(array $settings) : array
+    {
+        $where = [];
+        foreach ($settings as $column => $filters) {
+            foreach ($filters as $filter => $value) {
+                if ($filter === Grid\Grid::FILTER_LIKE) {
+                    $value = '%' . $value . '%';
+                }
+                $where[] = $column . ' ' .
+                    $this->filters[$filter] . ' ' .
+                    Proxy\Db::quote((string)$value);
+            }
+        }
+        return $where;
+    }
+
+    /**
+     * Apply order to SQL query
+     *
+     * @param  array $settings
+     *
+     * @return array
+     */
+    private function applyOrders(array $settings) : array
+    {
+        $orders = [];
+        // Obtain a list of columns
+        foreach ($settings as $column => $order) {
+            $column = Proxy\Db::quoteIdentifier($column);
+            $orders[] = $column . ' ' . $order;
+        }
+        return $orders;
     }
 }

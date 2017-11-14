@@ -10,7 +10,9 @@ declare(strict_types=1);
 
 namespace Bluz\Grid\Source;
 
+use Bluz\Grid\Data;
 use Bluz\Grid\Grid;
+use Bluz\Grid\GridException;
 
 /**
  * Adapter
@@ -39,20 +41,40 @@ abstract class AbstractSource
     ];
 
     /**
-     * Setup adapter source
+     * Process source
+     *
+     * @param int   $page
+     * @param int   $limit
+     * @param array $filters
+     * @param array $orders
+     *
+     * @return Data
+     */
+    abstract public function process(int $page, int $limit, array $filters = [], array $orders = []) : Data;
+
+    /**
+     * Setup source adapter
      *
      * @param  mixed $source
      *
-     * @return self
+     * @return void
      */
-    abstract public function setSource($source);
+    public function setSource($source) : void
+    {
+        $this->source = $source;
+    }
 
     /**
-     * Process source
+     * Get source adapter
      *
-     * @param  array $settings
-     *
-     * @return \Bluz\Grid\Data
+     * @return mixed
+     * @throws GridException
      */
-    abstract public function process(array $settings = []);
+    public function getSource()
+    {
+        if (!$this->source) {
+            throw new GridException('Source Adapter should be initialized by `setSource` method');
+        }
+        return $this->source;
+    }
 }

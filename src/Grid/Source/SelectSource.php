@@ -12,6 +12,7 @@ namespace Bluz\Grid\Source;
 
 use Bluz\Db;
 use Bluz\Grid;
+use Bluz\Grid\Data;
 use Bluz\Proxy;
 
 /**
@@ -19,77 +20,54 @@ use Bluz\Proxy;
  *
  * @package  Bluz\Grid
  * @author   Anton Shevchuk
+ *
+ * @method   Db\Query\Select getSource()
  */
 class SelectSource extends AbstractSource
 {
-    /**
-     * @var Db\Query\Select instance of select source
-     */
-    protected $source;
-
     /**
      * Set Select source
      *
      * @param  Db\Query\Select $source
      *
      * @throws Grid\GridException
-     * @return self
+     * @return void
      */
-    public function setSource($source)
+    public function setSource($source) : void
     {
         if (!$source instanceof Db\Query\Select) {
             throw new Grid\GridException('Source of `SelectSource` should be `Db\\Query\\Select` object');
         }
-        $this->source = $source;
-
-        return $this;
+        parent::setSource($source);
     }
 
     /**
-     * Process
-     *
-     * @param  array[] $settings
-     *
-     * @return \Bluz\Grid\Data
+     * {@inheritdoc}
      */
-    public function process(array $settings = [])
+    public function process(int $page, int $limit, array $filters = [], array $orders = []) : Data
     {
         // process filters
-        if (!empty($settings['filters'])) {
-            foreach ($settings['filters'] as $column => $filters) {
-                foreach ($filters as $filter => $value) {
-                    if ($filter === Grid\Grid::FILTER_LIKE) {
-                        $value = '%' . $value . '%';
-                    }
-                    $this->source->andWhere($column . ' ' . $this->filters[$filter] . ' ?', $value);
-                }
-            }
-        }
+        $this->applyFilters($filters);
 
         // process orders
-        if (!empty($settings['orders'])) {
-            // Obtain a list of columns
-            foreach ($settings['orders'] as $column => $order) {
-                $this->source->addOrderBy($column, $order);
-            }
-        }
+        $this->applyOrders($orders);
 
         // process pages
-        $this->source->setLimit($settings['limit']);
-        $this->source->setPage($settings['page']);
+        $this->getSource()->setLimit($limit);
+        $this->getSource()->setPage($page);
 
         // prepare query
         $type = Proxy\Db::getOption('connect', 'type');
 
         if (strtolower($type) === 'mysql') {
             // MySQL
-            $select = $this->source->getQueryPart('select');
-            $this->source->select('SQL_CALC_FOUND_ROWS ' . current($select));
+            $select = $this->getSource()->getQueryPart('select');
+            $this->getSource()->select('SQL_CALC_FOUND_ROWS ' . current($select));
 
             $totalSql = 'SELECT FOUND_ROWS()';
         } else {
             // other
-            $totalSource = clone $this->source;
+            $totalSource = clone $this->getSource();
             $totalSource->select('COUNT(*)');
 
             $totalSql = $totalSource->getSql();
@@ -107,8 +85,42 @@ class SelectSource extends AbstractSource
             }
         );
 
-        $gridData = new Grid\Data($data);
+        $gridData = new Data($data);
         $gridData->setTotal($total);
         return $gridData;
+    }
+
+    /**
+     * Apply filters to Select
+     *
+     * @param  array $settings
+     *
+     * @return void
+     */
+    private function applyFilters(array $settings) : void
+    {
+        foreach ($settings as $column => $filters) {
+            foreach ($filters as $filter => $value) {
+                if ($filter === Grid\Grid::FILTER_LIKE) {
+                    $value = '%' . $value . '%';
+                }
+                $this->getSource()->andWhere($column . ' ' . $this->filters[$filter] . ' ?', $value);
+            }
+        }
+    }
+
+    /**
+     * Apply order to Select
+     *
+     * @param  array $settings
+     *
+     * @return void
+     */
+    private function applyOrders(array $settings) : void
+    {
+        // Obtain a list of columns
+        foreach ($settings as $column => $order) {
+            $this->getSource()->addOrderBy($column, $order);
+        }
     }
 }

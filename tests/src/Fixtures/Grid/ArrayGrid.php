@@ -29,9 +29,9 @@ class ArrayGrid extends Grid
     /**
      * Init ArraySource
      *
-     * @return self
+     * @return void
      */
-    public function init()
+    public function init() : void
     {
         // Array
         $adapter = new ArraySource();
@@ -55,7 +55,5 @@ class ArrayGrid extends Grid
         $this->setAllowOrders(['name', 'email', 'id']);
         $this->setAllowFilters(['name', 'email', 'status', 'id']);
         $this->addAlias('id', 'index');
-
-        return $this;
     }
 }

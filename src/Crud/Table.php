@@ -96,9 +96,9 @@ class Table extends AbstractCrud
         $type = Proxy\Db::getOption('connect', 'type');
         switch ($type) {
             case 'mysql':
-                $selectPart = $select->getQueryPart('select');
-                $selectPart = 'SQL_CALC_FOUND_ROWS ' . current($selectPart);
-                $select->select($selectPart);
+                $selectPart = $select->getSelect();
+                $selectPart[0] = 'SQL_CALC_FOUND_ROWS ' . $selectPart[0];
+                $select->select(...$selectPart);
                 $totalSQL = 'SELECT FOUND_ROWS()';
                 break;
             case 'pgsql':

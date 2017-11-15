@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace Bluz\Db\Query;
 
+use Bluz\Proxy\Db;
+
 /**
  * Builder of UPDATE queries
  *
@@ -19,22 +21,23 @@ class Update extends AbstractBuilder
 {
     use Traits\Set;
     use Traits\Where;
-    use Traits\Order;
     use Traits\Limit;
 
     /**
+     * @var string Table name
+     */
+    protected $table;
+
+    /**
      * {@inheritdoc}
-     *
-     * @return string
      */
     public function getSql() : string
     {
-        $query = "UPDATE " . $this->sqlParts['from']['table']
-            . " SET " . implode(", ", $this->sqlParts['set'])
-            . ($this->sqlParts['where'] !== null ? " WHERE " . ((string)$this->sqlParts['where']) : "")
-            . ($this->limit ? " LIMIT " . $this->limit : "");
-
-        return $query;
+        return 'UPDATE '
+            . Db::quoteIdentifier($this->table)
+            . $this->prepareSet()
+            . $this->prepareWhere()
+            . $this->prepareLimit();
     }
 
     /**
@@ -54,8 +57,9 @@ class Update extends AbstractBuilder
      *
      * @return Update instance
      */
-    public function update($table)
+    public function update($table) : Update
     {
-        return $this->setFromQueryPart($table);
+        $this->table = $table;
+        return $this;
     }
 }

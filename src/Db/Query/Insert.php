@@ -22,6 +22,11 @@ class Insert extends AbstractBuilder
     use Traits\Set;
 
     /**
+     * @var string Table name
+     */
+    protected $table;
+
+    /**
      * {@inheritdoc}
      *
      * @param  null $sequence
@@ -44,11 +49,9 @@ class Insert extends AbstractBuilder
      */
     public function getSql() : string
     {
-        $query = "INSERT"
-            . " INTO " . $this->sqlParts['from']['table']
-            . " SET " . implode(", ", $this->sqlParts['set']);
-
-        return $query;
+        return 'INSERT INTO '
+            . Db::quoteIdentifier($this->table)
+            . $this->prepareSet();
     }
 
     /**
@@ -68,8 +71,9 @@ class Insert extends AbstractBuilder
      *
      * @return Insert instance
      */
-    public function insert($table)
+    public function insert($table) : Insert
     {
-        return $this->setFromQueryPart($table);
+        $this->table = $table;
+        return $this;
     }
 }

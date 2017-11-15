@@ -10,10 +10,6 @@ declare(strict_types=1);
 
 namespace Bluz\Db\Query\Traits;
 
-use Bluz\Db\Query\Delete;
-use Bluz\Db\Query\Select;
-use Bluz\Db\Query\Update;
-
 /**
  * Order Trait
  *
@@ -24,11 +20,14 @@ use Bluz\Db\Query\Update;
  *
  * @package  Bluz\Db\Query\Traits
  * @author   Anton Shevchuk
- *
- * @method   Select|Update|Delete addQueryPart(string $sqlPartName, mixed $sqlPart, $append = false)
  */
 trait Order
 {
+    /**
+     * @var array
+     */
+    protected $orderBy = [];
+
     /**
      * Specifies an ordering for the query results
      * Replaces any previously specified orderings, if any
@@ -40,8 +39,9 @@ trait Order
      */
     public function orderBy($sort, $order = 'ASC')
     {
-        $order = strtoupper($order);
-        return $this->addQueryPart('orderBy', $sort . ' ' . ('ASC' === $order ? 'ASC' : 'DESC'), false);
+        $order = 'ASC' === strtoupper($order) ? 'ASC' : 'DESC';
+        $this->orderBy = [$sort => $order];
+        return $this;
     }
 
     /**
@@ -54,7 +54,25 @@ trait Order
      */
     public function addOrderBy($sort, $order = 'ASC')
     {
-        $order = strtoupper($order);
-        return $this->addQueryPart('orderBy', $sort . ' ' . ('ASC' === $order ? 'ASC' : 'DESC'), true);
+        $order = 'ASC' === strtoupper($order) ? 'ASC' : 'DESC';
+        $this->orderBy[$sort] = $order;
+        return $this;
+    }
+
+    /**
+     * Prepare string to apply it inside SQL query
+     *
+     * @return string
+     */
+    protected function prepareOrderBy() : string
+    {
+        if (empty($this->orderBy)) {
+            return '';
+        }
+        $orders = [];
+        foreach ($this->orderBy as $column => $order) {
+            $orders[] = $column . ' ' . $order;
+        }
+        return ' ORDER BY ' . implode(', ', $orders);
     }
 }

@@ -26,6 +26,20 @@ class Select extends AbstractBuilder
     use Traits\Limit;
 
     /**
+     * <code>
+     * [
+     *     'u.id', 'u.name',
+     *     'p.id', 'p.title'
+     * ]
+     * </code>
+     *
+     * @var array[]
+     */
+    protected $select = [];
+    protected $groupBy = [];
+    protected $having = null;
+
+    /**
      * @var mixed PDO fetch types or object class
      */
     protected $fetchType = \PDO::FETCH_ASSOC;
@@ -69,31 +83,16 @@ class Select extends AbstractBuilder
 
     /**
      * {@inheritdoc}
-     *
-     * @return string
      */
     public function getSql() : string
     {
-        $query = "SELECT " . implode(', ', $this->sqlParts['select']) . " FROM ";
-
-        $fromClauses = [];
-
-        // Loop through all FROM clauses
-        foreach ($this->sqlParts['from'] as $from) {
-            $fromClause = $from['table'] . ' ' . $from['alias']
-                . $this->getSQLForJoins($from['alias']);
-
-            $fromClauses[$from['alias']] = $fromClause;
-        }
-
-        $query .= implode(', ', $fromClauses)
-            . ($this->sqlParts['where'] !== null ? " WHERE " . ((string)$this->sqlParts['where']) : "")
-            . ($this->sqlParts['groupBy'] ? " GROUP BY " . implode(", ", $this->sqlParts['groupBy']) : "")
-            . ($this->sqlParts['having'] !== null ? " HAVING " . ((string)$this->sqlParts['having']) : "")
-            . ($this->sqlParts['orderBy'] ? " ORDER BY " . implode(", ", $this->sqlParts['orderBy']) : "")
-            . ($this->limit ? " LIMIT " . $this->limit . " OFFSET " . $this->offset : "");
-
-        return $query;
+        return $this->prepareSelect()
+            . $this->prepareFrom()
+            . $this->prepareWhere()
+            . $this->prepareGroupBy()
+            . $this->prepareHaving()
+            . $this->prepareOrderBy()
+            . $this->prepareLimit();
     }
 
     /**
@@ -113,9 +112,10 @@ class Select extends AbstractBuilder
      *
      * @return Select instance
      */
-    public function select(...$select)
+    public function select(...$select) : Select
     {
-        return $this->addQueryPart('select', $select, false);
+        $this->select = $select;
+        return $this;
     }
 
     /**
@@ -131,148 +131,24 @@ class Select extends AbstractBuilder
      *         ->leftJoin('u', 'phone', 'u.id = p.user_id');
      * </code>
      *
-     * @param  string $select the selection expression
+     * @param  string[] $select the selection expression
      *
      * @return Select instance
      */
-    public function addSelect($select)
+    public function addSelect(string ...$select) : Select
     {
-        return $this->addQueryPart('select', $select, true);
+        $this->select = array_merge($this->select, $select);
+        return $this;
     }
 
     /**
-     * Creates and adds a join to the query
+     * Get current select query part
      *
-     * Example
-     * <code>
-     *     $sb = new Select();
-     *     $sb
-     *         ->select('u.name')
-     *         ->from('users', 'u')
-     *         ->join('u', 'phone', 'p', 'p.is_primary = 1');
-     * </code>
-     *
-     * @param  string $fromAlias the alias that points to a from clause
-     * @param  string $join      the table name to join
-     * @param  string $alias     the alias of the join table
-     * @param  string $condition the condition for the join
-     *
-     * @return Select instance
+     * @return array
      */
-    public function join($fromAlias, $join, $alias, $condition = null)
+    public function getSelect() : array
     {
-        return $this->innerJoin($fromAlias, $join, $alias, $condition);
-    }
-
-    /**
-     * Creates and adds a join to the query
-     *
-     * Example
-     * <code>
-     *     $sb = new Select();
-     *     $sb
-     *         ->select('u.name')
-     *         ->from('users', 'u')
-     *         ->innerJoin('u', 'phone', 'p', 'p.is_primary = 1');
-     * </code>
-     *
-     * @param  string $fromAlias the alias that points to a from clause
-     * @param  string $join      the table name to join
-     * @param  string $alias     the alias of the join table
-     * @param  string $condition the condition for the join
-     *
-     * @return Select instance
-     */
-    public function innerJoin($fromAlias, $join, $alias, $condition = null)
-    {
-        $this->aliases[] = $alias;
-
-        return $this->addQueryPart(
-            'join',
-            [
-                $fromAlias => [
-                    'joinType' => 'inner',
-                    'joinTable' => $join,
-                    'joinAlias' => $alias,
-                    'joinCondition' => $condition
-                ]
-            ],
-            true
-        );
-    }
-
-    /**
-     * Creates and adds a left join to the query.
-     *
-     * Example
-     * <code>
-     *     $sb = new Select();
-     *     $sb
-     *         ->select('u.name')
-     *         ->from('users', 'u')
-     *         ->leftJoin('u', 'phone', 'p', 'p.is_primary = 1');
-     * </code>
-     *
-     * @param  string $fromAlias the alias that points to a from clause
-     * @param  string $join      the table name to join
-     * @param  string $alias     the alias of the join table
-     * @param  string $condition the condition for the join
-     *
-     * @return Select instance
-     */
-    public function leftJoin($fromAlias, $join, $alias, $condition = null)
-    {
-        $this->aliases[] = $alias;
-
-        return $this->addQueryPart(
-            'join',
-            [
-                $fromAlias => [
-                    'joinType' => 'left',
-                    'joinTable' => $join,
-                    'joinAlias' => $alias,
-                    'joinCondition' => $condition
-                ]
-            ],
-            true
-        );
-    }
-
-    /**
-     * Creates and adds a right join to the query.
-     *
-     * Example
-     * <code>
-     *     $sb = new Select();
-     *     $sb
-     *         ->select('u.name')
-     *         ->from('users', 'u')
-     *         ->rightJoin('u', 'phone', 'p', 'p.is_primary = 1');
-     * </code>
-     *
-     * @param  string $fromAlias the alias that points to a from clause
-     * @param  string $join      the table name to join
-     * @param  string $alias     the alias of the join table
-     * @param  string $condition the condition for the join
-     *
-     * @return Select instance
-     */
-    public function rightJoin($fromAlias, $join, $alias, $condition = null)
-    {
-        $this->aliases[] = $alias;
-
-        return $this->addQueryPart(
-            'join',
-            [
-                $fromAlias => [
-                    'joinType' => 'right',
-                    'joinTable' => $join,
-                    'joinAlias' => $alias,
-                    'joinCondition' => $condition
-                ]
-            ],
-            true
-        );
+        return $this->select;
     }
 
     /**
@@ -292,13 +168,10 @@ class Select extends AbstractBuilder
      *
      * @return Select instance
      */
-    public function groupBy(...$groupBy)
+    public function groupBy(string ...$groupBy) : Select
     {
-        if (empty($groupBy)) {
-            return $this;
-        }
-
-        return $this->addQueryPart('groupBy', $groupBy, false);
+        $this->groupBy = $groupBy;
+        return $this;
     }
 
     /**
@@ -318,71 +191,66 @@ class Select extends AbstractBuilder
      *
      * @return Select instance
      */
-    public function addGroupBy(...$groupBy)
+    public function addGroupBy(string ...$groupBy) : Select
     {
-        if (empty($groupBy)) {
-            return $this;
-        }
-
-        return $this->addQueryPart('groupBy', $groupBy, true);
+        $this->groupBy = array_merge($this->groupBy, $groupBy);
+        return $this;
     }
 
     /**
      * Specifies a restriction over the groups of the query.
      * Replaces any previous having restrictions, if any
      *
-     * @param  string[] $condition the query restriction predicates
+     * @param  string[] $conditions the query restriction predicates
      *
      * @return Select
      */
-    public function having(...$condition)
+    public function having(...$conditions) : Select
     {
-        $condition = $this->prepareCondition($condition);
-        return $this->addQueryPart('having', $condition, false);
+        $this->having = $this->prepareCondition($conditions);
+        return $this;
     }
 
     /**
      * Adds a restriction over the groups of the query, forming a logical
      * conjunction with any existing having restrictions
      *
-     * @param  string[] $condition the query restriction predicates
+     * @param  string[] $conditions the query restriction predicates
      *
      * @return Select
      */
-    public function andHaving(...$condition)
+    public function andHaving(...$conditions) : Select
     {
-        $condition = $this->prepareCondition($condition);
-        $having = $this->getQueryPart('having');
+        $condition = $this->prepareCondition($conditions);
 
-        if ($having instanceof CompositeBuilder && $having->getType() == 'AND') {
-            $having->add($condition);
+        if ($this->having instanceof CompositeBuilder
+            && $this->having->getType() === 'AND') {
+            $this->having->addPart($condition);
         } else {
-            $having = new CompositeBuilder([$having, $condition]);
+            $this->having = new CompositeBuilder([$this->having, $condition]);
         }
-
-        return $this->addQueryPart('having', $having, false);
+        return $this;
     }
 
     /**
      * Adds a restriction over the groups of the query, forming a logical
      * disjunction with any existing having restrictions
      *
-     * @param  string[] $condition the query restriction predicates
+     * @param  string[] $conditions the query restriction predicates
      *
      * @return Select
      */
-    public function orHaving(...$condition)
+    public function orHaving(...$conditions) : Select
     {
-        $condition = $this->prepareCondition($condition);
-        $having = $this->getQueryPart('having');
+        $condition = $this->prepareCondition($conditions);
 
-        if ($having instanceof CompositeBuilder && $having->getType() == 'OR') {
-            $having->add($condition);
+        if ($this->having instanceof CompositeBuilder
+            && $this->having->getType() === 'OR') {
+            $this->having->addPart($condition);
         } else {
-            $having = new CompositeBuilder([$having, $condition], 'OR');
+            $this->having = new CompositeBuilder([$this->having, $condition], 'OR');
         }
-
-        return $this->addQueryPart('having', $having, false);
+        return $this;
     }
 
     /**
@@ -393,37 +261,42 @@ class Select extends AbstractBuilder
      * @return Select
      * @throws DbException
      */
-    public function setPage(int $page = 1)
+    public function setPage(int $page = 1) : Select
     {
         if (!$this->limit) {
-            throw new DbException("Please setup limit for use method `setPage`");
+            throw new DbException('Please setup limit for use method `setPage`');
         }
         $this->offset = $this->limit * ($page - 1);
         return $this;
     }
 
     /**
-     * Generate SQL string for JOINs
-     *
-     * @internal
-     *
-     * @param  string $fromAlias alias of table
+     * Prepare Select query part
      *
      * @return string
      */
-    protected function getSQLForJoins($fromAlias)
+    protected function prepareSelect() : string
     {
-        $sql = '';
+        return 'SELECT ' . implode(', ', $this->select);
+    }
 
-        if (isset($this->sqlParts['join'][$fromAlias])) {
-            foreach ($this->sqlParts['join'][$fromAlias] as $join) {
-                $sql .= ' ' . strtoupper($join['joinType'])
-                    . " JOIN " . $join['joinTable'] . ' ' . $join['joinAlias']
-                    . " ON " . ((string)$join['joinCondition']);
-                $sql .= $this->getSQLForJoins($join['joinAlias']);
-            }
-        }
+    /**
+     * prepareWhere
+     *
+     * @return string
+     */
+    protected function prepareGroupBy() : string
+    {
+        return !empty($this->groupBy) ? ' GROUP BY ' . implode(', ', $this->groupBy) : '';
+    }
 
-        return $sql;
+    /**
+     * prepareWhere
+     *
+     * @return string
+     */
+    protected function prepareHaving() : string
+    {
+        return $this->having ? ' HAVING ' . $this->having : '';
     }
 }

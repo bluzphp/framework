@@ -10,8 +10,6 @@ declare(strict_types=1);
 
 namespace Bluz\Db\Query\Traits;
 
-use Bluz\Db\Query\Insert;
-use Bluz\Db\Query\Update;
 use Bluz\Proxy\Db;
 
 /**
@@ -23,12 +21,21 @@ use Bluz\Proxy\Db;
  *
  * @package  Bluz\Db\Query\Traits
  * @author   Anton Shevchuk
- *
- * @method   Insert|Update addQueryPart(string $sqlPartName, mixed $sqlPart, $append = false)
- * @method   Insert|Update setParameter(string|null $key, mixed $value, $type = \PDO::PARAM_STR)
  */
 trait Set
 {
+    /**
+     * <code>
+     * [
+     *     '`firstName` = ?',
+     *     '`lastName` = ?'
+     * ]
+     * </code>
+     *
+     * @var array
+     */
+    protected $set = [];
+
     /**
      * Set key-value pair
      *
@@ -48,9 +55,9 @@ trait Set
      */
     public function set($key, $value)
     {
-        $this->setParameter(null, $value, \PDO::PARAM_STR);
-        $key = Db::quoteIdentifier($key);
-        return $this->addQueryPart('set', $key . ' = ?', true);
+        $this->setParam(null, $value, \PDO::PARAM_STR);
+        $this->set[] = Db::quoteIdentifier($key) . ' = ?';
+        return $this;
     }
 
     /**
@@ -77,5 +84,15 @@ trait Set
             $this->set($key, $value);
         }
         return $this;
+    }
+
+    /**
+     * Prepare string to apply it inside SQL query
+     *
+     * @return string
+     */
+    protected function prepareSet() : string
+    {
+        return ' SET ' . implode(', ', $this->set);
     }
 }

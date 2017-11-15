@@ -334,10 +334,10 @@ class Db
      * @param  array  $params  params for query placeholders (optional)
      *                         array (':name' => 'John', ':pass' => '123456')
      *
-     * @return string
+     * @return string|false
      * @throws DbException
      */
-    public function fetchOne(string $sql, array $params = []) : string
+    public function fetchOne(string $sql, array $params = [])
     {
         $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetch(\PDO::FETCH_COLUMN);
@@ -361,10 +361,10 @@ class Db
      * @param  array  $params  params for query placeholders (optional)
      *                         array (':name' => 'John', ':pass' => '123456')
      *
-     * @return array           array ('name' => 'John', 'email' => 'john@smith.com')
+     * @return array|false     array ('name' => 'John', 'email' => 'john@smith.com')
      * @throws DbException
      */
-    public function fetchRow(string $sql, array $params = []) : array
+    public function fetchRow(string $sql, array $params = [])
     {
         $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
@@ -386,10 +386,10 @@ class Db
      * @param  array  $params params for query placeholders (optional)
      *                        array (':ip' => '127.0.0.1')
      *
-     * @return array[]
+     * @return array[]|false
      * @throws DbException
      */
-    public function fetchAll(string $sql, array $params = []) : array
+    public function fetchAll(string $sql, array $params = [])
     {
         $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -406,10 +406,10 @@ class Db
      * @param  array  $params params for query placeholders (optional)
      *                        array (':ip' => '127.0.0.1')
      *
-     * @return array
+     * @return array|false
      * @throws DbException
      */
-    public function fetchColumn(string $sql, array $params = []) : array
+    public function fetchColumn(string $sql, array $params = [])
     {
         $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetchAll(\PDO::FETCH_COLUMN);
@@ -432,10 +432,10 @@ class Db
      * @param  array  $params params for query placeholders (optional)
      * @param  mixed  $object
      *
-     * @return array
+     * @return array|false
      * @throws DbException
      */
-    public function fetchGroup(string $sql, array $params = [], $object = null) : array
+    public function fetchGroup(string $sql, array $params = [], $object = null)
     {
         $stmt = $this->prepare($sql, $params);
 
@@ -458,10 +458,10 @@ class Db
      *                        "SELECT ip, id FROM users"
      * @param  array  $params params for query placeholders (optional)
      *
-     * @return array
+     * @return array|false
      * @throws DbException
      */
-    public function fetchColumnGroup(string $sql, array $params = []) : array
+    public function fetchColumnGroup(string $sql, array $params = [])
     {
         $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetchAll(\PDO::FETCH_COLUMN | \PDO::FETCH_GROUP);
@@ -479,10 +479,10 @@ class Db
      *                        "SELECT email, name, sex FROM users"
      * @param  array  $params params for query placeholders (optional)
      *
-     * @return array
+     * @return array|false
      * @throws DbException
      */
-    public function fetchUniqueGroup(string $sql, array $params = []) : array
+    public function fetchUniqueGroup(string $sql, array $params = [])
     {
         $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetchAll(\PDO::FETCH_UNIQUE | \PDO::FETCH_ASSOC | \PDO::FETCH_GROUP);
@@ -499,10 +499,10 @@ class Db
      * @param  array  $params params for query placeholders (optional)
      *                        array (':ip' => '127.0.0.1')
      *
-     * @return array
+     * @return array|false
      * @throws DbException
      */
-    public function fetchPairs(string $sql, array $params = []) : array
+    public function fetchPairs(string $sql, array $params = [])
     {
         $stmt = $this->prepare($sql, $params);
         $result = $stmt->fetchAll(\PDO::FETCH_KEY_PAIR);
@@ -560,10 +560,10 @@ class Db
      *                        array (':name' => 'John', ':pass' => '123456')
      * @param  mixed  $object Class name or instance
      *
-     * @return array
+     * @return array|false
      * @throws DbException
      */
-    public function fetchObjects(string $sql, array $params = [], $object = null) : array
+    public function fetchObjects(string $sql, array $params = [], $object = null)
     {
         $stmt = $this->prepare($sql, $params);
 
@@ -591,10 +591,10 @@ class Db
      * @param  array  $params params for query placeholders (optional)
      *                        array (':name' => 'John')
      *
-     * @return array
+     * @return array|false
      * @throws DbException
      */
-    public function fetchRelations(string $sql, array $params = []) : array
+    public function fetchRelations(string $sql, array $params = [])
     {
         $stmt = $this->prepare($sql, $params);
 

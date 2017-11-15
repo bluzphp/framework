@@ -61,8 +61,9 @@ class SelectSource extends AbstractSource
 
         if (strtolower($type) === 'mysql') {
             // MySQL
-            $select = $this->getSource()->getQueryPart('select');
-            $this->getSource()->select('SQL_CALC_FOUND_ROWS ' . current($select));
+            $selectPart = $this->getSource()->getSelect();
+            $selectPart[0] = 'SQL_CALC_FOUND_ROWS ' . $selectPart[0];
+            $this->getSource()->select(...$selectPart);
 
             $totalSql = 'SELECT FOUND_ROWS()';
         } else {

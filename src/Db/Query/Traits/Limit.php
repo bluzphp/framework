@@ -36,12 +36,12 @@ trait Limit
     /**
      * Sets the maximum number of results to retrieve/update/delete
      *
-     * @param  integer $limit The maximum number of results to retrieve
-     * @param  integer $offset
+     * @param  integer $limit  The maximum number of results to retrieve
+     * @param  integer $offset The offset of the query
      *
      * @return $this
      */
-    public function limit($limit, $offset = 0)
+    public function limit(int $limit, int $offset = 0)
     {
         $this->setLimit($limit);
         $this->setOffset($offset);

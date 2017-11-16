@@ -48,14 +48,15 @@ trait Set
      *         ->where('id = ?');
      * </code>
      *
-     * @param  string $key   The column to set
-     * @param  string $value The value, expression, placeholder, etc
+     * @param  string         $key   The column to set
+     * @param  string|integer $value The value, expression, placeholder, etc
+     * @param  int            $type  The type of value on of PDO::PARAM_* params
      *
      * @return $this
      */
-    public function set($key, $value)
+    public function set(string $key, $value, $type = \PDO::PARAM_STR)
     {
-        $this->setParam(null, $value, \PDO::PARAM_STR);
+        $this->setParam(null, $value, $type);
         $this->set[] = Db::quoteIdentifier($key) . ' = ?';
         return $this;
     }

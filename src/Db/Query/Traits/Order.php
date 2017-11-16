@@ -37,7 +37,7 @@ trait Order
      *
      * @return $this
      */
-    public function orderBy($sort, $order = 'ASC')
+    public function orderBy(string $sort, string $order = 'ASC')
     {
         $order = 'ASC' === strtoupper($order) ? 'ASC' : 'DESC';
         $this->orderBy = [$sort => $order];
@@ -52,7 +52,7 @@ trait Order
      *
      * @return $this
      */
-    public function addOrderBy($sort, $order = 'ASC')
+    public function addOrderBy(string $sort, string $order = 'ASC')
     {
         $order = 'ASC' === strtoupper($order) ? 'ASC' : 'DESC';
         $this->orderBy[$sort] = $order;

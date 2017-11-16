@@ -71,7 +71,7 @@ trait Options
      *
      * @return void
      */
-    public function setOption($key, $value)
+    public function setOption($key, $value) : void
     {
         $method = 'set' . Str::toCamelCase($key);
         if (method_exists($this, $method)) {
@@ -86,7 +86,7 @@ trait Options
      *
      * @return array
      */
-    public function getOptions(): array
+    public function getOptions() : array
     {
         return $this->options;
     }
@@ -100,9 +100,9 @@ trait Options
      *
      * @param  array $options
      *
-     * @return self
+     * @return void
      */
-    public function setOptions(array $options = null)
+    public function setOptions(array $options = null) : void
     {
         // store options by default
         $this->options = (array)$options;
@@ -114,8 +114,6 @@ trait Options
 
         // check and initialize options
         $this->initOptions();
-
-        return $this;
     }
 
     /**
@@ -124,7 +122,7 @@ trait Options
      * @throws \Bluz\Config\ConfigException
      * @return void
      */
-    protected function initOptions()
+    protected function initOptions() : void
     {
     }
 }

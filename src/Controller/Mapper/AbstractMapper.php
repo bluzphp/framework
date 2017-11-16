@@ -11,15 +11,15 @@ declare(strict_types=1);
 namespace Bluz\Controller\Mapper;
 
 use Bluz\Application\Application;
-use Bluz\Application\Exception\ForbiddenException;
-use Bluz\Application\Exception\NotAcceptableException;
-use Bluz\Application\Exception\NotAllowedException;
-use Bluz\Application\Exception\NotImplementedException;
 use Bluz\Common\Exception\CommonException;
 use Bluz\Common\Exception\ComponentException;
 use Bluz\Controller\Controller;
 use Bluz\Controller\ControllerException;
 use Bluz\Crud\AbstractCrud;
+use Bluz\Http\Exception\ForbiddenException;
+use Bluz\Http\Exception\NotAcceptableException;
+use Bluz\Http\Exception\NotAllowedException;
+use Bluz\Http\Exception\NotImplementedException;
 use Bluz\Http\RequestMethod;
 use Bluz\Proxy\Acl;
 use Bluz\Proxy\Request;
@@ -110,9 +110,9 @@ abstract class AbstractMapper
     /**
      * Add mapping data
      *
-     * @param string $method
-     * @param string $module
-     * @param string $controller
+     * @param  string $method
+     * @param  string $module
+     * @param  string $controller
      * @return Link
      */
     public function addMap($method, $module, $controller) : Link
@@ -123,9 +123,12 @@ abstract class AbstractMapper
     /**
      * Add param to data, for example - setup foreign keys on fly
      *
+     * @param  string $name
+     * @param  string $value
+     *
      * @return void
      */
-    public function addParam($name, $value)
+    public function addParam($name, $value) : void
     {
         $this->data[$name] = $value;
     }
@@ -133,8 +136,8 @@ abstract class AbstractMapper
     /**
      * Add mapping for HEAD method
      *
-     * @param string $module
-     * @param string $controller
+     * @param  string $module
+     * @param  string $controller
      * @return Link
      */
     public function head($module, $controller) : Link
@@ -149,7 +152,7 @@ abstract class AbstractMapper
      * @param string $controller
      * @return Link
      */
-    public function get($module, $controller) : Link
+    public function get(string $module, string $controller) : Link
     {
         return $this->addMap(RequestMethod::GET, $module, $controller);
     }
@@ -157,11 +160,11 @@ abstract class AbstractMapper
     /**
      * Add mapping for POST method
      *
-     * @param string $module
-     * @param string $controller
+     * @param  string $module
+     * @param  string $controller
      * @return Link
      */
-    public function post($module, $controller) : Link
+    public function post(string $module, string $controller) : Link
     {
         return $this->addMap(RequestMethod::POST, $module, $controller);
     }
@@ -169,11 +172,11 @@ abstract class AbstractMapper
     /**
      * Add mapping for PATCH method
      *
-     * @param string $module
-     * @param string $controller
+     * @param  string $module
+     * @param  string $controller
      * @return Link
      */
-    public function patch($module, $controller) : Link
+    public function patch(string $module, string $controller) : Link
     {
         return $this->addMap(RequestMethod::PATCH, $module, $controller);
     }
@@ -181,11 +184,11 @@ abstract class AbstractMapper
     /**
      * Add mapping for PUT method
      *
-     * @param string $module
-     * @param string $controller
+     * @param  string $module
+     * @param  string $controller
      * @return Link
      */
-    public function put($module, $controller) : Link
+    public function put(string $module, string $controller) : Link
     {
         return $this->addMap(RequestMethod::PUT, $module, $controller);
     }
@@ -193,11 +196,11 @@ abstract class AbstractMapper
     /**
      * Add mapping for DELETE method
      *
-     * @param string $module
-     * @param string $controller
+     * @param  string $module
+     * @param  string $controller
      * @return Link
      */
-    public function delete($module, $controller) : Link
+    public function delete(string $module, string $controller) : Link
     {
         return $this->addMap(RequestMethod::DELETE, $module, $controller);
     }
@@ -205,11 +208,11 @@ abstract class AbstractMapper
     /**
      * Add mapping for OPTIONS method
      *
-     * @param string $module
-     * @param string $controller
+     * @param  string $module
+     * @param  string $controller
      * @return Link
      */
-    public function options($module, $controller) : Link
+    public function options(string $module, string $controller) : Link
     {
         return $this->addMap(RequestMethod::OPTIONS, $module, $controller);
     }
@@ -218,8 +221,12 @@ abstract class AbstractMapper
      * Run
      *
      * @return Controller
+     * @throws ComponentException
+     * @throws CommonException
      * @throws ControllerException
      * @throws ForbiddenException
+     * @throws NotAllowedException
+     * @throws NotAcceptableException
      * @throws NotImplementedException
      */
     public function run() : Controller
@@ -231,9 +238,9 @@ abstract class AbstractMapper
     /**
      * Prepare request for processing
      *
-     * @throws \Bluz\Controller\ControllerException
+     * @throws ControllerException
      */
-    protected function prepareRequest()
+    protected function prepareRequest() : void
     {
         // HTTP method
         $method = Request::getMethod();
@@ -258,6 +265,7 @@ abstract class AbstractMapper
         $this->data = array_merge($data, $this->data);
 
         $primary = $this->crud->getPrimaryKey();
+
         $this->primary = array_intersect_key($this->data, array_flip($primary));
     }
 

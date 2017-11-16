@@ -32,7 +32,7 @@ trait Container
      *
      * @return void
      */
-    protected function doSetContainer($key, $value)
+    protected function doSetContainer($key, $value) : void
     {
         $this->container[$key] = $value;
     }
@@ -59,7 +59,7 @@ trait Container
      *
      * @return bool
      */
-    protected function doContainsContainer($key): bool
+    protected function doContainsContainer($key) : bool
     {
         return array_key_exists($key, $this->container);
     }
@@ -71,7 +71,7 @@ trait Container
      *
      * @return void
      */
-    protected function doDeleteContainer($key)
+    protected function doDeleteContainer($key) : void
     {
         unset($this->container[$key]);
     }
@@ -81,14 +81,13 @@ trait Container
      *
      * @param  array $data
      *
-     * @return self
+     * @return void
      */
-    public function setFromArray(array $data)
+    public function setFromArray(array $data) : void
     {
         foreach ($data as $key => $value) {
             $this->container[$key] = $value;
         }
-        return $this;
     }
 
     /**
@@ -96,7 +95,7 @@ trait Container
      *
      * @return array
      */
-    public function toArray(): array
+    public function toArray() : array
     {
         return $this->container;
     }
@@ -104,13 +103,12 @@ trait Container
     /**
      * Reset container array
      *
-     * @return self
+     * @return void
      */
-    public function resetArray()
+    public function resetArray() : void
     {
         foreach ($this->container as &$value) {
             $value = null;
         }
-        return $this;
     }
 }

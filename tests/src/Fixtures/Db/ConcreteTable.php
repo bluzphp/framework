@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace Bluz\Tests\Fixtures\Db;
 
 use Bluz\Db\Table;
+use Bluz\Db\Traits\TableRelations;
 
 /**
  * Concrete realization of Table class.
@@ -20,6 +21,8 @@ use Bluz\Db\Table;
  */
 class ConcreteTable extends Table
 {
+    use TableRelations;
+
     protected $name = 'foo';
     protected $primary = ['bar', 'baz'];
     protected $rowClass = 'ConcreteRow';

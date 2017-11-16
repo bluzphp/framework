@@ -103,7 +103,7 @@ class TableTest extends FrameworkTestCase
     /**
      * Method readOne with invalid $primary should throw exception
      *
-     * @expectedException \Bluz\Application\Exception\NotFoundException
+     * @expectedException \Bluz\Http\Exception\NotFoundException
      */
     public function testReadOneWithInvalidPrimary()
     {
@@ -168,7 +168,7 @@ class TableTest extends FrameworkTestCase
     /**
      * Method UpdateOne with invalid primary should throw exception
      *
-     * @expectedException \Bluz\Application\Exception\NotFoundException
+     * @expectedException \Bluz\Http\Exception\NotFoundException
      */
     public function testUpdateOneWithInvalidPrimary()
     {
@@ -194,7 +194,7 @@ class TableTest extends FrameworkTestCase
     /**
      * Method DeleteOne with invalid primary should throw exception
      *
-     * @expectedException \Bluz\Application\Exception\NotFoundException
+     * @expectedException \Bluz\Http\Exception\NotFoundException
      */
     public function testDeleteOneWithInvalidPrimary()
     {

@@ -28,25 +28,6 @@ abstract class AbstractBuilder
     protected $aliases = [];
 
     /**
-     * @var string the complete SQL string for this query
-     */
-    protected $sql;
-
-    /**
-     * @var array the array of SQL parts collected
-     */
-    protected $sqlParts = [
-        'select' => [],
-        'from' => [],
-        'join' => [],
-        'set' => [],
-        'where' => null,
-        'groupBy' => [],
-        'having' => null,
-        'orderBy' => []
-    ];
-
-    /**
      * @var array the query parameters
      */
     protected $params = [];
@@ -55,6 +36,11 @@ abstract class AbstractBuilder
      * @var array the parameter type map of this query
      */
     protected $types = [];
+
+    /**
+     * @var string the complete SQL string for this query
+     */
+    protected $sql;
 
     /**
      * Execute this query using the bound parameters and their types
@@ -104,7 +90,19 @@ abstract class AbstractBuilder
         $sql = str_replace(['%', '?'], ['%%', '"%s"'], $sql);
 
         // replace mask by data
-        return vsprintf($sql, $this->getParameters());
+        return vsprintf($sql, $this->getParams());
+    }
+
+    /**
+     * Gets a (previously set) query parameter of the query being constructed
+     *
+     * @param  mixed $key The key (index or name) of the bound parameter
+     *
+     * @return mixed The value of the bound parameter.
+     */
+    public function getParam($key)
+    {
+        return $this->params[$key] ?? null;
     }
 
     /**
@@ -124,9 +122,9 @@ abstract class AbstractBuilder
      * @param  mixed      $value The parameter value
      * @param  integer    $type  PDO::PARAM_*
      *
-     * @return $this
+     * @return self
      */
-    public function setParameter($key, $value, $type = \PDO::PARAM_STR)
+    public function setParam($key, $value, $type = \PDO::PARAM_STR)
     {
         if (null === $key) {
             $key = count($this->params);
@@ -136,6 +134,16 @@ abstract class AbstractBuilder
         $this->types[$key] = $type;
 
         return $this;
+    }
+
+    /**
+     * Gets all defined query parameters for the query being constructed
+     *
+     * @return array The currently defined query parameters
+     */
+    public function getParams() : array
+    {
+        return $this->params;
     }
 
     /**
@@ -157,118 +165,14 @@ abstract class AbstractBuilder
      * @param  array $params The query parameters to set
      * @param  array $types  The query parameters types to set
      *
-     * @return $this
+     * @return self
      */
-    public function setParameters(array $params, array $types = [])
+    public function setParams(array $params, array $types = [])
     {
         $this->types = $types;
         $this->params = $params;
 
         return $this;
-    }
-
-    /**
-     * Gets a (previously set) query parameter of the query being constructed
-     *
-     * @param  mixed $key The key (index or name) of the bound parameter
-     *
-     * @return mixed The value of the bound parameter.
-     */
-    public function getParameter($key)
-    {
-        return $this->params[$key] ?? null;
-    }
-
-    /**
-     * Gets all defined query parameters for the query being constructed
-     *
-     * @return array The currently defined query parameters
-     */
-    public function getParameters() : array
-    {
-        return $this->params;
-    }
-
-    /**
-     * Either appends to or replaces a single, generic query part
-     *
-     * The available parts are: 'select', 'from', 'set', 'where',
-     * 'groupBy', 'having' and 'orderBy'
-     *
-     * @param  string       $sqlPartName
-     * @param  string|array $sqlPart
-     * @param  bool         $append
-     *
-     * @return $this
-     */
-    protected function addQueryPart($sqlPartName, $sqlPart, $append = false)
-    {
-        $isArray = is_array($sqlPart);
-        $isMultiple = is_array($this->sqlParts[$sqlPartName]);
-
-        if ($isMultiple && !$isArray) {
-            $sqlPart = [$sqlPart];
-        }
-
-        if ($append) {
-            if ($sqlPartName === 'orderBy' || $sqlPartName === 'groupBy'
-                || $sqlPartName === 'select' || $sqlPartName === 'set'
-            ) {
-                foreach ((array)$sqlPart as $part) {
-                    $this->sqlParts[$sqlPartName][] = $part;
-                }
-            } elseif ($isArray && is_array($sqlPart[key($sqlPart)])) {
-                $key = key($sqlPart);
-                $this->sqlParts[$sqlPartName][$key][] = $sqlPart[$key];
-            } elseif ($isMultiple) {
-                $this->sqlParts[$sqlPartName][] = $sqlPart;
-            } else {
-                $this->sqlParts[$sqlPartName] = $sqlPart;
-            }
-        } else {
-            $this->sqlParts[$sqlPartName] = $sqlPart;
-        }
-        return $this;
-    }
-
-    /**
-     * Get a query part by its name
-     *
-     * @param  string $queryPartName
-     *
-     * @return mixed
-     */
-    public function getQueryPart($queryPartName)
-    {
-        return $this->sqlParts[$queryPartName];
-    }
-
-    /**
-     * Reset single SQL part
-     *
-     * @param  string $queryPartName
-     *
-     * @return $this
-     */
-    protected function resetQueryPart($queryPartName)
-    {
-        $this->sqlParts[$queryPartName] = is_array($this->sqlParts[$queryPartName])
-            ? [] : null;
-
-        return $this;
-    }
-
-    /**
-     * setFromQueryPart
-     *
-     * @param  string $table
-     *
-     * @return $this
-     */
-    protected function setFromQueryPart($table)
-    {
-        $table = Db::quoteIdentifier($table);
-        return $this->addQueryPart('from', ['table' => $table], false);
     }
 
     /**
@@ -282,7 +186,7 @@ abstract class AbstractBuilder
      *
      * @return string
      */
-    protected function prepareCondition($args = [])
+    protected function prepareCondition(array $args = []) : string
     {
         $condition = array_shift($args);
         foreach ($args as &$value) {
@@ -290,12 +194,13 @@ abstract class AbstractBuilder
                 $replace = implode(',', array_fill(0, count($value), ':REPLACE:'));
                 $condition = preg_replace('/\?/', $replace, $condition, 1);
                 foreach ($value as $part) {
-                    $this->setParameter(null, $part);
+                    $this->setParam(null, $part);
                 }
             } else {
-                $this->setParameter(null, $value);
+                $this->setParam(null, $value);
             }
         }
+        unset($value);
 
         $condition = preg_replace('/(\:REPLACE\:)/', '?', $condition);
 

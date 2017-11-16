@@ -24,9 +24,9 @@ interface ViewInterface
      * Example of usage
      *     $view->getPath();
      *
-     * @return ViewInterface
+     * @return string
      */
-    public function getPath();
+    public function getPath() : ?string;
 
     /**
      * Setup path to templates
@@ -36,9 +36,9 @@ interface ViewInterface
      *
      * @param  string $path
      *
-     * @return ViewInterface
+     * @return void
      */
-    public function setPath($path);
+    public function setPath($path) : void;
 
     /**
      * Get template
@@ -46,9 +46,9 @@ interface ViewInterface
      * Example of usage
      *     $view->getTemplate();
      *
-     * @return ViewInterface
+     * @return string
      */
-    public function getTemplate();
+    public function getTemplate() : ?string;
 
     /**
      * Setup template
@@ -58,23 +58,23 @@ interface ViewInterface
      *
      * @param  string $file
      *
-     * @return ViewInterface
+     * @return void
      */
-    public function setTemplate($file);
+    public function setTemplate($file) : void;
 
     /**
      * Merge data from array
      *
      * @param  array $data
      *
-     * @return ViewInterface
+     * @return void
      */
-    public function setFromArray(array $data);
+    public function setFromArray(array $data) : void;
 
     /**
      * Get data as array
      *
      * @return array
      */
-    public function toArray();
+    public function toArray() : array;
 }

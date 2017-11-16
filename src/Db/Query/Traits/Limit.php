@@ -10,10 +10,6 @@ declare(strict_types=1);
 
 namespace Bluz\Db\Query\Traits;
 
-use Bluz\Db\Query\Delete;
-use Bluz\Db\Query\Select;
-use Bluz\Db\Query\Update;
-
 /**
  * Limit Trait
  *
@@ -40,12 +36,12 @@ trait Limit
     /**
      * Sets the maximum number of results to retrieve/update/delete
      *
-     * @param  integer $limit The maximum number of results to retrieve
-     * @param  integer $offset
+     * @param  integer $limit  The maximum number of results to retrieve
+     * @param  integer $offset The offset of the query
      *
      * @return $this
      */
-    public function limit($limit, $offset = 0)
+    public function limit(int $limit, int $offset = 0)
     {
         $this->setLimit($limit);
         $this->setOffset($offset);
@@ -76,5 +72,15 @@ trait Limit
     {
         $this->offset = (int)$offset;
         return $this;
+    }
+
+    /**
+     * Prepare string to apply limit inside SQL query
+     *
+     * @return string
+     */
+    protected function prepareLimit() : string
+    {
+        return $this->limit ? ' LIMIT ' . $this->limit . ' OFFSET ' . $this->offset : '';
     }
 }

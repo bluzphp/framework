@@ -39,7 +39,7 @@ trait Helper
      * @return void
      * @throws CommonException
      */
-    public function addHelperPath(string $path)
+    public function addHelperPath(string $path) : void
     {
         $class = static::class;
         $realPath = realpath($path);
@@ -53,7 +53,7 @@ trait Helper
             static::$helpersPath[$class] = [];
         }
 
-        if (!in_array($realPath, static::$helpersPath[$class])) {
+        if (!in_array($realPath, static::$helpersPath[$class], true)) {
             static::$helpersPath[$class][] = $realPath;
         }
     }
@@ -89,7 +89,7 @@ trait Helper
      * @return void
      * @throws CommonException
      */
-    private function loadHelper(string $name)
+    private function loadHelper(string $name) : void
     {
         $class = static::class;
 
@@ -118,7 +118,7 @@ trait Helper
      * @return void
      * @throws CommonException
      */
-    private function addHelper(string $name, string $path)
+    private function addHelper(string $name, string $path) : void
     {
         $class = static::class;
 

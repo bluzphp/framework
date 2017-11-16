@@ -11,9 +11,6 @@ declare(strict_types=1);
 namespace Bluz\Db\Query\Traits;
 
 use Bluz\Db\Query\CompositeBuilder;
-use Bluz\Db\Query\Delete;
-use Bluz\Db\Query\Select;
-use Bluz\Db\Query\Update;
 
 /**
  * Order Trait
@@ -25,13 +22,14 @@ use Bluz\Db\Query\Update;
  *
  * @package  Bluz\Db\Query\Traits
  * @author   Anton Shevchuk
- *
- * @method   Select|Update|Delete addQueryPart(string $sqlPartName, mixed $sqlPart, $append = 'true')
- * @method   mixed getQueryPart(string $queryPartName)
- * @method   string prepareCondition($args = [])
  */
 trait Where
 {
+    /**
+     * @var string|CompositeBuilder|null
+     */
+    protected $where = null;
+
     /**
      * Set WHERE condition
      *
@@ -46,15 +44,14 @@ trait Where
      *      ;
      * </code>
      *
-     * @param  string[] ...$conditions optional the query restriction predicates
+     * @param  string[] $conditions optional the query restriction predicates
      *
      * @return $this
      */
     public function where(...$conditions)
     {
-        $condition = $this->prepareCondition($conditions);
-
-        return $this->addQueryPart('where', $condition, false);
+        $this->where = $this->prepareCondition($conditions);
+        return $this;
     }
 
     /**
@@ -71,7 +68,7 @@ trait Where
      *         ->andWhere('u.is_active = ?', 1);
      * </code>
      *
-     * @param  string[] ...$conditions Optional the query restriction predicates
+     * @param  string[] $conditions Optional the query restriction predicates
      *
      * @return $this
      */
@@ -79,14 +76,13 @@ trait Where
     {
         $condition = $this->prepareCondition($conditions);
 
-        $where = $this->getQueryPart('where');
-
-        if ($where instanceof CompositeBuilder && $where->getType() === 'AND') {
-            $where->add($condition);
+        if ($this->where instanceof CompositeBuilder
+            && $this->where->getType() === 'AND') {
+            $this->where->addPart($condition);
         } else {
-            $where = new CompositeBuilder([$where, $condition]);
+            $this->where = new CompositeBuilder([$this->where, $condition]);
         }
-        return $this->addQueryPart('where', $where, false);
+        return $this;
     }
 
     /**
@@ -103,7 +99,7 @@ trait Where
      *         ->orWhere('u.id = ?', 2);
      * </code>
      *
-     * @param  string[] ...$conditions Optional the query restriction predicates
+     * @param  string[] $conditions Optional the query restriction predicates
      *
      * @return $this
      */
@@ -111,13 +107,22 @@ trait Where
     {
         $condition = $this->prepareCondition($conditions);
 
-        $where = $this->getQueryPart('where');
-
-        if ($where instanceof CompositeBuilder && $where->getType() === 'OR') {
-            $where->add($condition);
+        if ($this->where instanceof CompositeBuilder
+            && $this->where->getType() === 'OR') {
+            $this->where->addPart($condition);
         } else {
-            $where = new CompositeBuilder([$where, $condition], 'OR');
+            $this->where = new CompositeBuilder([$this->where, $condition], 'OR');
         }
-        return $this->addQueryPart('where', $where, false);
+        return $this;
+    }
+
+    /**
+     * prepareWhere
+     *
+     * @return string
+     */
+    protected function prepareWhere() : string
+    {
+        return $this->where ? ' WHERE ' . $this->where : '';
     }
 }

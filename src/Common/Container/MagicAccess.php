@@ -31,7 +31,7 @@ trait MagicAccess
      *
      * @return void
      */
-    public function __set($key, $value)
+    public function __set($key, $value) : void
     {
         $this->doSetContainer($key, $value);
     }
@@ -55,7 +55,7 @@ trait MagicAccess
      *
      * @return bool
      */
-    public function __isset($key)
+    public function __isset($key) : bool
     {
         return $this->doContainsContainer($key);
     }
@@ -67,7 +67,7 @@ trait MagicAccess
      *
      * @return void
      */
-    public function __unset($key)
+    public function __unset($key) : void
     {
         $this->doDeleteContainer($key);
     }

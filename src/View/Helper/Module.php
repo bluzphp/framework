@@ -22,7 +22,7 @@ use Bluz\Proxy\Request;
  */
 return
     function ($module = null) {
-        if (is_null($module)) {
+        if (null === $module) {
             return Request::getModule();
         }
         return Request::getModule() === $module;

@@ -10,8 +10,9 @@ declare(strict_types=1);
 
 namespace Bluz\Crud;
 
-use Bluz\Application\Exception\NotImplementedException;
-use Bluz\Db\Row;
+use Bluz\Common\Instance;
+use Bluz\Db\RowInterface;
+use Bluz\Http\Exception\NotImplementedException;
 
 /**
  * Crud
@@ -22,6 +23,8 @@ use Bluz\Db\Row;
  */
 abstract class AbstractCrud implements CrudInterface
 {
+    use Instance;
+
     /**
      * @var array Fields for action
      * @todo should be different for Create, Read and Update
@@ -33,24 +36,10 @@ abstract class AbstractCrud implements CrudInterface
      *
      * @return array
      */
-    abstract public function getPrimaryKey();
+    abstract public function getPrimaryKey() : array;
 
     /**
-     * Get CRUD Instance
-     *
-     * @return static
-     */
-    public static function getInstance()
-    {
-        static $instance;
-        if (null === $instance) {
-            $instance = new static();
-        }
-        return $instance;
-    }
-
-    /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @throws NotImplementedException
      */
@@ -60,7 +49,7 @@ abstract class AbstractCrud implements CrudInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @throws NotImplementedException
      */
@@ -70,7 +59,7 @@ abstract class AbstractCrud implements CrudInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @throws NotImplementedException
      */
@@ -80,7 +69,7 @@ abstract class AbstractCrud implements CrudInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @throws NotImplementedException
      */
@@ -90,7 +79,7 @@ abstract class AbstractCrud implements CrudInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @throws NotImplementedException
      */
@@ -100,7 +89,7 @@ abstract class AbstractCrud implements CrudInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @throws NotImplementedException
      */
@@ -110,7 +99,7 @@ abstract class AbstractCrud implements CrudInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @throws NotImplementedException
      */
@@ -120,7 +109,7 @@ abstract class AbstractCrud implements CrudInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @throws NotImplementedException
      */
@@ -132,7 +121,7 @@ abstract class AbstractCrud implements CrudInterface
     /**
      * @return array
      */
-    public function getFields(): array
+    public function getFields() : array
     {
         return $this->fields;
     }
@@ -140,7 +129,7 @@ abstract class AbstractCrud implements CrudInterface
     /**
      * @param array $fields
      */
-    public function setFields(array $fields)
+    public function setFields(array $fields) : void
     {
         $this->fields = $fields;
     }
@@ -163,11 +152,11 @@ abstract class AbstractCrud implements CrudInterface
     /**
      * Filter output Row
      *
-     * @param Row $row from database
+     * @param RowInterface $row from database
      *
-     * @return Row
+     * @return RowInterface
      */
-    protected function filterRow($row)
+    protected function filterRow(RowInterface $row) : RowInterface
     {
         if (empty($this->getFields())) {
             return $row;

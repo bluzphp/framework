@@ -30,9 +30,9 @@ class EventManager
      * @param  callable $callback
      * @param  integer  $priority
      *
-     * @return EventManager
+     * @return void
      */
-    public function attach($eventName, $callback, $priority = 1)
+    public function attach($eventName, $callback, $priority = 1) : void
     {
         if (!isset($this->listeners[$eventName])) {
             $this->listeners[$eventName] = [];
@@ -41,7 +41,6 @@ class EventManager
             $this->listeners[$eventName][$priority] = [];
         }
         $this->listeners[$eventName][$priority][] = $callback;
-        return $this;
     }
 
     /**
@@ -80,9 +79,9 @@ class EventManager
      * @param  array $listeners
      * @param  Event $event
      *
-     * @return EventManager
+     * @return void
      */
-    protected function fire($listeners, $event)
+    protected function fire($listeners, $event) : void
     {
         ksort($listeners);
         foreach ($listeners as $list) {
@@ -97,6 +96,5 @@ class EventManager
                 }
             }
         }
-        return $this;
     }
 }

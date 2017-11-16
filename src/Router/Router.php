@@ -30,10 +30,10 @@ class Router
     /**
      * Or should be as properties?
      */
-    const DEFAULT_MODULE = 'index';
-    const DEFAULT_CONTROLLER = 'index';
-    const ERROR_MODULE = 'error';
-    const ERROR_CONTROLLER = 'index';
+    private const DEFAULT_MODULE = 'index';
+    private const DEFAULT_CONTROLLER = 'index';
+    private const ERROR_MODULE = 'error';
+    private const ERROR_CONTROLLER = 'index';
 
     /**
      * @var string base URL
@@ -459,7 +459,7 @@ class Router
      *
      * @return bool
      */
-    protected function processDefault(): bool
+    protected function processDefault() : bool
     {
         $uri = $this->getCleanUri();
         return empty($uri);
@@ -470,7 +470,7 @@ class Router
      *
      * @return bool
      */
-    protected function processCustom(): bool
+    protected function processCustom() : bool
     {
         $uri = '/' . $this->getCleanUri();
         foreach ($this->routers as $router) {
@@ -500,7 +500,7 @@ class Router
      *
      * @return bool
      */
-    protected function processRoute(): bool
+    protected function processRoute() : bool
     {
         $uri = $this->getCleanUri();
         $uri = trim($uri, '/');
@@ -524,7 +524,7 @@ class Router
             }
 
             // remove tail
-            if ($size % 2 == 1) {
+            if ($size % 2 === 1) {
                 array_pop($raw);
                 $size = count($raw);
             }
@@ -541,7 +541,7 @@ class Router
      *
      * @return void
      */
-    protected function resetRequest()
+    protected function resetRequest() : void
     {
         $request = Request::getInstance();
 

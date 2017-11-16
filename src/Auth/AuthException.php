@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Bluz\Auth;
 
-use Bluz\Application\Exception\UnauthorizedException;
+use Bluz\Http\Exception\UnauthorizedException;
 
 /**
  * Auth Exception

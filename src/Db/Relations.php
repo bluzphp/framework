@@ -59,7 +59,7 @@ class Relations
      *
      * @return void
      */
-    public static function setRelation($modelOne, $keyOne, $modelTwo, $keyTwo)
+    public static function setRelation($modelOne, $keyOne, $modelTwo, $keyTwo) : void
     {
         $relations = [$modelOne => $keyOne, $modelTwo => $keyTwo];
         self::setRelations($modelOne, $modelTwo, $relations);
@@ -74,7 +74,7 @@ class Relations
      *
      * @return void
      */
-    public static function setRelations($modelOne, $modelTwo, $relations)
+    public static function setRelations($modelOne, $modelTwo, $relations) : void
     {
         $name = [$modelOne, $modelTwo];
         sort($name);
@@ -107,17 +107,18 @@ class Relations
      * @param  string $relation
      *
      * @return array
+     * @throws Exception\TableNotFoundException
      * @throws Exception\RelationNotFoundException
      */
-    public static function findRelation($row, $relation)
+    public static function findRelation($row, $relation) : array
     {
         $model = $row->getTable()->getModel();
 
         /** @var \Bluz\Db\Table $relationTable */
-        $relationTable = Relations::getModelClass($relation);
+        $relationTable = self::getModelClass($relation);
         $relationTable::getInstance();
 
-        if (!$relations = Relations::getRelations($model, $relation)) {
+        if (!$relations = self::getRelations($model, $relation)) {
             throw new RelationNotFoundException(
                 "Relations between model `$model` and `$relation` is not defined"
             );
@@ -131,7 +132,7 @@ class Relations
         $field = $relations[$model];
         $key = $row->{$field};
 
-        return Relations::findRelations($model, $relation, [$key]);
+        return self::findRelations($model, $relation, [$key]);
     }
 
     /**
@@ -144,7 +145,7 @@ class Relations
      * @return array
      * @throws Exception\RelationNotFoundException
      */
-    public static function findRelations($modelOne, $modelTwo, $keys)
+    public static function findRelations($modelOne, $modelTwo, $keys) : array
     {
         $keys = (array)$keys;
         if (!$relations = self::getRelations($modelOne, $modelTwo)) {
@@ -164,7 +165,7 @@ class Relations
         $tableTwoName = $tableTwoClass::getInstance()->getName();
 
         /* @var Query\Select $tableTwoSelect */
-        $tableTwoSelect = $tableTwoClass::getInstance()->select();
+        $tableTwoSelect = $tableTwoClass::getInstance()::select();
 
         // check many to many relation
         if (is_int(array_keys($relations)[0])) {
@@ -216,7 +217,7 @@ class Relations
      *
      * @return void
      */
-    public static function addClassMap($model, $className)
+    public static function addClassMap($model, $className) : void
     {
         self::$modelClassMap[$model] = $className;
     }
@@ -229,7 +230,7 @@ class Relations
      * @return string
      * @throws Exception\RelationNotFoundException
      */
-    public static function getModelClass($model)
+    public static function getModelClass($model) : string
     {
         if (!isset(self::$modelClassMap[$model])) {
             // try to detect
@@ -249,15 +250,15 @@ class Relations
      * @param  string $modelName
      * @param  array  $data
      *
-     * @return Row
+     * @return RowInterface
      * @throws Exception\RelationNotFoundException
      */
-    public static function createRow($modelName, $data)
+    public static function createRow($modelName, $data) : RowInterface
     {
         $tableClass = self::getModelClass($modelName);
 
         /* @var Table $tableClass name */
-        return $tableClass::getInstance()->create($data);
+        return $tableClass::getInstance()::create($data);
     }
 
     /**
@@ -266,8 +267,9 @@ class Relations
      * @param  array $input
      *
      * @return array
+     * @throws Exception\RelationNotFoundException
      */
-    public static function fetch($input)
+    public static function fetch($input) : array
     {
         $output = [];
         $map = [];

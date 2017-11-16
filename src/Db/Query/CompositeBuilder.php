@@ -33,28 +33,41 @@ class CompositeBuilder implements \Countable
      * @param array  $parts parts of the composite expression
      * @param string $type  AND|OR
      */
-    public function __construct(array $parts = [], $type = 'AND')
+    public function __construct(array $parts = [], string $type = 'AND')
     {
         $type = strtoupper($type);
         $this->type = $type === 'OR' ? 'OR' : 'AND';
-        $this->add($parts);
+        $this->addParts($parts);
     }
 
     /**
-     * Adds an expression to composite expression.
+     * Adds a set of expressions to composite expression
      *
-     * @param  mixed $parts
+     * @param  array $parts
      *
      * @return CompositeBuilder
      */
-    public function add($parts)
+    public function addParts($parts) : CompositeBuilder
     {
-        foreach ((array)$parts as $part) {
-            if (!empty($part) || ($part instanceof self && $part->count() > 0)) {
-                $this->parts[] = $part;
-            }
+        foreach ($parts as $part) {
+            $this->addPart($part);
         }
 
+        return $this;
+    }
+
+    /**
+     * Adds an expression to composite expression
+     *
+     * @param  mixed $part
+     *
+     * @return CompositeBuilder
+     */
+    public function addPart($part) : CompositeBuilder
+    {
+        if (!empty($part) || ($part instanceof self && $part->count() > 0)) {
+            $this->parts[] = $part;
+        }
         return $this;
     }
 
@@ -63,7 +76,7 @@ class CompositeBuilder implements \Countable
      *
      * @return string
      */
-    public function getType()
+    public function getType() : string
     {
         return $this->type;
     }
@@ -73,7 +86,7 @@ class CompositeBuilder implements \Countable
      *
      * @return integer
      */
-    public function count()
+    public function count() : int
     {
         return count($this->parts);
     }
@@ -85,8 +98,8 @@ class CompositeBuilder implements \Countable
      */
     public function __toString()
     {
-        if (count($this->parts) === 1) {
-            return (string)$this->parts[0];
+        if ($this->count() === 1) {
+            return (string) $this->parts[0];
         }
         return '(' . implode(') ' . $this->type . ' (', $this->parts) . ')';
     }

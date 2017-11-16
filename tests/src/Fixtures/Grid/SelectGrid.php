@@ -30,9 +30,9 @@ class SelectGrid extends Grid
     /**
      * Init SelectSource
      *
-     * @return self
+     * @return void
      */
-    public function init()
+    public function init() : void
     {
         // Array
         $adapter = new SelectSource();
@@ -46,7 +46,5 @@ class SelectGrid extends Grid
         $this->setDefaultLimit(10);
         $this->setAllowOrders(['name', 'id', 'status']);
         $this->setAllowFilters(['status', 'id', 'email']);
-
-        return $this;
     }
 }

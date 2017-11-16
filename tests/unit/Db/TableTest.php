@@ -127,42 +127,35 @@ class TableTest extends FrameworkTestCase
         ];
     }
 
-    /**
-     * @todo Implement testFind().
-     */
-    public function testFind()
-    {
-        if (!class_exists('PDO') || !in_array('sqlite', \PDO::getAvailableDrivers(), false)) {
-            self::markTestSkipped('This test requires SQLite support in your environment');
-        }
-        // Remove the following lines when you implement this test.
-        self::markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /**
-     * @todo Implement testInsert().
-     */
     public function testInsert()
     {
-        // Remove the following lines when you implement this test.
-        self::markTestIncomplete('This test has not been implemented yet.');
+        $result = TestTable::getInstance()::insert(['name' => 'Tester', 'email' => 'Very.Strong.Unique@mail.us']);
+        self::assertTrue($result > 0);
     }
 
-    /**
-     * @todo Implement testUpdate().
-     */
+    public function testFindRowWhere()
+    {
+        $result = TestTable::findRowWhere(['email' => 'Very.Strong.Unique@mail.us']);
+        self::assertEquals('Tester', $result->name);
+    }
+
+    public function testNotFoundRowWhere()
+    {
+        $result = TestTable::findRowWhere(['email' => 'Not.Found@mail.us']);
+        self::assertNull($result);
+    }
+
     public function testUpdate()
     {
-        // Remove the following lines when you implement this test.
-        self::markTestIncomplete('This test has not been implemented yet.');
+        $result = TestTable::getInstance()::update(['name' => 'Selfer'], ['email' => 'Very.Strong.Unique@mail.us']);
+        self::assertTrue(is_int($result));
+        self::assertEquals(1, $result);
     }
 
-    /**
-     * @todo Implement testDelete().
-     */
     public function testDelete()
     {
-        // Remove the following lines when you implement this test.
-        self::markTestIncomplete('This test has not been implemented yet.');
+        $result = TestTable::getInstance()::delete(['email' => 'Very.Strong.Unique@mail.us']);
+        self::assertTrue(is_int($result));
+        self::assertEquals(1, $result);
     }
 }

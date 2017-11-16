@@ -55,7 +55,7 @@ class QueryTest extends FrameworkTestCase
             ->limit(5);
 
         $check = 'SELECT u.*, ua.*'
-            . ' FROM users u LEFT JOIN users_actions ua ON ua.userId = u.id'
+            . ' FROM `users` AS u LEFT JOIN `users_actions` AS ua ON ua.userId = u.id'
             . ' WHERE (((u.id = "4" OR u.id = "5") OR (u.id IN ("4","5")))'
             . ' AND (u.status = "active" OR u.status = "pending")) OR (u.login LIKE ("A%"))'
             . ' ORDER BY u.id ASC, u.login ASC'
@@ -78,15 +78,15 @@ class QueryTest extends FrameworkTestCase
             ->having('MONTH(p.created) = :month1')
             ->orHaving('MONTH(p.created) = :month2')
             ->andHaving('p.userId <> 0')
-            ->setParameters([':month1' => 2, ':month2' => 4]);
+            ->setParams([':month1' => 2, ':month2' => 4]);
 
         $check = 'SELECT p.*'
-            . ' FROM pages p'
+            . ' FROM `pages` AS p'
             . ' GROUP BY p.userId, MONTH(p.created)'
             . ' HAVING ((MONTH(p.created) = :month1) OR (MONTH(p.created) = :month2)) AND (p.userId <> 0)';
 
-        self::assertEquals(2, $builder->getParameter(':month1'));
-        self::assertEquals(4, $builder->getParameter(':month2'));
+        self::assertEquals(2, $builder->getParam(':month1'));
+        self::assertEquals(4, $builder->getParam(':month2'));
         self::assertEquals($builder->getQuery(), $check);
     }
 
@@ -102,7 +102,7 @@ class QueryTest extends FrameworkTestCase
             ->join('u', 'pages', 'p', 'p.userId = u.id');
 
         $check = 'SELECT u.*, p.*'
-            . ' FROM users u INNER JOIN pages p ON p.userId = u.id';
+            . ' FROM `users` AS u INNER JOIN `pages` AS p ON p.userId = u.id';
 
         self::assertEquals($builder->getQuery(), $check);
     }
@@ -119,7 +119,7 @@ class QueryTest extends FrameworkTestCase
             ->rightJoin('u', 'pages', 'p', 'p.userId = u.id');
 
         $check = 'SELECT u.*, p.*'
-            . ' FROM users u RIGHT JOIN pages p ON p.userId = u.id';
+            . ' FROM `users` AS u RIGHT JOIN `pages` AS p ON p.userId = u.id';
 
         self::assertEquals($builder->getQuery(), $check);
     }
@@ -137,7 +137,7 @@ class QueryTest extends FrameworkTestCase
             ->where('u.id = ? OR u.id = ?', 4, 5);
 
         $check = 'SELECT u.*, p.*'
-            . ' FROM users u INNER JOIN pages p ON p.userId = u.id'
+            . ' FROM `users` AS u INNER JOIN `pages` AS p ON p.userId = u.id'
             . ' WHERE u.id = ? OR u.id = ?';
 
         self::assertEquals($check, (string)$builder);
@@ -172,8 +172,8 @@ class QueryTest extends FrameworkTestCase
                     'status' => 'disable'
                 ]
             )
-            ->where('email = ?', 'example@domain.com');
-        $check = 'UPDATE `test` SET `status` = "disable" WHERE email = "example@domain.com"';
+            ->where('`email` = ?', 'example@domain.com');
+        $check = 'UPDATE `test` SET `status` = "disable" WHERE `email` = "example@domain.com"';
 
         self::assertEquals($builder->getQuery(), $check);
         self::assertEquals(0, $builder->execute());
@@ -187,11 +187,11 @@ class QueryTest extends FrameworkTestCase
         $builder = new Delete();
         $builder = $builder
             ->delete('test')
-            ->where('email = ?', 'example@domain.com')
+            ->where('`email` = ?', 'example@domain.com')
             ->limit(1);
-        $check = 'DELETE FROM `test` WHERE email = "example@domain.com" LIMIT 1';
+        $check = 'DELETE FROM `test` WHERE `email` = "example@domain.com" LIMIT 1';
 
-        self::assertEquals($builder->getQuery(), $check);
+        self::assertEquals($check, $builder->getQuery());
         self::assertEquals(0, $builder->execute());
     }
 }

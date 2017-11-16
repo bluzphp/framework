@@ -11,8 +11,8 @@ declare(strict_types=1);
 namespace Bluz\Db;
 
 use Bluz\Common\Container;
+use Bluz\Db\Exception\DbException;
 use Bluz\Db\Exception\InvalidPrimaryKeyException;
-use Bluz\Db\Exception\RelationNotFoundException;
 use Bluz\Db\Exception\TableNotFoundException;
 
 /**
@@ -23,12 +23,12 @@ use Bluz\Db\Exception\TableNotFoundException;
  *     namespace Application\Users;
  *     class Row extends \Bluz\Db\Row
  *     {
- *        public function beforeInsert()
+ *        public function beforeInsert() : void
  *        {
  *            $this->created = gmdate('Y-m-d H:i:s');
  *        }
  *
- *        public function beforeUpdate()
+ *        public function beforeUpdate() : void
  *        {
  *            $this->updated = gmdate('Y-m-d H:i:s');
  *        }
@@ -43,22 +43,19 @@ use Bluz\Db\Exception\TableNotFoundException;
  * @author   Anton Shevchuk
  * @link     https://github.com/bluzphp/framework/wiki/Db-Row
  */
-class Row implements \JsonSerializable, \ArrayAccess
+abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
 {
     use Container\Container;
     use Container\ArrayAccess;
     use Container\JsonSerialize;
     use Container\MagicAccess;
+    use Traits\TableProperty;
+    use Traits\RowRelations;
 
     /**
      * @var Table instance of Table class
      */
     protected $table;
-
-    /**
-     * @var string name of Table class
-     */
-    protected $tableClass;
 
     /**
      * This is set to a copy of $data when the data is fetched from
@@ -70,16 +67,11 @@ class Row implements \JsonSerializable, \ArrayAccess
     protected $clean = [];
 
     /**
-     * @var array relations rows
-     */
-    protected $relations = [];
-
-    /**
      * Create Row instance
      *
      * @param array $data
      */
-    public function __construct($data = [])
+    public function __construct(array $data = [])
     {
         // original cleaner data
         $this->clean = $this->toArray();
@@ -115,26 +107,26 @@ class Row implements \JsonSerializable, \ArrayAccess
      * Magic method for var_dump()
      *
      * @return array
+     * @throws TableNotFoundException
      * @see var_dump()
      */
     public function __debugInfo()
     {
         return [
-            'TABLE' => $this->getTable()->getName(),
             'DATA::CLEAN' => $this->clean,
             'DATA::RAW' => $this->container,
-            'RELATIONS' => $this->relations
+            'RELATIONS' => $this->relations ?? []
         ];
     }
 
     /**
      * Validate input data
      *
-     * @param  array|object $data
+     * @param  array $data
      *
      * @return bool
      */
-    public function validate($data)
+    public function validate($data) : bool
     {
         return true;
     }
@@ -142,12 +134,13 @@ class Row implements \JsonSerializable, \ArrayAccess
     /**
      * Assert input data
      *
-     * @param  array|object $data
+     * @param  array $data
      *
      * @return void
      */
-    public function assert($data)
+    public function assert($data) : void
     {
+        return;
     }
 
     /**
@@ -158,6 +151,10 @@ class Row implements \JsonSerializable, \ArrayAccess
      *
      * @return mixed The primary key value(s), as an associative array if the
      *               key is compound, or a scalar if the key is single-column
+     * @throws DbException
+     * @throws InvalidPrimaryKeyException
+     * @throws TableNotFoundException
+     * @throws \Bluz\Common\Exception\ConfigurationException
      */
     public function save()
     {
@@ -183,6 +180,10 @@ class Row implements \JsonSerializable, \ArrayAccess
      *
      * @return mixed The primary key value(s), as an associative array if the
      *               key is compound, or a scalar if the key is single-column
+     * @throws DbException
+     * @throws InvalidPrimaryKeyException
+     * @throws TableNotFoundException
+     * @throws \Bluz\Common\Exception\ConfigurationException
      */
     protected function doInsert()
     {
@@ -192,7 +193,6 @@ class Row implements \JsonSerializable, \ArrayAccess
         $this->beforeInsert();
 
         $data = $this->toArray();
-
         /**
          * Execute validator logic
          * Can throw ValidatorException
@@ -237,8 +237,12 @@ class Row implements \JsonSerializable, \ArrayAccess
      * Update row
      *
      * @return integer The number of rows updated
+     * @throws DbException
+     * @throws InvalidPrimaryKeyException
+     * @throws TableNotFoundException
+     * @throws \Bluz\Common\Exception\ConfigurationException
      */
-    protected function doUpdate()
+    protected function doUpdate() : int
     {
         /**
          * Run pre-UPDATE logic
@@ -262,6 +266,7 @@ class Row implements \JsonSerializable, \ArrayAccess
         $diffData = array_diff_assoc($data, $this->clean);
 
         $table = $this->getTable();
+
         $diffData = $table::filterColumns($diffData);
 
         /**
@@ -270,10 +275,9 @@ class Row implements \JsonSerializable, \ArrayAccess
          * Use the $diffData variable, so the UPDATE statement
          * includes SET terms only for data values that changed.
          */
+        $result = 0;
         if (count($diffData) > 0) {
             $result = $table::update($diffData, $primaryKey);
-        } else {
-            $result = 0;
         }
 
         /**
@@ -295,12 +299,13 @@ class Row implements \JsonSerializable, \ArrayAccess
     /**
      * Delete existing row
      *
-     * @return integer The number of deleted rows
-     * @throws Exception\DbException
-     * @throws Exception\TableNotFoundException
-     * @throws Exception\InvalidPrimaryKeyException
+     * @return bool Removed or not
+     * @throws \Bluz\Common\Exception\ConfigurationException
+     * @throws DbException
+     * @throws InvalidPrimaryKeyException
+     * @throws TableNotFoundException
      */
-    public function delete()
+    public function delete() : bool
     {
         /**
          * Execute pre-DELETE logic
@@ -325,7 +330,7 @@ class Row implements \JsonSerializable, \ArrayAccess
          */
         $this->resetArray();
 
-        return $result;
+        return $result > 0;
     }
 
     /**
@@ -333,9 +338,9 @@ class Row implements \JsonSerializable, \ArrayAccess
      *
      * @return array
      * @throws InvalidPrimaryKeyException
-     * @throws Exception\TableNotFoundException
+     * @throws TableNotFoundException
      */
-    protected function getPrimaryKey()
+    protected function getPrimaryKey() : array
     {
         $primary = array_flip($this->getTable()->getPrimaryKey());
 
@@ -347,7 +352,7 @@ class Row implements \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    public function refresh()
+    public function refresh() : void
     {
         $this->setFromArray($this->clean);
         $this->afterRead();
@@ -358,7 +363,7 @@ class Row implements \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    protected function afterRead()
+    protected function afterRead() : void
     {
     }
 
@@ -368,7 +373,7 @@ class Row implements \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    protected function beforeSave()
+    protected function beforeSave() : void
     {
     }
 
@@ -378,7 +383,7 @@ class Row implements \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    protected function afterSave()
+    protected function afterSave() : void
     {
     }
 
@@ -388,7 +393,7 @@ class Row implements \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    protected function beforeInsert()
+    protected function beforeInsert() : void
     {
     }
 
@@ -398,7 +403,7 @@ class Row implements \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    protected function afterInsert()
+    protected function afterInsert() : void
     {
     }
 
@@ -408,7 +413,7 @@ class Row implements \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    protected function beforeUpdate()
+    protected function beforeUpdate() : void
     {
     }
 
@@ -418,7 +423,7 @@ class Row implements \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    protected function afterUpdate()
+    protected function afterUpdate() : void
     {
     }
 
@@ -428,7 +433,7 @@ class Row implements \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    protected function beforeDelete()
+    protected function beforeDelete() : void
     {
     }
 
@@ -438,112 +443,7 @@ class Row implements \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    protected function afterDelete()
+    protected function afterDelete() : void
     {
-    }
-
-    /**
-     * Setup Table instance
-     *
-     * @param  Table $table
-     *
-     * @return self
-     */
-    public function setTable(Table $table)
-    {
-        $this->table = $table;
-        return $this;
-    }
-
-    /**
-     * Returns the table object, or null if this is disconnected row
-     *
-     * @throws TableNotFoundException
-     * @return Table
-     */
-    public function getTable()
-    {
-        if ($this->table instanceof Table) {
-            return $this->table;
-        }
-
-        if ($this->tableClass) {
-            $tableClass = $this->tableClass;
-        } else {
-            // try to guess table class
-            /**
-             * @var string $tableClass is child of \Bluz\Db\Table
-             */
-            $tableClass = class_namespace(static::class) . '\\Table';
-        }
-
-        // check class initialization
-        if (!class_exists($tableClass) || !is_subclass_of($tableClass, Table::class)) {
-            throw new TableNotFoundException('`Table` class is not exists or not initialized');
-        }
-
-        /**
-         * @var Table $tableClass
-         */
-        $table = $tableClass::getInstance();
-
-        $this->setTable($table);
-
-        return $table;
-    }
-
-    /**
-     * initTable
-     *
-     * @return void
-     */
-    protected function initTable()
-    {
-
-    }
-
-    /**
-     * Set relation
-     *
-     * @param  Row $row
-     *
-     * @return Row
-     */
-    public function setRelation(Row $row)
-    {
-        $modelName = $row->getTable()->getModel();
-        $this->relations[$modelName] = [$row];
-        return $this;
-    }
-
-    /**
-     * Get relation by model name
-     *
-     * @param  string $modelName
-     *
-     * @return Row|false
-     * @throws RelationNotFoundException
-     */
-    public function getRelation($modelName)
-    {
-        $relations = $this->getRelations($modelName);
-        return empty($relations) ? false : current($relations);
-    }
-
-    /**
-     * Get relations by model name
-     *
-     * @param  string $modelName
-     *
-     * @return array
-     * @throws RelationNotFoundException
-     */
-    public function getRelations($modelName)
-    {
-        if (!isset($this->relations[$modelName])) {
-            $this->relations[$modelName] = Relations::findRelation($this, $modelName);
-        }
-
-        return $this->relations[$modelName];
     }
 }

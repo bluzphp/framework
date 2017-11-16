@@ -10,8 +10,7 @@ declare(strict_types=1);
 
 namespace Bluz\Db\Query\Traits;
 
-use Bluz\Db\Query\Delete;
-use Bluz\Db\Query\Select;
+use Bluz\Proxy\Db;
 
 /**
  * From Trait
@@ -22,12 +21,36 @@ use Bluz\Db\Query\Select;
  *
  * @package  Bluz\Db\Query\Traits
  * @author   Anton Shevchuk
- *
- * @property array $aliases
- * @method   Select|Delete addQueryPart(string $sqlPartName, mixed $sqlPart, $append = false)
  */
 trait From
 {
+    /**
+     * <code>
+     * [
+     *     'table' => 'users',
+     *     'alias' => 'u'
+     * ]
+     * </code>
+     *
+     * @var array
+     */
+    protected $from = [];
+
+    /**
+     * <code>
+     * [
+     *     'u' => [
+     *         'joinType' => 'inner',
+     *         'joinTable' => $join,
+     *         'joinAlias' => $alias,
+     *         'joinCondition' => $condition
+     * ]
+     * </code>
+     *
+     * @var array[]
+     */
+    protected $join = [];
+
     /**
      * Set FROM
      *
@@ -46,17 +69,191 @@ trait From
      *
      * @return $this
      */
-    public function from($from, $alias)
+    public function from(string $from, string $alias)
     {
         $this->aliases[] = $alias;
 
-        return $this->addQueryPart(
-            'from',
-            [
-                'table' => $from,
-                'alias' => $alias
-            ],
-            true
-        );
+        $this->from[] = [
+            'table' => $from,
+            'alias' => $alias
+        ];
+
+        return $this;
+    }
+
+    /**
+     * Creates and adds a join to the query
+     *
+     * Example
+     * <code>
+     *     $sb = new Select();
+     *     $sb
+     *         ->select('u.name')
+     *         ->from('users', 'u')
+     *         ->join('u', 'phone', 'p', 'p.is_primary = 1');
+     * </code>
+     *
+     * @param  string $fromAlias The alias that points to a from clause
+     * @param  string $join      The table name to join
+     * @param  string $alias     The alias of the join table
+     * @param  string $condition The condition for the join
+     *
+     * @return $this
+     */
+    public function join(string $fromAlias, string $join, string $alias, string $condition = null)
+    {
+        return $this->innerJoin($fromAlias, $join, $alias, $condition);
+    }
+
+    /**
+     * Creates and adds a join to the query
+     *
+     * Example
+     * <code>
+     *     $sb = new Select();
+     *     $sb
+     *         ->select('u.name')
+     *         ->from('users', 'u')
+     *         ->innerJoin('u', 'phone', 'p', 'p.is_primary = 1');
+     * </code>
+     *
+     * @param  string $fromAlias The alias that points to a from clause
+     * @param  string $join      The table name to join
+     * @param  string $alias     The alias of the join table
+     * @param  string $condition The condition for the join
+     *
+     * @return $this
+     */
+    public function innerJoin(string $fromAlias, string $join, string $alias, string $condition = null)
+    {
+        return $this->addJoin('inner', $fromAlias, $join, $alias, $condition);
+    }
+
+    /**
+     * Creates and adds a left join to the query.
+     *
+     * Example
+     * <code>
+     *     $sb = new Select();
+     *     $sb
+     *         ->select('u.name')
+     *         ->from('users', 'u')
+     *         ->leftJoin('u', 'phone', 'p', 'p.is_primary = 1');
+     * </code>
+     *
+     * @param  string $fromAlias The alias that points to a from clause
+     * @param  string $join      The table name to join
+     * @param  string $alias     The alias of the join table
+     * @param  string $condition The condition for the join
+     *
+     * @return $this
+     */
+    public function leftJoin(string $fromAlias, string $join, string $alias, string $condition = null)
+    {
+        return $this->addJoin('left', $fromAlias, $join, $alias, $condition);
+    }
+
+    /**
+     * Creates and adds a right join to the query.
+     *
+     * Example
+     * <code>
+     *     $sb = new Select();
+     *     $sb
+     *         ->select('u.name')
+     *         ->from('users', 'u')
+     *         ->rightJoin('u', 'phone', 'p', 'p.is_primary = 1');
+     * </code>
+     *
+     * @param  string $fromAlias The alias that points to a from clause
+     * @param  string $join      The table name to join
+     * @param  string $alias     The alias of the join table
+     * @param  string $condition The condition for the join
+     *
+     * @return $this
+     */
+    public function rightJoin(string $fromAlias, string $join, string $alias, string $condition = null)
+    {
+        return $this->addJoin('right', $fromAlias, $join, $alias, $condition);
+    }
+
+    /**
+     * addJoin()
+     *
+     * @param  string $type      The type of join
+     * @param  string $fromAlias The alias that points to a from clause
+     * @param  string $join      The table name to join
+     * @param  string $alias     The alias of the join table
+     * @param  string $condition The condition for the join
+     *
+     * @return $this
+     */
+    protected function addJoin(string $type, string $fromAlias, string $join, string $alias, string $condition = null)
+    {
+        $this->aliases[] = $alias;
+
+        $this->join[$fromAlias][] = [
+            'joinType' => $type,
+            'joinTable' => $join,
+            'joinAlias' => $alias,
+            'joinCondition' => $condition
+        ];
+        return $this;
+    }
+
+    /**
+     * setFromQueryPart
+     *
+     * @param  string $table
+     *
+     * @return self
+     */
+    protected function setFromQueryPart($table)
+    {
+        return $this->from($table, $table);
+    }
+
+    /**
+     * Prepare From query part
+     *
+     * @return string
+     */
+    protected function prepareFrom() : string
+    {
+        $fromClauses = [];
+        // Loop through all FROM clauses
+        foreach ($this->from as $from) {
+            $fromClause = Db::quoteIdentifier($from['table']) . ' AS ' . $from['alias']
+                . $this->prepareJoins($from['alias']);
+
+            $fromClauses[$from['alias']] = $fromClause;
+        }
+
+        return ' FROM ' . implode(', ', $fromClauses);
+    }
+
+    /**
+     * Generate SQL string for JOINs
+     *
+     * @param  string $fromAlias The alias of the table
+     *
+     * @return string
+     */
+    protected function prepareJoins($fromAlias) : string
+    {
+        if (!isset($this->join[$fromAlias])) {
+            return '';
+        }
+
+        $query = '';
+
+        foreach ($this->join[$fromAlias] as $join) {
+            $query .= ' ' . strtoupper($join['joinType'])
+                . ' JOIN ' . Db::quoteIdentifier($join['joinTable']) . ' AS ' . $join['joinAlias']
+                . ' ON ' . $join['joinCondition'];
+            $query .= $this->prepareJoins($join['joinAlias']);
+        }
+
+        return $query;
     }
 }

@@ -31,7 +31,7 @@ trait RegularAccess
      *
      * @return void
      */
-    public function set($key, $value)
+    public function set($key, $value) : void
     {
         $this->doSetContainer($key, $value);
     }
@@ -55,7 +55,7 @@ trait RegularAccess
      *
      * @return bool
      */
-    public function contains($key)
+    public function contains($key) : bool
     {
         return $this->doContainsContainer($key);
     }
@@ -67,7 +67,7 @@ trait RegularAccess
      *
      * @return void
      */
-    public function delete($key)
+    public function delete($key) : void
     {
         $this->doDeleteContainer($key);
     }

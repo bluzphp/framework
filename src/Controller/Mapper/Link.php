@@ -81,7 +81,7 @@ class Link
     /**
      * @return string
      */
-    public function getModule(): string
+    public function getModule() : ?string
     {
         return $this->module;
     }
@@ -89,7 +89,7 @@ class Link
     /**
      * @param string $module
      */
-    protected function setModule(string $module)
+    protected function setModule(string $module) : void
     {
         $this->module = $module;
     }
@@ -97,7 +97,7 @@ class Link
     /**
      * @return string
      */
-    public function getController(): string
+    public function getController(): ?string
     {
         return $this->controller;
     }
@@ -105,7 +105,7 @@ class Link
     /**
      * @param string $controller
      */
-    protected function setController(string $controller)
+    protected function setController(string $controller) : void
     {
         $this->controller = $controller;
     }
@@ -113,7 +113,7 @@ class Link
     /**
      * @return string|null
      */
-    public function getAcl()
+    public function getAcl() : ?string
     {
         return $this->acl;
     }
@@ -121,7 +121,7 @@ class Link
     /**
      * @param string $acl
      */
-    protected function setAcl(string $acl)
+    protected function setAcl(string $acl) : void
     {
         $this->acl = $acl;
     }
@@ -129,7 +129,7 @@ class Link
     /**
      * @return array
      */
-    public function getFields(): array
+    public function getFields() : array
     {
         return $this->fields;
     }
@@ -139,7 +139,7 @@ class Link
      *
      * @param array $fields
      */
-    protected function setFields(array $fields)
+    protected function setFields(array $fields) : void
     {
         $this->fields = $fields;
     }

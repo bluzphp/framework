@@ -59,7 +59,7 @@ class Event
      *
      * @return string
      */
-    public function getName()
+    public function getName() : string
     {
         return $this->name;
     }
@@ -81,10 +81,10 @@ class Event
      *
      * @param  array|object $params
      *
-     * @return Event
+     * @return void
      * @throws EventException
      */
-    public function setParams($params)
+    public function setParams($params) : void
     {
         if (!is_array($params) && !is_object($params)) {
             throw new EventException(
@@ -93,7 +93,6 @@ class Event
         }
 
         $this->params = $params;
-        return $this;
     }
 
     /**
@@ -135,12 +134,11 @@ class Event
      *
      * @param  string $name
      *
-     * @return Event
+     * @return void
      */
-    public function setName($name)
+    public function setName($name) : void
     {
         $this->name = (string)$name;
-        return $this;
     }
 
     /**
@@ -148,12 +146,11 @@ class Event
      *
      * @param  null|string|object $target
      *
-     * @return Event
+     * @return void
      */
-    public function setTarget($target)
+    public function setTarget($target) : void
     {
         $this->target = $target;
-        return $this;
     }
 
     /**
@@ -162,9 +159,9 @@ class Event
      * @param  string|int $name
      * @param  mixed      $value
      *
-     * @return Event
+     * @return void
      */
-    public function setParam($name, $value)
+    public function setParam($name, $value) : void
     {
         if (is_array($this->params)) {
             // Arrays or objects implementing array access
@@ -173,6 +170,5 @@ class Event
             // Objects
             $this->params->{$name} = $value;
         }
-        return $this;
     }
 }

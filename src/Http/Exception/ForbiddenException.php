@@ -8,25 +8,20 @@
 
 declare(strict_types=1);
 
-namespace Bluz\Application\Exception;
+namespace Bluz\Http\Exception;
 
 use Bluz\Http\StatusCode;
 
 /**
  * Forbidden Exception
  *
- * @package  Bluz\Application\Exception
+ * @package  Bluz\Http\Exception
  * @author   Anton Shevchuk
  */
-class ForbiddenException extends ApplicationException
+class ForbiddenException extends HttpException
 {
     /**
      * @var integer HTTP Code
      */
     protected $code = StatusCode::FORBIDDEN;
-
-    /**
-     * @var string
-     */
-    protected $message = 'Forbidden';
 }

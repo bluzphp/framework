@@ -30,7 +30,7 @@ return
         }
         $result = [];
         foreach ($attributes as $key => $value) {
-            if (is_null($value)) {
+            if (null === $value) {
                 // skip empty values
                 //   input: [attribute=>null]
                 //   output: ''

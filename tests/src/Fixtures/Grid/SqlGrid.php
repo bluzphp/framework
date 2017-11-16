@@ -29,9 +29,9 @@ class SqlGrid extends Grid
     /**
      * Init SqlSource
      *
-     * @return self
+     * @return void
      */
-    public function init()
+    public function init() : void
     {
         // Array
         $adapter = new SqlSource();
@@ -42,7 +42,5 @@ class SqlGrid extends Grid
         $this->setAllowOrders(['name', 'id', 'status']);
         $this->setAllowFilters(['status', 'id', 'email']);
         $this->setDefaultOrder('name', Grid::ORDER_DESC);
-
-        return $this;
     }
 }

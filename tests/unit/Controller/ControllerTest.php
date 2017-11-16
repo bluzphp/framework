@@ -77,7 +77,7 @@ class ControllerTest extends FrameworkTestCase
     }
 
     /**
-     * @expectedException \Bluz\Application\Exception\ForbiddenException
+     * @expectedException \Bluz\Http\Exception\ForbiddenException
      */
     public function testHelperDenied()
     {

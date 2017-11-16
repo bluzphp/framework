@@ -32,7 +32,7 @@ class Acl
      *
      * @return bool
      */
-    public function isAllowed($module, $privilege): bool
+    public function isAllowed($module, $privilege) : bool
     {
         if ($privilege) {
             $user = Auth::getIdentity();

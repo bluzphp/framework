@@ -70,7 +70,7 @@ class Layout extends View
      *
      * @return void
      */
-    public function setContent($content)
+    public function setContent($content) : void
     {
         try {
             $this->content = value($content);

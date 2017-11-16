@@ -26,7 +26,7 @@ class EmptyCrud extends AbstractCrud
     /**
      * @return array
      */
-    public function getPrimaryKey()
+    public function getPrimaryKey() : array
     {
         return [];
     }

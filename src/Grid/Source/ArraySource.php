@@ -11,12 +11,15 @@ declare(strict_types=1);
 namespace Bluz\Grid\Source;
 
 use Bluz\Grid;
+use Bluz\Grid\Data;
 
 /**
  * Array Source Adapter for Grid package
  *
  * @package  Bluz\Grid
  * @author   Anton Shevchuk
+ *
+ * @method   array getSource()
  */
 class ArraySource extends AbstractSource
 {
@@ -25,46 +28,36 @@ class ArraySource extends AbstractSource
      *
      * @param  array $source
      *
-     * @return self
+     * @return void
      * @throws Grid\GridException
      */
-    public function setSource($source)
+    public function setSource($source) : void
     {
         if (!is_array($source) && !($source instanceof \ArrayAccess)) {
             throw new Grid\GridException('Source of `ArraySource` should be array or implement ArrayAccess interface');
         }
-
-        $this->source = $source;
-        return $this;
+        parent::setSource($source);
     }
 
     /**
-     * Process
-     *
-     * @param  array[] $settings
-     *
-     * @return \Bluz\Grid\Data
+     * {@inheritdoc}
      */
-    public function process(array $settings = [])
+    public function process(int $page, int $limit, array $filters = [], array $orders = []) : Data
     {
-        $data = $this->source;
-
         // process filters
-        if (!empty($settings['filters'])) {
-            $data = $this->applyFilters($data, $settings['filters']);
-        }
+        $this->applyFilters($filters);
 
         // process orders
-        if (!empty($settings['orders'])) {
-            $data = $this->applyOrders($data, $settings['orders']);
-        }
+        $this->applyOrders($orders);
+
+        $data = $this->getSource();
 
         $total = count($data);
 
         // process pages
-        $data = array_slice($data, $settings['limit'] * ($settings['page'] - 1), $settings['limit']);
+        $data = array_slice($data, $limit * ($page - 1), $limit);
 
-        $gridData = new Grid\Data($data);
+        $gridData = new Data($data);
         $gridData->setTotal($total);
         return $gridData;
     }
@@ -72,14 +65,14 @@ class ArraySource extends AbstractSource
     /**
      * Apply filters to array
      *
-     * @param  array $data
      * @param  array $settings
      *
-     * @return array
+     * @return void
      */
-    private function applyFilters(array $data, array $settings): array
+    private function applyFilters(array $settings) : void
     {
-        return array_filter(
+        $data = $this->getSource();
+        $data = array_filter(
             $data,
             function ($row) use ($settings) {
                 foreach ($settings as $column => $filters) {
@@ -127,18 +120,19 @@ class ArraySource extends AbstractSource
                 return true;
             }
         );
+        $this->setSource($data);
     }
 
     /**
      * Apply order to array
      *
-     * @param  array $data
      * @param  array $settings
      *
-     * @return array
+     * @return void
      */
-    private function applyOrders(array $data, array $settings): array
+    private function applyOrders(array $settings) : void
     {
+        $data = $this->getSource();
         // Create empty column stack
         $orders = [];
         foreach ($settings as $column => $order) {
@@ -163,6 +157,6 @@ class ArraySource extends AbstractSource
         // Sort the data with volume descending, edition ascending
         // Add $data as the last parameter, to sort by the common key
         array_multisort(...$funcArgs);
-        return $data;
+        $this->setSource($data);
     }
 }

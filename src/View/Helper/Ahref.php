@@ -55,5 +55,5 @@ return
 
         $attributes = $this->attributes($attributes);
 
-        return '<a href="' . $href . '" ' . $attributes . '>' . Translator::translate($text) . '</a>';
+        return '<a href="' . $href . '" ' . $attributes . '>' . Translator::translate((string)$text) . '</a>';
     };

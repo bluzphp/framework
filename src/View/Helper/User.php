@@ -10,13 +10,13 @@ declare(strict_types=1);
 
 namespace Bluz\View\Helper;
 
-use Bluz\Auth\EntityInterface;
+use Bluz\Auth\IdentityInterface;
 use Bluz\Proxy\Auth;
 
 /**
  * Get current user
  *
- * @return EntityInterface|null
+ * @return IdentityInterface|null
  */
 return
     function () {

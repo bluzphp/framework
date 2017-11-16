@@ -20,7 +20,7 @@ use Bluz\Http\RequestMethod;
  */
 class Rest extends AbstractMapper
 {
-    protected function prepareRequest()
+    protected function prepareRequest() : void
     {
         parent::prepareRequest();
 
@@ -46,7 +46,7 @@ class Rest extends AbstractMapper
         }
     }
 
-    protected function prepareParams(): array
+    protected function prepareParams() : array
     {
         return [
             'crud' => $this->crud,

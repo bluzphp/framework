@@ -10,7 +10,7 @@
 
 namespace Bluz\Tests\View;
 
-use Bluz\Router\Router;
+use Bluz\Proxy\Router;
 use Bluz\Tests\FrameworkTestCase;
 use Bluz\View\View;
 
@@ -114,11 +114,11 @@ class ViewTest extends FrameworkTestCase
         self::assertEquals('<a href="test/test" >text</a>', $view->ahref('text', 'test/test'));
         self::assertEquals(
             '<a href="/" class="active">text</a>',
-            $view->ahref('text', [Router::DEFAULT_MODULE, Router::DEFAULT_CONTROLLER])
+            $view->ahref('text', [Router::getDefaultModule(), Router::getDefaultController()])
         );
         self::assertEquals(
             '<a href="/" class="foo active">text</a>',
-            $view->ahref('text', [Router::DEFAULT_MODULE, Router::DEFAULT_CONTROLLER], ['class' => 'foo'])
+            $view->ahref('text', [Router::getDefaultModule(), Router::getDefaultController()], ['class' => 'foo'])
         );
     }
 
@@ -168,8 +168,8 @@ class ViewTest extends FrameworkTestCase
     {
         $view = $this->getView();
 
-        self::assertEquals(Router::DEFAULT_CONTROLLER, $view->controller());
-        self::assertTrue($view->controller(Router::DEFAULT_CONTROLLER));
+        self::assertEquals(Router::getDefaultController(), $view->controller());
+        self::assertTrue($view->controller(Router::getDefaultController()));
     }
 
     /**
@@ -269,8 +269,8 @@ class ViewTest extends FrameworkTestCase
     {
         $view = $this->getView();
 
-        self::assertEquals(Router::DEFAULT_MODULE, $view->module());
-        self::assertTrue($view->module(Router::DEFAULT_MODULE));
+        self::assertEquals(Router::getDefaultModule(), $view->module());
+        self::assertTrue($view->module(Router::getDefaultModule()));
     }
 
     /**

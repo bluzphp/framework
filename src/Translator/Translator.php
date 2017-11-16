@@ -115,10 +115,10 @@ class Translator
      * @param  string $domain of text for gettext setup
      * @param  string $path   on filesystem
      *
-     * @return self
+     * @return void
      * @throws ConfigurationException
      */
-    public function addTextDomain($domain, $path)
+    public function addTextDomain($domain, $path) : void
     {
         // check path
         if (!is_dir($path)) {
@@ -129,8 +129,6 @@ class Translator
 
         // @todo: hardcoded codeset
         bind_textdomain_codeset($domain, 'UTF-8');
-
-        return $this;
     }
 
     /**
@@ -138,10 +136,12 @@ class Translator
      *
      * Simple example of usage
      * equal to gettext('Message')
+     *
      *     Translator::translate('Message');
      *
      * Simple replace of one or more argument(s)
      * equal to sprintf(gettext('Message to %s'), 'Username')
+     *
      *     Translator::translate('Message to %s', 'Username');
      *
      * @param  string   $message
@@ -149,7 +149,7 @@ class Translator
      *
      * @return string
      */
-    public static function translate($message, ...$text)
+    public static function translate(string $message, ...$text) : string
     {
         if (empty($message)) {
             return $message;
@@ -185,7 +185,7 @@ class Translator
      * @return string
      * @link   http://docs.translatehouse.org/projects/localization-guide/en/latest/l10n/pluralforms.html
      */
-    public static function translatePlural($singular, $plural, $number, ...$text)
+    public static function translatePlural(string $singular, string $plural, $number, ...$text) : string
     {
         if (function_exists('ngettext')) {
             $message = ngettext($singular, $plural, $number);

@@ -25,9 +25,9 @@ class Messages
 {
     use Options;
 
-    const TYPE_ERROR = 'error';
-    const TYPE_SUCCESS = 'success';
-    const TYPE_NOTICE = 'notice';
+    private const TYPE_ERROR = 'error';
+    private const TYPE_SUCCESS = 'success';
+    private const TYPE_NOTICE = 'notice';
 
     /**
      * @var array list of messages types
@@ -39,19 +39,6 @@ class Messages
     ];
 
     /**
-     * Initialize Messages container
-     *
-     * @return Messages
-     */
-    protected function init()
-    {
-        if (!$this->getMessagesStore()) {
-            $this->reset();
-        }
-        return $this;
-    }
-
-    /**
      * Add notice
      *
      * @param  string   $message
@@ -60,7 +47,7 @@ class Messages
      * @return void
      * @since  1.0.0 added $text
      */
-    public function addNotice($message, ...$text)
+    public function addNotice($message, ...$text) : void
     {
         $this->add(self::TYPE_NOTICE, $message, ...$text);
     }
@@ -74,7 +61,7 @@ class Messages
      * @return void
      * @since  1.0.0 added $text
      */
-    public function addSuccess($message, ...$text)
+    public function addSuccess($message, ...$text) : void
     {
         $this->add(self::TYPE_SUCCESS, $message, ...$text);
     }
@@ -88,7 +75,7 @@ class Messages
      * @return void
      * @since  1.0.0 added $text
      */
-    public function addError($message, ...$text)
+    public function addError($message, ...$text) : void
     {
         $this->add(self::TYPE_ERROR, $message, ...$text);
     }
@@ -102,39 +89,26 @@ class Messages
      *
      * @return void
      */
-    protected function add($type, $message, ...$text)
+    protected function add($type, $message, ...$text) : void
     {
-        $this->init();
         $this->getMessagesStore()[$type][] = Translator::translate($message, ...$text);
     }
 
     /**
-     * Pop a message
+     * Pop a message by type
      *
      * @param  string $type
      *
      * @return \stdClass|null
      */
-    public function pop($type = null)
+    public function pop($type) : ?\stdClass
     {
-        if (!$this->getMessagesStore()) {
-            return null;
-        }
-
-        if ($type !== null) {
-            $text = array_shift($this->getMessagesStore()[$type]);
-            if ($text) {
-                $message = new \stdClass();
-                $message->text = $text;
-                $message->type = $type;
-                return $message;
-            }
-        } else {
-            foreach ($this->types as $aType) {
-                if ($message = $this->pop($aType)) {
-                    return $message;
-                }
-            }
+        $text = array_shift($this->getMessagesStore()[$type]);
+        if ($text) {
+            $message = new \stdClass();
+            $message->text = $text;
+            $message->type = $type;
+            return $message;
         }
         return null;
     }
@@ -146,12 +120,8 @@ class Messages
      */
     public function popAll()
     {
-        if (!$this->getMessagesStore()) {
-            return $this->createEmptyMessagesStore();
-        }
-
         $messages = $this->getMessagesStore()->getArrayCopy();
-        $this->reset();
+        $this->resetMessagesStore();
         return $messages;
     }
 
@@ -160,7 +130,7 @@ class Messages
      *
      * @return integer
      */
-    public function count()
+    public function count() : int
     {
         $size = 0;
         if (!$store = $this->getMessagesStore()) {
@@ -175,21 +145,35 @@ class Messages
     /**
      * Reset messages
      *
+     * @param \ArrayObject $store
      * @return void
      */
-    public function reset()
+    protected function setMessagesStore(\ArrayObject $store) : void
     {
-        Session::set('messages:store', $this->createEmptyMessagesStore());
+        Session::set('messages:store', $store);
     }
 
     /**
-     * Returns current messages store
+     * Returns current or new messages store if it not exists
      *
-     * @return \ArrayObject|null Returns null if store not exists yet
+     * @return \ArrayObject
      */
-    protected function getMessagesStore()
+    protected function getMessagesStore() : \ArrayObject
     {
+        if (!$store = Session::get('messages:store')) {
+            $this->resetMessagesStore();
+        }
         return Session::get('messages:store');
+    }
+
+    /**
+     * Reset messages
+     *
+     * @return void
+     */
+    protected function resetMessagesStore() : void
+    {
+        $this->setMessagesStore($this->createEmptyMessagesStore());
     }
 
     /**
@@ -197,7 +181,7 @@ class Messages
      *
      * @return \ArrayObject
      */
-    protected function createEmptyMessagesStore()
+    protected function createEmptyMessagesStore() : \ArrayObject
     {
         return new \ArrayObject(
             [

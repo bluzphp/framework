@@ -88,7 +88,7 @@ class RestTest extends FrameworkTestCase
     }
 
     /**
-     * @expectedException \Bluz\Application\Exception\NotImplementedException
+     * @expectedException \Bluz\Http\Exception\NotImplementedException
      */
     public function testNotImplementedMethod()
     {
@@ -96,7 +96,7 @@ class RestTest extends FrameworkTestCase
     }
 
     /**
-     * @expectedException \Bluz\Application\Exception\ForbiddenException
+     * @expectedException \Bluz\Http\Exception\ForbiddenException
      */
     public function testForbiddenMethod()
     {

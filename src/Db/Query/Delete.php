@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace Bluz\Db\Query;
 
+use Bluz\Proxy\Db;
+
 /**
  * Builder of DELETE queries
  *
@@ -17,10 +19,14 @@ namespace Bluz\Db\Query;
  */
 class Delete extends AbstractBuilder
 {
-    use Traits\From;
     use Traits\Where;
     use Traits\Order;
     use Traits\Limit;
+
+    /**
+     * @var string Table name
+     */
+    protected $table;
 
     /**
      * {@inheritdoc}
@@ -29,11 +35,10 @@ class Delete extends AbstractBuilder
      */
     public function getSql() : string
     {
-        $query = 'DELETE FROM ' . $this->sqlParts['from']['table']
-            . ($this->sqlParts['where'] !== null ? ' WHERE ' . ((string)$this->sqlParts['where']) : '')
-            . ($this->limit ? ' LIMIT ' . $this->limit : '');
-
-        return $query;
+        return 'DELETE FROM '
+            . Db::quoteIdentifier($this->table)
+            . $this->prepareWhere()
+            . $this->prepareLimit();
     }
 
     /**
@@ -52,8 +57,19 @@ class Delete extends AbstractBuilder
      *
      * @return Delete instance
      */
-    public function delete($table)
+    public function delete($table) : Delete
     {
-        return $this->setFromQueryPart($table);
+        $this->table = $table;
+        return $this;
+    }
+
+    /**
+     * Prepare string to apply limit inside SQL query
+     *
+     * @return string
+     */
+    protected function prepareLimit() : string
+    {
+        return $this->limit ? ' LIMIT ' . $this->limit : '';
     }
 }

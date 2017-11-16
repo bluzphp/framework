@@ -10,6 +10,7 @@
 
 namespace Bluz\Tests\Fixtures\Models\Test;
 
+use Bluz\Db\TableInterface;
 use Bluz\Validator\Traits\Validator;
 
 /**
@@ -29,9 +30,9 @@ class Row extends \Bluz\Db\Row
     /**
      * Return table instance for manipulation
      *
-     * @return Table
+     * @return TableInterface
      */
-    public function getTable()
+    public function getTable() : TableInterface
     {
         return Table::getInstance();
     }
@@ -41,7 +42,7 @@ class Row extends \Bluz\Db\Row
      *
      * @return void
      */
-    public function beforeSave()
+    public function beforeSave() : void
     {
         $this->addValidator('name')
             ->required()

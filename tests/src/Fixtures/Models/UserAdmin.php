@@ -5,7 +5,7 @@
 
 namespace Bluz\Tests\Fixtures\Models;
 
-use Bluz\Auth\AbstractRowEntity;
+use Bluz\Auth\AbstractIdentity;
 use Bluz\Proxy\Auth;
 
 /**
@@ -16,7 +16,7 @@ use Bluz\Proxy\Auth;
  * @author   Anton Shevchuk
  * @created  28.03.14 18:25
  */
-class UserAdmin extends AbstractRowEntity
+class UserAdmin extends AbstractIdentity
 {
     /**
      * Can entity login

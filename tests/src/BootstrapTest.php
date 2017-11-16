@@ -10,9 +10,9 @@
 namespace Bluz\Tests;
 
 use Bluz\Application\Application;
-use Bluz\Application\Exception\ForbiddenException;
-use Bluz\Application\Exception\RedirectException;
 use Bluz\Controller\Controller;
+use Bluz\Http\Exception\ForbiddenException;
+use Bluz\Http\Exception\RedirectException;
 use Bluz\Proxy\Layout;
 use Bluz\Proxy\Request;
 use Bluz\Proxy\Response;
@@ -51,7 +51,7 @@ class BootstrapTest extends Application
      *
      * @return string|null
      */
-    public function getModule()
+    public function getModule() : ?string
     {
         return $this->dispatchModule;
     }
@@ -61,7 +61,7 @@ class BootstrapTest extends Application
      *
      * @return string|null
      */
-    public function getController()
+    public function getController() : ?string
     {
         return $this->dispatchController;
     }
@@ -73,7 +73,7 @@ class BootstrapTest extends Application
      *
      * @return void
      */
-    public function setException($exception)
+    public function setException($exception) : void
     {
         $this->exception = $exception;
 
@@ -86,7 +86,7 @@ class BootstrapTest extends Application
      *
      * @return \Exception|null
      */
-    public function getException()
+    public function getException() : ?\Exception
     {
         return $this->exception;
     }
@@ -94,7 +94,7 @@ class BootstrapTest extends Application
     /**
      * @inheritdoc
      */
-    protected function doProcess()
+    protected function doProcess() : void
     {
         $module = Request::getModule();
         $controller = Request::getController();
@@ -104,7 +104,6 @@ class BootstrapTest extends Application
         try {
             codecept_debug('');
             codecept_debug(' >> '. $module .'/'. $controller);
-
             // dispatch controller
             $result = $this->dispatch($module, $controller, $params);
         } catch (ForbiddenException $e) {
@@ -112,8 +111,7 @@ class BootstrapTest extends Application
             $result = $this->forbidden($e);
         } catch (RedirectException $e) {
             $this->setException($e);
-            // redirect to URL
-            $result = $this->redirect($e->getUrl());
+            $result = $this->redirect($e);
         } catch (\Exception $e) {
             $this->setException($e);
             $result = $this->error($e);

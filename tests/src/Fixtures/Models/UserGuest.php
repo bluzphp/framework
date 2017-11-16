@@ -6,7 +6,7 @@
 namespace Bluz\Tests\Fixtures\Models;
 
 use Bluz\Application\Exception\ApplicationException;
-use Bluz\Auth\AbstractRowEntity;
+use Bluz\Auth\AbstractIdentity;
 
 /**
  * Row
@@ -16,7 +16,7 @@ use Bluz\Auth\AbstractRowEntity;
  * @author   Anton Shevchuk
  * @created  28.03.14 18:25
  */
-class UserGuest extends AbstractRowEntity
+class UserGuest extends AbstractIdentity
 {
     /**
      * Can entity login

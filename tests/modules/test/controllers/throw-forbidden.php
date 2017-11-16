@@ -10,7 +10,7 @@
 
 namespace Bluz\Tests\Fixtures\Controllers;
 
-use Bluz\Application\Exception\ForbiddenException;
+use Bluz\Http\Exception\ForbiddenException;
 
 /**
  * @throws ForbiddenException

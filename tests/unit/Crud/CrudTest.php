@@ -25,7 +25,7 @@ class CrudTest extends FrameworkTestCase
 {
     /**
      * @covers \Bluz\Crud\AbstractCrud::readOne()
-     * @expectedException \Bluz\Application\Exception\NotImplementedException
+     * @expectedException \Bluz\Http\Exception\NotImplementedException
      */
     public function testNotImplementedReadOneMethodThrowException()
     {
@@ -34,7 +34,7 @@ class CrudTest extends FrameworkTestCase
 
     /**
      * @covers \Bluz\Crud\AbstractCrud::readSet()
-     * @expectedException \Bluz\Application\Exception\NotImplementedException
+     * @expectedException \Bluz\Http\Exception\NotImplementedException
      */
     public function testNotImplementedReadSetMethodThrowException()
     {
@@ -43,7 +43,7 @@ class CrudTest extends FrameworkTestCase
 
     /**
      * @covers \Bluz\Crud\AbstractCrud::createOne()
-     * @expectedException \Bluz\Application\Exception\NotImplementedException
+     * @expectedException \Bluz\Http\Exception\NotImplementedException
      */
     public function testNotImplementedCreateOneMethodThrowException()
     {
@@ -52,7 +52,7 @@ class CrudTest extends FrameworkTestCase
 
     /**
      * @covers \Bluz\Crud\AbstractCrud::createSet()
-     * @expectedException \Bluz\Application\Exception\NotImplementedException
+     * @expectedException \Bluz\Http\Exception\NotImplementedException
      */
     public function testNotImplementedCreateSetMethodThrowException()
     {
@@ -61,7 +61,7 @@ class CrudTest extends FrameworkTestCase
 
     /**
      * @covers \Bluz\Crud\AbstractCrud::updateOne()
-     * @expectedException \Bluz\Application\Exception\NotImplementedException
+     * @expectedException \Bluz\Http\Exception\NotImplementedException
      */
     public function testNotImplementedUpdateOneMethodThrowException()
     {
@@ -70,7 +70,7 @@ class CrudTest extends FrameworkTestCase
 
     /**
      * @covers \Bluz\Crud\AbstractCrud::updateSet()
-     * @expectedException \Bluz\Application\Exception\NotImplementedException
+     * @expectedException \Bluz\Http\Exception\NotImplementedException
      */
     public function testNotImplementedUpdateSetMethodThrowException()
     {
@@ -79,7 +79,7 @@ class CrudTest extends FrameworkTestCase
 
     /**
      * @covers \Bluz\Crud\AbstractCrud::deleteOne()
-     * @expectedException \Bluz\Application\Exception\NotImplementedException
+     * @expectedException \Bluz\Http\Exception\NotImplementedException
      */
     public function testNotImplementedDeleteOneMethodThrowException()
     {
@@ -88,7 +88,7 @@ class CrudTest extends FrameworkTestCase
 
     /**
      * @covers \Bluz\Crud\AbstractCrud::deleteSet()
-     * @expectedException \Bluz\Application\Exception\NotImplementedException
+     * @expectedException \Bluz\Http\Exception\NotImplementedException
      */
     public function testNotImplementedDeleteSetMethodThrowException()
     {

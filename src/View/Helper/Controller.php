@@ -22,7 +22,7 @@ use Bluz\Proxy\Request;
  */
 return
     function ($controller = null) {
-        if (is_null($controller)) {
+        if (null === $controller) {
             return Request::getController();
         }
         return Request::getController() === $controller;

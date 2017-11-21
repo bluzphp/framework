@@ -175,7 +175,11 @@ abstract class Table implements TableInterface
 
                 $meta = DbProxy::fetchUniqueGroup(
                     '
-                    SELECT COLUMN_NAME, DATA_TYPE, COLUMN_DEFAULT, COLUMN_KEY
+                    SELECT 
+                      COLUMN_NAME AS `name`,
+                      DATA_TYPE AS `type`,
+                      COLUMN_DEFAULT AS `default`,
+                      COLUMN_KEY AS `key`
                     FROM INFORMATION_SCHEMA.COLUMNS
                     WHERE TABLE_SCHEMA = ?
                       AND TABLE_NAME = ?',

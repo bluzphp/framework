@@ -47,6 +47,37 @@ class IpRule extends AbstractRule
     }
 
     /**
+     * Check input data
+     *
+     * @param  string $input
+     *
+     * @return bool
+     */
+    public function validate($input) : bool
+    {
+        return $this->verifyAddress($input) && $this->verifyNetwork($input);
+    }
+
+    /**
+     * Get error template
+     *
+     * @return string
+     */
+    public function getDescription() : string
+    {
+        if (!empty($this->networkRange)) {
+            $message = $this->networkRange['min'];
+            if (isset($this->networkRange['max'])) {
+                $message .= '-' . $this->networkRange['max'];
+            } else {
+                $message .= '/' . long2ip((string)bindec($this->networkRange['mask']));
+            }
+            return __('must be an IP address in the "%s" range', $message);
+        }
+        return __('must be an IP address');
+    }
+
+    /**
      * Parse IP range
      *
      * @param  string $input
@@ -65,7 +96,7 @@ class IpRule extends AbstractRule
         $range = ['min' => null, 'max' => null, 'mask' => null];
 
         if (strpos($input, '-') !== false) {
-            list($range['min'], $range['max']) = explode('-', $input);
+            [$range['min'], $range['max']] = explode('-', $input);
         } elseif (strpos($input, '*') !== false) {
             $this->parseRangeUsingWildcards($input, $range);
         } elseif (strpos($input, '/') !== false) {
@@ -142,18 +173,6 @@ class IpRule extends AbstractRule
     }
 
     /**
-     * Check input data
-     *
-     * @param  string $input
-     *
-     * @return bool
-     */
-    public function validate($input): bool
-    {
-        return $this->verifyAddress($input) && $this->verifyNetwork($input);
-    }
-
-    /**
      * Verify IP address
      *
      * @param  string $address
@@ -210,24 +229,5 @@ class IpRule extends AbstractRule
         $input = sprintf('%032b', ip2long($input));
 
         return ($input & $range['mask']) === ($min & $range['mask']);
-    }
-
-    /**
-     * Get error template
-     *
-     * @return string
-     */
-    public function getDescription() : string
-    {
-        if (!empty($this->networkRange)) {
-            $message = $this->networkRange['min'];
-            if (isset($this->networkRange['max'])) {
-                $message .= '-' . $this->networkRange['max'];
-            } else {
-                $message .= '/' . long2ip((string)bindec($this->networkRange['mask']));
-            }
-            return __('must be an IP address in the "%s" range', $message);
-        }
-        return __('must be an IP address');
     }
 }

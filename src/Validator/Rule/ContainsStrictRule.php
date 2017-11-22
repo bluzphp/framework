@@ -24,7 +24,7 @@ class ContainsStrictRule extends ContainsRule
      *
      * @return bool
      */
-    public function validate($input): bool
+    public function validate($input) : bool
     {
         // for array
         if (is_array($input)) {
@@ -35,15 +35,5 @@ class ContainsStrictRule extends ContainsRule
             return false !== mb_strpos($input, $this->containsValue, 0, mb_detect_encoding($input));
         }
         return false;
-    }
-
-    /**
-     * Get error template
-     *
-     * @return string
-     */
-    public function getDescription() : string
-    {
-        return __('must contain the value "%s"', $this->containsValue);
     }
 }

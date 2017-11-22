@@ -39,7 +39,7 @@ class LessRule extends AbstractCompareRule
      *
      * @return bool
      */
-    public function validate($input): bool
+    public function validate($input) : bool
     {
         return $this->less($input, $this->maxValue);
     }

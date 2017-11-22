@@ -350,7 +350,7 @@ class Meta
             return;
         }
 
-        list($type, $key) = preg_split('/[ $]+/', $param);
+        [$type, $key] = preg_split('/[ $]+/', $param);
 
         $this->params[$key] = trim($type);
     }

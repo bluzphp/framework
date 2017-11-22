@@ -30,7 +30,7 @@ class VersionRule extends AbstractRule
      *
      * @return bool
      */
-    public function validate($input): bool
+    public function validate($input) : bool
     {
         $pattern = '/^[0-9]+\.[0-9]+\.[0-9]+([+-][^+-][0-9A-Za-z-.]*)?$/';
 

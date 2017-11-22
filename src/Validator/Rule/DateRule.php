@@ -41,7 +41,7 @@ class DateRule extends AbstractRule
      *
      * @return bool
      */
-    public function validate($input): bool
+    public function validate($input) : bool
     {
         if ($input instanceof DateTime) {
             return true;

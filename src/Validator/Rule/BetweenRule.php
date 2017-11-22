@@ -58,7 +58,7 @@ class BetweenRule extends AbstractCompareRule
      *
      * @return bool
      */
-    public function validate($input): bool
+    public function validate($input) : bool
     {
         return $this->less($this->minValue, $input)
             && $this->less($input, $this->maxValue);

@@ -29,7 +29,7 @@ class StringRule extends AbstractRule
      *
      * @return bool
      */
-    public function validate($input): bool
+    public function validate($input) : bool
     {
         return is_string($input);
     }

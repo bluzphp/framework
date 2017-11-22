@@ -44,7 +44,7 @@ class DomainRule extends AbstractRule
      *
      * @return bool
      */
-    public function validate($input): bool
+    public function validate($input) : bool
     {
         $input = (string)$input;
         // check by regular expression

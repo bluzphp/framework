@@ -74,7 +74,7 @@ class LengthRule extends AbstractCompareRule
      *
      * @return bool
      */
-    public function validate($input): bool
+    public function validate($input) : bool
     {
         if (!$length = $this->extractLength($input)) {
             return false;
@@ -111,11 +111,14 @@ class LengthRule extends AbstractCompareRule
     public function getDescription() : string
     {
         if (!$this->minValue) {
-            return __('must have a length lower than "%d"', $this->maxValue);
+            return __('must have length lower than "%d"', $this->maxValue);
         }
         if (!$this->maxValue) {
-            return __('must have a length greater than "%d"', $this->minValue);
+            return __('must have length greater than "%d"', $this->minValue);
         }
-        return __('must have a length between "%d" and "%d"', $this->minValue, $this->maxValue);
+        if ($this->minValue === $this->maxValue) {
+            return __('must have length "%d"', $this->minValue);
+        }
+        return __('must have length between "%d" and "%d"', $this->minValue, $this->maxValue);
     }
 }

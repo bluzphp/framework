@@ -291,8 +291,11 @@ abstract class Table implements TableInterface
                         );
                         $keyValue = implode(',', $keyValue);
                         $whereAndTerms[] = $self->name . '.' . $keyName . ' IN (' . $keyValue . ')';
-                    } elseif (is_null($keyValue)) {
+                    } elseif (null === $keyValue) {
                         $whereAndTerms[] = $self->name . '.' . $keyName . ' IS NULL';
+                    } elseif ('%' === $keyValue{0} || '%' === $keyValue{-1}) {
+                        $whereAndTerms[] = $self->name . '.' . $keyName . ' LIKE ?';
+                        $whereParams[] = $keyValue;
                     } else {
                         $whereAndTerms[] = $self->name . '.' . $keyName . ' = ?';
                         $whereParams[] = $keyValue;

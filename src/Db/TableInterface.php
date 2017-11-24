@@ -87,13 +87,17 @@ interface TableInterface
     /**
      * Find rows by WHERE
      *     // WHERE alias = 'foo'
-     *     Table::findWhere(['alias'=>'foo']);
+     *     Table::findWhere(['alias' => 'foo']);
+     *     // WHERE alias IS NULL
+     *     Table::findWhere(['alias' => null]);
+     *     // WHERE alias IN ('foo', 'bar')
+     *     Table::findWhere(['alias' => ['foo', 'bar']]);
+     *     // WHERE alias LIKE 'foo%'
+     *     Table::findWhere(['alias' => 'foo%']);
      *     // WHERE alias = 'foo' OR 'alias' = 'bar'
      *     Table::findWhere(['alias'=>'foo'], ['alias'=>'bar']);
      *     // WHERE (alias = 'foo' AND userId = 2) OR ('alias' = 'bar' AND userId = 4)
      *     Table::findWhere(['alias'=>'foo', 'userId'=> 2], ['alias'=>'foo', 'userId'=>4]);
-     *     // WHERE alias IN ('foo', 'bar')
-     *     Table::findWhere(['alias'=> ['foo', 'bar']]);
      *
      * @param  mixed ...$where
      *

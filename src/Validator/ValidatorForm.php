@@ -54,6 +54,18 @@ class ValidatorForm implements ValidatorInterface
     }
 
     /**
+     * Get chain to form
+     *
+     * @param string      $name
+     *
+     * @return ValidatorChain
+     */
+    public function get($name) : ValidatorChain
+    {
+        return $this->add($name);
+    }
+
+    /**
      * Validate chain of rules
      *
      * @param  array $input

@@ -63,9 +63,21 @@ trait Validator
      *
      * @return ValidatorChain
      */
-    protected function addValidator($name) : ValidatorChain
+    public function addValidator($name) : ValidatorChain
     {
         return $this->getValidatorForm()->add($name);
+    }
+
+    /**
+     * Get ValidatorChain
+     *
+     * @param  string $name
+     *
+     * @return ValidatorChain
+     */
+    public function getValidator($name) : ValidatorChain
+    {
+        return $this->getValidatorForm()->get($name);
     }
 
     /**

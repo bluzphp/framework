@@ -393,7 +393,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    public function beforeInsert() : void
+    protected function beforeInsert() : void
     {
     }
 
@@ -413,7 +413,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    public function beforeUpdate() : void
+    protected function beforeUpdate() : void
     {
     }
 

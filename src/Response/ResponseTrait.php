@@ -43,9 +43,8 @@ trait ResponseTrait
             case 'JSON':
                 return $this->jsonSerialize();
             case 'HTML':
-                return $this->__toString();
             default:
-                return '';
+                return $this->__toString();
         }
     }
 }

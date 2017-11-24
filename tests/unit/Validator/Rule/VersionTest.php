@@ -33,6 +33,8 @@ class VersionTest extends Tests\FrameworkTestCase
      */
     public function testValidVersionNumberShouldPass($input)
     {
+        $rule = $this->rule;
+        self::assertTrue($rule($input));
         self::assertTrue($this->rule->validate($input));
         self::assertNotEmpty($this->rule->__toString());
     }
@@ -44,8 +46,21 @@ class VersionTest extends Tests\FrameworkTestCase
      */
     public function testInvalidVersionNumberShouldFail($input)
     {
+        $rule = $this->rule;
+        self::assertFalse($rule($input));
         self::assertFalse($this->rule->validate($input));
         self::assertNotEmpty($this->rule->__toString());
+    }
+
+    /**
+     * @dataProvider providerForFail
+     * @expectedException \Bluz\Validator\Exception\ValidatorException
+     *
+     * @param $input
+     */
+    public function testInvalidVersionNumberShouldThrowException($input)
+    {
+        $this->rule->assert($input);
     }
 
     /**
@@ -53,7 +68,7 @@ class VersionTest extends Tests\FrameworkTestCase
      */
     public function providerForPass() : array
     {
-        return array(
+        return [
             ['1.0.0'],
             ['1.0.0-alpha'],
             ['1.0.0-alpha.1'],
@@ -61,7 +76,7 @@ class VersionTest extends Tests\FrameworkTestCase
             ['1.0.0-x.7.z.92'],
             ['1.3.7+build.2.b8f12d7'],
             ['1.3.7-rc.1'],
-        );
+        ];
     }
 
     /**
@@ -69,7 +84,7 @@ class VersionTest extends Tests\FrameworkTestCase
      */
     public function providerForFail() : array
     {
-        return array(
+        return [
             [''],
             ['1.3.7--'],
             ['1.3.7++'],
@@ -77,6 +92,6 @@ class VersionTest extends Tests\FrameworkTestCase
             ['1.2.3.4'],
             ['1.2.3.4-beta'],
             ['beta'],
-        );
+        ];
     }
 }

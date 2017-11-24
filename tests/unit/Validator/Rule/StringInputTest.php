@@ -64,11 +64,11 @@ class StringInputTest extends Tests\FrameworkTestCase
      */
     public function providerForFail() : array
     {
-        return array(
+        return [
             [null],
             [[]],
             [new \stdClass],
             [150]
-        );
+        ];
     }
 }

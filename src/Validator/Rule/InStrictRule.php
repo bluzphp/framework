@@ -24,7 +24,7 @@ class InStrictRule extends InRule
      *
      * @return bool
      */
-    public function validate($input): bool
+    public function validate($input) : bool
     {
         if (is_array($this->haystack)) {
             return in_array($input, $this->haystack, true);

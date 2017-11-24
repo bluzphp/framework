@@ -29,7 +29,7 @@ abstract class AbstractRule implements RuleInterface
     /**
      * @inheritdoc
      */
-    public function assert($input)
+    public function assert($input) : void
     {
         if (!$this->validate($input)) {
             throw new ValidatorException($this->description);

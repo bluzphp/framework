@@ -29,7 +29,7 @@ class RequiredRule extends AbstractRule
      *
      * @return bool
      */
-    public function validate($input): bool
+    public function validate($input) : bool
     {
         if (is_string($input)) {
             $input = trim($input);

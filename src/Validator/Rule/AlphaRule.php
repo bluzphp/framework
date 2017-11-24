@@ -24,7 +24,7 @@ class AlphaRule extends AbstractCtypeRule
      *
      * @return bool
      */
-    protected function validateClean($input): bool
+    protected function validateClean($input) : bool
     {
         return ctype_alpha($input);
     }

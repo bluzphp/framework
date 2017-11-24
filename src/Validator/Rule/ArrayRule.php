@@ -44,11 +44,11 @@ class ArrayRule extends AbstractRule
     /**
      * Check input data
      *
-     * @param  string $input
+     * @param  mixed $input
      *
      * @return bool
      */
-    public function validate($input): bool
+    public function validate($input) : bool
     {
         if (!is_array($input)) {
             return false;

@@ -39,7 +39,7 @@ class ContainsRule extends AbstractRule
      *
      * @return bool
      */
-    public function validate($input): bool
+    public function validate($input) : bool
     {
         // for array
         if (is_array($input)) {

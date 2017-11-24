@@ -33,7 +33,7 @@ class ValidatorException extends BadRequestException
     /**
      * @return array
      */
-    public function getErrors(): array
+    public function getErrors() : array
     {
         return $this->errors;
     }
@@ -41,7 +41,7 @@ class ValidatorException extends BadRequestException
     /**
      * @param array $errors
      */
-    public function setErrors(array $errors)
+    public function setErrors(array $errors) : void
     {
         $this->errors = $errors;
     }
@@ -54,7 +54,7 @@ class ValidatorException extends BadRequestException
      *
      * @return void
      */
-    public function setError($name, $message)
+    public function setError($name, $message) : void
     {
         $this->errors[$name] = $message;
     }

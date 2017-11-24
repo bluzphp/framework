@@ -30,7 +30,7 @@ class CreditCardRule extends AbstractRule
      *
      * @return bool
      */
-    public function validate($input): bool
+    public function validate($input) : bool
     {
         $input = preg_replace('([ \.-])', '', $input);
 
@@ -55,7 +55,7 @@ class CreditCardRule extends AbstractRule
         $inputLen = strlen($input);
         for ($i = 0; $i < $inputLen; $i++) {
             $current = $input[$i];
-            if ($i % 2 == 1) {
+            if ($i % 2 === 1) {
                 $current *= 2;
                 if ($current > 9) {
                     $firstDigit = $current % 10;
@@ -66,6 +66,6 @@ class CreditCardRule extends AbstractRule
             $sum += $current;
         }
 
-        return ($sum % 10 == 0);
+        return ($sum % 10 === 0);
     }
 }

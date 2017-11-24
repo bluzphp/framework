@@ -94,7 +94,7 @@ class Router
         $reverse = Cache::get('router.reverse');
 
         if (!$routers || !$reverse) {
-            list($routers, $reverse) = $this->prepareRouterData();
+            [$routers, $reverse] = $this->prepareRouterData();
             Cache::set('router.routers', $routers, Cache::TTL_NO_EXPIRY, ['system']);
             Cache::set('router.reverse', $reverse, Cache::TTL_NO_EXPIRY, ['system']);
         }

@@ -103,7 +103,7 @@ class TableTest extends FrameworkTestCase
         self::assertArrayHasSize($meta, 6);
         self::assertArrayHasKey('id', $meta);
         self::assertArrayHasKey('name', $meta);
-        self::assertEqualsArray(['DATA_TYPE' => 'int', 'COLUMN_DEFAULT' => '', 'COLUMN_KEY' => 'PRI'], $meta['id']);
+        self::assertEqualsArray(['type' => 'int', 'default' => '', 'key' => 'PRI'], $meta['id']);
     }
 
     /**

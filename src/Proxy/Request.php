@@ -267,7 +267,7 @@ final class Request
                 // check if there is a different quality
                 if (strpos($a, ';q=') or strpos($a, '; q=')) {
                     // divide "mime/type;q=X" into two parts: "mime/type" i "X"
-                    list($a, $q) = preg_split('/;([ ]?)q=/', $a);
+                    [$a, $q] = preg_split('/;([ ]?)q=/', $a);
                 }
                 // remove other extension
                 if (strpos($a, ';')) {

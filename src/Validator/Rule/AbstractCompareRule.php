@@ -30,7 +30,7 @@ abstract class AbstractCompareRule extends AbstractRule
      *
      * @return bool
      */
-    protected function less($what, $than): bool
+    protected function less($what, $than) : bool
     {
         if ($this->inclusive) {
             return $what <= $than;

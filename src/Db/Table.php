@@ -106,7 +106,7 @@ abstract class Table implements TableInterface
 
         // setup default select query
         if (empty($this->select)) {
-            $this->select = 'SELECT * ' .
+            $this->select = 'SELECT ' . DbProxy::quoteIdentifier($this->name) . '.* ' .
                 'FROM ' . DbProxy::quoteIdentifier($this->name);
         }
 
@@ -387,7 +387,7 @@ abstract class Table implements TableInterface
         $self = static::getInstance();
 
         $select = new Query\Select();
-        $select->select($self->name . '.*')
+        $select->select(DbProxy::quoteIdentifier($self->name) . '.*')
             ->from($self->name, $self->name)
             ->setFetchType($self->rowClass);
 

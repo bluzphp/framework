@@ -249,7 +249,7 @@ trait From
 
         foreach ($this->join[$fromAlias] as $join) {
             $query .= ' ' . strtoupper($join['joinType'])
-                . ' JOIN ' . Db::quoteIdentifier($join['joinTable']) . ' AS ' . $join['joinAlias']
+                . ' JOIN ' . Db::quoteIdentifier($join['joinTable']) . ' AS ' . Db::quoteIdentifier($join['joinAlias'])
                 . ' ON ' . $join['joinCondition'];
             $query .= $this->prepareJoins($join['joinAlias']);
         }

@@ -223,7 +223,7 @@ trait From
         $fromClauses = [];
         // Loop through all FROM clauses
         foreach ($this->from as $from) {
-            $fromClause = Db::quoteIdentifier($from['table']) . ' AS ' . $from['alias']
+            $fromClause = Db::quoteIdentifier($from['table']) . ' AS ' . Db::quoteIdentifier($from['alias'])
                 . $this->prepareJoins($from['alias']);
 
             $fromClauses[$from['alias']] = $fromClause;

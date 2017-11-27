@@ -55,7 +55,7 @@ class QueryTest extends FrameworkTestCase
             ->limit(5);
 
         $check = 'SELECT u.*, ua.*'
-            . ' FROM `users` AS u LEFT JOIN `users_actions` AS ua ON ua.userId = u.id'
+            . ' FROM `users` AS `u` LEFT JOIN `users_actions` AS `ua` ON ua.userId = u.id'
             . ' WHERE (((u.id = "4" OR u.id = "5") OR (u.id IN ("4","5")))'
             . ' AND (u.status = "active" OR u.status = "pending")) OR (u.login LIKE ("A%"))'
             . ' ORDER BY u.id ASC, u.login ASC'
@@ -81,7 +81,7 @@ class QueryTest extends FrameworkTestCase
             ->setParams([':month1' => 2, ':month2' => 4]);
 
         $check = 'SELECT p.*'
-            . ' FROM `pages` AS p'
+            . ' FROM `pages` AS `p`'
             . ' GROUP BY p.userId, MONTH(p.created)'
             . ' HAVING ((MONTH(p.created) = :month1) OR (MONTH(p.created) = :month2)) AND (p.userId <> 0)';
 
@@ -102,7 +102,7 @@ class QueryTest extends FrameworkTestCase
             ->join('u', 'pages', 'p', 'p.userId = u.id');
 
         $check = 'SELECT u.*, p.*'
-            . ' FROM `users` AS u INNER JOIN `pages` AS p ON p.userId = u.id';
+            . ' FROM `users` AS `u` INNER JOIN `pages` AS `p` ON p.userId = u.id';
 
         self::assertEquals($builder->getQuery(), $check);
     }
@@ -119,7 +119,7 @@ class QueryTest extends FrameworkTestCase
             ->rightJoin('u', 'pages', 'p', 'p.userId = u.id');
 
         $check = 'SELECT u.*, p.*'
-            . ' FROM `users` AS u RIGHT JOIN `pages` AS p ON p.userId = u.id';
+            . ' FROM `users` AS `u` RIGHT JOIN `pages` AS `p` ON p.userId = u.id';
 
         self::assertEquals($builder->getQuery(), $check);
     }
@@ -137,7 +137,7 @@ class QueryTest extends FrameworkTestCase
             ->where('u.id = ? OR u.id = ?', 4, 5);
 
         $check = 'SELECT u.*, p.*'
-            . ' FROM `users` AS u INNER JOIN `pages` AS p ON p.userId = u.id'
+            . ' FROM `users` AS `u` INNER JOIN `pages` AS `p` ON p.userId = u.id'
             . ' WHERE u.id = ? OR u.id = ?';
 
         self::assertEquals($check, (string)$builder);

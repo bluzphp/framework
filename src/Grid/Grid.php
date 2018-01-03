@@ -720,7 +720,7 @@ abstract class Grid
      *
      * @return mixed
      */
-    public function getFilter($column, $filter = null) : ?string
+    public function getFilter($column, $filter = null)
     {
         if (null === $filter) {
             return $this->filters[$column] ?? null;

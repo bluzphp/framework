@@ -337,8 +337,11 @@ abstract class Grid
                      * - http://domain.com/users/grid/users-filter-roleId/gt-2      - roleId greater than 2
                      * - http://domain.com/users/grid/users-filter-roleId/gt-1-lt-4 - 1 < roleId < 4
                      * - http://domain.com/users/grid/users-filter-login/eq-admin   - login == admin
+                     * - http://domain.com/users/grid/users-filter-login/like-adm   - login LIKE `adm`
+                     * - http://domain.com/users/grid/users-filter-login/like-od-   - login LIKE `od-`
                      */
                     while ($filter) {
+                        // @todo rewrite with regexp like (filter|filter)-(value)
                         [$filterName, $filterValue, $filter] = array_pad(explode('-', $filter, 3), 3, null);
                         $this->addFilter($column, $filterName, $filterValue);
                     }
@@ -770,7 +773,7 @@ abstract class Grid
      *
      * @return string
      */
-    protected function applyAlias($column) : string
+    public function applyAlias($column) : string
     {
         return $this->aliases[$column] ?? $column;
     }

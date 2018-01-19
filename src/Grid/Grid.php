@@ -337,8 +337,11 @@ abstract class Grid
                      * - http://domain.com/users/grid/users-filter-roleId/gt-2      - roleId greater than 2
                      * - http://domain.com/users/grid/users-filter-roleId/gt-1-lt-4 - 1 < roleId < 4
                      * - http://domain.com/users/grid/users-filter-login/eq-admin   - login == admin
+                     * - http://domain.com/users/grid/users-filter-login/like-adm   - login LIKE `adm`
+                     * - http://domain.com/users/grid/users-filter-login/like-od-   - login LIKE `od-`
                      */
                     while ($filter) {
+                        // @todo rewrite with regexp like (filter|filter)-(value)
                         [$filterName, $filterValue, $filter] = array_pad(explode('-', $filter, 3), 3, null);
                         $this->addFilter($column, $filterName, $filterValue);
                     }
@@ -443,7 +446,7 @@ abstract class Grid
         foreach ($filters as $column => $columnFilters) {
             /** @var array $columnFilters */
             $column = $this->applyAlias($column);
-            if (count($columnFilters) === 1 && isset($columnFilters[self::FILTER_EQ])) {
+            if (\count($columnFilters) === 1 && isset($columnFilters[self::FILTER_EQ])) {
                 $params[$this->prefix . 'filter-' . $column] = $columnFilters[self::FILTER_EQ];
                 continue;
             }
@@ -523,7 +526,7 @@ abstract class Grid
      */
     protected function checkOrderColumn($column) : bool
     {
-        return in_array($column, $this->getAllowOrders(), true);
+        return \in_array($column, $this->getAllowOrders(), true);
     }
 
     /**
@@ -614,8 +617,8 @@ abstract class Grid
         $default = $this->getDefaultOrder();
 
         // remove default order when another one is set
-        if (is_array($default)
-            && count($this->orders)
+        if (\is_array($default)
+            && \count($this->orders)
             && isset($this->orders[key($default)])
             && $this->orders[key($default)] === reset($default)
         ) {
@@ -672,7 +675,7 @@ abstract class Grid
     protected function checkFilterColumn($column) : bool
     {
         return array_key_exists($column, $this->getAllowFilters()) ||
-            in_array($column, $this->getAllowFilters(), false);
+            \in_array($column, $this->getAllowFilters(), false);
     }
 
     /**
@@ -684,7 +687,7 @@ abstract class Grid
      */
     protected function checkFilterName($filter) : bool
     {
-        return in_array($filter, $this->allowFilterNames, false);
+        return \in_array($filter, $this->allowFilterNames, false);
     }
 
     /**
@@ -720,7 +723,7 @@ abstract class Grid
      *
      * @return mixed
      */
-    public function getFilter($column, $filter = null) : ?string
+    public function getFilter($column, $filter = null)
     {
         if (null === $filter) {
             return $this->filters[$column] ?? null;
@@ -770,7 +773,7 @@ abstract class Grid
      *
      * @return string
      */
-    protected function applyAlias($column) : string
+    public function applyAlias($column) : string
     {
         return $this->aliases[$column] ?? $column;
     }

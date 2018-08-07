@@ -111,18 +111,5 @@ trait Options
         foreach ($this->options as $key => $value) {
             $this->setOption($key, $value);
         }
-
-        // check and initialize options
-        $this->initOptions();
-    }
-
-    /**
-     * Check and initialize options in package
-     *
-     * @throws \Bluz\Config\ConfigException
-     * @return void
-     */
-    protected function initOptions() : void
-    {
     }
 }

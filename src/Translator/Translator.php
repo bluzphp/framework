@@ -85,9 +85,10 @@ class Translator
      * Initialization
      *
      * @return void
+     * @throws ConfigurationException
      * @throw  \Bluz\Config\ConfigException
      */
-    protected function initOptions()
+    public function init() : void
     {
         // Setup locale
         putenv('LC_ALL=' . $this->locale);
@@ -95,12 +96,12 @@ class Translator
         putenv('LANGUAGE=' . $this->locale);
 
         // Windows workaround
-        defined('LC_MESSAGES') ?: define('LC_MESSAGES', 6);
+        \defined('LC_MESSAGES') ?: \define('LC_MESSAGES', 6);
 
         setlocale(LC_MESSAGES, $this->locale);
 
         // For gettext only
-        if (function_exists('gettext')) {
+        if (\function_exists('gettext')) {
             // Setup domain path
             $this->addTextDomain($this->domain, $this->path);
 
@@ -155,11 +156,11 @@ class Translator
             return $message;
         }
 
-        if (function_exists('gettext')) {
+        if (\function_exists('gettext')) {
             $message = gettext($message);
         }
 
-        if (func_num_args() > 1) {
+        if (\func_num_args() > 1) {
             $message = vsprintf($message, $text);
         }
 
@@ -187,13 +188,13 @@ class Translator
      */
     public static function translatePlural(string $singular, string $plural, $number, ...$text) : string
     {
-        if (function_exists('ngettext')) {
+        if (\function_exists('ngettext')) {
             $message = ngettext($singular, $plural, $number);
         } else {
             $message = $singular;
         }
 
-        if (func_num_args() > 3) {
+        if (\func_num_args() > 3) {
             // first element is number
             array_unshift($text, $number);
             $message = vsprintf($message, $text);

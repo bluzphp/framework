@@ -25,7 +25,7 @@ return
         // it's stack for <head>
         $meta = Registry::get('layout:meta') ?: [];
 
-        if (is_null($name) && is_null($content)) {
+        if (null === $name && null === $content) {
             // clear system vars
             Registry::set('layout:meta', []);
             // prepare to output
@@ -35,7 +35,7 @@ return
                     'content="' . htmlspecialchars((string)$aContent, ENT_QUOTES) . '"/>';
             }
             return implode("\n", $tags);
-        } elseif (is_null($name)) {
+        } elseif (null === $name) {
             // if exists only $content, do nothing
             return null;
         }

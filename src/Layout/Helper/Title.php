@@ -23,7 +23,7 @@ use Bluz\Proxy\Registry;
 return
     function ($title = null) {
         // it's stack for <title> tag
-        if (is_null($title)) {
+        if (null === $title) {
             return Registry::get('layout:title');
         }
 

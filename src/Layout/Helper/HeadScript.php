@@ -29,7 +29,7 @@ return
         // it's stack for <head>
         $headScripts = Registry::get('layout:headScripts') ?: [];
 
-        if (is_null($src)) {
+        if (null === $src) {
             // clear system vars
             Registry::set('layout:headScripts', []);
             $tags = [];

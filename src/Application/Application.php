@@ -84,16 +84,17 @@ class Application
      * Get path to Application
      *
      * @return string
+     * @throws \ReflectionException
      */
     public function getPath() : string
     {
         if (!$this->path) {
-            if (defined('PATH_APPLICATION')) {
+            if (\defined('PATH_APPLICATION')) {
                 $this->path = PATH_APPLICATION;
             } else {
                 $reflection = new \ReflectionClass($this);
                 // 3 level up
-                $this->path = dirname($reflection->getFileName(), 3);
+                $this->path = \dirname($reflection->getFileName(), 3);
             }
         }
         return $this->path;
@@ -118,7 +119,7 @@ class Application
      */
     public function useLayout($flag = null) : bool
     {
-        if (is_bool($flag)) {
+        if (\is_bool($flag)) {
             $this->layoutFlag = $flag;
         }
 
@@ -221,6 +222,7 @@ class Application
      * Initial Router instance
      *
      * @return void
+     * @throws \Bluz\Config\ConfigException
      */
     protected function initRouter() : void
     {
@@ -287,7 +289,6 @@ class Application
      * - Analyse request headers
      *
      * @return void
-     * @throws ApplicationException
      */
     protected function preProcess() : void
     {

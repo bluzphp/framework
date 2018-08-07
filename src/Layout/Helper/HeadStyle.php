@@ -29,7 +29,7 @@ return
         // it's stack for <head>
         $headStyle = Registry::get('layout:headStyle') ?: [];
 
-        if (is_null($href)) {
+        if (null === $href) {
             // clear system vars
             Registry::set('layout:headStyle', []);
             $tags = [];

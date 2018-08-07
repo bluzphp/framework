@@ -168,7 +168,7 @@ class Relations
         $tableTwoSelect = $tableTwoClass::getInstance()::select();
 
         // check many to many relation
-        if (is_int(array_keys($relations)[0])) {
+        if (\is_int(\array_keys($relations)[0])) {
             // many to many relation over third table
             $modelThree = $relations[0];
 

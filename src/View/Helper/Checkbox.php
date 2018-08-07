@@ -17,8 +17,6 @@ use Bluz\View\View;
  *
  * @author The-Who
  *
- * @var    View        $this
- *
  * @param  string      $name
  * @param  string|null $value
  * @param  bool        $checked

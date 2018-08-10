@@ -137,7 +137,7 @@ class Messages
             return $size;
         }
         foreach ($store as $messages) {
-            $size += count($messages);
+            $size += \count($messages);
         }
         return $size;
     }

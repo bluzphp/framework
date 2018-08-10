@@ -210,7 +210,7 @@ class ValidatorChain implements ValidatorInterface
      *
      * @return null|string
      */
-    public function getError()
+    public function getError() : ?string
     {
         return $this->error;
     }

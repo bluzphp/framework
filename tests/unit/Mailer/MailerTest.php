@@ -30,6 +30,7 @@ class MailerTest extends FrameworkTestCase
     {
         $mailer = new Mailer();
         $mailer->setOptions(null);
+        $mailer->init();
     }
 
     /**

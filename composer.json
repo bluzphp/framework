@@ -9,11 +9,11 @@
         "ext-json": "*",
         "cache/cache": "~1.0",
         "psr/log": "~1.0",
-        "zendframework/zend-diactoros": "~1.6"
+        "zendframework/zend-diactoros": "~1.8"
     },
     "require-dev": {
-        "codeception/codeception": "~2.3",
-        "satooshi/php-coveralls": "~1.0",
+        "codeception/codeception": "~2.4",
+        "php-coveralls/php-coveralls": "~2.0",
         "squizlabs/php_codesniffer": "~2.3",
         "phploc/phploc": "~4.0",
         "phpmd/phpmd": "~2.6"

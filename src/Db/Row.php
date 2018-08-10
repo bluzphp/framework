@@ -77,7 +77,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
         $this->clean = $this->toArray();
 
         // not clean data, but not modified
-        if (count($data)) {
+        if (\count($data)) {
             $this->setFromArray($data);
         }
         $this->afterRead();
@@ -107,7 +107,6 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      * Magic method for var_dump()
      *
      * @return array
-     * @throws TableNotFoundException
      * @see var_dump()
      */
     public function __debugInfo()
@@ -164,9 +163,9 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
          * Otherwise check primary key updated or not, if it changed - INSERT
          * otherwise UPDATE
          */
-        if (!count(array_filter($this->getPrimaryKey()))) {
+        if (!\count(\array_filter($this->getPrimaryKey()))) {
             $result = $this->doInsert();
-        } elseif (count(array_diff_assoc($this->getPrimaryKey(), $this->clean))) {
+        } elseif (\count(\array_diff_assoc($this->getPrimaryKey(), $this->clean))) {
             $result = $this->doInsert();
         } else {
             $result = $this->doUpdate();
@@ -180,10 +179,8 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      *
      * @return mixed The primary key value(s), as an associative array if the
      *               key is compound, or a scalar if the key is single-column
-     * @throws DbException
      * @throws InvalidPrimaryKeyException
      * @throws TableNotFoundException
-     * @throws \Bluz\Common\Exception\ConfigurationException
      */
     protected function doInsert()
     {
@@ -237,10 +234,8 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      * Update row
      *
      * @return integer The number of rows updated
-     * @throws DbException
      * @throws InvalidPrimaryKeyException
      * @throws TableNotFoundException
-     * @throws \Bluz\Common\Exception\ConfigurationException
      */
     protected function doUpdate() : int
     {
@@ -276,7 +271,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
          * includes SET terms only for data values that changed.
          */
         $result = 0;
-        if (count($diffData) > 0) {
+        if (\count($diffData) > 0) {
             $result = $table::update($diffData, $primaryKey);
         }
 
@@ -300,8 +295,6 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      * Delete existing row
      *
      * @return bool Removed or not
-     * @throws \Bluz\Common\Exception\ConfigurationException
-     * @throws DbException
      * @throws InvalidPrimaryKeyException
      * @throws TableNotFoundException
      */

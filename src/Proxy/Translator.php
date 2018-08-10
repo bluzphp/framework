@@ -42,10 +42,11 @@ final class Translator
      *
      * @return Instance
      */
-    private static function initInstance()
+    private static function initInstance() : Instance
     {
         $instance = new Instance();
         $instance->setOptions(Config::getData('translator'));
+        $instance->init();
         return $instance;
     }
 }

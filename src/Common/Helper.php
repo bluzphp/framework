@@ -53,7 +53,7 @@ trait Helper
             static::$helpersPath[$class] = [];
         }
 
-        if (!in_array($realPath, static::$helpersPath[$class], true)) {
+        if (!\in_array($realPath, static::$helpersPath[$class], true)) {
             static::$helpersPath[$class][] = $realPath;
         }
     }
@@ -129,7 +129,7 @@ trait Helper
 
         $helper = include $path;
 
-        if (is_callable($helper)) {
+        if (\is_callable($helper)) {
             static::$helpers[$class][$name] = $helper;
         } else {
             throw new CommonException("Helper `$name` not found in file `$path`");

@@ -225,15 +225,15 @@ class Controller implements \JsonSerializable
                 $this->disableLayout();
                 $this->disableView();
                 break;
-            case is_string($result):
+            case \is_string($result):
                 // return string variable is equal to change view template
                 $this->setTemplate($result);
                 break;
-            case is_array($result):
+            case \is_array($result):
                 // return associative array is equal to setup view data
                 $this->getData()->setFromArray($result);
                 break;
-            case ($result instanceof Controller):
+            case ($result instanceof self):
                 // return Controller - just extract data from it
                 $this->getData()->setFromArray($result->getData()->toArray());
                 break;

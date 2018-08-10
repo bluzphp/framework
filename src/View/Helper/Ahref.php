@@ -19,8 +19,6 @@ use Bluz\View\View;
  *
  * @author ErgallM
  *
- * @var    View         $this
- *
  * @param  string       $text
  * @param  string|array $href
  * @param  array        $attributes HTML attributes
@@ -30,7 +28,7 @@ use Bluz\View\View;
 return
     function ($text, $href, array $attributes = []) {
         // if href is settings for url helper
-        if (is_array($href)) {
+        if (\is_array($href)) {
             $href = $this->url(...$href);
         }
 

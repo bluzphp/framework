@@ -28,7 +28,7 @@ return
         // it's stack for <head>
         $links = Registry::get('layout:link') ?: [];
 
-        if (is_null($link)) {
+        if (null === $link) {
             // clear system vars
             Registry::set('layout:link', []);
             // prepare to output

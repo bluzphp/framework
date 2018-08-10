@@ -16,8 +16,6 @@ use Bluz\View\View;
 /**
  * Get baseUrl
  *
- * @var    View   $this
- *
  * @param  string $file
  *
  * @return string

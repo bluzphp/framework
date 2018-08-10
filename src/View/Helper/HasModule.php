@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace Bluz\View\Helper;
 
+use Bluz\Application\Application;
+
 /**
  * Check to isset module
  *
@@ -17,8 +19,6 @@ namespace Bluz\View\Helper;
  *
  * @return bool
  */
-use Bluz\Application\Application;
-
 return
     function ($module = null) {
         $modulePath = Application::getInstance()->getPath() . DIRECTORY_SEPARATOR .

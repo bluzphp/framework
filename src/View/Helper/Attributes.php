@@ -17,8 +17,6 @@ use Bluz\View\View;
  *
  * @author The-Who
  *
- * @var    View  $this
- *
  * @param  array $attributes
  *
  * @return string
@@ -35,7 +33,9 @@ return
                 //   input: [attribute=>null]
                 //   output: ''
                 continue;
-            } elseif (is_int($key)) {
+            }
+
+            if (\is_int($key)) {
                 // allow non-associative keys
                 //   input: [checked, disabled]
                 //   output: 'checked disabled'

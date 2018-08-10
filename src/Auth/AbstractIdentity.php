@@ -43,6 +43,6 @@ abstract class AbstractIdentity extends Row implements IdentityInterface
     {
         $privileges = $this->getPrivileges();
 
-        return in_array("$module:$privilege", $privileges, true);
+        return \in_array("$module:$privilege", $privileges, true);
     }
 }

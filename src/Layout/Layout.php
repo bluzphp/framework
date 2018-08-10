@@ -56,7 +56,7 @@ class Layout extends View
     /**
      * Get content
      *
-     * @return View
+     * @return View|callable
      */
     public function getContent()
     {

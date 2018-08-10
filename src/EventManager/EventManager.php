@@ -51,6 +51,7 @@ class EventManager
      * @param  array|object  $params
      *
      * @return string|object
+     * @throws EventException
      */
     public function trigger($event, $target = null, $params = null)
     {

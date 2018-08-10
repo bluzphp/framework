@@ -73,14 +73,14 @@ class Table extends AbstractCrud
      * @param array $params
      *
      * @return array[Row[], integer]
-     * @throws ApplicationException
+     * @throws TableNotFoundException
      */
     public function readSet($offset = 0, $limit = 10, $params = [])
     {
         $select = $this->getTable()::select();
 
         // select only required fields
-        if (count($this->getFields())) {
+        if (\count($this->getFields())) {
             $fields = $this->getFields();
             $name = $this->getTable()->getName();
             $fields = array_map(

@@ -33,8 +33,8 @@ class ConfigTest extends FrameworkTestCase
         //  - configs/default/
         //  - configs/testing/
         // hardcoded numbers of configuration items
-        self::assertCount(14, Proxy::getData());
-        self::assertEquals(['foo' => 'bar'], Proxy::getData('test'));
-        self::assertEquals('bar', Proxy::getData('test', 'foo'));
+        self::assertCount(14, Proxy::get());
+        self::assertEquals(['foo' => 'bar'], Proxy::get('test'));
+        self::assertEquals('bar', Proxy::get('test', 'foo'));
     }
 }

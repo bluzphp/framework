@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Bluz\Application;
 
 use Bluz\Application\Exception\ApplicationException;
+use Bluz\Config\ConfigLoader;
 use Bluz\Http\Exception\ForbiddenException;
 use Bluz\Http\Exception\NotAcceptableException;
 use Bluz\Http\Exception\NotAllowedException;
@@ -174,18 +175,28 @@ class Application
      * Initial Request instance
      *
      * @return void
+     * @throws \Bluz\Config\ConfigException
+     * @throws \ReflectionException
      */
     protected function initConfig() : void
     {
-        Config::getInstance();
+        $loader = new ConfigLoader();
+        $loader->setPath($this->getPath());
+        $loader->setEnvironment($this->getEnvironment());
+        $loader->load();
+
+        $config = new \Bluz\Config\Config();
+        $config->setFromArray($loader->getConfig());
+
+        Config::setInstance($config);
 
         // setup configuration for current environment
-        if ($debug = Config::getData('debug')) {
+        if ($debug = Config::get('debug')) {
             $this->debugFlag = (bool)$debug;
         }
 
         // initial php settings
-        if ($ini = Config::getData('php')) {
+        if ($ini = Config::get('php')) {
             foreach ($ini as $key => $value) {
                 $result = ini_set($key, $value);
                 Logger::info('app:init:php:' . $key . ':' . ($result ?: '---'));
@@ -227,7 +238,7 @@ class Application
     protected function initRouter() : void
     {
         $router = new \Bluz\Router\Router();
-        $router->setOptions(Config::getData('router'));
+        $router->setOptions(Config::get('router'));
 
         Router::setInstance($router);
     }

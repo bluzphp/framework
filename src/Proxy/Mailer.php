@@ -51,7 +51,7 @@ final class Mailer
     private static function initInstance() : Instance
     {
         $instance = new Instance();
-        $instance->setOptions(Config::getData('mailer'));
+        $instance->setOptions(Config::get('mailer'));
         $instance->init();
         return $instance;
     }

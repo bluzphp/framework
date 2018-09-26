@@ -32,6 +32,7 @@ class TableTest extends FrameworkTestCase
      */
     protected function setUp()
     {
+        self::getApp();
         $this->table = Db\ConcreteTable::getInstance();
     }
 

@@ -37,7 +37,7 @@ class DbTest extends Bluz\Tests\FrameworkTestCase
         parent::setUp();
 
         $this->db = new Db\Db();
-        $this->db->setOptions(Proxy\Config::getData('db'));
+        $this->db->setOptions(Proxy\Config::get('db'));
     }
 
     /**

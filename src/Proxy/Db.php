@@ -106,7 +106,7 @@ final class Db
     private static function initInstance() : Instance
     {
         $instance = new Instance();
-        $instance->setOptions(Config::getData('db'));
+        $instance->setOptions(Config::get('db'));
         return $instance;
     }
 }

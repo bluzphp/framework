@@ -47,7 +47,7 @@ final class Auth
     private static function initInstance() : Instance
     {
         $instance = new Instance();
-        $instance->setOptions(Config::getData('auth'));
+        $instance->setOptions(Config::get('auth'));
         return $instance;
     }
 }

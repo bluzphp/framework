@@ -45,7 +45,7 @@ final class Translator
     private static function initInstance() : Instance
     {
         $instance = new Instance();
-        $instance->setOptions(Config::getData('translator'));
+        $instance->setOptions(Config::get('translator'));
         $instance->init();
         return $instance;
     }

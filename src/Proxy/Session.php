@@ -62,7 +62,7 @@ final class Session
     private static function initInstance() : Instance
     {
         $instance = new Instance();
-        $instance->setOptions(Config::getData('session'));
+        $instance->setOptions(Config::get('session'));
         return $instance;
     }
 }

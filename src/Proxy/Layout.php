@@ -75,7 +75,7 @@ final class Layout
     private static function initInstance() : Instance
     {
         $instance = new Instance();
-        $instance->setOptions(Config::getData('layout'));
+        $instance->setOptions(Config::get('layout'));
         return $instance;
     }
 }

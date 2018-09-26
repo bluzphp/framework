@@ -60,7 +60,7 @@ final class Messages
     private static function initInstance() : Instance
     {
         $instance = new Instance();
-        $instance->setOptions(Config::getData('messages'));
+        $instance->setOptions(Config::get('messages'));
         return $instance;
     }
 }

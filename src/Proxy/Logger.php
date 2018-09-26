@@ -69,7 +69,7 @@ final class Logger
      */
     private static function initInstance()
     {
-        if (Config::getData('logger')) {
+        if (Config::get('logger')) {
             return new Instance();
         }
         return new Nil();

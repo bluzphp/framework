@@ -17,207 +17,84 @@ use Bluz\Tests\FrameworkTestCase;
 class ConfigTest extends FrameworkTestCase
 {
     /**
-     * @var Config\Config
-     */
-    protected $config;
-
-    /**
      * @var string Path to config dir
      */
     protected $path;
 
     /**
-     * @var string Path to empty config dir
-     */
-    protected $emptyConfigsDir;
-
-    /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp() : void
     {
-        $this->config = new Bluz\Config\Config();
         $this->path = __DIR__ . '/Fixtures/';
-        $this->emptyConfigsDir = __DIR__ . '/Fixtures/emptyConfigsDir';
     }
 
     /**
-     * @covers Bluz\Config\Config::setPath
-     * @expectedException Bluz\Config\ConfigException
+     * @covers \Bluz\Config\Config::get
      */
-    public function testSetPathExeption()
+    public function testGetData() : void
     {
-        $this->config->setPath('invalid/path');
-    }
+        $loader = new Config\ConfigLoader();
+        $loader->setPath($this->path);
+        $loader->load();
 
-    /**
-     * @covers Bluz\Config\Config::setPath
-     */
-    public function testSetPath()
-    {
-        $this->config->setPath($this->path);
-    }
+        $config = new Config\Config();
+        $config->setFromArray($loader->getConfig());
 
-    /**
-     * @covers Bluz\Config\Config::init
-     * @expectedException \Bluz\Config\ConfigException
-     */
-    public function testLoadConfigPathIsNotSetup()
-    {
-        $this->config->init();
-    }
-
-    /**
-     * @covers Bluz\Config\Config::init
-     * @expectedException \Bluz\Config\ConfigException
-     */
-    public function testLoadConfigFileNotFound()
-    {
-        $this->config->setPath($this->emptyConfigsDir);
-        $this->config->init();
-    }
-
-    /**
-     * @covers Bluz\Config\Config::init
-     */
-    public function testLoad()
-    {
-        $this->config->setPath($this->path);
-        $this->config->init();
-    }
-
-    /**
-     * @covers Bluz\Config\Config::init
-     */
-    public function testLoadConfigWithEnvironment()
-    {
-        $this->config->setPath($this->path);
-        $this->config->init();
-        $configWithoutEnvironment = $this->config->getData();
-        $this->config->setEnvironment('testing');
-        $this->config->init();
-        $configWithEnvironment = $this->config->getData();
-        self::assertNotEquals($configWithoutEnvironment, $configWithEnvironment);
-    }
-
-    /**
-     * @covers Bluz\Config\Config::init
-     * @expectedException \Bluz\Config\ConfigException
-     */
-    public function testLoadConfigWithWrongEnvironment()
-    {
-        $this->config->setPath($this->path);
-        $this->config->setEnvironment('not_existed_environment');
-        $this->config->init();
-    }
-
-    /**
-     * @covers Bluz\Config\Config::getData
-     * @expectedException \Bluz\Config\ConfigException
-     */
-    public function testGetDataNotLoadedFromConfig()
-    {
-        $this->config->setPath($this->path);
-        $this->config->getData();
-    }
-
-    /**
-     * @covers Bluz\Config\Config::getData
-     */
-    public function testGetData()
-    {
-        $this->config->setPath($this->path);
-        $this->config->init();
         self::assertEquals(
             ['application' => ['section1' => 'default', 'section2' => [], 'section3' => []]],
-            $this->config->getData()
+            $config->get()
         );
     }
 
     /**
-     * @covers Bluz\Config\Config::getData
+     * @covers \Bluz\Config\Config::get
      */
-    public function testGetDataByNotExistedSection()
+    public function testGetDataByNotExistedSection() : void
     {
-        $this->config->setPath($this->path);
-        $this->config->init();
-        self::assertNull($this->config->getData('section_doesnt_exist'));
+        $loader = new Config\ConfigLoader();
+        $loader->setPath($this->path);
+        $loader->load();
+
+        $config = new Config\Config();
+        $config->setFromArray($loader->getConfig());
+
+        self::assertNull($config->get('section_doesnt_exist'));
     }
 
     /**
-     * @covers Bluz\Config\Config::getData
+     * @covers \Bluz\Config\Config::get
      */
-    public function testGetDataBySection()
+    public function testGetDataBySection() : void
     {
-        $this->config->setPath($this->path);
-        $this->config->init();
+        $loader = new Config\ConfigLoader();
+        $loader->setPath($this->path);
+        $loader->load();
+
+        $config = new Config\Config();
+        $config->setFromArray($loader->getConfig());
+
         self::assertEquals(
             ['section1' => 'default', 'section2' => [], 'section3' => []],
-            $this->config->getData('application')
+            $config->get('application')
         );
     }
 
     /**
-     * @covers Bluz\Config\Config::getData
+     * @covers \Bluz\Config\Config::get
      */
-    public function testGetDataBySubSection()
+    public function testGetDataBySubSection() : void
     {
-        $this->config->setPath($this->path);
-        $this->config->setEnvironment('testing');
-        $this->config->init();
-        self::assertEquals(1, $this->config->getData('application', 'section1'));
-    }
 
+        $loader = new Config\ConfigLoader();
+        $loader->setPath($this->path);
+        $loader->setEnvironment('testing');
+        $loader->load();
 
-    /**
-     * @covers Bluz\Config\Config::getModuleData
-     */
-    public function testGetModuleData()
-    {
-        $this->config->setPath($this->path);
-        self::assertEquals(
-            ['foo' => 'bar', 'qux' => 'bar'],
-            $this->config->getModuleData('index')
-        );
-    }
+        $config = new Config\Config();
+        $config->setFromArray($loader->getConfig());
 
-    /**
-     * @covers Bluz\Config\Config::getModuleData
-     * @expectedException \Bluz\Config\ConfigException
-     */
-    public function testGetModuleDataByNotExistedModule()
-    {
-        $this->config->setPath($this->path);
-        self::assertNull($this->config->getModuleData('module_doesnt_exist'));
-    }
-
-    /**
-     * @covers Bluz\Config\Config::getModuleData
-     */
-    public function testGetModuleDataBySection()
-    {
-        $this->config->setPath($this->path);
-        self::assertEquals('bar', $this->config->getModuleData('index', 'foo'));
-    }
-
-
-    /**
-     * @covers Bluz\Config\Config::getModuleData
-     */
-    public function testGetModuleDataByNotExistedSection()
-    {
-        $this->config->setPath($this->path);
-        self::assertNull($this->config->getModuleData('index', 'section_doesnt_exist'));
-    }
-
-    /**
-     * @covers Bluz\Config\Config::getModuleData
-     */
-    public function testGetModuleDataBySectionWithEnvironment()
-    {
-        $this->config->setPath($this->path);
-        $this->config->setEnvironment('testing');
-        self::assertEquals('baz', $this->config->getModuleData('index', 'foo'));
+        self::assertEquals(1, $config->get('application', 'section1'));
     }
 }

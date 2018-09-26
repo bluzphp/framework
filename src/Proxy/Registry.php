@@ -52,7 +52,7 @@ final class Registry
     private static function initInstance() : Instance
     {
         $instance = new Instance();
-        if ($data = Config::getData('registry')) {
+        if ($data = Config::get('registry')) {
             $instance->setFromArray($data);
         }
         return $instance;

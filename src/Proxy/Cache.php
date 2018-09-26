@@ -59,7 +59,7 @@ final class Cache
      */
     private static function initInstance()
     {
-        $adapter = Config::getData('cache', 'adapter');
+        $adapter = Config::get('cache', 'adapter');
         return self::getAdapter($adapter);
     }
 
@@ -73,7 +73,7 @@ final class Cache
      */
     public static function getAdapter($adapter)
     {
-        $config = Config::getData('cache');
+        $config = Config::get('cache');
 
         if ($config && $adapter && isset($config['enabled']) && $config['enabled']) {
             if (!isset($config['pools'][$adapter])) {

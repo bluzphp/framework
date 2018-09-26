@@ -97,6 +97,7 @@ class SelectSource extends AbstractSource
      * @param  array $settings
      *
      * @return void
+     * @throws Grid\GridException
      */
     private function applyFilters(array $settings) : void
     {
@@ -116,6 +117,7 @@ class SelectSource extends AbstractSource
      * @param  array $settings
      *
      * @return void
+     * @throws Grid\GridException
      */
     private function applyOrders(array $settings) : void
     {

@@ -284,7 +284,7 @@ abstract class Table implements TableInterface
                 foreach ($keyValueSets as $keyName => $keyValue) {
                     if (is_array($keyValue)) {
                         $keyValue = array_map(
-                            function ($value) use ($self) {
+                            function ($value) {
                                 return DbProxy::quote($value);
                             },
                             $keyValue

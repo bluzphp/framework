@@ -34,6 +34,7 @@ class RowTest extends FrameworkTestCase
      */
     protected function setUp()
     {
+        self::getApp();
         $this->row = new Db\ConcreteRow();
     }
 

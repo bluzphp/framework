@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Bluz\Proxy;
 
-use Bluz\Application\Application;
+use Bluz\Common\Exception\ComponentException;
 use Bluz\Config\Config as Instance;
 
 /**
@@ -20,7 +20,7 @@ use Bluz\Config\Config as Instance;
  * <code>
  *     use Bluz\Proxy\Config;
  *
- *     if (!Config::getData('db')) {
+ *     if (!Config::get('db')) {
  *          throw new Exception('Configuration for `db` is missed');
  *     }
  * </code>
@@ -30,11 +30,8 @@ use Bluz\Config\Config as Instance;
  *
  * @method   static Instance getInstance()
  *
- * @method   static mixed getData($key = null, $section = null)
- * @see      Instance::getData()
- *
- * @method   static mixed getModuleData($module, $section = null)
- * @see      Instance::getModuleData()
+ * @method   static mixed get(...$keys)
+ * @see      Instance::get()
  */
 final class Config
 {
@@ -43,16 +40,10 @@ final class Config
     /**
      * Init instance
      *
-     * @return Instance
-     * @throws \Bluz\Config\ConfigException
+     * @throws ComponentException
      */
-    private static function initInstance() : Instance
+    private static function initInstance()
     {
-        $instance = new Instance();
-        $instance->setPath(Application::getInstance()->getPath());
-        $instance->setEnvironment(Application::getInstance()->getEnvironment());
-        $instance->init();
-
-        return $instance;
+        throw new ComponentException('Class `Proxy\\Config` required external initialization');
     }
 }

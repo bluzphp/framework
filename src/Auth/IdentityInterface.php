@@ -22,14 +22,14 @@ interface IdentityInterface
      *
      * @return integer
      */
-    public function getId() : ?int;
+    public function getId(): ?int;
 
     /**
      * Get user's privileges
      *
      * @return array
      */
-    public function getPrivileges() : array;
+    public function getPrivileges(): array;
 
     /**
      * Has it privilege?
@@ -39,5 +39,5 @@ interface IdentityInterface
      *
      * @return bool
      */
-    public function hasPrivilege($module, $privilege) : bool;
+    public function hasPrivilege($module, $privilege): bool;
 }

@@ -28,21 +28,21 @@ interface TableInterface
      * @return array
      * @throws InvalidPrimaryKeyException if primary key was not set or has wrong format
      */
-    public function getPrimaryKey() : array;
+    public function getPrimaryKey(): array;
 
     /**
      * Get table name
      *
      * @return string
      */
-    public function getName() : string;
+    public function getName(): string;
 
     /**
      * Get model name
      *
      * @return string
      */
-    public function getModel() : string;
+    public function getModel(): string;
 
     /**
      * Create Row instance
@@ -51,7 +51,7 @@ interface TableInterface
      *
      * @return RowInterface
      */
-    public static function create(array $data = []) : RowInterface;
+    public static function create(array $data = []): RowInterface;
 
     /**
      * Fetches rows by primary key.  The argument specifies one or more primary
@@ -82,7 +82,7 @@ interface TableInterface
      *
      * @return RowInterface[]
      */
-    public static function find(...$keys) : array;
+    public static function find(...$keys): array;
 
     /**
      * Find rows by WHERE
@@ -103,7 +103,7 @@ interface TableInterface
      *
      * @return RowInterface[]
      */
-    public static function findWhere(...$where) : array;
+    public static function findWhere(...$where): array;
 
     /**
      * Find row by primary key
@@ -112,7 +112,7 @@ interface TableInterface
      *
      * @return RowInterface
      */
-    public static function findRow($primaryKey) : ?RowInterface;
+    public static function findRow($primaryKey): ?RowInterface;
 
     /**
      * Find row by where condition
@@ -121,7 +121,7 @@ interface TableInterface
      *
      * @return RowInterface
      */
-    public static function findRowWhere(array $whereList) : ?RowInterface;
+    public static function findRowWhere(array $whereList): ?RowInterface;
 
     /**
      * Prepare Db\Query\Select for current table:
@@ -144,7 +144,7 @@ interface TableInterface
      *
      * @return Query\Select
      */
-    public static function select() : Query\Select;
+    public static function select(): Query\Select;
 
     /**
      * Insert new record to table and return last insert Id
@@ -171,7 +171,7 @@ interface TableInterface
      *
      * @return integer The number of rows updated
      */
-    public static function update(array $data, array $where) : int;
+    public static function update(array $data, array $where): int;
 
     /**
      * Deletes existing rows
@@ -184,5 +184,5 @@ interface TableInterface
      *
      * @return integer The number of rows deleted
      */
-    public static function delete(array $where) : int;
+    public static function delete(array $where): int;
 }

@@ -39,7 +39,7 @@ abstract class AbstractAdapter
      *
      * @return string
      */
-    protected function prepareId($id)
+    protected function prepareId($id): string
     {
         return $this->prefix . $id;
     }
@@ -52,7 +52,7 @@ abstract class AbstractAdapter
      *
      * @return bool
      */
-    public function open($savePath, $sessionName)
+    public function open($savePath, $sessionName): bool
     {
         $this->prefix = $sessionName . ':';
         $this->ttl = (int)ini_get('session.gc_maxlifetime');
@@ -68,7 +68,7 @@ abstract class AbstractAdapter
      *
      * @return bool
      */
-    public function close()
+    public function close(): bool
     {
         $this->handler = null;
         unset($this->handler);
@@ -82,7 +82,7 @@ abstract class AbstractAdapter
      *
      * @return bool
      */
-    public function gc($maxLifetime)
+    public function gc($maxLifetime): bool
     {
         // no action necessary because using EXPIRE
         return true;

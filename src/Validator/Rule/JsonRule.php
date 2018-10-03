@@ -29,7 +29,7 @@ class JsonRule extends AbstractRule
      *
      * @return bool
      */
-    public function validate($input) : bool
+    public function validate($input): bool
     {
         return (bool)json_decode($input);
     }

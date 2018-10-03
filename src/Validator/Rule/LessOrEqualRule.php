@@ -27,7 +27,7 @@ class LessOrEqualRule extends LessRule
      *
      * @return string
      */
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return __('must be lower than or equals "%s"', $this->maxValue);
     }

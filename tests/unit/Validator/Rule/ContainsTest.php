@@ -44,7 +44,7 @@ class ContainsTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForPass() : array
+    public function providerForPass(): array
     {
         return [
             ['foo', ['bar', 'foo']],
@@ -58,7 +58,7 @@ class ContainsTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail() : array
+    public function providerForFail(): array
     {
         return [
             ['foo', ''],

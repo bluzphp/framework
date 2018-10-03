@@ -48,7 +48,7 @@ trait Where
      *
      * @return $this
      */
-    public function where(...$conditions)
+    public function where(...$conditions): self
     {
         $this->where = $this->prepareCondition($conditions);
         return $this;
@@ -72,7 +72,7 @@ trait Where
      *
      * @return $this
      */
-    public function andWhere(...$conditions)
+    public function andWhere(...$conditions): self
     {
         $condition = $this->prepareCondition($conditions);
 
@@ -103,7 +103,7 @@ trait Where
      *
      * @return $this
      */
-    public function orWhere(...$conditions)
+    public function orWhere(...$conditions): self
     {
         $condition = $this->prepareCondition($conditions);
 
@@ -121,7 +121,7 @@ trait Where
      *
      * @return string
      */
-    protected function prepareWhere() : string
+    protected function prepareWhere(): string
     {
         return $this->where ? ' WHERE ' . $this->where : '';
     }

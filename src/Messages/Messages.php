@@ -47,7 +47,7 @@ class Messages
      * @return void
      * @since  1.0.0 added $text
      */
-    public function addNotice($message, ...$text) : void
+    public function addNotice($message, ...$text): void
     {
         $this->add(self::TYPE_NOTICE, $message, ...$text);
     }
@@ -61,7 +61,7 @@ class Messages
      * @return void
      * @since  1.0.0 added $text
      */
-    public function addSuccess($message, ...$text) : void
+    public function addSuccess($message, ...$text): void
     {
         $this->add(self::TYPE_SUCCESS, $message, ...$text);
     }
@@ -75,7 +75,7 @@ class Messages
      * @return void
      * @since  1.0.0 added $text
      */
-    public function addError($message, ...$text) : void
+    public function addError($message, ...$text): void
     {
         $this->add(self::TYPE_ERROR, $message, ...$text);
     }
@@ -89,7 +89,7 @@ class Messages
      *
      * @return void
      */
-    protected function add($type, $message, ...$text) : void
+    protected function add($type, $message, ...$text): void
     {
         $this->getMessagesStore()[$type][] = Translator::translate($message, ...$text);
     }
@@ -101,7 +101,7 @@ class Messages
      *
      * @return \stdClass|null
      */
-    public function pop($type) : ?\stdClass
+    public function pop($type): ?\stdClass
     {
         $text = array_shift($this->getMessagesStore()[$type]);
         if ($text) {
@@ -130,7 +130,7 @@ class Messages
      *
      * @return integer
      */
-    public function count() : int
+    public function count(): int
     {
         $size = 0;
         if (!$store = $this->getMessagesStore()) {
@@ -148,7 +148,7 @@ class Messages
      * @param \ArrayObject $store
      * @return void
      */
-    protected function setMessagesStore(\ArrayObject $store) : void
+    protected function setMessagesStore(\ArrayObject $store): void
     {
         Session::set('messages:store', $store);
     }
@@ -158,7 +158,7 @@ class Messages
      *
      * @return \ArrayObject
      */
-    protected function getMessagesStore() : \ArrayObject
+    protected function getMessagesStore(): \ArrayObject
     {
         if (!$store = Session::get('messages:store')) {
             $this->resetMessagesStore();
@@ -171,7 +171,7 @@ class Messages
      *
      * @return void
      */
-    protected function resetMessagesStore() : void
+    protected function resetMessagesStore(): void
     {
         $this->setMessagesStore($this->createEmptyMessagesStore());
     }
@@ -181,7 +181,7 @@ class Messages
      *
      * @return \ArrayObject
      */
-    protected function createEmptyMessagesStore() : \ArrayObject
+    protected function createEmptyMessagesStore(): \ArrayObject
     {
         return new \ArrayObject(
             [

@@ -54,7 +54,7 @@ class CreditCardTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForPass() : array
+    public function providerForPass(): array
     {
         return [
             ['5376 7473 9720 8720'], // MasterCard
@@ -68,7 +68,7 @@ class CreditCardTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail() : array
+    public function providerForFail(): array
     {
         return [
             [null],

@@ -69,7 +69,7 @@ class DomainTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForPass() : array
+    public function providerForPass(): array
     {
         return [
             ['domain.local'],
@@ -82,7 +82,7 @@ class DomainTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail() : array
+    public function providerForFail(): array
     {
         return [
             [null],
@@ -95,7 +95,7 @@ class DomainTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerRealDomainForPass() : array
+    public function providerRealDomainForPass(): array
     {
         return [
             ['google.com'],
@@ -105,7 +105,7 @@ class DomainTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerRealDomainForFail() : array
+    public function providerRealDomainForFail(): array
     {
         return [
             ['domain.local'],

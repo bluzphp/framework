@@ -77,7 +77,7 @@ class Db
      * @return void
      * @throws DbException
      */
-    public function setConnect(array $connect) : void
+    public function setConnect(array $connect): void
     {
         $this->connect = array_merge($this->connect, $connect);
         $this->checkConnect();
@@ -89,7 +89,7 @@ class Db
      * @return void
      * @throws ConfigurationException
      */
-    private function checkConnect() : void
+    private function checkConnect(): void
     {
         if (empty($this->connect['type']) ||
             empty($this->connect['host']) ||
@@ -110,7 +110,7 @@ class Db
      *
      * @return void
      */
-    public function setAttributes(array $attributes) : void
+    public function setAttributes(array $attributes): void
     {
         $this->attributes = $attributes;
     }
@@ -121,7 +121,7 @@ class Db
      * @return bool
      * @throws DbException
      */
-    public function connect() : bool
+    public function connect(): bool
     {
         try {
             $this->checkConnect();
@@ -149,7 +149,7 @@ class Db
      *
      * @return void
      */
-    public function disconnect() : void
+    public function disconnect(): void
     {
         if ($this->handler) {
             $this->handler = null;
@@ -162,7 +162,7 @@ class Db
      * @return \PDO
      * @throws DbException
      */
-    public function handler() : \PDO
+    public function handler(): \PDO
     {
         if (null === $this->handler) {
             $this->connect();
@@ -182,7 +182,7 @@ class Db
      * @return \PDOStatement
      * @throws DbException
      */
-    protected function prepare(string $sql, array $params = []) : \PDOStatement
+    protected function prepare(string $sql, array $params = []): \PDOStatement
     {
         $stmt = $this->handler()->prepare($sql);
         $stmt->execute($params);
@@ -206,7 +206,7 @@ class Db
      * @return string
      * @throws DbException
      */
-    public function quote(string $value, int $type = \PDO::PARAM_STR) : string
+    public function quote(string $value, int $type = \PDO::PARAM_STR): string
     {
         return $this->handler()->quote($value, $type);
     }
@@ -218,7 +218,7 @@ class Db
      *
      * @return string
      */
-    public function quoteIdentifier(string $identifier) : string
+    public function quoteIdentifier(string $identifier): string
     {
         // switch statement for DB type
         switch ($this->connect['type']) {
@@ -249,7 +249,7 @@ class Db
      * @return integer the number of rows
      * @throws DbException
      */
-    public function query($sql, array $params = [], array $types = []) : int
+    public function query($sql, array $params = [], array $types = []): int
     {
         $stmt = $this->handler()->prepare($sql);
         foreach ($params as $key => &$param) {
@@ -272,7 +272,7 @@ class Db
      *
      * @return Query\Select
      */
-    public function select(...$select) : Query\Select
+    public function select(...$select): Query\Select
     {
         $query = new Query\Select();
         $query->select(...$select);
@@ -286,7 +286,7 @@ class Db
      *
      * @return Query\Insert
      */
-    public function insert(string $table) : Query\Insert
+    public function insert(string $table): Query\Insert
     {
         $query = new Query\Insert();
         $query->insert($table);
@@ -300,7 +300,7 @@ class Db
      *
      * @return Query\Update
      */
-    public function update(string $table) : Query\Update
+    public function update(string $table): Query\Update
     {
         $query = new Query\Update();
         $query->update($table);
@@ -314,7 +314,7 @@ class Db
      *
      * @return Query\Delete
      */
-    public function delete(string $table) : Query\Delete
+    public function delete(string $table): Query\Delete
     {
         $query = new Query\Delete();
         $query->delete($table);
@@ -644,7 +644,7 @@ class Db
      *
      * @return void
      */
-    protected function ok() : void
+    protected function ok(): void
     {
         Logger::info('<<<');
     }
@@ -657,7 +657,7 @@ class Db
      *
      * @return void
      */
-    protected function log(string $sql, array $context = []) : void
+    protected function log(string $sql, array $context = []): void
     {
         $sql = str_replace('%', '%%', $sql);
         $sql = preg_replace('/\?/', '"%s"', $sql, count($context));

@@ -24,7 +24,7 @@ class AlphaRule extends AbstractCtypeRule
      *
      * @return bool
      */
-    protected function validateClean($input) : bool
+    protected function validateClean($input): bool
     {
         return ctype_alpha($input);
     }
@@ -34,7 +34,7 @@ class AlphaRule extends AbstractCtypeRule
      *
      * @return string
      */
-    public function getDescription() : string
+    public function getDescription(): string
     {
         if (empty($this->additionalChars)) {
             return __('must contain only letters');

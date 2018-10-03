@@ -54,7 +54,7 @@ class SlugTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForPass() : array
+    public function providerForPass(): array
     {
         return array(
             ['o-rato-roeu-o-rei-de-roma'],
@@ -67,7 +67,7 @@ class SlugTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail() : array
+    public function providerForFail(): array
     {
         return array(
             [''],

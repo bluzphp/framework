@@ -47,7 +47,7 @@ class ValidatorForm implements ValidatorInterface
      *
      * @return ValidatorChain
      */
-    public function add($name) : ValidatorChain
+    public function add($name): ValidatorChain
     {
         $this->validators[$name] = $this->validators[$name] ?? Validator::create();
         return $this->validators[$name];
@@ -60,7 +60,7 @@ class ValidatorForm implements ValidatorInterface
      *
      * @return ValidatorChain
      */
-    public function get($name) : ValidatorChain
+    public function get($name): ValidatorChain
     {
         return $this->add($name);
     }
@@ -72,7 +72,7 @@ class ValidatorForm implements ValidatorInterface
      *
      * @return bool
      */
-    public function validate($input) : bool
+    public function validate($input): bool
     {
         $this->exception = new ValidatorException();
 
@@ -126,7 +126,7 @@ class ValidatorForm implements ValidatorInterface
     /**
      * @inheritdoc
      */
-    public function __invoke($input) : bool
+    public function __invoke($input): bool
     {
         return $this->validate($input);
     }
@@ -136,7 +136,7 @@ class ValidatorForm implements ValidatorInterface
      *
      * @return array
      */
-    public function getErrors() : array
+    public function getErrors(): array
     {
         return $this->exception->getErrors();
     }
@@ -146,7 +146,7 @@ class ValidatorForm implements ValidatorInterface
      *
      * @return bool
      */
-    public function hasErrors() : bool
+    public function hasErrors(): bool
     {
         return $this->exception->hasErrors();
     }

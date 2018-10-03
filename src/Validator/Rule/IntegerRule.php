@@ -29,7 +29,7 @@ class IntegerRule extends AbstractRule
      *
      * @return bool
      */
-    public function validate($input) : bool
+    public function validate($input): bool
     {
         return is_numeric($input) && (int)$input == $input;
     }

@@ -83,7 +83,7 @@ class ValidatorChain implements ValidatorInterface
      * @return ValidatorChain
      * @throws Exception\ComponentException
      */
-    public function __call($ruleName, $arguments) : ValidatorChain
+    public function __call($ruleName, $arguments): ValidatorChain
     {
         $this->addRule(Validator::rule($ruleName, $arguments));
         return $this;
@@ -96,7 +96,7 @@ class ValidatorChain implements ValidatorInterface
      *
      * @return ValidatorChain
      */
-    public function addRule($rule) : ValidatorChain
+    public function addRule($rule): ValidatorChain
     {
         $this->rules[] = $rule;
         return $this;
@@ -107,7 +107,7 @@ class ValidatorChain implements ValidatorInterface
      *
      * @return bool
      */
-    public function isRequired() : bool
+    public function isRequired(): bool
     {
         foreach ($this->rules as $rule) {
             if ($rule instanceof RequiredRule) {
@@ -126,7 +126,7 @@ class ValidatorChain implements ValidatorInterface
      * @return ValidatorChain
      * @throws \Bluz\Validator\Exception\ComponentException
      */
-    public function callback($callable, $description = null) : ValidatorChain
+    public function callback($callable, $description = null): ValidatorChain
     {
         $rule = Validator::rule('callback', [$callable]);
         if (null !== $description) {
@@ -145,7 +145,7 @@ class ValidatorChain implements ValidatorInterface
      * @return ValidatorChain
      * @throws \Bluz\Validator\Exception\ComponentException
      */
-    public function regexp($expression, $description = null) : ValidatorChain
+    public function regexp($expression, $description = null): ValidatorChain
     {
         $rule = Validator::rule('regexp', [$expression]);
         if (null !== $description) {
@@ -162,7 +162,7 @@ class ValidatorChain implements ValidatorInterface
      *
      * @return bool
      */
-    public function validate($input) : bool
+    public function validate($input): bool
     {
         $this->error = null; // clean
         foreach ($this->rules as $rule) {
@@ -192,7 +192,7 @@ class ValidatorChain implements ValidatorInterface
     /**
      * @inheritdoc
      */
-    public function __invoke($input) : bool
+    public function __invoke($input): bool
     {
         return $this->validate($input);
     }
@@ -200,7 +200,7 @@ class ValidatorChain implements ValidatorInterface
     /**
      * @inheritdoc
      */
-    public function __toString() : string
+    public function __toString(): string
     {
         return implode("\n", $this->getDescription());
     }
@@ -210,7 +210,7 @@ class ValidatorChain implements ValidatorInterface
      *
      * @return null|string
      */
-    public function getError() : ?string
+    public function getError(): ?string
     {
         return $this->error;
     }
@@ -222,7 +222,7 @@ class ValidatorChain implements ValidatorInterface
      *
      * @return ValidatorChain
      */
-    protected function setError($message) : ValidatorChain
+    protected function setError($message): ValidatorChain
     {
         $this->error = $message;
         return $this;
@@ -233,7 +233,7 @@ class ValidatorChain implements ValidatorInterface
      *
      * @return array
      */
-    public function getDescription() : array
+    public function getDescription(): array
     {
         // apply custom description
         if ($this->description) {
@@ -251,7 +251,7 @@ class ValidatorChain implements ValidatorInterface
      *
      * @return ValidatorChain
      */
-    public function setDescription($message) : ValidatorChain
+    public function setDescription($message): ValidatorChain
     {
         $this->description = $message;
         return $this;

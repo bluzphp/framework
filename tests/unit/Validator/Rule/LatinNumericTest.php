@@ -81,7 +81,7 @@ class LatinNumericTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForPass() : array
+    public function providerForPass(): array
     {
         return [
             [0],
@@ -98,7 +98,7 @@ class LatinNumericTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail() : array
+    public function providerForFail(): array
     {
         return [
             [1e21],
@@ -114,7 +114,7 @@ class LatinNumericTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForComponentException() : array
+    public function providerForComponentException(): array
     {
         return [
             [new \stdClass],
@@ -126,7 +126,7 @@ class LatinNumericTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerAdditionalChars() : array
+    public function providerAdditionalChars(): array
     {
         return [
             ['!@#$%^&*(){} ', '!@#$%^&*(){} abc'],

@@ -46,7 +46,7 @@ class ConditionTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForPass() : array
+    public function providerForPass(): array
     {
         return [
             [4 > 2, 'always'],
@@ -57,7 +57,7 @@ class ConditionTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail() : array
+    public function providerForFail(): array
     {
         return [
             [4 < 2, 'always'],

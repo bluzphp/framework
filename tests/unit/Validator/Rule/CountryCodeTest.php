@@ -54,7 +54,7 @@ class CountryCodeTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForPass() : array
+    public function providerForPass(): array
     {
         return [
             ['UA'],
@@ -64,7 +64,7 @@ class CountryCodeTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail() : array
+    public function providerForFail(): array
     {
         return [
             [''],

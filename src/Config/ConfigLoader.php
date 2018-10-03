@@ -39,7 +39,7 @@ class ConfigLoader
     /**
      * @return array
      */
-    public function getConfig() : array
+    public function getConfig(): array
     {
         return $this->config;
     }
@@ -47,7 +47,7 @@ class ConfigLoader
     /**
      * @return string
      */
-    public function getPath() : string
+    public function getPath(): string
     {
         return $this->path;
     }
@@ -60,7 +60,7 @@ class ConfigLoader
      * @return void
      * @throws ConfigException
      */
-    public function setPath($path) : void
+    public function setPath($path): void
     {
         if (!is_dir($path)) {
             throw new ConfigException('Configuration directory is not exists');
@@ -71,7 +71,7 @@ class ConfigLoader
     /**
      * @return string
      */
-    public function getEnvironment() : string
+    public function getEnvironment(): string
     {
         return $this->environment;
     }
@@ -83,7 +83,7 @@ class ConfigLoader
      *
      * @return void
      */
-    public function setEnvironment($environment) : void
+    public function setEnvironment($environment): void
     {
         $this->environment = $environment;
     }
@@ -94,7 +94,7 @@ class ConfigLoader
      * @return void
      * @throws ConfigException
      */
-    public function load() : void
+    public function load(): void
     {
         if (!$this->path) {
             throw new ConfigException('Configuration directory is not setup');
@@ -132,7 +132,7 @@ class ConfigLoader
      * @return array
      * @throws ConfigException
      */
-    protected function loadFiles($path) : array
+    protected function loadFiles($path): array
     {
         $config = [];
 

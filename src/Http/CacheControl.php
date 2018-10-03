@@ -66,7 +66,7 @@ class CacheControl
                 $parts[] = "$key=$value";
             }
         }
-        if (count($parts)) {
+        if (\count($parts)) {
             $this->response->setHeader('Cache-Control', implode(', ', $parts));
         }
     }
@@ -78,7 +78,7 @@ class CacheControl
      *
      * @return void
      */
-    public function setPrivate()
+    public function setPrivate(): void
     {
         $this->doDeleteContainer('public');
         $this->doSetContainer('private', true);
@@ -92,7 +92,7 @@ class CacheControl
      *
      * @return void
      */
-    public function setPublic()
+    public function setPublic(): void
     {
         $this->doDeleteContainer('private');
         $this->doSetContainer('public', true);
@@ -135,7 +135,7 @@ class CacheControl
      *
      * @return void
      */
-    public function setMaxAge($value)
+    public function setMaxAge($value): void
     {
         $this->doSetContainer('max-age', $value);
         $this->updateCacheControlHeader();
@@ -150,7 +150,7 @@ class CacheControl
      *
      * @return void
      */
-    public function setSharedMaxAge($value)
+    public function setSharedMaxAge($value): void
     {
         $this->setPublic();
         $this->doSetContainer('s-maxage', $value);
@@ -166,7 +166,7 @@ class CacheControl
      *
      * @return integer|null The TTL in seconds
      */
-    public function getTtl()
+    public function getTtl(): ?int
     {
         if ($maxAge = $this->getMaxAge()) {
             return $maxAge - $this->getAge();
@@ -183,7 +183,7 @@ class CacheControl
      *
      * @return void
      */
-    public function setTtl($seconds)
+    public function setTtl($seconds): void
     {
         $this->setSharedMaxAge($this->getAge() + $seconds);
     }
@@ -197,7 +197,7 @@ class CacheControl
      *
      * @return void
      */
-    public function setClientTtl($seconds)
+    public function setClientTtl($seconds): void
     {
         $this->setMaxAge($this->getAge() + $seconds);
     }
@@ -207,7 +207,7 @@ class CacheControl
      *
      * @return string The ETag HTTP header or null if it does not exist
      */
-    public function getEtag()
+    public function getEtag(): string
     {
         return $this->response->getHeader('ETag');
     }
@@ -220,7 +220,7 @@ class CacheControl
      *
      * @return void
      */
-    public function setEtag($etag, $weak = false)
+    public function setEtag($etag, $weak = false): void
     {
         $etag = trim($etag, '"');
         $this->response->setHeader('ETag', (true === $weak ? 'W/' : '') . '"' . $etag . '"');
@@ -231,7 +231,7 @@ class CacheControl
      *
      * @return integer The age of the response in seconds
      */
-    public function getAge()
+    public function getAge(): int
     {
         if ($age = $this->response->getHeader('Age')) {
             return (int)$age;
@@ -246,7 +246,7 @@ class CacheControl
      *
      * @return void
      */
-    public function setAge($age)
+    public function setAge($age): void
     {
         $this->response->setHeader('Age', $age);
     }
@@ -256,7 +256,7 @@ class CacheControl
      *
      * @return string A string or null if the header does not exist
      */
-    public function getExpires()
+    public function getExpires(): string
     {
         return $this->response->getHeader('Expires');
     }
@@ -268,7 +268,7 @@ class CacheControl
      *
      * @return void
      */
-    public function setExpires($date)
+    public function setExpires($date): void
     {
         if ($date instanceof \DateTime) {
             $date = clone $date;
@@ -285,7 +285,7 @@ class CacheControl
      *
      * @return string A string or null if the header does not exist
      */
-    public function getLastModified()
+    public function getLastModified(): string
     {
         return $this->response->getHeader('Last-Modified');
     }
@@ -297,7 +297,7 @@ class CacheControl
      *
      * @return void
      */
-    public function setLastModified($date)
+    public function setLastModified($date): void
     {
         if ($date instanceof \DateTime) {
             $date = clone $date;
@@ -314,7 +314,7 @@ class CacheControl
      *
      * @return void
      */
-    public function expire()
+    public function expire(): void
     {
         if ($this->getTtl() > 0) {
             $this->setAge($this->getMaxAge());

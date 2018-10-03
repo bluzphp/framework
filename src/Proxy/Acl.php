@@ -39,7 +39,7 @@ final class Acl
      *
      * @return Instance
      */
-    private static function initInstance() : Instance
+    private static function initInstance(): Instance
     {
         return new Instance();
     }

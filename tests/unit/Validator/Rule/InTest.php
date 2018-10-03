@@ -45,7 +45,7 @@ class InTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForPass() : array
+    public function providerForPass(): array
     {
         return array(
             ['foo', ['foo', 'bar']],
@@ -60,7 +60,7 @@ class InTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail() : array
+    public function providerForFail(): array
     {
         return array(
             ['', 'barfoobaz'],

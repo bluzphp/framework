@@ -27,7 +27,7 @@ class MoreOrEqualRule extends MoreRule
      *
      * @return string
      */
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return __('must be greater than or equals "%s"', $this->minValue);
     }

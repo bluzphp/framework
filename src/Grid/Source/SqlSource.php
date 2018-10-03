@@ -33,9 +33,9 @@ class SqlSource extends AbstractSource
      * @return void
      * @throws \Bluz\Grid\GridException
      */
-    public function setSource($source) : void
+    public function setSource($source): void
     {
-        if (!is_string($source)) {
+        if (!\is_string($source)) {
             throw new Grid\GridException('Source of `SqlSource` should be string with SQL query');
         }
         parent::setSource($source);
@@ -44,7 +44,7 @@ class SqlSource extends AbstractSource
     /**
      * {@inheritdoc}
      */
-    public function process(int $page, int $limit, array $filters = [], array $orders = []) : Data
+    public function process(int $page, int $limit, array $filters = [], array $orders = []): Data
     {
         // process filters
         $filters = $this->applyFilters($filters);
@@ -63,15 +63,15 @@ class SqlSource extends AbstractSource
             // other
             $dataSql = $this->source;
             $totalSql = preg_replace('/SELECT\s(.*?)\sFROM/is', 'SELECT COUNT(*) FROM', $this->source, 1);
-            if (count($filters)) {
+            if (\count($filters)) {
                 $totalSql .= ' WHERE ' . implode(' AND ', $filters);
             }
         }
 
-        if (count($filters)) {
+        if (\count($filters)) {
             $dataSql .= ' WHERE ' . implode(' AND ', $filters);
         }
-        if (count($orders)) {
+        if (\count($orders)) {
             $dataSql .= ' ORDER BY ' . implode(', ', $orders);
         }
         // process pages
@@ -98,7 +98,7 @@ class SqlSource extends AbstractSource
      *
      * @return array
      */
-    private function applyFilters(array $settings) : array
+    private function applyFilters(array $settings): array
     {
         $where = [];
         foreach ($settings as $column => $filters) {
@@ -121,7 +121,7 @@ class SqlSource extends AbstractSource
      *
      * @return array
      */
-    private function applyOrders(array $settings) : array
+    private function applyOrders(array $settings): array
     {
         $orders = [];
         // Obtain a list of columns

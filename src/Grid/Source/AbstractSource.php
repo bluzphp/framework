@@ -50,7 +50,7 @@ abstract class AbstractSource
      *
      * @return Data
      */
-    abstract public function process(int $page, int $limit, array $filters = [], array $orders = []) : Data;
+    abstract public function process(int $page, int $limit, array $filters = [], array $orders = []): Data;
 
     /**
      * Setup source adapter
@@ -59,7 +59,7 @@ abstract class AbstractSource
      *
      * @return void
      */
-    public function setSource($source) : void
+    public function setSource($source): void
     {
         $this->source = $source;
     }

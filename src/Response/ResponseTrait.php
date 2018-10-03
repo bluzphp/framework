@@ -35,7 +35,7 @@ trait ResponseTrait
      *
      * @return string
      */
-    public function render($type = 'HTML') : string
+    public function render($type = 'HTML'): string
     {
         // switch statement by response type
         switch (strtoupper($type)) {

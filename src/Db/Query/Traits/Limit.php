@@ -41,7 +41,7 @@ trait Limit
      *
      * @return $this
      */
-    public function limit(int $limit, int $offset = 0)
+    public function limit(int $limit, int $offset = 0): self
     {
         $this->setLimit($limit);
         $this->setOffset($offset);
@@ -55,7 +55,7 @@ trait Limit
      *
      * @return $this
      */
-    public function setLimit($limit)
+    public function setLimit($limit): self
     {
         $this->limit = (int)$limit;
         return $this;
@@ -68,7 +68,7 @@ trait Limit
      *
      * @return $this
      */
-    public function setOffset($offset)
+    public function setOffset($offset): self
     {
         $this->offset = (int)$offset;
         return $this;
@@ -79,7 +79,7 @@ trait Limit
      *
      * @return string
      */
-    protected function prepareLimit() : string
+    protected function prepareLimit(): string
     {
         return $this->limit ? ' LIMIT ' . $this->limit . ' OFFSET ' . $this->offset : '';
     }

@@ -31,9 +31,9 @@ class ArraySource extends AbstractSource
      * @return void
      * @throws Grid\GridException
      */
-    public function setSource($source) : void
+    public function setSource($source): void
     {
-        if (!is_array($source) && !($source instanceof \ArrayAccess)) {
+        if (!\is_array($source) && !($source instanceof \ArrayAccess)) {
             throw new Grid\GridException('Source of `ArraySource` should be array or implement ArrayAccess interface');
         }
         parent::setSource($source);
@@ -42,7 +42,7 @@ class ArraySource extends AbstractSource
     /**
      * {@inheritdoc}
      */
-    public function process(int $page, int $limit, array $filters = [], array $orders = []) : Data
+    public function process(int $page, int $limit, array $filters = [], array $orders = []): Data
     {
         // process filters
         $this->applyFilters($filters);
@@ -52,10 +52,10 @@ class ArraySource extends AbstractSource
 
         $data = $this->getSource();
 
-        $total = count($data);
+        $total = \count($data);
 
         // process pages
-        $data = array_slice($data, $limit * ($page - 1), $limit);
+        $data = \array_slice($data, $limit * ($page - 1), $limit);
 
         $gridData = new Data($data);
         $gridData->setTotal($total);
@@ -70,7 +70,7 @@ class ArraySource extends AbstractSource
      * @return void
      * @throws Grid\GridException
      */
-    private function applyFilters(array $settings) : void
+    private function applyFilters(array $settings): void
     {
         $data = $this->getSource();
         $data = array_filter(
@@ -132,7 +132,7 @@ class ArraySource extends AbstractSource
      * @return void
      * @throws Grid\GridException
      */
-    private function applyOrders(array $settings) : void
+    private function applyOrders(array $settings): void
     {
         $data = $this->getSource();
         // Create empty column stack

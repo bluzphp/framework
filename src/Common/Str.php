@@ -25,7 +25,7 @@ class Str
      *
      * @return string
      */
-    public static function toCamelCase($subject) : string
+    public static function toCamelCase($subject): string
     {
         $subject = str_replace(['_', '-'], ' ', strtolower($subject));
         return str_replace(' ', '', ucwords($subject));

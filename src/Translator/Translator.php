@@ -47,12 +47,11 @@ class Translator
      *
      * @param  string $domain
      *
-     * @return self
+     * @return void
      */
-    public function setDomain($domain)
+    public function setDomain($domain): void
     {
         $this->domain = $domain;
-        return $this;
     }
 
     /**
@@ -60,12 +59,11 @@ class Translator
      *
      * @param  string $locale
      *
-     * @return self
+     * @return void
      */
-    public function setLocale($locale)
+    public function setLocale($locale): void
     {
         $this->locale = $locale;
-        return $this;
     }
 
     /**
@@ -73,12 +71,11 @@ class Translator
      *
      * @param  string $path
      *
-     * @return self
+     * @return void
      */
-    public function setPath($path)
+    public function setPath($path): void
     {
         $this->path = $path;
-        return $this;
     }
 
     /**
@@ -88,7 +85,7 @@ class Translator
      * @throws ConfigurationException
      * @throw  \Bluz\Config\ConfigException
      */
-    public function init() : void
+    public function init(): void
     {
         // Setup locale
         putenv('LC_ALL=' . $this->locale);
@@ -119,7 +116,7 @@ class Translator
      * @return void
      * @throws ConfigurationException
      */
-    public function addTextDomain($domain, $path) : void
+    public function addTextDomain($domain, $path): void
     {
         // check path
         if (!is_dir($path)) {
@@ -150,7 +147,7 @@ class Translator
      *
      * @return string
      */
-    public static function translate(string $message, ...$text) : string
+    public static function translate(string $message, ...$text): string
     {
         if (empty($message)) {
             return $message;
@@ -186,7 +183,7 @@ class Translator
      * @return string
      * @link   http://docs.translatehouse.org/projects/localization-guide/en/latest/l10n/pluralforms.html
      */
-    public static function translatePlural(string $singular, string $plural, $number, ...$text) : string
+    public static function translatePlural(string $singular, string $plural, $number, ...$text): string
     {
         if (\function_exists('ngettext')) {
             $message = ngettext($singular, $plural, $number);

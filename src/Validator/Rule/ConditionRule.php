@@ -39,7 +39,7 @@ class ConditionRule extends AbstractRule
      *
      * @return bool
      */
-    public function validate($input) : bool
+    public function validate($input): bool
     {
         return (bool)$this->condition;
     }

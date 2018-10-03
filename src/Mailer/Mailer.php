@@ -32,7 +32,7 @@ class Mailer
      * @throws ConfigurationException
      * @return void
      */
-    public function init() : void
+    public function init(): void
     {
         if (!$this->getOption('from', 'email')) {
             throw new ConfigurationException(

@@ -68,7 +68,7 @@ class DateTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForPass() : array
+    public function providerForPass(): array
     {
         return [
             ['Y-m-d', '2009-09-09'],
@@ -79,7 +79,7 @@ class DateTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail() : array
+    public function providerForFail(): array
     {
         return [
             [null, 'invalid date'],

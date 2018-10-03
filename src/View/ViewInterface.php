@@ -26,7 +26,7 @@ interface ViewInterface
      *
      * @return string
      */
-    public function getPath() : ?string;
+    public function getPath(): ?string;
 
     /**
      * Setup path to templates
@@ -38,7 +38,7 @@ interface ViewInterface
      *
      * @return void
      */
-    public function setPath($path) : void;
+    public function setPath($path): void;
 
     /**
      * Get template
@@ -48,7 +48,7 @@ interface ViewInterface
      *
      * @return string
      */
-    public function getTemplate() : ?string;
+    public function getTemplate(): ?string;
 
     /**
      * Setup template
@@ -60,7 +60,7 @@ interface ViewInterface
      *
      * @return void
      */
-    public function setTemplate($file) : void;
+    public function setTemplate($file): void;
 
     /**
      * Merge data from array
@@ -69,12 +69,12 @@ interface ViewInterface
      *
      * @return void
      */
-    public function setFromArray(array $data) : void;
+    public function setFromArray(array $data): void;
 
     /**
      * Get data as array
      *
      * @return array
      */
-    public function toArray() : array;
+    public function toArray(): array;
 }

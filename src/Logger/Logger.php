@@ -87,7 +87,7 @@ class Logger extends AbstractLogger
      *
      * @return string
      */
-    protected function interpolate($message, array $context = []) : string
+    protected function interpolate($message, array $context = []): string
     {
         // build a replacement array with braces around the context keys
         $replace = [];

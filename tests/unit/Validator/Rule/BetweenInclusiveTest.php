@@ -47,7 +47,7 @@ class BetweenInclusiveTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForPass() : array
+    public function providerForPass(): array
     {
         return [
             [10, 20, 10],
@@ -64,7 +64,7 @@ class BetweenInclusiveTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail() : array
+    public function providerForFail(): array
     {
         return [
             [0, 1, -1],

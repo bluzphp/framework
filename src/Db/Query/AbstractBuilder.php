@@ -66,7 +66,7 @@ abstract class AbstractBuilder
      *
      * @return string The SQL query string
      */
-    abstract public function getSql() : string;
+    abstract public function getSql(): string;
 
     /**
      * Return the complete SQL string formed for use
@@ -83,7 +83,7 @@ abstract class AbstractBuilder
      *
      * @return string
      */
-    public function getQuery() : string
+    public function getQuery(): string
     {
         $sql = $this->getSql();
 
@@ -124,10 +124,10 @@ abstract class AbstractBuilder
      *
      * @return self
      */
-    public function setParam($key, $value, $type = \PDO::PARAM_STR)
+    public function setParam($key, $value, $type = \PDO::PARAM_STR): self
     {
         if (null === $key) {
-            $key = count($this->params);
+            $key = \count($this->params);
         }
 
         $this->params[$key] = $value;
@@ -141,7 +141,7 @@ abstract class AbstractBuilder
      *
      * @return array The currently defined query parameters
      */
-    public function getParams() : array
+    public function getParams(): array
     {
         return $this->params;
     }
@@ -167,7 +167,7 @@ abstract class AbstractBuilder
      *
      * @return self
      */
-    public function setParams(array $params, array $types = [])
+    public function setParams(array $params, array $types = []): self
     {
         $this->types = $types;
         $this->params = $params;
@@ -186,12 +186,12 @@ abstract class AbstractBuilder
      *
      * @return string
      */
-    protected function prepareCondition(array $args = []) : string
+    protected function prepareCondition(array $args = []): string
     {
         $condition = array_shift($args);
         foreach ($args as &$value) {
-            if (is_array($value)) {
-                $replace = implode(',', array_fill(0, count($value), ':REPLACE:'));
+            if (\is_array($value)) {
+                $replace = implode(',', array_fill(0, \count($value), ':REPLACE:'));
                 $condition = preg_replace('/\?/', $replace, $condition, 1);
                 foreach ($value as $part) {
                     $this->setParam(null, $part);

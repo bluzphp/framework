@@ -45,7 +45,7 @@ class LessTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForPass() : array
+    public function providerForPass(): array
     {
         return array(
             [200, ''], // empty string is equal zero
@@ -58,7 +58,7 @@ class LessTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail() : array
+    public function providerForFail(): array
     {
         return [
             [-200, 0],

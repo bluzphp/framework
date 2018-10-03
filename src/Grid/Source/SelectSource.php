@@ -33,7 +33,7 @@ class SelectSource extends AbstractSource
      * @throws Grid\GridException
      * @return void
      */
-    public function setSource($source) : void
+    public function setSource($source): void
     {
         if (!$source instanceof Db\Query\Select) {
             throw new Grid\GridException('Source of `SelectSource` should be `Db\\Query\\Select` object');
@@ -44,7 +44,7 @@ class SelectSource extends AbstractSource
     /**
      * {@inheritdoc}
      */
-    public function process(int $page, int $limit, array $filters = [], array $orders = []) : Data
+    public function process(int $page, int $limit, array $filters = [], array $orders = []): Data
     {
         // process filters
         $this->applyFilters($filters);
@@ -99,7 +99,7 @@ class SelectSource extends AbstractSource
      * @return void
      * @throws Grid\GridException
      */
-    private function applyFilters(array $settings) : void
+    private function applyFilters(array $settings): void
     {
         foreach ($settings as $column => $filters) {
             foreach ($filters as $filter => $value) {
@@ -119,7 +119,7 @@ class SelectSource extends AbstractSource
      * @return void
      * @throws Grid\GridException
      */
-    private function applyOrders(array $settings) : void
+    private function applyOrders(array $settings): void
     {
         // Obtain a list of columns
         foreach ($settings as $column => $order) {

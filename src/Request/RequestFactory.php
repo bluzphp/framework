@@ -32,35 +32,23 @@ class RequestFactory extends ServerRequestFactory
         array $body = null,
         array $cookies = null,
         array $files = null
-    ) {
-        $server = static::normalizeServer($server ?: $_SERVER);
-        $files = static::normalizeFiles($files ?: $_FILES);
-        $headers = static::marshalHeaders($server);
-        $request = new ServerRequest(
-            $server,
-            $files,
-            static::marshalUriFromServer($server, $headers),
-            static::get('REQUEST_METHOD', $server, RequestMethod::GET),
-            'php://input',
-            $headers
-        );
+    ) : ServerRequest {
+
+        $request = parent::fromGlobals($server, $query, $body, $cookies, $files);
 
         $contentType = current($request->getHeader('Content-Type'));
 
-        $input = file_get_contents('php://input');
-
         // support header like "application/json" and "application/json; charset=utf-8"
         if (false !== $contentType && false !== stripos($contentType, Request::TYPE_JSON)) {
+            $input = file_get_contents('php://input');
             $data = (array) json_decode($input);
         } elseif ($request->getMethod() === RequestMethod::POST) {
             $data = $_POST;
         } else {
+            $input = file_get_contents('php://input');
             parse_str($input, $data);
         }
 
-        return $request
-            ->withCookieParams($cookies ?: $_COOKIE)
-            ->withQueryParams($query ?: $_GET)
-            ->withParsedBody($body ?: $data);
+        return $request->withParsedBody($body ?: $data);
     }
 }

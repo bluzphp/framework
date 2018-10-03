@@ -121,7 +121,7 @@ abstract class Table implements TableInterface
      *
      * @return void
      */
-    public function init() : void
+    public function init(): void
     {
     }
 
@@ -131,9 +131,9 @@ abstract class Table implements TableInterface
      * @return array
      * @throws InvalidPrimaryKeyException if primary key was not set or has wrong format
      */
-    public function getPrimaryKey() : array
+    public function getPrimaryKey(): array
     {
-        if (!is_array($this->primary)) {
+        if (!\is_array($this->primary)) {
             throw new InvalidPrimaryKeyException('The primary key must be set as an array');
         }
         return $this->primary;
@@ -144,7 +144,7 @@ abstract class Table implements TableInterface
      *
      * @return string
      */
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -154,7 +154,7 @@ abstract class Table implements TableInterface
      *
      * @return string
      */
-    public function getModel() : string
+    public function getModel(): string
     {
         return $this->model;
     }
@@ -164,7 +164,7 @@ abstract class Table implements TableInterface
      *
      * @return array
      */
-    public static function getMeta() : array
+    public static function getMeta(): array
     {
         $self = static::getInstance();
         if (empty($self->meta)) {
@@ -197,7 +197,7 @@ abstract class Table implements TableInterface
      *
      * @return array
      */
-    public static function getColumns() : array
+    public static function getColumns(): array
     {
         $self = static::getInstance();
         return array_keys($self::getMeta());
@@ -210,7 +210,7 @@ abstract class Table implements TableInterface
      *
      * @return array
      */
-    public static function filterColumns($data) : array
+    public static function filterColumns($data): array
     {
         return array_intersect_key($data, array_flip(static::getColumns()));
     }
@@ -223,7 +223,7 @@ abstract class Table implements TableInterface
      *
      * @return RowInterface[] of rows results in FETCH_CLASS mode
      */
-    protected static function fetch($sql, $params = []) : array
+    protected static function fetch($sql, $params = []): array
     {
         $self = static::getInstance();
         return DbProxy::fetchObjects($sql, $params, $self->rowClass);
@@ -236,14 +236,14 @@ abstract class Table implements TableInterface
      * @throws InvalidPrimaryKeyException if wrong count of values passed
      * @throws \InvalidArgumentException
      */
-    public static function find(...$keys) : array
+    public static function find(...$keys): array
     {
         $keyNames = array_values(static::getInstance()->getPrimaryKey());
         $whereList = [];
 
         foreach ($keys as $keyValues) {
             $keyValues = (array)$keyValues;
-            if (count($keyValues) !== count($keyNames)) {
+            if (\count($keyValues) !== \count($keyNames)) {
                 throw new InvalidPrimaryKeyException(
                     "Invalid columns for the primary key.\n" .
                     "Please check " . static::class . " initialization or usage.\n" .
@@ -268,21 +268,21 @@ abstract class Table implements TableInterface
      * @throws \InvalidArgumentException
      * @throws Exception\DbException
      */
-    public static function findWhere(...$where) : array
+    public static function findWhere(...$where): array
     {
         $self = static::getInstance();
 
         $whereParams = [];
 
-        if (count($where) === 2 && is_string($where[0])) {
+        if (\count($where) === 2 && \is_string($where[0])) {
             $whereClause = $where[0];
             $whereParams = (array)$where[1];
-        } elseif (count($where)) {
+        } elseif (\count($where)) {
             $whereOrTerms = [];
             foreach ($where as $keyValueSets) {
                 $whereAndTerms = [];
                 foreach ($keyValueSets as $keyName => $keyValue) {
-                    if (is_array($keyValue)) {
+                    if (\is_array($keyValue)) {
                         $keyValue = array_map(
                             function ($value) {
                                 return DbProxy::quote($value);
@@ -326,7 +326,7 @@ abstract class Table implements TableInterface
      * @throws \InvalidArgumentException
      * @throws InvalidPrimaryKeyException
      */
-    public static function findRow($primaryKey) : ?RowInterface
+    public static function findRow($primaryKey): ?RowInterface
     {
         $result = static::find($primaryKey);
         return current($result) ?: null;
@@ -338,7 +338,7 @@ abstract class Table implements TableInterface
      * @throws DbException
      * @throws \InvalidArgumentException
      */
-    public static function findRowWhere(array $whereList) : ?RowInterface
+    public static function findRowWhere(array $whereList): ?RowInterface
     {
         $result = static::findWhere($whereList);
         return current($result) ?: null;
@@ -350,9 +350,8 @@ abstract class Table implements TableInterface
      * @param  array $where
      *
      * @return array
-     * @throws \Bluz\Common\Exception\ConfigurationException
      */
-    private static function prepareStatement(array $where) : array
+    private static function prepareStatement(array $where): array
     {
         $keys = array_keys($where);
         foreach ($keys as &$key) {
@@ -382,7 +381,7 @@ abstract class Table implements TableInterface
      *
      * @return Query\Select
      */
-    public static function select() : Query\Select
+    public static function select(): Query\Select
     {
         $self = static::getInstance();
 
@@ -397,7 +396,7 @@ abstract class Table implements TableInterface
     /**
      * {@inheritdoc}
      */
-    public static function create(array $data = []) : RowInterface
+    public static function create(array $data = []): RowInterface
     {
         $rowClass = static::getInstance()->rowClass;
         /** @var Row $row */
@@ -409,7 +408,6 @@ abstract class Table implements TableInterface
     /**
      * {@inheritdoc}
      *
-     * @throws \Bluz\Common\Exception\ConfigurationException
      * @throws Exception\DbException
      */
     public static function insert(array $data)
@@ -418,7 +416,7 @@ abstract class Table implements TableInterface
 
         $data = static::filterColumns($data);
 
-        if (!count($data)) {
+        if (!\count($data)) {
             throw new DbException(
                 "Invalid field names of table `{$self->name}`. Please check use of `insert()` method"
             );
@@ -447,16 +445,15 @@ abstract class Table implements TableInterface
     /**
      * {@inheritdoc}
      *
-     * @throws \Bluz\Common\Exception\ConfigurationException
      * @throws Exception\DbException
      */
-    public static function update(array $data, array $where) : int
+    public static function update(array $data, array $where): int
     {
         $self = static::getInstance();
 
         $data = static::filterColumns($data);
 
-        if (!count($data)) {
+        if (!\count($data)) {
             throw new DbException(
                 "Invalid field names of table `{$self->name}`. Please check use of `update()` method"
             );
@@ -464,7 +461,7 @@ abstract class Table implements TableInterface
 
         $where = static::filterColumns($where);
 
-        if (!count($where)) {
+        if (!\count($where)) {
             throw new DbException(
                 "Method `Table::update()` can't update all records in the table `{$self->name}`,\n" .
                 "please use `Db::query()` instead (of cause if you know what are you doing)"
@@ -482,14 +479,13 @@ abstract class Table implements TableInterface
     /**
      * {@inheritdoc}
      *
-     * @throws \Bluz\Common\Exception\ConfigurationException
      * @throws \Bluz\Db\Exception\DbException
      */
-    public static function delete(array $where) : int
+    public static function delete(array $where): int
     {
         $self = static::getInstance();
 
-        if (!count($where)) {
+        if (!\count($where)) {
             throw new DbException(
                 "Method `Table::delete()` can't delete all records in the table `{$self->name}`,\n" .
                 "please use `Db::query()` instead (of cause if you know what are you doing)"
@@ -499,7 +495,7 @@ abstract class Table implements TableInterface
 
         $where = static::filterColumns($where);
 
-        if (!count($where)) {
+        if (!\count($where)) {
             throw new DbException(
                 "Invalid field names of table `{$self->name}`. Please check use of `delete()` method"
             );

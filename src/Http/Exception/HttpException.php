@@ -31,7 +31,7 @@ class HttpException extends CommonException
      *
      * @return string
      */
-    public function getStatus() : string
+    public function getStatus(): string
     {
         return StatusCode::$statusTexts[$this->code];
     }

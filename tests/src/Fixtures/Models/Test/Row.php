@@ -32,7 +32,7 @@ class Row extends \Bluz\Db\Row
      *
      * @return TableInterface
      */
-    public function getTable() : TableInterface
+    public function getTable(): TableInterface
     {
         return Table::getInstance();
     }
@@ -42,7 +42,7 @@ class Row extends \Bluz\Db\Row
      *
      * @return void
      */
-    public function beforeSave() : void
+    public function beforeSave(): void
     {
         $this->addValidator('name')
             ->required()

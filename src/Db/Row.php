@@ -23,12 +23,12 @@ use Bluz\Db\Exception\TableNotFoundException;
  *     namespace Application\Users;
  *     class Row extends \Bluz\Db\Row
  *     {
- *        public function beforeInsert() : void
+ *        public function beforeInsert(): void
  *        {
  *            $this->created = gmdate('Y-m-d H:i:s');
  *        }
  *
- *        public function beforeUpdate() : void
+ *        public function beforeUpdate(): void
  *        {
  *            $this->updated = gmdate('Y-m-d H:i:s');
  *        }
@@ -125,7 +125,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      *
      * @return bool
      */
-    public function validate($data) : bool
+    public function validate($data): bool
     {
         return true;
     }
@@ -137,7 +137,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    public function assert($data) : void
+    public function assert($data): void
     {
         return;
     }
@@ -237,7 +237,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      * @throws InvalidPrimaryKeyException
      * @throws TableNotFoundException
      */
-    protected function doUpdate() : int
+    protected function doUpdate(): int
     {
         /**
          * Run pre-UPDATE logic
@@ -298,7 +298,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      * @throws InvalidPrimaryKeyException
      * @throws TableNotFoundException
      */
-    public function delete() : bool
+    public function delete(): bool
     {
         /**
          * Execute pre-DELETE logic
@@ -333,7 +333,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      * @throws InvalidPrimaryKeyException
      * @throws TableNotFoundException
      */
-    protected function getPrimaryKey() : array
+    protected function getPrimaryKey(): array
     {
         $primary = array_flip($this->getTable()->getPrimaryKey());
 
@@ -345,7 +345,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    public function refresh() : void
+    public function refresh(): void
     {
         $this->setFromArray($this->clean);
         $this->afterRead();
@@ -356,7 +356,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    protected function afterRead() : void
+    protected function afterRead(): void
     {
     }
 
@@ -366,7 +366,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    protected function beforeSave() : void
+    protected function beforeSave(): void
     {
     }
 
@@ -376,7 +376,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    protected function afterSave() : void
+    protected function afterSave(): void
     {
     }
 
@@ -386,7 +386,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    protected function beforeInsert() : void
+    protected function beforeInsert(): void
     {
     }
 
@@ -396,7 +396,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    protected function afterInsert() : void
+    protected function afterInsert(): void
     {
     }
 
@@ -406,7 +406,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    protected function beforeUpdate() : void
+    protected function beforeUpdate(): void
     {
     }
 
@@ -416,7 +416,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    protected function afterUpdate() : void
+    protected function afterUpdate(): void
     {
     }
 
@@ -426,7 +426,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    protected function beforeDelete() : void
+    protected function beforeDelete(): void
     {
     }
 
@@ -436,7 +436,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      *
      * @return void
      */
-    protected function afterDelete() : void
+    protected function afterDelete(): void
     {
     }
 }

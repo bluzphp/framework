@@ -24,7 +24,7 @@ class ContainsStrictRule extends ContainsRule
      *
      * @return bool
      */
-    public function validate($input) : bool
+    public function validate($input): bool
     {
         // for array
         if (is_array($input)) {

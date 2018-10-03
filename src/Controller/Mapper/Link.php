@@ -59,7 +59,7 @@ class Link
      *
      * @return Link
      */
-    public function acl(string $acl) : Link
+    public function acl(string $acl): Link
     {
         $this->setAcl($acl);
         return $this;
@@ -72,7 +72,7 @@ class Link
      *
      * @return Link
      */
-    public function fields(array $fields) : Link
+    public function fields(array $fields): Link
     {
         $this->setFields($fields);
         return $this;
@@ -81,7 +81,7 @@ class Link
     /**
      * @return string
      */
-    public function getModule() : ?string
+    public function getModule(): ?string
     {
         return $this->module;
     }
@@ -89,7 +89,7 @@ class Link
     /**
      * @param string $module
      */
-    protected function setModule(string $module) : void
+    protected function setModule(string $module): void
     {
         $this->module = $module;
     }
@@ -105,7 +105,7 @@ class Link
     /**
      * @param string $controller
      */
-    protected function setController(string $controller) : void
+    protected function setController(string $controller): void
     {
         $this->controller = $controller;
     }
@@ -113,7 +113,7 @@ class Link
     /**
      * @return string|null
      */
-    public function getAcl() : ?string
+    public function getAcl(): ?string
     {
         return $this->acl;
     }
@@ -121,7 +121,7 @@ class Link
     /**
      * @param string $acl
      */
-    protected function setAcl(string $acl) : void
+    protected function setAcl(string $acl): void
     {
         $this->acl = $acl;
     }
@@ -129,7 +129,7 @@ class Link
     /**
      * @return array
      */
-    public function getFields() : array
+    public function getFields(): array
     {
         return $this->fields;
     }
@@ -139,7 +139,7 @@ class Link
      *
      * @param array $fields
      */
-    protected function setFields(array $fields) : void
+    protected function setFields(array $fields): void
     {
         $this->fields = $fields;
     }

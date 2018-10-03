@@ -49,7 +49,7 @@ trait Singleton
      *
      * @return void
      */
-    public static function resetInstance() : void
+    public static function resetInstance(): void
     {
         static::$instance = null;
     }

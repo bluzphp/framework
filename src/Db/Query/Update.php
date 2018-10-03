@@ -31,7 +31,7 @@ class Update extends AbstractBuilder
     /**
      * {@inheritdoc}
      */
-    public function getSql() : string
+    public function getSql(): string
     {
         return 'UPDATE '
             . Db::quoteIdentifier($this->table)
@@ -57,7 +57,7 @@ class Update extends AbstractBuilder
      *
      * @return Update instance
      */
-    public function update($table) : Update
+    public function update($table): Update
     {
         $this->table = $table;
         return $this;

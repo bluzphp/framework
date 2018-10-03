@@ -45,7 +45,7 @@ class InStrictTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForPass() : array
+    public function providerForPass(): array
     {
         return [
             ['foo', 'foo'],
@@ -59,7 +59,7 @@ class InStrictTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail() : array
+    public function providerForFail(): array
     {
         return [
             ['', 'barfoobaz'],

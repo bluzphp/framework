@@ -20,7 +20,7 @@ use Zend\Diactoros\Response\EmptyResponse;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\JsonResponse;
 use Zend\Diactoros\Response\RedirectResponse;
-use Zend\Diactoros\Response\SapiEmitter;
+use Zend\HttpHandlerRunner\Emitter\SapiEmitter;
 
 /**
  * Response Container
@@ -74,7 +74,7 @@ class Response
      * @throws NotAcceptableException
      * @throws \InvalidArgumentException
      */
-    public function send()
+    public function send(): void
     {
         $body = $this->getBody();
 
@@ -84,7 +84,7 @@ class Response
             case 'CLI' === $this->type:
                 // no CLI response
                 return;
-            case is_null($body):
+            case null === $body:
             case StatusCode::NO_CONTENT === $this->getStatusCode():
                 $response = new EmptyResponse($this->getStatusCode(), $this->getHeaders());
                 break;
@@ -138,7 +138,7 @@ class Response
      *
      * @return string
      */
-    public function getType() : string
+    public function getType(): string
     {
         return $this->type;
     }
@@ -148,7 +148,7 @@ class Response
      *
      * @param $type
      */
-    public function setType($type) : void
+    public function setType($type): void
     {
         // switch statement by content type
         switch ($type) {
@@ -173,7 +173,7 @@ class Response
      *
      * @return string HTTP protocol version.
      */
-    public function getProtocolVersion() : string
+    public function getProtocolVersion(): string
     {
         return $this->protocol;
     }
@@ -186,7 +186,7 @@ class Response
      *
      * @return integer status code.
      */
-    public function getStatusCode() : int
+    public function getStatusCode(): int
     {
         return $this->code;
     }
@@ -198,7 +198,7 @@ class Response
      *
      * @return void
      */
-    public function setStatusCode($code) : void
+    public function setStatusCode($code): void
     {
         $this->code = (int)$code;
     }
@@ -213,7 +213,7 @@ class Response
      *
      * @return string|null reason phrase, or null if unknown.
      */
-    public function getReasonPhrase() : ?string
+    public function getReasonPhrase(): ?string
     {
         return $this->phrase;
     }
@@ -226,7 +226,7 @@ class Response
      *
      * @param string $phrase the Reason-Phrase to set.
      */
-    public function setReasonPhrase($phrase) : void
+    public function setReasonPhrase($phrase): void
     {
         $this->phrase = $phrase;
     }
@@ -242,7 +242,7 @@ class Response
      *
      * @return string
      */
-    public function getHeader($header) : string
+    public function getHeader($header): string
     {
         if ($this->hasHeader($header)) {
             return implode(', ', $this->headers[$header]);
@@ -257,7 +257,7 @@ class Response
      *
      * @return string[]
      */
-    public function getHeaderAsArray($header) : array
+    public function getHeaderAsArray($header): array
     {
         if ($this->hasHeader($header)) {
             return $this->headers[$header];
@@ -274,7 +274,7 @@ class Response
      *              name using a case-insensitive string comparison. Returns false if
      *              no matching header name is found in the message.
      */
-    public function hasHeader($header) : bool
+    public function hasHeader($header): bool
     {
         return isset($this->headers[$header]);
     }
@@ -291,7 +291,7 @@ class Response
      *
      * @return void
      */
-    public function setHeader($header, $value) : void
+    public function setHeader($header, $value): void
     {
         $this->headers[$header] = (array)$value;
     }
@@ -307,7 +307,7 @@ class Response
      *
      * @return void
      */
-    public function addHeader($header, $value) : void
+    public function addHeader($header, $value): void
     {
         if ($this->hasHeader($header)) {
             $this->headers[$header][] = $value;
@@ -323,7 +323,7 @@ class Response
      *
      * @return void
      */
-    public function removeHeader($header) : void
+    public function removeHeader($header): void
     {
         unset($this->headers[$header]);
     }
@@ -341,7 +341,7 @@ class Response
      *
      * @return array returns an associative array of the message's headers.
      */
-    public function getHeaders() : array
+    public function getHeaders(): array
     {
         return $this->headers;
     }
@@ -356,7 +356,7 @@ class Response
      *
      * @return void
      */
-    public function setHeaders(array $headers) : void
+    public function setHeaders(array $headers): void
     {
         $this->headers = $headers;
     }
@@ -374,7 +374,7 @@ class Response
      *
      * @return void
      */
-    public function addHeaders(array $headers) : void
+    public function addHeaders(array $headers): void
     {
         $this->headers = array_merge_recursive($this->headers, $headers);
     }
@@ -384,7 +384,7 @@ class Response
      *
      * @return void
      */
-    public function removeHeaders() : void
+    public function removeHeaders(): void
     {
         $this->headers = [];
     }
@@ -396,7 +396,7 @@ class Response
      *
      * @return void
      */
-    public function setBody($body) : void
+    public function setBody($body): void
     {
         $this->body = $body;
     }
@@ -416,7 +416,7 @@ class Response
      *
      * @return void
      */
-    public function clearBody() : void
+    public function clearBody(): void
     {
         $this->body = null;
     }
@@ -443,7 +443,7 @@ class Response
         $domain = '',
         $secure = false,
         $httpOnly = false
-    ) : void {
+    ): void {
         // from PHP source code
         if (preg_match("/[=,; \t\r\n\013\014]/", $name)) {
             throw new \InvalidArgumentException('The cookie name contains invalid characters.');
@@ -481,7 +481,7 @@ class Response
      *
      * @return array|null
      */
-    public function getCookie($name) : ?array
+    public function getCookie($name): ?array
     {
         return $this->cookies[$name] ?? null;
     }
@@ -495,7 +495,7 @@ class Response
      *
      * @return void
      */
-    protected function sendCookies() : void
+    protected function sendCookies(): void
     {
         foreach ($this->cookies as $cookie) {
             setcookie(...array_values($cookie));

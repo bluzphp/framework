@@ -104,7 +104,7 @@ class AlphaTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail() : array
+    public function providerForFail(): array
     {
         return [
             ['@#$', ''],
@@ -124,7 +124,7 @@ class AlphaTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForComponentException() : array
+    public function providerForComponentException(): array
     {
         return [
             [new \stdClass],
@@ -136,7 +136,7 @@ class AlphaTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerAdditionalChars() : array
+    public function providerAdditionalChars(): array
     {
         return [
             ['!@#$%^&*(){}', '!@#$%^&*(){} abc'],

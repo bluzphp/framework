@@ -29,7 +29,7 @@ class SlugRule extends AbstractRule
      *
      * @return bool
      */
-    public function validate($input) : bool
+    public function validate($input): bool
     {
         if (false !== strpos($input, '--')) {
             return false;

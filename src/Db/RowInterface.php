@@ -25,7 +25,7 @@ interface RowInterface
      *
      * @return array
      */
-    public function toArray() : array;
+    public function toArray(): array;
 
     /**
      * Sets all data in the row from an array
@@ -34,7 +34,7 @@ interface RowInterface
      *
      * @return void
      */
-    public function setFromArray(array $data) : void;
+    public function setFromArray(array $data): void;
 
     /**
      * Saves the properties to the database.
@@ -52,12 +52,12 @@ interface RowInterface
      *
      * @return bool Removed or not
      */
-    public function delete() : bool;
+    public function delete(): bool;
 
     /**
      * Refreshes properties from the database
      *
      * @return void
      */
-    public function refresh() : void;
+    public function refresh(): void;
 }

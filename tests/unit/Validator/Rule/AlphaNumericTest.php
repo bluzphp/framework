@@ -80,7 +80,7 @@ class AlphaNumericTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForPass() : array
+    public function providerForPass(): array
     {
         return [
             ['', ''],
@@ -105,7 +105,7 @@ class AlphaNumericTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail() : array
+    public function providerForFail(): array
     {
         return [
             ['@#$', ''],
@@ -121,7 +121,7 @@ class AlphaNumericTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForComponentException() : array
+    public function providerForComponentException(): array
     {
         return [
             [new \stdClass],
@@ -133,7 +133,7 @@ class AlphaNumericTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerAdditionalChars() : array
+    public function providerAdditionalChars(): array
     {
         return [
             ['!@#$%^&*(){}', '!@#$%^&*(){} abc 123'],

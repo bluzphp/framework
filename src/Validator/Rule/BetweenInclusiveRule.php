@@ -27,7 +27,7 @@ class BetweenInclusiveRule extends BetweenRule
      *
      * @return string
      */
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return __('must be inclusive between "%1" and "%2"', $this->minValue, $this->maxValue);
     }

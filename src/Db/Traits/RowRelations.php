@@ -37,7 +37,7 @@ trait RowRelations
      * @return void
      * @throws TableNotFoundException
      */
-    public function setRelation(Row $row) : void
+    public function setRelation(Row $row): void
     {
         $modelName = $row->getTable()->getModel();
         $this->relations[$modelName] = [$row];
@@ -52,7 +52,7 @@ trait RowRelations
      * @throws RelationNotFoundException
      * @throws TableNotFoundException
      */
-    public function getRelation($modelName) : ?RowInterface
+    public function getRelation($modelName): ?RowInterface
     {
         $relations = $this->getRelations($modelName);
         return empty($relations) ? null : current($relations);
@@ -67,7 +67,7 @@ trait RowRelations
      * @throws RelationNotFoundException
      * @throws TableNotFoundException
      */
-    public function getRelations($modelName) : array
+    public function getRelations($modelName): array
     {
         if (!isset($this->relations[$modelName])) {
             $this->relations[$modelName] = Relations::findRelation($this, $modelName);

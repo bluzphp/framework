@@ -30,7 +30,7 @@ class ConfigLoaderTest extends FrameworkTestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->path = __DIR__ . '/Fixtures/';
         $this->emptyConfigsDir = __DIR__ . '/Fixtures/emptyConfigsDir';
@@ -40,7 +40,7 @@ class ConfigLoaderTest extends FrameworkTestCase
      * @covers \Bluz\Config\ConfigLoader::setPath
      * @expectedException \Bluz\Config\ConfigException
      */
-    public function testSetPathExeption() : void
+    public function testSetPathExeption(): void
     {
         $loader = new Config\ConfigLoader();
         $loader->setPath('invalid/path');
@@ -49,7 +49,7 @@ class ConfigLoaderTest extends FrameworkTestCase
     /**
      * @covers \Bluz\Config\ConfigLoader::setPath
      */
-    public function testSetPath() : void
+    public function testSetPath(): void
     {
         $loader = new Config\ConfigLoader();
         $loader->setPath($this->path);
@@ -59,7 +59,7 @@ class ConfigLoaderTest extends FrameworkTestCase
      * @covers \Bluz\Config\ConfigLoader::load
      * @expectedException \Bluz\Config\ConfigException
      */
-    public function testLoadConfigPathIsNotSetup() : void
+    public function testLoadConfigPathIsNotSetup(): void
     {
         $loader = new Config\ConfigLoader();
         $loader->load();
@@ -69,7 +69,7 @@ class ConfigLoaderTest extends FrameworkTestCase
      * @covers \Bluz\Config\ConfigLoader::load
      * @expectedException \Bluz\Config\ConfigException
      */
-    public function testLoadConfigFileNotFound() : void
+    public function testLoadConfigFileNotFound(): void
     {
         $loader = new Config\ConfigLoader();
         $loader->setPath($this->emptyConfigsDir);
@@ -79,7 +79,7 @@ class ConfigLoaderTest extends FrameworkTestCase
     /**
      * @covers \Bluz\Config\ConfigLoader::load
      */
-    public function testLoad() : void
+    public function testLoad(): void
     {
         $loader = new Config\ConfigLoader();
         $loader->setPath($this->path);
@@ -89,7 +89,7 @@ class ConfigLoaderTest extends FrameworkTestCase
     /**
      * @covers \Bluz\Config\ConfigLoader::load
      */
-    public function testLoadConfigWithEnvironment() : void
+    public function testLoadConfigWithEnvironment(): void
     {
         $loader = new Config\ConfigLoader();
         $loader->setPath($this->path);
@@ -109,7 +109,7 @@ class ConfigLoaderTest extends FrameworkTestCase
      * @covers \Bluz\Config\ConfigLoader::load
      * @expectedException \Bluz\Config\ConfigException
      */
-    public function testLoadConfigWithWrongEnvironment() : void
+    public function testLoadConfigWithWrongEnvironment(): void
     {
         $loader = new Config\ConfigLoader();
         $loader->setPath($this->path);

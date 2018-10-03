@@ -34,7 +34,7 @@ class Table extends AbstractCrud
      * @throws InvalidPrimaryKeyException
      * @throws TableNotFoundException
      */
-    public function getPrimaryKey() : array
+    public function getPrimaryKey(): array
     {
         return $this->getTable()->getPrimaryKey();
     }

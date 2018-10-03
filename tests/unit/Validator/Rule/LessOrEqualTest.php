@@ -45,7 +45,7 @@ class LessOrEqualTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForPass() : array
+    public function providerForPass(): array
     {
         return [
             [0, ''], // empty string is equal zero
@@ -61,7 +61,7 @@ class LessOrEqualTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail() : array
+    public function providerForFail(): array
     {
         return [
             [0, true],

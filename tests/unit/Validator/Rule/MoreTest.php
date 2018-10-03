@@ -45,7 +45,7 @@ class MoreTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForPass() : array
+    public function providerForPass(): array
     {
         return array(
             [-1, ''],       // empty string is equal zero
@@ -58,7 +58,7 @@ class MoreTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail() : array
+    public function providerForFail(): array
     {
         return array(
             [0, ''],     // empty string is equal zero

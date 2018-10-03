@@ -50,7 +50,7 @@ class Session
      * @throws SessionException
      * @return void
      */
-    public function setName($name) : void
+    public function setName($name): void
     {
         if ($this->sessionExists()) {
             throw new SessionException(
@@ -75,7 +75,7 @@ class Session
      *
      * @return string
      */
-    public function getName() : string
+    public function getName(): string
     {
         if (null === $this->name) {
             // If we're grabbing via session_name(), we don't need our
@@ -94,7 +94,7 @@ class Session
      *
      * @return void
      */
-    public function setNamespace(string $namespace) : void
+    public function setNamespace(string $namespace): void
     {
         $this->namespace = $namespace;
     }
@@ -104,7 +104,7 @@ class Session
      *
      * @return string
      */
-    public function getNamespace() : string
+    public function getNamespace(): string
     {
         return $this->namespace;
     }
@@ -119,7 +119,7 @@ class Session
      * @return void
      * @throws SessionException
      */
-    public function setId($id) : void
+    public function setId($id): void
     {
         if ($this->sessionExists()) {
             throw new SessionException(
@@ -136,7 +136,7 @@ class Session
      *
      * @return string
      */
-    public function getId() : string
+    public function getId(): string
     {
         return session_id();
     }
@@ -151,7 +151,7 @@ class Session
      *
      * @return bool
      */
-    public function regenerateId($deleteOldSession = true) : bool
+    public function regenerateId($deleteOldSession = true): bool
     {
         if ($this->sessionExists() && session_id() !== '') {
             return session_regenerate_id((bool)$deleteOldSession);
@@ -164,7 +164,7 @@ class Session
      *
      * @return bool
      */
-    public function cookieExists() : bool
+    public function cookieExists(): bool
     {
         return isset($_COOKIE[session_name()]);
     }
@@ -174,7 +174,7 @@ class Session
      *
      * @return bool
      */
-    public function sessionExists() : bool
+    public function sessionExists(): bool
     {
         return session_status() === PHP_SESSION_ACTIVE;
     }
@@ -189,7 +189,7 @@ class Session
      * @return bool
      * @throws ComponentException
      */
-    public function start() : bool
+    public function start(): bool
     {
         if ($this->sessionExists()) {
             return true;
@@ -207,7 +207,7 @@ class Session
      *
      * @return void
      */
-    public function destroy() : void
+    public function destroy(): void
     {
         if (!$this->cookieExists() || !$this->sessionExists()) {
             return;
@@ -229,7 +229,7 @@ class Session
      *
      * @return void
      */
-    public function setAdapter($saveHandler) : void
+    public function setAdapter($saveHandler): void
     {
         $this->adapter = $saveHandler;
     }
@@ -239,7 +239,7 @@ class Session
      *
      * @return \SessionHandlerInterface
      */
-    public function getAdapter() : \SessionHandlerInterface
+    public function getAdapter(): \SessionHandlerInterface
     {
         return $this->adapter;
     }
@@ -253,7 +253,7 @@ class Session
      * @return bool
      * @throws ComponentException
      */
-    protected function initAdapter() : bool
+    protected function initAdapter(): bool
     {
         if (null === $this->adapter || 'files' === $this->adapter) {
             // try to apply settings
@@ -285,7 +285,7 @@ class Session
      *
      * @return void
      */
-    public function setSessionCookieLifetime($ttl) : void
+    public function setSessionCookieLifetime($ttl): void
     {
         // Set new cookie TTL
         session_set_cookie_params($ttl);
@@ -303,7 +303,7 @@ class Session
      *
      * @return void
      */
-    public function expireSessionCookie() : void
+    public function expireSessionCookie(): void
     {
         if (ini_get('session.use_cookies')) {
             $params = session_get_cookie_params();
@@ -327,7 +327,7 @@ class Session
      * @return void
      * @throws ComponentException
      */
-    protected function setSavePath($savePath) : void
+    protected function setSavePath($savePath): void
     {
         if (!is_dir($savePath)
             || !is_writable($savePath)
@@ -346,7 +346,7 @@ class Session
      * @return void
      * @throws ComponentException
      */
-    public function set($key, $value) : void
+    public function set($key, $value): void
     {
         $this->start();
         // check storage
@@ -380,7 +380,7 @@ class Session
      * @return bool
      * @throws ComponentException
      */
-    public function contains($key) : bool
+    public function contains($key): bool
     {
         if ($this->cookieExists()) {
             $this->start();

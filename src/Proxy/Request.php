@@ -151,7 +151,7 @@ final class Request
         $headers = self::getInstance()->getHeaders();
         $headers = array_change_key_case($headers, CASE_LOWER);
         if (array_key_exists($header, $headers)) {
-            $value = is_array($headers[$header]) ? implode(', ', $headers[$header]) : $headers[$header];
+            $value = \is_array($headers[$header]) ? implode(', ', $headers[$header]) : $headers[$header];
             return $value;
         }
         return $default;
@@ -196,7 +196,7 @@ final class Request
      */
     public static function getFile($name)
     {
-        return RequestFactory::get($name, self::getInstance()->getUploadedFiles());
+        return self::getInstance()->getUploadedFiles()[$name] ?? false;
     }
 
     /**

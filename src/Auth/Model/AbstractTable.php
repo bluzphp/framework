@@ -62,7 +62,7 @@ abstract class AbstractTable extends Table
      * @throws \Bluz\Db\Exception\DbException
      * @throws \Bluz\Db\Exception\InvalidPrimaryKeyException
      */
-    public static function getAuthRow($provider, $foreignKey) : ?RowInterface
+    public static function getAuthRow($provider, $foreignKey): ?RowInterface
     {
         return static::findRow(['provider' => $provider, 'foreignKey' => $foreignKey]);
     }

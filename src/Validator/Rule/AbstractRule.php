@@ -29,7 +29,7 @@ abstract class AbstractRule implements RuleInterface
     /**
      * @inheritdoc
      */
-    public function assert($input) : void
+    public function assert($input): void
     {
         if (!$this->validate($input)) {
             throw new ValidatorException($this->description);
@@ -39,7 +39,7 @@ abstract class AbstractRule implements RuleInterface
     /**
      * @inheritdoc
      */
-    public function __invoke($input) : bool
+    public function __invoke($input): bool
     {
         return $this->validate($input);
     }
@@ -47,7 +47,7 @@ abstract class AbstractRule implements RuleInterface
     /**
      * @inheritdoc
      */
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->getDescription();
     }
@@ -55,7 +55,7 @@ abstract class AbstractRule implements RuleInterface
     /**
      * @inheritdoc
      */
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return __($this->description);
     }
@@ -63,7 +63,7 @@ abstract class AbstractRule implements RuleInterface
     /**
      * @inheritdoc
      */
-    public function setDescription(string $description) : RuleInterface
+    public function setDescription(string $description): RuleInterface
     {
         $this->description = $description;
         return $this;

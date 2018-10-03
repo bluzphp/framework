@@ -33,7 +33,7 @@ trait TableProperty
      *
      * @return void
      */
-    public function setTable(TableInterface $table) : void
+    public function setTable(TableInterface $table): void
     {
         $this->table = $table;
     }
@@ -44,7 +44,7 @@ trait TableProperty
      * @return TableInterface
      * @throws TableNotFoundException
      */
-    public function getTable() : TableInterface
+    public function getTable(): TableInterface
     {
         if (!$this->table) {
             $this->initTable();
@@ -58,7 +58,7 @@ trait TableProperty
      * @return void
      * @throws TableNotFoundException
      */
-    protected function initTable() : void
+    protected function initTable(): void
     {
         $tableClass = class_namespace(static::class) . '\\Table';
 

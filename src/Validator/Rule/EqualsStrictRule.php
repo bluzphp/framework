@@ -39,7 +39,7 @@ class EqualsStrictRule extends AbstractRule
      *
      * @return bool
      */
-    public function validate($input) : bool
+    public function validate($input): bool
     {
         return $input === $this->compareTo;
     }
@@ -49,7 +49,7 @@ class EqualsStrictRule extends AbstractRule
      *
      * @return string
      */
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return __('must be identical as "%s"', $this->compareTo);
     }

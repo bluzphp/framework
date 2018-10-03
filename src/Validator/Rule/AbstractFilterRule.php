@@ -55,7 +55,7 @@ abstract class AbstractFilterRule extends AbstractRule
      *
      * @return string
      */
-    protected function filter($input) : string
+    protected function filter($input): string
     {
         return str_replace(str_split($this->additionalChars), '', $input);
     }
@@ -67,7 +67,7 @@ abstract class AbstractFilterRule extends AbstractRule
      *
      * @return bool
      */
-    public function validate($input) : bool
+    public function validate($input): bool
     {
         if (!is_scalar($input)) {
             return false;

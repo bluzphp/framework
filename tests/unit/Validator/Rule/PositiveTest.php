@@ -54,7 +54,7 @@ class PositiveTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForPass() : array
+    public function providerForPass(): array
     {
         return array(
             [16],
@@ -67,7 +67,7 @@ class PositiveTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail() : array
+    public function providerForFail(): array
     {
         return array(
             [null],

@@ -34,7 +34,7 @@ class LatinNumericRule extends AbstractFilterRule
      *
      * @return string
      */
-    public function getDescription() : string
+    public function getDescription(): string
     {
         if (empty($this->additionalChars)) {
             return __('must contain only Latin letters and digits');

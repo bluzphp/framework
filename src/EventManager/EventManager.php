@@ -32,7 +32,7 @@ class EventManager
      *
      * @return void
      */
-    public function attach($eventName, $callback, $priority = 1) : void
+    public function attach($eventName, $callback, $priority = 1): void
     {
         if (!isset($this->listeners[$eventName])) {
             $this->listeners[$eventName] = [];
@@ -82,7 +82,7 @@ class EventManager
      *
      * @return void
      */
-    protected function fire($listeners, $event) : void
+    protected function fire($listeners, $event): void
     {
         ksort($listeners);
         foreach ($listeners as $list) {

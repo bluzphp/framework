@@ -69,7 +69,7 @@ trait From
      *
      * @return $this
      */
-    public function from(string $from, string $alias)
+    public function from(string $from, string $alias): self
     {
         $this->aliases[] = $alias;
 
@@ -100,7 +100,7 @@ trait From
      *
      * @return $this
      */
-    public function join(string $fromAlias, string $join, string $alias, string $condition = null)
+    public function join(string $fromAlias, string $join, string $alias, string $condition = null): self
     {
         return $this->innerJoin($fromAlias, $join, $alias, $condition);
     }
@@ -124,7 +124,7 @@ trait From
      *
      * @return $this
      */
-    public function innerJoin(string $fromAlias, string $join, string $alias, string $condition = null)
+    public function innerJoin(string $fromAlias, string $join, string $alias, string $condition = null): self
     {
         return $this->addJoin('inner', $fromAlias, $join, $alias, $condition);
     }
@@ -148,7 +148,7 @@ trait From
      *
      * @return $this
      */
-    public function leftJoin(string $fromAlias, string $join, string $alias, string $condition = null)
+    public function leftJoin(string $fromAlias, string $join, string $alias, string $condition = null): self
     {
         return $this->addJoin('left', $fromAlias, $join, $alias, $condition);
     }
@@ -172,7 +172,7 @@ trait From
      *
      * @return $this
      */
-    public function rightJoin(string $fromAlias, string $join, string $alias, string $condition = null)
+    public function rightJoin(string $fromAlias, string $join, string $alias, string $condition = null): self
     {
         return $this->addJoin('right', $fromAlias, $join, $alias, $condition);
     }
@@ -188,8 +188,13 @@ trait From
      *
      * @return $this
      */
-    protected function addJoin(string $type, string $fromAlias, string $join, string $alias, string $condition = null)
-    {
+    protected function addJoin(
+        string $type,
+        string $fromAlias,
+        string $join,
+        string $alias,
+        string $condition = null
+    ): self {
         $this->aliases[] = $alias;
 
         $this->join[$fromAlias][] = [
@@ -208,7 +213,7 @@ trait From
      *
      * @return self
      */
-    protected function setFromQueryPart($table)
+    protected function setFromQueryPart($table): self
     {
         return $this->from($table, $table);
     }
@@ -218,7 +223,7 @@ trait From
      *
      * @return string
      */
-    protected function prepareFrom() : string
+    protected function prepareFrom(): string
     {
         $fromClauses = [];
         // Loop through all FROM clauses
@@ -239,7 +244,7 @@ trait From
      *
      * @return string
      */
-    protected function prepareJoins($fromAlias) : string
+    protected function prepareJoins($fromAlias): string
     {
         if (!isset($this->join[$fromAlias])) {
             return '';

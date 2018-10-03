@@ -74,7 +74,7 @@ final class Request
      */
     public static function getQuery($key = null, $default = null)
     {
-        return RequestFactory::get($key, self::getInstance()->getQueryParams(), $default);
+        return self::getInstance()->getQueryParams()[$key] ?? $default;
     }
 
     /**
@@ -89,7 +89,7 @@ final class Request
      */
     public static function getPost($key = null, $default = null)
     {
-        return RequestFactory::get($key, (array)self::getInstance()->getParsedBody(), $default);
+        return self::getInstance()->getParsedBody()[$key] ?? $default;
     }
 
     /**
@@ -104,7 +104,7 @@ final class Request
      */
     public static function getServer($key = null, $default = null)
     {
-        return RequestFactory::get($key, self::getInstance()->getServerParams(), $default);
+        return self::getInstance()->getServerParams()[$key] ?? $default;
     }
 
     /**
@@ -119,7 +119,7 @@ final class Request
      */
     public static function getCookie($key = null, $default = null)
     {
-        return RequestFactory::get($key, self::getInstance()->getCookieParams(), $default);
+        return self::getInstance()->getCookieParams()[$key] ?? $default;
     }
 
     /**
@@ -134,7 +134,7 @@ final class Request
      */
     public static function getEnv($key = null, $default = null)
     {
-        return RequestFactory::get($key, $_ENV, $default);
+        return $_ENV[$key] ?? $default;
     }
 
     /**
@@ -147,7 +147,14 @@ final class Request
      */
     public static function getHeader($header, $default = null)
     {
-        return RequestFactory::getHeader($header, self::getInstance()->getHeaders(), $default);
+        $header  = strtolower($header);
+        $headers = self::getInstance()->getHeaders();
+        $headers = array_change_key_case($headers, CASE_LOWER);
+        if (array_key_exists($header, $headers)) {
+            $value = is_array($headers[$header]) ? implode(', ', $headers[$header]) : $headers[$header];
+            return $value;
+        }
+        return $default;
     }
 
     /**

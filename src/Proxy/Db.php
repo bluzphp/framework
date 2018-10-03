@@ -43,7 +43,7 @@ use Bluz\Db\Query;
  * @method   static integer query($sql, $params = [], $types = [])
  * @see      Instance::query()
  *
- * @method   static Query\Select select($select)
+ * @method   static Query\Select select(...$select)
  * @see      Instance::select()
  *
  * @method   static Query\Insert insert($table)
@@ -103,7 +103,7 @@ final class Db
      *
      * @return Instance
      */
-    private static function initInstance() : Instance
+    private static function initInstance(): Instance
     {
         $instance = new Instance();
         $instance->setOptions(Config::get('db'));

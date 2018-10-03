@@ -41,7 +41,7 @@ class DateRule extends AbstractRule
      *
      * @return bool
      */
-    public function validate($input) : bool
+    public function validate($input): bool
     {
         if ($input instanceof DateTime) {
             return true;
@@ -62,7 +62,7 @@ class DateRule extends AbstractRule
      *
      * @return string
      */
-    public function getDescription() : string
+    public function getDescription(): string
     {
         if ($this->format) {
             return __('must be a valid date. Sample format: "%s"', $this->format);

@@ -81,7 +81,7 @@ class LatinTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForPass() : array
+    public function providerForPass(): array
     {
         return array(
             ['foobar'],
@@ -95,7 +95,7 @@ class LatinTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail() : array
+    public function providerForFail(): array
     {
         return array(
             ['@#$'],
@@ -115,7 +115,7 @@ class LatinTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForComponentException() : array
+    public function providerForComponentException(): array
     {
         return [
             [new \stdClass],
@@ -127,7 +127,7 @@ class LatinTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerAdditionalChars() : array
+    public function providerAdditionalChars(): array
     {
         return [
             ['!@#$%^&*(){} ', '!@#$%^&*(){} abc'],

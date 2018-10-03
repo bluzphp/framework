@@ -31,7 +31,7 @@ class ArrayGrid extends Grid
      *
      * @return void
      */
-    public function init() : void
+    public function init(): void
     {
         // Array
         $adapter = new ArraySource();

@@ -25,7 +25,7 @@ abstract class AbstractCtypeRule extends AbstractFilterRule
      *
      * @return string
      */
-    protected function filter($input) : string
+    protected function filter($input): string
     {
         $input = parent::filter((string)$input);
         return preg_replace('/\s/', '', $input);

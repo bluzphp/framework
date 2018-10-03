@@ -51,7 +51,7 @@ class BootstrapTest extends Application
      *
      * @return string|null
      */
-    public function getModule() : ?string
+    public function getModule(): ?string
     {
         return $this->dispatchModule;
     }
@@ -61,7 +61,7 @@ class BootstrapTest extends Application
      *
      * @return string|null
      */
-    public function getController() : ?string
+    public function getController(): ?string
     {
         return $this->dispatchController;
     }
@@ -73,7 +73,7 @@ class BootstrapTest extends Application
      *
      * @return void
      */
-    public function setException($exception) : void
+    public function setException($exception): void
     {
         $this->exception = $exception;
 
@@ -86,7 +86,7 @@ class BootstrapTest extends Application
      *
      * @return \Exception|null
      */
-    public function getException() : ?\Exception
+    public function getException(): ?\Exception
     {
         return $this->exception;
     }
@@ -94,7 +94,7 @@ class BootstrapTest extends Application
     /**
      * @inheritdoc
      */
-    protected function doProcess() : void
+    protected function doProcess(): void
     {
         $module = Request::getModule();
         $controller = Request::getController();

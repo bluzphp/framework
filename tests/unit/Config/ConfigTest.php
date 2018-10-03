@@ -25,7 +25,7 @@ class ConfigTest extends FrameworkTestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->path = __DIR__ . '/Fixtures/';
     }
@@ -33,7 +33,7 @@ class ConfigTest extends FrameworkTestCase
     /**
      * @covers \Bluz\Config\Config::get
      */
-    public function testGetData() : void
+    public function testGetData(): void
     {
         $loader = new Config\ConfigLoader();
         $loader->setPath($this->path);
@@ -51,7 +51,7 @@ class ConfigTest extends FrameworkTestCase
     /**
      * @covers \Bluz\Config\Config::get
      */
-    public function testGetDataByNotExistedSection() : void
+    public function testGetDataByNotExistedSection(): void
     {
         $loader = new Config\ConfigLoader();
         $loader->setPath($this->path);
@@ -66,7 +66,7 @@ class ConfigTest extends FrameworkTestCase
     /**
      * @covers \Bluz\Config\Config::get
      */
-    public function testGetDataBySection() : void
+    public function testGetDataBySection(): void
     {
         $loader = new Config\ConfigLoader();
         $loader->setPath($this->path);
@@ -84,7 +84,7 @@ class ConfigTest extends FrameworkTestCase
     /**
      * @covers \Bluz\Config\Config::get
      */
-    public function testGetDataBySubSection() : void
+    public function testGetDataBySubSection(): void
     {
 
         $loader = new Config\ConfigLoader();

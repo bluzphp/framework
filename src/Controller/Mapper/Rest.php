@@ -20,23 +20,23 @@ use Bluz\Http\RequestMethod;
  */
 class Rest extends AbstractMapper
 {
-    protected function prepareRequest() : void
+    protected function prepareRequest(): void
     {
         parent::prepareRequest();
 
         $params = $this->params;
 
-        if (count($params)) {
+        if (\count($params)) {
             $primaryKeys = $this->crud->getPrimaryKey();
 
-            $primaryValues = explode('-', array_shift($params), count($primaryKeys));
+            $primaryValues = explode('-', array_shift($params), \count($primaryKeys));
 
             $this->primary = array_combine($primaryKeys, $primaryValues);
         }
-        if (count($params)) {
+        if (\count($params)) {
             $this->relation = array_shift($params);
         }
-        if (count($params)) {
+        if (\count($params)) {
             $this->relationId = array_shift($params);
         }
 
@@ -46,7 +46,7 @@ class Rest extends AbstractMapper
         }
     }
 
-    protected function prepareParams() : array
+    protected function prepareParams(): array
     {
         return [
             'crud' => $this->crud,

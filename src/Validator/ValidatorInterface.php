@@ -45,5 +45,5 @@ interface ValidatorInterface
      *
      * @return bool
      */
-    public function __invoke($input) : bool;
+    public function __invoke($input): bool;
 }

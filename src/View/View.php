@@ -124,7 +124,7 @@ class View implements ViewInterface, \JsonSerializable
      *
      * @return string
      */
-    public function getPath() : ?string
+    public function getPath(): ?string
     {
         return $this->path;
     }
@@ -136,7 +136,7 @@ class View implements ViewInterface, \JsonSerializable
      *
      * @return void
      */
-    public function setPath($path) : void
+    public function setPath($path): void
     {
         $this->path = $path;
     }
@@ -146,7 +146,7 @@ class View implements ViewInterface, \JsonSerializable
      *
      * @return string
      */
-    public function getTemplate() : ?string
+    public function getTemplate(): ?string
     {
         return $this->template;
     }
@@ -158,7 +158,7 @@ class View implements ViewInterface, \JsonSerializable
      *
      * @return void
      */
-    public function setTemplate($file) : void
+    public function setTemplate($file): void
     {
         $this->template = $file;
     }
@@ -170,7 +170,7 @@ class View implements ViewInterface, \JsonSerializable
      *
      * @return void
      */
-    public function addPartialPath($path) : void
+    public function addPartialPath($path): void
     {
         $this->partialPath[] = $path;
     }

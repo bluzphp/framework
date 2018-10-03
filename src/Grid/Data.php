@@ -30,7 +30,7 @@ class Data extends \ArrayIterator
      *
      * @return void
      */
-    public function setTotal(int $total) : void
+    public function setTotal(int $total): void
     {
         $this->total = $total;
     }
@@ -40,7 +40,7 @@ class Data extends \ArrayIterator
      *
      * @return integer
      */
-    public function getTotal() : int
+    public function getTotal(): int
     {
         return $this->total;
     }

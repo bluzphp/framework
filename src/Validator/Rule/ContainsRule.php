@@ -39,7 +39,7 @@ class ContainsRule extends AbstractRule
      *
      * @return bool
      */
-    public function validate($input) : bool
+    public function validate($input): bool
     {
         // for array
         if (is_array($input)) {
@@ -58,7 +58,7 @@ class ContainsRule extends AbstractRule
      *
      * @return string
      */
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return __('must contain the value "%s"', $this->containsValue);
     }

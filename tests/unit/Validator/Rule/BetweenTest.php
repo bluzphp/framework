@@ -59,7 +59,7 @@ class BetweenTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForPass() : array
+    public function providerForPass(): array
     {
         return [
             [10, 20, 11],
@@ -78,7 +78,7 @@ class BetweenTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail() : array
+    public function providerForFail(): array
     {
         return [
             [0, 1, -1],
@@ -101,7 +101,7 @@ class BetweenTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForComponentException() : array
+    public function providerForComponentException(): array
     {
         return [
             [10, 5],

@@ -58,7 +58,7 @@ class Select extends AbstractBuilder
         }
 
         switch ($fetchType) {
-            case (!is_int($fetchType)):
+            case (!\is_int($fetchType)):
                 return Db::fetchObjects($this->getSql(), $this->params, $fetchType);
             case \PDO::FETCH_CLASS:
                 return Db::fetchObjects($this->getSql(), $this->params);
@@ -75,7 +75,7 @@ class Select extends AbstractBuilder
      *
      * @return Select instance
      */
-    public function setFetchType($fetchType)
+    public function setFetchType($fetchType): Select
     {
         $this->fetchType = $fetchType;
         return $this;
@@ -84,7 +84,7 @@ class Select extends AbstractBuilder
     /**
      * {@inheritdoc}
      */
-    public function getSql() : string
+    public function getSql(): string
     {
         return $this->prepareSelect()
             . $this->prepareFrom()
@@ -112,7 +112,7 @@ class Select extends AbstractBuilder
      *
      * @return Select instance
      */
-    public function select(...$select) : Select
+    public function select(...$select): Select
     {
         $this->select = $select;
         return $this;
@@ -135,7 +135,7 @@ class Select extends AbstractBuilder
      *
      * @return Select instance
      */
-    public function addSelect(string ...$select) : Select
+    public function addSelect(string ...$select): Select
     {
         $this->select = array_merge($this->select, $select);
         return $this;
@@ -146,7 +146,7 @@ class Select extends AbstractBuilder
      *
      * @return array
      */
-    public function getSelect() : array
+    public function getSelect(): array
     {
         return $this->select;
     }
@@ -168,7 +168,7 @@ class Select extends AbstractBuilder
      *
      * @return Select instance
      */
-    public function groupBy(string ...$groupBy) : Select
+    public function groupBy(string ...$groupBy): Select
     {
         $this->groupBy = $groupBy;
         return $this;
@@ -191,7 +191,7 @@ class Select extends AbstractBuilder
      *
      * @return Select instance
      */
-    public function addGroupBy(string ...$groupBy) : Select
+    public function addGroupBy(string ...$groupBy): Select
     {
         $this->groupBy = array_merge($this->groupBy, $groupBy);
         return $this;
@@ -205,7 +205,7 @@ class Select extends AbstractBuilder
      *
      * @return Select
      */
-    public function having(...$conditions) : Select
+    public function having(...$conditions): Select
     {
         $this->having = $this->prepareCondition($conditions);
         return $this;
@@ -219,7 +219,7 @@ class Select extends AbstractBuilder
      *
      * @return Select
      */
-    public function andHaving(...$conditions) : Select
+    public function andHaving(...$conditions): Select
     {
         $condition = $this->prepareCondition($conditions);
 
@@ -240,7 +240,7 @@ class Select extends AbstractBuilder
      *
      * @return Select
      */
-    public function orHaving(...$conditions) : Select
+    public function orHaving(...$conditions): Select
     {
         $condition = $this->prepareCondition($conditions);
 
@@ -261,7 +261,7 @@ class Select extends AbstractBuilder
      * @return Select
      * @throws DbException
      */
-    public function setPage(int $page = 1) : Select
+    public function setPage(int $page = 1): Select
     {
         if (!$this->limit) {
             throw new DbException('Please setup limit for use method `setPage`');
@@ -275,7 +275,7 @@ class Select extends AbstractBuilder
      *
      * @return string
      */
-    protected function prepareSelect() : string
+    protected function prepareSelect(): string
     {
         return 'SELECT ' . implode(', ', $this->select);
     }
@@ -285,9 +285,9 @@ class Select extends AbstractBuilder
      *
      * @return string
      */
-    protected function prepareGroupBy() : string
+    protected function prepareGroupBy(): string
     {
-        return !empty($this->groupBy) ? ' GROUP BY ' . implode(', ', $this->groupBy) : '';
+        return !empty($this->groupBy) ? ' GROUP BY ' . implode(', ', $this->groupBy): '';
     }
 
     /**
@@ -295,7 +295,7 @@ class Select extends AbstractBuilder
      *
      * @return string
      */
-    protected function prepareHaving() : string
+    protected function prepareHaving(): string
     {
         return $this->having ? ' HAVING ' . $this->having : '';
     }

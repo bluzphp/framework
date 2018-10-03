@@ -59,7 +59,7 @@ class LengthTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForPass() : array
+    public function providerForPass(): array
     {
         return array(
             ['foobar', 1, 15],
@@ -74,7 +74,7 @@ class LengthTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail() : array
+    public function providerForFail(): array
     {
         return array(
             [0, 1, 3],
@@ -87,7 +87,7 @@ class LengthTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForComponentException() : array
+    public function providerForComponentException(): array
     {
         return [
             ['a', 15],

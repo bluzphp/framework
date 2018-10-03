@@ -71,7 +71,7 @@ class Validator
      *
      * @return ValidatorChain
      */
-    public static function create() : ValidatorChain
+    public static function create(): ValidatorChain
     {
         return new ValidatorChain();
     }
@@ -85,7 +85,7 @@ class Validator
      * @return ValidatorChain
      * @throws Exception\ComponentException
      */
-    public static function __callStatic($ruleName, $arguments) : ValidatorChain
+    public static function __callStatic($ruleName, $arguments): ValidatorChain
     {
         $validatorChain = self::create();
         return $validatorChain->$ruleName(...$arguments);
@@ -100,7 +100,7 @@ class Validator
      * @return RuleInterface
      * @throws Exception\ComponentException
      */
-    public static function rule($ruleName, $arguments) : RuleInterface
+    public static function rule($ruleName, $arguments): RuleInterface
     {
         $ruleName = ucfirst($ruleName) . 'Rule';
 

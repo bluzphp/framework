@@ -61,7 +61,7 @@ class Event
      *
      * @return string
      */
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -86,7 +86,7 @@ class Event
      * @return void
      * @throws EventException
      */
-    public function setParams($params) : void
+    public function setParams($params): void
     {
         if (!\is_array($params) && !\is_object($params)) {
             throw new EventException(
@@ -138,7 +138,7 @@ class Event
      *
      * @return void
      */
-    public function setName($name) : void
+    public function setName($name): void
     {
         $this->name = (string)$name;
     }
@@ -150,7 +150,7 @@ class Event
      *
      * @return void
      */
-    public function setTarget($target) : void
+    public function setTarget($target): void
     {
         $this->target = $target;
     }
@@ -163,7 +163,7 @@ class Event
      *
      * @return void
      */
-    public function setParam($name, $value) : void
+    public function setParam($name, $value): void
     {
         if (\is_array($this->params)) {
             // Arrays or objects implementing array access

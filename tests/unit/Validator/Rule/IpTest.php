@@ -82,7 +82,7 @@ class IpTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForPass() : array
+    public function providerForPass(): array
     {
         return [
             ['127.0.0.1'],
@@ -92,7 +92,7 @@ class IpTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForFail() : array
+    public function providerForFail(): array
     {
         return array(
             [null],
@@ -107,7 +107,7 @@ class IpTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForComponentException() : array
+    public function providerForComponentException(): array
     {
         return array(
             ['192.168'],
@@ -124,7 +124,7 @@ class IpTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForIpBetweenRange() : array
+    public function providerForIpBetweenRange(): array
     {
         return array(
             ['127.0.0.1', '127.*'],
@@ -151,7 +151,7 @@ class IpTest extends Tests\FrameworkTestCase
     /**
      * @return array
      */
-    public function providerForIpOutsideRange() : array
+    public function providerForIpOutsideRange(): array
     {
         return array(
             ['127.0.0.1', '127.0.1.*'],

@@ -47,7 +47,7 @@ class CompositeBuilder implements \Countable
      *
      * @return CompositeBuilder
      */
-    public function addParts($parts) : CompositeBuilder
+    public function addParts($parts): CompositeBuilder
     {
         foreach ($parts as $part) {
             $this->addPart($part);
@@ -63,7 +63,7 @@ class CompositeBuilder implements \Countable
      *
      * @return CompositeBuilder
      */
-    public function addPart($part) : CompositeBuilder
+    public function addPart($part): CompositeBuilder
     {
         if (!empty($part) || ($part instanceof self && $part->count() > 0)) {
             $this->parts[] = $part;
@@ -76,7 +76,7 @@ class CompositeBuilder implements \Countable
      *
      * @return string
      */
-    public function getType() : string
+    public function getType(): string
     {
         return $this->type;
     }
@@ -86,9 +86,9 @@ class CompositeBuilder implements \Countable
      *
      * @return integer
      */
-    public function count() : int
+    public function count(): int
     {
-        return count($this->parts);
+        return \count($this->parts);
     }
 
     /**

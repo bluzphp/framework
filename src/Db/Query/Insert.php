@@ -47,7 +47,7 @@ class Insert extends AbstractBuilder
      *
      * @return string
      */
-    public function getSql() : string
+    public function getSql(): string
     {
         return 'INSERT INTO '
             . Db::quoteIdentifier($this->table)
@@ -71,7 +71,7 @@ class Insert extends AbstractBuilder
      *
      * @return Insert instance
      */
-    public function insert($table) : Insert
+    public function insert($table): Insert
     {
         $this->table = $table;
         return $this;

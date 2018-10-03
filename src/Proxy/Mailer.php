@@ -48,7 +48,7 @@ final class Mailer
      * @throws \Bluz\Common\Exception\ConfigurationException
      * @throws \Bluz\Config\ConfigException
      */
-    private static function initInstance() : Instance
+    private static function initInstance(): Instance
     {
         $instance = new Instance();
         $instance->setOptions(Config::get('mailer'));

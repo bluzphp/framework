@@ -26,12 +26,12 @@ abstract class AbstractIdentity extends Row implements IdentityInterface
     /**
      * {@inheritdoc}
      */
-    abstract public function getPrivileges() : array;
+    abstract public function getPrivileges(): array;
 
     /**
      * {@inheritdoc}
      */
-    public function getId() : ?int
+    public function getId(): ?int
     {
         return $this->id ? (int)$this->id : null;
     }
@@ -39,7 +39,7 @@ abstract class AbstractIdentity extends Row implements IdentityInterface
     /**
      * {@inheritdoc}
      */
-    public function hasPrivilege($module, $privilege) : bool
+    public function hasPrivilege($module, $privilege): bool
     {
         $privileges = $this->getPrivileges();
 

@@ -33,7 +33,7 @@ class Delete extends AbstractBuilder
      *
      * @return string
      */
-    public function getSql() : string
+    public function getSql(): string
     {
         return 'DELETE FROM '
             . Db::quoteIdentifier($this->table)
@@ -57,7 +57,7 @@ class Delete extends AbstractBuilder
      *
      * @return Delete instance
      */
-    public function delete($table) : Delete
+    public function delete($table): Delete
     {
         $this->table = $table;
         return $this;
@@ -68,7 +68,7 @@ class Delete extends AbstractBuilder
      *
      * @return string
      */
-    protected function prepareLimit() : string
+    protected function prepareLimit(): string
     {
         return $this->limit ? ' LIMIT ' . $this->limit : '';
     }

@@ -48,7 +48,7 @@ trait Validator
      *
      * @return ValidatorForm
      */
-    private function getValidatorForm() : ValidatorForm
+    private function getValidatorForm(): ValidatorForm
     {
         if (!$this->validatorForm) {
             $this->validatorForm = new ValidatorForm();
@@ -63,7 +63,7 @@ trait Validator
      *
      * @return ValidatorChain
      */
-    public function addValidator($name) : ValidatorChain
+    public function addValidator($name): ValidatorChain
     {
         return $this->getValidatorForm()->add($name);
     }
@@ -75,7 +75,7 @@ trait Validator
      *
      * @return ValidatorChain
      */
-    public function getValidator($name) : ValidatorChain
+    public function getValidator($name): ValidatorChain
     {
         return $this->getValidatorForm()->get($name);
     }
@@ -87,7 +87,7 @@ trait Validator
      *
      * @return bool
      */
-    public function validate($input) : bool
+    public function validate($input): bool
     {
         return $this->getValidatorForm()->validate($input);
     }
@@ -99,7 +99,7 @@ trait Validator
      *
      * @throws \Bluz\Validator\Exception\ValidatorException
      */
-    public function assert($input) : void
+    public function assert($input): void
     {
         $this->getValidatorForm()->assert($input);
     }

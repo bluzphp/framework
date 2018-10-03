@@ -39,7 +39,7 @@ class MoreRule extends AbstractCompareRule
      *
      * @return bool
      */
-    public function validate($input) : bool
+    public function validate($input): bool
     {
         return $this->less($this->minValue, $input);
     }
@@ -49,7 +49,7 @@ class MoreRule extends AbstractCompareRule
      *
      * @return string
      */
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return __('must be greater than "%s"', $this->minValue);
     }

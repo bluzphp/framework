@@ -45,7 +45,7 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
      * @return string
      * @throws \Psr\Cache\InvalidArgumentException
      */
-    public function read($id)
+    public function read($id): string
     {
         return Proxy\Cache::get($this->prepareId($id)) ?: '';
     }
@@ -59,7 +59,7 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
      * @return bool
      * @throws \Psr\Cache\InvalidArgumentException
      */
-    public function write($id, $data)
+    public function write($id, $data): bool
     {
         return Proxy\Cache::set($this->prepareId($id), $data, $this->ttl);
     }
@@ -71,7 +71,7 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
      *
      * @return bool
      */
-    public function destroy($id)
+    public function destroy($id): bool
     {
         return Proxy\Cache::delete($this->prepareId($id));
     }

@@ -25,14 +25,14 @@ interface RuleInterface extends ValidatorInterface
      *
      * @return string
      */
-    public function __toString() : string;
+    public function __toString(): string;
 
     /**
      * Get error template
      *
      * @return string
      */
-    public function getDescription() : string;
+    public function getDescription(): string;
 
     /**
      * Set error template
@@ -41,5 +41,5 @@ interface RuleInterface extends ValidatorInterface
      *
      * @return self
      */
-    public function setDescription(string $description) : RuleInterface;
+    public function setDescription(string $description): RuleInterface;
 }

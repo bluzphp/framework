@@ -76,7 +76,7 @@ class Application
      *
      * @return string
      */
-    public function getEnvironment() : string
+    public function getEnvironment(): string
     {
         return $this->environment;
     }
@@ -87,7 +87,7 @@ class Application
      * @return string
      * @throws \ReflectionException
      */
-    public function getPath() : string
+    public function getPath(): string
     {
         if (!$this->path) {
             if (\defined('PATH_APPLICATION')) {
@@ -106,7 +106,7 @@ class Application
      *
      * @return bool
      */
-    public function isDebug() : bool
+    public function isDebug(): bool
     {
         return $this->debugFlag;
     }
@@ -118,7 +118,7 @@ class Application
      *
      * @return bool
      */
-    public function useLayout($flag = null) : bool
+    public function useLayout($flag = null): bool
     {
         if (\is_bool($flag)) {
             $this->layoutFlag = $flag;
@@ -135,7 +135,7 @@ class Application
      * @throws ApplicationException
      * @return void
      */
-    public function init($environment = 'production') : void
+    public function init($environment = 'production'): void
     {
         $this->environment = $environment;
 
@@ -178,7 +178,7 @@ class Application
      * @throws \Bluz\Config\ConfigException
      * @throws \ReflectionException
      */
-    protected function initConfig() : void
+    protected function initConfig(): void
     {
         $loader = new ConfigLoader();
         $loader->setPath($this->getPath());
@@ -210,7 +210,7 @@ class Application
      * @return void
      * @throws \InvalidArgumentException
      */
-    protected function initRequest() : void
+    protected function initRequest(): void
     {
         $request = RequestFactory::fromGlobals();
 
@@ -222,7 +222,7 @@ class Application
      *
      * @return void
      */
-    protected function initResponse() : void
+    protected function initResponse(): void
     {
         $response = new ResponseInstance();
 
@@ -233,9 +233,8 @@ class Application
      * Initial Router instance
      *
      * @return void
-     * @throws \Bluz\Config\ConfigException
      */
-    protected function initRouter() : void
+    protected function initRouter(): void
     {
         $router = new \Bluz\Router\Router();
         $router->setOptions(Config::get('router'));
@@ -248,7 +247,7 @@ class Application
      *
      * @return \Bluz\Response\Response
      */
-    public function getResponse() : ResponseInstance
+    public function getResponse(): ResponseInstance
     {
         return Response::getInstance();
     }
@@ -258,7 +257,7 @@ class Application
      *
      * @return \Zend\Diactoros\ServerRequest
      */
-    public function getRequest() : ServerRequest
+    public function getRequest(): ServerRequest
     {
         return Request::getInstance();
     }
@@ -269,7 +268,7 @@ class Application
      * @return void
      * @throws ApplicationException
      */
-    public function run() : void
+    public function run(): void
     {
         $this->process();
         $this->render();
@@ -284,9 +283,8 @@ class Application
      * - Because it deprecated ({@link http://tools.ietf.org/html/rfc6648})
      *
      * @return void
-     * @throws ApplicationException
      */
-    public function process() : void
+    public function process(): void
     {
         $this->preProcess();
         $this->doProcess();
@@ -301,7 +299,7 @@ class Application
      *
      * @return void
      */
-    protected function preProcess() : void
+    protected function preProcess(): void
     {
         Router::process();
 
@@ -327,7 +325,7 @@ class Application
      *
      * @return void
      */
-    protected function doProcess() : void
+    protected function doProcess(): void
     {
         $module = Request::getModule();
         $controller = Request::getController();
@@ -363,7 +361,7 @@ class Application
      *
      * @return void
      */
-    protected function postProcess() : void
+    protected function postProcess(): void
     {
         // nothing
     }
@@ -386,7 +384,7 @@ class Application
      * @throws NotAcceptableException
      * @throws NotAllowedException
      */
-    public function dispatch($module, $controller, array $params = []) : Controller
+    public function dispatch($module, $controller, array $params = []): Controller
     {
         $instance = new Controller($module, $controller, $params);
 
@@ -408,12 +406,8 @@ class Application
      * @param  Controller $controller
      *
      * @return void
-     * @throws ComponentException
-     * @throws ForbiddenException
-     * @throws NotAcceptableException
-     * @throws NotAllowedException
      */
-    protected function preDispatch($controller) : void
+    protected function preDispatch($controller): void
     {
         // check HTTP method
         $controller->checkHttpMethod();
@@ -434,7 +428,7 @@ class Application
      * @throws ComponentException
      * @throws ControllerException
      */
-    protected function doDispatch($controller) : void
+    protected function doDispatch($controller): void
     {
         // run controller
         $controller->run();
@@ -447,7 +441,7 @@ class Application
      *
      * @return void
      */
-    protected function postDispatch($controller) : void
+    protected function postDispatch($controller): void
     {
         // nothing by default
     }
@@ -457,7 +451,7 @@ class Application
      *
      * @return void
      */
-    public function render() : void
+    public function render(): void
     {
         Response::send();
     }
@@ -467,7 +461,7 @@ class Application
      *
      * @return void
      */
-    public function end() : void
+    public function end(): void
     {
         // nothing
     }

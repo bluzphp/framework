@@ -38,7 +38,7 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
      * @throws ComponentException
      * @throws ConfigurationException
      */
-    public function __construct($settings = [])
+    public function __construct(array $settings = [])
     {
         // check Redis extension
         if (!extension_loaded('redis')) {
@@ -68,7 +68,7 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
      *
      * @return bool
      */
-    public function open($savePath, $sessionName)
+    public function open($savePath, $sessionName): bool
     {
         parent::open($savePath, $sessionName);
 
@@ -96,7 +96,7 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
      *
      * @return string
      */
-    public function read($id)
+    public function read($id): string
     {
         return $this->handler->get($this->prepareId($id)) ?: '';
     }
@@ -109,7 +109,7 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
      *
      * @return bool
      */
-    public function write($id, $data)
+    public function write($id, $data): bool
     {
         return $this->handler->set($this->prepareId($id), $data, (int)$this->ttl);
     }
@@ -121,7 +121,7 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
      *
      * @return bool
      */
-    public function destroy($id)
+    public function destroy($id): bool
     {
         $this->handler->del($this->prepareId($id));
         return true;

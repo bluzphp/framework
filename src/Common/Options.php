@@ -71,7 +71,7 @@ trait Options
      *
      * @return void
      */
-    public function setOption($key, $value) : void
+    public function setOption($key, $value): void
     {
         $method = 'set' . Str::toCamelCase($key);
         if (method_exists($this, $method)) {
@@ -86,7 +86,7 @@ trait Options
      *
      * @return array
      */
-    public function getOptions() : array
+    public function getOptions(): array
     {
         return $this->options;
     }
@@ -102,7 +102,7 @@ trait Options
      *
      * @return void
      */
-    public function setOptions(array $options = null) : void
+    public function setOptions(array $options = null): void
     {
         // store options by default
         $this->options = (array)$options;

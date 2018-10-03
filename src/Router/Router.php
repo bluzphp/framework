@@ -107,6 +107,10 @@ class Router
      * Initial routers data from controllers
      *
      * @return array[]
+     * @throws \Bluz\Common\Exception\CommonException
+     * @throws \Bluz\Common\Exception\ComponentException
+     * @throws \Bluz\Controller\ControllerException
+     * @throws \ReflectionException
      */
     private function prepareRouterData()
     {
@@ -155,7 +159,7 @@ class Router
      *
      * @return string
      */
-    public function getBaseUrl()
+    public function getBaseUrl(): string
     {
         return $this->baseUrl;
     }
@@ -167,7 +171,7 @@ class Router
      *
      * @return void
      */
-    public function setBaseUrl($baseUrl)
+    public function setBaseUrl($baseUrl): void
     {
         $this->baseUrl = str_trim_end($baseUrl, '/');
     }
@@ -195,7 +199,7 @@ class Router
      *
      * @return void
      */
-    public function setParam($key, $value)
+    public function setParam($key, $value): void
     {
         $key = (string)$key;
 
@@ -211,7 +215,7 @@ class Router
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return $this->params;
     }
@@ -221,7 +225,7 @@ class Router
      *
      * @return array
      */
-    public function getRawParams()
+    public function getRawParams(): array
     {
         return $this->rawParams;
     }
@@ -231,7 +235,7 @@ class Router
      *
      * @return string
      */
-    public function getDefaultModule()
+    public function getDefaultModule(): string
     {
         return $this->defaultModule;
     }
@@ -243,7 +247,7 @@ class Router
      *
      * @return void
      */
-    public function setDefaultModule($defaultModule)
+    public function setDefaultModule($defaultModule): void
     {
         $this->defaultModule = $defaultModule;
     }
@@ -253,7 +257,7 @@ class Router
      *
      * @return string
      */
-    public function getDefaultController()
+    public function getDefaultController(): string
     {
         return $this->defaultController;
     }
@@ -265,7 +269,7 @@ class Router
      *
      * @return void
      */
-    public function setDefaultController($defaultController)
+    public function setDefaultController($defaultController): void
     {
         $this->defaultController = $defaultController;
     }
@@ -275,7 +279,7 @@ class Router
      *
      * @return string
      */
-    public function getErrorModule()
+    public function getErrorModule(): string
     {
         return $this->errorModule;
     }
@@ -287,7 +291,7 @@ class Router
      *
      * @return void
      */
-    public function setErrorModule($errorModule)
+    public function setErrorModule($errorModule): void
     {
         $this->errorModule = $errorModule;
     }
@@ -297,7 +301,7 @@ class Router
      *
      * @return string
      */
-    public function getErrorController()
+    public function getErrorController(): string
     {
         return $this->errorController;
     }
@@ -309,9 +313,26 @@ class Router
      *
      * @return void
      */
-    public function setErrorController($errorController)
+    public function setErrorController($errorController): void
     {
         $this->errorController = $errorController;
+    }
+
+    /**
+     * Get the request URI without baseUrl
+     *
+     * @return string
+     */
+    public function getCleanUri(): string
+    {
+        if ($this->cleanUri === null) {
+            $uri = Request::getUri()->getPath();
+            if ($this->getBaseUrl() && strpos($uri, $this->getBaseUrl()) === 0) {
+                $uri = substr($uri, \strlen($this->getBaseUrl()));
+            }
+            $this->cleanUri = $uri;
+        }
+        return $this->cleanUri;
     }
 
     /**
@@ -327,7 +348,7 @@ class Router
         $module = self::DEFAULT_MODULE,
         $controller = self::DEFAULT_CONTROLLER,
         array $params = []
-    ) {
+    ): string {
         $module = $module ?? Request::getModule();
         $controller = $controller ?? Request::getController();
 
@@ -351,11 +372,11 @@ class Router
         $module = self::DEFAULT_MODULE,
         $controller = self::DEFAULT_CONTROLLER,
         array $params = []
-    ) {
+    ): string {
         $scheme = Request::getUri()->getScheme() . '://';
         $host = Request::getUri()->getHost();
         $port = Request::getUri()->getPort();
-        if ($port && !in_array($port, [80, 443], true)) {
+        if ($port && !\in_array($port, [80, 443], true)) {
             $host .= ':' . $port;
         }
         $url = $this->getUrl($module, $controller, $params);
@@ -371,14 +392,14 @@ class Router
      *
      * @return string
      */
-    protected function urlCustom($module, $controller, $params)
+    protected function urlCustom($module, $controller, $params): string
     {
         $url = $this->reverse[$module][$controller]['route'];
 
         $getParams = [];
         foreach ($params as $key => $value) {
             // sub-array as GET params
-            if (is_array($value)) {
+            if (\is_array($value)) {
                 $getParams[$key] = $value;
                 continue;
             }
@@ -410,24 +431,22 @@ class Router
      *
      * @return string
      */
-    protected function urlRoute($module, $controller, $params)
+    protected function urlRoute($module, $controller, $params): string
     {
         $url = $this->getBaseUrl();
 
-        if (empty($params)) {
-            if ($controller === self::DEFAULT_CONTROLLER) {
-                if ($module === self::DEFAULT_MODULE) {
-                    return $url;
-                }
-                return $url . $module;
+        if (empty($params) && $controller === self::DEFAULT_CONTROLLER) {
+            if ($module === self::DEFAULT_MODULE) {
+                return $url;
             }
+            return $url . $module;
         }
 
         $url .= $module . '/' . $controller;
         $getParams = [];
         foreach ($params as $key => $value) {
             // sub-array as GET params
-            if (is_array($value)) {
+            if (\is_array($value)) {
                 $getParams[$key] = $value;
                 continue;
             }
@@ -459,7 +478,7 @@ class Router
      *
      * @return bool
      */
-    protected function processDefault() : bool
+    protected function processDefault(): bool
     {
         $uri = $this->getCleanUri();
         return empty($uri);
@@ -470,7 +489,7 @@ class Router
      *
      * @return bool
      */
-    protected function processCustom() : bool
+    protected function processCustom(): bool
     {
         $uri = '/' . $this->getCleanUri();
         foreach ($this->routers as $router) {
@@ -500,21 +519,21 @@ class Router
      *
      * @return bool
      */
-    protected function processRoute() : bool
+    protected function processRoute(): bool
     {
         $uri = $this->getCleanUri();
         $uri = trim($uri, '/');
         $raw = explode('/', $uri);
 
         // rewrite module from request
-        if (count($raw)) {
+        if (\count($raw)) {
             $this->setParam('_module', array_shift($raw));
         }
         // rewrite module from controller
-        if (count($raw)) {
+        if (\count($raw)) {
             $this->setParam('_controller', array_shift($raw));
         }
-        if ($size = count($raw)) {
+        if ($size = \count($raw)) {
             // save raw
             $this->rawParams = $raw;
 
@@ -526,7 +545,7 @@ class Router
             // remove tail
             if ($size % 2 === 1) {
                 array_pop($raw);
-                $size = count($raw);
+                $size = \count($raw);
             }
             // or use array_chunk and run another loop?
             for ($i = 0; $i < $size; $i += 2) {
@@ -541,7 +560,7 @@ class Router
      *
      * @return void
      */
-    protected function resetRequest() : void
+    protected function resetRequest(): void
     {
         $request = Request::getInstance();
 
@@ -560,22 +579,5 @@ class Router
             )
         );
         Request::setInstance($request);
-    }
-
-    /**
-     * Get the request URI without baseUrl
-     *
-     * @return string
-     */
-    public function getCleanUri()
-    {
-        if ($this->cleanUri === null) {
-            $uri = Request::getUri()->getPath();
-            if ($this->getBaseUrl() && strpos($uri, $this->getBaseUrl()) === 0) {
-                $uri = substr($uri, strlen($this->getBaseUrl()));
-            }
-            $this->cleanUri = $uri;
-        }
-        return $this->cleanUri;
     }
 }

@@ -53,7 +53,7 @@ class IpRule extends AbstractRule
      *
      * @return bool
      */
-    public function validate($input) : bool
+    public function validate($input): bool
     {
         return $this->verifyAddress($input) && $this->verifyNetwork($input);
     }
@@ -63,7 +63,7 @@ class IpRule extends AbstractRule
      *
      * @return string
      */
-    public function getDescription() : string
+    public function getDescription(): string
     {
         if (!empty($this->networkRange)) {
             $message = $this->networkRange['min'];

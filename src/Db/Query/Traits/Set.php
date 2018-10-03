@@ -54,7 +54,7 @@ trait Set
      *
      * @return $this
      */
-    public function set(string $key, $value, $type = \PDO::PARAM_STR)
+    public function set(string $key, $value, $type = \PDO::PARAM_STR): self
     {
         $this->setParam(null, $value, $type);
         $this->set[] = Db::quoteIdentifier($key) . ' = ?';
@@ -79,7 +79,7 @@ trait Set
      *
      * @return $this
      */
-    public function setArray(array $data)
+    public function setArray(array $data): self
     {
         foreach ($data as $key => $value) {
             $this->set($key, $value);
@@ -92,7 +92,7 @@ trait Set
      *
      * @return string
      */
-    protected function prepareSet() : string
+    protected function prepareSet(): string
     {
         return ' SET ' . implode(', ', $this->set);
     }

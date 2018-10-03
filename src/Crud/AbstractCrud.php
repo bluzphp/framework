@@ -36,7 +36,7 @@ abstract class AbstractCrud implements CrudInterface
      *
      * @return array
      */
-    abstract public function getPrimaryKey() : array;
+    abstract public function getPrimaryKey(): array;
 
     /**
      * {@inheritdoc}
@@ -121,7 +121,7 @@ abstract class AbstractCrud implements CrudInterface
     /**
      * @return array
      */
-    public function getFields() : array
+    public function getFields(): array
     {
         return $this->fields;
     }
@@ -129,7 +129,7 @@ abstract class AbstractCrud implements CrudInterface
     /**
      * @param array $fields
      */
-    public function setFields(array $fields) : void
+    public function setFields(array $fields): void
     {
         $this->fields = $fields;
     }
@@ -141,7 +141,7 @@ abstract class AbstractCrud implements CrudInterface
      *
      * @return array
      */
-    protected function filterData($data) : array
+    protected function filterData($data): array
     {
         if (empty($this->getFields())) {
             return $data;
@@ -156,7 +156,7 @@ abstract class AbstractCrud implements CrudInterface
      *
      * @return RowInterface
      */
-    protected function filterRow(RowInterface $row) : RowInterface
+    protected function filterRow(RowInterface $row): RowInterface
     {
         if (empty($this->getFields())) {
             return $row;

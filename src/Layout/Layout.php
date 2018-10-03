@@ -43,6 +43,8 @@ class Layout extends View
      * Layout constructor
      *  - init Layout helpers
      *  - call parent View constructor
+     *
+     * @throws \Bluz\Common\Exception\CommonException
      */
     public function __construct()
     {
@@ -70,7 +72,7 @@ class Layout extends View
      *
      * @return void
      */
-    public function setContent($content) : void
+    public function setContent($content): void
     {
         try {
             $this->content = value($content);

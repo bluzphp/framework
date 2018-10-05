@@ -42,7 +42,7 @@ class BetweenRule extends AbstractCompareRule
         $this->minValue = $min;
         $this->maxValue = $max;
 
-        if (is_null($min) || is_null($max)) {
+        if (null === $min || null === $max) {
             throw new ComponentException('Minimum and maximum is required');
         }
 

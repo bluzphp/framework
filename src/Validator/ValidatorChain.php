@@ -182,7 +182,7 @@ class ValidatorChain implements ValidatorInterface
      *
      * @throws ValidatorException
      */
-    public function assert($input)
+    public function assert($input): void
     {
         if (!$this->validate($input)) {
             throw new ValidatorException($this->getError());
@@ -241,7 +241,7 @@ class ValidatorChain implements ValidatorInterface
         }
 
         // eject description from rules
-        return array_map('strval', $this->rules);
+        return array_map('\strval', $this->rules);
     }
 
     /**

@@ -83,7 +83,6 @@ class Validator
      * @param array  $arguments
      *
      * @return ValidatorChain
-     * @throws Exception\ComponentException
      */
     public static function __callStatic($ruleName, $arguments): ValidatorChain
     {
@@ -121,7 +120,7 @@ class Validator
      *
      * @return void
      */
-    public static function addRuleNamespace(string $path)
+    public static function addRuleNamespace(string $path): void
     {
         static::$rulesNamespaces[] = rtrim($path, '\\') . '\\';
     }

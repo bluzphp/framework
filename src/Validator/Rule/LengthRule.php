@@ -48,19 +48,19 @@ class LengthRule extends AbstractCompareRule
         $this->minValue = $min;
         $this->maxValue = $max;
 
-        if (!is_numeric($min) && !is_null($min)) {
+        if (!is_numeric($min) && null !== $min) {
             throw new ComponentException(
                 __('"%s" is not a valid numeric length', $min)
             );
         }
 
-        if (!is_numeric($max) && !is_null($max)) {
+        if (!is_numeric($max) && null !== $max) {
             throw new ComponentException(
                 __('"%s" is not a valid numeric length', $max)
             );
         }
 
-        if (!is_null($min) && !is_null($max) && $min > $max) {
+        if (null !== $min && null !== $max && $min > $max) {
             throw new ComponentException(
                 __('"%s" cannot be less than "%s" for validation', $min, $max)
             );
@@ -80,8 +80,8 @@ class LengthRule extends AbstractCompareRule
             return false;
         }
 
-        return (is_null($this->minValue) || $this->less($this->minValue, $length))
-            && (is_null($this->maxValue) || $this->less($length, $this->maxValue));
+        return (null === $this->minValue || $this->less($this->minValue, $length))
+            && (null === $this->maxValue || $this->less($length, $this->maxValue));
     }
 
     /**
@@ -93,12 +93,16 @@ class LengthRule extends AbstractCompareRule
      */
     protected function extractLength($input)
     {
-        if (is_string($input)) {
+        if (\is_string($input)) {
             return mb_strlen($input, mb_detect_encoding($input));
-        } elseif (is_array($input) || $input instanceof Countable) {
-            return count($input);
-        } elseif (is_object($input)) {
-            return count(get_object_vars($input));
+        }
+
+        if (\is_array($input) || $input instanceof Countable) {
+            return \count($input);
+        }
+
+        if (\is_object($input)) {
+            return \count(get_object_vars($input));
         }
         return false;
     }

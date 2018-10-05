@@ -42,11 +42,11 @@ class ContainsRule extends AbstractRule
     public function validate($input): bool
     {
         // for array
-        if (is_array($input)) {
-            return in_array($this->containsValue, $input, false);
+        if (\is_array($input)) {
+            return \in_array($this->containsValue, $input, false);
         }
         // for string
-        if (is_string($input)) {
+        if (\is_string($input)) {
             return false !== mb_stripos($input, $this->containsValue, 0, mb_detect_encoding($input));
         }
         // can't compare

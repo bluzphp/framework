@@ -38,7 +38,7 @@ class IpRule extends AbstractRule
      */
     public function __construct($options = null)
     {
-        if (is_int($options)) {
+        if (\is_int($options)) {
             $this->options = $options;
             return;
         }
@@ -82,10 +82,10 @@ class IpRule extends AbstractRule
      *
      * @param  string $input
      *
-     * @return array
+     * @return array|null
      * @throws \Bluz\Validator\Exception\ComponentException
      */
-    protected function parseRange($input)
+    protected function parseRange($input): ?array
     {
         if ($input === null || $input === '*' || $input === '*.*.*.*'
             || $input === '0.0.0.0-255.255.255.255'
@@ -122,7 +122,7 @@ class IpRule extends AbstractRule
      * @param string $input
      * @param string $char
      */
-    protected function fillAddress(&$input, $char = '*')
+    protected function fillAddress(&$input, $char = '*'): void
     {
         while (substr_count($input, '.') < 3) {
             $input .= '.' . $char;
@@ -135,11 +135,11 @@ class IpRule extends AbstractRule
      * @param string $input
      * @param array  $range
      */
-    protected function parseRangeUsingWildcards($input, &$range)
+    protected function parseRangeUsingWildcards($input, &$range): void
     {
         $this->fillAddress($input);
 
-        $range['min'] = strtr($input, '*', '0');
+        $range['min'] = str_replace('*', '0', $input);
         $range['max'] = str_replace('*', '255', $input);
     }
 
@@ -152,7 +152,7 @@ class IpRule extends AbstractRule
      * @throws \Bluz\Validator\Exception\ComponentException
      * @link http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing
      */
-    protected function parseRangeUsingCidr($input, &$range)
+    protected function parseRangeUsingCidr($input, &$range): void
     {
         $input = explode('/', $input);
         $this->fillAddress($input[0], '0');
@@ -179,7 +179,7 @@ class IpRule extends AbstractRule
      *
      * @return bool
      */
-    protected function verifyAddress($address)
+    protected function verifyAddress($address): bool
     {
         return (boolean)filter_var(
             $address,
@@ -197,7 +197,7 @@ class IpRule extends AbstractRule
      *
      * @return bool
      */
-    protected function verifyNetwork($input)
+    protected function verifyNetwork($input): bool
     {
         if ($this->networkRange === null) {
             return true;
@@ -222,7 +222,7 @@ class IpRule extends AbstractRule
      *
      * @return bool
      */
-    protected function belongsToSubnet($input)
+    protected function belongsToSubnet($input): bool
     {
         $range = $this->networkRange;
         $min = sprintf('%032b', ip2long($range['min']));

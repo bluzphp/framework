@@ -31,6 +31,6 @@ class NoWhitespaceRule extends AbstractRule
      */
     public function validate($input): bool
     {
-        return is_null($input) || !preg_match('/\s/', (string)$input);
+        return null === $input || !preg_match('/\s/', (string)$input);
     }
 }

@@ -45,9 +45,13 @@ class DateRule extends AbstractRule
     {
         if ($input instanceof DateTime) {
             return true;
-        } elseif (!is_string($input)) {
+        }
+
+        if (!\is_string($input)) {
             return false;
-        } elseif (is_null($this->format)) {
+        }
+
+        if (null === $this->format) {
             return false !== strtotime($input);
         }
 

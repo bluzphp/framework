@@ -295,7 +295,7 @@ final class Request
      *
      * @return void
      */
-    public static function resetAccept()
+    public static function resetAccept(): void
     {
         self::$accept = null;
     }
@@ -320,7 +320,7 @@ final class Request
 
         // let’s check our supported types:
         foreach ($accept as $mime => $quality) {
-            if ($quality && in_array($mime, $allowTypes)) {
+            if ($quality && \in_array($mime, $allowTypes)) {
                 return $mime;
             }
         }

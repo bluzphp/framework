@@ -26,8 +26,6 @@ class CallbackRule extends AbstractRule
      * Setup validation rule
      *
      * @param  callable $callback
-     *
-     * @throws \Bluz\Validator\Exception\ComponentException
      */
     public function __construct(callable $callback)
     {
@@ -43,6 +41,6 @@ class CallbackRule extends AbstractRule
      */
     public function validate($input): bool
     {
-        return (bool)call_user_func($this->callback, $input);
+        return (bool)\call_user_func($this->callback, $input);
     }
 }

@@ -26,11 +26,11 @@ class InStrictRule extends InRule
      */
     public function validate($input): bool
     {
-        if (is_array($this->haystack)) {
-            return in_array($input, $this->haystack, true);
+        if (\is_array($this->haystack)) {
+            return \in_array($input, $this->haystack, true);
         }
 
-        if (!is_string($this->haystack)) {
+        if (!\is_string($this->haystack)) {
             return false;
         }
 

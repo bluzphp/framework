@@ -16,13 +16,14 @@ $rule('123123');
 use Bluz\Validator\ValidatorChain;
 
 $chain = new ValidatorChain('some name');
-$chain->required()->alphaNumeric();
-$chain->validate('first');
+$chain->required()
+      ->alphaNumeric()
+      ->validate('first');
 // or
 $chain('first')
 ```
 
-Цепочки можно объединять в наборы
+Цепочки можно объединять в формы:
 ```php
 use Bluz\Validator\ValidatorForm;
 

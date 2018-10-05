@@ -10,8 +10,6 @@ declare(strict_types=1);
 
 namespace Bluz\Config;
 
-use Bluz\Common\Collection;
-
 /**
  * Config
  *

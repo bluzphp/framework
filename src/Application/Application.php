@@ -266,7 +266,6 @@ class Application
      * Run application
      *
      * @return void
-     * @throws ApplicationException
      */
     public function run(): void
     {

@@ -38,7 +38,7 @@ class Collection
             return $array[$key] ?? null;
         }
 
-        if (!is_array($array[$key])) {
+        if (!\is_array($array[$key])) {
             return null;
         }
 
@@ -65,7 +65,7 @@ class Collection
             return isset($array[$key]);
         }
 
-        if (!is_array($array[$key])) {
+        if (!\is_array($array[$key])) {
             return false;
         }
 
@@ -83,14 +83,14 @@ class Collection
      */
     public static function add(array &$array, ...$keys): void
     {
-        if (count($keys) < 2) {
+        if (\count($keys) < 2) {
             throw new \InvalidArgumentException('Method `Collection::add()` is required minimum one key and value');
         }
 
         $value = array_pop($keys);
-        while (count($keys) > 1) {
+        while (\count($keys) > 1) {
             $key = array_shift($keys);
-            if (!isset($array[$key]) || !is_array($array[$key])) {
+            if (!isset($array[$key]) || !\is_array($array[$key])) {
                 $array[$key] = [];
             }
             $array = &$array[$key];
@@ -109,14 +109,14 @@ class Collection
      */
     public static function set(array &$array, ...$keys): void
     {
-        if (count($keys) < 2) {
+        if (\count($keys) < 2) {
             throw new \InvalidArgumentException('Method `Collection::set()` is required minimum one key and value');
         }
 
         $value = array_pop($keys);
-        while (count($keys) > 1) {
+        while (\count($keys) > 1) {
             $key = array_shift($keys);
-            if (!isset($array[$key]) || !is_array($array[$key])) {
+            if (!isset($array[$key]) || !\is_array($array[$key])) {
                 $array[$key] = [];
             }
             $array = &$array[$key];

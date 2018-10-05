@@ -179,6 +179,7 @@ class Controller implements \JsonSerializable
      * @return Data
      * @throws ComponentException
      * @throws ControllerException
+     * @throws \ReflectionException
      */
     public function run(): Data
     {
@@ -195,6 +196,7 @@ class Controller implements \JsonSerializable
      * @return Data
      * @throws ComponentException
      * @throws ControllerException
+     * @throws \ReflectionException
      */
     protected function process(): Data
     {

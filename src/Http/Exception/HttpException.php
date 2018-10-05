@@ -22,11 +22,6 @@ use Bluz\Http\StatusCode;
 class HttpException extends CommonException
 {
     /**
-     * @var integer Used as default HTTP code for exceptions
-     */
-    protected $code = StatusCode::INTERNAL_SERVER_ERROR;
-
-    /**
      * Return HTTP Status Message
      *
      * @return string

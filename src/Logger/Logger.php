@@ -107,7 +107,7 @@ class Logger extends AbstractLogger
      *
      * @return void
      */
-    public function info($message, array $context = [])
+    public function info($message, array $context = []): void
     {
         $message = $this->interpolate($message, $context);
 
@@ -140,7 +140,7 @@ class Logger extends AbstractLogger
      *
      * @return void
      */
-    public function log($level, $message, array $context = [])
+    public function log($level, $message, array $context = []): void
     {
         $this->{$level}[] = $this->interpolate($message, $context);
     }
@@ -152,7 +152,7 @@ class Logger extends AbstractLogger
      *
      * @return array
      */
-    public function get($level)
+    public function get($level): array
     {
         return $this->{$level};
     }

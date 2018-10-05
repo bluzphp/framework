@@ -26,7 +26,7 @@ return
          * @var Controller $this
          */
         $methods = $this->getMeta()->getMethod();
-        if ($methods && !in_array(Request::getMethod(), $methods, true)) {
+        if ($methods && !\in_array(Request::getMethod(), $methods, true)) {
             throw new NotAllowedException(implode(',', $methods));
         }
     };

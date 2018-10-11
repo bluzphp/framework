@@ -108,7 +108,7 @@ final class Response
      * @return void
      * @throws RedirectException
      */
-    public static function redirect($url)
+    public static function redirect($url): void
     {
         $redirect = new RedirectException();
         $redirect->setUrl($url);
@@ -125,7 +125,7 @@ final class Response
      * @return void
      * @throws RedirectException
      */
-    public static function redirectTo($module = 'index', $controller = 'index', array $params = [])
+    public static function redirectTo($module = 'index', $controller = 'index', array $params = []): void
     {
         $url = Router::getFullUrl($module, $controller, $params);
         self::redirect($url);
@@ -137,7 +137,7 @@ final class Response
      * @return void
      * @throws RedirectException
      */
-    public static function reload()
+    public static function reload(): void
     {
         self::redirect((string) Request::getUri());
     }

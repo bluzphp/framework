@@ -7,6 +7,7 @@
         "ext-PDO": "*",
         "ext-pdo_mysql": "*",
         "ext-json": "*",
+        "ext-ctype": "*",
         "cache/cache": "~1.0",
         "psr/log": "~1.0",
         "zendframework/zend-diactoros": "~2.0",

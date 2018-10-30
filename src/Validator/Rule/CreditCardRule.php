@@ -48,11 +48,11 @@ class CreditCardRule extends AbstractRule
      *
      * @return bool
      */
-    private function verifyMod10($input)
+    private function verifyMod10($input): bool
     {
         $sum = 0;
         $input = strrev($input);
-        $inputLen = strlen($input);
+        $inputLen = \strlen($input);
         for ($i = 0; $i < $inputLen; $i++) {
             $current = $input[$i];
             if ($i % 2 === 1) {

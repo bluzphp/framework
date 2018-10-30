@@ -14,6 +14,7 @@ use Bluz\Common\Exception\ComponentException;
 use Bluz\Common\Exception\ConfigurationException;
 use Bluz\Common\Options;
 use Bluz\Proxy\Translator;
+use PHPMailer\PHPMailer\PHPMailer;
 
 /**
  * Wrapper over PHPMailer
@@ -46,14 +47,14 @@ class Mailer
     /**
      * Creates new instance of PHPMailer and set default options from config
      *
+     * @return PHPMailer
      * @throws ComponentException
-     * @throws \phpmailerException
-     * @return \PHPMailer
+     * @throws \PHPMailer\PHPMailer\Exception
      */
-    public function create()
+    public function create(): PHPMailer
     {
         // can initial, can't use
-        if (!class_exists('\PHPMailer')) {
+        if (!class_exists(PHPMailer::class)) {
             throw new ComponentException(
                 "PHPMailer library is required for `Bluz\\Mailer` package. <br/>\n" .
                 "Read more: <a href='https://github.com/bluzphp/framework/wiki/Mailer'>" .
@@ -61,7 +62,7 @@ class Mailer
             );
         }
 
-        $mail = new \PHPMailer();
+        $mail = new PHPMailer();
         $mail->WordWrap = 920; // RFC 2822 Compliant for Max 998 characters per line
 
         $fromEmail = $this->getOption('from', 'email');
@@ -92,12 +93,13 @@ class Mailer
      *
      * @todo Add mail to queue
      *
-     * @param  \PHPMailer $mail
+     * @param  PHPMailer $mail
      *
      * @return bool
      * @throws MailerException
+     * @throws \PHPMailer\PHPMailer\Exception
      */
-    public function send(\PHPMailer $mail)
+    public function send(PHPMailer $mail)
     {
         if ($template = $this->getOption('subjectTemplate')) {
             /** @var string $template */

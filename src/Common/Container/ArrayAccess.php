@@ -32,7 +32,7 @@ trait ArrayAccess
      *
      * @throws \InvalidArgumentException
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (null === $offset) {
             throw new \InvalidArgumentException('Class `Common\Container\ArrayAccess` support only associative arrays');
@@ -45,7 +45,7 @@ trait ArrayAccess
      *
      * @param  mixed $offset
      *
-     * @return string
+     * @return mixed
      */
     public function offsetGet($offset)
     {
@@ -59,7 +59,7 @@ trait ArrayAccess
      *
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return $this->doContainsContainer($offset);
     }
@@ -69,7 +69,7 @@ trait ArrayAccess
      *
      * @param mixed $offset
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         $this->doDeleteContainer($offset);
     }

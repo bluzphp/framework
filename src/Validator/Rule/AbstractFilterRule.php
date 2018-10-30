@@ -42,7 +42,7 @@ abstract class AbstractFilterRule extends AbstractRule
      */
     public function __construct($additionalChars = '')
     {
-        if (!is_string($additionalChars)) {
+        if (!\is_string($additionalChars)) {
             throw new ComponentException('Invalid list of additional characters to be loaded');
         }
         $this->additionalChars .= $additionalChars;

@@ -41,11 +41,11 @@ class InRule extends AbstractRule
      */
     public function validate($input): bool
     {
-        if (is_array($this->haystack)) {
-            return in_array($input, $this->haystack, false);
+        if (\is_array($this->haystack)) {
+            return \in_array($input, $this->haystack, false);
         }
 
-        if (!is_string($this->haystack)) {
+        if (!\is_string($this->haystack)) {
             return false;
         }
 
@@ -65,7 +65,7 @@ class InRule extends AbstractRule
      */
     public function getDescription(): string
     {
-        if (is_array($this->haystack)) {
+        if (\is_array($this->haystack)) {
             $haystack = implode(', ', $this->haystack);
         } else {
             $haystack = $this->haystack;

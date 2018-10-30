@@ -35,7 +35,9 @@ return
                     'content="' . htmlspecialchars((string)$aContent, ENT_QUOTES) . '"/>';
             }
             return implode("\n", $tags);
-        } elseif (null === $name) {
+        }
+
+        if (null === $name) {
             // if exists only $content, do nothing
             return null;
         }

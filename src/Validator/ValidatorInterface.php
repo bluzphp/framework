@@ -36,7 +36,7 @@ interface ValidatorInterface
      *
      * @throws ValidatorException
      */
-    public function assert($input);
+    public function assert($input): void;
 
     /**
      * Invoke

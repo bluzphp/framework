@@ -32,7 +32,7 @@ class VersionRule extends AbstractRule
      */
     public function validate($input): bool
     {
-        $pattern = '/^[0-9]+\.[0-9]+\.[0-9]+([+-][^+-][0-9A-Za-z-.]*)?$/';
+        $pattern = '/^\d+\.\d+\.\d+([+-][^+-][0-9A-Za-z-.]*)?$/';
 
         return (bool)preg_match($pattern, $input);
     }

@@ -41,7 +41,7 @@ class RedirectException extends HttpException
      *
      * @param string $url
      */
-    public function setUrl($url)
+    public function setUrl($url): void
     {
         $this->url = $url;
     }
@@ -51,7 +51,7 @@ class RedirectException extends HttpException
      *
      * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }

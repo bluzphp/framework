@@ -116,7 +116,7 @@ class ValidatorForm implements ValidatorInterface
      * @return void
      * @throws ValidatorException
      */
-    public function assert($input)
+    public function assert($input): void
     {
         if (!$this->validate($input)) {
             throw $this->exception;

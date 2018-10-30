@@ -52,7 +52,7 @@ class CacheControl
      *
      * @return void
      */
-    protected function updateCacheControlHeader()
+    protected function updateCacheControlHeader(): void
     {
         $parts = [];
         ksort($this->container);
@@ -106,9 +106,9 @@ class CacheControl
      * First, it checks for a s-maxage directive, then a max-age directive, and then it falls
      * back on an expires header. It returns null when no maximum age can be established.
      *
-     * @return integer Number of seconds
+     * @return integer|null Number of seconds
      */
-    public function getMaxAge()
+    public function getMaxAge(): ?int
     {
         if ($this->doContainsContainer('s-maxage')) {
             return (int)$this->doGetContainer('s-maxage');
@@ -120,7 +120,7 @@ class CacheControl
 
         if ($expires = $this->getExpires()) {
             $expires = \DateTime::createFromFormat(DATE_RFC2822, $expires);
-            return $expires->format('U') - date('U');
+            return (int) $expires->format('U') - date('U');
         }
 
         return null;

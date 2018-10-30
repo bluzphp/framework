@@ -118,7 +118,7 @@ abstract class Grid
      * @var array default order
      * @see Grid::$orders
      */
-    protected $defaultOrder;
+    protected $defaultOrder = [];
 
     /**
      * @var array list of allow orders
@@ -614,15 +614,8 @@ abstract class Grid
      */
     public function getOrders(): array
     {
-        $default = $this->getDefaultOrder();
-
-        // remove default order when another one is set
-        if (\is_array($default)
-            && \count($this->orders)
-            && isset($this->orders[key($default)])
-            && $this->orders[key($default)] === reset($default)
-        ) {
-            unset($this->orders[key($default)]);
+        if (empty($this->orders)) {
+            return $this->getDefaultOrder();
         }
 
         return $this->orders;
@@ -865,12 +858,9 @@ abstract class Grid
      * @param  string $order ASC or DESC
      *
      * @return void
-     * @throws GridException
      */
     public function setDefaultOrder($column, $order = self::ORDER_ASC): void
     {
-        $this->setOrder($column, $order);
-
         $this->defaultOrder = [$column => $order];
     }
 

@@ -173,24 +173,6 @@ class GridTest extends FrameworkTestCase
     }
 
     /**
-     * @expectedException \Bluz\Grid\GridException
-     */
-    public function testWrongOrderThrowException()
-    {
-        $grid = new ArrayGrid();
-        $grid->setDefaultOrder('not exist');
-    }
-
-    /**
-     * @expectedException \Bluz\Grid\GridException
-     */
-    public function testWrongOrderDirectionThrowException()
-    {
-        $grid = new ArrayGrid();
-        $grid->setDefaultOrder('id', 'not exist');
-    }
-
-    /**
      * Helper Filter
      */
     public function testHelperFilter()

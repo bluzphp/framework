@@ -41,6 +41,7 @@ final class Translator
      * Init instance
      *
      * @return Instance
+     * @throws \Bluz\Common\Exception\ConfigurationException
      */
     private static function initInstance(): Instance
     {

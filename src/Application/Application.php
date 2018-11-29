@@ -155,14 +155,14 @@ class Application
             // init Messages
             Messages::getInstance();
 
-            // init Translator
-            Translator::getInstance();
-
             // init Request
             $this->initRequest();
 
             // init Response
             $this->initResponse();
+
+            // init Translator
+            $this->initTranslator();
 
             // init Router
             $this->initRouter();
@@ -230,19 +230,6 @@ class Application
     }
 
     /**
-     * Initial Router instance
-     *
-     * @return void
-     */
-    protected function initRouter(): void
-    {
-        $router = new \Bluz\Router\Router();
-        $router->setOptions(Config::get('router'));
-
-        Router::setInstance($router);
-    }
-
-    /**
      * Get Response instance
      *
      * @return \Bluz\Response\Response
@@ -260,6 +247,34 @@ class Application
     public function getRequest(): ServerRequest
     {
         return Request::getInstance();
+    }
+
+    /**
+     * Initial Router instance
+     *
+     * @return void
+     */
+    protected function initRouter(): void
+    {
+        $router = new \Bluz\Router\Router();
+        $router->setOptions(Config::get('router'));
+
+        Router::setInstance($router);
+    }
+
+    /**
+     * Initial Translator instance
+     *
+     * @return void
+     * @throws Common\Exception\ConfigurationException
+     */
+    protected function initTranslator(): void
+    {
+        $translator = new \Bluz\Translator\Translator();
+        $translator->setOptions(Config::get('translator'));
+        $translator->init();
+
+        Translator::setInstance($translator);
     }
 
     /**

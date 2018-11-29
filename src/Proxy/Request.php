@@ -53,6 +53,11 @@ final class Request
     static private $accept;
 
     /**
+     * @var array|null Accepted languages
+     */
+    static private $language;
+
+    /**
      * Init instance
      *
      * @throws ComponentException
@@ -253,41 +258,66 @@ final class Request
     public static function getAccept(): array
     {
         if (!self::$accept) {
-            // save to static variable
-            self::$accept = [];
-
             // get header from request
-            $header = self::getHeader('accept');
-
-            // nothing ...
-            if (!$header) {
-                return self::$accept;
-            }
-
-            // make array if types
-            $header = explode(',', $header);
-            $header = array_map('trim', $header);
-
-            foreach ($header as $a) {
-                // the default quality is 1.
-                $q = 1;
-                // check if there is a different quality
-                if (strpos($a, ';q=') or strpos($a, '; q=')) {
-                    // divide "mime/type;q=X" into two parts: "mime/type" i "X"
-                    [$a, $q] = preg_split('/;([ ]?)q=/', $a);
-                }
-                // remove other extension
-                if (strpos($a, ';')) {
-                    $a = substr($a, 0, strpos($a, ';'));
-                }
-
-                // mime-type $a is accepted with the quality $q
-                // WARNING: $q == 0 means, that mime-type isn’t supported!
-                self::$accept[$a] = (float)$q;
-            }
-            arsort(self::$accept);
+            self::$accept = self::parseAcceptHeader(self::getHeader('Accept'));
         }
         return self::$accept;
+    }
+
+    /**
+     * Get Accept MIME Type
+     *
+     * @return array
+     */
+    public static function getAcceptLanguage(): array
+    {
+        if (!self::$language) {
+            // get header from request
+            self::$language = self::parseAcceptHeader(self::getHeader('Accept-Language'));
+        }
+        return self::$language;
+    }
+
+    /**
+     * parseAcceptHeader
+     *
+     * @param string $header
+     *
+     * @return array
+     */
+    private static function parseAcceptHeader($header): array
+    {
+        // empty array
+        $accept = [];
+
+        // check empty
+        if (!$header || $header === '') {
+            return $accept;
+        }
+
+        // make array from header
+        $values = explode(',', $header);
+        $values = array_map('trim', $values);
+
+        foreach ($values as $a) {
+            // the default quality is 1.
+            $q = 1;
+            // check if there is a different quality
+            if (strpos($a, ';q=') or strpos($a, '; q=')) {
+                // divide "mime/type;q=X" into two parts: "mime/type" i "X"
+                [$a, $q] = preg_split('/;([ ]?)q=/', $a);
+            }
+            // remove other extension
+            if (strpos($a, ';')) {
+                $a = substr($a, 0, strpos($a, ';'));
+            }
+
+            // mime-type $a is accepted with the quality $q
+            // WARNING: $q == 0 means, that isn’t supported!
+            $accept[$a] = (float)$q;
+        }
+        arsort($accept);
+        return $accept;
     }
 
     /**
@@ -320,7 +350,7 @@ final class Request
 
         // let’s check our supported types:
         foreach ($accept as $mime => $quality) {
-            if ($quality && \in_array($mime, $allowTypes)) {
+            if ($quality && \in_array($mime, $allowTypes, true)) {
                 return $mime;
             }
         }

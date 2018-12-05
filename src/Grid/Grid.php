@@ -343,7 +343,7 @@ abstract class Grid
                     $filters = explode('_', $filter);
                     foreach ($filters as $rawFilter) {
                         [$filterName, $filterValue] = explode('-', $rawFilter, 2);
-                        $this->addFilter($column, $filterName, $filterValue);
+                        $this->addFilter($column, $filterName, urldecode($filterValue));
                     }
                 } else {
                     /**

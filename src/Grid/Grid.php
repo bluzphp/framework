@@ -330,19 +330,19 @@ abstract class Grid
             $filter = Request::getParam($this->prefix . 'filter-' . $alias);
 
             if (null !== $filter) {
-                $filter = trim($filter, ' -');
+                $filter = trim($filter, ' _-');
                 if (strpos($filter, '-')) {
                     /**
                      * Example of filters
                      * - http://domain.com/users/grid/users-filter-roleId/gt-2      - roleId greater than 2
-                     * - http://domain.com/users/grid/users-filter-roleId/gt-1-lt-4 - 1 < roleId < 4
+                     * - http://domain.com/users/grid/users-filter-roleId/gt-1_lt-4 - 1 < roleId < 4
                      * - http://domain.com/users/grid/users-filter-login/eq-admin   - login == admin
                      * - http://domain.com/users/grid/users-filter-login/like-adm   - login LIKE `adm`
                      * - http://domain.com/users/grid/users-filter-login/like-od-   - login LIKE `od-`
                      */
-                    while ($filter) {
-                        // @todo rewrite with regexp like (filter|filter)-(value)
-                        [$filterName, $filterValue, $filter] = array_pad(explode('-', $filter, 3), 3, null);
+                    $filters = explode('_', $filter);
+                    foreach ($filters as $rawFilter) {
+                        [$filterName, $filterValue] = explode('-', $rawFilter, 2);
                         $this->addFilter($column, $filterName, $filterValue);
                     }
                 } else {
@@ -455,7 +455,7 @@ abstract class Grid
             foreach ($columnFilters as $filterName => $filterValue) {
                 $columnFilter[] = $filterName . '-' . $filterValue;
             }
-            $params[$this->prefix . 'filter-' . $column] = implode('-', $columnFilter);
+            $params[$this->prefix . 'filter-' . $column] = implode('_', $columnFilter);
         }
         return $params;
     }

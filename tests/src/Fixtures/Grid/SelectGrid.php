@@ -31,6 +31,7 @@ class SelectGrid extends Grid
      * Init SelectSource
      *
      * @return void
+     * @throws \Bluz\Grid\GridException
      */
     public function init(): void
     {

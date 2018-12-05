@@ -30,6 +30,7 @@ class ArrayGrid extends Grid
      * Init ArraySource
      *
      * @return void
+     * @throws \Bluz\Grid\GridException
      */
     public function init(): void
     {

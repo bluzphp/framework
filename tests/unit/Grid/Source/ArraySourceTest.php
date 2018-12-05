@@ -71,7 +71,7 @@ class ArraySourceTest extends FrameworkTestCase
         self::assertEquals(8, $grid->total());
         self::assertEquals(2, $grid->pages());
 
-        self::assertEquals('/index/index/arr-filter-index/gt-1-ge-2-lt-10-le-9', $grid->first());
+        self::assertEquals('/index/index/arr-filter-index/gt-1_ge-2_lt-10_le-9', $grid->first());
     }
 
     /**

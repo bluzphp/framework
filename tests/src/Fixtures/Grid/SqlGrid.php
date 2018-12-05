@@ -30,6 +30,7 @@ class SqlGrid extends Grid
      * Init SqlSource
      *
      * @return void
+     * @throws \Bluz\Grid\GridException
      */
     public function init(): void
     {

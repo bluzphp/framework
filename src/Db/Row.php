@@ -153,7 +153,6 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      * @throws DbException
      * @throws InvalidPrimaryKeyException
      * @throws TableNotFoundException
-     * @throws \Bluz\Common\Exception\ConfigurationException
      */
     public function save()
     {

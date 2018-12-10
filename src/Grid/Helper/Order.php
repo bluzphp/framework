@@ -14,6 +14,11 @@ use Bluz\Grid;
 
 return
     /**
+     * @param string $column
+     * @param null   $order
+     * @param string $defaultOrder
+     * @param bool   $reset
+     *
      * @return string|null $url
      */
     function ($column, $order = null, $defaultOrder = Grid\Grid::ORDER_ASC, $reset = true) {
@@ -29,7 +34,7 @@ return
         // change order
         if (null === $order) {
             if (isset($orders[$column])) {
-                $order = ($orders[$column] == Grid\Grid::ORDER_ASC) ?
+                $order = ($orders[$column] === Grid\Grid::ORDER_ASC) ?
                     Grid\Grid::ORDER_DESC : Grid\Grid::ORDER_ASC;
             } else {
                 $order = $defaultOrder;

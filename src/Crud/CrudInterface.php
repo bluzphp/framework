@@ -24,7 +24,7 @@ interface CrudInterface
     /**
      * Default limit for READ SET of elements
      */
-    const DEFAULT_LIMIT = 10;
+    public const DEFAULT_LIMIT = 10;
 
     /**
      * Get item by primary key(s)

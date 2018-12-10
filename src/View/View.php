@@ -116,7 +116,7 @@ class View implements ViewInterface, \JsonSerializable
             // clean output
             ob_clean();
         }
-        return ob_get_clean();
+        return (string) ob_get_clean();
     }
 
     /**

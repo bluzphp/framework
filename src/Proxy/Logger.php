@@ -82,7 +82,7 @@ final class Logger
      *
      * @return void
      */
-    public static function exception($exception)
+    public static function exception($exception): void
     {
         self::getInstance()->error(
             $exception->getMessage() . ' [' .

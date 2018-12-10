@@ -29,7 +29,7 @@ trait ProxyTrait
      *
      * @return void
      */
-    public static function setInstance($instance)
+    public static function setInstance($instance): void
     {
         static::$instance = $instance;
     }

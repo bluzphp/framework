@@ -33,8 +33,6 @@ class ArrayRule extends AbstractRule
      * Setup validation rule
      *
      * @param  callable $callback
-     *
-     * @throws ComponentException
      */
     public function __construct(callable $callback)
     {
@@ -50,10 +48,10 @@ class ArrayRule extends AbstractRule
      */
     public function validate($input): bool
     {
-        if (!is_array($input)) {
+        if (!\is_array($input)) {
             return false;
         }
         $filtered = array_filter($input, $this->callback);
-        return count($input) === count($filtered);
+        return \count($input) === \count($filtered);
     }
 }

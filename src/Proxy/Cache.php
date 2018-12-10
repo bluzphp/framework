@@ -162,7 +162,7 @@ final class Cache
      *
      * @return string
      */
-    public static function prepare($key)
+    public static function prepare($key): string
     {
         return str_replace(['-', '/', '\\', '@', ':'], '_', $key);
     }
@@ -176,7 +176,7 @@ final class Cache
      *
      * @return bool
      */
-    public static function clearTag($tag)
+    public static function clearTag($tag): bool
     {
         if (self::getInstance() instanceof HierarchicalPoolInterface) {
             return self::getInstance()->invalidateTag($tag);
@@ -193,7 +193,7 @@ final class Cache
      *
      * @return bool
      */
-    public static function clearTags(array $tags)
+    public static function clearTags(array $tags): bool
     {
         if (self::getInstance() instanceof HierarchicalPoolInterface) {
             return self::getInstance()->invalidateTags($tags);

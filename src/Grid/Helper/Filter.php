@@ -14,6 +14,11 @@ use Bluz\Grid;
 
 return
     /**
+     * @param string $column
+     * @param string $filter
+     * @param string $value
+     * @param bool   $reset
+     *
      * @return string|null $url
      */
     function ($column, $filter, $value, $reset = true) {

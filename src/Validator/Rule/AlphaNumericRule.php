@@ -37,8 +37,8 @@ class AlphaNumericRule extends AbstractCtypeRule
     public function getDescription(): string
     {
         if (empty($this->additionalChars)) {
-            return __('must contain only letters and digits');
+            return __('must contain only Latin letters and digits');
         }
-        return __('must contain only letters, digits and "%s"', $this->additionalChars);
+        return __('must contain only Latin letters, digits and "%s"', $this->additionalChars);
     }
 }

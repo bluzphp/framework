@@ -126,7 +126,7 @@ class ValidatorChainTest extends Tests\FrameworkTestCase
             ->length(1, 15)
             ->noWhitespace();
 
-        $ruleText = "must contain only letters, digits and \"_\"\n"
+        $ruleText = "must contain only Latin letters, digits and \"_\"\n"
             . "must have a length between \"1\" and \"15\"\n"
             . "must not contain whitespace";
 

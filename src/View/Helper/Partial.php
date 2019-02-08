@@ -41,11 +41,11 @@ return
             }
         }
 
-        if (is_null($__file)) {
+        if ($__file === null) {
             throw new ViewException("Template '{$__template}' not found");
         }
 
-        if (count($__params)) {
+        if (\count($__params)) {
             extract($__params, EXTR_SKIP);
         }
 

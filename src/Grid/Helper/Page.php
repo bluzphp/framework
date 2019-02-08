@@ -14,6 +14,8 @@ use Bluz\Grid;
 
 return
     /**
+     * @param int $page
+     *
      * @return string|null
      */
     function ($page = 1) {

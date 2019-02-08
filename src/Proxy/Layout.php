@@ -71,6 +71,7 @@ final class Layout
      * Init instance
      *
      * @return Instance
+     * @throws \Bluz\Common\Exception\CommonException
      */
     private static function initInstance(): Instance
     {

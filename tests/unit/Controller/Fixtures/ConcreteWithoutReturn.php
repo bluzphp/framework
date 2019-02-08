@@ -22,5 +22,3 @@ function ($a, $b, $c = null)
      */
     return [];
 }
-
-;

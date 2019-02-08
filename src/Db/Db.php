@@ -267,7 +267,7 @@ class Db
     /**
      * Create new query select builder
      *
-     * @param array|string ...$select The selection expressions
+     * @param string[] $select The selection expressions
      *
      * @return Query\Select
      */

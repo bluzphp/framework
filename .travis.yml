@@ -27,16 +27,14 @@ before_script:
   - chmod a+w ./tests/_output
 script:
   # Check code style
-  #- php vendor/bin/phpcs --report=xml --report-file=.reports/phpcs.xml
-  # Mess detection
-  #- php vendor/bin/phpmd ./src xml codesize,unusedcode,naming --reportfile .reports/phpmd.xml || true
+  - php vendor/bin/phpcs ./src --standard=PSR1,PSR2 --encoding=utf-8
   # Complexity of code
   - php vendor/bin/phploc ./src
   # Run CodeCeption tests
   - php vendor/bin/codecept run --coverage --coverage-xml
 after_success:
   # Upload coverage report
-  - php vendor/bin/coveralls -v
+  - php vendor/bin/php-coveralls -v
   - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml
   # Generate documentation

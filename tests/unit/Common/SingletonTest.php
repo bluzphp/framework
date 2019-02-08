@@ -4,10 +4,6 @@
  * @link      https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Common;
 
 use Bluz\Tests\FrameworkTestCase;
@@ -67,6 +63,6 @@ class SingletonTest extends FrameworkTestCase
      */
     public function testCloneThrowError()
     {
-        $result = clone ConcreteSingleton::getInstance();
+        clone ConcreteSingleton::getInstance();
     }
 }

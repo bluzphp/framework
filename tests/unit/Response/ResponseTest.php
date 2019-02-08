@@ -4,10 +4,6 @@
  * @link      https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Response;
 
 use Bluz\Response\Response;

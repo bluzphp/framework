@@ -53,6 +53,7 @@ class FrameworkTestCase extends Unit
      * Get Application instance
      *
      * @return BootstrapTest
+     * @throws Bluz\Application\Exception\ApplicationException
      */
     protected static function getApp()
     {

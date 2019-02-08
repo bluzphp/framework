@@ -4,10 +4,6 @@
  * @link      https://github.com/bluzphp/skeleton
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Proxy;
 
 use Bluz\Logger\Logger as Target;
@@ -29,6 +25,7 @@ class LoggerTest extends FrameworkTestCase
 
     public function testExeptionsLogger()
     {
+        $line = __LINE__ + 2;
         try {
             throw new \Exception('Message');
         } catch (\Exception $e) {
@@ -39,6 +36,6 @@ class LoggerTest extends FrameworkTestCase
         $error = current($errors);
 
         self::assertArrayHasSize($errors, 1);
-        self::assertEquals('Message ['. __FILE__ .':33]', $error);
+        self::assertEquals('Message ['. __FILE__ .':'. $line .']', $error);
     }
 }

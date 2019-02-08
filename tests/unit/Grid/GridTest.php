@@ -4,10 +4,6 @@
  * @link      https://github.com/bluzphp/skeleton
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Grid;
 
 use Bluz\Grid\Grid;

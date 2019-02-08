@@ -31,10 +31,10 @@ use Bluz\Mailer\Mailer as Instance;
  *
  * @method   static Instance getInstance()
  *
- * @method   static \PHPMailer create()
+ * @method   static \PHPMailer\PHPMailer\PHPMailer create()
  * @see      Instance::create()
  *
- * @method   static bool send(\PHPMailer $mail)
+ * @method   static bool send(\PHPMailer\PHPMailer\PHPMailer $mail)
  * @see      Instance::send()
  */
 final class Mailer

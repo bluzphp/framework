@@ -125,8 +125,8 @@ class Relations
         }
 
         // check many-to-many relations
-        if (count($relations) === 1) {
-            $relations = Relations::getRelations($model, current($relations));
+        if (\count($relations) === 1) {
+            $relations = self::getRelations($model, current($relations));
         }
 
         $field = $relations[$model];

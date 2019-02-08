@@ -35,7 +35,7 @@ use Bluz\View\ViewException;
  * </code>
  *
  * @param  string $template
- * @param  array  $data
+ * @param  array|object  $data
  * @param  array  $params
  *
  * @return string

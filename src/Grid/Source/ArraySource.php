@@ -41,6 +41,7 @@ class ArraySource extends AbstractSource
 
     /**
      * {@inheritdoc}
+     * @throws Grid\GridException
      */
     public function process(int $page, int $limit, array $filters = [], array $orders = []): Data
     {

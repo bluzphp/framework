@@ -46,7 +46,6 @@ final class Mailer
      *
      * @return Instance
      * @throws \Bluz\Common\Exception\ConfigurationException
-     * @throws \Bluz\Config\ConfigException
      */
     private static function initInstance(): Instance
     {

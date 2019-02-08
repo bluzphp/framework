@@ -26,7 +26,6 @@ use Bluz\View\ViewException;
  * @param  bool   $checkAccess
  *
  * @return null|string
- * @throws ViewException
  */
 return
     function ($module, $controller, $params = [], $checkAccess = false) {

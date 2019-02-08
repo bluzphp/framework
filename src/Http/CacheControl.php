@@ -296,6 +296,7 @@ class CacheControl
      * @param  \DateTime|string $date A \DateTime instance or date as string
      *
      * @return void
+     * @throws \Exception
      */
     public function setLastModified($date): void
     {

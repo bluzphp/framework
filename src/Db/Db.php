@@ -75,7 +75,6 @@ class Db
      *
      * @throws ConfigurationException
      * @return void
-     * @throws DbException
      */
     public function setConnect(array $connect): void
     {
@@ -567,7 +566,7 @@ class Db
     {
         $stmt = $this->prepare($sql, $params);
 
-        if (is_string($object)) {
+        if (\is_string($object)) {
             // fetch to some class by name
             $result = $stmt->fetchAll(\PDO::FETCH_CLASS, $object);
         } else {
@@ -660,7 +659,7 @@ class Db
     protected function log(string $sql, array $context = []): void
     {
         $sql = str_replace('%', '%%', $sql);
-        $sql = preg_replace('/\?/', '"%s"', $sql, count($context));
+        $sql = preg_replace('/\?/', '"%s"', $sql, \count($context));
 
         // replace mask by data
         $log = vsprintf($sql, $context);

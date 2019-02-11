@@ -10,7 +10,7 @@
         "ext-ctype": "*",
         "cache/cache": "~1.0",
         "psr/log": "~1.0",
-        "zendframework/zend-diactoros": "~2.0",
+        "zendframework/zend-diactoros": "~2.1",
         "zendframework/zend-httphandlerrunner": "~1.0"
     },
     "require-dev": {

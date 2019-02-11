@@ -269,7 +269,7 @@ abstract class Grid
     /**
      * Set controller
      *
-     * @param  string $controller
+     * @param string $controller
      *
      * @return void
      */
@@ -321,15 +321,18 @@ abstract class Grid
         foreach ($this->allowOrders as $column) {
             $alias = $this->applyAlias($column);
             $order = Request::getParam($this->prefix . 'order-' . $alias);
+            if (is_array($order)) {
+                $order = current($order);
+            }
             if (null !== $order) {
                 $this->addOrder($column, $order);
             }
         }
         foreach ($this->allowFilters as $column) {
             $alias = $this->applyAlias($column);
-            $filter = Request::getParam($this->prefix . 'filter-' . $alias);
+            $filters = (array)Request::getParam($this->prefix . 'filter-' . $alias, []);
 
-            if (null !== $filter) {
+            foreach ($filters as $filter) {
                 $filter = trim($filter, ' _-');
                 if (strpos($filter, '-')) {
                     /**

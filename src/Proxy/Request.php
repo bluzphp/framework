@@ -49,12 +49,12 @@ final class Request
     /**
      * @var array|null Accepted type
      */
-    static private $accept;
+    private static $accept;
 
     /**
      * @var array|null Accepted languages
      */
-    static private $language;
+    private static $language;
 
     /**
      * Init instance

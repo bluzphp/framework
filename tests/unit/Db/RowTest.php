@@ -52,12 +52,14 @@ class RowTest extends FrameworkTestCase
     }
 
     /**
-     * @todo Implement testIsset().
+     * @covers \Bluz\Db\Row::__isset
      */
     public function testIsset()
     {
-        // Remove the following lines when you implement this test.
-        self::markTestIncomplete('This test has not been implemented yet.');
+        $this->row->someValue = 'foo';
+
+        self::assertTrue(isset($this->row->someValue));
+        self::assertFalse(isset($this->row->anotherValue));
     }
 
     /**
@@ -133,21 +135,21 @@ class RowTest extends FrameworkTestCase
     }
 
     /**
-     * @todo Implement testToArray().
+     * Test export to array
      */
     public function testToArray()
     {
-        // Remove the following lines when you implement this test.
-        self::markTestIncomplete('This test has not been implemented yet.');
+        $this->row->someValue = 'foo';
+        self::assertEqualsArray(['someValue' => 'foo'], $this->row->toArray());
     }
 
     /**
-     * @todo Implement testSetFromArray().
+     * Test import from array
      */
     public function testSetFromArray()
     {
-        // Remove the following lines when you implement this test.
-        self::markTestIncomplete('This test has not been implemented yet.');
+        $this->row->setFromArray(['someValue' => 'foo']);
+        self::assertEquals('foo', $this->row->someValue);
     }
 
     /**

@@ -16,5 +16,5 @@ use Bluz\Proxy\Response;
  * @return void
  */
 return function () {
-    Response::redirectTo('index', 'index');
+    Response::redirectTo('index');
 };

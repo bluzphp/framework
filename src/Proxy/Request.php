@@ -12,7 +12,6 @@ namespace Bluz\Proxy;
 
 use Bluz\Common\Exception\ComponentException;
 use Bluz\Http\RequestMethod;
-use Bluz\Request\RequestFactory;
 use Psr\Http\Message\UriInterface;
 use Zend\Diactoros\ServerRequest as Instance;
 
@@ -50,12 +49,12 @@ final class Request
     /**
      * @var array|null Accepted type
      */
-    static private $accept;
+    private static $accept;
 
     /**
      * @var array|null Accepted languages
      */
-    static private $language;
+    private static $language;
 
     /**
      * Init instance
@@ -75,7 +74,7 @@ final class Request
      * @param  string $key
      * @param  string $default Default value to use if key not found
      *
-     * @return string Returns null if key does not exist
+     * @return string|array|null Returns null if key does not exist
      */
     public static function getQuery($key = null, $default = null)
     {
@@ -90,7 +89,7 @@ final class Request
      * @param  string $key
      * @param  string $default Default value to use if key not found
      *
-     * @return string Returns null if key does not exist
+     * @return string|array|null Returns null if key does not exist
      */
     public static function getPost($key = null, $default = null)
     {
@@ -169,7 +168,7 @@ final class Request
      * @param  string $key
      * @param  null   $default
      *
-     * @return string|null
+     * @return string|array|null
      * @link http://msdn.microsoft.com/en-us/library/system.web.httprequest.item.aspx
      */
     public static function getParam($key, $default = null)
@@ -185,11 +184,11 @@ final class Request
      *
      * @return array
      */
-    public static function getParams()
+    public static function getParams(): array
     {
         $body = (array)self::getInstance()->getParsedBody();
         $query = (array)self::getInstance()->getQueryParams();
-        return array_merge($body, $query);
+        return array_merge([], $body, $query);
     }
 
     /**
@@ -303,7 +302,7 @@ final class Request
             // the default quality is 1.
             $q = 1;
             // check if there is a different quality
-            if (strpos($a, ';q=') or strpos($a, '; q=')) {
+            if (strpos($a, ';q=') || strpos($a, '; q=')) {
                 // divide "mime/type;q=X" into two parts: "mime/type" i "X"
                 [$a, $q] = preg_split('/;([ ]?)q=/', $a);
             }

@@ -4,10 +4,6 @@
  * @link      https://github.com/bluzphp/skeleton
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Proxy;
 
 use Bluz\Mailer\Mailer as Target;

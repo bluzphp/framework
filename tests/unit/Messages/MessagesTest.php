@@ -4,10 +4,6 @@
  * @link      https://github.com/bluzphp/framework
  */
 
-/**
- * @namespace
- */
-
 namespace Bluz\Tests\Messages;
 
 use Bluz\Messages\Messages;
@@ -28,6 +24,7 @@ class MessagesTest extends FrameworkTestCase
      * setUp
      *
      * @return void
+     * @throws \Bluz\Application\Exception\ApplicationException
      */
     public function setUp()
     {

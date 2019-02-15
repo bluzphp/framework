@@ -2,6 +2,8 @@ Bluz, a lightweight PHP Framework
 =================================
 Easy to setup, easy to use.
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/bluzphp/main)
+
 ## Achievements
 [![PHP >= 7.1+](https://img.shields.io/packagist/php-v/bluzphp/framework.svg?style=flat)](https://php.net/)
 

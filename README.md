@@ -5,18 +5,19 @@ Easy to setup, easy to use.
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/bluzphp/main)
 
 ## Achievements
-[![PHP >= 7+](https://img.shields.io/badge/php-%3E%3D%207-8892BF.svg?style=flat)](https://php.net/)
+[![PHP >= 7.1+](https://img.shields.io/packagist/php-v/bluzphp/framework.svg?style=flat)](https://php.net/)
+
+[![Latest Stable Version](https://img.shields.io/packagist/v/bluzphp/framework.svg?label=version&style=flat)](https://packagist.org/packages/bluzphp/framework)
 
 [![Build Status](https://img.shields.io/travis/bluzphp/framework/master.svg?style=flat)](https://travis-ci.org/bluzphp/framework)
-[![Dependency Status](https://www.versioneye.com/php/bluzphp:framework/badge.png)](https://www.versioneye.com/php/bluzphp:framework)
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bluzphp/framework/badges/quality-score.png?s=4fb36e6e0c742699777d2586ed14a0063a55ca62)](https://scrutinizer-ci.com/g/bluzphp/framework/)
+[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/bluzphp/framework.svg?style=flat)](https://scrutinizer-ci.com/g/bluzphp/framework/)
+
 [![Coverage Status](https://img.shields.io/coveralls/bluzphp/framework/master.svg?style=flat)](https://coveralls.io/r/bluzphp/framework?branch=master)
 
-[![Latest Stable Version](https://poser.pugx.org/bluzphp/framework/v/stable.png)](https://packagist.org/packages/bluzphp/framework)
-[![Total Downloads](https://poser.pugx.org/bluzphp/framework/downloads.png)](https://packagist.org/packages/bluzphp/framework)
+[![Total Downloads](https://img.shields.io/packagist/dt/bluzphp/framework.svg?style=flat)](https://packagist.org/packages/bluzphp/framework)
 
-[![License](https://poser.pugx.org/bluzphp/framework/license.svg)](https://packagist.org/packages/bluzphp/framework)
+[![License](https://img.shields.io/packagist/l/bluzphp/framework.svg?style=flat)](https://packagist.org/packages/bluzphp/framework)
 
 ## Installation
 

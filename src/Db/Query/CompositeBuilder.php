@@ -88,7 +88,7 @@ class CompositeBuilder implements \Countable
      */
     public function count(): int
     {
-        return \count($this->parts);
+        return count($this->parts);
     }
 
     /**

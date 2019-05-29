@@ -287,6 +287,6 @@ class CountryCodeRule extends AbstractRule
      */
     public function validate($input): bool
     {
-        return \in_array(strtoupper($input), $this->countryCodeList, true);
+        return in_array(strtoupper($input), $this->countryCodeList, true);
     }
 }

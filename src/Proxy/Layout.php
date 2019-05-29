@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Bluz\Proxy;
 
 use Bluz\Common\Container\RegularAccess;
+use Bluz\Common\Exception\CommonException;
 use Bluz\Layout\Layout as Instance;
 use Bluz\View\View;
 
@@ -71,7 +72,7 @@ final class Layout
      * Init instance
      *
      * @return Instance
-     * @throws \Bluz\Common\Exception\CommonException
+     * @throws CommonException
      */
     private static function initInstance(): Instance
     {

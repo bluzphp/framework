@@ -47,7 +47,7 @@ class DateRule extends AbstractRule
             return true;
         }
 
-        if (!\is_string($input)) {
+        if (!is_string($input)) {
             return false;
         }
 

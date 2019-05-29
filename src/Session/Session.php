@@ -12,6 +12,7 @@ namespace Bluz\Session;
 
 use Bluz\Common\Exception\ComponentException;
 use Bluz\Common\Options;
+use SessionHandlerInterface;
 
 /**
  * Session
@@ -35,7 +36,7 @@ class Session
     protected $namespace = 'bluz';
 
     /**
-     * @var \SessionHandlerInterface Session save handler
+     * @var SessionHandlerInterface Session save handler
      */
     protected $adapter;
 
@@ -225,7 +226,7 @@ class Session
     /**
      * Set session save handler object
      *
-     * @param  \SessionHandlerInterface $saveHandler
+     * @param  SessionHandlerInterface $saveHandler
      *
      * @return void
      */
@@ -237,9 +238,9 @@ class Session
     /**
      * Get SaveHandler Object
      *
-     * @return \SessionHandlerInterface
+     * @return SessionHandlerInterface
      */
-    public function getAdapter(): \SessionHandlerInterface
+    public function getAdapter(): SessionHandlerInterface
     {
         return $this->adapter;
     }
@@ -262,9 +263,9 @@ class Session
             }
             return true;
         }
-        if (\is_string($this->adapter)) {
+        if (is_string($this->adapter)) {
             $adapterClass = '\\Bluz\\Session\\Adapter\\' . ucfirst($this->adapter);
-            if (!class_exists($adapterClass) || !is_subclass_of($adapterClass, \SessionHandlerInterface::class)) {
+            if (!class_exists($adapterClass) || !is_subclass_of($adapterClass, SessionHandlerInterface::class)) {
                 throw new ComponentException("Class for session adapter `{$this->adapter}` not found");
             }
             $settings = $this->getOption('settings', $this->adapter) ?: [];
@@ -398,7 +399,7 @@ class Session
      * @return void
      * @throws ComponentException
      */
-    public function delete($key)
+    public function delete($key): void
     {
         if ($this->contains($key)) {
             unset($_SESSION[$this->namespace][$key]);

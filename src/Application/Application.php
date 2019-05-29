@@ -11,10 +11,9 @@ declare(strict_types=1);
 namespace Bluz\Application;
 
 use Bluz\Application\Exception\ApplicationException;
+use Bluz\Config\ConfigException;
 use Bluz\Config\ConfigLoader;
 use Bluz\Http\Exception\ForbiddenException;
-use Bluz\Http\Exception\NotAcceptableException;
-use Bluz\Http\Exception\NotAllowedException;
 use Bluz\Http\Exception\RedirectException;
 use Bluz\Common;
 use Bluz\Common\Exception\CommonException;
@@ -32,6 +31,10 @@ use Bluz\Proxy\Session;
 use Bluz\Proxy\Translator;
 use Bluz\Request\RequestFactory;
 use Bluz\Response\Response as ResponseInstance;
+use Exception;
+use InvalidArgumentException;
+use ReflectionClass;
+use ReflectionException;
 use Zend\Diactoros\ServerRequest;
 
 /**
@@ -42,7 +45,7 @@ use Zend\Diactoros\ServerRequest;
  * @author   Anton Shevchuk
  * @created  06.07.11 16:25
  *
- * @method Controller error(\Exception $exception)
+ * @method Controller error(Exception $exception)
  * @method mixed forbidden(ForbiddenException $exception)
  * @method null redirect(RedirectException $url)
  */
@@ -85,17 +88,17 @@ class Application
      * Get path to Application
      *
      * @return string
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function getPath(): string
     {
         if (!$this->path) {
-            if (\defined('PATH_APPLICATION')) {
+            if (defined('PATH_APPLICATION')) {
                 $this->path = PATH_APPLICATION;
             } else {
-                $reflection = new \ReflectionClass($this);
+                $reflection = new ReflectionClass($this);
                 // 3 level up
-                $this->path = \dirname($reflection->getFileName(), 3);
+                $this->path = dirname($reflection->getFileName(), 3);
             }
         }
         return $this->path;
@@ -120,7 +123,7 @@ class Application
      */
     public function useLayout($flag = null): bool
     {
-        if (\is_bool($flag)) {
+        if (is_bool($flag)) {
             $this->layoutFlag = $flag;
         }
 
@@ -166,7 +169,7 @@ class Application
 
             // init Router
             $this->initRouter();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw new ApplicationException("Application can't be loaded: " . $e->getMessage());
         }
     }
@@ -175,8 +178,8 @@ class Application
      * Initial Request instance
      *
      * @return void
-     * @throws \Bluz\Config\ConfigException
-     * @throws \ReflectionException
+     * @throws ConfigException
+     * @throws ReflectionException
      */
     protected function initConfig(): void
     {
@@ -208,7 +211,7 @@ class Application
      * Initial Request instance
      *
      * @return void
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     protected function initRequest(): void
     {
@@ -232,7 +235,7 @@ class Application
     /**
      * Get Response instance
      *
-     * @return \Bluz\Response\Response
+     * @return ResponseInstance
      */
     public function getResponse(): ResponseInstance
     {
@@ -242,7 +245,7 @@ class Application
     /**
      * Get Request instance
      *
-     * @return \Zend\Diactoros\ServerRequest
+     * @return ServerRequest
      */
     public function getRequest(): ServerRequest
     {
@@ -354,7 +357,7 @@ class Application
         } catch (RedirectException $e) {
             // should return `null` for disable output and setup redirect headers
             $result = $this->redirect($e);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // dispatch default error controller
             $result = $this->error($e);
         }
@@ -386,17 +389,15 @@ class Application
      * Call dispatch from any \Bluz\Package
      *     Application::getInstance()->dispatch($module, $controller, array $params);
      *
-     * @param  string $module
-     * @param  string $controller
-     * @param  array  $params
+     * @param string $module
+     * @param string $controller
+     * @param array  $params
      *
      * @return Controller
-     * @throws ComponentException
      * @throws CommonException
+     * @throws ComponentException
      * @throws ControllerException
-     * @throws ForbiddenException
-     * @throws NotAcceptableException
-     * @throws NotAllowedException
+     * @throws ReflectionException
      */
     public function dispatch($module, $controller, array $params = []): Controller
     {
@@ -436,11 +437,12 @@ class Application
     /**
      * Do dispatch
      *
-     * @param  Controller $controller
+     * @param Controller $controller
      *
      * @return void
      * @throws ComponentException
      * @throws ControllerException
+     * @throws ReflectionException
      */
     protected function doDispatch($controller): void
     {
@@ -461,7 +463,7 @@ class Application
     }
 
     /**
-     * Render, is send Response
+     * Render send Response
      *
      * @return void
      */
@@ -477,6 +479,6 @@ class Application
      */
     public function end(): void
     {
-        // nothing
+        // nothing by default
     }
 }

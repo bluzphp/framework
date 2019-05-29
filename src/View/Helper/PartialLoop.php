@@ -45,14 +45,14 @@ return
         /**
          * @var View $this
          */
-        if (!\is_array($data)
+        if (!is_array($data)
             && !($data instanceof \Traversable)
-            && !(\is_object($data) && method_exists($data, 'toArray'))
+            && !(is_object($data) && method_exists($data, 'toArray'))
         ) {
             throw new \InvalidArgumentException('PartialLoop helper requires iterable data');
         }
 
-        if (\is_object($data)
+        if (is_object($data)
             && (!$data instanceof \Traversable)
             && method_exists($data, 'toArray')
         ) {

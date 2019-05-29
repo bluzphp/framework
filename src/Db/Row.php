@@ -53,11 +53,6 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
     use Traits\RowRelations;
 
     /**
-     * @var Table instance of Table class
-     */
-    protected $table;
-
-    /**
      * This is set to a copy of $data when the data is fetched from
      * a database, specified as a new tuple in the constructor, or
      * when dirty data is posted to the database with save().
@@ -77,7 +72,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
         $this->clean = $this->toArray();
 
         // not clean data, but not modified
-        if (\count($data)) {
+        if (count($data)) {
             $this->setFromArray($data);
         }
         $this->afterRead();
@@ -162,9 +157,9 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
          * Otherwise check primary key updated or not, if it changed - INSERT
          * otherwise UPDATE
          */
-        if (!\count(\array_filter($this->getPrimaryKey()))) {
+        if (!count(array_filter($this->getPrimaryKey()))) {
             $result = $this->doInsert();
-        } elseif (\count(\array_diff_assoc($this->getPrimaryKey(), $this->clean))) {
+        } elseif (count(array_diff_assoc($this->getPrimaryKey(), $this->clean))) {
             $result = $this->doInsert();
         } else {
             $result = $this->doUpdate();
@@ -270,7 +265,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
          * includes SET terms only for data values that changed.
          */
         $result = 0;
-        if (\count($diffData) > 0) {
+        if (count($diffData) > 0) {
             $result = $table::update($diffData, $primaryKey);
         }
 

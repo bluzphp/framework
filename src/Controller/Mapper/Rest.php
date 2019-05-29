@@ -26,17 +26,17 @@ class Rest extends AbstractMapper
 
         $params = $this->params;
 
-        if (\count($params)) {
+        if (count($params)) {
             $primaryKeys = $this->crud->getPrimaryKey();
 
-            $primaryValues = explode('-', array_shift($params), \count($primaryKeys));
+            $primaryValues = explode('-', array_shift($params), count($primaryKeys));
 
             $this->primary = array_combine($primaryKeys, $primaryValues);
         }
-        if (\count($params)) {
+        if (count($params)) {
             $this->relation = array_shift($params);
         }
-        if (\count($params)) {
+        if (count($params)) {
             $this->relationId = array_shift($params);
         }
 

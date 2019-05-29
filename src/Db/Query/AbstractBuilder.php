@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Bluz\Db\Query;
 
 use Bluz\Proxy\Db;
+use PDO;
 
 /**
  * Query Builders classes is responsible to dynamically create SQL queries
@@ -124,10 +125,10 @@ abstract class AbstractBuilder
      *
      * @return self
      */
-    public function setParam($key, $value, $type = \PDO::PARAM_STR): self
+    public function setParam($key, $value, $type = PDO::PARAM_STR): self
     {
         if (null === $key) {
-            $key = \count($this->params);
+            $key = count($this->params);
         }
 
         $this->params[$key] = $value;
@@ -190,8 +191,8 @@ abstract class AbstractBuilder
     {
         $condition = array_shift($args);
         foreach ($args as &$value) {
-            if (\is_array($value)) {
-                $replace = implode(',', array_fill(0, \count($value), ':REPLACE:'));
+            if (is_array($value)) {
+                $replace = implode(',', array_fill(0, count($value), ':REPLACE:'));
                 $condition = preg_replace('/\?/', $replace, $condition, 1);
                 foreach ($value as $part) {
                     $this->setParam(null, $part);

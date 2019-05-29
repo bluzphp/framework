@@ -33,7 +33,7 @@ class ArraySource extends AbstractSource
      */
     public function setSource($source): void
     {
-        if (!\is_array($source) && !($source instanceof \ArrayAccess)) {
+        if (!is_array($source) && !($source instanceof \ArrayAccess)) {
             throw new Grid\GridException('Source of `ArraySource` should be array or implement ArrayAccess interface');
         }
         parent::setSource($source);
@@ -53,7 +53,7 @@ class ArraySource extends AbstractSource
 
         $data = $this->getSource();
 
-        $total = \count($data);
+        $total = count($data);
 
         // process pages
         $data = \array_slice($data, $limit * ($page - 1), $limit);

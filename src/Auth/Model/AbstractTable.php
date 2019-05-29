@@ -10,8 +10,11 @@ declare(strict_types=1);
 
 namespace Bluz\Auth\Model;
 
+use Bluz\Db\Exception\DbException;
+use Bluz\Db\Exception\InvalidPrimaryKeyException;
 use Bluz\Db\RowInterface;
 use Bluz\Db\Table;
+use InvalidArgumentException;
 
 /**
  * Abstract class for Auth\Table
@@ -58,9 +61,9 @@ abstract class AbstractTable extends Table
      * @param  string $foreignKey
      *
      * @return RowInterface
-     * @throws \InvalidArgumentException
-     * @throws \Bluz\Db\Exception\DbException
-     * @throws \Bluz\Db\Exception\InvalidPrimaryKeyException
+     * @throws InvalidArgumentException
+     * @throws DbException
+     * @throws InvalidPrimaryKeyException
      */
     public static function getAuthRow($provider, $foreignKey): ?RowInterface
     {

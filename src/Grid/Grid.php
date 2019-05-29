@@ -10,10 +10,12 @@ declare(strict_types=1);
 
 namespace Bluz\Grid;
 
+use Bluz\Common\Exception\CommonException;
 use Bluz\Common\Helper;
 use Bluz\Common\Options;
 use Bluz\Proxy\Request;
 use Bluz\Proxy\Router;
+use Exception;
 
 /**
  * Grid
@@ -171,7 +173,7 @@ abstract class Grid
      *
      * @param array $options
      *
-     * @throws \Bluz\Common\Exception\CommonException
+     * @throws CommonException
      */
     public function __construct($options = null)
     {
@@ -379,7 +381,7 @@ abstract class Grid
                 $this->getFilters(),
                 $this->getOrders()
             );
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw new GridException('Grid Adapter can\'t process request: '. $e->getMessage());
         }
     }
@@ -388,7 +390,7 @@ abstract class Grid
      * Get data
      *
      * @return Data
-     * @throws \Bluz\Grid\GridException
+     * @throws GridException
      */
     public function getData(): Data
     {
@@ -449,7 +451,7 @@ abstract class Grid
         foreach ($filters as $column => $columnFilters) {
             /** @var array $columnFilters */
             $column = $this->applyAlias($column);
-            if (\count($columnFilters) === 1 && isset($columnFilters[self::FILTER_EQ])) {
+            if (count($columnFilters) === 1 && isset($columnFilters[self::FILTER_EQ])) {
                 $params[$this->prefix . 'filter-' . $column] = $columnFilters[self::FILTER_EQ];
                 continue;
             }
@@ -529,7 +531,7 @@ abstract class Grid
      */
     protected function checkOrderColumn($column): bool
     {
-        return \in_array($column, $this->getAllowOrders(), true);
+        return in_array($column, $this->getAllowOrders(), true);
     }
 
     /**
@@ -671,7 +673,7 @@ abstract class Grid
     protected function checkFilterColumn($column): bool
     {
         return array_key_exists($column, $this->getAllowFilters()) ||
-            \in_array($column, $this->getAllowFilters(), false);
+            in_array($column, $this->getAllowFilters(), false);
     }
 
     /**
@@ -683,7 +685,7 @@ abstract class Grid
      */
     protected function checkFilterName($filter): bool
     {
-        return \in_array($filter, $this->allowFilterNames, false);
+        return in_array($filter, $this->allowFilterNames, false);
     }
 
     /**

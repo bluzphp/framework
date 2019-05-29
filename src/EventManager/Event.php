@@ -88,9 +88,9 @@ class Event
      */
     public function setParams($params): void
     {
-        if (!\is_array($params) && !\is_object($params)) {
+        if (!is_array($params) && !is_object($params)) {
             throw new EventException(
-                'Event parameters must be an array or object; received `' . \gettype($params) . '`'
+                'Event parameters must be an array or object; received `' . gettype($params) . '`'
             );
         }
 
@@ -119,10 +119,10 @@ class Event
      */
     public function getParam($name, $default = null)
     {
-        if (\is_array($this->params)) {
+        if (is_array($this->params)) {
             // Check in params that are arrays or implement array access
             return $this->params[$name] ?? $default;
-        } elseif (\is_object($this->params)) {
+        } elseif (is_object($this->params)) {
             // Check in normal objects
             return $this->params->{$name} ?? $default;
         } else {
@@ -165,7 +165,7 @@ class Event
      */
     public function setParam($name, $value): void
     {
-        if (\is_array($this->params)) {
+        if (is_array($this->params)) {
             // Arrays or objects implementing array access
             $this->params[$name] = $value;
         } else {

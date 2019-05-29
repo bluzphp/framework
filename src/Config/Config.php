@@ -41,7 +41,7 @@ class Config
             throw new ConfigException('System configuration is missing');
         }
 
-        if (!\count($keys)) {
+        if (!count($keys)) {
             return $this->container;
         }
 

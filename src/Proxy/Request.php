@@ -14,6 +14,7 @@ use Bluz\Common\Exception\ComponentException;
 use Bluz\Http\RequestMethod;
 use Psr\Http\Message\UriInterface;
 use Zend\Diactoros\ServerRequest as Instance;
+use Zend\Diactoros\UploadedFile;
 
 /**
  * Proxy to Request
@@ -155,7 +156,7 @@ final class Request
         $headers = self::getInstance()->getHeaders();
         $headers = array_change_key_case($headers, CASE_LOWER);
         if (array_key_exists($header, $headers)) {
-            $value = \is_array($headers[$header]) ? implode(', ', $headers[$header]) : $headers[$header];
+            $value = is_array($headers[$header]) ? implode(', ', $headers[$header]) : $headers[$header];
             return $value;
         }
         return $default;
@@ -196,7 +197,7 @@ final class Request
      *
      * @param  string $name
      *
-     * @return \Zend\Diactoros\UploadedFile
+     * @return UploadedFile
      */
     public static function getFile($name)
     {
@@ -349,7 +350,7 @@ final class Request
 
         // let’s check our supported types:
         foreach ($accept as $mime => $quality) {
-            if ($quality && \in_array($mime, $allowTypes, true)) {
+            if ($quality && in_array($mime, $allowTypes, true)) {
                 return $mime;
             }
         }

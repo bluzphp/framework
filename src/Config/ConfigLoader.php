@@ -10,6 +10,9 @@ declare(strict_types=1);
 
 namespace Bluz\Config;
 
+use FilesystemIterator;
+use GlobIterator;
+
 /**
  * Config
  *
@@ -138,9 +141,9 @@ class ConfigLoader
             throw new ConfigException("Configuration directory `$path` not found");
         }
 
-        $iterator = new \GlobIterator(
+        $iterator = new GlobIterator(
             $path . '/*.php',
-            \FilesystemIterator::KEY_AS_FILENAME | \FilesystemIterator::CURRENT_AS_PATHNAME
+            FilesystemIterator::KEY_AS_FILENAME | FilesystemIterator::CURRENT_AS_PATHNAME
         );
 
         foreach ($iterator as $name => $file) {

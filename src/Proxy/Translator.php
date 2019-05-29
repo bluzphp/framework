@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Bluz\Proxy;
 
+use Bluz\Common\Exception\ConfigurationException;
 use Bluz\Translator\Translator as Instance;
 
 /**
@@ -41,7 +42,7 @@ final class Translator
      * Init instance
      *
      * @return Instance
-     * @throws \Bluz\Common\Exception\ConfigurationException
+     * @throws ConfigurationException
      */
     private static function initInstance(): Instance
     {

@@ -18,7 +18,6 @@ use Bluz\Proxy\Acl;
  * Denied helper can be declared inside Bootstrap
  *
  * @return void
- * @throws ForbiddenException
  */
 return
     function () {

@@ -23,5 +23,5 @@ class InvalidPrimaryKeyException extends DbException
      *
      * @var string
      */
-    public $message = "Wrong primary key";
+    public $message = 'Wrong primary key';
 }

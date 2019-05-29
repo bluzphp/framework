@@ -27,11 +27,11 @@ class ContainsStrictRule extends ContainsRule
     public function validate($input): bool
     {
         // for array
-        if (\is_array($input)) {
-            return \in_array($this->containsValue, $input, true);
+        if (is_array($input)) {
+            return in_array($this->containsValue, $input, true);
         }
         // for string
-        if (\is_string($input)) {
+        if (is_string($input)) {
             return false !== mb_strpos($input, $this->containsValue, 0, mb_detect_encoding($input));
         }
         return false;

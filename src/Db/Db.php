@@ -15,6 +15,9 @@ use Bluz\Common\Options;
 use Bluz\Db\Exception\DbException;
 use Bluz\Db\Query;
 use Bluz\Proxy\Logger;
+use PDO;
+use PDOException;
+use PDOStatement;
 
 /**
  * PDO wrapper
@@ -49,11 +52,11 @@ class Db
      * @link http://php.net/manual/en/pdo.setattribute.php
      */
     protected $attributes = [
-        \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
     ];
 
     /**
-     * @var \PDO PDO instance
+     * @var PDO PDO instance
      */
     protected $handler;
 
@@ -125,7 +128,7 @@ class Db
         try {
             $this->checkConnect();
             $this->log('Connect to ' . $this->connect['host']);
-            $this->handler = new \PDO(
+            $this->handler = new PDO(
                 $this->connect['type'] . ':host=' . $this->connect['host'] . ';dbname=' . $this->connect['name'],
                 $this->connect['user'],
                 $this->connect['pass'],
@@ -158,10 +161,10 @@ class Db
     /**
      * Return PDO handler
      *
-     * @return \PDO
+     * @return PDO
      * @throws DbException
      */
-    public function handler(): \PDO
+    public function handler(): PDO
     {
         if (null === $this->handler) {
             $this->connect();
@@ -178,10 +181,10 @@ class Db
      * @todo Switch to PDO::activeQueryString() when it will be possible
      * @link https://wiki.php.net/rfc/debugging_pdo_prepared_statement_emulation
      *
-     * @return \PDOStatement
+     * @return PDOStatement
      * @throws DbException
      */
-    protected function prepare(string $sql, array $params = []): \PDOStatement
+    protected function prepare(string $sql, array $params = []): PDOStatement
     {
         $stmt = $this->handler()->prepare($sql);
         $stmt->execute($params);
@@ -205,7 +208,7 @@ class Db
      * @return string
      * @throws DbException
      */
-    public function quote(string $value, int $type = \PDO::PARAM_STR): string
+    public function quote(string $value, int $type = PDO::PARAM_STR): string
     {
         return $this->handler()->quote($value, $type);
     }
@@ -255,7 +258,7 @@ class Db
             $stmt->bindParam(
                 (is_int($key) ? $key + 1 : ':' . $key),
                 $param,
-                $types[$key] ?? \PDO::PARAM_STR
+                $types[$key] ?? PDO::PARAM_STR
             );
         }
         $this->log($sql, $params);
@@ -339,7 +342,7 @@ class Db
     public function fetchOne(string $sql, array $params = [])
     {
         $stmt = $this->prepare($sql, $params);
-        $result = $stmt->fetch(\PDO::FETCH_COLUMN);
+        $result = $stmt->fetch(PDO::FETCH_COLUMN);
 
         $this->ok();
         return $result;
@@ -366,7 +369,7 @@ class Db
     public function fetchRow(string $sql, array $params = [])
     {
         $stmt = $this->prepare($sql, $params);
-        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         $this->ok();
         return $result;
@@ -391,7 +394,7 @@ class Db
     public function fetchAll(string $sql, array $params = [])
     {
         $stmt = $this->prepare($sql, $params);
-        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $this->ok();
         return $result;
@@ -411,7 +414,7 @@ class Db
     public function fetchColumn(string $sql, array $params = [])
     {
         $stmt = $this->prepare($sql, $params);
-        $result = $stmt->fetchAll(\PDO::FETCH_COLUMN);
+        $result = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
         $this->ok();
         return $result;
@@ -439,9 +442,9 @@ class Db
         $stmt = $this->prepare($sql, $params);
 
         if ($object) {
-            $result = $stmt->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_GROUP, $object);
+            $result = $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_GROUP, $object);
         } else {
-            $result = $stmt->fetchAll(\PDO::FETCH_ASSOC | \PDO::FETCH_GROUP);
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC | PDO::FETCH_GROUP);
         }
 
         $this->ok();
@@ -463,7 +466,7 @@ class Db
     public function fetchColumnGroup(string $sql, array $params = [])
     {
         $stmt = $this->prepare($sql, $params);
-        $result = $stmt->fetchAll(\PDO::FETCH_COLUMN | \PDO::FETCH_GROUP);
+        $result = $stmt->fetchAll(PDO::FETCH_COLUMN | PDO::FETCH_GROUP);
 
         $this->ok();
         return $result;
@@ -484,7 +487,7 @@ class Db
     public function fetchUniqueGroup(string $sql, array $params = [])
     {
         $stmt = $this->prepare($sql, $params);
-        $result = $stmt->fetchAll(\PDO::FETCH_UNIQUE | \PDO::FETCH_ASSOC | \PDO::FETCH_GROUP);
+        $result = $stmt->fetchAll(PDO::FETCH_UNIQUE | PDO::FETCH_ASSOC | PDO::FETCH_GROUP);
 
         $this->ok();
         return $result;
@@ -504,7 +507,7 @@ class Db
     public function fetchPairs(string $sql, array $params = [])
     {
         $stmt = $this->prepare($sql, $params);
-        $result = $stmt->fetchAll(\PDO::FETCH_KEY_PAIR);
+        $result = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
 
         $this->ok();
         return $result;
@@ -541,8 +544,8 @@ class Db
             $result = $stmt->fetchObject($object);
         } else {
             // some instance
-            $stmt->setFetchMode(\PDO::FETCH_INTO, $object);
-            $result = $stmt->fetch(\PDO::FETCH_INTO);
+            $stmt->setFetchMode(PDO::FETCH_INTO, $object);
+            $result = $stmt->fetch(PDO::FETCH_INTO);
         }
 
         $stmt->closeCursor();
@@ -566,12 +569,12 @@ class Db
     {
         $stmt = $this->prepare($sql, $params);
 
-        if (\is_string($object)) {
+        if (is_string($object)) {
             // fetch to some class by name
-            $result = $stmt->fetchAll(\PDO::FETCH_CLASS, $object);
+            $result = $stmt->fetchAll(PDO::FETCH_CLASS, $object);
         } else {
             // fetch to StdClass
-            $result = $stmt->fetchAll(\PDO::FETCH_OBJ);
+            $result = $stmt->fetchAll(PDO::FETCH_OBJ);
         }
 
         $stmt->closeCursor();
@@ -597,7 +600,7 @@ class Db
     {
         $stmt = $this->prepare($sql, $params);
 
-        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // prepare results
         $result = Relations::fetch($result);
@@ -631,7 +634,7 @@ class Db
             $result = $process();
             $this->handler()->commit();
             return $result ?? true;
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             $this->handler()->rollBack();
             Logger::error($e->getMessage());
             return false;
@@ -651,18 +654,18 @@ class Db
     /**
      * Log queries by Application
      *
-     * @param  string $sql SQL query for logs
+     * @param  string $query SQL query for logs
      * @param  array  $context
      *
      * @return void
      */
-    protected function log(string $sql, array $context = []): void
+    protected function log(string $query, array $context = []): void
     {
-        $sql = str_replace('%', '%%', $sql);
-        $sql = preg_replace('/\?/', '"%s"', $sql, \count($context));
+        $query = str_replace('%', '%%', $query);
+        $queries = preg_replace('/\?/', '"%s"', $query, count($context));
 
         // replace mask by data
-        $log = vsprintf($sql, $context);
+        $log = vsprintf($queries, $context);
 
         Logger::info($log);
     }

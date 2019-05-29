@@ -18,7 +18,6 @@ use Bluz\Proxy\Request;
  * Denied helper can be declared inside Bootstrap
  *
  * @return void
- * @throws NotAcceptableException
  */
 return
     function () {
@@ -38,7 +37,7 @@ return
 
         // some controllers allow any type (*/*)
         // and client doesn't send Accept header
-        if (!$accept && \in_array(Request::TYPE_ANY, $allowAccept, true)) {
+        if (!$accept && in_array(Request::TYPE_ANY, $allowAccept, true)) {
             // all OK, controller should realize logic for response
             return;
         }

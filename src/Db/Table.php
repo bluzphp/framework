@@ -16,6 +16,7 @@ use Bluz\Db\Exception\InvalidPrimaryKeyException;
 use Bluz\Db\Traits\TableRelations;
 use Bluz\Proxy\Cache;
 use Bluz\Proxy\Db as DbProxy;
+use InvalidArgumentException;
 
 /**
  * Table
@@ -133,7 +134,7 @@ abstract class Table implements TableInterface
      */
     public function getPrimaryKey(): array
     {
-        if (!\is_array($this->primary)) {
+        if (!is_array($this->primary)) {
             throw new InvalidPrimaryKeyException('The primary key must be set as an array');
         }
         return $this->primary;
@@ -234,7 +235,7 @@ abstract class Table implements TableInterface
      *
      * @throws DbException
      * @throws InvalidPrimaryKeyException if wrong count of values passed
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public static function find(...$keys): array
     {
@@ -243,7 +244,7 @@ abstract class Table implements TableInterface
 
         foreach ($keys as $keyValues) {
             $keyValues = (array)$keyValues;
-            if (\count($keyValues) !== \count($keyNames)) {
+            if (count($keyValues) !== count($keyNames)) {
                 throw new InvalidPrimaryKeyException(
                     "Invalid columns for the primary key.\n" .
                     "Please check " . static::class . " initialization or usage.\n" .
@@ -265,7 +266,7 @@ abstract class Table implements TableInterface
     /**
      * {@inheritdoc}
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      * @throws Exception\DbException
      */
     public static function findWhere(...$where): array
@@ -274,19 +275,17 @@ abstract class Table implements TableInterface
 
         $whereParams = [];
 
-        if (\count($where) === 2 && \is_string($where[0])) {
+        if (count($where) === 2 && is_string($where[0])) {
             $whereClause = $where[0];
             $whereParams = (array)$where[1];
-        } elseif (\count($where)) {
+        } elseif (count($where)) {
             $whereOrTerms = [];
             foreach ($where as $keyValueSets) {
                 $whereAndTerms = [];
                 foreach ($keyValueSets as $keyName => $keyValue) {
-                    if (\is_array($keyValue)) {
+                    if (is_array($keyValue)) {
                         $keyValue = array_map(
-                            function ($value) {
-                                return DbProxy::quote($value);
-                            },
+                            ['DbProxy', 'quote'],
                             $keyValue
                         );
                         $keyValue = implode(',', $keyValue);
@@ -301,9 +300,9 @@ abstract class Table implements TableInterface
                         $whereParams[] = $keyValue;
                     }
                     if (!is_scalar($keyValue) && !is_null($keyValue)) {
-                        throw new \InvalidArgumentException(
+                        throw new InvalidArgumentException(
                             "Wrong arguments of method 'findWhere'.\n" .
-                            "Please use syntax described at https://github.com/bluzphp/framework/wiki/Db-Table"
+                            'Please use syntax described at https://github.com/bluzphp/framework/wiki/Db-Table'
                         );
                     }
                 }
@@ -323,7 +322,7 @@ abstract class Table implements TableInterface
      * {@inheritdoc}
      *
      * @throws DbException
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      * @throws InvalidPrimaryKeyException
      */
     public static function findRow($primaryKey): ?RowInterface
@@ -336,7 +335,7 @@ abstract class Table implements TableInterface
      * {@inheritdoc}
      *
      * @throws DbException
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public static function findRowWhere(array $whereList): ?RowInterface
     {
@@ -416,7 +415,7 @@ abstract class Table implements TableInterface
 
         $data = static::filterColumns($data);
 
-        if (!\count($data)) {
+        if (!count($data)) {
             throw new DbException(
                 "Invalid field names of table `{$self->name}`. Please check use of `insert()` method"
             );
@@ -453,7 +452,7 @@ abstract class Table implements TableInterface
 
         $data = static::filterColumns($data);
 
-        if (!\count($data)) {
+        if (!count($data)) {
             throw new DbException(
                 "Invalid field names of table `{$self->name}`. Please check use of `update()` method"
             );
@@ -461,7 +460,7 @@ abstract class Table implements TableInterface
 
         $where = static::filterColumns($where);
 
-        if (!\count($where)) {
+        if (!count($where)) {
             throw new DbException(
                 "Method `Table::update()` can't update all records in the table `{$self->name}`,\n" .
                 "please use `Db::query()` instead (of cause if you know what are you doing)"
@@ -485,7 +484,7 @@ abstract class Table implements TableInterface
     {
         $self = static::getInstance();
 
-        if (!\count($where)) {
+        if (!count($where)) {
             throw new DbException(
                 "Method `Table::delete()` can't delete all records in the table `{$self->name}`,\n" .
                 "please use `Db::query()` instead (of cause if you know what are you doing)"
@@ -495,7 +494,7 @@ abstract class Table implements TableInterface
 
         $where = static::filterColumns($where);
 
-        if (!\count($where)) {
+        if (!count($where)) {
             throw new DbException(
                 "Invalid field names of table `{$self->name}`. Please check use of `delete()` method"
             );

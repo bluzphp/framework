@@ -28,7 +28,7 @@ trait Where
     /**
      * @var string|CompositeBuilder|null
      */
-    protected $where = null;
+    protected $where;
 
     /**
      * Set WHERE condition

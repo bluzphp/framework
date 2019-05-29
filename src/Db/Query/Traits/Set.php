@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Bluz\Db\Query\Traits;
 
 use Bluz\Proxy\Db;
+use PDO;
 
 /**
  * Set Trait
@@ -54,7 +55,7 @@ trait Set
      *
      * @return $this
      */
-    public function set(string $key, $value, $type = \PDO::PARAM_STR): self
+    public function set(string $key, $value, $type = PDO::PARAM_STR): self
     {
         $this->setParam(null, $value, $type);
         $this->set[] = Db::quoteIdentifier($key) . ' = ?';

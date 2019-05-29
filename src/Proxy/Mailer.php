@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Bluz\Proxy;
 
+use Bluz\Common\Exception\ConfigurationException;
 use Bluz\Mailer\Mailer as Instance;
 
 /**
@@ -45,7 +46,7 @@ final class Mailer
      * Init instance
      *
      * @return Instance
-     * @throws \Bluz\Common\Exception\ConfigurationException
+     * @throws ConfigurationException
      */
     private static function initInstance(): Instance
     {

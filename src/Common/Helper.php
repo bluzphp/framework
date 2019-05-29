@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Bluz\Common;
 
 use Bluz\Common\Exception\CommonException;
+use Closure;
 
 /**
  * Helper trait
@@ -53,7 +54,7 @@ trait Helper
             static::$helpersPath[$class] = [];
         }
 
-        if (!\in_array($realPath, static::$helpersPath[$class], true)) {
+        if (!in_array($realPath, static::$helpersPath[$class], true)) {
             static::$helpersPath[$class][] = $realPath;
         }
     }
@@ -72,11 +73,11 @@ trait Helper
         $class = static::class;
 
         // Call callable helper structure (function or class)
-        if (!isset(static::$helpers[$class], static::$helpers[$class][$method])) {
+        if (!isset(static::$helpers[$class][$method])) {
             $this->loadHelper($method);
         }
 
-        /** @var \Closure $helper */
+        /** @var Closure $helper */
         $helper = static::$helpers[$class][$method];
         return $helper->call($this, ...$arguments);
     }
@@ -129,7 +130,7 @@ trait Helper
 
         $helper = include $path;
 
-        if (\is_callable($helper)) {
+        if (is_callable($helper)) {
             static::$helpers[$class][$name] = $helper;
         } else {
             throw new CommonException("Helper `$name` not found in file `$path`");

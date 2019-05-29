@@ -14,6 +14,7 @@ use Bluz\Common\Exception\ComponentException;
 use Bluz\Common\Exception\ConfigurationException;
 use Bluz\Common\Options;
 use Bluz\Proxy\Translator;
+use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 
 /**
@@ -39,7 +40,7 @@ class Mailer
             throw new ConfigurationException(
                 "Missed `from.email` option in `mailer` configuration. <br/>\n" .
                 "Read more: <a href='https://github.com/bluzphp/framework/wiki/Mailer'>" .
-                "https://github.com/bluzphp/framework/wiki/Mailer</a>"
+                'https://github.com/bluzphp/framework/wiki/Mailer</a>'
             );
         }
     }
@@ -49,7 +50,7 @@ class Mailer
      *
      * @return PHPMailer
      * @throws ComponentException
-     * @throws \PHPMailer\PHPMailer\Exception
+     * @throws Exception
      */
     public function create(): PHPMailer
     {
@@ -97,7 +98,7 @@ class Mailer
      *
      * @return bool
      * @throws MailerException
-     * @throws \PHPMailer\PHPMailer\Exception
+     * @throws Exception
      */
     public function send(PHPMailer $mail)
     {

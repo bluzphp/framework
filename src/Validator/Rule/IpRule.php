@@ -38,7 +38,7 @@ class IpRule extends AbstractRule
      */
     public function __construct($options = null)
     {
-        if (\is_int($options)) {
+        if (is_int($options)) {
             $this->options = $options;
             return;
         }

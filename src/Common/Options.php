@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace Bluz\Common;
 
+use Bluz\Collection\Collection;
+
 /**
  * Options Trait
  *

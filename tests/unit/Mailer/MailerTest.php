@@ -6,6 +6,8 @@
 
 namespace Bluz\Tests\Mailer;
 
+use Bluz\Common\Exception\ComponentException;
+use Bluz\Common\Exception\ConfigurationException;
 use Bluz\Mailer\Mailer;
 use Bluz\Tests\FrameworkTestCase;
 
@@ -19,21 +21,17 @@ use Bluz\Tests\FrameworkTestCase;
  */
 class MailerTest extends FrameworkTestCase
 {
-    /**
-     * @expectedException \Bluz\Common\Exception\ConfigurationException
-     */
     public function testWrongConfigurationThrowException()
     {
+        $this->expectException(ConfigurationException::class);
         $mailer = new Mailer();
         $mailer->setOptions(null);
         $mailer->init();
     }
 
-    /**
-     * @expectedException \Bluz\Common\Exception\ComponentException
-     */
     public function testWithoutPHPMailerThrowException()
     {
+        $this->expectException(ComponentException::class);
         $mailer = new Mailer();
         $mailer->create();
     }

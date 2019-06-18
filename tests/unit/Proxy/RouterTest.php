@@ -6,6 +6,7 @@
 
 namespace Bluz\Tests\Proxy;
 
+use Bluz\Common\Exception\ComponentException;
 use Bluz\Router\Router as Target;
 use Bluz\Proxy\Router as Proxy;
 use Bluz\Tests\FrameworkTestCase;
@@ -23,11 +24,9 @@ class RouterTest extends FrameworkTestCase
         self::assertInstanceOf(Target::class, Proxy::getInstance());
     }
 
-    /**
-     * @expectedException \Bluz\Common\Exception\ComponentException
-     */
     public function testLazyInitialInstanceShouldThrowError()
     {
+        $this->expectException(ComponentException::class);
         Proxy::resetInstance();
         Proxy::getInstance();
     }

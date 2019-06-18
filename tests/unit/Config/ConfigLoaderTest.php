@@ -8,6 +8,7 @@ namespace Bluz\Tests\Config;
 
 use Bluz;
 use Bluz\Config;
+use Bluz\Config\ConfigException;
 use Bluz\Tests\FrameworkTestCase;
 
 class ConfigLoaderTest extends FrameworkTestCase
@@ -34,10 +35,10 @@ class ConfigLoaderTest extends FrameworkTestCase
 
     /**
      * @covers \Bluz\Config\ConfigLoader::setPath
-     * @expectedException \Bluz\Config\ConfigException
      */
     public function testSetPathExeption(): void
     {
+        $this->expectException(ConfigException::class);
         $loader = new Config\ConfigLoader();
         $loader->setPath('invalid/path');
     }
@@ -53,20 +54,20 @@ class ConfigLoaderTest extends FrameworkTestCase
 
     /**
      * @covers \Bluz\Config\ConfigLoader::load
-     * @expectedException \Bluz\Config\ConfigException
      */
     public function testLoadConfigPathIsNotSetup(): void
     {
+        $this->expectException(ConfigException::class);
         $loader = new Config\ConfigLoader();
         $loader->load();
     }
 
     /**
      * @covers \Bluz\Config\ConfigLoader::load
-     * @expectedException \Bluz\Config\ConfigException
      */
     public function testLoadConfigFileNotFound(): void
     {
+        $this->expectException(ConfigException::class);
         $loader = new Config\ConfigLoader();
         $loader->setPath($this->emptyConfigsDir);
         $loader->load();
@@ -103,10 +104,10 @@ class ConfigLoaderTest extends FrameworkTestCase
 
     /**
      * @covers \Bluz\Config\ConfigLoader::load
-     * @expectedException \Bluz\Config\ConfigException
      */
     public function testLoadConfigWithWrongEnvironment(): void
     {
+        $this->expectException(ConfigException::class);
         $loader = new Config\ConfigLoader();
         $loader->setPath($this->path);
         $loader->setEnvironment('not_existed_environment');

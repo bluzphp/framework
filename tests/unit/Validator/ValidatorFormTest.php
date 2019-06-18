@@ -69,11 +69,9 @@ class ValidatorFormTest extends Tests\FrameworkTestCase
         }
     }
 
-    /**
-     * @expectedException \Bluz\Validator\Exception\ValidatorException
-     */
     public function testAssertEmptyDataShouldRaiseException()
     {
+        $this->expectException(ValidatorException::class);
         $validator = new ValidatorForm();
         $validator->add('foo')->required();
         $validator->add('bar')->numeric();

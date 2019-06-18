@@ -8,6 +8,7 @@ namespace Bluz\Tests;
 
 use Bluz;
 use Bluz\EventManager\Event;
+use Bluz\EventManager\EventException;
 
 /**
  * EventTest
@@ -58,11 +59,10 @@ class EventTest extends Bluz\Tests\FrameworkTestCase
 
     /**
      * Test trigger with wong params
-     *
-     * @expectedException \Bluz\EventManager\EventException
      */
     public function testEventSetParamsException()
     {
+        $this->expectException(EventException::class);
         new Event('test', null, 'wrong type');
     }
 }

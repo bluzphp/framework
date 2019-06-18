@@ -6,6 +6,7 @@
 
 namespace Bluz\Tests\Translator;
 
+use Bluz\Common\Exception\ConfigurationException;
 use Bluz\Tests\FrameworkTestCase;
 use Bluz\Translator\Translator;
 
@@ -21,11 +22,10 @@ class TranslatorTest extends FrameworkTestCase
 {
     /**
      * Test Translator initialization
-     *
-     * @expectedException \Bluz\Common\Exception\ConfigurationException
      */
     public function testInvalidConfigurationThrowException()
     {
+        $this->expectException(ConfigurationException::class);
         $translator = new Translator();
         $translator->addTextDomain('any', '/this/directory/is/not/exists');
     }

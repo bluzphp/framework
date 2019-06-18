@@ -7,6 +7,7 @@
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
+use Bluz\Validator\Exception\ComponentException;
 use Bluz\Validator\Rule\LatinNumericRule as Rule;
 
 /**
@@ -44,12 +45,12 @@ class LatinNumericTest extends Tests\FrameworkTestCase
 
     /**
      * @dataProvider providerForComponentException
-     * @expectedException \Bluz\Validator\Exception\ComponentException
      *
      * @param $additional
      */
     public function testInvalidConstructorParamsShouldThrowComponentException($additional)
     {
+        $this->expectException(ComponentException::class);
         new Rule($additional);
     }
 

@@ -7,6 +7,7 @@
 namespace Bluz\Tests\Controller;
 
 use Bluz\Controller;
+use Bluz\Http\Exception\ForbiddenException;
 use Bluz\Proxy\Layout;
 use Bluz\Tests\FrameworkTestCase;
 
@@ -72,11 +73,9 @@ class ControllerTest extends FrameworkTestCase
         self::markTestIncomplete('This test has not been implemented yet.');
     }
 
-    /**
-     * @expectedException \Bluz\Http\Exception\ForbiddenException
-     */
     public function testHelperDenied()
     {
+        $this->expectException(ForbiddenException::class);
         $this->controller->denied();
     }
 

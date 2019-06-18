@@ -7,6 +7,7 @@
 namespace Bluz\Tests\Grid\Source;
 
 use Bluz\Grid\Grid;
+use Bluz\Grid\GridException;
 use Bluz\Grid\Source\SqlSource;
 use Bluz\Tests\FrameworkTestCase;
 use Bluz\Tests\Fixtures\Grid\SqlGrid;
@@ -33,11 +34,10 @@ class SqlSourceTest extends FrameworkTestCase
 
     /**
      * SQL Source Exception
-     *
-     * @expectedException \Bluz\Grid\GridException
      */
     public function testSqlSourceThrowsGridException()
     {
+        $this->expectException(GridException::class);
         $adapter = new SqlSource();
         $adapter->setSource(['wrong source type']);
     }

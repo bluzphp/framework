@@ -6,6 +6,7 @@
 
 namespace Bluz\Tests\Proxy;
 
+use Bluz\Http\Exception\RedirectException;
 use Bluz\Proxy\Response;
 use Bluz\Proxy\Router;
 use Bluz\Tests\FrameworkTestCase;
@@ -20,31 +21,28 @@ class ResponseTest extends FrameworkTestCase
 {
     /**
      * Test Helper Redirect
-     *
-     * @expectedException \Bluz\Http\Exception\RedirectException
      */
     public function testHelperRedirect()
     {
+        $this->expectException(RedirectException::class);
         Response::redirect('/');
     }
 
     /**
      * Test Helper RedirectTo
-     *
-     * @expectedException \Bluz\Http\Exception\RedirectException
      */
     public function testHelperRedirectTo()
     {
+        $this->expectException(RedirectException::class);
         Response::redirectTo(Router::getDefaultModule(), Router::getDefaultController());
     }
 
     /**
      * Test Helper Reload
-     *
-     * @expectedException \Bluz\Http\Exception\RedirectException
      */
     public function testHelperReload()
     {
+        $this->expectException(RedirectException::class);
         Response::reload();
     }
 }

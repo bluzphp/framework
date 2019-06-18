@@ -7,6 +7,7 @@
 namespace Bluz\Tests\Grid\Source;
 
 use Bluz\Grid\Grid;
+use Bluz\Grid\GridException;
 use Bluz\Grid\Source\SelectSource;
 use Bluz\Tests\FrameworkTestCase;
 use Bluz\Tests\Fixtures\Grid\SelectGrid;
@@ -33,11 +34,10 @@ class SelectSourceTest extends FrameworkTestCase
 
     /**
      * Select Source Exception
-     *
-     * @expectedException \Bluz\Grid\GridException
      */
     public function testSelectSourceThrowsGridException()
     {
+        $this->expectException(GridException::class);
         $adapter = new SelectSource();
         $adapter->setSource('wrong source type');
     }

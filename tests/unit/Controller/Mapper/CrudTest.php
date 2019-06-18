@@ -8,6 +8,7 @@ namespace Bluz\Tests\Controller\Mapper;
 
 use Bluz\Controller\Controller;
 use Bluz\Controller\Mapper\Crud;
+use Bluz\Http\Exception\ForbiddenException;
 use Bluz\Http\RequestMethod;
 use Bluz\Tests\Fixtures\Crud\TableCrud;
 use Bluz\Tests\Fixtures\Models\Test\Table;
@@ -86,11 +87,9 @@ class CrudTest extends FrameworkTestCase
         self::assertInstanceOf(Controller::class, $controller);
     }
 
-    /**
-     * @expectedException \Bluz\Http\Exception\ForbiddenException
-     */
     public function testForbiddenMethod()
     {
+        $this->expectException(ForbiddenException::class);
         self::setRequestParams('test/index', [], [], RequestMethod::GET);
 
         $this->mapper->addMap(RequestMethod::GET, 'test', 'index')->acl('Deny');

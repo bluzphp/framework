@@ -40,11 +40,10 @@ class ValidatorChainTest extends Tests\FrameworkTestCase
 
     /**
      * Complex test with exception
-     *
-     * @expectedException \Bluz\Validator\Exception\ValidatorException
      */
     public function testAssertInvalidDataShouldRaiseException()
     {
+        $this->expectException(ValidatorException::class);
         Validator::alphaNumeric('_')->length(1, 15)->noWhitespace()->assert('invalid username');
     }
 

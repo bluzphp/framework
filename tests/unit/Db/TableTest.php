@@ -53,11 +53,9 @@ class TableTest extends FrameworkTestCase
         );
     }
 
-    /**
-     * @expectedException \Bluz\Db\Exception\InvalidPrimaryKeyException
-     */
     public function testGetPrimaryKeyException()
     {
+        $this->expectException(InvalidPrimaryKeyException::class);
         $table = Db\WrongKeysTable::getInstance();
         $table->getPrimaryKey();
     }
@@ -82,12 +80,12 @@ class TableTest extends FrameworkTestCase
 
     /**
      * @dataProvider getFindWrongData
-     * @expectedException \Bluz\Db\Exception\InvalidPrimaryKeyException
      *
      * @param $keyValues
      */
     public function testFindException($keyValues)
     {
+        $this->expectException(InvalidPrimaryKeyException::class);
         $this->table::find(...$keyValues);
     }
 

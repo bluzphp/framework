@@ -48,21 +48,19 @@ class SingletonTest extends FrameworkTestCase
 
     /**
      * Test Construct Throw Error
-     *
-     * @expectedException \Error
      */
     public function testConstructThrowError()
     {
+        $this->expectException(\Error::class);
         new ConcreteSingleton();
     }
 
     /**
      * Test Clone Throw Error
-     *
-     * @expectedException \Error
      */
     public function testCloneThrowError()
     {
+        $this->expectException(\Error::class);
         clone ConcreteSingleton::getInstance();
     }
 }

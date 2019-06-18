@@ -7,6 +7,7 @@
 namespace Bluz\Tests\Validator;
 
 use Bluz\Tests;
+use Bluz\Validator\Exception\ComponentException;
 use Bluz\Validator\Exception\ValidatorException;
 use Bluz\Validator\Rule\RuleInterface;
 use Bluz\Validator\Validator;
@@ -62,11 +63,9 @@ class ValidatorTest extends Tests\FrameworkTestCase
         self::assertInstanceOf(ValidatorChain::class, Validator::custom());
     }
 
-    /**
-     * @expectedException \Bluz\Validator\Exception\ComponentException
-     */
     public function testInvalidRuleClassShouldRaiseComponentException()
     {
+        $this->expectException(ComponentException::class);
         Validator::iDoNotExistSoIShouldThrowException();
     }
 }

@@ -7,6 +7,7 @@
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
+use Bluz\Validator\Exception\ComponentException;
 use Bluz\Validator\Rule\IpRule as Rule;
 
 /**
@@ -44,12 +45,12 @@ class IpTest extends Tests\FrameworkTestCase
 
     /**
      * @dataProvider providerForComponentException
-     * @expectedException \Bluz\Validator\Exception\ComponentException
      *
      * @param $range
      */
     public function testInvalidRangeShouldRaiseException($range)
     {
+        $this->expectException(ComponentException::class);
         new Rule($range);
     }
 

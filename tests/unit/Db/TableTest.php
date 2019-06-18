@@ -6,6 +6,7 @@
 
 namespace Bluz\Tests\Db;
 
+use Bluz\Db\Exception\InvalidPrimaryKeyException;
 use Bluz\Db\Table;
 use Bluz\Tests\Fixtures\Db;
 use Bluz\Tests\Fixtures\Models\Test\Table as TestTable;

@@ -8,6 +8,7 @@
         "ext-pdo_mysql": "*",
         "ext-json": "*",
         "ext-ctype": "*",
+        "bluzphp/collection": "~1.0",
         "cache/cache": "~1.0",
         "psr/log": "~1.0",
         "zendframework/zend-diactoros": "~2.1.1",

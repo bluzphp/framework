@@ -56,7 +56,7 @@ return
          */
         $attributes['name'] = $name;
 
-        if (!\is_array($selected)) {
+        if (!is_array($selected)) {
             if ($selected === null) {
                 // empty array
                 $selected = [];
@@ -64,7 +64,7 @@ return
                 // convert one option to an array
                 $selected = [(string)$selected];
             }
-        } elseif (\count($selected) > 1) {
+        } elseif (count($selected) > 1) {
             $attributes['multiple'] = 'multiple';
         }
 
@@ -77,7 +77,7 @@ return
         $buildOption = function ($value, $text) use ($selected) {
             $value = (string)$value;
             $option = ['value' => $value];
-            if (\in_array($value, $selected, false)) {
+            if (in_array($value, $selected, false)) {
                 $option['selected'] = 'selected';
             }
             return '<option ' . $this->attributes($option) . '>' . htmlspecialchars(
@@ -90,7 +90,7 @@ return
 
         $result = [];
     foreach ($options as $value => $text) {
-        if (\is_array($text)) {
+        if (is_array($text)) {
             // optgroup support
             // create a list of sub-options
             $subOptions = [];

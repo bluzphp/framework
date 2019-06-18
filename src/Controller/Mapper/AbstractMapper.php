@@ -24,6 +24,7 @@ use Bluz\Http\RequestMethod;
 use Bluz\Proxy\Acl;
 use Bluz\Proxy\Request;
 use Bluz\Proxy\Router;
+use ReflectionException;
 
 /**
  * Mapper for controller
@@ -237,8 +238,6 @@ abstract class AbstractMapper
 
     /**
      * Prepare request for processing
-     *
-     * @throws ControllerException
      */
     protected function prepareRequest(): void
     {
@@ -273,13 +272,12 @@ abstract class AbstractMapper
      * Dispatch REST or CRUD controller
      *
      * @return mixed
-     * @throws ComponentException
      * @throws CommonException
+     * @throws ComponentException
      * @throws ControllerException
      * @throws ForbiddenException
-     * @throws NotAllowedException
-     * @throws NotAcceptableException
      * @throws NotImplementedException
+     * @throws ReflectionException
      */
     protected function dispatch()
     {

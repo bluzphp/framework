@@ -125,7 +125,7 @@ class Relations
         }
 
         // check many-to-many relations
-        if (\count($relations) === 1) {
+        if (count($relations) === 1) {
             $relations = self::getRelations($model, current($relations));
         }
 
@@ -168,7 +168,7 @@ class Relations
         $tableTwoSelect = $tableTwoClass::getInstance()::select();
 
         // check many to many relation
-        if (\is_int(\array_keys($relations)[0])) {
+        if (is_int(\array_keys($relations)[0])) {
             // many to many relation over third table
             $modelThree = $relations[0];
 

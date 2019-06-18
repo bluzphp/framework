@@ -31,6 +31,6 @@ class StringRule extends AbstractRule
      */
     public function validate($input): bool
     {
-        return \is_string($input);
+        return is_string($input);
     }
 }

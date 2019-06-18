@@ -18,7 +18,6 @@ use Bluz\Proxy\Request;
  * Denied helper can be declared inside Bootstrap
  *
  * @return void
- * @throws NotAllowedException
  */
 return
     function () {
@@ -26,7 +25,7 @@ return
          * @var Controller $this
          */
         $methods = $this->getMeta()->getMethod();
-        if ($methods && !\in_array(Request::getMethod(), $methods, true)) {
+        if ($methods && !in_array(Request::getMethod(), $methods, true)) {
             throw new NotAllowedException(implode(',', $methods));
         }
     };

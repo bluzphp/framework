@@ -12,6 +12,9 @@ namespace Bluz\Http;
 
 use Bluz\Common\Container\Container;
 use Bluz\Response\Response;
+use DateTime;
+use DateTimeZone;
+use Exception;
 
 /**
  * HTTP Cache Control
@@ -66,7 +69,7 @@ class CacheControl
                 $parts[] = "$key=$value";
             }
         }
-        if (\count($parts)) {
+        if (count($parts)) {
             $this->response->setHeader('Cache-Control', implode(', ', $parts));
         }
     }
@@ -119,7 +122,7 @@ class CacheControl
         }
 
         if ($expires = $this->getExpires()) {
-            $expires = \DateTime::createFromFormat(DATE_RFC2822, $expires);
+            $expires = DateTime::createFromFormat(DATE_RFC2822, $expires);
             return (int) $expires->format('U') - date('U');
         }
 
@@ -264,19 +267,20 @@ class CacheControl
     /**
      * Sets the Expires HTTP header with a DateTime instance
      *
-     * @param  \DateTime|string $date A \DateTime instance or date as string
+     * @param DateTime|string $date A \DateTime instance or date as string
      *
      * @return void
+     * @throws Exception
      */
     public function setExpires($date): void
     {
-        if ($date instanceof \DateTime) {
+        if ($date instanceof DateTime) {
             $date = clone $date;
         } else {
-            $date = new \DateTime($date);
+            $date = new DateTime($date);
         }
 
-        $date->setTimezone(new \DateTimeZone('UTC'));
+        $date->setTimezone(new DateTimeZone('UTC'));
         $this->response->setHeader('Expires', $date->format('D, d M Y H:i:s') . ' GMT');
     }
 
@@ -293,20 +297,20 @@ class CacheControl
     /**
      * Sets the Last-Modified HTTP header with a DateTime instance or string
      *
-     * @param  \DateTime|string $date A \DateTime instance or date as string
+     * @param  DateTime|string $date A \DateTime instance or date as string
      *
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function setLastModified($date): void
     {
-        if ($date instanceof \DateTime) {
+        if ($date instanceof DateTime) {
             $date = clone $date;
         } else {
-            $date = new \DateTime($date);
+            $date = new DateTime($date);
         }
 
-        $date->setTimezone(new \DateTimeZone('UTC'));
+        $date->setTimezone(new DateTimeZone('UTC'));
         $this->response->setHeader('Last-Modified', $date->format('D, d M Y H:i:s') . ' GMT');
     }
 

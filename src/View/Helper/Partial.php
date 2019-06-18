@@ -45,7 +45,7 @@ return
             throw new ViewException("Template '{$__template}' not found");
         }
 
-        if (\count($__params)) {
+        if (count($__params)) {
             extract($__params, EXTR_SKIP);
         }
 

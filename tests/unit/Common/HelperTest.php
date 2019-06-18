@@ -6,6 +6,7 @@
 
 namespace Bluz\Tests\Common;
 
+use Bluz\Common\Exception\CommonException;
 use Bluz\Tests\FrameworkTestCase;
 use Bluz\Tests\Fixtures\Common\ConcreteHelpers;
 
@@ -37,21 +38,19 @@ class HelperTest extends FrameworkTestCase
 
     /**
      * Helper paths is not initialized, and helper file not found
-     *
-     * @expectedException \Bluz\Common\Exception\CommonException
      */
     public function testInvalidHelperCall()
     {
+        $this->expectException(CommonException::class);
         $this->class->helperFunction(self::MAGIC_NUMBER);
     }
 
     /**
      * Helper path initialized, but file consists some stuff, it's not callable
-     *
-     * @expectedException \Bluz\Common\Exception\CommonException
      */
     public function testInvalidHelperCall2()
     {
+        $this->expectException(CommonException::class);
         $this->class->addHelperPath(__DIR__ . '/Fixtures/Helper');
         $this->class->helperInvalidFunction(self::MAGIC_NUMBER);
     }

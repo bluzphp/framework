@@ -11,10 +11,14 @@ declare(strict_types=1);
 namespace Bluz\Router;
 
 use Bluz\Application\Application;
+use Bluz\Common\Exception\CommonException;
+use Bluz\Common\Exception\ComponentException;
 use Bluz\Common\Options;
 use Bluz\Controller\Controller;
+use Bluz\Controller\ControllerException;
 use Bluz\Proxy\Cache;
 use Bluz\Proxy\Request;
+use ReflectionException;
 
 /**
  * Router
@@ -107,10 +111,10 @@ class Router
      * Initial routers data from controllers
      *
      * @return array[]
-     * @throws \Bluz\Common\Exception\CommonException
-     * @throws \Bluz\Common\Exception\ComponentException
-     * @throws \Bluz\Controller\ControllerException
-     * @throws \ReflectionException
+     * @throws CommonException
+     * @throws ComponentException
+     * @throws ControllerException
+     * @throws ReflectionException
      */
     private function prepareRouterData()
     {
@@ -328,7 +332,7 @@ class Router
         if ($this->cleanUri === null) {
             $uri = Request::getUri()->getPath();
             if ($this->getBaseUrl() && strpos($uri, $this->getBaseUrl()) === 0) {
-                $uri = substr($uri, \strlen($this->getBaseUrl()));
+                $uri = substr($uri, strlen($this->getBaseUrl()));
             }
             $this->cleanUri = $uri;
         }
@@ -352,7 +356,7 @@ class Router
         $module = $module ?? Request::getModule();
         $controller = $controller ?? Request::getController();
 
-        if (isset($this->reverse[$module], $this->reverse[$module][$controller])) {
+        if (isset($this->reverse[$module][$controller])) {
             return $this->urlCustom($module, $controller, $params);
         }
 
@@ -376,7 +380,7 @@ class Router
         $scheme = Request::getUri()->getScheme() . '://';
         $host = Request::getUri()->getHost();
         $port = Request::getUri()->getPort();
-        if ($port && !\in_array($port, [80, 443], true)) {
+        if ($port && !in_array($port, [80, 443], true)) {
             $host .= ':' . $port;
         }
         $url = $this->getUrl($module, $controller, $params);
@@ -399,7 +403,7 @@ class Router
         $getParams = [];
         foreach ($params as $key => $value) {
             // sub-array as GET params
-            if (\is_array($value)) {
+            if (is_array($value)) {
                 $getParams[$key] = $value;
                 continue;
             }
@@ -446,7 +450,7 @@ class Router
         $getParams = [];
         foreach ($params as $key => $value) {
             // sub-array as GET params
-            if (\is_array($value)) {
+            if (is_array($value)) {
                 $getParams[$key] = $value;
                 continue;
             }
@@ -461,16 +465,15 @@ class Router
     /**
      * Process routing
      *
-     * @return \Bluz\Router\Router
+     * @return void
      */
-    public function process()
+    public function process(): void
     {
         $this->processDefault() || // try to process default router (homepage)
         $this->processCustom() ||  //  or custom routers
         $this->processRoute();     //  or default router schema
 
         $this->resetRequest();
-        return $this;
     }
 
     /**
@@ -526,14 +529,14 @@ class Router
         $raw = explode('/', $uri);
 
         // rewrite module from request
-        if (\count($raw)) {
+        if (count($raw)) {
             $this->setParam('_module', array_shift($raw));
         }
         // rewrite module from controller
-        if (\count($raw)) {
+        if (count($raw)) {
             $this->setParam('_controller', array_shift($raw));
         }
-        if ($size = \count($raw)) {
+        if ($size = count($raw)) {
             // save raw
             $this->rawParams = $raw;
 
@@ -545,7 +548,7 @@ class Router
             // remove tail
             if ($size % 2 === 1) {
                 array_pop($raw);
-                $size = \count($raw);
+                $size = count($raw);
             }
             // or use array_chunk and run another loop?
             for ($i = 0; $i < $size; $i += 2) {

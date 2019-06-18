@@ -93,16 +93,16 @@ class LengthRule extends AbstractCompareRule
      */
     protected function extractLength($input)
     {
-        if (\is_string($input)) {
+        if (is_string($input)) {
             return mb_strlen($input, mb_detect_encoding($input));
         }
 
-        if (\is_array($input) || $input instanceof Countable) {
-            return \count($input);
+        if (is_array($input) || $input instanceof Countable) {
+            return count($input);
         }
 
-        if (\is_object($input)) {
-            return \count(get_object_vars($input));
+        if (is_object($input)) {
+            return count(get_object_vars($input));
         }
         return false;
     }

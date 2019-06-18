@@ -8,6 +8,8 @@ namespace Bluz\Tests\Controller\Mapper;
 
 use Bluz\Controller\Controller;
 use Bluz\Controller\Mapper\Rest;
+use Bluz\Http\Exception\NotImplementedException;
+use Bluz\Http\Exception\ForbiddenException;
 use Bluz\Http\RequestMethod;
 use Bluz\Tests\Fixtures\Crud\TableCrud;
 use Bluz\Tests\Fixtures\Models\Test\Table;
@@ -83,19 +85,15 @@ class RestTest extends FrameworkTestCase
         self::assertInstanceOf(Controller::class, $controller);
     }
 
-    /**
-     * @expectedException \Bluz\Http\Exception\NotImplementedException
-     */
     public function testNotImplementedMethod()
     {
+        $this->expectException(NotImplementedException::class);
         $this->mapper->run();
     }
 
-    /**
-     * @expectedException \Bluz\Http\Exception\ForbiddenException
-     */
     public function testForbiddenMethod()
     {
+        $this->expectException(ForbiddenException::class);
         self::setRequestParams('test/index', [], [], RequestMethod::GET);
 
         $this->mapper->addMap(RequestMethod::GET, 'test', 'index')->acl('Deny');

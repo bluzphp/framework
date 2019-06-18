@@ -70,9 +70,6 @@ class Response
 
     /**
      * send
-     *
-     * @throws NotAcceptableException
-     * @throws \InvalidArgumentException
      */
     public function send(): void
     {

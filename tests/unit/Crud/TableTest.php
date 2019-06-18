@@ -6,6 +6,7 @@
 
 namespace Bluz\Tests\Crud;
 
+use Bluz\Http\Exception\NotFoundException;
 use Bluz\Proxy\Db;
 use Bluz\Tests\Fixtures\Crud\TableCrud;
 use Bluz\Tests\Fixtures\Models\Test\Row;
@@ -98,11 +99,10 @@ class TableTest extends FrameworkTestCase
 
     /**
      * Method readOne with invalid $primary should throw exception
-     *
-     * @expectedException \Bluz\Http\Exception\NotFoundException
      */
     public function testReadOneWithInvalidPrimary()
     {
+        $this->expectException(NotFoundException::class);
         $this->crudTable->readOne(10000);
     }
 
@@ -163,11 +163,10 @@ class TableTest extends FrameworkTestCase
 
     /**
      * Method UpdateOne with invalid primary should throw exception
-     *
-     * @expectedException \Bluz\Http\Exception\NotFoundException
      */
     public function testUpdateOneWithInvalidPrimary()
     {
+        $this->expectException(NotFoundException::class);
         $this->crudTable->updateOne(
             10000,
             [
@@ -189,11 +188,10 @@ class TableTest extends FrameworkTestCase
 
     /**
      * Method DeleteOne with invalid primary should throw exception
-     *
-     * @expectedException \Bluz\Http\Exception\NotFoundException
      */
     public function testDeleteOneWithInvalidPrimary()
     {
+        $this->expectException(NotFoundException::class);
         $this->crudTable->deleteOne(10000);
     }
 }

@@ -6,6 +6,7 @@
 
 namespace Bluz\Tests\Db;
 
+use Bluz\Db\Exception\InvalidPrimaryKeyException;
 use Bluz\Db\Table;
 use Bluz\Tests\Fixtures\Db;
 use Bluz\Tests\Fixtures\Models\Test\Table as TestTable;
@@ -53,11 +54,9 @@ class TableTest extends FrameworkTestCase
         );
     }
 
-    /**
-     * @expectedException \Bluz\Db\Exception\InvalidPrimaryKeyException
-     */
     public function testGetPrimaryKeyException()
     {
+        $this->expectException(InvalidPrimaryKeyException::class);
         $table = Db\WrongKeysTable::getInstance();
         $table->getPrimaryKey();
     }
@@ -82,12 +81,12 @@ class TableTest extends FrameworkTestCase
 
     /**
      * @dataProvider getFindWrongData
-     * @expectedException \Bluz\Db\Exception\InvalidPrimaryKeyException
      *
      * @param $keyValues
      */
     public function testFindException($keyValues)
     {
+        $this->expectException(InvalidPrimaryKeyException::class);
         $this->table::find(...$keyValues);
     }
 

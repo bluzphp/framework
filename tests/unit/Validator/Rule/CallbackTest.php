@@ -67,11 +67,9 @@ class CallbackTest extends Tests\FrameworkTestCase
         self::assertTrue($rule->validate('test'));
     }
 
-    /**
-     * @expectedException \TypeError
-     */
     public function testInvalidCallbacksShouldRaiseComponentExceptionUponInstantiation()
     {
+        $this->expectException(\TypeError::class);
         new Rule(new \stdClass);
     }
 

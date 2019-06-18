@@ -10,9 +10,11 @@ declare(strict_types=1);
 
 namespace Bluz\Messages;
 
+use ArrayObject;
 use Bluz\Common\Options;
 use Bluz\Proxy\Session;
 use Bluz\Proxy\Translator;
+use stdClass;
 
 /**
  * Realization of Flash Messages
@@ -99,13 +101,13 @@ class Messages
      *
      * @param  string $type
      *
-     * @return \stdClass|null
+     * @return stdClass|null
      */
-    public function pop($type): ?\stdClass
+    public function pop($type): ?stdClass
     {
         $text = array_shift($this->getMessagesStore()[$type]);
         if ($text) {
-            $message = new \stdClass();
+            $message = new stdClass();
             $message->text = $text;
             $message->type = $type;
             return $message;
@@ -116,7 +118,7 @@ class Messages
     /**
      * Pop all messages
      *
-     * @return \ArrayObject|array
+     * @return ArrayObject|array
      */
     public function popAll()
     {
@@ -137,7 +139,7 @@ class Messages
             return $size;
         }
         foreach ($store as $messages) {
-            $size += \count($messages);
+            $size += count($messages);
         }
         return $size;
     }
@@ -145,10 +147,10 @@ class Messages
     /**
      * Reset messages
      *
-     * @param \ArrayObject $store
+     * @param ArrayObject $store
      * @return void
      */
-    protected function setMessagesStore(\ArrayObject $store): void
+    protected function setMessagesStore(ArrayObject $store): void
     {
         Session::set('messages:store', $store);
     }
@@ -156,9 +158,9 @@ class Messages
     /**
      * Returns current or new messages store if it not exists
      *
-     * @return \ArrayObject
+     * @return ArrayObject
      */
-    protected function getMessagesStore(): \ArrayObject
+    protected function getMessagesStore(): ArrayObject
     {
         if (!$store = Session::get('messages:store')) {
             $this->resetMessagesStore();
@@ -179,11 +181,11 @@ class Messages
     /**
      * Creates a new empty store for messages
      *
-     * @return \ArrayObject
+     * @return ArrayObject
      */
-    protected function createEmptyMessagesStore(): \ArrayObject
+    protected function createEmptyMessagesStore(): ArrayObject
     {
-        return new \ArrayObject(
+        return new ArrayObject(
             [
                 self::TYPE_ERROR => [],
                 self::TYPE_SUCCESS => [],

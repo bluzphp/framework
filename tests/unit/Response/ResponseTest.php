@@ -139,27 +139,21 @@ class ResponseTest extends FrameworkTestCase
         );
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testSetCookieWithWrongCookieNameThrowException()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->response->setCookie('foo=', 'bar');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testSetCookieWithEmptyCookieNameThrowException()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->response->setCookie('', 'bar');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testSetCookieWithWrongDateNameThrowException()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->response->setCookie('foo', 'bar', 'the day before sunday');
     }
 }

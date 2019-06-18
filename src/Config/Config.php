@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Bluz\Config;
 
-use Bluz\Common\Collection;
+use Bluz\Collection\Collection;
 use Bluz\Common\Container\Container;
 use Bluz\Common\Container\RegularAccess;
 
@@ -41,7 +41,7 @@ class Config
             throw new ConfigException('System configuration is missing');
         }
 
-        if (!\count($keys)) {
+        if (!count($keys)) {
             return $this->container;
         }
 

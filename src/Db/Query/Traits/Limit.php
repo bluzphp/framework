@@ -26,7 +26,7 @@ trait Limit
     /**
      * @var integer the maximum number of results to retrieve/update/delete
      */
-    protected $limit = null;
+    protected $limit;
 
     /**
      * @var integer the index of the first result to retrieve.
@@ -55,9 +55,9 @@ trait Limit
      *
      * @return $this
      */
-    public function setLimit($limit): self
+    public function setLimit(int $limit): self
     {
-        $this->limit = (int)$limit;
+        $this->limit = $limit;
         return $this;
     }
 
@@ -68,9 +68,9 @@ trait Limit
      *
      * @return $this
      */
-    public function setOffset($offset): self
+    public function setOffset(int $offset): self
     {
-        $this->offset = (int)$offset;
+        $this->offset = $offset;
         return $this;
     }
 

@@ -6,6 +6,7 @@
 
 namespace Bluz\Tests\Crud;
 
+use Bluz\Http\Exception\NotImplementedException;
 use Bluz\Tests\Fixtures\Crud\EmptyCrud;
 use Bluz\Tests\FrameworkTestCase;
 
@@ -21,73 +22,73 @@ class CrudTest extends FrameworkTestCase
 {
     /**
      * @covers \Bluz\Crud\AbstractCrud::readOne()
-     * @expectedException \Bluz\Http\Exception\NotImplementedException
      */
     public function testNotImplementedReadOneMethodThrowException()
     {
+        $this->expectException(NotImplementedException::class);
         EmptyCrud::getInstance()->readOne('any');
     }
 
     /**
      * @covers \Bluz\Crud\AbstractCrud::readSet()
-     * @expectedException \Bluz\Http\Exception\NotImplementedException
      */
     public function testNotImplementedReadSetMethodThrowException()
     {
+        $this->expectException(NotImplementedException::class);
         EmptyCrud::getInstance()->readSet();
     }
 
     /**
      * @covers \Bluz\Crud\AbstractCrud::createOne()
-     * @expectedException \Bluz\Http\Exception\NotImplementedException
      */
     public function testNotImplementedCreateOneMethodThrowException()
     {
+        $this->expectException(NotImplementedException::class);
         EmptyCrud::getInstance()->createOne([]);
     }
 
     /**
      * @covers \Bluz\Crud\AbstractCrud::createSet()
-     * @expectedException \Bluz\Http\Exception\NotImplementedException
      */
     public function testNotImplementedCreateSetMethodThrowException()
     {
+        $this->expectException(NotImplementedException::class);
         EmptyCrud::getInstance()->createSet([]);
     }
 
     /**
      * @covers \Bluz\Crud\AbstractCrud::updateOne()
-     * @expectedException \Bluz\Http\Exception\NotImplementedException
      */
     public function testNotImplementedUpdateOneMethodThrowException()
     {
+        $this->expectException(NotImplementedException::class);
         EmptyCrud::getInstance()->updateOne('any', []);
     }
 
     /**
      * @covers \Bluz\Crud\AbstractCrud::updateSet()
-     * @expectedException \Bluz\Http\Exception\NotImplementedException
      */
     public function testNotImplementedUpdateSetMethodThrowException()
     {
+        $this->expectException(NotImplementedException::class);
         EmptyCrud::getInstance()->updateSet([]);
     }
 
     /**
      * @covers \Bluz\Crud\AbstractCrud::deleteOne()
-     * @expectedException \Bluz\Http\Exception\NotImplementedException
      */
     public function testNotImplementedDeleteOneMethodThrowException()
     {
+        $this->expectException(NotImplementedException::class);
         EmptyCrud::getInstance()->deleteOne('any');
     }
 
     /**
      * @covers \Bluz\Crud\AbstractCrud::deleteSet()
-     * @expectedException \Bluz\Http\Exception\NotImplementedException
      */
     public function testNotImplementedDeleteSetMethodThrowException()
     {
+        $this->expectException(NotImplementedException::class);
         EmptyCrud::getInstance()->deleteSet([]);
     }
 }

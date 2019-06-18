@@ -7,6 +7,7 @@
 namespace Bluz\Tests\Grid;
 
 use Bluz\Grid\Grid;
+use Bluz\Grid\GridException;
 use Bluz\Proxy\Request;
 use Bluz\Tests\FrameworkTestCase;
 use Bluz\Tests\Fixtures\Grid\ArrayGrid;
@@ -114,20 +115,16 @@ class GridTest extends FrameworkTestCase
         self::assertEquals('arr-', $grid->getPrefix());
     }
 
-    /**
-     * @expectedException \Bluz\Grid\GridException
-     */
     public function testWrongPageThrowException()
     {
+        $this->expectException(GridException::class);
         $grid = new ArrayGrid();
         $grid->setPage(0);
     }
 
-    /**
-     * @expectedException \Bluz\Grid\GridException
-     */
     public function testWrongLimitThrowException()
     {
+        $this->expectException(GridException::class);
         $grid = new ArrayGrid();
         $grid->setLimit(0);
     }
@@ -141,29 +138,23 @@ class GridTest extends FrameworkTestCase
         self::assertEquals(4, $grid->getDefaultLimit());
     }
 
-    /**
-     * @expectedException \Bluz\Grid\GridException
-     */
     public function testWrongDefaultLimitThrowException()
     {
+        $this->expectException(GridException::class);
         $grid = new ArrayGrid();
         $grid->setDefaultLimit(0);
     }
 
-    /**
-     * @expectedException \Bluz\Grid\GridException
-     */
     public function testWrongColumnFilterThrowException()
     {
+        $this->expectException(GridException::class);
         $grid = new ArrayGrid();
         $grid->addFilter('not exist', Grid::FILTER_EQ, 'not found');
     }
 
-    /**
-     * @expectedException \Bluz\Grid\GridException
-     */
     public function testWrongFilterNameThrowException()
     {
+        $this->expectException(GridException::class);
         $grid = new ArrayGrid();
         $grid->addFilter('id', 'not exist', 'not found');
     }

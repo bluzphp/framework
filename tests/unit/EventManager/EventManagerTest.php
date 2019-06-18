@@ -8,6 +8,7 @@ namespace Bluz\Tests;
 
 use Bluz;
 use Bluz\EventManager\Event;
+use Bluz\EventManager\EventException;
 use Bluz\EventManager\EventManager;
 
 /**
@@ -202,11 +203,10 @@ class EventManagerTest extends Bluz\Tests\FrameworkTestCase
 
     /**
      * Test wrong params
-     *
-     * @expectedException Bluz\EventManager\EventException
      */
     public function testEventSetParamsException()
     {
+        $this->expectException(EventException::class);
         $this->eventManager->trigger('test', null, 'wrong type params');
     }
 }

@@ -35,7 +35,7 @@ return
                 continue;
             }
 
-            if (\is_int($key)) {
+            if (is_int($key)) {
                 // allow non-associative keys
                 //   input: [checked, disabled]
                 //   output: 'checked disabled'

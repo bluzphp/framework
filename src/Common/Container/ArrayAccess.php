@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace Bluz\Common\Container;
 
+use InvalidArgumentException;
+
 /**
  * Container implements ArrayAccess
  *
@@ -30,12 +32,12 @@ trait ArrayAccess
      * @param  mixed $offset
      * @param  mixed $value
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function offsetSet($offset, $value): void
     {
         if (null === $offset) {
-            throw new \InvalidArgumentException('Class `Common\Container\ArrayAccess` support only associative arrays');
+            throw new InvalidArgumentException('Class `Common\Container\ArrayAccess` support only associative arrays');
         }
         $this->doSetContainer($offset, $value);
     }

@@ -80,7 +80,7 @@ class Table extends AbstractCrud
         $select = $this->getTable()::select();
 
         // select only required fields
-        if (\count($this->getFields())) {
+        if (count($this->getFields())) {
             $fields = $this->getFields();
             $name = $this->getTable()->getName();
             $fields = array_map(

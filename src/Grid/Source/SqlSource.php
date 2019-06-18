@@ -35,7 +35,7 @@ class SqlSource extends AbstractSource
      */
     public function setSource($source): void
     {
-        if (!\is_string($source)) {
+        if (!is_string($source)) {
             throw new Grid\GridException('Source of `SqlSource` should be string with SQL query');
         }
         parent::setSource($source);
@@ -63,15 +63,15 @@ class SqlSource extends AbstractSource
             // other
             $dataSql = $this->source;
             $totalSql = preg_replace('/SELECT\s(.*?)\sFROM/is', 'SELECT COUNT(*) FROM', $this->source, 1);
-            if (\count($filters)) {
+            if (count($filters)) {
                 $totalSql .= ' WHERE ' . implode(' AND ', $filters);
             }
         }
 
-        if (\count($filters)) {
+        if (count($filters)) {
             $dataSql .= ' WHERE ' . implode(' AND ', $filters);
         }
-        if (\count($orders)) {
+        if (count($orders)) {
             $dataSql .= ' ORDER BY ' . implode(', ', $orders);
         }
         // process pages

@@ -7,6 +7,7 @@
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
+use Bluz\Validator\Exception\ValidatorException;
 use Bluz\Validator\Rule\VersionRule as Rule;
 
 /**
@@ -54,12 +55,12 @@ class VersionTest extends Tests\FrameworkTestCase
 
     /**
      * @dataProvider providerForFail
-     * @expectedException \Bluz\Validator\Exception\ValidatorException
      *
      * @param $input
      */
     public function testInvalidVersionNumberShouldThrowException($input)
     {
+        $this->expectException(ValidatorException::class);
         $this->rule->assert($input);
     }
 

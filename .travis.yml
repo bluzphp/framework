@@ -1,6 +1,5 @@
 language: php
 php:
-  - 7.1
   - 7.2
   - 7.3
   - master
@@ -31,7 +30,7 @@ script:
   - php vendor/bin/phpcs ./src --standard=PSR1,PSR2 --encoding=utf-8
   # Complexity of code
   - php vendor/bin/phploc ./src
-  # Run CodeCeption tests
+  # Run Codeception tests
   - php vendor/bin/codecept run --coverage --coverage-xml
 after_success:
   # Upload coverage report

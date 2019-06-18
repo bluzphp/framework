@@ -7,6 +7,7 @@
 namespace Bluz\Tests\Grid\Source;
 
 use Bluz\Grid\Grid;
+use Bluz\Grid\GridException;
 use Bluz\Grid\Source\ArraySource;
 use Bluz\Tests\FrameworkTestCase;
 use Bluz\Tests\Fixtures\Grid\ArrayGrid;
@@ -30,11 +31,10 @@ class ArraySourceTest extends FrameworkTestCase
 
     /**
      * Array Source Exception
-     *
-     * @expectedException \Bluz\Grid\GridException
      */
     public function testArraySourceThrowsGridException()
     {
+        $this->expectException(GridException::class);
         $adapter = new ArraySource();
         $adapter->setSource('wrong source type');
     }

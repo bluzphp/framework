@@ -170,11 +170,12 @@ final class Cache
     /**
      * Clear cache items by tag
      *
-     * @see    TaggableCacheItemPoolInterface::invalidateTag()
-     *
      * @param string $tag
      *
      * @return bool
+     * @throws InvalidArgumentException
+     * @see    TaggableCacheItemPoolInterface::invalidateTag()
+     *
      */
     public static function clearTag($tag): bool
     {
@@ -187,11 +188,12 @@ final class Cache
     /**
      * Clear cache items by tags
      *
-     * @see    TaggableCacheItemPoolInterface::invalidateTags()
-     *
      * @param array $tags
      *
      * @return bool
+     * @throws InvalidArgumentException
+     * @see    TaggableCacheItemPoolInterface::invalidateTags()
+     *
      */
     public static function clearTags(array $tags): bool
     {

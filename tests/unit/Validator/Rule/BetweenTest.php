@@ -7,6 +7,7 @@
 namespace Bluz\Tests\Validator\Rule;
 
 use Bluz\Tests;
+use Bluz\Validator\Exception\ComponentException;
 use Bluz\Validator\Rule\BetweenRule as Rule;
 
 /**
@@ -46,13 +47,13 @@ class BetweenTest extends Tests\FrameworkTestCase
 
     /**
      * @dataProvider providerForComponentException
-     * @expectedException \Bluz\Validator\Exception\ComponentException
      *
      * @param $min
      * @param $max
      */
     public function testInvalidConstructionParamsShouldRaiseException($min, $max)
     {
+        $this->expectException(ComponentException::class);
         new Rule($min, $max);
     }
 

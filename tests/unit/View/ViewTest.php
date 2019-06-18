@@ -9,6 +9,7 @@ namespace Bluz\Tests\View;
 use Bluz\Proxy\Router;
 use Bluz\Tests\FrameworkTestCase;
 use Bluz\View\View;
+use Bluz\View\ViewException;
 
 /**
  * ViewTest
@@ -88,6 +89,9 @@ class ViewTest extends FrameworkTestCase
      * Get new View instance
      *
      * @return View
+     * @throws \Bluz\Application\Exception\ApplicationException
+     * @throws \Bluz\Common\Exception\CommonException
+     * @throws \ReflectionException
      */
     protected function getView()
     {
@@ -283,13 +287,11 @@ class ViewTest extends FrameworkTestCase
 
     /**
      * Helper Partial throws
-     *
-     * @expectedException \Bluz\View\ViewException
      */
     public function testHelperPartialNotFoundTrowsException()
     {
+        $this->expectException(ViewException::class);
         $view = $this->getView();
-
         $view->partial('file-not-exists.phtml');
     }
 
@@ -307,11 +309,10 @@ class ViewTest extends FrameworkTestCase
 
     /**
      * Helper Partial Loop throws
-     *
-     * @expectedException \InvalidArgumentException
      */
     public function testHelperPartialLoopInvalidArgumentsTrowsException()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $view = $this->getView();
 
         $view->partialLoop('file-not-exists.phtml', null);
@@ -319,11 +320,10 @@ class ViewTest extends FrameworkTestCase
 
     /**
      * Helper Partial Loop throws
-     *
-     * @expectedException \Bluz\View\ViewException
      */
     public function testHelperPartialLoopNotFoundTrowsException()
     {
+        $this->expectException(ViewException::class);
         $view = $this->getView();
 
         $view->partialLoop('file-not-exists.phtml', ['foo', 'bar']);
@@ -530,11 +530,10 @@ class ViewTest extends FrameworkTestCase
 
     /**
      * Helper Url Exceptions
-     *
-     * @expectedException \Bluz\View\ViewException
      */
     public function testHelperUrlException()
     {
+        $this->expectException(ViewException::class);
         $view = $this->getView();
 
         self::assertEquals('/test/test', $view->url('test', 'test', [], true));

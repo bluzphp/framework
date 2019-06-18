@@ -13,6 +13,8 @@ namespace Bluz\Controller;
 use Bluz\Common\Exception\ComponentException;
 use Bluz\Common\Options;
 use Bluz\Proxy\Request;
+use Closure;
+use ReflectionException;
 
 /**
  * Meta information from reflection of the function
@@ -100,14 +102,14 @@ class Meta
      *
      * @return void
      * @throws ComponentException
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function process(): void
     {
-        /** @var \Closure|object $closure */
+        /** @var Closure|object $closure */
         $closure = include $this->file;
 
-        if (!\is_callable($closure)) {
+        if (!is_callable($closure)) {
             throw new ComponentException("There is no callable structure in file `{$this->file}`");
         }
 
@@ -256,7 +258,7 @@ class Meta
      */
     public function getAccept(): ?array
     {
-        return \count($this->accept) ? $this->accept : null;
+        return count($this->accept) ? $this->accept : null;
     }
 
     /**
@@ -289,7 +291,7 @@ class Meta
      */
     public function getAcl(): ?array
     {
-        return \count($this->acl) ? $this->acl : null;
+        return count($this->acl) ? $this->acl : null;
     }
 
     /**
@@ -311,7 +313,7 @@ class Meta
      */
     public function getMethod(): ?array
     {
-        return \count($this->method) ? $this->method : null;
+        return count($this->method) ? $this->method : null;
     }
 
     /**
@@ -385,7 +387,7 @@ class Meta
      */
     public function getRoute(): ?array
     {
-        return \count($this->route) ? $this->route : null;
+        return count($this->route) ? $this->route : null;
     }
 
     /**

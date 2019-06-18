@@ -6,6 +6,7 @@
 
 namespace Bluz\Tests\Controller;
 
+use Bluz\Common\Exception\ComponentException;
 use Bluz\Controller\Meta;
 use Bluz\Tests\FrameworkTestCase;
 
@@ -72,11 +73,10 @@ class MetaTest extends FrameworkTestCase
 
     /**
      * Test reflection without return structure
-     *
-     * @expectedException \Bluz\Common\Exception\ComponentException
      */
     public function testReflectionWithoutReturn()
     {
+        $this->expectException(ComponentException::class);
         $controllerFile = __DIR__ . '/Fixtures/ConcreteWithoutReturn.php';
 
         $meta = new Meta($controllerFile);

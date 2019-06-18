@@ -15,10 +15,15 @@ use Bluz\Auth\IdentityInterface;
 use Bluz\Common\Exception\CommonException;
 use Bluz\Common\Exception\ComponentException;
 use Bluz\Common\Helper;
+use Bluz\Http\Exception\ForbiddenException;
 use Bluz\Proxy\Cache;
 use Bluz\Proxy\Logger;
 use Bluz\Response\ResponseTrait;
 use Bluz\View\View;
+use Closure;
+use Exception;
+use JsonSerializable;
+use ReflectionException;
 
 /**
  * Statement
@@ -42,7 +47,7 @@ use Bluz\View\View;
  * @method void useLayout($layout)
  * @method IdentityInterface user()
  */
-class Controller implements \JsonSerializable
+class Controller implements JsonSerializable
 {
     use Helper;
     use ResponseTrait;
@@ -179,7 +184,7 @@ class Controller implements \JsonSerializable
      * @return Data
      * @throws ComponentException
      * @throws ControllerException
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function run(): Data
     {
@@ -196,7 +201,7 @@ class Controller implements \JsonSerializable
      * @return Data
      * @throws ComponentException
      * @throws ControllerException
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     protected function process(): Data
     {
@@ -206,11 +211,11 @@ class Controller implements \JsonSerializable
         $params = $this->params;
 
         /**
-         * @var \closure $controllerClosure
+         * @var Closure $controllerClosure
          */
         $controllerClosure = include $this->getFile();
 
-        if (!\is_callable($controllerClosure)) {
+        if (!is_callable($controllerClosure)) {
             throw new ControllerException("Controller is not callable '{$module}/{$controller}'");
         }
 
@@ -227,11 +232,11 @@ class Controller implements \JsonSerializable
                 $this->disableLayout();
                 $this->disableView();
                 break;
-            case \is_string($result):
+            case is_string($result):
                 // return string variable is equal to change view template
                 $this->setTemplate($result);
                 break;
-            case \is_array($result):
+            case is_array($result):
                 // return associative array is equal to setup view data
                 $this->getData()->setFromArray($result);
                 break;
@@ -249,7 +254,7 @@ class Controller implements \JsonSerializable
      *
      * @return void
      * @throws ControllerException
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     protected function findFile(): void
     {
@@ -268,7 +273,7 @@ class Controller implements \JsonSerializable
      *
      * @return string
      * @throws ControllerException
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     protected function getFile(): string
     {
@@ -284,7 +289,7 @@ class Controller implements \JsonSerializable
      * @return void
      * @throws ComponentException
      * @throws ControllerException
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     protected function initMeta(): void
     {
@@ -311,7 +316,7 @@ class Controller implements \JsonSerializable
      * @return Meta
      * @throws ControllerException
      * @throws ComponentException
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function getMeta(): Meta
     {
@@ -353,7 +358,7 @@ class Controller implements \JsonSerializable
      * @return bool
      * @throws ComponentException
      * @throws ControllerException
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     private function loadData(): bool
     {
@@ -372,7 +377,7 @@ class Controller implements \JsonSerializable
      * @return bool
      * @throws ComponentException
      * @throws ControllerException
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     private function saveData(): bool
     {
@@ -429,7 +434,7 @@ class Controller implements \JsonSerializable
             // setup data
             $view->setFromArray($this->getData()->toArray());
             return $view->render();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // save log
             Logger::exception($e);
             return '';

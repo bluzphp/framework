@@ -7,6 +7,8 @@
 namespace Bluz\Tests\Db;
 
 use Bluz;
+use Bluz\Db\Exception\RelationNotFoundException;
+use Bluz\Db\Exception\TableNotFoundException;
 use Bluz\Db\Row;
 use Bluz\Db\Table;
 use Bluz\Tests\Fixtures\Db;
@@ -100,10 +102,10 @@ class RowTest extends FrameworkTestCase
 
     /**
      * @covers \Bluz\Db\Row::getTable
-     * @expectedException Bluz\Db\Exception\TableNotFoundException
      */
     public function testGetTableException()
     {
+        $this->expectException(TableNotFoundException::class);
         $this->row = new Db\ConcreteRowWithInvalidTable();
         $this->row->getTable();
     }
@@ -117,11 +119,9 @@ class RowTest extends FrameworkTestCase
         self::markTestIncomplete('This test has not been implemented yet.');
     }
 
-    /**
-     * @expectedException Bluz\Db\Exception\RelationNotFoundException
-     */
     public function testGetRelationException()
     {
+        $this->expectException(RelationNotFoundException::class);
         $this->row->getRelation('wrongRelation');
     }
 

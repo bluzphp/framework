@@ -7,6 +7,7 @@
 namespace Bluz\Tests\Db;
 
 use Bluz;
+use Bluz\Common\Exception\ConfigurationException;
 use Bluz\Db;
 use Bluz\Proxy;
 use Bluz\Db\Query\Select;
@@ -57,11 +58,10 @@ class DbTest extends Bluz\Tests\FrameworkTestCase
 
     /**
      * Initial Db with empty configuration
-     *
-     * @expectedException \Bluz\Common\Exception\ConfigurationException
      */
     public function testCheckConnectException()
     {
+        $this->expectException(ConfigurationException::class);
         $db = new Db\Db();
         $db->setConnect([]);
     }
@@ -226,11 +226,10 @@ class DbTest extends Bluz\Tests\FrameworkTestCase
 
     /**
      * Transaction fail
-     *
-     * @expectedException \TypeError
      */
     public function testTransactionInvalidCallbackThrowException()
     {
+        $this->expectException(\TypeError::class);
         $this->db->transaction('foo');
     }
 

@@ -29,6 +29,7 @@ return
          */
         $defaultSettings = [
             'imageUpload' => $this->url('media', 'upload'),    // default media upload controller
+            'imageUploadParam' => 'files',
             'imageManagerJson' => $this->url('media', 'list'), // default images list
             'plugins' => ['imagemanager']
         ];
@@ -38,8 +39,8 @@ return
         $html = '';
         $html .= $this->style('redactor/redactor.css');
         $html .= $this->scriptBlock(
-            'require(["jquery", "redactor", "redactor.imagemanager"], function($) {
-                $("' . $selector . '").redactor(' . json_encode($settings) . ');
+            'require(["redactor", "imagemanager"], function($R) {
+                $R("' . $selector . '", ' . json_encode($settings) . ');
             });'
         );
         return $html;

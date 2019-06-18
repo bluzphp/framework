@@ -230,6 +230,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
      * @return integer The number of rows updated
      * @throws InvalidPrimaryKeyException
      * @throws TableNotFoundException
+     * @throws DbException
      */
     protected function doUpdate(): int
     {
@@ -254,6 +255,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
          */
         $diffData = array_diff_assoc($data, $this->clean);
 
+        /* @var Table $table */
         $table = $this->getTable();
 
         $diffData = $table::filterColumns($diffData);

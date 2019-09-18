@@ -2,10 +2,12 @@ language: php
 php:
   - 7.2
   - 7.3
-  - master
+  - nightly
+services:
+  - mysql
 matrix:
   allow_failures:
-    - php: master
+    - php: nightly
 env:
   global:
     - secure: "QKyI/QO6H6pFE04Iz/4IcSuttMdY3o85mD2BTNV2Y2SeSPxLfuukqPrxjANrTc4GfI1v7/bZM43uMl3aRa76+HRZ83ZsXR8uv1VZUgNHYuoq7jdZb18BitM36h0LbHzTbYetJLiYg7l3mnbAezTXPXHfpNIWvZcuyZzatyF/lng="

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Bluz PHP Team
  * @link      https://github.com/bluzphp/skeleton
@@ -36,6 +37,6 @@ class LoggerTest extends FrameworkTestCase
         $error = current($errors);
 
         self::assertArrayHasSize($errors, 1);
-        self::assertEquals('Message ['. __FILE__ .':'. $line .']', $error);
+        self::assertEquals('Message [' . __FILE__ . ':' . $line . ']', $error);
     }
 }

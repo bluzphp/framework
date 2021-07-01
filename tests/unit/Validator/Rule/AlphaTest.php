@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Bluz PHP Team
  * @link      https://github.com/bluzphp/framework
@@ -117,7 +118,7 @@ class AlphaTest extends Tests\FrameworkTestCase
             [1e21, ''],
             [0, ''],
             [null, ''],
-            [new \stdClass, ''],
+            [new \stdClass(), ''],
             [[], ''],
         ];
     }
@@ -128,7 +129,7 @@ class AlphaTest extends Tests\FrameworkTestCase
     public function providerForComponentException(): array
     {
         return [
-            [new \stdClass],
+            [new \stdClass()],
             [[]],
             [0x2]
         ];

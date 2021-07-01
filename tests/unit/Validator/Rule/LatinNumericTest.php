@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Bluz PHP Team
  * @link      https://github.com/bluzphp/framework
@@ -107,7 +108,7 @@ class LatinNumericTest extends Tests\FrameworkTestCase
             ['_'],
             ['dgç'],
             [null],
-            [new \stdClass],
+            [new \stdClass()],
             [[]],
         ];
     }
@@ -118,7 +119,7 @@ class LatinNumericTest extends Tests\FrameworkTestCase
     public function providerForComponentException(): array
     {
         return [
-            [new \stdClass],
+            [new \stdClass()],
             [[]],
             [0x2]
         ];

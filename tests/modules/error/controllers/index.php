@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Error controller
  * Send error headers and show simple page
@@ -37,7 +38,7 @@ return function ($code, $exception = null) {
     // 500 - Internal Server Error
     $code = (StatusCode::CONTINUE <= $code && $code < 600) ? $code : StatusCode::INTERNAL_SERVER_ERROR;
     // use exception
-    $message = $exception ? $exception->getMessage(): '';
+    $message = $exception ? $exception->getMessage() : '';
 
     Response::setStatusCode($code);
 

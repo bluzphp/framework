@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Auth configuration
  *
  * @link https://github.com/bluzphp/framework/wiki/Auth
  * @return array
  */
+
 return [
     'equals' => [
         'encryptFunction' => function ($password, $salt) {

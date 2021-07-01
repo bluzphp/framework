@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Bluz PHP Team
  * @link      https://github.com/bluzphp/framework
@@ -23,7 +24,7 @@ class StringInputTest extends Tests\FrameworkTestCase
 
     protected function setUp()
     {
-        $this->rule = new Rule;
+        $this->rule = new Rule();
     }
 
     /**
@@ -67,7 +68,7 @@ class StringInputTest extends Tests\FrameworkTestCase
         return [
             [null],
             [[]],
-            [new \stdClass],
+            [new \stdClass()],
             [150]
         ];
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Default module/controller
  *
@@ -17,5 +18,4 @@ namespace Application;
  * @return void
  */
 return function () {
-
 };

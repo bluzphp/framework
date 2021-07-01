@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Bluz PHP Team
  * @link      https://github.com/bluzphp/framework
@@ -26,7 +27,7 @@ class NotEmptyTest extends Tests\FrameworkTestCase
      */
     protected function setUp()
     {
-        $this->rule = new Rule;
+        $this->rule = new Rule();
     }
 
     /**
@@ -61,7 +62,7 @@ class NotEmptyTest extends Tests\FrameworkTestCase
             [' oi'],
             [[5]],
             [[0]],
-            [new \stdClass]
+            [new \stdClass()]
         );
     }
 

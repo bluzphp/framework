@@ -1,4 +1,5 @@
 <?php
+
 // This is global bootstrap for autoloading
 // Environment
 define('DEBUG', true);

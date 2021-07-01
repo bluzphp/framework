@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Bluz PHP Team
  * @link      https://github.com/bluzphp/framework
@@ -24,7 +25,7 @@ class VersionTest extends Tests\FrameworkTestCase
 
     protected function setUp()
     {
-        $this->rule = new Rule;
+        $this->rule = new Rule();
     }
 
     /**

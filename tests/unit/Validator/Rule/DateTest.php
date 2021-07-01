@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Bluz PHP Team
  * @link      https://github.com/bluzphp/framework
@@ -26,7 +27,7 @@ class DateTest extends Tests\FrameworkTestCase
      */
     protected function setUp()
     {
-        $this->rule = new Rule;
+        $this->rule = new Rule();
     }
 
     public function testDateWithoutFormatShouldPass()
@@ -85,7 +86,7 @@ class DateTest extends Tests\FrameworkTestCase
             [null, 'invalid date'],
             ['Y-m-d', '2009-09-00'],
             ['y-m-d', '2009-09-09'],
-            ['y-m-d', new \stdClass],
+            ['y-m-d', new \stdClass()],
         ];
     }
 }

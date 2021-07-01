@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Bluz PHP Team
  * @link      https://github.com/bluzphp/framework
@@ -69,7 +70,7 @@ class ApplicationTest extends FrameworkTestCase
         self::assertFalse(self::getApp()->useLayout());
         self::assertEquals('JSON', self::getApp()->getResponse()->getType());
     }
-    
+
     /**
      * Test run Index Controller if Index Module
      */

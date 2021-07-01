@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Bluz PHP Team
  * @link      https://github.com/bluzphp/framework
@@ -77,8 +78,8 @@ class BootstrapTest extends Application
     {
         $this->exception = $exception;
 
-        codecept_debug(' ## '. $exception->getCode());
-        codecept_debug(' ## '. $exception->getMessage());
+        codecept_debug(' ## ' . $exception->getCode());
+        codecept_debug(' ## ' . $exception->getMessage());
     }
 
     /**
@@ -103,7 +104,7 @@ class BootstrapTest extends Application
         // try to dispatch controller
         try {
             codecept_debug('');
-            codecept_debug(' >> '. $module .'/'. $controller);
+            codecept_debug(' >> ' . $module . '/' . $controller);
             // dispatch controller
             $result = $this->dispatch($module, $controller, $params);
         } catch (ForbiddenException $e) {
@@ -120,7 +121,7 @@ class BootstrapTest extends Application
         if ($result instanceof Controller) {
             $this->dispatchModule = $result->getModule();
             $this->dispatchController = $result->getController();
-            codecept_debug(' << '. $this->getModule() .'/'. $this->getController());
+            codecept_debug(' << ' . $this->getModule() . '/' . $this->getController());
         }
 
         // setup layout, if needed

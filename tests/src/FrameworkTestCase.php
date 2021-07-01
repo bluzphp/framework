@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Bluz PHP Team
  * @link      https://github.com/bluzphp/framework
@@ -31,7 +32,7 @@ class FrameworkTestCase extends Unit
      *
      * @var \Bluz\Tests\BootstrapTest
      */
-    static protected $app;
+    protected static $app;
 
     /**
      * Setup TestCase

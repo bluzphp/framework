@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Bluz PHP Team
  * @link      https://github.com/bluzphp/framework
@@ -26,7 +27,7 @@ class PositiveTest extends Tests\FrameworkTestCase
      */
     protected function setUp()
     {
-        $this->rule = new Rule;
+        $this->rule = new Rule();
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Bluz PHP Team
  * @link      https://github.com/bluzphp/framework
@@ -70,7 +71,7 @@ class CallbackTest extends Tests\FrameworkTestCase
     public function testInvalidCallbacksShouldRaiseComponentExceptionUponInstantiation()
     {
         $this->expectException(\TypeError::class);
-        new Rule(new \stdClass);
+        new Rule(new \stdClass());
     }
 
     /**

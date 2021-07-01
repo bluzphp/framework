@@ -1,4 +1,5 @@
 <?php
+
 return [
     'section1' => 1,
     'section2' => [

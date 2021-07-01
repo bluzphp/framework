@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Database configuration
  *
  * @link https://github.com/bluzphp/framework/wiki/Db
  * @return array
  */
+
 return [
     'connect' => [
         'type' => 'mysql',

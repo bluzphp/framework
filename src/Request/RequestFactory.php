@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bluz Framework Component
  *
@@ -12,8 +13,8 @@ namespace Bluz\Request;
 
 use Bluz\Http\RequestMethod;
 use Bluz\Proxy\Request;
-use Zend\Diactoros\ServerRequest;
-use Zend\Diactoros\ServerRequestFactory;
+use Laminas\Diactoros\ServerRequest;
+use Laminas\Diactoros\ServerRequestFactory;
 
 /**
  * Request Factory
@@ -32,7 +33,7 @@ class RequestFactory extends ServerRequestFactory
         array $body = null,
         array $cookies = null,
         array $files = null
-    ) : ServerRequest {
+    ): ServerRequest {
 
         $request = parent::fromGlobals($server, $query, $body, $cookies, $files);
 

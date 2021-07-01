@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bluz Framework Component
  *
@@ -48,7 +49,8 @@ class DomainRule extends AbstractRule
     {
         $input = (string)$input;
         // check by regular expression
-        if (preg_match("/^([a-z\d](-*[a-z\d])*)(\.([a-z\d](-*[a-z\d])*))*$/i", $input)
+        if (
+            preg_match("/^([a-z\d](-*[a-z\d])*)(\.([a-z\d](-*[a-z\d])*))*$/i", $input)
             && preg_match("/^.{1,253}$/", $input)
             && preg_match("/^[^\.]{1,63}(\.[^\.]{1,63})*$/", $input)
         ) {

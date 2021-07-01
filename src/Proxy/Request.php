@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bluz Framework Component
  *
@@ -13,8 +14,8 @@ namespace Bluz\Proxy;
 use Bluz\Common\Exception\ComponentException;
 use Bluz\Http\RequestMethod;
 use Psr\Http\Message\UriInterface;
-use Zend\Diactoros\ServerRequest as Instance;
-use Zend\Diactoros\UploadedFile;
+use Laminas\Diactoros\ServerRequest as Instance;
+use Laminas\Diactoros\UploadedFile;
 
 /**
  * Proxy to Request
@@ -34,7 +35,7 @@ use Zend\Diactoros\UploadedFile;
  * @method   static Instance getInstance()
  *
  * @method   static UriInterface getUri()
- * @see      \Zend\Diactoros\RequestTrait::getUri()
+ * @see      \Laminas\Diactoros\RequestTrait::getUri()
  */
 final class Request
 {

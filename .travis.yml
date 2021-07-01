@@ -1,13 +1,13 @@
 language: php
 php:
-  - 7.2
   - 7.3
-  - nightly
+  - 7.4
+  - 8.0
 services:
   - mysql
 matrix:
   allow_failures:
-    - php: nightly
+    - php: 8.0
 env:
   global:
     - secure: "QKyI/QO6H6pFE04Iz/4IcSuttMdY3o85mD2BTNV2Y2SeSPxLfuukqPrxjANrTc4GfI1v7/bZM43uMl3aRa76+HRZ83ZsXR8uv1VZUgNHYuoq7jdZb18BitM36h0LbHzTbYetJLiYg7l3mnbAezTXPXHfpNIWvZcuyZzatyF/lng="
@@ -29,7 +29,7 @@ before_script:
   - chmod a+w ./tests/_output
 script:
   # Check code style
-  - php vendor/bin/phpcs ./src --standard=PSR1,PSR2 --encoding=utf-8
+  - php vendor/bin/phpcs ./src --standard=PSR12 --encoding=utf-8
   # Complexity of code
   - php vendor/bin/phploc ./src
   # Run Codeception tests

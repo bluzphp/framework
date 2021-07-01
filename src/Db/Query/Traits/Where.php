@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bluz Framework Component
  *
@@ -76,8 +77,10 @@ trait Where
     {
         $condition = $this->prepareCondition($conditions);
 
-        if ($this->where instanceof CompositeBuilder
-            && $this->where->getType() === 'AND') {
+        if (
+            $this->where instanceof CompositeBuilder
+            && $this->where->getType() === 'AND'
+        ) {
             $this->where->addPart($condition);
         } else {
             $this->where = new CompositeBuilder([$this->where, $condition]);
@@ -107,8 +110,10 @@ trait Where
     {
         $condition = $this->prepareCondition($conditions);
 
-        if ($this->where instanceof CompositeBuilder
-            && $this->where->getType() === 'OR') {
+        if (
+            $this->where instanceof CompositeBuilder
+            && $this->where->getType() === 'OR'
+        ) {
             $this->where->addPart($condition);
         } else {
             $this->where = new CompositeBuilder([$this->where, $condition], 'OR');

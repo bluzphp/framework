@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bluz Framework Component
  *
@@ -56,6 +57,6 @@ return
                 $this->disableView();
                 break;
             default:
-                throw new NotAcceptableException;
+                throw new NotAcceptableException();
         }
     };

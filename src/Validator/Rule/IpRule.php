@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bluz Framework Component
  *
@@ -87,7 +88,8 @@ class IpRule extends AbstractRule
      */
     protected function parseRange($input): ?array
     {
-        if ($input === null || $input === '*' || $input === '*.*.*.*'
+        if (
+            $input === null || $input === '*' || $input === '*.*.*.*'
             || $input === '0.0.0.0-255.255.255.255'
         ) {
             return null;
@@ -181,7 +183,7 @@ class IpRule extends AbstractRule
      */
     protected function verifyAddress($address): bool
     {
-        return (boolean)filter_var(
+        return (bool)filter_var(
             $address,
             FILTER_VALIDATE_IP,
             [

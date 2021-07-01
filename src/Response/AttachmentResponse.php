@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bluz Framework Component
  *
@@ -10,15 +11,15 @@ declare(strict_types=1);
 
 namespace Bluz\Response;
 
-use Zend\Diactoros\Response as DiactorsResponse;
-use Zend\Diactoros\Response\InjectContentTypeTrait;
-use Zend\Diactoros\Stream;
+use Laminas\Diactoros\Response as DiactorsResponse;
+use Laminas\Diactoros\Response\InjectContentTypeTrait;
+use Laminas\Diactoros\Stream;
 
 /**
  * Class AttachmentResponse
  *
  * @package Bluz\Response
- * @link    http://www.marco-bunge.com/2016/09/01/file-downloads-with-zend-diactoros/
+ * @link    http://www.marco-bunge.com/2016/09/01/file-downloads-with-Laminas-diactoros/
  */
 class AttachmentResponse extends DiactorsResponse
 {

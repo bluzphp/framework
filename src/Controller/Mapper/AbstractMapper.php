@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bluz Framework Component
  *
@@ -283,14 +284,14 @@ abstract class AbstractMapper
     {
         // check implementation
         if (!isset($this->map[$this->method])) {
-            throw new NotImplementedException;
+            throw new NotImplementedException();
         }
 
         $link = $this->map[$this->method];
 
         // check permissions
         if (!Acl::isAllowed($this->module, $link->getAcl())) {
-            throw new ForbiddenException;
+            throw new ForbiddenException();
         }
 
         $this->crud->setFields($link->getFields());

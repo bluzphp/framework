@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bluz Framework Component
  *
@@ -45,7 +46,7 @@ abstract class AbstractCrud implements CrudInterface
      */
     public function readOne($primary)
     {
-        throw new NotImplementedException;
+        throw new NotImplementedException();
     }
 
     /**
@@ -55,7 +56,7 @@ abstract class AbstractCrud implements CrudInterface
      */
     public function readSet($offset = 0, $limit = self::DEFAULT_LIMIT, $params = [])
     {
-        throw new NotImplementedException;
+        throw new NotImplementedException();
     }
 
     /**
@@ -65,7 +66,7 @@ abstract class AbstractCrud implements CrudInterface
      */
     public function createOne($data)
     {
-        throw new NotImplementedException;
+        throw new NotImplementedException();
     }
 
     /**
@@ -75,7 +76,7 @@ abstract class AbstractCrud implements CrudInterface
      */
     public function createSet($data)
     {
-        throw new NotImplementedException;
+        throw new NotImplementedException();
     }
 
     /**
@@ -85,7 +86,7 @@ abstract class AbstractCrud implements CrudInterface
      */
     public function updateOne($primary, $data)
     {
-        throw new NotImplementedException;
+        throw new NotImplementedException();
     }
 
     /**
@@ -95,7 +96,7 @@ abstract class AbstractCrud implements CrudInterface
      */
     public function updateSet($data)
     {
-        throw new NotImplementedException;
+        throw new NotImplementedException();
     }
 
     /**
@@ -105,7 +106,7 @@ abstract class AbstractCrud implements CrudInterface
      */
     public function deleteOne($primary)
     {
-        throw new NotImplementedException;
+        throw new NotImplementedException();
     }
 
     /**
@@ -115,7 +116,7 @@ abstract class AbstractCrud implements CrudInterface
      */
     public function deleteSet($data)
     {
-        throw new NotImplementedException;
+        throw new NotImplementedException();
     }
 
     /**

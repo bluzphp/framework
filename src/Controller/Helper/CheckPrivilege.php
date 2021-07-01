@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bluz Framework Component
  *
@@ -26,6 +27,6 @@ return
          */
         $privilege = $this->getMeta()->getPrivilege();
         if ($privilege && !Acl::isAllowed($this->getModule(), $privilege)) {
-            throw new ForbiddenException;
+            throw new ForbiddenException();
         }
     };

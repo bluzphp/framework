@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bluz Framework Component
  *
@@ -25,7 +26,8 @@ return
         /**
          * @var Grid\Grid $this
          */
-        if (!$this->checkFilterName($filter) ||
+        if (
+            !$this->checkFilterName($filter) ||
             !$this->checkFilterColumn($column)
         ) {
             return null;

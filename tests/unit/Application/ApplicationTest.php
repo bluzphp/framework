@@ -12,7 +12,7 @@ use Bluz\Proxy;
 use Bluz\Proxy\Response;
 use Bluz\Proxy\Router;
 use Bluz\Tests\FrameworkTestCase;
-use Zend\Diactoros\ServerRequest;
+use Laminas\Diactoros\ServerRequest;
 
 /**
  * ApplicationTest

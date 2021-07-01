@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bluz Framework Component
  *
@@ -103,7 +104,8 @@ class View implements ViewInterface, \JsonSerializable
     {
         ob_start();
         try {
-            if (!file_exists($this->path . DIRECTORY_SEPARATOR . $this->template)
+            if (
+                !file_exists($this->path . DIRECTORY_SEPARATOR . $this->template)
                 || !is_file($this->path . DIRECTORY_SEPARATOR . $this->template)
             ) {
                 throw new ViewException("Template `{$this->template}` not found");

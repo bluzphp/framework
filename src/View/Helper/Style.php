@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bluz Framework Component
  *
@@ -25,7 +26,8 @@ return
         /**
          * @var View $this
          */
-        if (strpos($href, 'http://') !== 0
+        if (
+            strpos($href, 'http://') !== 0
             && strpos($href, 'https://') !== 0
             && strpos($href, '//') !== 0
         ) {

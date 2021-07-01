@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bluz Framework Component
  *
@@ -41,7 +42,7 @@ trait Singleton
      */
     private static function initInstance()
     {
-        return new static;
+        return new static();
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bluz Framework Component
  *
@@ -223,8 +224,10 @@ class Select extends AbstractBuilder
     {
         $condition = $this->prepareCondition($conditions);
 
-        if ($this->having instanceof CompositeBuilder
-            && $this->having->getType() === 'AND') {
+        if (
+            $this->having instanceof CompositeBuilder
+            && $this->having->getType() === 'AND'
+        ) {
             $this->having->addPart($condition);
         } else {
             $this->having = new CompositeBuilder([$this->having, $condition]);
@@ -244,8 +247,10 @@ class Select extends AbstractBuilder
     {
         $condition = $this->prepareCondition($conditions);
 
-        if ($this->having instanceof CompositeBuilder
-            && $this->having->getType() === 'OR') {
+        if (
+            $this->having instanceof CompositeBuilder
+            && $this->having->getType() === 'OR'
+        ) {
             $this->having->addPart($condition);
         } else {
             $this->having = new CompositeBuilder([$this->having, $condition], 'OR');
@@ -287,7 +292,7 @@ class Select extends AbstractBuilder
      */
     protected function prepareGroupBy(): string
     {
-        return !empty($this->groupBy) ? ' GROUP BY ' . implode(', ', $this->groupBy): '';
+        return !empty($this->groupBy) ? ' GROUP BY ' . implode(', ', $this->groupBy) : '';
     }
 
     /**

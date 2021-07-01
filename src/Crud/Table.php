@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bluz Framework Component
  *
@@ -85,7 +86,7 @@ class Table extends AbstractCrud
             $name = $this->getTable()->getName();
             $fields = array_map(
                 function ($field) use ($name) {
-                    return $name .'.'. $field;
+                    return $name . '.' . $field;
                 },
                 $fields
             );

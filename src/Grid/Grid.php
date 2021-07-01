@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bluz Framework Component
  *
@@ -382,7 +383,7 @@ abstract class Grid
                 $this->getOrders()
             );
         } catch (Exception $e) {
-            throw new GridException('Grid Adapter can\'t process request: '. $e->getMessage());
+            throw new GridException('Grid Adapter can\'t process request: ' . $e->getMessage());
         }
     }
 

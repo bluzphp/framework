@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bluz Framework Component
  *
@@ -35,7 +36,7 @@ use Exception;
 use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionException;
-use Zend\Diactoros\ServerRequest;
+use Laminas\Diactoros\ServerRequest;
 
 /**
  * Application

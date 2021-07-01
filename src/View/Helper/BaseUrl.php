@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bluz Framework Component
  *
@@ -26,7 +27,8 @@ return
         if (!$this->baseUrl) {
             $this->baseUrl = Router::getBaseUrl();
             // clean script name
-            if (isset($_SERVER['SCRIPT_NAME'])
+            if (
+                isset($_SERVER['SCRIPT_NAME'])
                 && ($pos = strripos($this->baseUrl, basename($_SERVER['SCRIPT_NAME']))) !== false
             ) {
                 $this->baseUrl = substr($this->baseUrl, 0, $pos);

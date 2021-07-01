@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bluz Framework Component
  *
@@ -330,7 +331,8 @@ class Session
      */
     protected function setSavePath($savePath): void
     {
-        if (!is_dir($savePath)
+        if (
+            !is_dir($savePath)
             || !is_writable($savePath)
         ) {
             throw new ComponentException('Session path is not writable');

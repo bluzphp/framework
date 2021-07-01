@@ -14,7 +14,7 @@ use Bluz;
 use Bluz\Http;
 use Bluz\Proxy;
 use Codeception\Test\Unit;
-use Zend\Diactoros\ServerRequest;
+use Laminas\Diactoros\ServerRequest;
 
 /**
  * Bluz TestCase

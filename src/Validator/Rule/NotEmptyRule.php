@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bluz Framework Component
  *

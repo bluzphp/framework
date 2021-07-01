@@ -26,7 +26,7 @@ class QueryTest extends FrameworkTestCase
     /**
      * tearDown
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         Proxy\Db::delete('test')->where('email = ?', 'example@domain.com')->execute();
         parent::tearDown();

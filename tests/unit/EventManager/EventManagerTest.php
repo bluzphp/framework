@@ -30,7 +30,7 @@ class EventManagerTest extends Bluz\Tests\FrameworkTestCase
     /**
      * setUp
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->eventManager = new EventManager();
     }

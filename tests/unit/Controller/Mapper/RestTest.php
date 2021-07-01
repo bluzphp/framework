@@ -29,7 +29,7 @@ class RestTest extends FrameworkTestCase
      */
     protected $mapper;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $crudTable = TableCrud::getInstance();
@@ -37,7 +37,7 @@ class RestTest extends FrameworkTestCase
         $this->mapper = new Rest($crudTable);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         TableCrud::getInstance()->resetTable();

@@ -28,7 +28,7 @@ class TableTest extends FrameworkTestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         self::getApp();
         $this->table = Db\ConcreteTable::getInstance();

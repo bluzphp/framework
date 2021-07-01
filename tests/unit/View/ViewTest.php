@@ -25,7 +25,7 @@ class ViewTest extends FrameworkTestCase
     /**
      * Setup `test` table before the first test
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         self::getApp();
     }
@@ -33,7 +33,7 @@ class ViewTest extends FrameworkTestCase
     /**
      * Drop `test` table after the last test
      */
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         self::resetGlobals();
         self::resetApp();
@@ -94,7 +94,7 @@ class ViewTest extends FrameworkTestCase
      * @throws \Bluz\Common\Exception\CommonException
      * @throws \ReflectionException
      */
-    protected function getView()
+    protected function getView(): View
     {
         $view = new View();
 

@@ -27,7 +27,7 @@ class ControllerTest extends FrameworkTestCase
     /**
      * Create `index/index` controller
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->controller = self::getApp()->dispatch('index', 'index');
     }

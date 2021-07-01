@@ -25,7 +25,7 @@ class FloatInputTest extends Tests\FrameworkTestCase
     /**
      * Setup validator instance
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->rule = new Rule();
     }

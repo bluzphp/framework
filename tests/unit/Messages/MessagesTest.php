@@ -27,7 +27,7 @@ class MessagesTest extends FrameworkTestCase
      * @return void
      * @throws \Bluz\Application\Exception\ApplicationException
      */
-    public function setUp()
+    public function setUp(): void
     {
         // initialize application
         self::getApp();

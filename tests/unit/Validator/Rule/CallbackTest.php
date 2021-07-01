@@ -30,7 +30,7 @@ class CallbackTest extends Tests\FrameworkTestCase
     /**
      * Setup Callbacks
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->alwaysTrue = new Rule(
             function () {

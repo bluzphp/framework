@@ -28,7 +28,7 @@ class CrudTest extends FrameworkTestCase
      */
     protected $mapper;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $crudTable = TableCrud::getInstance();
@@ -36,7 +36,7 @@ class CrudTest extends FrameworkTestCase
         $this->mapper = new Crud($crudTable);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         TableCrud::getInstance()->resetTable();

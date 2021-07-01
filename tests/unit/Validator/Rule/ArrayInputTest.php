@@ -22,7 +22,7 @@ class ArrayInputTest extends Tests\FrameworkTestCase
      */
     protected $rule;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->rule = new Rule('is_numeric');
     }

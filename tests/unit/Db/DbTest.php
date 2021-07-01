@@ -30,7 +30,7 @@ class DbTest extends Bluz\Tests\FrameworkTestCase
     /**
      * setUp
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -41,7 +41,7 @@ class DbTest extends Bluz\Tests\FrameworkTestCase
     /**
      * tearDown
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 

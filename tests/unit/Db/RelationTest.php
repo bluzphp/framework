@@ -17,14 +17,14 @@ class RelationTest extends FrameworkTestCase
     /**
      * setUp
      */
-    public function setUp()
+    public function setUp(): void
     {
     }
 
     /**
      * tearDown
      */
-    public function tearDown()
+    public function tearDown(): void
     {
     }
 

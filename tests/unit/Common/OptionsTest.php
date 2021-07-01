@@ -34,7 +34,7 @@ class OptionsTest extends FrameworkTestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->class = new ConcreteOptions();
         $this->options = ['foo' => 'bar', 'foo bar' => 'qux', 'baz' => ['foo' => 'bar'], 'moo' => 'Moo'];

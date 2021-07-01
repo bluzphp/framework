@@ -37,7 +37,7 @@ class FrameworkTestCase extends Unit
     /**
      * Setup TestCase
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         self::getApp();
     }
@@ -45,7 +45,7 @@ class FrameworkTestCase extends Unit
     /**
      * Tear Down
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         self::resetApp();
     }

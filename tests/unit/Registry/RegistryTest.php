@@ -29,7 +29,7 @@ class RegistryTest extends FrameworkTestCase
     /**
      * setUp
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

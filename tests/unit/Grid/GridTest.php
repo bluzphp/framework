@@ -23,7 +23,7 @@ class GridTest extends FrameworkTestCase
     /**
      * Reset application
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         self::resetApp();
     }

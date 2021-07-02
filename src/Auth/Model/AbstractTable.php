@@ -58,15 +58,15 @@ abstract class AbstractTable extends Table
     /**
      * Get AuthRow
      *
-     * @param  string $provider
-     * @param  string $foreignKey
+     * @param string $provider
+     * @param string $foreignKey
      *
      * @return RowInterface
      * @throws InvalidArgumentException
      * @throws DbException
      * @throws InvalidPrimaryKeyException
      */
-    public static function getAuthRow($provider, $foreignKey): ?RowInterface
+    public static function getAuthRow(string $provider, string $foreignKey): ?RowInterface
     {
         return static::findRow(['provider' => $provider, 'foreignKey' => $foreignKey]);
     }

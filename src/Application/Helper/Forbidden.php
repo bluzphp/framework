@@ -23,7 +23,7 @@ use Bluz\Controller\Controller;
  * @return Controller
  */
 return
-    function ($exception) {
+    function (ForbiddenException $exception) {
         /**
          * @var Application $this
          */

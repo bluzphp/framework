@@ -28,12 +28,12 @@ trait Container
     /**
      * Set key/value pair
      *
-     * @param  string $key
+     * @param string $key
      * @param  mixed  $value
      *
      * @return void
      */
-    protected function doSetContainer($key, $value): void
+    protected function doSetContainer(string $key, $value): void
     {
         $this->container[$key] = $value;
     }
@@ -41,11 +41,11 @@ trait Container
     /**
      * Get value by key
      *
-     * @param  string $key
+     * @param string $key
      *
      * @return mixed
      */
-    protected function doGetContainer($key)
+    protected function doGetContainer(string $key)
     {
         if ($this->doContainsContainer($key)) {
             return $this->container[$key];
@@ -56,11 +56,11 @@ trait Container
     /**
      * Check contains key in container
      *
-     * @param  string $key
+     * @param string $key
      *
      * @return bool
      */
-    protected function doContainsContainer($key): bool
+    protected function doContainsContainer(string $key): bool
     {
         return array_key_exists($key, $this->container);
     }
@@ -68,11 +68,11 @@ trait Container
     /**
      * Delete value by key
      *
-     * @param  string $key
+     * @param string $key
      *
      * @return void
      */
-    protected function doDeleteContainer($key): void
+    protected function doDeleteContainer(string $key): void
     {
         unset($this->container[$key]);
     }

@@ -17,10 +17,10 @@ namespace Bluz\Common\Container;
  * @package  Bluz\Common
  * @author   Anton Shevchuk
  *
- * @method   void  doSetContainer($key, $value)
- * @method   mixed doGetContainer($key)
- * @method   bool  doContainsContainer($key)
- * @method   void  doDeleteContainer($key)
+ * @method   void  doSetContainer(string $key, $value)
+ * @method   mixed doGetContainer(string $key)
+ * @method   bool  doContainsContainer(string $key)
+ * @method   void  doDeleteContainer(string $key)
  */
 trait RegularAccess
 {

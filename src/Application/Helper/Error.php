@@ -12,19 +12,28 @@ declare(strict_types=1);
 namespace Bluz\Application\Helper;
 
 use Bluz\Application\Application;
+use Bluz\Common\Exception\CommonException;
+use Bluz\Common\Exception\ComponentException;
 use Bluz\Controller\Controller;
+use Bluz\Controller\ControllerException;
 use Bluz\Proxy\Response;
 use Bluz\Proxy\Router;
+use Exception;
+use ReflectionException;
 
 /**
  * Reload helper can be declared inside Bootstrap
  *
- * @param \Exception $exception
+ * @param Exception $exception
  *
  * @return Controller
+ * @throws CommonException
+ * @throws ComponentException
+ * @throws ControllerException
+ * @throws ReflectionException
  */
 return
-    function ($exception) {
+    function (Exception $exception) {
         /**
          * @var Application $this
          */

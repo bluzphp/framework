@@ -23,7 +23,7 @@ trait Instance
      * Get instance
      * @return static
      */
-    public static function getInstance()
+    public static function getInstance(): Instance
     {
         static $instance;
         if (null === $instance) {

@@ -67,12 +67,12 @@ final class Cache
     /**
      * Get Cache Adapter
      *
-     * @param  string $adapter
+     * @param string $adapter
      *
      * @return Instance|false
      * @throws ComponentException
      */
-    public static function getAdapter($adapter)
+    public static function getAdapter(string $adapter)
     {
         $config = Config::get('cache');
 
@@ -80,10 +80,10 @@ final class Cache
             if (!isset($config['pools'][$adapter])) {
                 throw new ComponentException("Class `Proxy\\Cache` required configuration for `$adapter` adapter");
             }
-            if (!isset(static::$pools[$adapter])) {
-                static::$pools[$adapter] = $config['pools'][$adapter]();
+            if (!isset(Cache::$pools[$adapter])) {
+                Cache::$pools[$adapter] = $config['pools'][$adapter]();
             }
-            return static::$pools[$adapter];
+            return Cache::$pools[$adapter];
         }
         return false;
     }
@@ -91,11 +91,11 @@ final class Cache
     /**
      * Get value of cache item
      *
-     * @param  string $key
+     * @param string $key
      *
      * @return mixed
      */
-    public static function get($key)
+    public static function get(string $key)
     {
         if (!$cache = self::getInstance()) {
             return false;
@@ -128,7 +128,7 @@ final class Cache
      *
      * @return bool
      */
-    public static function set($key, $data, $ttl = self::TTL_NO_EXPIRY, $tags = [])
+    public static function set(string $key, $data, int $ttl = self::TTL_NO_EXPIRY, array $tags = [])
     {
         if (!$cache = self::getInstance()) {
             return false;
@@ -163,7 +163,7 @@ final class Cache
      *
      * @return string
      */
-    public static function prepare($key): string
+    public static function prepare(string $key): string
     {
         return str_replace(['-', '/', '\\', '@', ':'], '_', $key);
     }
@@ -171,14 +171,14 @@ final class Cache
     /**
      * Clear cache items by tag
      *
-     * @param string $tag
+     * @param  string $tag
      *
      * @return bool
      * @throws InvalidArgumentException
      * @see    TaggableCacheItemPoolInterface::invalidateTag()
      *
      */
-    public static function clearTag($tag): bool
+    public static function clearTag(string $tag): bool
     {
         if (self::getInstance() instanceof HierarchicalPoolInterface) {
             return self::getInstance()->invalidateTag($tag);

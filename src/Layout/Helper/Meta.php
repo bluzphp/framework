@@ -16,13 +16,13 @@ use Bluz\Proxy\Registry;
 /**
  * Set or generate <meta> code for <head>
  *
- * @param  string|array|null $name
- * @param  string|null       $content
+ * @param string|array|null $name
+ * @param string|null $content
  *
  * @return string|null
  */
 return
-    function ($name = null, $content = null) {
+    function ($name = null, ?string $content = null) {
         // it's stack for <head>
         $meta = Registry::get('layout:meta') ?: [];
 

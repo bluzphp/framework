@@ -17,13 +17,13 @@ use Bluz\Proxy\Registry;
 /**
  * Set or generate <script> code for <head>
  *
- * @param  string $src
- * @param  array  $attributes
+ * @param string|null $src
+ * @param array  $attributes
  *
  * @return null|string
  */
 return
-    function ($src = null, array $attributes = []) {
+    function (?string $src = null, array $attributes = []) {
         /**
          * @var Layout $this
          */

@@ -13,6 +13,7 @@ namespace Bluz\Proxy;
 
 use Bluz\Common\Nil;
 use Bluz\Logger\Logger as Instance;
+use Exception;
 
 /**
  * Proxy to Logger
@@ -79,7 +80,7 @@ final class Logger
     /**
      * exception
      *
-     * @param \Exception $exception
+     * @param Exception $exception
      *
      * @return void
      */

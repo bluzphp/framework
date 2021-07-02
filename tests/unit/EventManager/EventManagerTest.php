@@ -157,20 +157,16 @@ class EventManagerTest extends Bluz\Tests\FrameworkTestCase
         // first
         $this->eventManager->attach(
             'test',
-            function (
+            function ($event) {
                 /* @var Event */
-                $event
-            ) {
                 return $event->getTarget() + 1;
             }
         );
         // second
         $this->eventManager->attach(
             'test',
-            function (
+            function ($event) {
                 /* @var Event */
-                $event
-            ) {
                 return $event->getTarget() + 1;
             }
         );
@@ -189,10 +185,8 @@ class EventManagerTest extends Bluz\Tests\FrameworkTestCase
     {
         $this->eventManager->attach(
             'test',
-            function (
+            function ($event) {
                 /* @var Event */
-                $event
-            ) {
                 return $event->getTarget() + $event->getParam('plus');
             }
         );

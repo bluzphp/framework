@@ -21,7 +21,7 @@ use Bluz\Tests\Fixtures\Common\ConcreteHelpers;
  */
 class HelperTest extends FrameworkTestCase
 {
-    const MAGIC_NUMBER = 42;
+    protected const MAGIC_NUMBER = 42;
 
     /**
      * @var ConcreteHelpers

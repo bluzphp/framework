@@ -16,13 +16,13 @@ use Bluz\View\View;
 /**
  * Generate HTML for <style> or <link> element
  *
- * @param  string $href
- * @param  string $media
+ * @param string $href
+ * @param string $media
  *
  * @return string
  */
 return
-    function ($href, $media = 'all') {
+    function (string $href, string $media = 'all') {
         /**
          * @var View $this
          */

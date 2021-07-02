@@ -33,7 +33,7 @@ class EmailRule extends AbstractRule
      *
      * @param bool $checkDns
      */
-    public function __construct($checkDns = false)
+    public function __construct(bool $checkDns = false)
     {
         $this->checkDns = $checkDns;
     }

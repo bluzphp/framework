@@ -22,11 +22,11 @@ abstract class AbstractCtypeRule extends AbstractFilterRule
     /**
      * Filter input data
      *
-     * @param  string $input
+     * @param string $input
      *
      * @return string
      */
-    protected function filter($input): string
+    protected function filter(string $input): string
     {
         $input = parent::filter((string)$input);
         return preg_replace('/\s/', '', $input);

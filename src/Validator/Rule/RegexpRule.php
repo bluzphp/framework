@@ -33,7 +33,7 @@ class RegexpRule extends AbstractRule
      *
      * @param string $regexp
      */
-    public function __construct($regexp)
+    public function __construct(string $regexp)
     {
         $this->regexp = $regexp;
     }

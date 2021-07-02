@@ -18,13 +18,13 @@ use Bluz\View\View;
  *
  * @link http://imperavi.com/redactor/
  *
- * @param  string $selector
- * @param  array  $settings
+ * @param string $selector
+ * @param array  $settings
  *
  * @return string
  */
 return
-    function ($selector, array $settings = []) {
+    function (string $selector, array $settings = []) {
         /**
          * @var View $this
          */

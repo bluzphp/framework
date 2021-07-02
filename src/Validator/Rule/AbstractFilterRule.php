@@ -37,7 +37,7 @@ abstract class AbstractFilterRule extends AbstractRule
     /**
      * Setup validation rule
      *
-     * @param  string $additionalChars
+     * @param string $additionalChars
      *
      * @throws \Bluz\Validator\Exception\ComponentException
      */
@@ -52,11 +52,11 @@ abstract class AbstractFilterRule extends AbstractRule
     /**
      * Filter input data
      *
-     * @param  string $input
+     * @param string $input
      *
      * @return string
      */
-    protected function filter($input): string
+    protected function filter(string $input): string
     {
         return str_replace(str_split($this->additionalChars), '', $input);
     }

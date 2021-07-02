@@ -35,14 +35,14 @@ use Bluz\View\ViewException;
  *     ?>
  * </code>
  *
- * @param  string $template
- * @param  array|object  $data
- * @param  array  $params
+ * @param string $template
+ * @param array|object $data
+ * @param array $params
  *
  * @return string
  */
 return
-    function ($template, $data = [], $params = []) {
+    function (string $template, $data = [], array $params = []) {
         /**
          * @var View $this
          */

@@ -21,15 +21,16 @@ use Bluz\View\ViewException;
 /**
  * Generate URL
  *
- * @param  string $module
- * @param  string $controller
- * @param  array  $params
- * @param  bool   $checkAccess
+ * @param string|null $module
+ * @param string|null $controller
+ * @param array|null $params
+ * @param bool $checkAccess
  *
  * @return null|string
+ * @throws ViewException
  */
 return
-    function ($module, $controller, $params = [], $checkAccess = false) {
+    function (?string $module, ?string $controller, ?array $params = [], bool $checkAccess = false) {
         /**
          * @var View $this
          */

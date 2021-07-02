@@ -43,15 +43,15 @@ use Bluz\View\View;
  *     </select>
  * </code>
  *
- * @param  string       $name
- * @param  array        $options
- * @param  array|string $selected
- * @param  array        $attributes
+ * @param string       $name
+ * @param array        $options
+ * @param array|string $selected
+ * @param array        $attributes
  *
  * @return string
  */
 return
-    function ($name, array $options = [], $selected = null, array $attributes = []) {
+    function (string $name, array $options = [], $selected = null, array $attributes = []) {
         /**
          * @var View $this
          */

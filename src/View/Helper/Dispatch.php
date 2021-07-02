@@ -21,14 +21,14 @@ use Bluz\View\View;
  * Example of usage:
  *     $this->dispatch($module, $controller, array $params);
  *
- * @param  string $module
- * @param  string $controller
- * @param  array  $params
+ * @param string $module
+ * @param string $controller
+ * @param array $params
  *
  * @return View|string|null
  */
 return
-    function ($module, $controller, $params = []) {
+    function (string $module, string $controller, array $params = []) {
         /**
          * @var View $this
          */

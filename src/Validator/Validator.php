@@ -94,13 +94,13 @@ class Validator
     /**
      * Create new rule by name
      *
-     * @param  string $ruleName
-     * @param  array  $arguments
+     * @param string $ruleName
+     * @param array $arguments
      *
      * @return RuleInterface
      * @throws Exception\ComponentException
      */
-    public static function rule($ruleName, $arguments): RuleInterface
+    public static function rule(string $ruleName, array $arguments): RuleInterface
     {
         $ruleName = ucfirst($ruleName) . 'Rule';
 

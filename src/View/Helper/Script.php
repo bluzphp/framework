@@ -16,13 +16,13 @@ use Bluz\View\View;
 /**
  * Generate HTML for <script> element
  *
- * @param  string $src
- * @param  array  $attributes HTML attributes
+ * @param string $src
+ * @param array  $attributes HTML attributes
  *
  * @return string
  */
 return
-    function ($src, array $attributes = []) {
+    function (string $src, array $attributes = []) {
         /**
          * @var View $this
          */

@@ -16,17 +16,17 @@ use Bluz\View\View;
 /**
  * Generate HTML for <input type="checkbox">
  *
- * @author The-Who
- *
- * @param  string      $name
- * @param  string|null $value
- * @param  bool        $checked
- * @param  array       $attributes
+ * @param string      $name
+ * @param string|null $value
+ * @param bool        $checked
+ * @param array       $attributes
  *
  * @return string
+ *@author The-Who
+ *
  */
 return
-    function ($name, $value = null, $checked = false, array $attributes = []) {
+    function (string $name, ?string $value = null, bool $checked = false, array $attributes = []) {
         /** @var View $this */
         if (true === $checked) {
             $attributes['checked'] = 'checked';

@@ -50,12 +50,12 @@ class ValidatorException extends BadRequestException
     /**
      * Add Error by field name
      *
-     * @param  string $name
-     * @param  string $message
+     * @param string $name
+     * @param string $message
      *
      * @return void
      */
-    public function setError($name, $message): void
+    public function setError(string $name, string $message): void
     {
         $this->errors[$name] = $message;
     }

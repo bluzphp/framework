@@ -16,12 +16,13 @@ use Bluz\Application\Application;
 /**
  * Check to isset module
  *
- * @param  string $module
+ * @param string|null $module
  *
  * @return bool
+ * @throws \ReflectionException
  */
 return
-    function ($module = null) {
+    function (?string $module = null) {
         $modulePath = Application::getInstance()->getPath() . DIRECTORY_SEPARATOR .
             'modules' . DIRECTORY_SEPARATOR . $module;
         return file_exists($modulePath);

@@ -17,12 +17,12 @@ use Bluz\Proxy\Request;
  * Return module name
  * or check to current module
  *
- * @param  string $module
+ * @param string|null $module
  *
  * @return string|bool
  */
 return
-    function ($module = null) {
+    function (?string $module = null) {
         if (null === $module) {
             return Request::getModule();
         }

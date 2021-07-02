@@ -18,13 +18,13 @@ use Bluz\View\View;
 /**
  * Set or generate <style> code for <head>
  *
- * @param  string $href
- * @param  string $media
+ * @param string|null $href
+ * @param string|null $media
  *
  * @return string|null
  */
 return
-    function ($href = null, $media = 'all') {
+    function (?string $href = null, ?string $media = 'all') {
         /**
          * @var View $this
          */

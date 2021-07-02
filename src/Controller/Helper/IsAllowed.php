@@ -17,12 +17,12 @@ use Bluz\Proxy\Acl;
 /**
  * Check privilege
  *
- * @param $privilege
+ * @param string $privilege
  *
  * @return bool
  */
 return
-    function ($privilege) {
+    function (string $privilege) {
         /**
          * @var Controller $this
          */

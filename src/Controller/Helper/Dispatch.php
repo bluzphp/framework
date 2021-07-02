@@ -12,19 +12,27 @@ declare(strict_types=1);
 namespace Bluz\Controller\Helper;
 
 use Bluz\Application\Application;
+use Bluz\Common\Exception\CommonException;
+use Bluz\Common\Exception\ComponentException;
 use Bluz\Controller\Controller;
+use Bluz\Controller\ControllerException;
+use ReflectionException;
 
 /**
  * Dispatch controller
  *
  * @param string $module
  * @param string $controller
- * @param array  $params
+ * @param array $params
  *
  * @return Controller
+ * @throws CommonException
+ * @throws ComponentException
+ * @throws ControllerException
+ * @throws ReflectionException
  */
 return
-    function ($module, $controller, $params = []) {
+    function (string $module, string $controller, array $params = []) {
         /**
          * @var Controller $this
          */

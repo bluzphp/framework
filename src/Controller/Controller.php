@@ -102,7 +102,7 @@ class Controller implements JsonSerializable
      *
      * @throws CommonException
      */
-    public function __construct($module, $controller, array $params = [])
+    public function __construct(string $module, string $controller, array $params = [])
     {
         // initial default helper path
         $this->addHelperPath(__DIR__ . '/Helper/');
@@ -335,7 +335,7 @@ class Controller implements JsonSerializable
      *
      * @return void
      */
-    public function assign($key, $value): void
+    public function assign(string $key, $value): void
     {
         $this->getData()->set($key, $value);
     }

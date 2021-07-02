@@ -54,7 +54,7 @@ abstract class AbstractCrud implements CrudInterface
      *
      * @throws NotImplementedException
      */
-    public function readSet($offset = 0, $limit = self::DEFAULT_LIMIT, $params = [])
+    public function readSet(int $offset = 0, int $limit = self::DEFAULT_LIMIT, array $params = [])
     {
         throw new NotImplementedException();
     }
@@ -64,7 +64,7 @@ abstract class AbstractCrud implements CrudInterface
      *
      * @throws NotImplementedException
      */
-    public function createOne($data)
+    public function createOne(array $data)
     {
         throw new NotImplementedException();
     }
@@ -74,7 +74,7 @@ abstract class AbstractCrud implements CrudInterface
      *
      * @throws NotImplementedException
      */
-    public function createSet($data)
+    public function createSet(array $data)
     {
         throw new NotImplementedException();
     }
@@ -84,7 +84,7 @@ abstract class AbstractCrud implements CrudInterface
      *
      * @throws NotImplementedException
      */
-    public function updateOne($primary, $data)
+    public function updateOne($primary, array $data)
     {
         throw new NotImplementedException();
     }
@@ -94,7 +94,7 @@ abstract class AbstractCrud implements CrudInterface
      *
      * @throws NotImplementedException
      */
-    public function updateSet($data)
+    public function updateSet(array $data)
     {
         throw new NotImplementedException();
     }
@@ -114,7 +114,7 @@ abstract class AbstractCrud implements CrudInterface
      *
      * @throws NotImplementedException
      */
-    public function deleteSet($data)
+    public function deleteSet(array $data)
     {
         throw new NotImplementedException();
     }

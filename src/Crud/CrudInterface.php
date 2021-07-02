@@ -39,50 +39,50 @@ interface CrudInterface
     /**
      * Get collection of items
      *
-     * @param  integer $offset
-     * @param  integer $limit
-     * @param  array   $params
+     * @param integer $offset
+     * @param integer $limit
+     * @param array $params
      *
      * @return array[Row[], integer]
      */
-    public function readSet($offset = 0, $limit = self::DEFAULT_LIMIT, $params = []);
+    public function readSet(int $offset = 0, int $limit = self::DEFAULT_LIMIT, array $params = []);
 
     /**
      * Create new item
      *
-     * @param  array $data
+     * @param array $data
      *
      * @return mixed
      */
-    public function createOne($data);
+    public function createOne(array $data);
 
     /**
      * Create items
      *
-     * @param  array $data
+     * @param array $data
      *
      * @return mixed
      */
-    public function createSet($data);
+    public function createSet(array $data);
 
     /**
      * Update item
      *
-     * @param  mixed $primary
-     * @param  array $data
+     * @param mixed $primary
+     * @param array $data
      *
      * @return integer
      */
-    public function updateOne($primary, $data);
+    public function updateOne($primary, array $data);
 
     /**
      * Update items
      *
-     * @param  array $data
+     * @param array $data
      *
      * @return integer
      */
-    public function updateSet($data);
+    public function updateSet(array $data);
 
     /**
      * Delete item
@@ -96,9 +96,9 @@ interface CrudInterface
     /**
      * Delete items
      *
-     * @param  array $data
+     * @param array $data
      *
      * @return integer
      */
-    public function deleteSet($data);
+    public function deleteSet(array $data);
 }

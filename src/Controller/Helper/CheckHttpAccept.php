@@ -11,14 +11,21 @@ declare(strict_types=1);
 
 namespace Bluz\Controller\Helper;
 
+use Bluz\Common\Exception\ComponentException;
+use Bluz\Controller\ControllerException;
 use Bluz\Http\Exception\NotAcceptableException;
 use Bluz\Controller\Controller;
 use Bluz\Proxy\Request;
+use ReflectionException;
 
 /**
  * Denied helper can be declared inside Bootstrap
  *
  * @return void
+ * @throws NotAcceptableException
+ * @throws ComponentException
+ * @throws ControllerException
+ * @throws ReflectionException
  */
 return
     function () {

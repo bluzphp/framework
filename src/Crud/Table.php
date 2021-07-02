@@ -69,14 +69,14 @@ class Table extends AbstractCrud
     /**
      * Get set of records
      *
-     * @param int   $offset
-     * @param int   $limit
+     * @param int $offset
+     * @param int $limit
      * @param array $params
      *
      * @return array[Row[], integer]
      * @throws TableNotFoundException
      */
-    public function readSet($offset = 0, $limit = 10, $params = [])
+    public function readSet(int $offset = 0, int $limit = 10, array $params = [])
     {
         $select = $this->getTable()::select();
 
@@ -131,12 +131,12 @@ class Table extends AbstractCrud
     /**
      * Create item
      *
-     * @param  array $data
+     * @param array $data
      *
      * @return mixed
      * @throws TableNotFoundException
      */
-    public function createOne($data)
+    public function createOne(array $data)
     {
         $row = $this->getTable()::create();
 
@@ -150,13 +150,13 @@ class Table extends AbstractCrud
      * Update item
      *
      * @param  mixed $primary
-     * @param  array $data
+     * @param array $data
      *
      * @return integer
      * @throws NotFoundException
      * @throws TableNotFoundException
      */
-    public function updateOne($primary, $data)
+    public function updateOne($primary, array $data)
     {
         $row = $this->getTable()::findRow($primary);
 

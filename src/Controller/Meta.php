@@ -150,11 +150,11 @@ class Meta
      *  - type conversion
      *  - set default value
      *
-     * @param  array $requestParams
+     * @param array $requestParams
      *
      * @return array
      */
-    public function params($requestParams): array
+    public function params(array $requestParams): array
     {
         // apply type and default value for request params
         $params = [];
@@ -214,11 +214,11 @@ class Meta
     /**
      * Set Cache TTL
      *
-     * @param  string $ttl
+     * @param string $ttl
      *
      * @return void
      */
-    public function setCache($ttl): void
+    public function setCache(string $ttl): void
     {
         $this->cache = $this->prepareCache($ttl);
     }
@@ -226,11 +226,11 @@ class Meta
     /**
      * Prepare Cache
      *
-     * @param  string $cache
+     * @param string $cache
      *
      * @return integer
      */
-    protected function prepareCache($cache): int
+    protected function prepareCache(string $cache): int
     {
         $num = (int)$cache;
         $time = 'min';
@@ -265,11 +265,11 @@ class Meta
     /**
      * Set accepted types
      *
-     * @param  string $accept
+     * @param string $accept
      *
      * @return void
      */
-    public function setAccept($accept): void
+    public function setAccept(string $accept): void
     {
         // allow accept map
         $acceptMap = [
@@ -298,11 +298,11 @@ class Meta
     /**
      * Set Acl privileges
      *
-     * @param  string $acl
+     * @param string $acl
      *
      * @return void
      */
-    public function setAcl($acl): void
+    public function setAcl(string $acl): void
     {
         $this->acl[] = $acl;
     }
@@ -320,11 +320,11 @@ class Meta
     /**
      * Set HTTP Method
      *
-     * @param  string $method
+     * @param string $method
      *
      * @return void
      */
-    public function setMethod($method): void
+    public function setMethod(string $method): void
     {
         $this->method[] = strtoupper($method);
     }
@@ -342,11 +342,11 @@ class Meta
     /**
      * Set param types
      *
-     * @param  string $param
+     * @param string $param
      *
      * @return void
      */
-    public function setParam($param): void
+    public function setParam(string $param): void
     {
         // prepare params data
         // setup param types
@@ -372,11 +372,11 @@ class Meta
     /**
      * Set Privilege fo ACL allow only one privilege
      *
-     * @param  string $privilege
+     * @param string $privilege
      *
      * @return void
      */
-    public function setPrivilege($privilege): void
+    public function setPrivilege(string $privilege): void
     {
         $this->privilege = $privilege;
     }
@@ -394,11 +394,11 @@ class Meta
     /**
      * Set Route
      *
-     * @param  string $route
+     * @param string $route
      *
      * @return void
      */
-    public function setRoute($route): void
+    public function setRoute(string $route): void
     {
         $this->route[$route] = null;
     }
@@ -418,11 +418,11 @@ class Meta
     /**
      * Prepare Route pattern
      *
-     * @param  string $route
+     * @param string $route
      *
      * @return string
      */
-    protected function prepareRoutePattern($route): string
+    protected function prepareRoutePattern(string $route): string
     {
         $pattern = str_replace('/', '\/', $route);
 

@@ -134,11 +134,11 @@ class View implements ViewInterface, \JsonSerializable
     /**
      * {@inheritdoc}
      *
-     * @param  string $path
+     * @param string $path
      *
      * @return void
      */
-    public function setPath($path): void
+    public function setPath(string $path): void
     {
         $this->path = $path;
     }
@@ -156,11 +156,11 @@ class View implements ViewInterface, \JsonSerializable
     /**
      * {@inheritdoc}
      *
-     * @param  string $file
+     * @param string $file
      *
      * @return void
      */
-    public function setTemplate($file): void
+    public function setTemplate(string $file): void
     {
         $this->template = $file;
     }

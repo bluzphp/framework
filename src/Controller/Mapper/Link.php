@@ -42,8 +42,6 @@ class Link
     /**
      * Constructor of Link
      *
-     * @access  public
-     *
      * @param string $module
      * @param string $controller
      */

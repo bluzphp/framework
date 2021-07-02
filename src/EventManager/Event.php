@@ -38,13 +38,13 @@ class Event
      *
      * Accept a target and its parameters.
      *
-     * @param  string        $name Event name
+     * @param  string $name Event name
      * @param  string|object $target
      * @param  array|object  $params
      *
      * @throws EventException
      */
-    public function __construct($name, $target = null, $params = null)
+    public function __construct(string $name, $target = null, $params = null)
     {
         $this->setName($name);
 

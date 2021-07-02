@@ -94,8 +94,7 @@ class Db
      */
     private function checkConnect(): void
     {
-        if (
-            empty($this->connect['type']) ||
+        if (empty($this->connect['type']) ||
             empty($this->connect['host']) ||
             empty($this->connect['name']) ||
             empty($this->connect['user'])
@@ -253,7 +252,7 @@ class Db
      * @return integer the number of rows
      * @throws DbException
      */
-    public function query($sql, array $params = [], array $types = []): int
+    public function query(string $sql, array $params = [], array $types = []): int
     {
         $stmt = $this->handler()->prepare($sql);
         foreach ($params as $key => &$param) {

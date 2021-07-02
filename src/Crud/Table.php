@@ -61,9 +61,7 @@ class Table extends AbstractCrud
             throw new NotFoundException('Record not found');
         }
 
-        $row = $this->filterRow($row);
-
-        return $row;
+        return $this->filterRow($row);
     }
 
     /**

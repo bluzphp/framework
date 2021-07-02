@@ -32,11 +32,11 @@ trait ResponseTrait
     /**
      * Render object as HTML or JSON
      *
-     * @param  string $type
+     * @param string $type
      *
      * @return string
      */
-    public function render($type = 'HTML'): string
+    public function render(string $type = 'HTML'): string
     {
         // switch statement by response type
         switch (strtoupper($type)) {

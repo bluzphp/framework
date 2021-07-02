@@ -47,12 +47,12 @@ class Session
      * If the session has already been started, or if the name provided fails
      * validation, an exception will be raised.
      *
-     * @param  string $name
+     * @param string $name
      *
-     * @throws SessionException
      * @return void
+     * @throws SessionException
      */
-    public function setName($name): void
+    public function setName(string $name): void
     {
         if ($this->sessionExists()) {
             throw new SessionException(
@@ -116,12 +116,12 @@ class Session
      *
      * Can safely be called in the middle of a session.
      *
-     * @param  string $id
+     * @param string $id
      *
      * @return void
      * @throws SessionException
      */
-    public function setId($id): void
+    public function setId(string $id): void
     {
         if ($this->sessionExists()) {
             throw new SessionException(
@@ -149,14 +149,14 @@ class Session
      * Regenerate the session ID, using session save handler's
      * native ID generation Can safely be called in the middle of a session.
      *
-     * @param  bool $deleteOldSession
+     * @param bool $deleteOldSession
      *
      * @return bool
      */
-    public function regenerateId($deleteOldSession = true): bool
+    public function regenerateId(bool $deleteOldSession = true): bool
     {
         if ($this->sessionExists() && session_id() !== '') {
-            return session_regenerate_id((bool)$deleteOldSession);
+            return session_regenerate_id($deleteOldSession);
         }
         return false;
     }
@@ -227,7 +227,7 @@ class Session
     /**
      * Set session save handler object
      *
-     * @param  SessionHandlerInterface $saveHandler
+     * @param SessionHandlerInterface|string $saveHandler
      *
      * @return void
      */
@@ -283,11 +283,11 @@ class Session
      * If a session already exists, destroys it (without sending an expiration
      * cookie), regenerates the session ID, and restarts the session.
      *
-     * @param  integer $ttl TTL in seconds
+     * @param integer $ttl TTL in seconds
      *
      * @return void
      */
-    public function setSessionCookieLifetime($ttl): void
+    public function setSessionCookieLifetime(int $ttl): void
     {
         // Set new cookie TTL
         session_set_cookie_params($ttl);
@@ -324,12 +324,12 @@ class Session
     /**
      * Set session save path
      *
-     * @param  string $savePath
+     * @param string $savePath
      *
      * @return void
      * @throws ComponentException
      */
-    protected function setSavePath($savePath): void
+    protected function setSavePath(string $savePath): void
     {
         if (
             !is_dir($savePath)
@@ -343,13 +343,13 @@ class Session
     /**
      * Set key/value pair
      *
-     * @param  string $key
-     * @param  mixed  $value
+     * @param string $key
+     * @param mixed  $value
      *
      * @return void
      * @throws ComponentException
      */
-    public function set($key, $value): void
+    public function set(string $key, $value): void
     {
         $this->start();
         // check storage
@@ -362,12 +362,12 @@ class Session
     /**
      * Get value by key
      *
-     * @param  string $key
+     * @param string $key
      *
      * @return mixed
      * @throws ComponentException
      */
-    public function get($key)
+    public function get(string $key)
     {
         if ($this->contains($key)) {
             return $_SESSION[$this->namespace][$key];
@@ -378,12 +378,12 @@ class Session
     /**
      * Isset
      *
-     * @param  string $key
+     * @param string $key
      *
      * @return bool
      * @throws ComponentException
      */
-    public function contains($key): bool
+    public function contains(string $key): bool
     {
         if ($this->cookieExists()) {
             $this->start();
@@ -396,12 +396,12 @@ class Session
     /**
      * Unset
      *
-     * @param  string $key
+     * @param string $key
      *
      * @return void
      * @throws ComponentException
      */
-    public function delete($key): void
+    public function delete(string $key): void
     {
         if ($this->contains($key)) {
             unset($_SESSION[$this->namespace][$key]);

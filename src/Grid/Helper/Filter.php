@@ -18,11 +18,11 @@ return
      * @param string $column
      * @param string $filter
      * @param string $value
-     * @param bool   $reset
+     * @param bool $reset
      *
      * @return string|null $url
      */
-    function ($column, $filter, $value, $reset = true) {
+    function (string $column, string $filter, string $value, bool $reset = true) {
         /**
          * @var Grid\Grid $this
          */

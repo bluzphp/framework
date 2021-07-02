@@ -208,11 +208,11 @@ abstract class Table implements TableInterface
     /**
      * Filter columns for insert/update queries by table columns definition
      *
-     * @param  array $data
+     * @param array $data
      *
      * @return array
      */
-    public static function filterColumns($data): array
+    public static function filterColumns(array $data): array
     {
         return array_intersect_key($data, array_flip(static::getColumns()));
     }
@@ -220,12 +220,12 @@ abstract class Table implements TableInterface
     /**
      * Fetching rows by SQL query
      *
-     * @param  string $sql    SQL query with placeholders
-     * @param  array  $params Params for query placeholders
+     * @param string $sql    SQL query with placeholders
+     * @param array $params Params for query placeholders
      *
      * @return RowInterface[] of rows results in FETCH_CLASS mode
      */
-    protected static function fetch($sql, $params = []): array
+    protected static function fetch(string $sql, array $params = []): array
     {
         $self = static::getInstance();
         return DbProxy::fetchObjects($sql, $params, $self->rowClass);
@@ -293,7 +293,7 @@ abstract class Table implements TableInterface
                         $whereAndTerms[] = $self->name . '.' . $keyName . ' IN (' . $keyValue . ')';
                     } elseif (null === $keyValue) {
                         $whereAndTerms[] = $self->name . '.' . $keyName . ' IS NULL';
-                    } elseif ('%' === $keyValue{0} || '%' === $keyValue{-1}) {
+                    } elseif (is_string($keyValue) && ('%' === $keyValue{0} || '%' === $keyValue{-1})) {
                         $whereAndTerms[] = $self->name . '.' . $keyName . ' LIKE ?';
                         $whereParams[] = $keyValue;
                     } else {
@@ -479,7 +479,7 @@ abstract class Table implements TableInterface
     /**
      * {@inheritdoc}
      *
-     * @throws \Bluz\Db\Exception\DbException
+     * @throws DbException
      */
     public static function delete(array $where): int
     {

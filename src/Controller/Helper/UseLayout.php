@@ -18,10 +18,10 @@ use Bluz\Proxy\Layout;
 /**
  * Switch layout
  *
- * @param $layout
+ * @param string $layout
  */
 return
-    function ($layout) {
+    function (string $layout) {
         /**
          * @var Controller $this
          */

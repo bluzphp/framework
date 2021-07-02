@@ -17,22 +17,22 @@ namespace Bluz\Common\Container;
  * @package  Bluz\Common
  * @author   Anton Shevchuk
  *
- * @method   void  doSetContainer($key, $value)
- * @method   mixed doGetContainer($key)
- * @method   bool  doContainsContainer($key)
- * @method   void  doDeleteContainer($key)
+ * @method   void  doSetContainer(string $key, $value)
+ * @method   mixed doGetContainer(string $key)
+ * @method   bool  doContainsContainer(string $key)
+ * @method   void  doDeleteContainer(string $key)
  */
 trait MagicAccess
 {
     /**
      * Magic alias for set() regular method
      *
-     * @param  string $key
+     * @param string $key
      * @param  mixed  $value
      *
      * @return void
      */
-    public function __set($key, $value): void
+    public function __set(string $key, $value): void
     {
         $this->doSetContainer($key, $value);
     }
@@ -40,11 +40,11 @@ trait MagicAccess
     /**
      * Magic alias for get() regular method
      *
-     * @param  string $key
+     * @param string $key
      *
      * @return mixed
      */
-    public function __get($key)
+    public function __get(string $key)
     {
         return $this->doGetContainer($key);
     }
@@ -52,11 +52,11 @@ trait MagicAccess
     /**
      * Magic alias for contains() regular method
      *
-     * @param  string $key
+     * @param string $key
      *
      * @return bool
      */
-    public function __isset($key): bool
+    public function __isset(string $key): bool
     {
         return $this->doContainsContainer($key);
     }
@@ -64,11 +64,11 @@ trait MagicAccess
     /**
      * Magic alias for delete() regular method
      *
-     * @param  string $key
+     * @param string $key
      *
      * @return void
      */
-    public function __unset($key): void
+    public function __unset(string $key): void
     {
         $this->doDeleteContainer($key);
     }

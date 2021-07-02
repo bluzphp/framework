@@ -46,13 +46,13 @@ class Crud extends \Bluz\Crud\Table
     /**
      * {@inheritdoc}
      *
-     * @param int   $offset
-     * @param int   $limit
+     * @param int $offset
+     * @param int $limit
      * @param array $params
      *
      * @return array|int|mixed
      */
-    public function readSet($offset = 0, $limit = 10, $params = [])
+    public function readSet(int $offset = 0, int $limit = 10, array $params = [])
     {
         $select = Db::select('*')
             ->from('test', 't');

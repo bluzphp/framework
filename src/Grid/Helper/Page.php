@@ -19,7 +19,7 @@ return
      *
      * @return string|null
      */
-    function ($page = 1) {
+    function (int $page = 1) {
         /**
          * @var Grid\Grid $this
          */

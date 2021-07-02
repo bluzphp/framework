@@ -10,6 +10,7 @@ matrix:
     - php: 8.0
 env:
   global:
+    - XDEBUG_MODE=coverage
     - secure: "QKyI/QO6H6pFE04Iz/4IcSuttMdY3o85mD2BTNV2Y2SeSPxLfuukqPrxjANrTc4GfI1v7/bZM43uMl3aRa76+HRZ83ZsXR8uv1VZUgNHYuoq7jdZb18BitM36h0LbHzTbYetJLiYg7l3mnbAezTXPXHfpNIWvZcuyZzatyF/lng="
 before_install:
   # Prefer IPv4 over IPv6

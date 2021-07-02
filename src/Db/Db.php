@@ -253,7 +253,7 @@ class Db
      * @return integer the number of rows
      * @throws DbException
      */
-    public function query($sql, array $params = [], array $types = []): int
+    public function query(string $sql, array $params = [], array $types = []): int
     {
         $stmt = $this->handler()->prepare($sql);
         foreach ($params as $key => &$param) {

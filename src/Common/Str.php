@@ -22,11 +22,11 @@ class Str
     /**
      * Convert string to CamelCase
      *
-     * @param  string $subject
+     * @param string $subject
      *
      * @return string
      */
-    public static function toCamelCase($subject): string
+    public static function toCamelCase(string $subject): string
     {
         $subject = str_replace(['_', '-'], ' ', strtolower($subject));
         return str_replace(' ', '', ucwords($subject));

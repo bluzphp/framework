@@ -112,12 +112,13 @@ abstract class AbstractMapper
     /**
      * Add mapping data
      *
-     * @param  string $method
-     * @param  string $module
-     * @param  string $controller
+     * @param string $method
+     * @param string $module
+     * @param string $controller
+     *
      * @return Link
      */
-    public function addMap($method, $module, $controller): Link
+    public function addMap(string $method, string $module, string $controller): Link
     {
         return $this->map[strtoupper($method)] = new Link($module, $controller);
     }
@@ -125,12 +126,12 @@ abstract class AbstractMapper
     /**
      * Add param to data, for example - setup foreign keys on fly
      *
-     * @param  string $name
-     * @param  string $value
+     * @param string $name
+     * @param string $value
      *
      * @return void
      */
-    public function addParam($name, $value): void
+    public function addParam(string $name, string $value): void
     {
         $this->data[$name] = $value;
     }
@@ -138,11 +139,12 @@ abstract class AbstractMapper
     /**
      * Add mapping for HEAD method
      *
-     * @param  string $module
-     * @param  string $controller
+     * @param string $module
+     * @param string $controller
+     *
      * @return Link
      */
-    public function head($module, $controller): Link
+    public function head(string $module, string $controller): Link
     {
         return $this->addMap(RequestMethod::HEAD, $module, $controller);
     }
@@ -152,6 +154,7 @@ abstract class AbstractMapper
      *
      * @param string $module
      * @param string $controller
+     *
      * @return Link
      */
     public function get(string $module, string $controller): Link
@@ -162,8 +165,9 @@ abstract class AbstractMapper
     /**
      * Add mapping for POST method
      *
-     * @param  string $module
-     * @param  string $controller
+     * @param string $module
+     * @param string $controller
+     *
      * @return Link
      */
     public function post(string $module, string $controller): Link
@@ -174,8 +178,9 @@ abstract class AbstractMapper
     /**
      * Add mapping for PATCH method
      *
-     * @param  string $module
-     * @param  string $controller
+     * @param string $module
+     * @param string $controller
+     *
      * @return Link
      */
     public function patch(string $module, string $controller): Link
@@ -186,8 +191,9 @@ abstract class AbstractMapper
     /**
      * Add mapping for PUT method
      *
-     * @param  string $module
-     * @param  string $controller
+     * @param string $module
+     * @param string $controller
+     *
      * @return Link
      */
     public function put(string $module, string $controller): Link
@@ -198,8 +204,9 @@ abstract class AbstractMapper
     /**
      * Add mapping for DELETE method
      *
-     * @param  string $module
-     * @param  string $controller
+     * @param string $module
+     * @param string $controller
+     *
      * @return Link
      */
     public function delete(string $module, string $controller): Link
@@ -210,8 +217,9 @@ abstract class AbstractMapper
     /**
      * Add mapping for OPTIONS method
      *
-     * @param  string $module
-     * @param  string $controller
+     * @param string $module
+     * @param string $controller
+     *
      * @return Link
      */
     public function options(string $module, string $controller): Link
@@ -230,6 +238,7 @@ abstract class AbstractMapper
      * @throws NotAllowedException
      * @throws NotAcceptableException
      * @throws NotImplementedException
+     * @throws ReflectionException
      */
     public function run(): Controller
     {

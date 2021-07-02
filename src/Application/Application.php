@@ -118,11 +118,11 @@ class Application
     /**
      * Return/setup Layout Flag
      *
-     * @param  bool|null $flag
+     * @param bool|null $flag
      *
      * @return bool
      */
-    public function useLayout($flag = null): bool
+    public function useLayout(?bool $flag = null): bool
     {
         if (is_bool($flag)) {
             $this->layoutFlag = $flag;
@@ -134,12 +134,12 @@ class Application
     /**
      * Initialize system packages
      *
-     * @param  string $environment
+     * @param string $environment
      *
-     * @throws ApplicationException
      * @return void
+     * @throws ApplicationException
      */
-    public function init($environment = 'production'): void
+    public function init(string $environment = 'production'): void
     {
         $this->environment = $environment;
 
@@ -400,7 +400,7 @@ class Application
      * @throws ControllerException
      * @throws ReflectionException
      */
-    public function dispatch($module, $controller, array $params = []): Controller
+    public function dispatch(string $module, string $controller, array $params = []): Controller
     {
         $instance = new Controller($module, $controller, $params);
 
@@ -419,11 +419,11 @@ class Application
     /**
      * Extension point: pre dispatch
      *
-     * @param  Controller $controller
+     * @param Controller $controller
      *
      * @return void
      */
-    protected function preDispatch($controller): void
+    protected function preDispatch(Controller $controller): void
     {
         // check HTTP method
         $controller->checkHttpMethod();
@@ -445,7 +445,7 @@ class Application
      * @throws ControllerException
      * @throws ReflectionException
      */
-    protected function doDispatch($controller): void
+    protected function doDispatch(Controller $controller): void
     {
         // run controller
         $controller->run();
@@ -454,11 +454,11 @@ class Application
     /**
      * Extension point: post dispatch
      *
-     * @param  Controller $controller
+     * @param Controller $controller
      *
      * @return void
      */
-    protected function postDispatch($controller): void
+    protected function postDispatch(Controller $controller): void
     {
         // nothing by default
     }

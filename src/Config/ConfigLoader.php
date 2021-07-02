@@ -57,12 +57,12 @@ class ConfigLoader
     /**
      * Set path to configuration files
      *
-     * @param  string $path
+     * @param string $path
      *
      * @return void
      * @throws ConfigException
      */
-    public function setPath($path): void
+    public function setPath(string $path): void
     {
         if (!is_dir($path)) {
             throw new ConfigException('Configuration directory is not exists');
@@ -81,11 +81,11 @@ class ConfigLoader
     /**
      * Set application environment
      *
-     * @param  string $environment
+     * @param string $environment
      *
      * @return void
      */
-    public function setEnvironment($environment): void
+    public function setEnvironment(string $environment): void
     {
         $this->environment = $environment;
     }
@@ -113,12 +113,12 @@ class ConfigLoader
     /**
      * Load configuration file
      *
-     * @param  string $path
+     * @param string $path
      *
      * @return mixed
      * @throws ConfigException
      */
-    protected function loadFile($path)
+    protected function loadFile(string $path)
     {
         if (!is_file($path) && !is_readable($path)) {
             throw new ConfigException("Configuration file `$path` not found");
@@ -129,12 +129,12 @@ class ConfigLoader
     /**
      * Load configuration files to array
      *
-     * @param  string $path
+     * @param string $path
      *
      * @return array
      * @throws ConfigException
      */
-    protected function loadFiles($path): array
+    protected function loadFiles(string $path): array
     {
         $config = [];
 

@@ -60,7 +60,7 @@ class TableTest extends FrameworkTestCase
      */
     public function testGetPrimaryKey()
     {
-        self::assertArraySubset(['id'], $this->crudTable->getPrimaryKey());
+        self::assertTrue(array_search('id', $this->crudTable->getPrimaryKey()) !== false);
     }
 
     /**

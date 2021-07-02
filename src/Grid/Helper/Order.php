@@ -18,11 +18,11 @@ return
      * @param string $column
      * @param null   $order
      * @param string $defaultOrder
-     * @param bool   $reset
+     * @param bool $reset
      *
      * @return string|null $url
      */
-    function ($column, $order = null, $defaultOrder = Grid\Grid::ORDER_ASC, $reset = true) {
+    function (string $column, $order = null, string $defaultOrder = Grid\Grid::ORDER_ASC, bool $reset = true) {
         /**
          * @var Grid\Grid $this
          */

@@ -35,11 +35,11 @@ interface ViewInterface
      * Example of usage
      *     $view->setPath('/modules/users/views');
      *
-     * @param  string $path
+     * @param string $path
      *
      * @return void
      */
-    public function setPath($path): void;
+    public function setPath(string $path): void;
 
     /**
      * Get template
@@ -57,11 +57,11 @@ interface ViewInterface
      * Example of usage
      *     $view->setTemplate('index.phtml');
      *
-     * @param  string $file
+     * @param string $file
      *
      * @return void
      */
-    public function setTemplate($file): void;
+    public function setTemplate(string $file): void;
 
     /**
      * Merge data from array

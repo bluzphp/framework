@@ -57,7 +57,7 @@ trait Options
      *
      * @return mixed
      */
-    public function getOption($key, ...$keys)
+    public function getOption(string $key, ...$keys)
     {
         $method = 'get' . Str::toCamelCase($key);
         if (method_exists($this, $method)) {
@@ -70,11 +70,11 @@ trait Options
      * Set option by key over setter
      *
      * @param  string $key
-     * @param  string $value
+     * @param  mixed $value
      *
      * @return void
      */
-    public function setOption($key, $value): void
+    public function setOption(string $key, $value): void
     {
         $method = 'set' . Str::toCamelCase($key);
         if (method_exists($this, $method)) {
@@ -101,7 +101,7 @@ trait Options
      * - options must be a array
      * - options can be null
      *
-     * @param  array $options
+     * @param array|null $options
      *
      * @return void
      */

@@ -25,7 +25,7 @@ use Bluz\Proxy\Response;
  * @return null
  */
 return
-    function ($exception) {
+    function (RedirectException $exception) {
         /**
          * @var Application $this
          */

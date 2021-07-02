@@ -53,14 +53,14 @@ class Relations
     /**
      * Setup relation between two models
      *
-     * @param  string $modelOne
-     * @param  string $keyOne
-     * @param  string $modelTwo
-     * @param  string $keyTwo
+     * @param string $modelOne
+     * @param string $keyOne
+     * @param string $modelTwo
+     * @param string $keyTwo
      *
      * @return void
      */
-    public static function setRelation($modelOne, $keyOne, $modelTwo, $keyTwo): void
+    public static function setRelation(string $modelOne, string $keyOne, string $modelTwo, string $keyTwo): void
     {
         $relations = [$modelOne => $keyOne, $modelTwo => $keyTwo];
         self::setRelations($modelOne, $modelTwo, $relations);
@@ -69,13 +69,13 @@ class Relations
     /**
      * Setup multi relations
      *
-     * @param  string $modelOne
-     * @param  string $modelTwo
-     * @param  array  $relations
+     * @param string $modelOne
+     * @param string $modelTwo
+     * @param array $relations
      *
      * @return void
      */
-    public static function setRelations($modelOne, $modelTwo, $relations): void
+    public static function setRelations(string $modelOne, string $modelTwo, array $relations): void
     {
         $name = [$modelOne, $modelTwo];
         sort($name);
@@ -87,12 +87,12 @@ class Relations
     /**
      * Get relations
      *
-     * @param  string $modelOne
-     * @param  string $modelTwo
+     * @param string $modelOne
+     * @param string $modelTwo
      *
      * @return array|false
      */
-    public static function getRelations($modelOne, $modelTwo)
+    public static function getRelations(string $modelOne, string $modelTwo)
     {
         $name = [$modelOne, $modelTwo];
         sort($name);
@@ -104,14 +104,14 @@ class Relations
     /**
      * findRelation
      *
-     * @param  Row    $row
-     * @param  string $relation
+     * @param Row $row
+     * @param string $relation
      *
      * @return array
      * @throws Exception\TableNotFoundException
      * @throws Exception\RelationNotFoundException
      */
-    public static function findRelation($row, $relation): array
+    public static function findRelation(Row $row, string $relation): array
     {
         $model = $row->getTable()->getModel();
 
@@ -139,14 +139,14 @@ class Relations
     /**
      * Find Relations between two tables
      *
-     * @param  string $modelOne Table
-     * @param  string $modelTwo Target table
-     * @param  array  $keys     Keys from first table
+     * @param string $modelOne Table
+     * @param string $modelTwo Target table
+     * @param array $keys     Keys from first table
      *
      * @return array
      * @throws Exception\RelationNotFoundException
      */
-    public static function findRelations($modelOne, $modelTwo, $keys): array
+    public static function findRelations(string $modelOne, string $modelTwo, array $keys): array
     {
         $keys = (array)$keys;
         if (!$relations = self::getRelations($modelOne, $modelTwo)) {
@@ -213,12 +213,12 @@ class Relations
     /**
      * Add information about model's classes
      *
-     * @param  string $model
-     * @param  string $className
+     * @param string $model
+     * @param string $className
      *
      * @return void
      */
-    public static function addClassMap($model, $className): void
+    public static function addClassMap(string $model, string $className): void
     {
         self::$modelClassMap[$model] = $className;
     }
@@ -226,12 +226,12 @@ class Relations
     /**
      * Get information about Model classes
      *
-     * @param  string $model
+     * @param string $model
      *
      * @return string
      * @throws Exception\RelationNotFoundException
      */
-    public static function getModelClass($model): string
+    public static function getModelClass(string $model): string
     {
         if (!isset(self::$modelClassMap[$model])) {
             // try to detect
@@ -248,13 +248,13 @@ class Relations
     /**
      * Get information about Table classes
      *
-     * @param  string $modelName
-     * @param  array  $data
+     * @param string $modelName
+     * @param array $data
      *
      * @return RowInterface
      * @throws Exception\RelationNotFoundException
      */
-    public static function createRow($modelName, $data): RowInterface
+    public static function createRow(string $modelName, array $data): RowInterface
     {
         $tableClass = self::getModelClass($modelName);
 
@@ -265,12 +265,12 @@ class Relations
     /**
      * Fetch by Divider
      *
-     * @param  array $input
+     * @param array $input
      *
      * @return array
      * @throws Exception\RelationNotFoundException
      */
-    public static function fetch($input): array
+    public static function fetch(array $input): array
     {
         $output = [];
         $map = [];

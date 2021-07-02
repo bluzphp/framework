@@ -94,7 +94,8 @@ class Db
      */
     private function checkConnect(): void
     {
-        if (empty($this->connect['type']) ||
+        if (
+            empty($this->connect['type']) ||
             empty($this->connect['host']) ||
             empty($this->connect['name']) ||
             empty($this->connect['user'])

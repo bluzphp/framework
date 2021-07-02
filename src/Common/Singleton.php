@@ -30,7 +30,7 @@ trait Singleton
      *
      * @return static
      */
-    public static function getInstance(): Singleton
+    public static function getInstance()
     {
         return static::$instance ?? (static::$instance = static::initInstance());
     }

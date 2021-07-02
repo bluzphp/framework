@@ -19,12 +19,12 @@ return
      *
      * @return string
      */
-    function ($limit = 25) {
+    function (int $limit = 25) {
         /**
          * @var Grid\Grid $this
          */
         $rewrite = [];
-        $rewrite['limit'] = (int)$limit;
+        $rewrite['limit'] = $limit;
 
         if ($limit !== $this->getLimit()) {
             $rewrite['page'] = 1;

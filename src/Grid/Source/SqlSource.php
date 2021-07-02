@@ -14,6 +14,7 @@ namespace Bluz\Grid\Source;
 use Bluz\Db;
 use Bluz\Grid;
 use Bluz\Grid\Data;
+use Bluz\Grid\GridException;
 use Bluz\Proxy;
 
 /**
@@ -32,12 +33,12 @@ class SqlSource extends AbstractSource
      * @param  string $source
      *
      * @return void
-     * @throws \Bluz\Grid\GridException
+     * @throws GridException
      */
     public function setSource($source): void
     {
         if (!is_string($source)) {
-            throw new Grid\GridException('Source of `SqlSource` should be string with SQL query');
+            throw new GridException('Source of `SqlSource` should be string with SQL query');
         }
         parent::setSource($source);
     }

@@ -16,6 +16,7 @@ use Bluz\Grid;
 return
     /**
      * @return integer
+     * @throws Grid\GridException
      */
     function () {
         /**

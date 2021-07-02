@@ -29,11 +29,11 @@ class Acl
      * Check user access by pair module-privilege
      *
      * @param string $module
-     * @param string $privilege
+     * @param string|null $privilege
      *
      * @return bool
      */
-    public function isAllowed(string $module, string $privilege): bool
+    public function isAllowed(string $module, ?string $privilege): bool
     {
         if ($privilege) {
             $user = Auth::getIdentity();

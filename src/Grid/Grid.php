@@ -172,11 +172,11 @@ abstract class Grid
     /**
      * Grid constructor
      *
-     * @param array $options
+     * @param array|null $options
      *
      * @throws CommonException
      */
-    public function __construct($options = null)
+    public function __construct(array $options = null)
     {
         // initial default helper path
         $this->addHelperPath(__DIR__ . '/Helper/');
@@ -469,11 +469,11 @@ abstract class Grid
     /**
      * Get Url
      *
-     * @param  array $params
+     * @param array $params
      *
      * @return string
      */
-    public function getUrl($params): string
+    public function getUrl(array $params): string
     {
         // prepare params
         $params = $this->getParams($params);
@@ -493,7 +493,7 @@ abstract class Grid
      *
      * @return void
      */
-    public function addAllowOrder($column): void
+    public function addAllowOrder(string $column): void
     {
         $this->allowOrders[] = $column;
     }
@@ -526,11 +526,11 @@ abstract class Grid
     /**
      * Check order column
      *
-     * @param  string $column
+     * @param string $column
      *
      * @return bool
      */
-    protected function checkOrderColumn($column): bool
+    protected function checkOrderColumn(string $column): bool
     {
         return in_array($column, $this->getAllowOrders(), true);
     }
@@ -538,11 +538,11 @@ abstract class Grid
     /**
      * Check order name
      *
-     * @param  string $order
+     * @param string $order
      *
      * @return bool
      */
-    protected function checkOrderName($order): bool
+    protected function checkOrderName(string $order): bool
     {
         return ($order === self::ORDER_ASC || $order === self::ORDER_DESC);
     }
@@ -550,13 +550,13 @@ abstract class Grid
     /**
      * Add order rule
      *
-     * @param  string $column
-     * @param  string $order
+     * @param string $column
+     * @param string $order
      *
      * @return void
      * @throws GridException
      */
-    public function addOrder($column, $order = self::ORDER_ASC): void
+    public function addOrder(string $column, string $order = self::ORDER_ASC): void
     {
         if (!$this->checkOrderColumn($column)) {
             throw new GridException("Order for column `$column` is not allowed");
@@ -587,13 +587,13 @@ abstract class Grid
     /**
      * Set order
      *
-     * @param  string $column
-     * @param  string $order ASC or DESC
+     * @param string $column
+     * @param string $order ASC or DESC
      *
      * @return void
      * @throws GridException
      */
-    public function setOrder($column, $order = self::ORDER_ASC): void
+    public function setOrder(string $column, string $order = self::ORDER_ASC): void
     {
         $this->orders = [];
         $this->addOrder($column, $order);
@@ -634,7 +634,7 @@ abstract class Grid
      *
      * @return void
      */
-    public function addAllowFilter($column): void
+    public function addAllowFilter(string $column): void
     {
         $this->allowFilters[] = $column;
     }
@@ -667,11 +667,11 @@ abstract class Grid
     /**
      * Check filter column
      *
-     * @param  string $column
+     * @param string $column
      *
      * @return bool
      */
-    protected function checkFilterColumn($column): bool
+    protected function checkFilterColumn(string $column): bool
     {
         return array_key_exists($column, $this->getAllowFilters()) ||
             in_array($column, $this->getAllowFilters(), false);
@@ -680,11 +680,11 @@ abstract class Grid
     /**
      * Check filter
      *
-     * @param  string $filter
+     * @param string $filter
      *
      * @return bool
      */
-    protected function checkFilterName($filter): bool
+    protected function checkFilterName(string $filter): bool
     {
         return in_array($filter, $this->allowFilterNames, false);
     }
@@ -692,14 +692,14 @@ abstract class Grid
     /**
      * Add filter
      *
-     * @param  string $column name
-     * @param  string $filter
-     * @param  string $value
+     * @param string $column name
+     * @param string $filter
+     * @param string $value
      *
      * @return void
      * @throws GridException
      */
-    public function addFilter($column, $filter, $value): void
+    public function addFilter(string $column, string $filter, string $value): void
     {
         if (!$this->checkFilterColumn($column)) {
             throw new GridException("Filter for column `$column` is not allowed");
@@ -717,12 +717,12 @@ abstract class Grid
     /**
      * Get filter
      *
-     * @param  string $column
-     * @param  string $filter
+     * @param string $column
+     * @param string|null $filter
      *
      * @return mixed
      */
-    public function getFilter($column, $filter = null)
+    public function getFilter(string $column, string $filter = null)
     {
         if (null === $filter) {
             return $this->filters[$column] ?? null;
@@ -743,12 +743,12 @@ abstract class Grid
     /**
      * Add alias for column name
      *
-     * @param  string $column
-     * @param  string $alias
+     * @param string $column
+     * @param string $alias
      *
      * @return void
      */
-    public function addAlias($column, $alias): void
+    public function addAlias(string $column, string $alias): void
     {
         $this->aliases[$column] = $alias;
     }
@@ -756,11 +756,11 @@ abstract class Grid
     /**
      * Get column name by alias
      *
-     * @param  string $alias
+     * @param string $alias
      *
      * @return string
      */
-    protected function reverseAlias($alias): string
+    protected function reverseAlias(string $alias): string
     {
         return array_search($alias, $this->aliases, true) ?: $alias;
     }
@@ -768,11 +768,11 @@ abstract class Grid
     /**
      * Get alias by column name
      *
-     * @param  string $column
+     * @param string $column
      *
      * @return string
      */
-    public function applyAlias($column): string
+    public function applyAlias(string $column): string
     {
         return $this->aliases[$column] ?? $column;
     }
@@ -860,12 +860,12 @@ abstract class Grid
     /**
      * Set default order
      *
-     * @param  string $column
-     * @param  string $order ASC or DESC
+     * @param string $column
+     * @param string $order ASC or DESC
      *
      * @return void
      */
-    public function setDefaultOrder($column, $order = self::ORDER_ASC): void
+    public function setDefaultOrder(string $column, string $order = self::ORDER_ASC): void
     {
         $this->defaultOrder = [$column => $order];
     }

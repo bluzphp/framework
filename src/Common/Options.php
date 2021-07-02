@@ -70,11 +70,11 @@ trait Options
      * Set option by key over setter
      *
      * @param  string $key
-     * @param  string $value
+     * @param  mixed $value
      *
      * @return void
      */
-    public function setOption(string $key, string $value): void
+    public function setOption(string $key, $value): void
     {
         $method = 'set' . Str::toCamelCase($key);
         if (method_exists($this, $method)) {

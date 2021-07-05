@@ -14,12 +14,12 @@ namespace Bluz\View\Helper;
 /**
  * Generate HTML for <style> or <link> element
  *
- * @param  string $code
- * @param  string $media
+ * @param string $code
+ * @param string $media
  *
  * @return string
  */
 return
-    function ($code, $media = 'all') {
+    function (string $code, string $media = 'all') {
         return "<style type=\"text/css\" media=\"$media\">\n$code\n</style>\n";
     };

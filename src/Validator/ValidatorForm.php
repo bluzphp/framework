@@ -44,11 +44,11 @@ class ValidatorForm implements ValidatorInterface
     /**
      * Add chain to form
      *
-     * @param string      $name
+     * @param string $name
      *
      * @return ValidatorChain
      */
-    public function add($name): ValidatorChain
+    public function add(string $name): ValidatorChain
     {
         $this->validators[$name] = $this->validators[$name] ?? Validator::create();
         return $this->validators[$name];
@@ -57,11 +57,11 @@ class ValidatorForm implements ValidatorInterface
     /**
      * Get chain to form
      *
-     * @param string      $name
+     * @param string $name
      *
      * @return ValidatorChain
      */
-    public function get($name): ValidatorChain
+    public function get(string $name): ValidatorChain
     {
         return $this->add($name);
     }
@@ -92,12 +92,12 @@ class ValidatorForm implements ValidatorInterface
     /**
      * Validate chain of rules for single item
      *
-     * @param  string $key
-     * @param  mixed  $value
+     * @param string $key
+     * @param mixed  $value
      *
      * @return bool
      */
-    protected function validateItem($key, $value): bool
+    protected function validateItem(string $key, $value): bool
     {
         // run validators chain
         $result = $this->validators[$key]->validate($value);

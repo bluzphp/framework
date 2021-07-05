@@ -46,11 +46,11 @@ class Translator
     /**
      * Set domain
      *
-     * @param  string $domain
+     * @param string $domain
      *
      * @return void
      */
-    public function setDomain($domain): void
+    public function setDomain(string $domain): void
     {
         $this->domain = $domain;
     }
@@ -58,11 +58,11 @@ class Translator
     /**
      * Set locale
      *
-     * @param  string $locale
+     * @param string $locale
      *
      * @return void
      */
-    public function setLocale($locale): void
+    public function setLocale(string $locale): void
     {
         $this->locale = $locale;
     }
@@ -70,11 +70,11 @@ class Translator
     /**
      * Set path to l10n
      *
-     * @param  string $path
+     * @param string $path
      *
      * @return void
      */
-    public function setPath($path): void
+    public function setPath(string $path): void
     {
         $this->path = $path;
     }
@@ -111,13 +111,13 @@ class Translator
     /**
      * Add text domain for gettext
      *
-     * @param  string $domain of text for gettext setup
-     * @param  string $path   on filesystem
+     * @param string $domain of text for gettext setup
+     * @param string $path   on filesystem
      *
      * @return void
      * @throws ConfigurationException
      */
-    public function addTextDomain($domain, $path): void
+    public function addTextDomain(string $domain, string $path): void
     {
         // check path
         if (!is_dir($path)) {

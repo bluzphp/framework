@@ -28,9 +28,9 @@ class DateRule extends AbstractRule
     /**
      * Setup validation rule
      *
-     * @param string $format
+     * @param string|null $format
      */
-    public function __construct($format = null)
+    public function __construct(?string $format = null)
     {
         $this->format = $format;
     }

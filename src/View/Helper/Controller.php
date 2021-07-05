@@ -17,12 +17,12 @@ use Bluz\Proxy\Request;
  * Return controller name
  * or check to current controller
  *
- * @param  string $controller
+ * @param string|null $controller
  *
  * @return string|bool
  */
 return
-    function ($controller = null) {
+    function (?string $controller = null) {
         if (null === $controller) {
             return Request::getController();
         }

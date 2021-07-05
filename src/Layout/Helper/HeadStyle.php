@@ -17,13 +17,13 @@ use Bluz\Proxy\Registry;
 /**
  * Set or generate <style> code for <head>
  *
- * @param  string $href
- * @param  string $media
+ * @param string|null $href
+ * @param string $media
  *
  * @return string|null
  */
 return
-    function ($href = null, $media = 'all') {
+    function (?string $href = null, string $media = 'all') {
         /**
          * @var Layout $this
          */

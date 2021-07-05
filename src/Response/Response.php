@@ -146,7 +146,7 @@ class Response
      *
      * @param $type
      */
-    public function setType($type): void
+    public function setType(string $type): void
     {
         // switch statement by content type
         switch ($type) {
@@ -192,13 +192,13 @@ class Response
     /**
      * Sets the status code of this response
      *
-     * @param  integer $code the 3-digit integer result code to set.
+     * @param integer $code the 3-digit integer result code to set.
      *
      * @return void
      */
-    public function setStatusCode($code): void
+    public function setStatusCode(int $code): void
     {
-        $this->code = (int)$code;
+        $this->code = $code;
     }
 
     /**
@@ -224,7 +224,7 @@ class Response
      *
      * @param string $phrase the Reason-Phrase to set.
      */
-    public function setReasonPhrase($phrase): void
+    public function setReasonPhrase(string $phrase): void
     {
         $this->phrase = $phrase;
     }
@@ -236,11 +236,11 @@ class Response
      * case-insensitive header name as a string concatenated together using
      * a comma.
      *
-     * @param  string $header case-insensitive header name.
+     * @param string $header case-insensitive header name.
      *
      * @return string
      */
-    public function getHeader($header): string
+    public function getHeader(string $header): string
     {
         if ($this->hasHeader($header)) {
             return implode(', ', $this->headers[$header]);
@@ -251,11 +251,11 @@ class Response
     /**
      * Retrieves a header by the given case-insensitive name as an array of strings
      *
-     * @param  string $header Case-insensitive header name.
+     * @param string $header Case-insensitive header name.
      *
      * @return string[]
      */
-    public function getHeaderAsArray($header): array
+    public function getHeaderAsArray(string $header): array
     {
         if ($this->hasHeader($header)) {
             return $this->headers[$header];
@@ -266,13 +266,13 @@ class Response
     /**
      * Checks if a header exists by the given case-insensitive name
      *
-     * @param  string $header case-insensitive header name.
+     * @param string $header case-insensitive header name.
      *
      * @return bool returns true if any header names match the given header
      *              name using a case-insensitive string comparison. Returns false if
      *              no matching header name is found in the message.
      */
-    public function hasHeader($header): bool
+    public function hasHeader(string $header): bool
     {
         return isset($this->headers[$header]);
     }
@@ -284,12 +284,12 @@ class Response
      * The header name is case-insensitive. The header values MUST be a string
      * or an array of strings.
      *
-     * @param  string          $header header name
-     * @param  string|string[] $value  header value(s)
+     * @param string $header header name
+     * @param string|string[] $value  header value(s)
      *
      * @return void
      */
-    public function setHeader($header, $value): void
+    public function setHeader(string $header, $value): void
     {
         $this->headers[$header] = (array)$value;
     }
@@ -300,12 +300,12 @@ class Response
      * Existing values for the specified header will be maintained. The new
      * value will be appended to the existing list.
      *
-     * @param  string $header header name to add
-     * @param  string $value  value of the header
+     * @param string $header header name to add
+     * @param string $value  value of the header
      *
      * @return void
      */
-    public function addHeader($header, $value): void
+    public function addHeader(string $header, string $value): void
     {
         if ($this->hasHeader($header)) {
             $this->headers[$header][] = $value;
@@ -317,11 +317,11 @@ class Response
     /**
      * Remove a specific header by case-insensitive name.
      *
-     * @param  string $header HTTP header to remove
+     * @param string $header HTTP header to remove
      *
      * @return void
      */
-    public function removeHeader($header): void
+    public function removeHeader(string $header): void
     {
         unset($this->headers[$header]);
     }
@@ -422,25 +422,25 @@ class Response
     /**
      * Set Cookie
      *
-     * @param  string               $name
-     * @param  string               $value
-     * @param  int|string|\DateTime $expire
-     * @param  string               $path
-     * @param  string               $domain
-     * @param  bool                 $secure
-     * @param  bool                 $httpOnly
+     * @param string $name
+     * @param string $value
+     * @param int|string|\DateTime $expire
+     * @param string $path
+     * @param string $domain
+     * @param bool $secure
+     * @param bool $httpOnly
      *
      * @return void
      * @throws \InvalidArgumentException
      */
     public function setCookie(
-        $name,
-        $value = '',
+        string $name,
+        string $value = '',
         $expire = 0,
-        $path = '/',
-        $domain = '',
-        $secure = false,
-        $httpOnly = false
+        string $path = '/',
+        string $domain = '',
+        bool $secure = false,
+        bool $httpOnly = false
     ): void {
         // from PHP source code
         if (preg_match("/[=,; \t\r\n\013\014]/", $name)) {
@@ -475,11 +475,11 @@ class Response
     /**
      * Get Cookie by name
      *
-     * @param  string $name
+     * @param string $name
      *
      * @return array|null
      */
-    public function getCookie($name): ?array
+    public function getCookie(string $name): ?array
     {
         return $this->cookies[$name] ?? null;
     }

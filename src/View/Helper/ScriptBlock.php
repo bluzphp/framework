@@ -14,12 +14,12 @@ namespace Bluz\View\Helper;
 /**
  * Generate HTML for <script> element with inline code
  *
- * @param  string $code
+ * @param string $code
  *
  * @return string
  */
 return
-    function ($code) {
+    function (string $code) {
         return "<script type=\"text/javascript\">\n"
             . "<!--\n"
             . "$code\n"

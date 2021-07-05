@@ -19,14 +19,14 @@ use Bluz\View\ViewException;
  *
  * be careful, method rewrites the View variables with params
  *
- * @param  string $__template
- * @param  array  $__params
+ * @param string $__template
+ * @param array $__params
  *
  * @return string
  * @throws ViewException
  */
 return
-    function ($__template, $__params = []) {
+    function (string $__template, array $__params = []) {
         /**
          * @var View $this
          */

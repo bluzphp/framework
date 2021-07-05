@@ -135,13 +135,13 @@ class Event
     /**
      * Set the event name
      *
-     * @param  string $name
+     * @param string $name
      *
      * @return void
      */
-    public function setName($name): void
+    public function setName(string $name): void
     {
-        $this->name = (string)$name;
+        $this->name = $name;
     }
 
     /**

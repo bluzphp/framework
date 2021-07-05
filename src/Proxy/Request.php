@@ -73,12 +73,12 @@ final class Request
      *
      * If no $key is passed, returns the entire $_GET array.
      *
-     * @param  string $key
-     * @param  string $default Default value to use if key not found
+     * @param string|null $key
+     * @param string|null $default Default value to use if key not found
      *
      * @return string|array|null Returns null if key does not exist
      */
-    public static function getQuery($key = null, $default = null)
+    public static function getQuery(?string $key = null, ?string $default = null)
     {
         return self::getInstance()->getQueryParams()[$key] ?? $default;
     }
@@ -88,12 +88,12 @@ final class Request
      *
      * If no $key is passed, returns the entire $_POST array.
      *
-     * @param  string $key
-     * @param  string $default Default value to use if key not found
+     * @param string|null $key
+     * @param string|null $default Default value to use if key not found
      *
      * @return string|array|null Returns null if key does not exist
      */
-    public static function getPost($key = null, $default = null)
+    public static function getPost(?string $key = null, ?string $default = null)
     {
         return self::getInstance()->getParsedBody()[$key] ?? $default;
     }
@@ -103,12 +103,12 @@ final class Request
      *
      * If no $key is passed, returns the entire $_SERVER array.
      *
-     * @param  string $key
-     * @param  string $default Default value to use if key not found
+     * @param string|null $key
+     * @param string|null $default Default value to use if key not found
      *
      * @return string Returns null if key does not exist
      */
-    public static function getServer($key = null, $default = null)
+    public static function getServer(?string $key = null, ?string $default = null)
     {
         return self::getInstance()->getServerParams()[$key] ?? $default;
     }
@@ -118,12 +118,12 @@ final class Request
      *
      * If no $key is passed, returns the entire $_COOKIE array.
      *
-     * @param  string $key
-     * @param  string $default Default value to use if key not found
+     * @param string|null $key
+     * @param string|null $default Default value to use if key not found
      *
      * @return string Returns null if key does not exist
      */
-    public static function getCookie($key = null, $default = null)
+    public static function getCookie(?string $key = null, ?string $default = null)
     {
         return self::getInstance()->getCookieParams()[$key] ?? $default;
     }
@@ -133,12 +133,12 @@ final class Request
      *
      * If no $key is passed, returns the entire $_ENV array.
      *
-     * @param  string $key
-     * @param  string $default Default value to use if key not found
+     * @param string|null $key
+     * @param string|null $default Default value to use if key not found
      *
      * @return string Returns null if key does not exist
      */
-    public static function getEnv($key = null, $default = null)
+    public static function getEnv(?string $key = null, ?string $default = null)
     {
         return $_ENV[$key] ?? $default;
     }
@@ -151,7 +151,7 @@ final class Request
      *
      * @return string
      */
-    public static function getHeader($header, $default = null)
+    public static function getHeader(string $header, $default = null)
     {
         $header  = strtolower($header);
         $headers = self::getInstance()->getHeaders();
@@ -167,13 +167,13 @@ final class Request
      * Access values contained in the superglobals as public members
      * Order of precedence: 1. GET, 2. POST
      *
-     * @param  string $key
-     * @param  null   $default
+     * @param string $key
+     * @param null   $default
      *
      * @return string|array|null
      * @link http://msdn.microsoft.com/en-us/library/system.web.httprequest.item.aspx
      */
-    public static function getParam($key, $default = null)
+    public static function getParam(string $key, $default = null)
     {
         return
             self::getQuery($key) ??
@@ -196,11 +196,11 @@ final class Request
     /**
      * Get uploaded file
      *
-     * @param  string $name
+     * @param string $name
      *
      * @return UploadedFile
      */
-    public static function getFile($name)
+    public static function getFile(string $name)
     {
         return self::getInstance()->getUploadedFiles()[$name] ?? false;
     }
@@ -208,11 +208,11 @@ final class Request
     /**
      * Get the client's IP address
      *
-     * @param  bool $checkProxy
+     * @param bool $checkProxy
      *
      * @return string
      */
-    public static function getClientIp($checkProxy = true)
+    public static function getClientIp(bool $checkProxy = true)
     {
         $result = null;
         if ($checkProxy) {
@@ -282,11 +282,11 @@ final class Request
     /**
      * parseAcceptHeader
      *
-     * @param string $header
+     * @param string|null $header
      *
      * @return array
      */
-    private static function parseAcceptHeader($header): array
+    private static function parseAcceptHeader(?string $header): array
     {
         // empty array
         $accept = [];

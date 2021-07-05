@@ -293,7 +293,10 @@ abstract class Table implements TableInterface
                         $whereAndTerms[] = $self->name . '.' . $keyName . ' IN (' . $keyValue . ')';
                     } elseif (null === $keyValue) {
                         $whereAndTerms[] = $self->name . '.' . $keyName . ' IS NULL';
-                    } elseif (is_string($keyValue) && ('%' === $keyValue{0} || '%' === $keyValue{-1})) {
+                    } elseif (
+                        is_string($keyValue)
+                        && ('%' === substr($keyValue, 0, 1) || '%' === substr($keyValue, -1, 1))
+                    ) {
                         $whereAndTerms[] = $self->name . '.' . $keyName . ' LIKE ?';
                         $whereParams[] = $keyValue;
                     } else {

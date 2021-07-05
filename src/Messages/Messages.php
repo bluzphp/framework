@@ -44,13 +44,13 @@ class Messages
     /**
      * Add notice
      *
-     * @param  string   $message
+     * @param  string $message
      * @param  string[] $text
      *
      * @return void
      * @since  1.0.0 added $text
      */
-    public function addNotice($message, ...$text): void
+    public function addNotice(string $message, ...$text): void
     {
         $this->add(self::TYPE_NOTICE, $message, ...$text);
     }
@@ -58,13 +58,13 @@ class Messages
     /**
      * Add success
      *
-     * @param  string   $message
+     * @param  string $message
      * @param  string[] $text
      *
      * @return void
      * @since  1.0.0 added $text
      */
-    public function addSuccess($message, ...$text): void
+    public function addSuccess(string $message, ...$text): void
     {
         $this->add(self::TYPE_SUCCESS, $message, ...$text);
     }
@@ -72,13 +72,13 @@ class Messages
     /**
      * Add error
      *
-     * @param  string   $message
+     * @param  string $message
      * @param  string[] $text
      *
      * @return void
      * @since  1.0.0 added $text
      */
-    public function addError($message, ...$text): void
+    public function addError(string $message, ...$text): void
     {
         $this->add(self::TYPE_ERROR, $message, ...$text);
     }
@@ -86,13 +86,13 @@ class Messages
     /**
      * Add message to container
      *
-     * @param  string   $type One of error, notice or success
-     * @param  string   $message
+     * @param  string $type One of error, notice or success
+     * @param  string $message
      * @param  string[] $text
      *
      * @return void
      */
-    protected function add($type, $message, ...$text): void
+    protected function add(string $type, string $message, ...$text): void
     {
         $this->getMessagesStore()[$type][] = Translator::translate($message, ...$text);
     }
@@ -100,11 +100,11 @@ class Messages
     /**
      * Pop a message by type
      *
-     * @param  string $type
+     * @param string $type
      *
      * @return stdClass|null
      */
-    public function pop($type): ?stdClass
+    public function pop(string $type): ?stdClass
     {
         $text = array_shift($this->getMessagesStore()[$type]);
         if ($text) {
@@ -119,7 +119,7 @@ class Messages
     /**
      * Pop all messages
      *
-     * @return ArrayObject|array
+     * @return array
      */
     public function popAll()
     {

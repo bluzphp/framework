@@ -39,8 +39,8 @@ class LengthRule extends AbstractCompareRule
     /**
      * Setup validation rule
      *
-     * @param  integer|null $min
-     * @param  integer|null $max
+     * @param integer|null $min
+     * @param integer|null $max
      *
      * @throws \Bluz\Validator\Exception\ComponentException
      */

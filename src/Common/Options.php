@@ -47,7 +47,7 @@ trait Options
     /**
      * @var array options store
      */
-    protected $options;
+    protected $options = [];
 
     /**
      * Get option by key
@@ -105,7 +105,7 @@ trait Options
      *
      * @return void
      */
-    public function setOptions(array $options = null): void
+    public function setOptions(?array $options = null): void
     {
         // store options by default
         $this->options = (array)$options;

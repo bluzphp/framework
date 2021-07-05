@@ -26,7 +26,7 @@ class EqualsRule extends AbstractRule
     /**
      * Setup validation rule
      *
-     * @param string $compareTo
+     * @param mixed $compareTo
      */
     public function __construct($compareTo)
     {

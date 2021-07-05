@@ -18,16 +18,16 @@ use Bluz\View\View;
 /**
  * Generate HTML for <a> element
  *
- * @author ErgallM
- *
- * @param  string       $text
- * @param  string|array $href
- * @param  array        $attributes HTML attributes
+ * @param string       $text
+ * @param string|array $href
+ * @param array        $attributes HTML attributes
  *
  * @return string
+ *@author ErgallM
+ *
  */
 return
-    function ($text, $href, array $attributes = []) {
+    function (string $text, $href, array $attributes = []) {
         // if href is settings for url helper
         if (is_array($href)) {
             $href = $this->url(...$href);

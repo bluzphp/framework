@@ -45,11 +45,11 @@ class CreditCardRule extends AbstractRule
     /**
      * Verify by Mod10
      *
-     * @param  string $input
+     * @param string $input
      *
      * @return bool
      */
-    private function verifyMod10($input): bool
+    private function verifyMod10(string $input): bool
     {
         $sum = 0;
         $input = strrev($input);

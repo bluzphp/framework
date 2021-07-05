@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Bluz\Validator;
 
+use Bluz\Validator\Exception\ComponentException;
 use Bluz\Validator\Exception\ValidatorException;
 use Bluz\Validator\Rule\RequiredRule;
 use Bluz\Validator\Rule\RuleInterface;
@@ -97,7 +98,7 @@ class ValidatorChain implements ValidatorInterface
      *
      * @return ValidatorChain
      */
-    public function addRule($rule): ValidatorChain
+    public function addRule(RuleInterface $rule): ValidatorChain
     {
         $this->rules[] = $rule;
         return $this;
@@ -125,9 +126,9 @@ class ValidatorChain implements ValidatorInterface
      * @param string|null $description
      *
      * @return ValidatorChain
-     * @throws \Bluz\Validator\Exception\ComponentException
+     * @throws ComponentException
      */
-    public function callback($callable, $description = null): ValidatorChain
+    public function callback($callable, ?string $description = null): ValidatorChain
     {
         $rule = Validator::rule('callback', [$callable]);
         if (null !== $description) {
@@ -140,13 +141,13 @@ class ValidatorChain implements ValidatorInterface
     /**
      * Add Regexp Rule to ValidatorChain
      *
-     * @param string      $expression
+     * @param string $expression
      * @param string|null $description
      *
      * @return ValidatorChain
-     * @throws \Bluz\Validator\Exception\ComponentException
+     * @throws ComponentException
      */
-    public function regexp($expression, $description = null): ValidatorChain
+    public function regexp(string $expression, ?string $description = null): ValidatorChain
     {
         $rule = Validator::rule('regexp', [$expression]);
         if (null !== $description) {
@@ -219,11 +220,11 @@ class ValidatorChain implements ValidatorInterface
     /**
      * Set error message for replace text from rule
      *
-     * @param  string $message
+     * @param string $message
      *
      * @return ValidatorChain
      */
-    protected function setError($message): ValidatorChain
+    protected function setError(string $message): ValidatorChain
     {
         $this->error = $message;
         return $this;
@@ -248,11 +249,11 @@ class ValidatorChain implements ValidatorInterface
     /**
      * Set validation description
      *
-     * @param  string $message
+     * @param string $message
      *
      * @return ValidatorChain
      */
-    public function setDescription($message): ValidatorChain
+    public function setDescription(string $message): ValidatorChain
     {
         $this->description = $message;
         return $this;

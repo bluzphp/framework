@@ -17,12 +17,12 @@ use Bluz\View\View;
 /**
  * Get baseUrl
  *
- * @param  string $file
+ * @param string|null $file
  *
  * @return string
  */
 return
-    function ($file = null) {
+    function (?string $file = null) {
         // setup baseUrl
         if (!$this->baseUrl) {
             $this->baseUrl = Router::getBaseUrl();

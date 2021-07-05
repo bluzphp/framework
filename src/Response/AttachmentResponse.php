@@ -32,13 +32,13 @@ class AttachmentResponse extends DiactorsResponse
      * status of 200.
      *
      * @param string $file    Valid file path
-     * @param int    $status  Integer status code for the response; 200 by default.
+     * @param int $status  Integer status code for the response; 200 by default.
      * @param array  $headers Array of headers to use at initialization.
      *
-     * @internal param StreamInterface|string $text String or stream for the message body.
      * @throws \InvalidArgumentException
+     *@internal param StreamInterface|string $text String or stream for the message body.
      */
-    public function __construct($file, $status = 200, array $headers = [])
+    public function __construct($file, int $status = 200, array $headers = [])
     {
         $fileInfo = new \SplFileInfo($file);
 

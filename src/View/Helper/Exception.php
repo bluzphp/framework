@@ -16,12 +16,12 @@ use Bluz\Application\Application;
 /**
  * Return Exception message
  *
- * @param  \Exception $exception
+ * @param \Exception $exception
  *
  * @return string
  */
 return
-    function ($exception) {
+    function (\Exception $exception) {
         if ($exception && Application::getInstance()->isDebug()) {
             // @codeCoverageIgnoreStart
             // exception message for developers

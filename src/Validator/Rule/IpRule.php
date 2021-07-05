@@ -35,7 +35,7 @@ class IpRule extends AbstractRule
      *
      * @param mixed $options
      *
-     * @throws \Bluz\Validator\Exception\ComponentException
+     * @throws ComponentException
      */
     public function __construct($options = null)
     {
@@ -84,7 +84,7 @@ class IpRule extends AbstractRule
      * @param  string $input
      *
      * @return array|null
-     * @throws \Bluz\Validator\Exception\ComponentException
+     * @throws ComponentException
      */
     protected function parseRange($input): ?array
     {
@@ -151,7 +151,7 @@ class IpRule extends AbstractRule
      * @param  string $input
      * @param  array  $range
      *
-     * @throws \Bluz\Validator\Exception\ComponentException
+     * @throws ComponentException
      * @link http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing
      */
     protected function parseRangeUsingCidr($input, &$range): void

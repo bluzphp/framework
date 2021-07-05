@@ -104,12 +104,12 @@ final class Response
     /**
      * Redirect to URL
      *
-     * @param  string $url
+     * @param string $url
      *
      * @return void
      * @throws RedirectException
      */
-    public static function redirect($url): void
+    public static function redirect(string $url): void
     {
         $redirect = new RedirectException();
         $redirect->setUrl($url);
@@ -119,14 +119,14 @@ final class Response
     /**
      * Redirect to controller
      *
-     * @param  string $module
-     * @param  string $controller
-     * @param  array  $params
+     * @param string $module
+     * @param string $controller
+     * @param array  $params
      *
      * @return void
      * @throws RedirectException
      */
-    public static function redirectTo($module, $controller = 'index', array $params = []): void
+    public static function redirectTo(string $module, string $controller = 'index', array $params = []): void
     {
         $url = Router::getFullUrl($module, $controller, $params);
         self::redirect($url);

@@ -13,6 +13,7 @@ namespace Bluz\View;
 
 use Bluz\Auth\AbstractIdentity;
 use Bluz\Common\Container;
+use Bluz\Common\Exception\CommonException;
 use Bluz\Common\Helper;
 use Bluz\Common\Options;
 use Bluz\Proxy\Logger;
@@ -87,7 +88,7 @@ class View implements ViewInterface, \JsonSerializable
     /**
      * Create view instance, initial default helper path
      *
-     * @throws \Bluz\Common\Exception\CommonException
+     * @throws CommonException
      */
     public function __construct()
     {
@@ -168,11 +169,11 @@ class View implements ViewInterface, \JsonSerializable
     /**
      * Add partial path for use inside partial and partialLoop helpers
      *
-     * @param  string $path
+     * @param string $path
      *
      * @return void
      */
-    public function addPartialPath($path): void
+    public function addPartialPath(string $path): void
     {
         $this->partialPath[] = $path;
     }

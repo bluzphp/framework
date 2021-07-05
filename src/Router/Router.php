@@ -117,7 +117,7 @@ class Router
      * @throws ControllerException
      * @throws ReflectionException
      */
-    private function prepareRouterData()
+    private function prepareRouterData(): array
     {
         $routers = [];
         $reverse = [];
@@ -172,11 +172,11 @@ class Router
     /**
      * Set the base URL.
      *
-     * @param  string $baseUrl
+     * @param string $baseUrl
      *
      * @return void
      */
-    public function setBaseUrl($baseUrl): void
+    public function setBaseUrl(string $baseUrl): void
     {
         $this->baseUrl = str_trim_end($baseUrl, '/');
     }
@@ -184,12 +184,12 @@ class Router
     /**
      * Get an action parameter
      *
-     * @param  string $key
-     * @param  mixed  $default Default value to use if key not found
+     * @param string $key
+     * @param mixed  $default Default value to use if key not found
      *
      * @return mixed
      */
-    public function getParam($key, $default = null)
+    public function getParam(string $key, $default = null)
     {
         return $this->params[$key] ?? $default;
     }
@@ -199,12 +199,12 @@ class Router
      *
      * A $value of null will unset the $key if it exists
      *
-     * @param  string $key
-     * @param  mixed  $value
+     * @param string $key
+     * @param mixed  $value
      *
      * @return void
      */
-    public function setParam($key, $value): void
+    public function setParam(string $key, $value): void
     {
         $key = (string)$key;
 
@@ -248,11 +248,11 @@ class Router
     /**
      * Set default module
      *
-     * @param  string $defaultModule
+     * @param string $defaultModule
      *
      * @return void
      */
-    public function setDefaultModule($defaultModule): void
+    public function setDefaultModule(string $defaultModule): void
     {
         $this->defaultModule = $defaultModule;
     }
@@ -270,11 +270,11 @@ class Router
     /**
      * Set default controller
      *
-     * @param  string $defaultController
+     * @param string $defaultController
      *
      * @return void
      */
-    public function setDefaultController($defaultController): void
+    public function setDefaultController(string $defaultController): void
     {
         $this->defaultController = $defaultController;
     }
@@ -292,11 +292,11 @@ class Router
     /**
      * Set error module
      *
-     * @param  string $errorModule
+     * @param string $errorModule
      *
      * @return void
      */
-    public function setErrorModule($errorModule): void
+    public function setErrorModule(string $errorModule): void
     {
         $this->errorModule = $errorModule;
     }
@@ -314,11 +314,11 @@ class Router
     /**
      * Set error controller
      *
-     * @param  string $errorController
+     * @param string $errorController
      *
      * @return void
      */
-    public function setErrorController($errorController): void
+    public function setErrorController(string $errorController): void
     {
         $this->errorController = $errorController;
     }
@@ -343,15 +343,15 @@ class Router
     /**
      * Build URL to controller
      *
-     * @param  string $module
-     * @param  string $controller
-     * @param  array  $params
+     * @param string|null $module
+     * @param string|null $controller
+     * @param array $params
      *
      * @return string
      */
     public function getUrl(
-        $module = self::DEFAULT_MODULE,
-        $controller = self::DEFAULT_CONTROLLER,
+        ?string $module = self::DEFAULT_MODULE,
+        ?string $controller = self::DEFAULT_CONTROLLER,
         array $params = []
     ): string {
         $module = $module ?? Request::getModule();
@@ -367,15 +367,15 @@ class Router
     /**
      * Build full URL to controller
      *
-     * @param  string $module
-     * @param  string $controller
-     * @param  array  $params
+     * @param string $module
+     * @param string $controller
+     * @param array  $params
      *
      * @return string
      */
     public function getFullUrl(
-        $module = self::DEFAULT_MODULE,
-        $controller = self::DEFAULT_CONTROLLER,
+        string $module = self::DEFAULT_MODULE,
+        string $controller = self::DEFAULT_CONTROLLER,
         array $params = []
     ): string {
         $scheme = Request::getUri()->getScheme() . '://';
@@ -391,13 +391,13 @@ class Router
     /**
      * Build URL by custom route
      *
-     * @param  string $module
-     * @param  string $controller
-     * @param  array  $params
+     * @param string $module
+     * @param string $controller
+     * @param array $params
      *
      * @return string
      */
-    protected function urlCustom($module, $controller, $params): string
+    protected function urlCustom(string $module, string $controller, array $params): string
     {
         $url = $this->reverse[$module][$controller]['route'];
 
@@ -430,13 +430,13 @@ class Router
     /**
      * Build URL by default route
      *
-     * @param  string $module
-     * @param  string $controller
-     * @param  array  $params
+     * @param string $module
+     * @param string $controller
+     * @param array $params
      *
      * @return string
      */
-    protected function urlRoute($module, $controller, $params): string
+    protected function urlRoute(string $module, string $controller, array $params): string
     {
         $url = $this->getBaseUrl();
 

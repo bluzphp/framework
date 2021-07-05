@@ -12,28 +12,25 @@ return [
     'adapter' => 'memcached',
     'pools' => [
         /**
-         * @link https://github.com/php-cache/apc-adapter
+         * @link https://symfony.com/doc/current/components/cache/adapters/apcu_adapter.html
          */
-        'apc' => function () {
-            return new \Cache\Adapter\Apc\ApcCachePool();
+        'apcu' => function () {
+            return new Symfony\Component\Cache\Adapter\ApcuAdapter('bluz');
         },
         /**
-         * @link https://github.com/php-cache/filesystem-adapter
+         * @link https://symfony.com/doc/current/components/cache/adapters/filesystem_adapter.html
          */
         'filesystem' => function () {
-            $filesystemAdapter = new \League\Flysystem\Adapter\Local(PATH_DATA . '/cache');
-            $filesystem = new \League\Flysystem\Filesystem($filesystemAdapter);
-
-            return new \Cache\Adapter\Filesystem\FilesystemCachePool($filesystem);
+            return new Symfony\Component\Cache\Adapter\FilesystemTagAwareAdapter('bluz', 0, PATH_DATA . '/cache');
         },
         /**
-         * @link https://github.com/php-cache/predis-adapter
+         * @link https://symfony.com/doc/current/components/cache/adapters/redis_adapter.html
          * @link https://github.com/nrk/predis/wiki/Connection-Parameters
          * @link https://github.com/nrk/predis/wiki/Client-Options
          */
         'predis' => function () {
             $client = new \Predis\Client('tcp:/127.0.0.1:6379');
-            return new \Cache\Adapter\Predis\PredisCachePool($client);
+            return new Symfony\Component\Cache\Adapter\RedisTagAwareAdapter($client, 'bluz');
         }
     ]
 ];

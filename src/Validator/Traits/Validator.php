@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Bluz\Validator\Traits;
 
+use Bluz\Validator\Exception\ValidatorException;
 use Bluz\Validator\ValidatorChain;
 use Bluz\Validator\ValidatorForm;
 
@@ -60,11 +61,11 @@ trait Validator
     /**
      * Add ValidatorChain
      *
-     * @param  string $name
+     * @param string $name
      *
      * @return ValidatorChain
      */
-    public function addValidator($name): ValidatorChain
+    public function addValidator(string $name): ValidatorChain
     {
         return $this->getValidatorForm()->add($name);
     }
@@ -72,11 +73,11 @@ trait Validator
     /**
      * Get ValidatorChain
      *
-     * @param  string $name
+     * @param string $name
      *
      * @return ValidatorChain
      */
-    public function getValidator($name): ValidatorChain
+    public function getValidator(string $name): ValidatorChain
     {
         return $this->getValidatorForm()->get($name);
     }
@@ -98,7 +99,7 @@ trait Validator
      *
      * @param  array $input
      *
-     * @throws \Bluz\Validator\Exception\ValidatorException
+     * @throws ValidatorException
      */
     public function assert($input): void
     {

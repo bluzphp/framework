@@ -46,7 +46,7 @@ class CacheControl
      *
      * @param Response $response
      */
-    public function __construct($response)
+    public function __construct(Response $response)
     {
         $this->response = $response;
     }
@@ -135,11 +135,11 @@ class CacheControl
      *
      * This methods sets the Cache-Control max-age directive.
      *
-     * @param  integer $value Number of seconds
+     * @param integer $value Number of seconds
      *
      * @return void
      */
-    public function setMaxAge($value): void
+    public function setMaxAge(int $value): void
     {
         $this->doSetContainer('max-age', $value);
         $this->updateCacheControlHeader();
@@ -150,11 +150,11 @@ class CacheControl
      *
      * This methods sets the Cache-Control s-maxage directive.
      *
-     * @param  integer $value Number of seconds
+     * @param integer $value Number of seconds
      *
      * @return void
      */
-    public function setSharedMaxAge($value): void
+    public function setSharedMaxAge(int $value): void
     {
         $this->setPublic();
         $this->doSetContainer('s-maxage', $value);
@@ -183,11 +183,11 @@ class CacheControl
      *
      * This method adjusts the Cache-Control/s-maxage directive.
      *
-     * @param  integer $seconds Number of seconds
+     * @param integer $seconds Number of seconds
      *
      * @return void
      */
-    public function setTtl($seconds): void
+    public function setTtl(int $seconds): void
     {
         $this->setSharedMaxAge($this->getAge() + $seconds);
     }
@@ -197,11 +197,11 @@ class CacheControl
      *
      * This method adjusts the Cache-Control/max-age directive.
      *
-     * @param  integer $seconds Number of seconds
+     * @param integer $seconds Number of seconds
      *
      * @return void
      */
-    public function setClientTtl($seconds): void
+    public function setClientTtl(int $seconds): void
     {
         $this->setMaxAge($this->getAge() + $seconds);
     }
@@ -219,12 +219,12 @@ class CacheControl
     /**
      * Sets the ETag value
      *
-     * @param  string $etag The ETag unique identifier
-     * @param  bool   $weak Whether you want a weak ETag or not
+     * @param string $etag The ETag unique identifier
+     * @param bool $weak Whether you want a weak ETag or not
      *
      * @return void
      */
-    public function setEtag($etag, $weak = false): void
+    public function setEtag(string $etag, bool $weak = false): void
     {
         $etag = trim($etag, '"');
         $this->response->setHeader('ETag', (true === $weak ? 'W/' : '') . '"' . $etag . '"');
@@ -246,11 +246,11 @@ class CacheControl
     /**
      * Set the age of the response
      *
-     * @param  integer $age
+     * @param integer $age
      *
      * @return void
      */
-    public function setAge($age): void
+    public function setAge(int $age): void
     {
         $this->response->setHeader('Age', $age);
     }

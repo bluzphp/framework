@@ -72,6 +72,6 @@ class BetweenRule extends AbstractCompareRule
      */
     public function getDescription(): string
     {
-        return __('must be between "%1" and "%2"', $this->minValue, $this->maxValue);
+        return __('must be between "%s" and "%s"', $this->minValue, $this->maxValue);
     }
 }

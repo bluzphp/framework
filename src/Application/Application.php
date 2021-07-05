@@ -89,7 +89,6 @@ class Application
      * Get path to Application
      *
      * @return string
-     * @throws ReflectionException
      */
     public function getPath(): string
     {
@@ -180,7 +179,6 @@ class Application
      *
      * @return void
      * @throws ConfigException
-     * @throws ReflectionException
      */
     protected function initConfig(): void
     {

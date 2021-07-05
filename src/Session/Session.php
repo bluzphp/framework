@@ -37,9 +37,14 @@ class Session
     protected $namespace = 'bluz';
 
     /**
+     * @var string Session handler name
+     */
+    protected $adapter = 'files';
+
+    /**
      * @var SessionHandlerInterface Session save handler
      */
-    protected $adapter;
+    protected $sessionHandler;
 
     /**
      * Attempt to set the session name
@@ -197,7 +202,7 @@ class Session
             return true;
         }
 
-        if ($this->initAdapter()) {
+        if ($this->init()) {
             return session_start();
         }
 
@@ -225,23 +230,23 @@ class Session
     }
 
     /**
-     * Set session save handler object
+     * Set session handler name
      *
-     * @param SessionHandlerInterface|string $saveHandler
+     * @param string $adapter
      *
      * @return void
      */
-    public function setAdapter($saveHandler): void
+    public function setAdapter(string $adapter): void
     {
-        $this->adapter = $saveHandler;
+        $this->adapter = $adapter;
     }
 
     /**
-     * Get SaveHandler Object
+     * Get session handler name
      *
-     * @return SessionHandlerInterface
+     * @return string
      */
-    public function getAdapter(): SessionHandlerInterface
+    public function getAdapter(): string
     {
         return $this->adapter;
     }
@@ -255,16 +260,16 @@ class Session
      * @return bool
      * @throws ComponentException
      */
-    protected function initAdapter(): bool
+    protected function init(): bool
     {
-        if (null === $this->adapter || 'files' === $this->adapter) {
+        if ('files' === $this->adapter) {
             // try to apply settings
             if ($settings = $this->getOption('settings', 'files')) {
                 $this->setSavePath($settings['save_path']);
             }
             return true;
         }
-        if (is_string($this->adapter)) {
+        if (null === $this->sessionHandler) {
             $adapterClass = '\\Bluz\\Session\\Adapter\\' . ucfirst($this->adapter);
             if (!class_exists($adapterClass) || !is_subclass_of($adapterClass, SessionHandlerInterface::class)) {
                 throw new ComponentException("Class for session adapter `{$this->adapter}` not found");

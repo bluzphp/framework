@@ -9,10 +9,10 @@
         "ext-json": "*",
         "ext-ctype": "*",
         "bluzphp/collection": "~1.0",
-        "cache/cache": "~1.0",
         "psr/log": "~1.1",
         "laminas/laminas-diactoros": "~2.6",
-        "laminas/laminas-httphandlerrunner": "~1.4"
+        "laminas/laminas-httphandlerrunner": "~1.4",
+        "symfony/cache": "^5.3"
     },
     "require-dev": {
         "codeception/codeception": "~4.1",
@@ -27,7 +27,7 @@
         "ext-redis": "required by Redis adapter for Bluz\\Cache (https://github.com/bluzphp/framework/wiki/Cache)",
         "ext-memcached": "required by Memcached adapter for Bluz\\Cache (https://github.com/bluzphp/framework/wiki/Cache)",
         "phpmailer/phpmailer": "required by Bluz\\Mailer (https://github.com/bluzphp/framework/wiki/Mailer)",
-        "predis/predis": "required by Cache\\Adapter\\Predis (https://github.com/bluzphp/framework/wiki/Cache)"
+        "predis/predis": "required by Redis adapter for Bluz\\Cache (https://github.com/bluzphp/framework/wiki/Cache)"
     },
     "autoload": {
         "psr-4": {

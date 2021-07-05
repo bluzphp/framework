@@ -12,8 +12,8 @@ declare(strict_types=1);
 namespace Bluz\Proxy;
 
 use Bluz\Common\Exception\ComponentException;
-use Cache\Hierarchy\HierarchicalPoolInterface;
-use Cache\TagInterop\TaggableCacheItemPoolInterface as Instance;
+use Symfony\Component\Cache\Adapter\TagAwareAdapterInterface;
+use Symfony\Component\Cache\Adapter\AdapterInterface as Instance;
 use Psr\Cache\InvalidArgumentException;
 
 /**
@@ -175,12 +175,10 @@ final class Cache
      *
      * @return bool
      * @throws InvalidArgumentException
-     * @see    TaggableCacheItemPoolInterface::invalidateTag()
-     *
      */
     public static function clearTag(string $tag): bool
     {
-        if (self::getInstance() instanceof HierarchicalPoolInterface) {
+        if (self::getInstance() instanceof TagAwareAdapterInterface) {
             return self::getInstance()->invalidateTag($tag);
         }
         return false;
@@ -193,12 +191,10 @@ final class Cache
      *
      * @return bool
      * @throws InvalidArgumentException
-     * @see    TaggableCacheItemPoolInterface::invalidateTags()
-     *
      */
     public static function clearTags(array $tags): bool
     {
-        if (self::getInstance() instanceof HierarchicalPoolInterface) {
+        if (self::getInstance() instanceof TagAwareAdapterInterface) {
             return self::getInstance()->invalidateTags($tags);
         }
         return false;

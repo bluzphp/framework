@@ -267,7 +267,7 @@ class Session
         }
 
         if ('files' === $this->adapter) {
-            $this->sessionHandler = new \SessionHandler;
+            $this->sessionHandler = new \SessionHandler();
             // try to apply settings
             if ($settings = $this->getOption('settings', 'files')) {
                 $this->setSavePath($settings['save_path']);

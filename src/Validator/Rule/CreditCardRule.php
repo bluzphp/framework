@@ -33,7 +33,7 @@ class CreditCardRule extends AbstractRule
      */
     public function validate($input): bool
     {
-        $input = preg_replace('([ \.-])', '', $input);
+        $input = preg_replace('([ \.-])', '', (string) $input);
 
         if (!is_numeric($input)) {
             return false;

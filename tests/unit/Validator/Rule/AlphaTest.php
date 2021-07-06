@@ -45,17 +45,6 @@ class AlphaTest extends Tests\FrameworkTestCase
     }
 
     /**
-     * @dataProvider providerForComponentException
-     *
-     * @param $additional
-     */
-    public function testInvalidConstructorParamsShouldRaiseComponentException($additional)
-    {
-        $this->expectException(ComponentException::class);
-        new Rule($additional);
-    }
-
-    /**
      * @dataProvider providerAdditionalChars
      *
      * @param $additional
@@ -120,18 +109,6 @@ class AlphaTest extends Tests\FrameworkTestCase
             [null, ''],
             [new \stdClass(), ''],
             [[], ''],
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public function providerForComponentException(): array
-    {
-        return [
-            [new \stdClass()],
-            [[]],
-            [0x2]
         ];
     }
 

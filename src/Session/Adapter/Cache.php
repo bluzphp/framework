@@ -17,7 +17,6 @@ use Bluz\Proxy;
 /**
  * Cache session handler
  *
- * @todo    Migrate to {@link https://github.com/php-cache/session-handler PSR-6 Session handler}
  * @package Bluz\Session\Adapter
  */
 class Cache extends AbstractAdapter implements \SessionHandlerInterface

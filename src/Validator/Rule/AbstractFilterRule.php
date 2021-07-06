@@ -38,14 +38,9 @@ abstract class AbstractFilterRule extends AbstractRule
      * Setup validation rule
      *
      * @param string $additionalChars
-     *
-     * @throws \Bluz\Validator\Exception\ComponentException
      */
-    public function __construct($additionalChars = '')
+    public function __construct(string $additionalChars = '')
     {
-        if (!is_string($additionalChars)) {
-            throw new ComponentException('Invalid list of additional characters to be loaded');
-        }
         $this->additionalChars .= $additionalChars;
     }
 

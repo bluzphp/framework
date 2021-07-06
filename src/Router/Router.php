@@ -408,6 +408,9 @@ class Router
                 $getParams[$key] = $value;
                 continue;
             }
+            if (is_numeric($value)) {
+                $value = (string) $value;
+            }
             $url = str_replace('{$' . $key . '}', $value, $url, $replaced);
             // if not replaced, setup param as GET
             if (!$replaced) {

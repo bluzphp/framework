@@ -262,24 +262,27 @@ class Session
      */
     protected function init(): bool
     {
+        if ($this->sessionHandler) {
+            return true;
+        }
+
         if ('files' === $this->adapter) {
+            $this->sessionHandler = new \SessionHandler();
             // try to apply settings
             if ($settings = $this->getOption('settings', 'files')) {
                 $this->setSavePath($settings['save_path']);
             }
-            return true;
+            return session_set_save_handler($this->sessionHandler);
         }
-        if (null === $this->sessionHandler) {
-            $adapterClass = '\\Bluz\\Session\\Adapter\\' . ucfirst($this->adapter);
-            if (!class_exists($adapterClass) || !is_subclass_of($adapterClass, SessionHandlerInterface::class)) {
-                throw new ComponentException("Class for session adapter `{$this->adapter}` not found");
-            }
-            $settings = $this->getOption('settings', $this->adapter) ?: [];
 
-            $this->adapter = new $adapterClass($settings);
-            return session_set_save_handler($this->adapter);
+        $adapterClass = '\\Bluz\\Session\\Adapter\\' . ucfirst($this->adapter);
+        if (!class_exists($adapterClass) || !is_subclass_of($adapterClass, SessionHandlerInterface::class)) {
+            throw new ComponentException("Class for session adapter `{$this->adapter}` not found");
         }
-        return true;
+        $settings = $this->getOption('settings', $this->adapter) ?: [];
+
+        $this->sessionHandler = new $adapterClass($settings);
+        return session_set_save_handler($this->sessionHandler);
     }
 
     /**

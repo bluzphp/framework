@@ -45,17 +45,6 @@ class LatinTest extends Tests\FrameworkTestCase
     }
 
     /**
-     * @dataProvider providerForComponentException
-     *
-     * @param $additional
-     */
-    public function testInvalidConstructorParamsShouldThrowComponentException($additional)
-    {
-        $this->expectException(ComponentException::class);
-        new Rule($additional);
-    }
-
-    /**
      * @dataProvider providerAdditionalChars
      *
      * @param $additional
@@ -112,18 +101,6 @@ class LatinTest extends Tests\FrameworkTestCase
             [new \stdClass()],
             [[]],
         );
-    }
-
-    /**
-     * @return array
-     */
-    public function providerForComponentException(): array
-    {
-        return [
-            [new \stdClass()],
-            [[]],
-            [0x2]
-        ];
     }
 
     /**

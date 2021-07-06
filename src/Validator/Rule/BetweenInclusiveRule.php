@@ -30,6 +30,17 @@ class BetweenInclusiveRule extends BetweenRule
      */
     public function getDescription(): string
     {
-        return __('must be inclusive between "%1" and "%2"', $this->minValue, $this->maxValue);
+
+        $min = $this->minValue;
+        $max = $this->maxValue;
+
+        if ($min instanceof \DateTime) {
+            $min = date_format($min, 'r');
+        }
+        if ($max instanceof \DateTime) {
+            $max = date_format($max, 'r');
+        }
+
+        return __('must be inclusive between "%1s" and "%2s"', $min, $max);
     }
 }

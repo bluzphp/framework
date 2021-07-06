@@ -32,6 +32,6 @@ class PositiveRule extends AbstractRule
      */
     public function validate($input): bool
     {
-        return $input > 0;
+        return is_numeric($input) && $input > 0;
     }
 }

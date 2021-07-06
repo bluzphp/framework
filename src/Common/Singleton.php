@@ -68,11 +68,4 @@ trait Singleton
     private function __clone()
     {
     }
-
-    /**
-     * Disabled by access level
-     */
-    private function __wakeup()
-    {
-    }
 }

@@ -49,7 +49,6 @@ class MoreOrEqualTest extends Tests\FrameworkTestCase
     public function providerForPass(): array
     {
         return array(
-            [0, ''], // empty string is equal zero
             [1, true],
             [0, false],
             [0, null],

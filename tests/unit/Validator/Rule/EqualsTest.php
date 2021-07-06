@@ -49,7 +49,6 @@ class EqualsTest extends Tests\FrameworkTestCase
     public function providerForPass(): array
     {
         return [
-            ['', 0],
             ['', null],
             ['', false],
             ['', ''],

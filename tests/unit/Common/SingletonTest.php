@@ -44,7 +44,6 @@ class SingletonTest extends FrameworkTestCase
 
         self::assertTrue($reflection->getMethod('__construct')->isPrivate());
         self::assertTrue($reflection->getMethod('__clone')->isPrivate());
-        self::assertTrue($reflection->getMethod('__wakeup')->isPrivate());
     }
 
     /**

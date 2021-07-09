@@ -184,12 +184,12 @@ class Router
     /**
      * Get an action parameter
      *
-     * @param string $key
-     * @param mixed  $default Default value to use if key not found
+     * @param mixed $key
+     * @param mixed $default Default value to use if key not found
      *
      * @return mixed
      */
-    public function getParam(string $key, $default = null)
+    public function getParam($key, $default = null)
     {
         return $this->params[$key] ?? $default;
     }
@@ -199,18 +199,18 @@ class Router
      *
      * A $value of null will unset the $key if it exists
      *
-     * @param string $key
-     * @param mixed  $value
+     * @param mixed $key
+     * @param mixed $value
      *
      * @return void
      */
-    public function setParam(string $key, $value): void
+    public function setParam($key, $value): void
     {
         $key = (string)$key;
 
-        if ((null === $value) && isset($this->params[$key])) {
+        if (null === $value) {
             unset($this->params[$key]);
-        } elseif (null !== $value) {
+        } else {
             $this->params[$key] = $value;
         }
     }

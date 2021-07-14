@@ -11,12 +11,13 @@ declare(strict_types=1);
 
 namespace Bluz\Response;
 
-use Bluz\Http\Exception\NotAcceptableException;
 use Bluz\Common\Options;
 use Bluz\Controller\Controller;
 use Bluz\Http\StatusCode;
 use Bluz\Layout\Layout;
 use Bluz\Proxy\Messages;
+use DateTime;
+use InvalidArgumentException;
 use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\JsonResponse;
@@ -144,7 +145,7 @@ class Response
     /**
      * Set Response Type, one of JSON, HTML or CLI
      *
-     * @param $type
+     * @param string $type
      */
     public function setType(string $type): void
     {
@@ -285,7 +286,7 @@ class Response
      * or an array of strings.
      *
      * @param string $header header name
-     * @param string|string[] $value  header value(s)
+     * @param int|int[]|string|string[] $value  header value(s)
      *
      * @return void
      */
@@ -301,11 +302,11 @@ class Response
      * value will be appended to the existing list.
      *
      * @param string $header header name to add
-     * @param string $value  value of the header
+     * @param string|int $value  value of the header
      *
      * @return void
      */
-    public function addHeader(string $header, string $value): void
+    public function addHeader(string $header, $value): void
     {
         if ($this->hasHeader($header)) {
             $this->headers[$header][] = $value;
@@ -424,14 +425,14 @@ class Response
      *
      * @param string $name
      * @param string $value
-     * @param int|string|\DateTime $expire
+     * @param int|string|DateTime $expire
      * @param string $path
      * @param string $domain
      * @param bool $secure
      * @param bool $httpOnly
      *
      * @return void
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function setCookie(
         string $name,
@@ -444,20 +445,20 @@ class Response
     ): void {
         // from PHP source code
         if (preg_match("/[=,; \t\r\n\013\014]/", $name)) {
-            throw new \InvalidArgumentException('The cookie name contains invalid characters.');
+            throw new InvalidArgumentException('The cookie name contains invalid characters.');
         }
 
         if (empty($name)) {
-            throw new \InvalidArgumentException('The cookie name cannot be empty.');
+            throw new InvalidArgumentException('The cookie name cannot be empty.');
         }
 
         // convert expiration time to a Unix timestamp
-        if ($expire instanceof \DateTime) {
+        if ($expire instanceof DateTime) {
             $expire = $expire->format('U');
         } elseif (!is_numeric($expire)) {
             $expire = strtotime($expire);
             if (false === $expire || -1 === $expire) {
-                throw new \InvalidArgumentException('The cookie expiration time is not valid.');
+                throw new InvalidArgumentException('The cookie expiration time is not valid.');
             }
         }
 
@@ -467,8 +468,8 @@ class Response
             'expire' => $expire,
             'path' => $path,
             'domain' => $domain,
-            'secure' => (bool)$secure,
-            'httpOnly' => (bool)$httpOnly
+            'secure' => $secure,
+            'httpOnly' => $httpOnly
         ];
     }
 

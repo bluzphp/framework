@@ -255,7 +255,6 @@ class Controller implements JsonSerializable
      *
      * @return void
      * @throws ControllerException
-     * @throws ReflectionException
      */
     protected function findFile(): void
     {
@@ -274,7 +273,6 @@ class Controller implements JsonSerializable
      *
      * @return string
      * @throws ControllerException
-     * @throws ReflectionException
      */
     protected function getFile(): string
     {

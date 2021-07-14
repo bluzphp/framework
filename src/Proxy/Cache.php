@@ -144,7 +144,7 @@ final class Cache
             }
 
             if (!empty($tags)) {
-                $item->setTags($tags);
+                $item->tag($tags);
             }
 
             return $cache->save($item);
@@ -174,7 +174,6 @@ final class Cache
      * @param  string $tag
      *
      * @return bool
-     * @throws InvalidArgumentException
      */
     public static function clearTag(string $tag): bool
     {
@@ -190,7 +189,6 @@ final class Cache
      * @param array $tags
      *
      * @return bool
-     * @throws InvalidArgumentException
      */
     public static function clearTags(array $tags): bool
     {

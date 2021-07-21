@@ -178,7 +178,7 @@ final class Cache
     public static function clearTag(string $tag): bool
     {
         if (self::getInstance() instanceof TagAwareAdapterInterface) {
-            return self::getInstance()->invalidateTag($tag);
+            return self::getInstance()->invalidateTags([$tag]);
         }
         return false;
     }

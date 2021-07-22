@@ -1,31 +1,40 @@
+checks:
+  php:
+    code_rating: true
+    deprecated_code_usage: true
+    duplication: true
+    no_short_open_tag: true
 build:
+  cache:
+    directories:
+      - "vendor"
+      - "~/.composer"
   nodes:
     analysis:
       tests:
         override:
           - php-scrutinizer-run
-checks:
-  php:
-    psr2_switch_declaration: true
-    psr2_class_declaration: true
-    no_short_open_tag: true
-    deprecated_code_usage: true
-    code_rating: true
+  dependencies:
+    override:
+      - COMPOSER_ROOT_VERSION=dev-master
 filter:
-  excluded_paths: [bin, docs, docker, data, tests, vendor]
+  excluded_paths:
+    - "docs/"
+    - "tests/"
+  dependency_paths:
+    - "vendor/"
 tools:
-  external_code_coverage:
-    timeout: 600
+  external_code_coverage: false
   php_analyzer: true
   php_code_sniffer:
     config:
-      standard: PSR2
+      standard: PSR12
   php_cpd:
     enabled: true
-    excluded_dirs: [bin, docs, docker, data, tests, vendor]
+    excluded_dirs: [bin, data, docs, docker, public, tests, vendor]
   php_loc:
     enabled: true
-    excluded_dirs: [bin, docs, docker, data, tests, vendor]
+    excluded_dirs: [bin, data, docs, docker, public, tests, vendor]
   php_mess_detector: true
   php_pdepend: true
   sensiolabs_security_checker: true

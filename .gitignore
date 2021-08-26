@@ -1,7 +1,12 @@
+# Local environment
 .DS_Store
 .idea
-vendor
+# Don't commit lock file for framework
+# But commit it for any other project
 composer.lock
+# Tools
 composer.phar
 codecept.phar
 codeception.yml
+# Vendors
+/vendor

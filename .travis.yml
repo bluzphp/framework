@@ -1,13 +1,14 @@
 language: php
 php:
-  - 7.3
   - 7.4
   - 8.0
+  - 8.1
 services:
   - mysql
 matrix:
   allow_failures:
     - php: 8.0
+    - php: 8.1
 env:
   global:
     - XDEBUG_MODE=coverage

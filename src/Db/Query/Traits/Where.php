@@ -45,7 +45,7 @@ trait Where
      *      ;
      * </code>
      *
-     * @param  string[] $conditions optional the query restriction predicates
+     * @param  array $conditions optional the query restriction predicates
      *
      * @return $this
      */

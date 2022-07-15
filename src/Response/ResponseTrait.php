@@ -22,7 +22,7 @@ trait ResponseTrait
     /**
      * @return string
      */
-    abstract public function jsonSerialize();
+    abstract public function jsonSerialize(): mixed;
 
     /**
      * @return string

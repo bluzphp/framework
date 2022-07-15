@@ -26,17 +26,17 @@ class ConfigLoader
     /**
      * @var array configuration data
      */
-    protected $config;
+    protected array $config;
 
     /**
      * @var string path to configuration files
      */
-    protected $path;
+    protected string $path;
 
     /**
      * @var string environment
      */
-    protected $environment;
+    protected string $environment;
 
     /**
      * @return array

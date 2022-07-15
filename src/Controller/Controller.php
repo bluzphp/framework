@@ -396,7 +396,7 @@ class Controller implements JsonSerializable
      *
      * @return Data
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return $this->getData();
     }

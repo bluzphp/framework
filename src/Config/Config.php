@@ -35,7 +35,7 @@ class Config
      * @return array|mixed
      * @throws ConfigException
      */
-    public function get(...$keys)
+    public function get(...$keys): mixed
     {
         // configuration is missed
         if (empty($this->container)) {

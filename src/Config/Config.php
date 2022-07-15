@@ -30,22 +30,22 @@ class Config
     /**
      * Return configuration by key
      *
-     * @param array $keys
+     * @param string|array $key
      *
      * @return array|mixed
      * @throws ConfigException
      */
-    public function get(...$keys): mixed
+    public function get($key): mixed
     {
         // configuration is missed
         if (empty($this->container)) {
             throw new ConfigException('System configuration is missing');
         }
 
-        if (!count($keys)) {
+        if (!count($key)) {
             return $this->container;
         }
 
-        return Collection::get($this->container, ...$keys);
+        return Collection::get($this->container, ...$key);
     }
 }

@@ -27,9 +27,9 @@ class Auth
     use Options;
 
     /**
-     * @var IdentityInterface Instance of EntityInterface
+     * @var ?IdentityInterface Instance of EntityInterface
      */
-    protected $identity;
+    protected ?IdentityInterface $identity;
 
     /**
      * Setup identity

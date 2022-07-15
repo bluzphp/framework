@@ -47,7 +47,7 @@ trait Options
     /**
      * @var array options store
      */
-    protected $options = [];
+    protected array $options = [];
 
     /**
      * Get option by key
@@ -57,7 +57,7 @@ trait Options
      *
      * @return mixed
      */
-    public function getOption(string $key, ...$keys)
+    public function getOption(string $key, ...$keys): mixed
     {
         $method = 'get' . Str::toCamelCase($key);
         if (method_exists($this, $method)) {
@@ -74,7 +74,7 @@ trait Options
      *
      * @return void
      */
-    public function setOption(string $key, $value): void
+    public function setOption(string $key, mixed $value): void
     {
         $method = 'set' . Str::toCamelCase($key);
         if (method_exists($this, $method)) {

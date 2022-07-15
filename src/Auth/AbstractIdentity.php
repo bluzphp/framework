@@ -40,7 +40,7 @@ abstract class AbstractIdentity extends Row implements IdentityInterface
     /**
      * {@inheritdoc}
      */
-    public function hasPrivilege($module, $privilege): bool
+    public function hasPrivilege(string $module, string $privilege): bool
     {
         $privileges = $this->getPrivileges();
 

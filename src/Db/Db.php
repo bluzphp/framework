@@ -37,7 +37,7 @@ class Db
      * @var  array
      * @link http://php.net/manual/en/pdo.construct.php
      */
-    protected $connect = [
+    protected array $connect = [
         'type' => 'mysql',
         'host' => 'localhost',
         'name' => '',
@@ -52,14 +52,14 @@ class Db
      * @var  array
      * @link http://php.net/manual/en/pdo.setattribute.php
      */
-    protected $attributes = [
+    protected array $attributes = [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
     ];
 
     /**
-     * @var PDO PDO instance
+     * @var ?PDO PDO instance
      */
-    protected $handler;
+    protected ?PDO $handler;
 
     /**
      * Setup connection

@@ -17,7 +17,7 @@ namespace Bluz\Common\Container;
  * @package  Bluz\Common
  * @author   Anton Shevchuk
  *
- * @method   void  doSetContainer(string $key, $value)
+ * @method   void  doSetContainer(string $key, mixed $value)
  * @method   mixed doGetContainer(string $key)
  * @method   bool  doContainsContainer(string $key)
  * @method   void  doDeleteContainer(string $key)
@@ -27,12 +27,12 @@ trait RegularAccess
     /**
      * Set key/value pair
      *
-     * @param  string $key
+     * @param string $key
      * @param  mixed  $value
      *
      * @return void
      */
-    public function set($key, $value): void
+    public function set(string $key, mixed $value): void
     {
         $this->doSetContainer($key, $value);
     }
@@ -40,11 +40,11 @@ trait RegularAccess
     /**
      * Get value by key
      *
-     * @param  string $key
+     * @param string $key
      *
      * @return mixed
      */
-    public function get($key)
+    public function get(string $key): mixed
     {
         return $this->doGetContainer($key);
     }
@@ -52,11 +52,11 @@ trait RegularAccess
     /**
      * Check contains key in container
      *
-     * @param  string $key
+     * @param string $key
      *
      * @return bool
      */
-    public function contains($key): bool
+    public function contains(string $key): bool
     {
         return $this->doContainsContainer($key);
     }
@@ -64,11 +64,11 @@ trait RegularAccess
     /**
      * Delete value by key
      *
-     * @param  string $key
+     * @param string $key
      *
      * @return void
      */
-    public function delete($key): void
+    public function delete(string $key): void
     {
         $this->doDeleteContainer($key);
     }

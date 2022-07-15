@@ -56,7 +56,7 @@ class Controller implements JsonSerializable
     /**
      * @var string
      */
-    protected $module;
+    protected $mzodule;
 
     /**
      * @var string

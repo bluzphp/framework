@@ -23,7 +23,7 @@ trait Container
     /**
      * @var array Container of elements
      */
-    protected $container = [];
+    protected array $container = [];
 
     /**
      * Set key/value pair
@@ -33,7 +33,7 @@ trait Container
      *
      * @return void
      */
-    protected function doSetContainer(string $key, $value): void
+    protected function doSetContainer(string $key, mixed $value): void
     {
         $this->container[$key] = $value;
     }
@@ -45,7 +45,7 @@ trait Container
      *
      * @return mixed
      */
-    protected function doGetContainer(string $key)
+    protected function doGetContainer(string $key): mixed
     {
         if ($this->doContainsContainer($key)) {
             return $this->container[$key];

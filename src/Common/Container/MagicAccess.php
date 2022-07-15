@@ -17,7 +17,7 @@ namespace Bluz\Common\Container;
  * @package  Bluz\Common
  * @author   Anton Shevchuk
  *
- * @method   void  doSetContainer(string $key, $value)
+ * @method   void  doSetContainer(string $key, mixed $value)
  * @method   mixed doGetContainer(string $key)
  * @method   bool  doContainsContainer(string $key)
  * @method   void  doDeleteContainer(string $key)
@@ -32,7 +32,7 @@ trait MagicAccess
      *
      * @return void
      */
-    public function __set(string $key, $value): void
+    public function __set(string $key, mixed $value): void
     {
         $this->doSetContainer($key, $value);
     }

@@ -59,7 +59,7 @@ class UserAdmin extends AbstractIdentity
      *
      * @return boolean
      */
-    public function hasPrivilege($module, $privilege): bool
+    public function hasPrivilege(string $module, string $privilege): bool
     {
         return true;
     }

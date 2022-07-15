@@ -21,7 +21,7 @@ interface IdentityInterface
     /**
      * Get an ID that can uniquely identify a user
      *
-     * @return integer
+     * @return int|null
      */
     public function getId(): ?int;
 
@@ -35,10 +35,10 @@ interface IdentityInterface
     /**
      * Has it privilege?
      *
-     * @param  string $module
-     * @param  string $privilege
+     * @param string $module
+     * @param string $privilege
      *
      * @return bool
      */
-    public function hasPrivilege($module, $privilege): bool;
+    public function hasPrivilege(string $module, string $privilege): bool;
 }

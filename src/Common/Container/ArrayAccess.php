@@ -20,7 +20,7 @@ use InvalidArgumentException;
  * @author   Anton Shevchuk
  * @see      ArrayAccess
  *
- * @method   void  doSetContainer(string $key, $value)
+ * @method   void  doSetContainer(string $key, mixed $value)
  * @method   mixed doGetContainer(string $key)
  * @method   bool  doContainsContainer(string $key)
  * @method   void  doDeleteContainer(string $key)
@@ -35,7 +35,7 @@ trait ArrayAccess
      *
      * @throws InvalidArgumentException
      */
-    public function offsetSet($offset, $value): void
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (null === $offset) {
             throw new InvalidArgumentException('Class `Common\Container\ArrayAccess` support only associative arrays');
@@ -50,7 +50,7 @@ trait ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet(mixed $offset): mixed
     {
         return $this->doGetContainer($offset);
     }
@@ -62,7 +62,7 @@ trait ArrayAccess
      *
      * @return bool
      */
-    public function offsetExists($offset): bool
+    public function offsetExists(mixed $offset): bool
     {
         return $this->doContainsContainer($offset);
     }
@@ -72,7 +72,7 @@ trait ArrayAccess
      *
      * @param mixed $offset
      */
-    public function offsetUnset($offset): void
+    public function offsetUnset(mixed $offset): void
     {
         $this->doDeleteContainer($offset);
     }

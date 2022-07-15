@@ -35,7 +35,7 @@ class Relations
      *
      * @var array
      */
-    protected static $relations;
+    protected static array $relations;
 
     /**
      * Class map, i.e.
@@ -48,7 +48,7 @@ class Relations
      *
      * @var array
      */
-    protected static $modelClassMap;
+    protected static array $modelClassMap;
 
     /**
      * Setup relation between two models

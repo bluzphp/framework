@@ -58,22 +58,22 @@ class Application
     /**
      * @var string Environment name
      */
-    protected $environment = 'production';
+    protected string $environment = 'production';
 
     /**
      * @var string Application path
      */
-    protected $path;
+    protected string $path;
 
     /**
      * @var bool Debug application flag
      */
-    protected $debugFlag = false;
+    protected bool $debugFlag = false;
 
     /**
      * @var bool Layout usage flag
      */
-    protected $layoutFlag = true;
+    protected bool $layoutFlag = true;
 
     /**
      * Get application environment

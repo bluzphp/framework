@@ -12,6 +12,7 @@ use Bluz\Http\StatusCode;
 use Bluz\Proxy;
 use Bluz\Proxy\Response;
 use Bluz\Proxy\Router;
+use Bluz\Response\ContentType;
 use Bluz\Tests\FrameworkTestCase;
 use Laminas\Diactoros\ServerRequest;
 
@@ -30,7 +31,7 @@ class ApplicationTest extends FrameworkTestCase
         self::getApp()->run();
 
         self::assertEquals(StatusCode::OK, Response::getStatusCode());
-        self::assertEquals('HTML', Response::getType());
+        self::assertEquals(ContentType::HTML, Response::getContentType());
     }
 
     public function testGetApplicationPath()
@@ -68,7 +69,7 @@ class ApplicationTest extends FrameworkTestCase
         self::getApp()->process();
 
         self::assertFalse(self::getApp()->useLayout());
-        self::assertEquals('JSON', self::getApp()->getResponse()->getType());
+        self::assertEquals(ContentType::JSON, self::getApp()->getResponse()->getContentType());
     }
 
     /**
@@ -115,7 +116,7 @@ class ApplicationTest extends FrameworkTestCase
         self::assertEquals(Router::getErrorModule(), self::getApp()->getModule());
         self::assertEquals(Router::getErrorController(), self::getApp()->getController());
         self::assertEquals(Response::getStatusCode(), StatusCode::INTERNAL_SERVER_ERROR);
-        self::assertEquals(Response::getBody()->getData()->get('code'), 500);
+        self::assertEquals(Response::getBody()->getData()->get('code'), StatusCode::INTERNAL_SERVER_ERROR->value);
         self::assertEquals(Response::getBody()->getData()->get('message'), 'Message');
     }
 
@@ -133,8 +134,8 @@ class ApplicationTest extends FrameworkTestCase
         self::assertEquals(Router::getErrorModule(), self::getApp()->getModule());
         self::assertEquals(Router::getErrorController(), self::getApp()->getController());
         self::assertEquals(Response::getStatusCode(), StatusCode::FORBIDDEN);
-        self::assertEquals(Response::getBody()->getData()->get('code'), StatusCode::FORBIDDEN);
-        self::assertEquals(Response::getBody()->getData()->get('message'), 'Forbidden');
+        self::assertEquals(Response::getBody()->getData()->get('code'), StatusCode::FORBIDDEN->value);
+        self::assertEquals(Response::getBody()->getData()->get('message'), StatusCode::FORBIDDEN->message());
     }
 
     /**

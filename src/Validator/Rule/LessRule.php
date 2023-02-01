@@ -36,7 +36,7 @@ class LessRule extends AbstractCompareRule
     /**
      * Check input data
      *
-     * @param  NumericRule $input
+     * @param NumericRule $input
      *
      * @return bool
      */

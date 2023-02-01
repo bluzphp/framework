@@ -21,7 +21,7 @@ class InStrictRule extends InRule
     /**
      * Check input data
      *
-     * @param  string $input
+     * @param string $input
      *
      * @return bool
      */

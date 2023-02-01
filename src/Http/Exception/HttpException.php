@@ -23,12 +23,36 @@ use Bluz\Http\StatusCode;
 class HttpException extends CommonException
 {
     /**
+     * @var StatusCode Used as default HTTP code for exceptions
+     */
+    protected StatusCode $statusCode = StatusCode::INTERNAL_SERVER_ERROR;
+
+    public function __construct(string $message = "", int $code = 0, ?\Throwable $previous = null)
+    {
+        parent::__construct(
+            $message ?: $this->statusCode->message(),
+            $code ?: $this->statusCode->value,
+            $previous
+        );
+    }
+
+    /**
+     * Return HTTP Status Message
+     *
+     * @return StatusCode
+     */
+    public function getStatusCode(): StatusCode
+    {
+        return $this->statusCode;
+    }
+
+    /**
      * Return HTTP Status Message
      *
      * @return string
      */
-    public function getStatus(): string
+    public function getStatusCodeMessage(): string
     {
-        return StatusCode::$statusTexts[$this->code];
+        return $this->statusCode->message();
     }
 }

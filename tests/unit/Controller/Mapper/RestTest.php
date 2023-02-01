@@ -27,7 +27,7 @@ class RestTest extends FrameworkTestCase
     /**
      * @var Rest
      */
-    protected $mapper;
+    protected Rest $mapper;
 
     public function setUp(): void
     {
@@ -75,9 +75,9 @@ class RestTest extends FrameworkTestCase
     /**
      * @dataProvider dataMethods
      *
-     * @param string $method
+     * @param RequestMethod $method
      */
-    public function testMethod($method)
+    public function testMethod(RequestMethod $method)
     {
         self::setRequestParams('test/index', [], [], $method);
         $this->mapper->addMap($method, 'test', 'index');
@@ -89,6 +89,7 @@ class RestTest extends FrameworkTestCase
     public function testNotImplementedMethod()
     {
         $this->expectException(NotImplementedException::class);
+        self::setRequestParams('test/index', [], [], RequestMethod::OPTIONS);
         $this->mapper->run();
     }
 
@@ -96,7 +97,6 @@ class RestTest extends FrameworkTestCase
     {
         $this->expectException(ForbiddenException::class);
         self::setRequestParams('test/index', [], [], RequestMethod::GET);
-
         $this->mapper->addMap(RequestMethod::GET, 'test', 'index')->acl('Deny');
         $this->mapper->run();
     }
@@ -107,11 +107,11 @@ class RestTest extends FrameworkTestCase
     public function dataMethods(): array
     {
         return [
-            RequestMethod::GET => [RequestMethod::GET],
-            RequestMethod::POST => [RequestMethod::POST],
-            RequestMethod::PATCH => [RequestMethod::PATCH],
-            RequestMethod::PUT => [RequestMethod::PUT],
-            RequestMethod::DELETE => [RequestMethod::DELETE],
+            RequestMethod::GET->value => [RequestMethod::GET],
+            RequestMethod::POST->value => [RequestMethod::POST],
+            RequestMethod::PATCH->value => [RequestMethod::PATCH],
+            RequestMethod::PUT->value => [RequestMethod::PUT],
+            RequestMethod::DELETE->value => [RequestMethod::DELETE],
         ];
     }
 }

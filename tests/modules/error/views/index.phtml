@@ -1,10 +1,12 @@
+<?php
+/** @var \Bluz\View\View $this */ ?>
 <div class="modal-header">
-  <h3 class="modal-title"><?= esc($error) ?></h3>
+    <h3 class="modal-title"><?= esc($message) ?></h3>
 </div>
 <div class="modal-body">
-  <p><?= esc($description) ?></p>
-    <?php if (isset($message)): ?>
-      <p><?= esc($message) ?></p>
-    <?php endif; ?>
+    <p><?= esc($description) ?></p>
+    <?= $this->exception($exception) ?>
 </div>
+<div class="modal-footer">
 
+</div>

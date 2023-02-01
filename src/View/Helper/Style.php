@@ -27,9 +27,9 @@ return
          * @var View $this
          */
         if (
-            strpos($href, 'http://') !== 0
-            && strpos($href, 'https://') !== 0
-            && strpos($href, '//') !== 0
+            !str_starts_with($href, 'http://')
+            && !str_starts_with($href, 'https://')
+            && !str_starts_with($href, '//')
         ) {
             $href = $this->baseUrl($href);
         }

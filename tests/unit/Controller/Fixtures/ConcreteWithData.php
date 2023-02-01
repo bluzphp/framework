@@ -19,8 +19,8 @@ use Bluz\Controller\Controller;
  * @route     /example/
  * @route     /example/{$a}/{$b}/{$c}
  *
- * @param int    $a
- * @param float  $b
+ * @param int $a
+ * @param float $b
  * @param string $c
  *
  * @return array

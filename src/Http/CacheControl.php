@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Bluz\Http;
 
-use Bluz\Common\Container\Container;
+use Bluz\Container\Container;
 use Bluz\Response\Response;
 use DateTime;
 use DateTimeZone;
@@ -28,7 +28,6 @@ use Exception;
  *     - Age
  *
  * @package  Bluz\Http
- * @author   Anton Shevchuk
  * @link     http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html
  * @link     http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9
  */
@@ -39,7 +38,7 @@ class CacheControl
     /**
      * @var Response instance
      */
-    protected $response;
+    protected Response $response;
 
     /**
      * Create instance
@@ -110,7 +109,7 @@ class CacheControl
      * First, it checks for a s-maxage directive, then a max-age directive, and then it falls
      * back on an expires header. It returns null when no maximum age can be established.
      *
-     * @return integer|null Number of seconds
+     * @return int|null Number of seconds
      */
     public function getMaxAge(): ?int
     {
@@ -124,7 +123,7 @@ class CacheControl
 
         if ($expires = $this->getExpires()) {
             $expires = DateTime::createFromFormat(DATE_RFC2822, $expires);
-            return (int) $expires->format('U') - date('U');
+            return (int)$expires->format('U') - date('U');
         }
 
         return null;
@@ -135,7 +134,7 @@ class CacheControl
      *
      * This methods sets the Cache-Control max-age directive.
      *
-     * @param integer $value Number of seconds
+     * @param int $value Number of seconds
      *
      * @return void
      */
@@ -150,7 +149,7 @@ class CacheControl
      *
      * This methods sets the Cache-Control s-maxage directive.
      *
-     * @param integer $value Number of seconds
+     * @param int $value Number of seconds
      *
      * @return void
      */
@@ -168,14 +167,11 @@ class CacheControl
      * When the responses TTL is <= 0, the response may not be served from cache without first
      * revalidating with the origin.
      *
-     * @return integer|null The TTL in seconds
+     * @return int|null The TTL in seconds
      */
     public function getTtl(): ?int
     {
-        if ($maxAge = $this->getMaxAge()) {
-            return $maxAge - $this->getAge();
-        }
-        return null;
+        return ($maxAge = $this->getMaxAge()) ? $maxAge - $this->getAge() : null;
     }
 
     /**
@@ -183,7 +179,7 @@ class CacheControl
      *
      * This method adjusts the Cache-Control/s-maxage directive.
      *
-     * @param integer $seconds Number of seconds
+     * @param int $seconds Number of seconds
      *
      * @return void
      */
@@ -197,7 +193,7 @@ class CacheControl
      *
      * This method adjusts the Cache-Control/max-age directive.
      *
-     * @param integer $seconds Number of seconds
+     * @param int $seconds Number of seconds
      *
      * @return void
      */
@@ -233,7 +229,7 @@ class CacheControl
     /**
      * Returns the age of the response
      *
-     * @return integer The age of the response in seconds
+     * @return int The age of the response in seconds
      */
     public function getAge(): int
     {
@@ -246,7 +242,7 @@ class CacheControl
     /**
      * Set the age of the response
      *
-     * @param integer $age
+     * @param int $age
      *
      * @return void
      */
@@ -273,13 +269,9 @@ class CacheControl
      * @return void
      * @throws Exception
      */
-    public function setExpires($date): void
+    public function setExpires(DateTime|string $date): void
     {
-        if ($date instanceof DateTime) {
-            $date = clone $date;
-        } else {
-            $date = new DateTime($date);
-        }
+        $date = $date instanceof DateTime ? clone $date : new DateTime($date);
 
         $date->setTimezone(new DateTimeZone('UTC'));
         $this->response->setHeader('Expires', $date->format('D, d M Y H:i:s') . ' GMT');
@@ -298,18 +290,14 @@ class CacheControl
     /**
      * Sets the Last-Modified HTTP header with a DateTime instance or string
      *
-     * @param  DateTime|string $date A \DateTime instance or date as string
+     * @param DateTime|string $date A \DateTime instance or date as string
      *
      * @return void
      * @throws Exception
      */
-    public function setLastModified($date): void
+    public function setLastModified(DateTime|string $date): void
     {
-        if ($date instanceof DateTime) {
-            $date = clone $date;
-        } else {
-            $date = new DateTime($date);
-        }
+        $date = $date instanceof DateTime ? clone $date : new DateTime($date);
 
         $date->setTimezone(new DateTimeZone('UTC'));
         $this->response->setHeader('Last-Modified', $date->format('D, d M Y H:i:s') . ' GMT');

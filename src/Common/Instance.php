@@ -19,16 +19,17 @@ namespace Bluz\Common;
  */
 trait Instance
 {
+    protected static array $instances = [];
+
     /**
      * Get instance
      * @return static
      */
-    public static function getInstance()
+    public static function getInstance(): static
     {
-        static $instance;
-        if (null === $instance) {
-            $instance = new static();
+        if (!isset(static::$instances[static::class])) {
+            static::$instances[static::class] = new static();
         }
-        return $instance;
+        return static::$instances[static::class];
     }
 }

@@ -9,6 +9,7 @@ namespace Bluz\Tests\Config;
 
 use Bluz;
 use Bluz\Config;
+use Bluz\Config\ConfigException;
 use Bluz\Tests\FrameworkTestCase;
 
 class ConfigTest extends FrameworkTestCase
@@ -16,7 +17,12 @@ class ConfigTest extends FrameworkTestCase
     /**
      * @var string Path to config dir
      */
-    protected $path;
+    protected string $path;
+
+    /**
+     * @var string Path to config dir
+     */
+    protected string $testing;
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -24,17 +30,18 @@ class ConfigTest extends FrameworkTestCase
      */
     protected function setUp(): void
     {
-        $this->path = __DIR__ . '/Fixtures/';
+        $this->path = __DIR__ . '/Fixtures/configs/default';
+        $this->testing = __DIR__ . '/Fixtures/configs/testing';
     }
 
     /**
      * @covers \Bluz\Config\Config::get
+     * @throws ConfigException
      */
     public function testGetData(): void
     {
         $loader = new Config\ConfigLoader();
-        $loader->setPath($this->path);
-        $loader->load();
+        $loader->load($this->path);
 
         $config = new Config\Config();
         $config->setFromArray($loader->getConfig());
@@ -47,12 +54,12 @@ class ConfigTest extends FrameworkTestCase
 
     /**
      * @covers \Bluz\Config\Config::get
+     * @throws ConfigException
      */
     public function testGetDataByNotExistedSection(): void
     {
         $loader = new Config\ConfigLoader();
-        $loader->setPath($this->path);
-        $loader->load();
+        $loader->load($this->path);
 
         $config = new Config\Config();
         $config->setFromArray($loader->getConfig());
@@ -62,12 +69,12 @@ class ConfigTest extends FrameworkTestCase
 
     /**
      * @covers \Bluz\Config\Config::get
+     * @throws ConfigException
      */
     public function testGetDataBySection(): void
     {
         $loader = new Config\ConfigLoader();
-        $loader->setPath($this->path);
-        $loader->load();
+        $loader->load($this->path);
 
         $config = new Config\Config();
         $config->setFromArray($loader->getConfig());
@@ -80,14 +87,13 @@ class ConfigTest extends FrameworkTestCase
 
     /**
      * @covers \Bluz\Config\Config::get
+     * @throws ConfigException
      */
     public function testGetDataBySubSection(): void
     {
-
         $loader = new Config\ConfigLoader();
-        $loader->setPath($this->path);
-        $loader->setEnvironment('testing');
-        $loader->load();
+        $loader->load($this->path);
+        $loader->load($this->testing);
 
         $config = new Config\Config();
         $config->setFromArray($loader->getConfig());

@@ -31,10 +31,10 @@ tools:
       standard: PSR12
   php_cpd:
     enabled: true
-    excluded_dirs: [bin, data, docs, docker, public, tests, vendor]
+    excluded_dirs: [ bin, data, docs, docker, public, tests, vendor ]
   php_loc:
     enabled: true
-    excluded_dirs: [bin, data, docs, docker, public, tests, vendor]
+    excluded_dirs: [ bin, data, docs, docker, public, tests, vendor ]
   php_mess_detector: true
   php_pdepend: true
   sensiolabs_security_checker: true

@@ -13,20 +13,20 @@ if [ "$TRAVIS_REPO_SLUG" == "bluzphp/framework" ] && [ "$TRAVIS_TAG" != "" ] && 
 
   echo "Publishing"
   # move docs to `home` directory
-  cp -R docs/html $HOME/docs-latest
+  cp -R docs/html "$HOME/docs-latest"
 
-  cd $HOME
+  cd "$HOME" || exit
   git config --global user.email "travis@travis-ci.com"
   git config --global user.name "travis-ci"
   git config --global push.default simple
-  git clone --quiet https://${GITHUB_TOKEN}@github.com/bluzphp/bluzphp.github.io > /dev/null
+  git clone --quiet "https://$GITHUB_TOKEN@github.com/bluzphp/bluzphp.github.io" > /dev/null
 
-  cd bluzphp.github.io
+  cd bluzphp.github.io || exit
   echo "-- Clean"
   git rm -rf ./ > /dev/null
 
   echo "-- Copy"
-  cp -Rf $HOME/docs-latest/* ./
+  cp -Rf "$HOME"/docs-latest/* ./
 
   echo "-- Push"
   git add -f .

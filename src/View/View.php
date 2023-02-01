@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace Bluz\View;
 
 use Bluz\Auth\AbstractIdentity;
-use Bluz\Common\Container;
+use Bluz\Container;
 use Bluz\Common\Exception\CommonException;
 use Bluz\Common\Helper;
 use Bluz\Common\Options;
@@ -66,24 +66,24 @@ class View implements ViewInterface, \JsonSerializable
     use ResponseTrait;
 
     /**
-     * @var string base url
+     * @var string|null base url
      */
-    protected $baseUrl;
+    protected ?string $baseUrl = null;
 
     /**
-     * @var string path to template
+     * @var string|null path to template
      */
-    protected $path;
+    protected ?string $path = null;
 
     /**
      * @var array paths to partial
      */
-    protected $partialPath = [];
+    protected array $partialPath = [];
 
     /**
-     * @var string template name
+     * @var string|null template name
      */
-    protected $template;
+    protected ?string $template = null;
 
     /**
      * Create view instance, initial default helper path
@@ -119,7 +119,7 @@ class View implements ViewInterface, \JsonSerializable
             // clean output
             ob_clean();
         }
-        return (string) ob_get_clean();
+        return (string)ob_get_clean();
     }
 
     /**

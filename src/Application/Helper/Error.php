@@ -16,6 +16,7 @@ use Bluz\Common\Exception\CommonException;
 use Bluz\Common\Exception\ComponentException;
 use Bluz\Controller\Controller;
 use Bluz\Controller\ControllerException;
+use Bluz\Http\Exception\HttpException;
 use Bluz\Proxy\Response;
 use Bluz\Proxy\Router;
 use Exception;
@@ -42,7 +43,14 @@ return
 
         $module = Router::getErrorModule();
         $controller = Router::getErrorController();
-        $params = ['code' => $exception->getCode(), 'exception' => $exception];
+
+        if ($exception instanceof HttpException) {
+            $code = $exception->getStatusCode()->value;
+        } else {
+            $code = $exception->getCode();
+        }
+
+        $params = ['code' => $code, 'exception' => $exception];
 
         return $this->dispatch($module, $controller, $params);
     };

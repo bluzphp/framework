@@ -26,7 +26,7 @@ class PositiveRule extends AbstractRule
     /**
      * Check for positive number
      *
-     * @param  string $input
+     * @param string $input
      *
      * @return bool
      */

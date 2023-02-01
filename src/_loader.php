@@ -21,10 +21,6 @@ declare(strict_types=1);
 // @codeCoverageIgnoreStart
 
 // traits
-require_once __DIR__ . '/Common/Container/Container.php';
-require_once __DIR__ . '/Common/Container/JsonSerialize.php';
-require_once __DIR__ . '/Common/Container/MagicAccess.php';
-require_once __DIR__ . '/Common/Container/RegularAccess.php';
 require_once __DIR__ . '/Common/Helper.php';
 require_once __DIR__ . '/Common/Nil.php';
 require_once __DIR__ . '/Common/Options.php';

@@ -21,8 +21,5 @@ use Bluz\Http\StatusCode;
  */
 class NotAcceptableException extends HttpException
 {
-    /**
-     * @var integer HTTP Code
-     */
-    protected $code = StatusCode::NOT_ACCEPTABLE;
+    protected StatusCode $statusCode = StatusCode::NOT_ACCEPTABLE;
 }

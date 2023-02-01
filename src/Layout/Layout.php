@@ -11,8 +11,7 @@ declare(strict_types=1);
 
 namespace Bluz\Layout;
 
-use Bluz\Common\Container\RegularAccess;
-use Bluz\Common\Exception\CommonException;
+use Bluz\Container\RegularAccess;
 use Bluz\View\View;
 use Exception;
 
@@ -46,8 +45,6 @@ class Layout extends View
      * Layout constructor
      *  - init Layout helpers
      *  - call parent View constructor
-     *
-     * @throws CommonException
      */
     public function __construct()
     {
@@ -71,7 +68,7 @@ class Layout extends View
     /**
      * Set content
      *
-     * @param  View|callable $content
+     * @param View|callable $content
      *
      * @return void
      */

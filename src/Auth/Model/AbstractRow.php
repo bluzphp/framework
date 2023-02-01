@@ -20,14 +20,14 @@ use Bluz\Db\Row;
  * @author   Anton Shevchuk
  *
  * @property integer $userId
- * @property string  $provider
- * @property string  $foreignKey
- * @property string  $token
- * @property string  $tokenSecret
- * @property string  $tokenType
- * @property string  $created
- * @property string  $updated
- * @property string  $expired
+ * @property string $provider
+ * @property string $foreignKey
+ * @property string $token
+ * @property string $tokenSecret
+ * @property string $tokenType
+ * @property string $created
+ * @property string $updated
+ * @property string $expired
  */
 abstract class AbstractRow extends Row
 {

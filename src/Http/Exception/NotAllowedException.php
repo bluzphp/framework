@@ -21,8 +21,5 @@ use Bluz\Http\StatusCode;
  */
 class NotAllowedException extends HttpException
 {
-    /**
-     * @var integer HTTP Code
-     */
-    protected $code = StatusCode::METHOD_NOT_ALLOWED;
+    protected StatusCode $statusCode = StatusCode::METHOD_NOT_ALLOWED;
 }

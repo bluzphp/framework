@@ -28,7 +28,7 @@ class TableCrud extends Table
      *
      * @return void
      */
-    public function resetTable()
+    public function resetTable(): void
     {
         $this->table = null;
     }

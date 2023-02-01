@@ -7,6 +7,7 @@
 
 namespace Bluz\Tests\Validator;
 
+use Bluz\Http\StatusCode;
 use Bluz\Tests;
 use Bluz\Validator\Exception\ValidatorException;
 use Bluz\Validator\ValidatorForm;
@@ -27,7 +28,7 @@ class ValidatorFormTest extends Tests\FrameworkTestCase
                 ->setDescription('is not numeric');
             $validator->assert(['some' => 'something']);
         } catch (ValidatorException $e) {
-            self::assertEquals('Invalid Arguments', $e->getMessage());
+            self::assertEquals(StatusCode::BAD_REQUEST->message(), $e->getMessage());
             self::assertArrayHasKey('some', $e->getErrors());
             self::assertEquals('is not numeric', $e->getErrors()['some']);
         }
@@ -41,7 +42,7 @@ class ValidatorFormTest extends Tests\FrameworkTestCase
             $validator->add('bar')->required()->callback('is_int');
             $validator->assert([]);
         } catch (ValidatorException $e) {
-            self::assertEquals('Invalid Arguments', $e->getMessage());
+            self::assertEquals(StatusCode::BAD_REQUEST->message(), $e->getMessage());
 
             $errors = $validator->getErrors();
 
@@ -60,7 +61,7 @@ class ValidatorFormTest extends Tests\FrameworkTestCase
             $validator->add('quz')->required()->callback('is_int');
             $validator->assert(['foo' => 42, 'bar' => 'something']);
         } catch (ValidatorException $e) {
-            self::assertEquals('Invalid Arguments', $e->getMessage());
+            self::assertEquals(StatusCode::BAD_REQUEST->message(), $e->getMessage());
 
             $errors = $validator->getErrors();
             self::assertEqualsArray($errors, $e->getErrors());

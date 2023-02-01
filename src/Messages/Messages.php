@@ -44,8 +44,8 @@ class Messages
     /**
      * Add notice
      *
-     * @param  string $message
-     * @param  string[] $text
+     * @param string $message
+     * @param string[] $text
      *
      * @return void
      * @since  1.0.0 added $text
@@ -58,8 +58,8 @@ class Messages
     /**
      * Add success
      *
-     * @param  string $message
-     * @param  string[] $text
+     * @param string $message
+     * @param string[] $text
      *
      * @return void
      * @since  1.0.0 added $text
@@ -72,8 +72,8 @@ class Messages
     /**
      * Add error
      *
-     * @param  string $message
-     * @param  string[] $text
+     * @param string $message
+     * @param string[] $text
      *
      * @return void
      * @since  1.0.0 added $text
@@ -86,9 +86,9 @@ class Messages
     /**
      * Add message to container
      *
-     * @param  string $type One of error, notice or success
-     * @param  string $message
-     * @param  string[] $text
+     * @param string $type One of error, notice or success
+     * @param string $message
+     * @param string[] $text
      *
      * @return void
      */

@@ -29,10 +29,10 @@ class SelectSource extends AbstractSource
     /**
      * Set Select source
      *
-     * @param  Db\Query\Select $source
+     * @param Db\Query\Select $source
      *
-     * @throws Grid\GridException
      * @return void
+     * @throws Grid\GridException
      */
     public function setSource($source): void
     {
@@ -98,7 +98,7 @@ class SelectSource extends AbstractSource
     /**
      * Apply filters to Select
      *
-     * @param  array $settings
+     * @param array $settings
      *
      * @return void
      * @throws Grid\GridException
@@ -118,7 +118,7 @@ class SelectSource extends AbstractSource
     /**
      * Apply order to Select
      *
-     * @param  array $settings
+     * @param array $settings
      *
      * @return void
      * @throws Grid\GridException

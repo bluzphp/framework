@@ -16,13 +16,13 @@ use Bluz\View\View;
 /**
  * Generate HTML for <input type="checkbox">
  *
- * @param string      $name
+ * @param string $name
  * @param string|null $value
- * @param bool        $checked
- * @param array       $attributes
+ * @param bool $checked
+ * @param array $attributes
  *
  * @return string
- *@author The-Who
+ * @author The-Who
  *
  */
 return

@@ -50,9 +50,9 @@ trait Set
      *         ->where('id = ?');
      * </code>
      *
-     * @param  string         $key   The column to set
-     * @param  string|integer $value The value, expression, placeholder, etc
-     * @param  int            $type  The type of value on of PDO::PARAM_* params
+     * @param string $key The column to set
+     * @param string|integer $value The value, expression, placeholder, etc
+     * @param int $type The type of value on of PDO::PARAM_* params
      *
      * @return $this
      */
@@ -77,7 +77,7 @@ trait Set
      *         ->where('u.id = ?');
      * </code>
      *
-     * @param  array $data
+     * @param array $data
      *
      * @return $this
      */

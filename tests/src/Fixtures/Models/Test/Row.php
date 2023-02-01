@@ -18,9 +18,9 @@ use Bluz\Validator\Traits\Validator;
  * Test Row
  *
  * @property integer $id
- * @property string  $name
- * @property string  $email
- * @property string  $status enum('active','disable','delete')
+ * @property string $name
+ * @property string $email
+ * @property string $status enum('active','disable','delete')
  *
  * @package  Bluz\Tests\Fixtures
  */

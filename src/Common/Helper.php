@@ -36,7 +36,7 @@ trait Helper
     /**
      * Add helper path
      *
-     * @param  string $path
+     * @param string $path
      *
      * @return void
      * @throws CommonException
@@ -63,8 +63,8 @@ trait Helper
     /**
      * Call magic helper
      *
-     * @param  string $method
-     * @param  array  $arguments
+     * @param string $method
+     * @param array $arguments
      *
      * @return mixed
      * @throws CommonException
@@ -114,8 +114,8 @@ trait Helper
     /**
      * Add helper callable
      *
-     * @param  string $name
-     * @param  string $path
+     * @param string $name
+     * @param string $path
      *
      * @return void
      * @throws CommonException

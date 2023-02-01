@@ -83,8 +83,8 @@ class Logger extends AbstractLogger
     /**
      * Interpolates context values into the message placeholders
      *
-     * @param  string $message
-     * @param  array  $context
+     * @param string $message
+     * @param array $context
      *
      * @return string
      */
@@ -103,8 +103,8 @@ class Logger extends AbstractLogger
     /**
      * Log info message
      *
-     * @param  string $message
-     * @param  array  $context
+     * @param string $message
+     * @param array $context
      *
      * @return void
      */
@@ -135,9 +135,9 @@ class Logger extends AbstractLogger
     /**
      * Logs with an arbitrary level
      *
-     * @param  mixed  $level
-     * @param  string $message
-     * @param  array  $context
+     * @param mixed $level
+     * @param string $message
+     * @param array $context
      *
      * @return void
      */

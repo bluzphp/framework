@@ -8,12 +8,12 @@
 /**
  * Example of helpers
  *
- * @author   Anton Shevchuk
- * @created  14.01.14 11:39
- *
  * @param $argument
  *
  * @return mixed
+ * @author   Anton Shevchuk
+ * @created  14.01.14 11:39
+ *
  */
 return function ($argument) {
     return $argument;

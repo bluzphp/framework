@@ -141,7 +141,7 @@ class Relations
      *
      * @param string $modelOne Table
      * @param string $modelTwo Target table
-     * @param array $keys     Keys from first table
+     * @param array $keys Keys from first table
      *
      * @return array
      * @throws Exception\RelationNotFoundException

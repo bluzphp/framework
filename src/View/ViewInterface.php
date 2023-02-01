@@ -66,7 +66,7 @@ interface ViewInterface
     /**
      * Merge data from array
      *
-     * @param  array $data
+     * @param array $data
      *
      * @return void
      */

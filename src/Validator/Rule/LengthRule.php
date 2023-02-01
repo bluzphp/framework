@@ -71,7 +71,7 @@ class LengthRule extends AbstractCompareRule
     /**
      * Check input data
      *
-     * @param  string $input
+     * @param string $input
      *
      * @return bool
      */
@@ -88,7 +88,7 @@ class LengthRule extends AbstractCompareRule
     /**
      * Extract length
      *
-     * @param  string|object $input
+     * @param string|object $input
      *
      * @return integer|false
      */

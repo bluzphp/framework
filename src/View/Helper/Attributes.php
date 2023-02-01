@@ -16,11 +16,11 @@ use Bluz\View\View;
 /**
  * Generate HTML attributes
  *
- * @author The-Who
- *
- * @param  array $attributes
+ * @param array $attributes
  *
  * @return string
+ * @author The-Who
+ *
  */
 return
     function (array $attributes = []) {

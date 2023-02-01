@@ -30,7 +30,7 @@ class SqlSource extends AbstractSource
     /**
      * Set SQL source
      *
-     * @param  string $source
+     * @param string $source
      *
      * @return void
      * @throws GridException
@@ -96,7 +96,7 @@ class SqlSource extends AbstractSource
     /**
      * Apply filters to SQL query
      *
-     * @param  array[] $settings
+     * @param array[] $settings
      *
      * @return array
      */
@@ -119,7 +119,7 @@ class SqlSource extends AbstractSource
     /**
      * Apply order to SQL query
      *
-     * @param  array $settings
+     * @param array $settings
      *
      * @return array
      */

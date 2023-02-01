@@ -16,7 +16,7 @@ use Bluz\Proxy\Registry;
 /**
  * Set or Get Breadcrumbs
  *
- * @param  array $data
+ * @param array $data
  *
  * @return array|null
  */

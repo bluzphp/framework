@@ -26,8 +26,8 @@ class Nil
     /**
      * Magic call
      *
-     * @param  string $method
-     * @param  array  $args
+     * @param string $method
+     * @param array $args
      *
      * @return null
      */
@@ -39,8 +39,8 @@ class Nil
     /**
      * Magic call for static
      *
-     * @param  string $method
-     * @param  array  $args
+     * @param string $method
+     * @param array $args
      *
      * @return null
      */
@@ -52,7 +52,7 @@ class Nil
     /**
      * Magic __get
      *
-     * @param  string $key
+     * @param string $key
      *
      * @return null
      */
@@ -64,8 +64,8 @@ class Nil
     /**
      * Magic __set
      *
-     * @param  string $key
-     * @param  mixed  $value
+     * @param string $key
+     * @param mixed $value
      *
      * @return null
      */
@@ -77,7 +77,7 @@ class Nil
     /**
      * Magic __isset
      *
-     * @param  string $key
+     * @param string $key
      *
      * @return false
      */

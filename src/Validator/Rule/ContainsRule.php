@@ -36,7 +36,7 @@ class ContainsRule extends AbstractRule
     /**
      * Check input data
      *
-     * @param  string|array $input
+     * @param string|array $input
      *
      * @return bool
      */

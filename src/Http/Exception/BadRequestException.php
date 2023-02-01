@@ -17,12 +17,8 @@ use Bluz\Http\StatusCode;
  * BadRequest Exception
  *
  * @package  Bluz\Http\Exception
- * @author   Anton Shevchuk
  */
 class BadRequestException extends HttpException
 {
-    /**
-     * @var integer HTTP Code
-     */
-    protected $code = StatusCode::BAD_REQUEST;
+    protected StatusCode $statusCode = StatusCode::BAD_REQUEST;
 }

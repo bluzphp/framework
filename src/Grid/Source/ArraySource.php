@@ -27,7 +27,7 @@ class ArraySource extends AbstractSource
     /**
      * Set array source
      *
-     * @param  array $source
+     * @param array $source
      *
      * @return void
      * @throws Grid\GridException
@@ -67,7 +67,7 @@ class ArraySource extends AbstractSource
     /**
      * Apply filters to array
      *
-     * @param  array $settings
+     * @param array $settings
      *
      * @return void
      * @throws Grid\GridException
@@ -129,7 +129,7 @@ class ArraySource extends AbstractSource
     /**
      * Apply order to array
      *
-     * @param  array $settings
+     * @param array $settings
      *
      * @return void
      * @throws Grid\GridException

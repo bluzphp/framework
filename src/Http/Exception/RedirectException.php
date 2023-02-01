@@ -27,22 +27,20 @@ class RedirectException extends HttpException
      * - 301 Moved Permanently
      * - 302 Moved Temporarily / Found
      * - 307 Temporary Redirect
-     *
-     * @var integer
      */
-    protected $code = StatusCode::FOUND;
+    protected StatusCode $statusCode = StatusCode::FOUND;
 
     /**
      * @var string
      */
-    protected $url;
+    protected string $url;
 
     /**
      * Set Url to Redirect
      *
      * @param string $url
      */
-    public function setUrl($url): void
+    public function setUrl(string $url): void
     {
         $this->url = $url;
     }

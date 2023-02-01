@@ -17,8 +17,8 @@ namespace Application;
 /**
  * @route /{$a}-{$b}-{$c}/
  *
- * @param int    $a
- * @param float  $b
+ * @param int $a
+ * @param float $b
  * @param string $c
  *
  * @return bool

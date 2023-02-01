@@ -5,6 +5,7 @@ Easy to setup, easy to use.
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/bluzphp/main)
 
 ## Achievements
+
 [![PHP >= 7.2+](https://img.shields.io/packagist/php-v/bluzphp/framework.svg?style=flat)](https://php.net/)
 
 [![Latest Stable Version](https://img.shields.io/packagist/v/bluzphp/framework.svg?label=version&style=flat)](https://packagist.org/packages/bluzphp/framework)
@@ -33,7 +34,10 @@ Auto-generating documentation is available at the http://bluzphp.github.io/
 The project is developed by [NIX][3] PHP team and distributed under [MIT LICENSE][4]
 
 [1]: https://github.com/bluzphp/skeleton
+
 [2]: https://github.com/bluzphp/framework/wiki
-[3]: http://nixsolutions.com
+
+[3]: https://nixsolutions.com
+
 [4]: https://raw.github.com/bluzphp/framework/master/LICENSE.md
 

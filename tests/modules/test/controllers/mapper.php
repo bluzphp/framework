@@ -17,7 +17,6 @@ namespace Application;
  * @return array
  */
 return function ($crud, $primary, $data, $relation = null, $relationId = null) {
-
     return [
         'crud' => $crud,
         'primary' => $primary,

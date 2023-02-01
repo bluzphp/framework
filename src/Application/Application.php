@@ -32,6 +32,7 @@ use Bluz\Proxy\Session;
 use Bluz\Proxy\Translator;
 use Bluz\Request\RequestFactory;
 use Bluz\Response\Response as ResponseInstance;
+use Bluz\Response\ContentType;
 use Exception;
 use InvalidArgumentException;
 use ReflectionClass;
@@ -61,9 +62,9 @@ class Application
     protected string $environment = 'production';
 
     /**
-     * @var string Application path
+     * @var string|null Application path
      */
-    protected string $path;
+    protected ?string $path = null;
 
     /**
      * @var bool Debug application flag
@@ -89,19 +90,46 @@ class Application
      * Get path to Application
      *
      * @return string
+     * @throws ApplicationException
      */
     public function getPath(): string
     {
         if (!$this->path) {
-            if (defined('PATH_APPLICATION')) {
-                $this->path = PATH_APPLICATION;
-            } else {
-                $reflection = new ReflectionClass($this);
-                // 3 level up
-                $this->path = dirname($reflection->getFileName(), 3);
-            }
+            $this->setPath(
+                $this->detectPath()
+            );
         }
         return $this->path;
+    }
+
+    /**
+     * @param string $environment
+     */
+    public function setEnvironment(string $environment): void
+    {
+        $this->environment = $environment;
+    }
+
+    /**
+     * @param string $path
+     * @throws ApplicationException
+     */
+    public function setPath(string $path): void
+    {
+        if (!is_readable($path)) {
+            throw new ApplicationException('Application path is not readable');
+        }
+        $this->path = $path;
+    }
+
+    /**
+     * Try to detect path of the Application
+     * @return string
+     */
+    protected function detectPath(): string
+    {
+        $reflection = new ReflectionClass($this);
+        return dirname($reflection->getFileName(), 3); // 3 level up
     }
 
     /**
@@ -133,15 +161,11 @@ class Application
     /**
      * Initialize system packages
      *
-     * @param string $environment
-     *
      * @return void
      * @throws ApplicationException
      */
-    public function init(string $environment = 'production'): void
+    public function init(): void
     {
-        $this->environment = $environment;
-
         try {
             // initial default helper path
             $this->addHelperPath(__DIR__ . '/Helper/');
@@ -179,13 +203,15 @@ class Application
      *
      * @return void
      * @throws ConfigException
+     * @throws ApplicationException
      */
     protected function initConfig(): void
     {
         $loader = new ConfigLoader();
-        $loader->setPath($this->getPath());
-        $loader->setEnvironment($this->getEnvironment());
-        $loader->load();
+        // load default configuration
+        $loader->load($this->getPath() .'/configs/default');
+        // and merge it with environment configuration
+        $loader->load($this->getPath() .'/configs/'. $this->getEnvironment());
 
         $config = new \Bluz\Config\Config();
         $config->setFromArray($loader->getConfig());
@@ -327,7 +353,7 @@ class Application
         // switch to JSON response based on Accept header
         if (Request::checkAccept([Request::TYPE_HTML, Request::TYPE_JSON]) === Request::TYPE_JSON) {
             $this->layoutFlag = false;
-            Response::setType('JSON');
+            Response::setContentType(ContentType::JSON);
         }
     }
 
@@ -390,7 +416,7 @@ class Application
      *
      * @param string $module
      * @param string $controller
-     * @param array  $params
+     * @param array $params
      *
      * @return Controller
      * @throws CommonException

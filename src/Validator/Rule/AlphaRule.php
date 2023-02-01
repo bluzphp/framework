@@ -21,7 +21,7 @@ class AlphaRule extends AbstractCtypeRule
     /**
      * Check for alphabetic character(s)
      *
-     * @param  string $input
+     * @param string $input
      *
      * @return bool
      */

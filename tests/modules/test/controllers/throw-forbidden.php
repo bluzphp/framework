@@ -14,8 +14,8 @@ namespace Bluz\Tests\Fixtures\Controllers;
 use Bluz\Http\Exception\ForbiddenException;
 
 /**
- * @throws ForbiddenException
  * @return void
+ * @throws ForbiddenException
  */
 return function () {
     $this->disableLayout();

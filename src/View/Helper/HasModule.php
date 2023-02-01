@@ -19,7 +19,6 @@ use Bluz\Application\Application;
  * @param string|null $module
  *
  * @return bool
- * @throws \ReflectionException
  */
 return
     function (?string $module = null) {

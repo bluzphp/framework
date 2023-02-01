@@ -41,7 +41,7 @@ class DomainRule extends AbstractRule
     /**
      * Check input data
      *
-     * @param  string $input
+     * @param string $input
      *
      * @return bool
      */
@@ -49,10 +49,9 @@ class DomainRule extends AbstractRule
     {
         $input = (string)$input;
         // check by regular expression
-        if (
-            preg_match("/^([a-z\d](-*[a-z\d])*)(\.([a-z\d](-*[a-z\d])*))*$/i", $input)
+        if (preg_match("/^([a-z\d](-*[a-z\d])*)(\.([a-z\d](-*[a-z\d])*))*$/i", $input)
             && preg_match("/^.{1,253}$/", $input)
-            && preg_match("/^[^\.]{1,63}(\.[^\.]{1,63})*$/", $input)
+            && preg_match("/^[^.]{1,63}(\.[^.]{1,63})*$/", $input)
         ) {
             // check by DNS record
             if ($this->checkDns) {

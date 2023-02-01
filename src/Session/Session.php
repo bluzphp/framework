@@ -97,7 +97,7 @@ class Session
     /**
      * Set Namespace
      *
-     * @param  string $namespace
+     * @param string $namespace
      *
      * @return void
      */
@@ -291,7 +291,7 @@ class Session
      * If a session already exists, destroys it (without sending an expiration
      * cookie), regenerates the session ID, and restarts the session.
      *
-     * @param integer $ttl TTL in seconds
+     * @param int $ttl TTL in seconds
      *
      * @return void
      */
@@ -352,7 +352,7 @@ class Session
      * Set key/value pair
      *
      * @param string $key
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return void
      * @throws ComponentException

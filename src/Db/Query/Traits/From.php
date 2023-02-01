@@ -65,8 +65,8 @@ trait From
      *         ->from('users', 'u')
      * </code>
      *
-     * @param  string $from  The table
-     * @param  string $alias The alias of the table
+     * @param string $from The table
+     * @param string $alias The alias of the table
      *
      * @return $this
      */
@@ -94,10 +94,10 @@ trait From
      *         ->join('u', 'phone', 'p', 'p.is_primary = 1');
      * </code>
      *
-     * @param  string $fromAlias The alias that points to a from clause
-     * @param  string $join      The table name to join
-     * @param  string $alias     The alias of the join table
-     * @param  string $condition The condition for the join
+     * @param string $fromAlias The alias that points to a from clause
+     * @param string $join The table name to join
+     * @param string $alias The alias of the join table
+     * @param string $condition The condition for the join
      *
      * @return $this
      */
@@ -118,10 +118,10 @@ trait From
      *         ->innerJoin('u', 'phone', 'p', 'p.is_primary = 1');
      * </code>
      *
-     * @param  string $fromAlias The alias that points to a from clause
-     * @param  string $join      The table name to join
-     * @param  string $alias     The alias of the join table
-     * @param  string $condition The condition for the join
+     * @param string $fromAlias The alias that points to a from clause
+     * @param string $join The table name to join
+     * @param string $alias The alias of the join table
+     * @param string $condition The condition for the join
      *
      * @return $this
      */
@@ -142,10 +142,10 @@ trait From
      *         ->leftJoin('u', 'phone', 'p', 'p.is_primary = 1');
      * </code>
      *
-     * @param  string $fromAlias The alias that points to a from clause
-     * @param  string $join      The table name to join
-     * @param  string $alias     The alias of the join table
-     * @param  string $condition The condition for the join
+     * @param string $fromAlias The alias that points to a from clause
+     * @param string $join The table name to join
+     * @param string $alias The alias of the join table
+     * @param string $condition The condition for the join
      *
      * @return $this
      */
@@ -166,10 +166,10 @@ trait From
      *         ->rightJoin('u', 'phone', 'p', 'p.is_primary = 1');
      * </code>
      *
-     * @param  string $fromAlias The alias that points to a from clause
-     * @param  string $join      The table name to join
-     * @param  string $alias     The alias of the join table
-     * @param  string $condition The condition for the join
+     * @param string $fromAlias The alias that points to a from clause
+     * @param string $join The table name to join
+     * @param string $alias The alias of the join table
+     * @param string $condition The condition for the join
      *
      * @return $this
      */
@@ -181,11 +181,11 @@ trait From
     /**
      * addJoin()
      *
-     * @param  string $type      The type of join
-     * @param  string $fromAlias The alias that points to a from clause
-     * @param  string $join      The table name to join
-     * @param  string $alias     The alias of the join table
-     * @param  string $condition The condition for the join
+     * @param string $type The type of join
+     * @param string $fromAlias The alias that points to a from clause
+     * @param string $join The table name to join
+     * @param string $alias The alias of the join table
+     * @param string $condition The condition for the join
      *
      * @return $this
      */
@@ -210,7 +210,7 @@ trait From
     /**
      * setFromQueryPart
      *
-     * @param  string $table
+     * @param string $table
      *
      * @return self
      */
@@ -241,7 +241,7 @@ trait From
     /**
      * Generate SQL string for JOINs
      *
-     * @param  string $fromAlias The alias of the table
+     * @param string $fromAlias The alias of the table
      *
      * @return string
      */

@@ -27,7 +27,7 @@ class VersionRule extends AbstractRule
     /**
      * Check for version format
      *
-     * @param  string $input
+     * @param string $input
      *
      * @return bool
      */

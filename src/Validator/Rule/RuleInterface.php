@@ -38,7 +38,7 @@ interface RuleInterface extends ValidatorInterface
     /**
      * Set error template
      *
-     * @param  string $description
+     * @param string $description
      *
      * @return self
      */

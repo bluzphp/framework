@@ -26,8 +26,8 @@ abstract class AbstractCompareRule extends AbstractRule
     /**
      * Check $what less $than or not
      *
-     * @param  mixed $what
-     * @param  mixed $than
+     * @param mixed $what
+     * @param mixed $than
      *
      * @return bool
      */

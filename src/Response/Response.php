@@ -38,27 +38,27 @@ class Response
     /**
      * @var string HTTP protocol version
      */
-    protected $protocol = '1.1';
+    protected string $protocol = '1.1';
 
     /**
-     * @var integer response code equal to HTTP status codes
+     * @var StatusCode response code equal to HTTP status codes
      */
-    protected $code = StatusCode::OK;
+    protected StatusCode $code = StatusCode::OK;
 
     /**
      * @var string|null HTTP Phrase
      */
-    protected $phrase;
+    protected ?string $phrase = null;
 
     /**
      * @var array list of headers
      */
-    protected $headers = [];
+    protected array $headers = [];
 
     /**
      * @var array list of cookies
      */
-    protected $cookies = [];
+    protected array $cookies = [];
 
     /**
      * @var Controller
@@ -66,9 +66,9 @@ class Response
     protected $body;
 
     /**
-     * @var string CLI|HTML|JSON|FILE
+     * @var ContentType
      */
-    protected $type = 'HTML';
+    protected ContentType $contentType = ContentType::HTML;
 
     /**
      * send
@@ -80,49 +80,51 @@ class Response
         $this->sendCookies();
 
         switch (true) {
-            case 'CLI' === $this->type:
+            case ContentType::CLI === $this->contentType:
                 // no CLI response
                 return;
             case null === $body:
             case StatusCode::NO_CONTENT === $this->getStatusCode():
-                $response = new EmptyResponse($this->getStatusCode(), $this->getHeaders());
+                $response = new EmptyResponse(
+                    $this->getStatusCode()->value,
+                    $this->getHeaders()
+                );
                 break;
             case StatusCode::MOVED_PERMANENTLY === $this->getStatusCode():
             case StatusCode::FOUND === $this->getStatusCode():
                 $response = new RedirectResponse(
                     $this->getHeader('Location'),
-                    $this->getStatusCode(),
+                    $this->getStatusCode()->value,
                     $this->getHeaders()
                 );
                 break;
-            case 'JSON' === $this->type:
+            case ContentType::JSON === $this->contentType:
                 // JSON response
                 // setup messages
                 if (Messages::count()) {
                     $this->setHeader('Bluz-Notify', json_encode(Messages::popAll()));
                 }
-
                 // encode body data to JSON
                 $response = new JsonResponse(
                     $body,
-                    $this->getStatusCode(),
+                    $this->getStatusCode()->value,
                     $this->getHeaders()
                 );
                 break;
-            case 'FILE' === $this->type:
+            case ContentType::FILE === $this->contentType:
                 // File attachment
                 $response = new AttachmentResponse(
                     $this->body->getData()->get('FILE'),
-                    $this->getStatusCode(),
+                    $this->getStatusCode()->value,
                     $this->getHeaders()
                 );
                 break;
-            case 'HTML' === $this->type:
+            case ContentType::HTML === $this->contentType:
             default:
                 // HTML response
                 $response = new HtmlResponse(
                     (string)$body,
-                    $this->getStatusCode(),
+                    $this->getStatusCode()->value,
                     $this->getHeaders()
                 );
                 break;
@@ -135,33 +137,32 @@ class Response
     /**
      * Get response type
      *
-     * @return string
+     * @return ContentType
      */
-    public function getType(): string
+    public function getContentType(): ContentType
     {
-        return $this->type;
+        return $this->contentType;
     }
 
     /**
      * Set Response Type, one of JSON, HTML or CLI
      *
-     * @param string $type
+     * @param ContentType $contentType
      */
-    public function setType(string $type): void
+    public function setContentType(ContentType $contentType): void
     {
         // switch statement by content type
-        switch ($type) {
-            case 'JSON':
+        switch ($contentType) {
+            case ContentType::JSON:
                 $this->setHeader('Content-Type', 'application/json');
                 break;
-            case 'CLI':
-            case 'FILE':
-            case 'HTML':
-            default:
+            case ContentType::CLI:
+            case ContentType::FILE:
+            case ContentType::HTML:
                 break;
         }
 
-        $this->type = $type;
+        $this->contentType = $contentType;
     }
 
 
@@ -183,9 +184,9 @@ class Response
      * The Status-Code is a 3-digit integer result code of the server's attempt
      * to understand and satisfy the request.
      *
-     * @return integer status code.
+     * @return StatusCode status code.
      */
-    public function getStatusCode(): int
+    public function getStatusCode(): StatusCode
     {
         return $this->code;
     }
@@ -193,11 +194,11 @@ class Response
     /**
      * Sets the status code of this response
      *
-     * @param integer $code the 3-digit integer result code to set.
+     * @param StatusCode $code the 3-digit integer result code to set.
      *
      * @return void
      */
-    public function setStatusCode(int $code): void
+    public function setStatusCode(StatusCode $code): void
     {
         $this->code = $code;
     }
@@ -286,7 +287,7 @@ class Response
      * or an array of strings.
      *
      * @param string $header header name
-     * @param int|int[]|string|string[] $value  header value(s)
+     * @param int|int[]|string|string[] $value header value(s)
      *
      * @return void
      */
@@ -302,7 +303,7 @@ class Response
      * value will be appended to the existing list.
      *
      * @param string $header header name to add
-     * @param string|int $value  value of the header
+     * @param string|int $value value of the header
      *
      * @return void
      */
@@ -351,7 +352,7 @@ class Response
      * The array keys MUST be a string. The array values must be either a
      * string or an array of strings.
      *
-     * @param  array $headers Headers to set.
+     * @param array $headers Headers to set.
      *
      * @return void
      */
@@ -369,7 +370,7 @@ class Response
      * name, or, if a header does not already exist by the given name, then the
      * header is added.
      *
-     * @param  array $headers Associative array of headers to add to the message
+     * @param array $headers Associative array of headers to add to the message
      *
      * @return void
      */
@@ -391,7 +392,7 @@ class Response
     /**
      * Set response body
      *
-     * @param  mixed $body
+     * @param mixed $body
      *
      * @return void
      */

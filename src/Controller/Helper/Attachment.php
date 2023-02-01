@@ -13,6 +13,7 @@ namespace Bluz\Controller\Helper;
 
 use Bluz\Controller\Controller;
 use Bluz\Proxy\Response;
+use Bluz\Response\ContentType;
 
 /**
  * Switch layout
@@ -24,7 +25,7 @@ return
         /**
          * @var Controller $this
          */
-        Response::setType('FILE');
+        Response::setContentType(ContentType::FILE);
         $this->assign('FILE', $file);
         $this->disableLayout();
         $this->disableView();

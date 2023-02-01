@@ -43,15 +43,15 @@ use Bluz\View\View;
  *     </select>
  * </code>
  *
- * @param string       $name
- * @param array        $options
- * @param array|string $selected
- * @param array        $attributes
+ * @param string $name
+ * @param array $options
+ * @param array|string|null $selected
+ * @param array $attributes
  *
  * @return string
  */
 return
-    function (string $name, array $options = [], $selected = null, array $attributes = []) {
+    function (string $name, array $options = [], array|string $selected = null, array $attributes = []) {
         /**
          * @var View $this
          */
@@ -90,6 +90,7 @@ return
         };
 
         $result = [];
+
     foreach ($options as $value => $text) {
         if (is_array($text)) {
             // optgroup support

@@ -39,13 +39,9 @@ trait ResponseTrait
     public function render(string $type = 'HTML'): string
     {
         // switch statement by response type
-        switch (strtoupper($type)) {
-            case 'CLI':
-            case 'JSON':
-                return $this->jsonSerialize();
-            case 'HTML':
-            default:
-                return $this->__toString();
-        }
+        return match (strtoupper($type)) {
+            'CLI', 'JSON' => $this->jsonSerialize(),
+            default => $this->__toString(),
+        };
     }
 }

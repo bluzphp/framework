@@ -26,7 +26,7 @@ trait ProxyTrait
     /**
      * Set or replace instance
      *
-     * @param  mixed $instance
+     * @param mixed $instance
      *
      * @return void
      */
@@ -38,8 +38,8 @@ trait ProxyTrait
     /**
      * Handle dynamic, static calls to the object.
      *
-     * @param  string $method
-     * @param  array  $args
+     * @param string $method
+     * @param array $args
      *
      * @return mixed
      */

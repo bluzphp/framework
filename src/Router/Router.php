@@ -369,7 +369,7 @@ class Router
      *
      * @param string $module
      * @param string $controller
-     * @param array  $params
+     * @param array $params
      *
      * @return string
      */
@@ -409,7 +409,7 @@ class Router
                 continue;
             }
             if (is_numeric($value)) {
-                $value = (string) $value;
+                $value = (string)$value;
             }
             $url = str_replace('{$' . $key . '}', $value, $url, $replaced);
             // if not replaced, setup param as GET
@@ -418,7 +418,7 @@ class Router
             }
         }
         // clean optional params
-        $url = preg_replace('/\{\$[a-z0-9-_]+\}/i', '', $url);
+        $url = preg_replace('/\{\$[a-z0-9-_]+}/i', '', $url);
         // clean regular expression (.*)
         $url = preg_replace('/\(\.\*\)/', '', $url);
         // replace "//" with "/"

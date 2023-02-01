@@ -29,12 +29,12 @@ class Auth
     /**
      * @var ?IdentityInterface Instance of EntityInterface
      */
-    protected ?IdentityInterface $identity;
+    protected ?IdentityInterface $identity = null;
 
     /**
      * Setup identity
      *
-     * @param  IdentityInterface $identity
+     * @param IdentityInterface $identity
      *
      * @return void
      */

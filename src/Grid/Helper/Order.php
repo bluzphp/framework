@@ -16,7 +16,7 @@ use Bluz\Grid;
 return
     /**
      * @param string $column
-     * @param null   $order
+     * @param null $order
      * @param string $defaultOrder
      * @param bool $reset
      *

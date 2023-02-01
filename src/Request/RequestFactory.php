@@ -15,6 +15,7 @@ use Bluz\Http\RequestMethod;
 use Bluz\Proxy\Request;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\ServerRequestFactory;
+use Laminas\Diactoros\ServerRequestFilter\FilterServerRequestInterface;
 
 /**
  * Request Factory
@@ -32,9 +33,9 @@ class RequestFactory extends ServerRequestFactory
         array $query = null,
         array $body = null,
         array $cookies = null,
-        array $files = null
+        array $files = null,
+        ?FilterServerRequestInterface $requestFilter = null
     ): ServerRequest {
-
         $request = parent::fromGlobals($server, $query, $body, $cookies, $files);
 
         $contentType = current($request->getHeader('Content-Type'));
@@ -42,7 +43,7 @@ class RequestFactory extends ServerRequestFactory
         // support header like "application/json" and "application/json; charset=utf-8"
         if (false !== $contentType && false !== stripos($contentType, Request::TYPE_JSON)) {
             $input = file_get_contents('php://input');
-            $data = (array) json_decode($input, false);
+            $data = (array)json_decode($input, false);
         } elseif ($request->getMethod() === RequestMethod::POST) {
             $data = $_POST;
         } else {

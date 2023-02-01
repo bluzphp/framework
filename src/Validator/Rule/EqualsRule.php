@@ -36,7 +36,7 @@ class EqualsRule extends AbstractRule
     /**
      * Check input data
      *
-     * @param  string $input
+     * @param string $input
      *
      * @return bool
      */

@@ -24,7 +24,7 @@ class RegistryTest extends FrameworkTestCase
     /**
      * @var Registry
      */
-    protected $registry;
+    protected Registry $registry;
 
     /**
      * setUp
@@ -67,8 +67,8 @@ class RegistryTest extends FrameworkTestCase
     {
         $this->registry->set('moo', 'maz');
 
-        self::assertTrue($this->registry->contains('moo'));
-        self::assertFalse($this->registry->contains('boo'));
+        self::assertTrue($this->registry->has('moo'));
+        self::assertFalse($this->registry->has('boo'));
     }
 
     /**
@@ -80,6 +80,6 @@ class RegistryTest extends FrameworkTestCase
         $this->registry->delete('moo');
 
         self::assertNull($this->registry->get('moo'));
-        self::assertFalse($this->registry->contains('moo'));
+        self::assertFalse($this->registry->has('moo'));
     }
 }

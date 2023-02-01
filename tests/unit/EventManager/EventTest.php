@@ -23,6 +23,7 @@ class EventTest extends Bluz\Tests\FrameworkTestCase
 {
     /**
      * Complex test of event getters
+     * @throws EventException
      */
     public function testEventMethods()
     {
@@ -40,30 +41,11 @@ class EventTest extends Bluz\Tests\FrameworkTestCase
     }
 
     /**
-     * Complex test of event getters with object
-     */
-    public function testEventMethodsWithObject()
-    {
-        $params = new \stdClass();
-        $params->foo = 'bar';
-
-        $event = new Event('test', 'target', $params);
-
-        self::assertEquals($params, $event->getParams());
-        self::assertEquals('bar', $event->getParam('foo'));
-        self::assertNull($event->getParam('baz'));
-        self::assertEquals('qux', $event->getParam('baz', 'qux'));
-
-        $event->setParam('baz', 'qux');
-        self::assertEquals('qux', $event->getParam('baz'));
-    }
-
-    /**
      * Test trigger with wong params
      */
     public function testEventSetParamsException()
     {
-        $this->expectException(EventException::class);
+        $this->expectException(\TypeError::class);
         new Event('test', null, 'wrong type');
     }
 }

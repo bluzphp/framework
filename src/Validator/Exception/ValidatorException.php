@@ -22,14 +22,9 @@ use Bluz\Http\Exception\BadRequestException;
 class ValidatorException extends BadRequestException
 {
     /**
-     * @var string exception message
-     */
-    protected $message = 'Invalid Arguments';
-
-    /**
      * @var array of error's messages
      */
-    protected $errors = [];
+    protected array $errors = [];
 
     /**
      * @return array
@@ -67,6 +62,6 @@ class ValidatorException extends BadRequestException
      */
     public function hasErrors(): bool
     {
-        return (bool) count($this->errors);
+        return (bool)count($this->errors);
     }
 }

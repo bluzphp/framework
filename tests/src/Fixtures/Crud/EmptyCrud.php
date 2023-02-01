@@ -11,8 +11,9 @@
 
 namespace Bluz\Tests\Fixtures\Crud;
 
-use Bluz\Common\Singleton;
+use Bluz\Common\Instance;
 use Bluz\Crud\AbstractCrud;
+use Bluz\Db\Traits\TableProperty;;
 
 /**
  * Crud based on Db\Table
@@ -24,6 +25,8 @@ use Bluz\Crud\AbstractCrud;
  */
 class EmptyCrud extends AbstractCrud
 {
+    use TableProperty;
+
     /**
      * @return array
      */

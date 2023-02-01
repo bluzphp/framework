@@ -50,7 +50,7 @@ class IpRule extends AbstractRule
     /**
      * Check input data
      *
-     * @param  string $input
+     * @param string $input
      *
      * @return bool
      */
@@ -81,7 +81,7 @@ class IpRule extends AbstractRule
     /**
      * Parse IP range
      *
-     * @param  string $input
+     * @param string $input
      *
      * @return array|null
      * @throws ComponentException
@@ -135,7 +135,7 @@ class IpRule extends AbstractRule
      * Parse range using wildcards
      *
      * @param string $input
-     * @param array  $range
+     * @param array $range
      */
     protected function parseRangeUsingWildcards($input, &$range): void
     {
@@ -148,8 +148,8 @@ class IpRule extends AbstractRule
     /**
      * Parse range using Classless Inter-Domain Routing (CIDR)
      *
-     * @param  string $input
-     * @param  array  $range
+     * @param string $input
+     * @param array $range
      *
      * @throws ComponentException
      * @link http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing
@@ -177,7 +177,7 @@ class IpRule extends AbstractRule
     /**
      * Verify IP address
      *
-     * @param  string $address
+     * @param string $address
      *
      * @return bool
      */
@@ -195,7 +195,7 @@ class IpRule extends AbstractRule
     /**
      * Verify Network by mask
      *
-     * @param  string $input
+     * @param string $input
      *
      * @return bool
      */
@@ -220,7 +220,7 @@ class IpRule extends AbstractRule
     /**
      * Check subnet
      *
-     * @param  string $input
+     * @param string $input
      *
      * @return bool
      */

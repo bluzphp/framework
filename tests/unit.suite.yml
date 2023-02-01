@@ -4,11 +4,11 @@
 
 class_name: UnitTester
 modules:
-    enabled:
-        - Asserts
-        - \Helper\Unit
+  enabled:
+    - Asserts
+    - \Helper\Unit
 coverage:
-    enabled: true
-    remote: false
-    include:
-        - src/*
+  enabled: true
+  remote: false
+  include:
+    - src/*

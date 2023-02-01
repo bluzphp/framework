@@ -21,8 +21,5 @@ use Bluz\Http\StatusCode;
  */
 class NotImplementedException extends HttpException
 {
-    /**
-     * @var integer HTTP code
-     */
-    protected $code = StatusCode::NOT_IMPLEMENTED;
+    protected StatusCode $statusCode = StatusCode::NOT_IMPLEMENTED;
 }

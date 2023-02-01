@@ -27,7 +27,7 @@ class TableTest extends FrameworkTestCase
     /**
      * @var TableCrud
      */
-    protected $crudTable;
+    protected TableCrud $crudTable;
 
     /**
      * setUp
@@ -139,7 +139,7 @@ class TableTest extends FrameworkTestCase
             [
                 'name' => 'CrudTestTable',
                 'email' => 'table@test.com',
-                'status' => 'disabled'
+                'status' => 'disable'
             ]
         );
         self::assertArrayHasKey('id', $result);

@@ -1,7 +1,9 @@
 ## Bluz::Validator
 
 ### Создание правил валидации
+
 Создание правил и валидация данных:
+
 ```php
 use Bluz\Validator\Validator;
 
@@ -12,6 +14,7 @@ $rule('123123');
 ```
 
 Правила могут выстраиваться в цепочку:
+
 ```php
 use Bluz\Validator\ValidatorChain;
 
@@ -24,6 +27,7 @@ $chain('first')
 ```
 
 Цепочки можно объединять в формы:
+
 ```php
 use Bluz\Validator\ValidatorForm;
 
@@ -39,11 +43,13 @@ if (!$form->validate([
 ```
 
 Так же правила валидации доступны через статический вызов для быстрой проверки:
+
 ```php
 Validator::integer()->validate('42.42');
 ```
 
 Статический вызов возвращает цепочку `ValidatorChain`:
+
 ```php
 Validator::string()->length(25, 40);
 ```
@@ -51,6 +57,7 @@ Validator::string()->length(25, 40);
 ### Текстовое описание правил
 
 Для получения описания правил в текстовом виде следует использовать метод `getDescription()`:
+
 ```php
 $rule->getDescription();
 // 'is required'
@@ -63,6 +70,7 @@ $form->getDescription();
 ```
 
 Альтернативный способ:
+
 ```php
 echo $rule;
 // >> is required
@@ -76,6 +84,7 @@ echo $form;
 ```
 
 Поддержка возможности локализации и кастомизации ошибок:
+
 ```php
 // for rule
 $rule->setDescription("Should be alphanumeric")
@@ -90,6 +99,7 @@ $form->add('first_name')->setDescription("First name is required");
 ### Обработка ошибок
 
 Поддержка как валидация true/false так и `Exception`:
+
 ```php
 $rule->validate($input);
 // throw ValidatorException

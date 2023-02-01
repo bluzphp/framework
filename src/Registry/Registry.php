@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Bluz\Registry;
 
-use Bluz\Common\Container;
+use Bluz\Container;
 
 /**
  * Registry

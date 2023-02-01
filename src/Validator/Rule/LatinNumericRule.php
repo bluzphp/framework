@@ -21,7 +21,7 @@ class LatinNumericRule extends AbstractFilterRule
     /**
      * Check for latin and numeric character(s)
      *
-     * @param  mixed $input
+     * @param mixed $input
      *
      * @return bool
      */

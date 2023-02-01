@@ -10,6 +10,7 @@ namespace Bluz\Tests\Controller;
 use Bluz\Controller;
 use Bluz\Http\Exception\ForbiddenException;
 use Bluz\Proxy\Layout;
+use Bluz\Response\ContentType;
 use Bluz\Tests\FrameworkTestCase;
 
 /**
@@ -37,7 +38,7 @@ class ControllerTest extends FrameworkTestCase
         $this->controller->attachment('some.jpg');
 
         self::assertNull($this->controller->getTemplate());
-        self::assertEquals('FILE', self::getApp()->getResponse()->getType());
+        self::assertEquals(ContentType::FILE, self::getApp()->getResponse()->getContentType());
         self::assertFalse(self::getApp()->useLayout());
     }
 

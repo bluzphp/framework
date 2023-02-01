@@ -85,7 +85,7 @@ trait Validator
     /**
      * Validate input data
      *
-     * @param  array $input
+     * @param array $input
      *
      * @return bool
      */
@@ -97,7 +97,7 @@ trait Validator
     /**
      * Assert input data
      *
-     * @param  array $input
+     * @param array $input
      *
      * @throws ValidatorException
      */

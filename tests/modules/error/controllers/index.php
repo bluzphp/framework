@@ -25,8 +25,8 @@ use Bluz\Proxy\Request;
 /**
  * @route  /error/{$code}
  *
- * @param  int        $code
- * @param  \Exception $exception
+ * @param int $code
+ * @param \Exception $exception
  *
  * @return array|null
  */
@@ -35,83 +35,70 @@ return function ($code, $exception = null) {
      * @var Controller $this
      */
     // cast to valid HTTP error code
-    // 500 - Internal Server Error
-    $code = (StatusCode::CONTINUE <= $code && $code < 600) ? $code : StatusCode::INTERNAL_SERVER_ERROR;
-    // use exception
-    $message = $exception ? $exception->getMessage() : '';
+    //  or use Internal Server Error (code 500)
+    $statusCode = StatusCode::tryFrom($code) ?: StatusCode::INTERNAL_SERVER_ERROR;
 
-    Response::setStatusCode($code);
+    Response::setStatusCode($statusCode);
 
-    Logger::error($message);
+    $exceptionMessage = '';
 
-    switch ($code) {
-        case 400:
-            $error = __('Bad Request');
-            $description = __('The server didn\'t understand the syntax of the request');
+    if ($exception) {
+        Logger::exception($exception);
+        $exceptionMessage = $exception->getMessage();
+    }
+
+    switch ($statusCode) {
+        case StatusCode::BAD_REQUEST:
+            $description = $exceptionMessage ?: __('The server didn\'t understand the syntax of the request');
             break;
-        case 401:
-            $error = __('Unauthorized');
+        case StatusCode::UNAUTHORIZED:
             $description = __('You are not authorized to view this page, please sign in');
             break;
-        case 403:
-            $error = __('Forbidden');
+        case StatusCode::FORBIDDEN:
             $description = __('You don\'t have permissions to access this page');
             break;
-        case 404:
-            $error = __('Not Found');
+        case StatusCode::NOT_FOUND:
             $description = __('The page you requested was not found');
             break;
-        case 405:
-            $error = __('Method Not Allowed');
+        case StatusCode::METHOD_NOT_ALLOWED:
+            Response::setHeader('Allow', $exceptionMessage);
             $description = __('The server is not support method `%s`', Request::getMethod());
-            Response::setHeader('Allow', $message);
             break;
-        case 406:
-            $error = __('Not Acceptable');
+        case StatusCode::NOT_ACCEPTABLE:
             $description = __('The server is not acceptable generating content type described at `Accept` header');
             break;
-        case 500:
-            $error = __('Internal Server Error');
+        case StatusCode::INTERNAL_SERVER_ERROR:
             $description = __('The server encountered an unexpected condition');
             break;
-        case 501:
-            $error = __('Not Implemented');
+        case StatusCode::NOT_IMPLEMENTED:
             $description = __('The server does not understand or does not support the HTTP method');
             break;
-        case 503:
-            $error = __('Service Unavailable');
-            $description = __('The server is currently unable to handle the request due to a temporary overloading');
+        case StatusCode::SERVICE_UNAVAILABLE:
             Response::setHeader('Retry-After', '600');
+            $description = __('The server is currently unable to handle the request due to a temporary overloading');
             break;
         default:
-            $error = __('Internal Server Error');
             $description = __('An unexpected error occurred with your request. Please try again later');
             break;
     }
 
     // check CLI or HTTP request
-    if (Request::isHttp()) {
-        // simple AJAX call, accept JSON
-        if (Request::checkAccept(['application/json'])) {
-            $this->useJson();
-            Messages::addError($description);
-            return [
-                'code' => $code,
-                'error' => !empty($message) ? $message : $error
-            ];
-        }
-        // dialog AJAX call, accept HTML
-        if (!Request::isXmlHttpRequest()) {
-            $this->useLayout('small.phtml');
-        }
+    // simple AJAX call, accept JSON
+    if (Request::isHttp() && Request::checkAccept([Request::TYPE_JSON])) {
+        $this->useJson();
+        Messages::addError($description);
+        return [
+            'code' => $statusCode->value,
+            'error' => $description
+        ];
     }
 
-    Layout::title($error);
+    Layout::title($statusCode->message());
 
     return [
-        'code' => $code,
-        'error' => $error,
+        'code' => $statusCode->value,
+        'message' => $exceptionMessage ?: $statusCode->message(),
         'description' => $description,
-        'message' => $message
+        'exception' => $exception
     ];
 };

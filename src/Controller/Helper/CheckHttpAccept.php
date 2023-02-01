@@ -34,7 +34,7 @@ return
          */
         $allowAccept = $this->getMeta()->getAccept();
 
-        // some controllers hasn't @accept tag
+        // some controllers haven't @accept tag
         if (!$allowAccept) {
             // but by default allow just HTML output
             $allowAccept = [Request::TYPE_HTML, Request::TYPE_ANY];

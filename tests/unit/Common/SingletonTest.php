@@ -34,6 +34,14 @@ class SingletonTest extends FrameworkTestCase
     }
 
     /**
+     * Test True Singleton
+     */
+    public function testGetTheSameInstance()
+    {
+        self::assertSame(ConcreteSingleton::getInstance(), ConcreteSingleton::getInstance());
+    }
+
+    /**
      * Test Clone
      */
     public function testPrivateMethods()

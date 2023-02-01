@@ -25,7 +25,7 @@ class EventManagerTest extends Bluz\Tests\FrameworkTestCase
     /**
      * @var EventManager
      */
-    protected $eventManager;
+    protected EventManager $eventManager;
 
     /**
      * setUp
@@ -201,7 +201,7 @@ class EventManagerTest extends Bluz\Tests\FrameworkTestCase
      */
     public function testEventSetParamsException()
     {
-        $this->expectException(EventException::class);
+        $this->expectException(\TypeError::class);
         $this->eventManager->trigger('test', null, 'wrong type params');
     }
 }

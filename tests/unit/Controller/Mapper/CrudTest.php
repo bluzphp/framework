@@ -26,7 +26,7 @@ class CrudTest extends FrameworkTestCase
     /**
      * @var Crud
      */
-    protected $mapper;
+    protected Crud $mapper;
 
     public function setUp(): void
     {
@@ -59,9 +59,9 @@ class CrudTest extends FrameworkTestCase
     /**
      * @dataProvider dataMethods
      *
-     * @param string $method
+     * @param RequestMethod $method
      */
-    public function testMethods($method)
+    public function testMethods(RequestMethod $method)
     {
         self::setRequestParams('test/index', [], [], $method);
         $this->mapper->addMap($method, 'test', 'index');
@@ -73,13 +73,13 @@ class CrudTest extends FrameworkTestCase
     /**
      * @dataProvider dataMethods
      *
-     * @param string $method
+     * @param RequestMethod $method
      */
-    public function testMethodsAliases($method)
+    public function testMethodsAliases(RequestMethod $method)
     {
         self::setRequestParams('test/index', [], [], $method);
 
-        $alias = strtolower($method);
+        $alias = strtolower($method->value);
 
         $this->mapper->$alias('test', 'index');
 
@@ -103,13 +103,13 @@ class CrudTest extends FrameworkTestCase
     public function dataMethods(): array
     {
         return [
-            RequestMethod::HEAD => [RequestMethod::HEAD],
-            RequestMethod::GET => [RequestMethod::GET],
-            RequestMethod::POST => [RequestMethod::POST],
-            RequestMethod::PATCH => [RequestMethod::PATCH],
-            RequestMethod::PUT => [RequestMethod::PUT],
-            RequestMethod::DELETE => [RequestMethod::DELETE],
-            RequestMethod::OPTIONS => [RequestMethod::OPTIONS],
+            RequestMethod::HEAD->value => [RequestMethod::HEAD],
+            RequestMethod::GET->value => [RequestMethod::GET],
+            RequestMethod::POST->value => [RequestMethod::POST],
+            RequestMethod::PATCH->value => [RequestMethod::PATCH],
+            RequestMethod::PUT->value => [RequestMethod::PUT],
+            RequestMethod::DELETE->value => [RequestMethod::DELETE],
+            RequestMethod::OPTIONS->value => [RequestMethod::OPTIONS],
         ];
     }
 }

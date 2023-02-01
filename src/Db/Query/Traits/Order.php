@@ -33,8 +33,8 @@ trait Order
      * Specifies an ordering for the query results
      * Replaces any previously specified orderings, if any
      *
-     * @param  string $sort  Sort expression
-     * @param  string $order Sort direction (ASC or DESC)
+     * @param string $sort Sort expression
+     * @param string $order Sort direction (ASC or DESC)
      *
      * @return $this
      */
@@ -48,8 +48,8 @@ trait Order
     /**
      * Adds an ordering to the query results
      *
-     * @param  string $sort  Sort expression
-     * @param  string $order Sort direction (ASC or DESC)
+     * @param string $sort Sort expression
+     * @param string $order Sort direction (ASC or DESC)
      *
      * @return $this
      */

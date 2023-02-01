@@ -416,7 +416,7 @@ abstract class Grid
     /**
      * Return params prepared for url builder
      *
-     * @param  array $rewrite
+     * @param array $rewrite
      *
      * @return array
      */
@@ -501,7 +501,7 @@ abstract class Grid
     /**
      * Set allow orders
      *
-     * @param  string[] $orders
+     * @param string[] $orders
      *
      * @return void
      */
@@ -572,7 +572,7 @@ abstract class Grid
     /**
      * Add order rules
      *
-     * @param  array $orders
+     * @param array $orders
      *
      * @return void
      * @throws GridException
@@ -602,7 +602,7 @@ abstract class Grid
     /**
      * Set orders
      *
-     * @param  array $orders
+     * @param array $orders
      *
      * @return void
      * @throws GridException
@@ -642,7 +642,7 @@ abstract class Grid
     /**
      * Set allowed filters
      *
-     * @param  string[] $filters
+     * @param string[] $filters
      *
      * @return void
      */
@@ -780,7 +780,7 @@ abstract class Grid
     /**
      * Set page
      *
-     * @param  integer $page
+     * @param int $page
      *
      * @return void
      * @throws GridException
@@ -806,7 +806,7 @@ abstract class Grid
     /**
      * Set limit per page
      *
-     * @param  integer $limit
+     * @param int $limit
      *
      * @return void
      * @throws GridException
@@ -832,7 +832,7 @@ abstract class Grid
     /**
      * Set default limit
      *
-     * @param  integer $limit
+     * @param int $limit
      *
      * @return void
      * @throws GridException

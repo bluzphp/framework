@@ -26,7 +26,7 @@ class NumericRule extends AbstractRule
     /**
      * Check for numeric
      *
-     * @param  mixed $input
+     * @param mixed $input
      *
      * @return bool
      */

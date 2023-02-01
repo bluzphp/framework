@@ -30,7 +30,7 @@ class Insert extends AbstractBuilder
     /**
      * {@inheritdoc}
      *
-     * @param  null $sequence
+     * @param null $sequence
      *
      * @return integer|string|array
      */
@@ -68,7 +68,7 @@ class Insert extends AbstractBuilder
      *         ->set('password', md5('password'));
      * </code>
      *
-     * @param  string $table The table into which the rows should be inserted
+     * @param string $table The table into which the rows should be inserted
      *
      * @return Insert instance
      */

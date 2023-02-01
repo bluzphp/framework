@@ -29,7 +29,7 @@ class RouterTest extends FrameworkTestCase
      * @param string $url
      * @param string $module
      * @param string $controller
-     * @param array  $params
+     * @param array $params
      */
     public function testRouterUrl($url, $module, $controller, $params = [])
     {
@@ -44,7 +44,7 @@ class RouterTest extends FrameworkTestCase
      * @param string $url
      * @param string $module
      * @param string $controller
-     * @param array  $params
+     * @param array $params
      */
     public function testRouterUrlWithCustomControllerRoute($url, $module, $controller, $params = [])
     {

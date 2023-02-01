@@ -52,8 +52,7 @@ class ValidatorChainTest extends Tests\FrameworkTestCase
     {
         $chain = Validator::create()
             ->callback('is_int', 'it should be custom one')
-            ->callback('is_numeric', 'it should be custom two')
-        ;
+            ->callback('is_numeric', 'it should be custom two');
         self::assertEqualsArray(
             ['it should be custom one', 'it should be custom two'],
             $chain->getDescription()
@@ -64,8 +63,7 @@ class ValidatorChainTest extends Tests\FrameworkTestCase
     {
         $chain = Validator::create()
             ->regexp('[0-9]+', 'it should be custom one')
-            ->regexp('[a-z]+', 'it should be custom two')
-        ;
+            ->regexp('[a-z]+', 'it should be custom two');
         self::assertEqualsArray(
             ['it should be custom one', 'it should be custom two'],
             $chain->getDescription()

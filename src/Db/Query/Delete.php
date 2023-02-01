@@ -54,7 +54,7 @@ class Delete extends AbstractBuilder
      *         ->where('id = ?');
      * </code>
      *
-     * @param  string $table The table whose rows are subject to the update
+     * @param string $table The table whose rows are subject to the update
      *
      * @return Delete instance
      */

@@ -44,8 +44,8 @@ abstract class AbstractSource
     /**
      * Process source
      *
-     * @param int   $page
-     * @param int   $limit
+     * @param int $page
+     * @param int $limit
      * @param array $filters
      * @param array $orders
      *
@@ -56,7 +56,7 @@ abstract class AbstractSource
     /**
      * Setup source adapter
      *
-     * @param  mixed $source
+     * @param mixed $source
      *
      * @return void
      */

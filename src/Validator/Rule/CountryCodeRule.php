@@ -282,7 +282,7 @@ class CountryCodeRule extends AbstractRule
     /**
      * Check for country code
      *
-     * @param  string $input
+     * @param string $input
      *
      * @return bool
      */

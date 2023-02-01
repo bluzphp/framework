@@ -42,7 +42,7 @@ class UserAdmin extends AbstractIdentity
     /**
      * Check user role
      *
-     * @param integer $roleId
+     * @param int $roleId
      *
      * @return boolean
      */

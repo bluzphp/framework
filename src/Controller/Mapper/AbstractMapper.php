@@ -36,49 +36,49 @@ use ReflectionException;
 abstract class AbstractMapper
 {
     /**
-     * @var string HTTP Method
+     * @var RequestMethod HTTP Method
      */
-    protected $method = RequestMethod::GET;
+    protected RequestMethod $method = RequestMethod::GET;
 
     /**
      * @var string
      */
-    protected $module;
+    protected string $module;
 
     /**
      * @var string
      */
-    protected $controller;
+    protected string $controller;
 
     /**
      * @var array identifier
      */
-    protected $primary;
+    protected array $primary;
 
     /**
-     * @var string relation list
+     * @var ?string relation list
      */
-    protected $relation;
+    protected ?string $relation = null;
 
     /**
-     * @var string relation Id
+     * @var ?string relation ID
      */
-    protected $relationId;
+    protected ?string $relationId = null;
 
     /**
      * @var array params of query
      */
-    protected $params = [];
+    protected array $params = [];
 
     /**
      * @var array query data
      */
-    protected $data = [];
+    protected array $data = [];
 
     /**
      * @var AbstractCrud instance of CRUD
      */
-    protected $crud;
+    protected AbstractCrud $crud;
 
     /**
      * [
@@ -92,7 +92,7 @@ abstract class AbstractMapper
      *
      * @var Link[]
      */
-    protected $map = [];
+    protected array $map = [];
 
     /**
      * Prepare params
@@ -112,15 +112,15 @@ abstract class AbstractMapper
     /**
      * Add mapping data
      *
-     * @param string $method
+     * @param RequestMethod $method
      * @param string $module
      * @param string $controller
      *
      * @return Link
      */
-    public function addMap(string $method, string $module, string $controller): Link
+    public function addMap(RequestMethod $method, string $module, string $controller): Link
     {
-        return $this->map[strtoupper($method)] = new Link($module, $controller);
+        return $this->map[$method->value] = new Link($module, $controller);
     }
 
     /**
@@ -252,15 +252,14 @@ abstract class AbstractMapper
     protected function prepareRequest(): void
     {
         // HTTP method
-        $method = Request::getMethod();
-        $this->method = strtoupper($method);
+        $method = strtoupper(Request::getMethod());
+        $this->method = RequestMethod::tryFrom($method);
 
         // get path
         // %module% / %controller% / %id% / %relation% / %id%
         $path = Router::getCleanUri();
 
         $this->params = explode('/', rtrim($path, '/'));
-
         // module
         $this->module = array_shift($this->params);
 
@@ -292,11 +291,11 @@ abstract class AbstractMapper
     protected function dispatch()
     {
         // check implementation
-        if (!isset($this->map[$this->method])) {
+        if (!isset($this->map[$this->method->value])) {
             throw new NotImplementedException();
         }
 
-        $link = $this->map[$this->method];
+        $link = $this->map[$this->method->value];
 
         // check permissions
         if (!Acl::isAllowed($this->module, $link->getAcl())) {
@@ -306,12 +305,10 @@ abstract class AbstractMapper
         $this->crud->setFields($link->getFields());
 
         // dispatch controller
-        $result = Application::getInstance()->dispatch(
+        return Application::getInstance()->dispatch(
             $link->getModule(),
             $link->getController(),
             $this->prepareParams()
         );
-
-        return $result;
     }
 }

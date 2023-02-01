@@ -22,14 +22,14 @@ class EventManager
     /**
      * @var array list of listeners
      */
-    protected $listeners = [];
+    protected array $listeners = [];
 
     /**
      * Attach callback to event
      *
      * @param string $eventName
      * @param callable $callback
-     * @param integer $priority
+     * @param int $priority
      *
      * @return void
      */
@@ -47,20 +47,19 @@ class EventManager
     /**
      * Trigger event
      *
-     * @param  string|Event  $event
-     * @param  string|object $target
-     * @param  array|object  $params
+     * @param string|Event $event
+     * @param mixed $target
+     * @param array|null $params
      *
-     * @return string|object
-     * @throws EventException
+     * @return mixed
      */
-    public function trigger($event, $target = null, $params = null)
+    public function trigger(string|Event $event, mixed $target = null, array $params = null): mixed
     {
         if (!$event instanceof Event) {
             $event = new Event($event, $target, $params);
         }
 
-        if (false !== strpos($event->getName(), ':')) {
+        if (str_contains($event->getName(), ':')) {
             $namespace = substr($event->getName(), 0, strpos($event->getName(), ':'));
 
             if (isset($this->listeners[$namespace])) {

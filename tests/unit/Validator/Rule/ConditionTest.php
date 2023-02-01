@@ -38,7 +38,6 @@ class ConditionTest extends Tests\FrameworkTestCase
      */
     public function testInvalidAlphanumericCharsShouldFail($condition, $input = 'any')
     {
-
         $rule = new Rule($condition);
         self::assertFalse($rule->validate($input));
         self::assertNotEmpty($rule->__toString());

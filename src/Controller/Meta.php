@@ -30,54 +30,54 @@ class Meta
     /**
      * @var string full path to file
      */
-    protected $file;
+    protected string $file;
 
     /**
-     * @var integer cache TTL
+     * @var int cache TTL
      */
-    protected $cache = 0;
+    protected int $cache = 0;
 
     /**
      * @var array list of Accept
      */
-    protected $accept = [];
+    protected array $accept = [];
 
     /**
      * @var array list of Acl
      */
-    protected $acl = [];
+    protected array $acl = [];
 
     /**
      * @var array list of HTTP methods
      */
-    protected $method = [];
+    protected array $method = [];
 
     /**
      * @var array described params
      */
-    protected $params = [];
+    protected array $params = [];
 
     /**
-     * @var string privilege
+     * @var ?string privilege
      */
-    protected $privilege;
+    protected ?string $privilege = null;
 
     /**
      * @var array routers
      */
-    protected $route = [];
+    protected array $route = [];
 
     /**
      * @var array default values of params
      */
-    protected $values = [];
+    protected array $values = [];
 
     /**
      * Constructor of Reflection
      *
      * @param string $file
      */
-    public function __construct($file)
+    public function __construct(string $file)
     {
         $this->file = $file;
     }
@@ -85,7 +85,7 @@ class Meta
     /**
      * Set state required for working with var_export (used inside PHP File cache)
      *
-     * @param  array $array
+     * @param array $array
      *
      * @return Meta
      */
@@ -120,7 +120,7 @@ class Meta
         $docComment = $reflection->getDocComment();
 
         // get all options by one regular expression
-        if (preg_match_all('/\s*\*\s*\@([a-z0-9-_]+)\s+(.*).*\s+/i', $docComment, $matches)) {
+        if (preg_match_all('/\s*\*\s*@([a-z0-9-_]+)\s+(.*).*\s+/i', $docComment, $matches)) {
             foreach ($matches[1] as $i => $key) {
                 $this->setOption($key, trim($matches[2][$i]));
             }
@@ -160,28 +160,14 @@ class Meta
         $params = [];
         foreach ($this->params as $param => $type) {
             if (isset($requestParams[$param])) {
-                switch ($type) {
-                    case 'bool':
-                    case 'boolean':
-                        $params[] = (bool)$requestParams[$param];
-                        break;
-                    case 'int':
-                    case 'integer':
-                        $params[] = (int)$requestParams[$param];
-                        break;
-                    case 'float':
-                        $params[] = (float)$requestParams[$param];
-                        break;
-                    case 'string':
-                        $params[] = (string)$requestParams[$param];
-                        break;
-                    case 'array':
-                        $params[] = (array)$requestParams[$param];
-                        break;
-                    default:
-                        $params[] = $requestParams[$param];
-                        break;
-                }
+                $params[] = match ($type) {
+                    'bool', 'boolean' => (bool)$requestParams[$param],
+                    'int', 'integer' => (int)$requestParams[$param],
+                    'float' => (float)$requestParams[$param],
+                    'string' => (string)$requestParams[$param],
+                    'array' => (array)$requestParams[$param],
+                    default => $requestParams[$param],
+                };
             } elseif (isset($this->values[$param])) {
                 $params[] = $this->values[$param];
             } else {
@@ -271,7 +257,7 @@ class Meta
      */
     public function setAccept(string $accept): void
     {
-        // allow accept map
+        // accept map
         $acceptMap = [
             'ANY' => Request::TYPE_ANY,
             'HTML' => Request::TYPE_HTML,

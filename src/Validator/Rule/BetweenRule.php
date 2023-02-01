@@ -33,8 +33,8 @@ class BetweenRule extends AbstractCompareRule
     /**
      * Setup validation rule
      *
-     * @param  mixed $min
-     * @param  mixed $max
+     * @param mixed $min
+     * @param mixed $max
      *
      * @throws \Bluz\Validator\Exception\ComponentException
      */
@@ -55,7 +55,7 @@ class BetweenRule extends AbstractCompareRule
     /**
      * Check input data
      *
-     * @param  NumericRule $input
+     * @param NumericRule $input
      *
      * @return bool
      */

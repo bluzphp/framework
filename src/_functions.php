@@ -9,7 +9,6 @@
 
 declare(strict_types=1);
 
-use Bluz\Common\Collection;
 use Bluz\Common\Str;
 use Bluz\Translator\Translator;
 
@@ -32,7 +31,7 @@ if (!function_exists('debug')) {
      *
      * @param mixed ...$params
      */
-    function debug(...$params)
+    function debug(...$params): void
     {
         // check definition
         if (!getenv('BLUZ_DEBUG') || !isset($_COOKIE['BLUZ_DEBUG'])) {
@@ -67,12 +66,12 @@ if (!function_exists('esc')) {
      *     esc($_GET['name']);
      *     esc($_GET['name'], ENT_QUOTES);
      *
-     * @param  string  $variable
-     * @param  integer $flags
+     * @param mixed $variable
+     * @param int $flags
      *
      * @return string
      */
-    function esc($variable, int $flags = ENT_HTML5)
+    function esc(mixed $variable, int $flags = ENT_HTML5): string
     {
         return htmlentities((string)$variable, $flags, 'UTF-8');
     }
@@ -82,12 +81,12 @@ if (!function_exists('str_trim_end')) {
     /**
      * Added symbol to end of string, trim it before
      *
-     * @param  string $subject
-     * @param  string $symbols
+     * @param string $subject
+     * @param string $symbols
      *
      * @return string
      */
-    function str_trim_end($subject, $symbols)
+    function str_trim_end(string $subject, string $symbols): string
     {
         return rtrim($subject, $symbols) . $symbols;
     }
@@ -97,11 +96,11 @@ if (!function_exists('to_camel_case')) {
     /**
      * Convert string to camel case
      *
-     * @param  string $subject
+     * @param string $subject
      *
      * @return string
      */
-    function to_camel_case($subject)
+    function to_camel_case(string $subject): string
     {
         return Str::toCamelCase($subject);
     }
@@ -111,11 +110,11 @@ if (!function_exists('class_namespace')) {
     /**
      * Get namespace of class
      *
-     * @param  string $class
+     * @param string $class
      *
      * @return string
      */
-    function class_namespace($class)
+    function class_namespace(string $class): string
     {
         return substr($class, 0, strrpos($class, '\\'));
     }
@@ -125,11 +124,11 @@ if (!function_exists('value')) {
     /**
      * Return the value for callable
      *
-     * @param  callable|mixed $value
+     * @param callable|mixed $value
      *
      * @return mixed
      */
-    function value($value)
+    function value(mixed $value): mixed
     {
         return is_callable($value) ? $value() : $value;
     }
@@ -150,12 +149,12 @@ if (!function_exists('__')) {
      *     // equal to sprintf(gettext('Message to %s'), 'Username')
      *     __('Message to %s', 'Username');
      *
-     * @param  string   $message
-     * @param  string[] $text [optional]
+     * @param string $message
+     * @param string[] $text [optional]
      *
      * @return string
      */
-    function __($message, ...$text)
+    function __(string $message, ...$text): string
     {
         return Translator::translate($message, ...$text);
     }
@@ -175,14 +174,14 @@ if (!function_exists('_n')) {
      *     // equal to sprintf(ngettext('%d comment', '%d comments', 4), 4, 'Topic')
      *     _n('%d comment to %s', '%d comments to %s', 4, 'Topic')
      *
-     * @param  string   $singular
-     * @param  string   $plural
-     * @param  integer  $number
-     * @param  string[] $text [optional]
+     * @param string $singular
+     * @param string $plural
+     * @param int $number
+     * @param string[] $text [optional]
      *
      * @return string
      */
-    function _n($singular, $plural, $number, ...$text)
+    function _n(string $singular, string $plural, int $number, ...$text): string
     {
         return Translator::translatePlural($singular, $plural, $number, ...$text);
     }

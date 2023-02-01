@@ -18,7 +18,7 @@ namespace Application;
  * @route /test/param/$
  * @route /test/param/{$a}/
  *
- * @param integer $a
+ * @param int $a
  *
  * @return bool
  */

@@ -17,12 +17,12 @@ class ConfigLoaderTest extends FrameworkTestCase
     /**
      * @var string Path to config dir
      */
-    protected $path;
+    protected string $path;
 
     /**
      * @var string Path to empty config dir
      */
-    protected $emptyConfigsDir;
+    protected string $emptyConfigsDir;
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -30,48 +30,24 @@ class ConfigLoaderTest extends FrameworkTestCase
      */
     protected function setUp(): void
     {
-        $this->path = __DIR__ . '/Fixtures/';
-        $this->emptyConfigsDir = __DIR__ . '/Fixtures/emptyConfigsDir';
+        $this->path = __DIR__ . '/Fixtures/configs/';
+    }
+
+    public function testEmptyPath(): void
+    {
+        $this->expectException(ConfigException::class);
+        $loader = new Config\ConfigLoader();
+        $loader->load('');
     }
 
     /**
      * @covers \Bluz\Config\ConfigLoader::setPath
      */
-    public function testSetPathExeption(): void
+    public function testLoadNotExists(): void
     {
         $this->expectException(ConfigException::class);
         $loader = new Config\ConfigLoader();
-        $loader->setPath('invalid/path');
-    }
-
-    /**
-     * @covers \Bluz\Config\ConfigLoader::setPath
-     */
-    public function testSetPath(): void
-    {
-        $loader = new Config\ConfigLoader();
-        $loader->setPath($this->path);
-    }
-
-    /**
-     * @covers \Bluz\Config\ConfigLoader::load
-     */
-    public function testLoadConfigPathIsNotSetup(): void
-    {
-        $this->expectException(ConfigException::class);
-        $loader = new Config\ConfigLoader();
-        $loader->load();
-    }
-
-    /**
-     * @covers \Bluz\Config\ConfigLoader::load
-     */
-    public function testLoadConfigFileNotFound(): void
-    {
-        $this->expectException(ConfigException::class);
-        $loader = new Config\ConfigLoader();
-        $loader->setPath($this->emptyConfigsDir);
-        $loader->load();
+        $loader->load('invalid/path');
     }
 
     /**
@@ -80,38 +56,22 @@ class ConfigLoaderTest extends FrameworkTestCase
     public function testLoad(): void
     {
         $loader = new Config\ConfigLoader();
-        $loader->setPath($this->path);
-        $loader->load();
+        $loader->load($this->path.'/default');
     }
 
     /**
      * @covers \Bluz\Config\ConfigLoader::load
      */
-    public function testLoadConfigWithEnvironment(): void
+    public function testLoadAndMerge(): void
     {
         $loader = new Config\ConfigLoader();
-        $loader->setPath($this->path);
-        $loader->load();
+        $loader->load($this->path .'/default');
         $configWithoutEnvironment = $loader->getConfig();
 
-        $loader2 = new Config\ConfigLoader();
-        $loader2->setPath($this->path);
-        $loader2->setEnvironment('testing');
-        $loader2->load();
-        $configWithEnvironment = $loader2->getConfig();
+        $loader->load($this->path .'/testing');
+        $configWithEnvironment = $loader->getConfig();
 
-        self::assertNotEquals($configWithoutEnvironment, $configWithEnvironment);
-    }
-
-    /**
-     * @covers \Bluz\Config\ConfigLoader::load
-     */
-    public function testLoadConfigWithWrongEnvironment(): void
-    {
-        $this->expectException(ConfigException::class);
-        $loader = new Config\ConfigLoader();
-        $loader->setPath($this->path);
-        $loader->setEnvironment('not_existed_environment');
-        $loader->load();
+        self::assertArrayHasSize($configWithoutEnvironment, 1);
+        self::assertArrayHasSize($configWithEnvironment, 2);
     }
 }

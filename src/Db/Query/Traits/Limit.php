@@ -37,8 +37,8 @@ trait Limit
     /**
      * Sets the maximum number of results to retrieve/update/delete
      *
-     * @param  integer $limit  The maximum number of results to retrieve
-     * @param  integer $offset The offset of the query
+     * @param int $limit The maximum number of results to retrieve
+     * @param int $offset The offset of the query
      *
      * @return $this
      */
@@ -52,7 +52,7 @@ trait Limit
     /**
      * Setup limit for the query
      *
-     * @param  integer $limit
+     * @param int $limit
      *
      * @return $this
      */
@@ -65,7 +65,7 @@ trait Limit
     /**
      * Setup offset for the query
      *
-     * @param  integer $offset
+     * @param int $offset
      *
      * @return $this
      */

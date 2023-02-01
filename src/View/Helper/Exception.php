@@ -22,7 +22,7 @@ use Bluz\Application\Application;
  */
 return
     function (\Exception $exception) {
-        if ($exception && Application::getInstance()->isDebug()) {
+        if (Application::getInstance()->isDebug()) {
             // @codeCoverageIgnoreStart
             // exception message for developers
             return
@@ -31,8 +31,7 @@ return
                 '<p>' . esc($exception->getMessage()) . '</p>' .
                 '<code>' . $exception->getFile() . ':' . $exception->getLine() . '</code>' .
                 '</div>' .
-                '<pre>' . $exception->getTraceAsString() . '</pre>'
-                ;
+                '<pre>' . $exception->getTraceAsString() . '</pre>';
             // @codeCoverageIgnoreEnd
         }
         return '';

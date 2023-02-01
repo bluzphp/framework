@@ -11,11 +11,11 @@ declare(strict_types=1);
 
 namespace Bluz\Controller;
 
-use Bluz\Common\Container\ArrayAccess;
-use Bluz\Common\Container\Container;
-use Bluz\Common\Container\JsonSerialize;
-use Bluz\Common\Container\MagicAccess;
-use Bluz\Common\Container\RegularAccess;
+use Bluz\Container\ArrayAccess;
+use Bluz\Container\Container;
+use Bluz\Container\JsonSerialize;
+use Bluz\Container\MagicAccess;
+use Bluz\Container\RegularAccess;
 
 /**
  * Data

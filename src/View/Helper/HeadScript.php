@@ -19,7 +19,7 @@ use Bluz\View\View;
  * Set or generate <script> code for <head>
  *
  * @param string|null $src
- * @param array  $attributes
+ * @param array $attributes
  *
  * @return null|string
  */

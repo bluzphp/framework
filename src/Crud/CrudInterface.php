@@ -30,7 +30,7 @@ interface CrudInterface
     /**
      * Get item by primary key(s)
      *
-     * @param  mixed $primary
+     * @param mixed $primary
      *
      * @return mixed
      */
@@ -39,8 +39,8 @@ interface CrudInterface
     /**
      * Get collection of items
      *
-     * @param integer $offset
-     * @param integer $limit
+     * @param int $offset
+     * @param int $limit
      * @param array $params
      *
      * @return array[Row[], integer]
@@ -87,7 +87,7 @@ interface CrudInterface
     /**
      * Delete item
      *
-     * @param  mixed $primary
+     * @param mixed $primary
      *
      * @return integer
      */

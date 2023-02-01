@@ -23,14 +23,14 @@ use Bluz\Db\TableInterface;
 trait TableProperty
 {
     /**
-     * @var TableInterface instance
+     * @var TableInterface|null instance
      */
-    protected $table;
+    protected ?TableInterface $table = null;
 
     /**
      * Setup Table instance
      *
-     * @param  TableInterface $table
+     * @param TableInterface $table
      *
      * @return void
      */

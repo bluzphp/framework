@@ -36,7 +36,7 @@ abstract class AbstractAdapter
     /**
      * Prepare Id - add prefix
      *
-     * @param  string $id
+     * @param string $id
      *
      * @return string
      */
@@ -48,8 +48,8 @@ abstract class AbstractAdapter
     /**
      * Initialize session
      *
-     * @param  string $savePath
-     * @param  string $sessionName
+     * @param string $savePath
+     * @param string $sessionName
      *
      * @return bool
      */
@@ -79,7 +79,7 @@ abstract class AbstractAdapter
     /**
      * Cleanup old sessions
      *
-     * @param integer $maxLifetime
+     * @param int $maxLifetime
      *
      * @return bool
      */

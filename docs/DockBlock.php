@@ -170,8 +170,8 @@ class DockBlock
      * @.since      [version] [<description>]
      * @.deprecated [version] [<description>]
      *
-     * @param  string $arg1 the string to quote
-     * @param  int    $arg2 an integer of how many problems happened.
+     * @param string $arg1 the string to quote
+     * @param int $arg2 an integer of how many problems happened.
      *                      Indent to the description's starting point
      *                      for long ones.
      *

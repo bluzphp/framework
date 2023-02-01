@@ -21,30 +21,28 @@ class Event
     /**
      * @var string event name
      */
-    protected $name;
+    protected string $name;
 
     /**
-     * @var string|object the event target
+     * @var mixed the event target
      */
-    protected $target;
+    protected mixed $target = null;
 
     /**
-     * @var array|object the event parameters
+     * @var array the event parameters
      */
-    protected $params = [];
+    protected array $params = [];
 
     /**
      * Constructor
      *
      * Accept a target and its parameters.
      *
-     * @param  string $name Event name
-     * @param  string|object $target
-     * @param  array|object  $params
-     *
-     * @throws EventException
+     * @param string $name Event name
+     * @param mixed $target
+     * @param array|null $params
      */
-    public function __construct(string $name, $target = null, $params = null)
+    public function __construct(string $name, mixed $target = null, array $params = null)
     {
         $this->setName($name);
 
@@ -72,9 +70,9 @@ class Event
      *
      * This may be either an object, or the name of a static method.
      *
-     * @return string|object
+     * @return mixed
      */
-    public function getTarget()
+    public function getTarget(): mixed
     {
         return $this->target;
     }
@@ -82,28 +80,21 @@ class Event
     /**
      * Overwrites parameters
      *
-     * @param  array|object $params
+     * @param array $params
      *
      * @return void
-     * @throws EventException
      */
-    public function setParams($params): void
+    public function setParams(array $params): void
     {
-        if (!is_array($params) && !is_object($params)) {
-            throw new EventException(
-                'Event parameters must be an array or object; received `' . gettype($params) . '`'
-            );
-        }
-
         $this->params = $params;
     }
 
     /**
      * Get all parameters
      *
-     * @return array|object
+     * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return $this->params;
     }
@@ -113,23 +104,14 @@ class Event
      *
      * If the parameter does not exist, the $default value will be returned.
      *
-     * @param  string|int $name
-     * @param  mixed      $default
+     * @param int|string $name
+     * @param mixed|null $default
      *
      * @return mixed
      */
-    public function getParam($name, $default = null)
+    public function getParam(int|string $name, mixed $default = null): mixed
     {
-        if (is_array($this->params)) {
-            // Check in params that are arrays or implement array access
-            return $this->params[$name] ?? $default;
-        } elseif (is_object($this->params)) {
-            // Check in normal objects
-            return $this->params->{$name} ?? $default;
-        } else {
-            // Wrong type, return default value
-            return $default;
-        }
+        return $this->params[$name] ?? $default;
     }
 
     /**
@@ -147,11 +129,11 @@ class Event
     /**
      * Set the event target/context
      *
-     * @param  null|string|object $target
+     * @param mixed $target
      *
      * @return void
      */
-    public function setTarget($target): void
+    public function setTarget(mixed $target): void
     {
         $this->target = $target;
     }
@@ -159,19 +141,13 @@ class Event
     /**
      * Set an individual parameter to a value
      *
-     * @param  string|int $name
-     * @param  mixed      $value
+     * @param int|string $name
+     * @param mixed $value
      *
      * @return void
      */
-    public function setParam($name, $value): void
+    public function setParam(int|string $name, mixed $value): void
     {
-        if (is_array($this->params)) {
-            // Arrays or objects implementing array access
-            $this->params[$name] = $value;
-        } else {
-            // Objects
-            $this->params->{$name} = $value;
-        }
+        $this->params[$name] = $value;
     }
 }

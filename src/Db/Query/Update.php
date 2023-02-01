@@ -54,7 +54,7 @@ class Update extends AbstractBuilder
      *         ->where('id = ?');
      * </code>
      *
-     * @param  string $table the table whose rows are subject to the update
+     * @param string $table the table whose rows are subject to the update
      *
      * @return Update instance
      */

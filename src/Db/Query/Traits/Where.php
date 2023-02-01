@@ -45,7 +45,7 @@ trait Where
      *      ;
      * </code>
      *
-     * @param  array $conditions optional the query restriction predicates
+     * @param array $conditions optional the query restriction predicates
      *
      * @return $this
      */
@@ -69,7 +69,7 @@ trait Where
      *         ->andWhere('u.is_active = ?', 1);
      * </code>
      *
-     * @param  string[] $conditions Optional the query restriction predicates
+     * @param string[] $conditions Optional the query restriction predicates
      *
      * @return $this
      */
@@ -102,7 +102,7 @@ trait Where
      *         ->orWhere('u.id = ?', 2);
      * </code>
      *
-     * @param  string[] $conditions Optional the query restriction predicates
+     * @param string[] $conditions Optional the query restriction predicates
      *
      * @return $this
      */

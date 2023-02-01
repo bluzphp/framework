@@ -24,9 +24,9 @@ trait TableRelations
     /**
      * Setup relation "one to one" or "one to many"
      *
-     * @param  string $key
-     * @param  string $model
-     * @param  string $foreign
+     * @param string $key
+     * @param string $model
+     * @param string $foreign
      *
      * @return void
      */
@@ -39,8 +39,8 @@ trait TableRelations
      * Setup relation "many to many"
      * [table1-key] [table1_key-table2-table3_key] [table3-key]
      *
-     * @param  string $model
-     * @param  string $link
+     * @param string $model
+     * @param string $link
      *
      * @return void
      */

@@ -14,7 +14,9 @@ namespace Bluz\Proxy;
 use Bluz\Common\Exception\ComponentException;
 use Bluz\Controller\Controller;
 use Bluz\Http\Exception\RedirectException;
+use Bluz\Response\ContentType as ContentType;
 use Bluz\Response\Response as Instance;
+use Bluz\Http\StatusCode as StatusCode;
 
 /**
  * Proxy to Response
@@ -35,9 +37,9 @@ use Bluz\Response\Response as Instance;
  * @method   static string getProtocolVersion()
  * @see      Instance::getProtocolVersion()
  *
- * @method   static string getStatusCode()
+ * @method   static StatusCode getStatusCode()
  * @see      Instance::getStatusCode()
- * @method   static void  setStatusCode($code)
+ * @method   static void  setStatusCode(StatusCode $code)
  * @see      Instance::setStatusCode()
  *
  * @method   static void  setReasonPhrase($phrase)
@@ -79,10 +81,10 @@ use Bluz\Response\Response as Instance;
  * @method   static array getCookie()
  * @see      Instance::getCookie()
  *
- * @method   static string getType()
- * @see      Instance::getType()
- * @method   static void setType($type)
- * @see      Instance::setType()
+ * @method   static ContentType getContentType()
+ * @see      Instance::getContentType()
+ * @method   static void setContentType(ContentType $type)
+ * @see      Instance::setContentType()
  *
  * @method   static void  send()
  * @see      Instance::send()
@@ -121,7 +123,7 @@ final class Response
      *
      * @param string $module
      * @param string $controller
-     * @param array  $params
+     * @param array $params
      *
      * @return void
      * @throws RedirectException
@@ -140,6 +142,6 @@ final class Response
      */
     public static function reload(): void
     {
-        self::redirect((string) Request::getUri());
+        self::redirect((string)Request::getUri());
     }
 }

@@ -43,7 +43,7 @@ class Table extends AbstractCrud
     /**
      * Get record from Db or create new object
      *
-     * @param  mixed $primary
+     * @param mixed $primary
      *
      * @return Db\RowInterface
      * @throws TableNotFoundException
@@ -147,7 +147,7 @@ class Table extends AbstractCrud
     /**
      * Update item
      *
-     * @param  mixed $primary
+     * @param mixed $primary
      * @param array $data
      *
      * @return integer
@@ -170,7 +170,7 @@ class Table extends AbstractCrud
     /**
      * Delete item
      *
-     * @param  mixed $primary
+     * @param mixed $primary
      *
      * @return integer
      * @throws NotFoundException

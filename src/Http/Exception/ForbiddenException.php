@@ -21,8 +21,5 @@ use Bluz\Http\StatusCode;
  */
 class ForbiddenException extends HttpException
 {
-    /**
-     * @var integer HTTP Code
-     */
-    protected $code = StatusCode::FORBIDDEN;
+    protected StatusCode $statusCode = StatusCode::FORBIDDEN;
 }

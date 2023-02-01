@@ -19,8 +19,8 @@ use Bluz\Db\Row;
  * @package Bluz\Auth
  *
  * @property integer $id
- * @property string  $login
- * @property string  $email
+ * @property string $login
+ * @property string $email
  */
 abstract class AbstractIdentity extends Row implements IdentityInterface
 {

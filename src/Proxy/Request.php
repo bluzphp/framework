@@ -51,12 +51,12 @@ final class Request
     /**
      * @var array|null Accepted type
      */
-    private static $accept;
+    private static ?array $accept = null;
 
     /**
      * @var array|null Accepted languages
      */
-    private static $language;
+    private static ?array $language = null;
 
     /**
      * Init instance
@@ -147,18 +147,17 @@ final class Request
      * Search for a header value
      *
      * @param string $header
-     * @param mixed  $default
+     * @param mixed $default
      *
      * @return string
      */
     public static function getHeader(string $header, $default = null)
     {
-        $header  = strtolower($header);
+        $header = strtolower($header);
         $headers = self::getInstance()->getHeaders();
         $headers = array_change_key_case($headers, CASE_LOWER);
         if (array_key_exists($header, $headers)) {
-            $value = is_array($headers[$header]) ? implode(', ', $headers[$header]) : $headers[$header];
-            return $value;
+            return is_array($headers[$header]) ? implode(', ', $headers[$header]) : $headers[$header];
         }
         return $default;
     }
@@ -168,7 +167,7 @@ final class Request
      * Order of precedence: 1. GET, 2. POST
      *
      * @param string $key
-     * @param null   $default
+     * @param null $default
      *
      * @return string|array|null
      * @link http://msdn.microsoft.com/en-us/library/system.web.httprequest.item.aspx
@@ -292,7 +291,7 @@ final class Request
         $accept = [];
 
         // check empty
-        if (!$header || $header === '') {
+        if (!$header) {
             return $accept;
         }
 
@@ -306,7 +305,7 @@ final class Request
             // check if there is a different quality
             if (strpos($a, ';q=') || strpos($a, '; q=')) {
                 // divide "mime/type;q=X" into two parts: "mime/type" i "X"
-                [$a, $q] = preg_split('/;([ ]?)q=/', $a);
+                [$a, $q] = preg_split('/;( ?)q=/', $a);
             }
             // remove other extension
             if (strpos($a, ';')) {
@@ -386,7 +385,7 @@ final class Request
      */
     public static function isGet(): bool
     {
-        return (self::getInstance()->getMethod() === RequestMethod::GET);
+        return (self::getInstance()->getMethod() === RequestMethod::GET->value);
     }
 
     /**
@@ -396,7 +395,7 @@ final class Request
      */
     public static function isPost(): bool
     {
-        return (self::getInstance()->getMethod() === RequestMethod::POST);
+        return (self::getInstance()->getMethod() === RequestMethod::POST->value);
     }
 
     /**
@@ -406,7 +405,7 @@ final class Request
      */
     public static function isPut(): bool
     {
-        return (self::getInstance()->getMethod() === RequestMethod::PUT);
+        return (self::getInstance()->getMethod() === RequestMethod::PUT->value);
     }
 
     /**
@@ -416,7 +415,7 @@ final class Request
      */
     public static function isDelete(): bool
     {
-        return (self::getInstance()->getMethod() === RequestMethod::DELETE);
+        return (self::getInstance()->getMethod() === RequestMethod::DELETE->value);
     }
 
     /**

@@ -30,7 +30,7 @@ abstract class AbstractCrud implements CrudInterface
      * @var array Fields for action
      * @todo should be different for Create, Read and Update
      */
-    protected $fields = [];
+    protected array $fields = [];
 
     /**
      * Return primary key signature

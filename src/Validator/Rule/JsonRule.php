@@ -26,7 +26,7 @@ class JsonRule extends AbstractRule
     /**
      * Check for valid JSON string
      *
-     * @param  string $input
+     * @param string $input
      *
      * @return bool
      */

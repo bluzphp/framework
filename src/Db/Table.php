@@ -220,7 +220,7 @@ abstract class Table implements TableInterface
     /**
      * Fetching rows by SQL query
      *
-     * @param string $sql    SQL query with placeholders
+     * @param string $sql SQL query with placeholders
      * @param array $params Params for query placeholders
      *
      * @return RowInterface[] of rows results in FETCH_CLASS mode
@@ -350,7 +350,7 @@ abstract class Table implements TableInterface
     /**
      * Prepare array for WHERE or SET statements
      *
-     * @param  array $where
+     * @param array $where
      *
      * @return array
      */

@@ -26,9 +26,6 @@ class MoreTest extends Tests\FrameworkTestCase
     public function testValidMoreShouldPass($minValue, $input)
     {
         $rule = new Rule($minValue);
-        codecept_debug($minValue);
-        codecept_debug($input);
-        codecept_debug($rule->validate($input));
         self::assertTrue($rule->validate($input));
         self::assertNotEmpty($rule->__toString());
     }

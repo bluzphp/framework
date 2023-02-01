@@ -26,7 +26,7 @@ class CallbackRule extends AbstractRule
     /**
      * Setup validation rule
      *
-     * @param  callable $callback
+     * @param callable $callback
      */
     public function __construct(callable $callback)
     {
@@ -36,7 +36,7 @@ class CallbackRule extends AbstractRule
     /**
      * Check input data
      *
-     * @param  mixed $input
+     * @param mixed $input
      *
      * @return bool
      */

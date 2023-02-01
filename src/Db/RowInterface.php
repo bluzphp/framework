@@ -31,7 +31,7 @@ interface RowInterface
     /**
      * Sets all data in the row from an array
      *
-     * @param  array $data
+     * @param array $data
      *
      * @return void
      */

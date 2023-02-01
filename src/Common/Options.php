@@ -52,8 +52,8 @@ trait Options
     /**
      * Get option by key
      *
-     * @param  string $key
-     * @param  array  $keys
+     * @param string $key
+     * @param array $keys
      *
      * @return mixed
      */
@@ -69,8 +69,8 @@ trait Options
     /**
      * Set option by key over setter
      *
-     * @param  string $key
-     * @param  mixed $value
+     * @param string $key
+     * @param mixed $value
      *
      * @return void
      */

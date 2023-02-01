@@ -24,7 +24,7 @@ interface ValidatorInterface
     /**
      * Check input data
      *
-     * @param  mixed $input
+     * @param mixed $input
      *
      * @return bool
      */
@@ -33,7 +33,7 @@ interface ValidatorInterface
     /**
      * Assert
      *
-     * @param  mixed $input
+     * @param mixed $input
      *
      * @throws ValidatorException
      */
@@ -42,7 +42,7 @@ interface ValidatorInterface
     /**
      * Invoke
      *
-     * @param  mixed $input
+     * @param mixed $input
      *
      * @return bool
      */

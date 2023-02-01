@@ -12,8 +12,8 @@ declare(strict_types=1);
 namespace Bluz\Config;
 
 use Bluz\Collection\Collection;
-use Bluz\Common\Container\Container;
-use Bluz\Common\Container\RegularAccess;
+use Bluz\Container\Container;
+use Bluz\Container\RegularAccess;
 
 /**
  * Config
@@ -30,22 +30,22 @@ class Config
     /**
      * Return configuration by key
      *
-     * @param string|array $key
+     * @param array $keys
      *
      * @return array|mixed
      * @throws ConfigException
      */
-    public function get($key): mixed
+    public function get(...$keys): mixed
     {
         // configuration is missed
         if (empty($this->container)) {
             throw new ConfigException('System configuration is missing');
         }
 
-        if (!count($key)) {
+        if (!count($keys)) {
             return $this->container;
         }
 
-        return Collection::get($this->container, ...$key);
+        return Collection::get($this->container, ...$keys);
     }
 }

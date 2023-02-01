@@ -121,10 +121,10 @@ final class Cache
     /**
      * Set value of cache item
      *
-     * @param  string   $key
-     * @param  mixed    $data
-     * @param  int      $ttl
-     * @param  string[] $tags
+     * @param string $key
+     * @param mixed $data
+     * @param int $ttl
+     * @param string[] $tags
      *
      * @return bool
      */
@@ -159,7 +159,7 @@ final class Cache
     /**
      * Prepare key
      *
-     * @param  string $key
+     * @param string $key
      *
      * @return string
      */
@@ -171,7 +171,7 @@ final class Cache
     /**
      * Clear cache items by tag
      *
-     * @param  string $tag
+     * @param string $tag
      *
      * @return bool
      */

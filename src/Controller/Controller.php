@@ -56,49 +56,49 @@ class Controller implements JsonSerializable
     /**
      * @var string
      */
-    protected $mzodule;
+    protected string $module;
 
     /**
      * @var string
      */
-    protected $controller;
+    protected string $controller;
 
     /**
      * @var array
      */
-    protected $params;
+    protected array $params;
 
     /**
      * @var string Cache key
      */
-    protected $key;
+    protected string $key;
 
     /**
-     * @var string Template name, by default is equal to controller name
+     * @var string|null Template name, by default is equal to controller name
      */
-    protected $template;
+    protected ?string $template;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $file;
+    protected ?string $file = null;
 
     /**
-     * @var Meta
+     * @var Meta|null
      */
-    protected $meta;
+    protected ?Meta $meta = null;
 
     /**
-     * @var Data
+     * @var Data|null
      */
-    protected $data;
+    protected ?Data $data = null;
 
     /**
      * Constructor of Statement
      *
      * @param string $module
      * @param string $controller
-     * @param array  $params
+     * @param array $params
      *
      * @throws CommonException
      */
@@ -164,7 +164,7 @@ class Controller implements JsonSerializable
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getTemplate(): ?string
     {
@@ -328,8 +328,8 @@ class Controller implements JsonSerializable
     /**
      * Assign key/value pair to Data object
      *
-     * @param  string $key
-     * @param  mixed  $value
+     * @param string $key
+     * @param mixed $value
      *
      * @return void
      */

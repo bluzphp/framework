@@ -34,7 +34,7 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
     /**
      * Check and setup Redis server
      *
-     * @param  array $settings
+     * @param array $settings
      *
      * @throws ComponentException
      * @throws ConfigurationException
@@ -64,8 +64,8 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
     /**
      * Initialize session
      *
-     * @param  string $savePath
-     * @param  string $sessionName
+     * @param string $savePath
+     * @param string $sessionName
      *
      * @return bool
      */
@@ -93,7 +93,7 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
     /**
      * Read session data
      *
-     * @param  string $id
+     * @param string $id
      *
      * @return string
      */
@@ -105,8 +105,8 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
     /**
      * Write session data
      *
-     * @param  string $id
-     * @param  string $data
+     * @param string $id
+     * @param string $data
      *
      * @return bool
      */
@@ -118,7 +118,7 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
     /**
      * Destroy a session
      *
-     * @param  integer $id
+     * @param int $id
      *
      * @return bool
      */

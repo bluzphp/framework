@@ -12,6 +12,7 @@
 namespace Bluz\Tests;
 
 use Bluz;
+use Bluz\Application\Application;
 use Bluz\Http;
 use Bluz\Proxy;
 use Codeception\Test\Unit;
@@ -30,9 +31,9 @@ class FrameworkTestCase extends Unit
     /**
      * Application entity
      *
-     * @var \Bluz\Tests\BootstrapTest
+     * @var Application|null
      */
-    protected static $app;
+    protected static ?Application $app = null;
 
     /**
      * Setup TestCase
@@ -53,16 +54,17 @@ class FrameworkTestCase extends Unit
     /**
      * Get Application instance
      *
-     * @return BootstrapTest
+     * @return Application
      * @throws Bluz\Application\Exception\ApplicationException
      */
-    protected static function getApp()
+    protected static function getApp(): Application
     {
         if (!self::$app) {
             $env = getenv('BLUZ_ENV') ?: 'testing';
             self::$app = BootstrapTest::getInstance();
-            self::$app->init($env);
-        }
+            self::$app->setEnvironment($env);
+            self::$app->init();
+        }    // Environment
         return self::$app;
     }
 
@@ -108,11 +110,11 @@ class FrameworkTestCase extends Unit
     /**
      * Assert one-level Arrays is Equals
      *
-     * @param array  $expected
-     * @param array  $actual
-     * @param string $message
+     * @param array $expected
+     * @param array $actual
+     * @param string|null $message
      */
-    protected static function assertEqualsArray($expected, $actual, $message = null)
+    protected static function assertEqualsArray(array $expected, array $actual, string $message = null)
     {
         self::assertSame(
             array_diff($expected, $actual),
@@ -125,8 +127,8 @@ class FrameworkTestCase extends Unit
      * Assert Array Size
      *
      * @param array|\ArrayObject $array
-     * @param integer            $size
-     * @param string             $message
+     * @param int $size
+     * @param string $message
      */
     protected static function assertArrayHasSize($array, $size, $message = null)
     {
@@ -141,11 +143,11 @@ class FrameworkTestCase extends Unit
      * Assert Array Key has Size
      *
      * @param array|\ArrayObject $array
-     * @param string             $key
-     * @param integer            $size
-     * @param string             $message
+     * @param string $key
+     * @param int $size
+     * @param string|null $message
      */
-    protected static function assertArrayHasKeyAndSize($array, $key, $size, $message = null)
+    protected static function assertArrayHasKeyAndSize($array, string $key, int $size, string $message = null)
     {
         if (!$message) {
             $message = 'Failed asserting that array has key ' . $key . ' with size ' . $size
@@ -159,49 +161,48 @@ class FrameworkTestCase extends Unit
     /**
      * Set new Request instance
      *
-     * @param string $path    Path part of URI http://host/module/controller/path
-     * @param array  $query   $_GET params
-     * @param array  $params  $_POST params
-     * @param string $method  HTTP method
-     * @param array  $headers HTTP headers
-     * @param array  $cookies
+     * @param string $path Path part of URI http://host/module/controller/path
+     * @param array $query $_GET params
+     * @param array $params $_POST params
+     * @param Http\RequestMethod $method HTTP method
+     * @param array $headers HTTP headers
+     * @param array $cookies
      *
      * @return \Psr\Http\Message\ServerRequestInterface|ServerRequest
      */
     protected static function prepareRequest(
-        $path = '',
-        $query = [],
-        $params = [],
-        $method = Http\RequestMethod::GET,
-        $headers = [],
-        $cookies = []
+        string $path = '',
+        array $query = [],
+        array $params = [],
+        Http\RequestMethod $method = Http\RequestMethod::GET,
+        array $headers = [],
+        array $cookies = []
     ) {
         $uri = 'http://127.0.0.1/' . $path;
 
-        return new ServerRequest([], [], $uri, $method, 'php://input', $headers, $cookies, $query, $params);
+        return new ServerRequest([], [], $uri, $method->value, 'php://input', $headers, $cookies, $query, $params);
     }
 
     /**
      * Set new Request instance
      *
-     * @param string $path    Path part of URI http://host/module/controller/path
-     * @param array  $query   $_GET params
-     * @param array  $params  $_POST params
-     * @param string $method  HTTP method
-     * @param array  $headers HTTP headers
-     * @param array  $cookies
+     * @param string $path Path part of URI http://host/module/controller/path
+     * @param array $query $_GET params
+     * @param array $params $_POST params
+     * @param Http\RequestMethod $method HTTP method
+     * @param array $headers HTTP headers
+     * @param array $cookies
      *
      * @return \Psr\Http\Message\ServerRequestInterface|ServerRequest
      */
     protected static function setRequestParams(
-        $path = '',
-        $query = [],
-        $params = [],
-        $method = Http\RequestMethod::GET,
-        $headers = [],
-        $cookies = []
+        string $path = '',
+        array $query = [],
+        array $params = [],
+        Http\RequestMethod $method = Http\RequestMethod::GET,
+        array $headers = [],
+        array $cookies = []
     ) {
-
         $request = self::prepareRequest($path, $query, $params, $method, $headers, $cookies);
 
         Proxy\Request::setInstance($request);

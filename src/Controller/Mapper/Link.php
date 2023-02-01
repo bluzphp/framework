@@ -22,22 +22,22 @@ class Link
     /**
      * @var string
      */
-    protected $module;
+    protected string $module;
 
     /**
      * @var string
      */
-    protected $controller;
+    protected string $controller;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $acl;
+    protected ?string $acl = null;
 
     /**
      * @var array
      */
-    protected $fields = [];
+    protected array $fields = [];
 
     /**
      * Constructor of Link
@@ -78,7 +78,7 @@ class Link
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getModule(): ?string
     {
@@ -94,7 +94,7 @@ class Link
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getController(): ?string
     {

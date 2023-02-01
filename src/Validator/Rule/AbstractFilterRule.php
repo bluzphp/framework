@@ -28,7 +28,7 @@ abstract class AbstractFilterRule extends AbstractRule
     /**
      * Check input string
      *
-     * @param  string $input
+     * @param string $input
      *
      * @return bool
      */
@@ -59,7 +59,7 @@ abstract class AbstractFilterRule extends AbstractRule
     /**
      * Check input data
      *
-     * @param  mixed $input
+     * @param mixed $input
      *
      * @return bool
      */

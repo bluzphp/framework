@@ -69,7 +69,7 @@ class Crud extends \Bluz\Crud\Table
         $result = $select->execute(Row::class);
 
         if ($limit) {
-            $total = (int) Db::fetchOne('SELECT FOUND_ROWS()');
+            $total = (int)Db::fetchOne('SELECT FOUND_ROWS()');
         } else {
             $total = count($result);
         }

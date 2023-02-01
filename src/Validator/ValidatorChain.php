@@ -79,8 +79,8 @@ class ValidatorChain implements ValidatorInterface
     /**
      * Magic call for create new rule
      *
-     * @param  string $ruleName
-     * @param  array  $arguments
+     * @param string $ruleName
+     * @param array $arguments
      *
      * @return ValidatorChain
      * @throws Exception\ComponentException
@@ -122,7 +122,7 @@ class ValidatorChain implements ValidatorInterface
     /**
      * Add Callback Rule to ValidatorChain
      *
-     * @param mixed       $callable
+     * @param mixed $callable
      * @param string|null $description
      *
      * @return ValidatorChain
@@ -180,7 +180,7 @@ class ValidatorChain implements ValidatorInterface
     /**
      * Assert
      *
-     * @param  mixed $input
+     * @param mixed $input
      *
      * @throws ValidatorException
      */

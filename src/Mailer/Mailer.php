@@ -32,8 +32,8 @@ class Mailer
     /**
      * Check Mailer configuration
      *
-     * @throws ConfigurationException
      * @return void
+     * @throws ConfigurationException
      */
     public function init(): void
     {
@@ -93,13 +93,13 @@ class Mailer
     /**
      * Send email
      *
-     * @todo Add mail to queue
-     *
-     * @param  PHPMailer $mail
+     * @param PHPMailer $mail
      *
      * @return bool
      * @throws MailerException
      * @throws Exception
+     * @todo Add mail to queue
+     *
      */
     public function send(PHPMailer $mail)
     {

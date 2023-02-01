@@ -30,7 +30,6 @@ class BetweenInclusiveRule extends BetweenRule
      */
     public function getDescription(): string
     {
-
         $min = $this->minValue;
         $max = $this->maxValue;
 

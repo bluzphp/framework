@@ -17,7 +17,7 @@ use Bluz\View\View;
  * Generate HTML for <script> element
  *
  * @param string $src
- * @param array  $attributes HTML attributes
+ * @param array $attributes HTML attributes
  *
  * @return string
  */
@@ -27,9 +27,9 @@ return
          * @var View $this
          */
         if (
-            strpos($src, 'http://') !== 0
-            && strpos($src, 'https://') !== 0
-            && strpos($src, '//') !== 0
+            !str_starts_with($src, 'http://')
+            && !str_starts_with($src, 'https://')
+            && !str_starts_with($src, '//')
         ) {
             $src = $this->baseUrl($src);
         }

@@ -57,9 +57,9 @@ class Db
     ];
 
     /**
-     * @var ?PDO PDO instance
+     * @var PDO|null PDO instance
      */
-    protected ?PDO $handler;
+    protected ?PDO $handler = null;
 
     /**
      * Setup connection
@@ -75,10 +75,10 @@ class Db
      *     ]);
      * </code>
      *
-     * @param  array $connect options
+     * @param array $connect options
      *
-     * @throws ConfigurationException
      * @return void
+     * @throws ConfigurationException
      */
     public function setConnect(array $connect): void
     {
@@ -94,8 +94,7 @@ class Db
      */
     private function checkConnect(): void
     {
-        if (
-            empty($this->connect['type']) ||
+        if (empty($this->connect['type']) ||
             empty($this->connect['host']) ||
             empty($this->connect['name']) ||
             empty($this->connect['user'])
@@ -110,7 +109,7 @@ class Db
     /**
      * Setup attributes for PDO connect
      *
-     * @param  array $attributes
+     * @param array $attributes
      *
      * @return void
      */
@@ -177,14 +176,14 @@ class Db
     /**
      * Prepare SQL query and return PDO Statement
      *
-     * @param  string $sql    SQL query with placeholders
-     * @param  array  $params params for query placeholders
-     *
-     * @todo Switch to PDO::activeQueryString() when it will be possible
-     * @link https://wiki.php.net/rfc/debugging_pdo_prepared_statement_emulation
+     * @param string $sql SQL query with placeholders
+     * @param array $params params for query placeholders
      *
      * @return PDOStatement
      * @throws DbException
+     * @todo Switch to PDO::activeQueryString() when it will be possible
+     * @link https://wiki.php.net/rfc/debugging_pdo_prepared_statement_emulation
+     *
      */
     protected function prepare(string $sql, array $params = []): PDOStatement
     {
@@ -204,8 +203,8 @@ class Db
      *     $db->quote($_GET['id'])
      * </code>
      *
-     * @param  string $value
-     * @param  int    $type
+     * @param string $value
+     * @param int $type
      *
      * @return string
      * @throws DbException
@@ -218,7 +217,7 @@ class Db
     /**
      * Quote a string so it can be safely used as a table or column name
      *
-     * @param  string $identifier
+     * @param string $identifier
      *
      * @return string
      */
@@ -243,11 +242,11 @@ class Db
      *     $db->query("SET NAMES 'utf8'");
      * </code>
      *
-     * @param  string $sql    SQL query with placeholders
+     * @param string $sql SQL query with placeholders
      *                        "UPDATE users SET name = :name WHERE id = :id"
-     * @param  array  $params params for query placeholders (optional)
+     * @param array $params params for query placeholders (optional)
      *                        array (':name' => 'John', ':id' => '123')
-     * @param  array  $types  Types of params (optional)
+     * @param array $types Types of params (optional)
      *                        array (':name' => \PDO::PARAM_STR, ':id' => \PDO::PARAM_INT)
      *
      * @return integer the number of rows
@@ -286,7 +285,7 @@ class Db
     /**
      * Create new query insert builder
      *
-     * @param  string $table
+     * @param string $table
      *
      * @return Query\Insert
      */
@@ -300,7 +299,7 @@ class Db
     /**
      * Create new query update builder
      *
-     * @param  string $table
+     * @param string $table
      *
      * @return Query\Update
      */
@@ -314,7 +313,7 @@ class Db
     /**
      * Create new query update builder
      *
-     * @param  string $table
+     * @param string $table
      *
      * @return Query\Delete
      */
@@ -333,9 +332,9 @@ class Db
      *     $db->fetchOne("SELECT COUNT(*) FROM users");
      * </code>
      *
-     * @param  string $sql     SQL query with placeholders
+     * @param string $sql SQL query with placeholders
      *                         "SELECT * FROM users WHERE name = :name AND pass = :pass"
-     * @param  array  $params  params for query placeholders (optional)
+     * @param array $params params for query placeholders (optional)
      *                         array (':name' => 'John', ':pass' => '123456')
      *
      * @return string|false
@@ -360,9 +359,9 @@ class Db
      *     $db->fetchRow("SELECT name, email FROM users WHERE id = :id", [':id'=>$id]);
      * </code>
      *
-     * @param  string $sql     SQL query with placeholders
+     * @param string $sql SQL query with placeholders
      *                         "SELECT * FROM users WHERE name = :name AND pass = :pass"
-     * @param  array  $params  params for query placeholders (optional)
+     * @param array $params params for query placeholders (optional)
      *                         array (':name' => 'John', ':pass' => '123456')
      *
      * @return array|false     array ('name' => 'John', 'email' => 'john@smith.com')
@@ -385,9 +384,9 @@ class Db
      *     $db->fetchAll("SELECT * FROM users WHERE ip = ?", ['192.168.1.1']);
      * </code>
      *
-     * @param  string $sql    SQL query with placeholders
+     * @param string $sql SQL query with placeholders
      *                        "SELECT * FROM users WHERE ip = :ip"
-     * @param  array  $params params for query placeholders (optional)
+     * @param array $params params for query placeholders (optional)
      *                        array (':ip' => '127.0.0.1')
      *
      * @return array[]|false
@@ -405,9 +404,9 @@ class Db
     /**
      * Returns an array containing one column from the result set rows
      *
-     * @param  string $sql    SQL query with placeholders
+     * @param string $sql SQL query with placeholders
      *                        "SELECT id FROM users WHERE ip = :ip"
-     * @param  array  $params params for query placeholders (optional)
+     * @param array $params params for query placeholders (optional)
      *                        array (':ip' => '127.0.0.1')
      *
      * @return array|false
@@ -431,10 +430,10 @@ class Db
      *     $db->fetchGroup("SELECT ip, COUNT(id) FROM users GROUP BY ip", []);
      * </code>
      *
-     * @param  string $sql    SQL query with placeholders
+     * @param string $sql SQL query with placeholders
      *                        "SELECT ip, id FROM users"
-     * @param  array  $params params for query placeholders (optional)
-     * @param  mixed  $object
+     * @param array $params params for query placeholders (optional)
+     * @param mixed $object
      *
      * @return array|false
      * @throws DbException
@@ -458,9 +457,9 @@ class Db
      *
      * Group by first column
      *
-     * @param  string $sql    SQL query with placeholders
+     * @param string $sql SQL query with placeholders
      *                        "SELECT ip, id FROM users"
-     * @param  array  $params params for query placeholders (optional)
+     * @param array $params params for query placeholders (optional)
      *
      * @return array|false
      * @throws DbException
@@ -479,9 +478,9 @@ class Db
      *
      * Group by first unique column
      *
-     * @param  string $sql    SQL query with placeholders
+     * @param string $sql SQL query with placeholders
      *                        "SELECT email, name, sex FROM users"
-     * @param  array  $params params for query placeholders (optional)
+     * @param array $params params for query placeholders (optional)
      *
      * @return array|false
      * @throws DbException
@@ -498,9 +497,9 @@ class Db
     /**
      * Returns a key-value array
      *
-     * @param  string $sql    SQL query with placeholders
+     * @param string $sql SQL query with placeholders
      *                        "SELECT id, username FROM users WHERE ip = :ip"
-     * @param  array  $params params for query placeholders (optional)
+     * @param array $params params for query placeholders (optional)
      *                        array (':ip' => '127.0.0.1')
      *
      * @return array|false
@@ -528,11 +527,11 @@ class Db
      *     $someClass = $db->fetchObject('SELECT * FROM some_table WHERE id = ?', [$id], $someClass);
      * </code>
      *
-     * @param  string $sql    SQL query with placeholders
+     * @param string $sql SQL query with placeholders
      *                        "SELECT * FROM users WHERE name = :name AND pass = :pass"
-     * @param  array  $params params for query placeholders (optional)
+     * @param array $params params for query placeholders (optional)
      *                        array (':name' => 'John', ':pass' => '123456')
-     * @param  mixed  $object
+     * @param mixed $object
      *
      * @return mixed
      * @throws DbException
@@ -558,11 +557,11 @@ class Db
     /**
      * Returns an array of objects containing the result set
      *
-     * @param  string $sql    SQL query with placeholders
+     * @param string $sql SQL query with placeholders
      *                        "SELECT * FROM users WHERE name = :name AND pass = :pass"
-     * @param  array  $params params for query placeholders (optional)
+     * @param array $params params for query placeholders (optional)
      *                        array (':name' => 'John', ':pass' => '123456')
-     * @param  mixed  $object Class name or instance
+     * @param mixed $object Class name or instance
      *
      * @return array|false
      * @throws DbException
@@ -587,12 +586,12 @@ class Db
     /**
      * Returns an array of linked objects containing the result set
      *
-     * @param  string $sql    SQL query with placeholders
+     * @param string $sql SQL query with placeholders
      *                        "SELECT '__users', u.*, '__users_profile', up.*
      *                        FROM users u
      *                        LEFT JOIN users_profile up ON up.userId = u.id
      *                        WHERE u.name = :name"
-     * @param  array  $params params for query placeholders (optional)
+     * @param array $params params for query placeholders (optional)
      *                        array (':name' => 'John')
      *
      * @return array|false
@@ -624,7 +623,7 @@ class Db
      *     })
      * </code>
      *
-     * @param  callable $process callable structure - closure function or class with __invoke() method
+     * @param callable $process callable structure - closure function or class with __invoke() method
      *
      * @return mixed|bool
      * @throws DbException
@@ -656,8 +655,8 @@ class Db
     /**
      * Log queries by Application
      *
-     * @param  string $query SQL query for logs
-     * @param  array  $context
+     * @param string $query SQL query for logs
+     * @param array $context
      *
      * @return void
      */

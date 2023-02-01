@@ -31,8 +31,8 @@ class CompositeBuilder implements \Countable
     /**
      * Constructor
      *
-     * @param array  $parts parts of the composite expression
-     * @param string $type  AND|OR
+     * @param array $parts parts of the composite expression
+     * @param string $type AND|OR
      */
     public function __construct(array $parts = [], string $type = 'AND')
     {
@@ -44,7 +44,7 @@ class CompositeBuilder implements \Countable
     /**
      * Adds a set of expressions to composite expression
      *
-     * @param  array $parts
+     * @param array $parts
      *
      * @return CompositeBuilder
      */
@@ -60,7 +60,7 @@ class CompositeBuilder implements \Countable
     /**
      * Adds an expression to composite expression
      *
-     * @param  mixed $part
+     * @param mixed $part
      *
      * @return CompositeBuilder
      */
@@ -100,7 +100,7 @@ class CompositeBuilder implements \Countable
     public function __toString()
     {
         if ($this->count() === 1) {
-            return (string) $this->parts[0];
+            return (string)$this->parts[0];
         }
         return '(' . implode(') ' . $this->type . ' (', $this->parts) . ')';
     }

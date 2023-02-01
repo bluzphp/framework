@@ -21,7 +21,7 @@ class ContainsStrictRule extends ContainsRule
     /**
      * Check input data
      *
-     * @param  string|array $input
+     * @param string|array $input
      *
      * @return bool
      */

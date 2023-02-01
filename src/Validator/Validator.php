@@ -81,7 +81,7 @@ class Validator
      * Magic static call for create instance of Validator
      *
      * @param string $ruleName
-     * @param array  $arguments
+     * @param array $arguments
      *
      * @return ValidatorChain
      */
@@ -117,7 +117,7 @@ class Validator
     /**
      * Add rules path
      *
-     * @param  string $path
+     * @param string $path
      *
      * @return void
      */

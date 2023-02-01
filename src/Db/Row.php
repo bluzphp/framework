@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Bluz\Db;
 
-use Bluz\Common\Container;
+use Bluz\Container;
 use Bluz\Db\Exception\DbException;
 use Bluz\Db\Exception\InvalidPrimaryKeyException;
 use Bluz\Db\Exception\TableNotFoundException;
@@ -117,7 +117,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
     /**
      * Validate input data
      *
-     * @param  array $data
+     * @param array $data
      *
      * @return bool
      */
@@ -129,7 +129,7 @@ abstract class Row implements RowInterface, \JsonSerializable, \ArrayAccess
     /**
      * Assert input data
      *
-     * @param  array $data
+     * @param array $data
      *
      * @return void
      */

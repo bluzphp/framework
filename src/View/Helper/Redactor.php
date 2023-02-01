@@ -19,7 +19,7 @@ use Bluz\View\View;
  * @link http://imperavi.com/redactor/
  *
  * @param string $selector
- * @param array  $settings
+ * @param array $settings
  *
  * @return string
  */
@@ -37,8 +37,7 @@ return
 
         $settings = array_replace_recursive($defaultSettings, $settings);
 
-        $html = '';
-        $html .= $this->style('redactor/redactor.css');
+        $html = $this->style('redactor/redactor.css');
         $html .= $this->scriptBlock(
             'require(["redactor", "imagemanager"], function($R) {
                 $R("' . $selector . '", ' . json_encode($settings) . ');

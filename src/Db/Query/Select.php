@@ -48,7 +48,7 @@ class Select extends AbstractBuilder
     /**
      * {@inheritdoc}
      *
-     * @param  integer|string|object $fetchType
+     * @param integer|string|object $fetchType
      *
      * @return integer|string|array
      */
@@ -72,7 +72,7 @@ class Select extends AbstractBuilder
     /**
      * Setup fetch type, any of PDO, or any Class
      *
-     * @param  string $fetchType
+     * @param string $fetchType
      *
      * @return Select instance
      */
@@ -109,7 +109,7 @@ class Select extends AbstractBuilder
      *         ->leftJoin('u', 'phone', 'p', 'u.id = p.user_id');
      * </code>
      *
-     * @param  string[] $select the selection expressions
+     * @param string[] $select the selection expressions
      *
      * @return Select instance
      */
@@ -132,7 +132,7 @@ class Select extends AbstractBuilder
      *         ->leftJoin('u', 'phone', 'u.id = p.user_id');
      * </code>
      *
-     * @param  string[] $select the selection expression
+     * @param string[] $select the selection expression
      *
      * @return Select instance
      */
@@ -145,7 +145,7 @@ class Select extends AbstractBuilder
     /**
      * Get current select query part
      *
-     * @return array
+     * @return string[]
      */
     public function getSelect(): array
     {
@@ -165,7 +165,7 @@ class Select extends AbstractBuilder
      *         ->groupBy('u.id');
      * </code>
      *
-     * @param  string[] $groupBy the grouping expression
+     * @param string[] $groupBy the grouping expression
      *
      * @return Select instance
      */
@@ -188,7 +188,7 @@ class Select extends AbstractBuilder
      *         ->addGroupBy('u.createdAt')
      * </code>
      *
-     * @param  string[] $groupBy the grouping expression
+     * @param string[] $groupBy the grouping expression
      *
      * @return Select instance
      */
@@ -202,7 +202,7 @@ class Select extends AbstractBuilder
      * Specifies a restriction over the groups of the query.
      * Replaces any previous having restrictions, if any
      *
-     * @param  string[] $conditions the query restriction predicates
+     * @param string[] $conditions the query restriction predicates
      *
      * @return Select
      */
@@ -216,7 +216,7 @@ class Select extends AbstractBuilder
      * Adds a restriction over the groups of the query, forming a logical
      * conjunction with any existing having restrictions
      *
-     * @param  string[] $conditions the query restriction predicates
+     * @param string[] $conditions the query restriction predicates
      *
      * @return Select
      */
@@ -239,7 +239,7 @@ class Select extends AbstractBuilder
      * Adds a restriction over the groups of the query, forming a logical
      * disjunction with any existing having restrictions
      *
-     * @param  string[] $conditions the query restriction predicates
+     * @param string[] $conditions the query restriction predicates
      *
      * @return Select
      */
@@ -261,7 +261,7 @@ class Select extends AbstractBuilder
     /**
      * Setup offset like a page number, start from 1
      *
-     * @param  integer $page
+     * @param int $page
      *
      * @return Select
      * @throws DbException

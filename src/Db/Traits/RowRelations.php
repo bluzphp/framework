@@ -33,7 +33,7 @@ trait RowRelations
     /**
      * Set relation
      *
-     * @param  Row $row
+     * @param Row $row
      *
      * @return void
      * @throws TableNotFoundException
@@ -47,7 +47,7 @@ trait RowRelations
     /**
      * Get relation by model name
      *
-     * @param  string $modelName
+     * @param string $modelName
      *
      * @return RowInterface
      * @throws RelationNotFoundException
@@ -62,7 +62,7 @@ trait RowRelations
     /**
      * Get relations by model name
      *
-     * @param  string $modelName
+     * @param string $modelName
      *
      * @return RowInterface[]
      * @throws RelationNotFoundException

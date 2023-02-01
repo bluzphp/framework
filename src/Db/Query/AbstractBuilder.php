@@ -98,7 +98,7 @@ abstract class AbstractBuilder
     /**
      * Gets a (previously set) query parameter of the query being constructed
      *
-     * @param  mixed $key The key (index or name) of the bound parameter
+     * @param mixed $key The key (index or name) of the bound parameter
      *
      * @return mixed The value of the bound parameter.
      */
@@ -120,9 +120,9 @@ abstract class AbstractBuilder
      *         ->setParameter(':user_id', 1);
      * </code>
      *
-     * @param  string|int|null $key   The parameter position or name
-     * @param  mixed      $value The parameter value
-     * @param  integer    $type  PDO::PARAM_*
+     * @param string|int|null $key The parameter position or name
+     * @param mixed $value The parameter value
+     * @param int $type PDO::PARAM_*
      *
      * @return self
      */
@@ -164,8 +164,8 @@ abstract class AbstractBuilder
      *         ]);
      * </code>
      *
-     * @param  array $params The query parameters to set
-     * @param  array $types  The query parameters types to set
+     * @param array $params The query parameters to set
+     * @param array $types The query parameters types to set
      *
      * @return self
      */
@@ -184,7 +184,7 @@ abstract class AbstractBuilder
      *     $builder->prepareCondition("WHERE id IN (?)", [..,..]);
      * </code>
      *
-     * @param  array $args
+     * @param array $args
      *
      * @return string
      */
@@ -204,9 +204,7 @@ abstract class AbstractBuilder
         }
         unset($value);
 
-        $condition = preg_replace('/(\:REPLACE\:)/', '?', $condition);
-
-        return $condition;
+        return preg_replace('/(:REPLACE:)/', '?', $condition);
     }
 
     /**

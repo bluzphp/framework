@@ -12,23 +12,20 @@ declare(strict_types=1);
 namespace Bluz\Http;
 
 /**
- * RequestMethod
+ * Request HTTP methods
  *
  * @package  Bluz\Http
- * @author   dark
  */
-class RequestMethod
+enum RequestMethod : string
 {
-    /**
-     * @const string HTTP methods
-     */
-    public const OPTIONS = 'OPTIONS';
-    public const GET = 'GET';
-    public const HEAD = 'HEAD';
-    public const PATCH = 'PATCH';
-    public const POST = 'POST';
-    public const PUT = 'PUT';
-    public const DELETE = 'DELETE';
-    public const TRACE = 'TRACE';
-    public const CONNECT = 'CONNECT';
+    case CONNECT = 'CONNECT';
+    case DELETE = 'DELETE';
+    case GET = 'GET';
+    case HEAD = 'HEAD';
+    case OPTIONS = 'OPTIONS';
+    case PATCH = 'PATCH';
+    case POST = 'POST';
+    case PURGE = 'PURGE';
+    case PUT = 'PUT';
+    case TRACE = 'TRACE';
 }

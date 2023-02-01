@@ -8,6 +8,7 @@
 /**
  * @namespace
  */
+
 namespace Bluz\Tests;
 
 use Bluz\Application\Application;
@@ -17,6 +18,7 @@ use Bluz\Http\Exception\RedirectException;
 use Bluz\Proxy\Layout;
 use Bluz\Proxy\Request;
 use Bluz\Proxy\Response;
+use Exception;
 
 /**
  * Bootstrap
@@ -33,19 +35,28 @@ class BootstrapTest extends Application
      *
      * @var string
      */
-    protected $dispatchModule;
+    protected string $dispatchModule;
 
     /**
      * Dispatched controller name
      *
      * @var string
      */
-    protected $dispatchController;
+    protected string $dispatchController;
 
     /**
-     * @var \Exception
+     * @var Exception
      */
-    protected $exception;
+    protected Exception $exception;
+
+    /**
+     * Try to detect path of the Application
+     * @return string
+     */
+    protected function detectPath(): string
+    {
+        return dirname(__DIR__); // level up
+    }
 
     /**
      * Get dispatched module name
@@ -70,11 +81,11 @@ class BootstrapTest extends Application
     /**
      * setException
      *
-     * @param \Exception $exception
+     * @param Exception $exception
      *
      * @return void
      */
-    public function setException($exception): void
+    public function setException(Exception $exception): void
     {
         $this->exception = $exception;
 
@@ -85,9 +96,9 @@ class BootstrapTest extends Application
     /**
      * getException
      *
-     * @return \Exception|null
+     * @return Exception|null
      */
-    public function getException(): ?\Exception
+    public function getException(): ?Exception
     {
         return $this->exception;
     }
@@ -113,7 +124,7 @@ class BootstrapTest extends Application
         } catch (RedirectException $e) {
             $this->setException($e);
             $result = $this->redirect($e);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->setException($e);
             $result = $this->error($e);
         }

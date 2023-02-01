@@ -21,8 +21,5 @@ use Bluz\Http\StatusCode;
  */
 class NotFoundException extends HttpException
 {
-    /**
-     * @var integer HTTP Code
-     */
-    protected $code = StatusCode::NOT_FOUND;
+    protected StatusCode $statusCode = StatusCode::NOT_FOUND;
 }

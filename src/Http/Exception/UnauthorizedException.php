@@ -21,8 +21,5 @@ use Bluz\Http\StatusCode;
  */
 class UnauthorizedException extends HttpException
 {
-    /**
-     * @var integer HTTP code
-     */
-    protected $code = StatusCode::UNAUTHORIZED;
+    protected StatusCode $statusCode = StatusCode::UNAUTHORIZED;
 }

@@ -29,7 +29,7 @@ class ValidatorForm implements ValidatorInterface
      *
      * @var ValidatorChain[]
      */
-    protected $validators = [];
+    protected array $validators = [];
 
     /**
      * Exception with list of validation errors
@@ -39,7 +39,7 @@ class ValidatorForm implements ValidatorInterface
      *
      * @var ValidatorException
      */
-    protected $exception;
+    protected ValidatorException $exception;
 
     /**
      * Add chain to form
@@ -69,7 +69,7 @@ class ValidatorForm implements ValidatorInterface
     /**
      * Validate chain of rules
      *
-     * @param  array $input
+     * @param array $input
      *
      * @return bool
      */
@@ -93,7 +93,7 @@ class ValidatorForm implements ValidatorInterface
      * Validate chain of rules for single item
      *
      * @param string $key
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return bool
      */
@@ -112,7 +112,7 @@ class ValidatorForm implements ValidatorInterface
     /**
      * Assert
      *
-     * @param  mixed $input
+     * @param mixed $input
      *
      * @return void
      * @throws ValidatorException

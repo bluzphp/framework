@@ -41,7 +41,7 @@ class RegexpRule extends AbstractRule
     /**
      * Check string by regular expression
      *
-     * @param  mixed $input
+     * @param mixed $input
      *
      * @return bool
      */

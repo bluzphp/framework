@@ -112,7 +112,7 @@ class Translator
      * Add text domain for gettext
      *
      * @param string $domain of text for gettext setup
-     * @param string $path   on filesystem
+     * @param string $path on filesystem
      *
      * @return void
      * @throws ConfigurationException
@@ -143,8 +143,8 @@ class Translator
      *
      *     Translator::translate('Message to %s', 'Username');
      *
-     * @param  string   $message
-     * @param  string[] ...$text
+     * @param string $message
+     * @param string[] ...$text
      *
      * @return string
      */
@@ -176,10 +176,10 @@ class Translator
      * equal to sprintf(ngettext('%d comment', '%d comments', 4), 4, 'Topic')
      *     Translator::translatePlural('%d comment to %s', '%d comments to %s', 4, 'Topic')
      *
-     * @param  string   $singular
-     * @param  string   $plural
-     * @param  integer  $number
-     * @param  string[] ...$text
+     * @param string $singular
+     * @param string $plural
+     * @param int $number
+     * @param string[] ...$text
      *
      * @return string
      * @link   http://docs.translatehouse.org/projects/localization-guide/en/latest/l10n/pluralforms.html

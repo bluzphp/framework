@@ -26,17 +26,7 @@ class ConfigLoader
     /**
      * @var array configuration data
      */
-    protected array $config;
-
-    /**
-     * @var string path to configuration files
-     */
-    protected string $path;
-
-    /**
-     * @var string environment
-     */
-    protected string $environment;
+    protected array $config = [];
 
     /**
      * @return array
@@ -47,67 +37,23 @@ class ConfigLoader
     }
 
     /**
-     * @return string
-     */
-    public function getPath(): string
-    {
-        return $this->path;
-    }
-
-    /**
-     * Set path to configuration files
+     * Load and merge configuration
      *
      * @param string $path
-     *
      * @return void
      * @throws ConfigException
      */
-    public function setPath(string $path): void
+    public function load(string $path): void
     {
+        if (!$path) {
+            throw new ConfigException('Configuration directory is required');
+        }
+
         if (!is_dir($path)) {
             throw new ConfigException('Configuration directory is not exists');
         }
-        $this->path = rtrim($path, '/');
-    }
 
-    /**
-     * @return string
-     */
-    public function getEnvironment(): string
-    {
-        return $this->environment;
-    }
-
-    /**
-     * Set application environment
-     *
-     * @param string $environment
-     *
-     * @return void
-     */
-    public function setEnvironment(string $environment): void
-    {
-        $this->environment = $environment;
-    }
-
-    /**
-     * Load configuration
-     *
-     * @return void
-     * @throws ConfigException
-     */
-    public function load(): void
-    {
-        if (!$this->path) {
-            throw new ConfigException('Configuration directory is not setup');
-        }
-
-        $this->config = $this->loadFiles($this->path . '/configs/default');
-
-        if ($this->environment) {
-            $customConfig = $this->loadFiles($this->path . '/configs/' . $this->environment);
-            $this->config = array_replace_recursive($this->config, $customConfig);
-        }
+        $this->config = array_replace_recursive($this->config, $this->loadFiles($path));
     }
 
     /**
@@ -118,7 +64,7 @@ class ConfigLoader
      * @return mixed
      * @throws ConfigException
      */
-    protected function loadFile(string $path)
+    protected function loadFile(string $path): mixed
     {
         if (!is_file($path) && !is_readable($path)) {
             throw new ConfigException("Configuration file `$path` not found");

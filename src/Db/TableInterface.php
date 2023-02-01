@@ -48,7 +48,7 @@ interface TableInterface
     /**
      * Create Row instance
      *
-     * @param  array $data
+     * @param array $data
      *
      * @return RowInterface
      */
@@ -79,7 +79,7 @@ interface TableInterface
      * Multiple rows by compound primary key
      *     Table::find([123, 'abc'], [234, 'def'], [345, 'ghi'])
      *
-     * @param  mixed ...$keys The value(s) of the primary keys.
+     * @param mixed ...$keys The value(s) of the primary keys.
      *
      * @return RowInterface[]
      */
@@ -100,7 +100,7 @@ interface TableInterface
      *     // WHERE (alias = 'foo' AND userId = 2) OR ('alias' = 'bar' AND userId = 4)
      *     Table::findWhere(['alias'=>'foo', 'userId'=> 2], ['alias'=>'foo', 'userId'=>4]);
      *
-     * @param  mixed ...$where
+     * @param mixed ...$where
      *
      * @return RowInterface[]
      */
@@ -109,7 +109,7 @@ interface TableInterface
     /**
      * Find row by primary key
      *
-     * @param  mixed $primaryKey
+     * @param mixed $primaryKey
      *
      * @return RowInterface
      */
@@ -118,7 +118,7 @@ interface TableInterface
     /**
      * Find row by where condition
      *
-     * @param  array $whereList
+     * @param array $whereList
      *
      * @return RowInterface
      */
@@ -154,7 +154,7 @@ interface TableInterface
      *     Table::insert(['login' => 'Man', 'email' => 'man@example.com'])
      * </code>
      *
-     * @param  array $data Column-value pairs
+     * @param array $data Column-value pairs
      *
      * @return string|null Primary key or null
      */
@@ -167,8 +167,8 @@ interface TableInterface
      *     Table::update(['login' => 'Man', 'email' => 'man@domain.com'], ['id' => 42])
      * </code>
      *
-     * @param  array $data  Column-value pairs.
-     * @param  array $where An array of SQL WHERE clause(s)
+     * @param array $data Column-value pairs.
+     * @param array $where An array of SQL WHERE clause(s)
      *
      * @return integer The number of rows updated
      */
@@ -181,7 +181,7 @@ interface TableInterface
      *     Table::delete(['login' => 'Man'])
      * </code>
      *
-     * @param  array $where An array of SQL WHERE clause(s)
+     * @param array $where An array of SQL WHERE clause(s)
      *
      * @return integer The number of rows deleted
      */

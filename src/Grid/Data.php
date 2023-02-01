@@ -27,7 +27,7 @@ class Data extends \ArrayIterator
     /**
      * Set total rows
      *
-     * @param  integer $total
+     * @param int $total
      *
      * @return void
      */

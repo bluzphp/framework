@@ -24,7 +24,7 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
     /**
      * Check and setup Redis server
      *
-     * @param  array $settings
+     * @param array $settings
      *
      * @throws ConfigurationException
      */
@@ -40,7 +40,7 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
     /**
      * Read session data
      *
-     * @param  string $id
+     * @param string $id
      *
      * @return string
      * @throws \Psr\Cache\InvalidArgumentException
@@ -53,8 +53,8 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
     /**
      * Write session data
      *
-     * @param  string $id
-     * @param  string $data
+     * @param string $id
+     * @param string $data
      *
      * @return bool
      * @throws \Psr\Cache\InvalidArgumentException
@@ -67,7 +67,7 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
     /**
      * Destroy a session
      *
-     * @param  integer $id
+     * @param int $id
      *
      * @return bool
      */

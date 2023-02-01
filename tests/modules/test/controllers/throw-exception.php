@@ -12,8 +12,8 @@
 namespace Bluz\Tests\Fixtures\Controllers;
 
 /**
- * @throws \Exception
  * @return void
+ * @throws \Exception
  */
 return function () {
     $this->disableLayout();

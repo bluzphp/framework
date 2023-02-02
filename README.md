@@ -5,7 +5,7 @@ Easy to setup, easy to use.
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/bluzphp/main)
 
 ## Achievements
-[![PHP >= 7.4+](https://img.shields.io/packagist/php-v/bluzphp/framework.svg?style=flat)](https://php.net/)
+[![PHP >= 8.1+](https://img.shields.io/packagist/php-v/bluzphp/framework.svg?style=flat)](https://php.net/)
 
 [![Latest Stable Version](https://img.shields.io/packagist/v/bluzphp/framework.svg?label=version&style=flat)](https://packagist.org/packages/bluzphp/framework)
 

@@ -29,8 +29,11 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
 
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md
+      - name: Run test suite
+        run: php vendor/bin/codecept run --debug
 
-    # - name: Run test suite
-    #   run: composer run-script test
+      - name: Check code style
+        run: php vendor/bin/phpcs ./src --standard=PSR12 --encoding=utf-8
+
+      - name: Check code style for tests
+        run: php vendor/bin/phpcs ./tests --standard=PSR12 --encoding=utf-8

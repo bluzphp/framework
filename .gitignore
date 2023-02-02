@@ -7,6 +7,5 @@ composer.lock
 # Tools
 composer.phar
 codecept.phar
-codeception.yml
 # Vendors
 /vendor

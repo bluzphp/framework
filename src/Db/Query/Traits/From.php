@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Bluz\Db\Query\Traits;
 
+use Bluz\Db\Query\Select;
 use Bluz\Proxy\Db;
 
 /**
@@ -35,7 +36,7 @@ trait From
      *
      * @var array
      */
-    protected $from = [];
+    protected array $from = [];
 
     /**
      * <code>
@@ -50,7 +51,7 @@ trait From
      *
      * @var array[]
      */
-    protected $join = [];
+    protected array $join = [];
 
     /**
      * Set FROM
@@ -67,8 +68,6 @@ trait From
      *
      * @param string $from The table
      * @param string $alias The alias of the table
-     *
-     * @return $this
      */
     public function from(string $from, string $alias): self
     {
@@ -97,9 +96,7 @@ trait From
      * @param string $fromAlias The alias that points to a from clause
      * @param string $join The table name to join
      * @param string $alias The alias of the join table
-     * @param string $condition The condition for the join
-     *
-     * @return $this
+     * @param string|null $condition The condition for the join
      */
     public function join(string $fromAlias, string $join, string $alias, string $condition = null): self
     {
@@ -121,9 +118,7 @@ trait From
      * @param string $fromAlias The alias that points to a from clause
      * @param string $join The table name to join
      * @param string $alias The alias of the join table
-     * @param string $condition The condition for the join
-     *
-     * @return $this
+     * @param string|null $condition The condition for the join
      */
     public function innerJoin(string $fromAlias, string $join, string $alias, string $condition = null): self
     {
@@ -145,9 +140,7 @@ trait From
      * @param string $fromAlias The alias that points to a from clause
      * @param string $join The table name to join
      * @param string $alias The alias of the join table
-     * @param string $condition The condition for the join
-     *
-     * @return $this
+     * @param string|null $condition The condition for the join
      */
     public function leftJoin(string $fromAlias, string $join, string $alias, string $condition = null): self
     {
@@ -169,9 +162,7 @@ trait From
      * @param string $fromAlias The alias that points to a from clause
      * @param string $join The table name to join
      * @param string $alias The alias of the join table
-     * @param string $condition The condition for the join
-     *
-     * @return $this
+     * @param string|null $condition The condition for the join
      */
     public function rightJoin(string $fromAlias, string $join, string $alias, string $condition = null): self
     {
@@ -185,9 +176,7 @@ trait From
      * @param string $fromAlias The alias that points to a from clause
      * @param string $join The table name to join
      * @param string $alias The alias of the join table
-     * @param string $condition The condition for the join
-     *
-     * @return $this
+     * @param string|null $condition The condition for the join
      */
     protected function addJoin(
         string $type,
@@ -211,10 +200,9 @@ trait From
      * setFromQueryPart
      *
      * @param string $table
-     *
-     * @return self
+     * @return Select|From
      */
-    protected function setFromQueryPart($table): self
+    protected function setFromQueryPart(string $table): self
     {
         return $this->from($table, $table);
     }
@@ -245,7 +233,7 @@ trait From
      *
      * @return string
      */
-    protected function prepareJoins($fromAlias): string
+    protected function prepareJoins(string $fromAlias): string
     {
         if (!isset($this->join[$fromAlias])) {
             return '';

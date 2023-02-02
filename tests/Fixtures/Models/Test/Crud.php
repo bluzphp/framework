@@ -28,7 +28,7 @@ class Crud extends \Bluz\Crud\Table
     /**
      * Return table instance for manipulation
      *
-     * @return \Bluz\Db\Table
+     * @return \Bluz\Db\TableInterface
      */
     public function getTable()
     {

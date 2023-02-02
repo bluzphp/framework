@@ -52,7 +52,7 @@ use Bluz\Response\ResponseTrait;
  * @method string select($name, array $options = [], $selected = null, array $attributes = [])
  * @method string style(string $href, $media = 'all')
  * @method string styleBlock(string $code, $media = 'all')
- * @method string|null url(string $module, string $controller, array $params = [], bool $checkAccess = false)
+ * @method string|null url(?string $module, ?string $controller, ?array $params = [], bool $checkAccess = false)
  * @method AbstractIdentity|null user()
  * @method void widget($module, $widget, $params = [])
  */

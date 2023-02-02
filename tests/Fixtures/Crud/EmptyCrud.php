@@ -11,9 +11,8 @@
 
 namespace Bluz\Tests\Fixtures\Crud;
 
-use Bluz\Common\Instance;
 use Bluz\Crud\AbstractCrud;
-use Bluz\Db\Traits\TableProperty;;
+use Bluz\Db\Traits\TableProperty;
 
 /**
  * Crud based on Db\Table

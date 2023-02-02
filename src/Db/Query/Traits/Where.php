@@ -46,8 +46,6 @@ trait Where
      * </code>
      *
      * @param array $conditions optional the query restriction predicates
-     *
-     * @return $this
      */
     public function where(...$conditions): self
     {
@@ -69,16 +67,13 @@ trait Where
      *         ->andWhere('u.is_active = ?', 1);
      * </code>
      *
-     * @param string[] $conditions Optional the query restriction predicates
-     *
-     * @return $this
+     * @param array $conditions Optional the query restriction predicates
      */
     public function andWhere(...$conditions): self
     {
         $condition = $this->prepareCondition($conditions);
 
-        if (
-            $this->where instanceof CompositeBuilder
+        if ($this->where instanceof CompositeBuilder
             && $this->where->getType() === 'AND'
         ) {
             $this->where->addPart($condition);
@@ -102,16 +97,13 @@ trait Where
      *         ->orWhere('u.id = ?', 2);
      * </code>
      *
-     * @param string[] $conditions Optional the query restriction predicates
-     *
-     * @return $this
+     * @param array $conditions Optional the query restriction predicates
      */
     public function orWhere(...$conditions): self
     {
         $condition = $this->prepareCondition($conditions);
 
-        if (
-            $this->where instanceof CompositeBuilder
+        if ($this->where instanceof CompositeBuilder
             && $this->where->getType() === 'OR'
         ) {
             $this->where->addPart($condition);

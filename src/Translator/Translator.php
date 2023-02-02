@@ -179,12 +179,12 @@ class Translator
      * @param string $singular
      * @param string $plural
      * @param int $number
-     * @param string[] ...$text
+     * @param mixed ...$text
      *
      * @return string
      * @link   http://docs.translatehouse.org/projects/localization-guide/en/latest/l10n/pluralforms.html
      */
-    public static function translatePlural(string $singular, string $plural, $number, ...$text): string
+    public static function translatePlural(string $singular, string $plural, int $number, ...$text): string
     {
         if (\function_exists('ngettext')) {
             $message = ngettext($singular, $plural, $number);

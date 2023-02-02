@@ -21,7 +21,6 @@ use Bluz\Tests\Unit\Unit;
  */
 class RowTest extends Unit
 {
-
     /**
      * @var Db\ConcreteRow
      */

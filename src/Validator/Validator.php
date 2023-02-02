@@ -63,7 +63,7 @@ class Validator
     /**
      * @var array[] list of rules namespaces
      */
-    protected static $rulesNamespaces = [
+    protected static array $rulesNamespaces = [
         '\\Bluz\\Validator\\Rule\\'
     ];
 
@@ -85,7 +85,7 @@ class Validator
      *
      * @return ValidatorChain
      */
-    public static function __callStatic($ruleName, $arguments): ValidatorChain
+    public static function __callStatic(string $ruleName, array $arguments): ValidatorChain
     {
         $validatorChain = self::create();
         return $validatorChain->$ruleName(...$arguments);

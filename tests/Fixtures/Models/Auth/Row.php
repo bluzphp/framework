@@ -23,5 +23,4 @@ use Bluz\Auth\Model\AbstractRow;
  */
 class Row extends AbstractRow
 {
-
 }

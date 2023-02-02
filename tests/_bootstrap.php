@@ -3,8 +3,6 @@
 // This is global bootstrap for autoloading
 // Environment
 define('DEBUG', true);
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 // Paths
 define('PATH_ROOT', realpath(dirname(__DIR__)));

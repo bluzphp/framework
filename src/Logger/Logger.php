@@ -26,59 +26,59 @@ class Logger extends AbstractLogger
     use Options;
 
     /**
-     * @var float start time
+     * @var float|null start time
      */
-    protected $startTime;
+    protected float|null $startTime = null;
 
     /**
-     * @var float part time
+     * @var float|null section time
      */
-    protected $timer;
+    protected float|null $timer = null;
 
     /**
      * @var integer
      */
-    protected $memory = 0;
+    protected int $memory = 0;
 
     /**
      * @var array list of alerts
      */
-    protected $alert = [];
+    protected array $alert = [];
 
     /**
      * @var array list of critical
      */
-    protected $critical = [];
+    protected array $critical = [];
 
     /**
      * @var array list of debug messages
      */
-    protected $debug = [];
+    protected array $debug = [];
 
     /**
      * @var array list of emergency
      */
-    protected $emergency = [];
+    protected array $emergency = [];
 
     /**
      * @var array list of errors
      */
-    protected $error = [];
+    protected array $error = [];
 
     /**
      * @var array list of info
      */
-    protected $info = [];
+    protected array $info = [];
 
     /**
      * @var array list of notices
      */
-    protected $notice = [];
+    protected array $notice = [];
 
     /**
      * @var array list of warnings
      */
-    protected $warning = [];
+    protected array $warning = [];
 
     /**
      * Interpolates context values into the message placeholders

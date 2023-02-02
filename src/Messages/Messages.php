@@ -35,7 +35,7 @@ class Messages
     /**
      * @var array list of messages types
      */
-    protected $types = [
+    protected array $types = [
         self::TYPE_ERROR,
         self::TYPE_SUCCESS,
         self::TYPE_NOTICE
@@ -121,7 +121,7 @@ class Messages
      *
      * @return array
      */
-    public function popAll()
+    public function popAll(): array
     {
         $messages = $this->getMessagesStore()->getArrayCopy();
         $this->resetMessagesStore();
@@ -163,7 +163,7 @@ class Messages
      */
     protected function getMessagesStore(): ArrayObject
     {
-        if (!$store = Session::get('messages:store')) {
+        if (!Session::get('messages:store')) {
             $this->resetMessagesStore();
         }
         return Session::get('messages:store');

@@ -99,9 +99,8 @@ class Mailer
      * @throws MailerException
      * @throws Exception
      * @todo Add mail to queue
-     *
      */
-    public function send(PHPMailer $mail)
+    public function send(PHPMailer $mail): bool
     {
         if ($template = $this->getOption('subjectTemplate')) {
             /** @var string $template */

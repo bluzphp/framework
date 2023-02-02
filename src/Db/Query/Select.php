@@ -224,7 +224,8 @@ class Select extends AbstractBuilder
     {
         $condition = $this->prepareCondition($conditions);
 
-        if ($this->having instanceof CompositeBuilder
+        if (
+            $this->having instanceof CompositeBuilder
             && $this->having->getType() === 'AND'
         ) {
             $this->having->addPart($condition);
@@ -246,7 +247,8 @@ class Select extends AbstractBuilder
     {
         $condition = $this->prepareCondition($conditions);
 
-        if ($this->having instanceof CompositeBuilder
+        if (
+            $this->having instanceof CompositeBuilder
             && $this->having->getType() === 'OR'
         ) {
             $this->having->addPart($condition);

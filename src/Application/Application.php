@@ -209,9 +209,9 @@ class Application
     {
         $loader = new ConfigLoader();
         // load default configuration
-        $loader->load($this->getPath() .'/configs/default');
+        $loader->load($this->getPath() . '/configs/default');
         // and merge it with environment configuration
-        $loader->load($this->getPath() .'/configs/'. $this->getEnvironment());
+        $loader->load($this->getPath() . '/configs/' . $this->getEnvironment());
 
         $config = new \Bluz\Config\Config();
         $config->setFromArray($loader->getConfig());

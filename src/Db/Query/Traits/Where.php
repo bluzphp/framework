@@ -78,7 +78,8 @@ trait Where
     {
         $condition = $this->prepareCondition($conditions);
 
-        if ($this->where instanceof CompositeBuilder
+        if (
+            $this->where instanceof CompositeBuilder
             && $this->where->getType() === 'AND'
         ) {
             $this->where->addPart($condition);
@@ -109,7 +110,8 @@ trait Where
     {
         $condition = $this->prepareCondition($conditions);
 
-        if ($this->where instanceof CompositeBuilder
+        if (
+            $this->where instanceof CompositeBuilder
             && $this->where->getType() === 'OR'
         ) {
             $this->where->addPart($condition);

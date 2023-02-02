@@ -20,7 +20,6 @@ use Bluz\Tests\Unit\Unit;
  */
 class LineTest extends Unit
 {
-
     /**
      * @dataProvider dataForStrTrimEnd
      *

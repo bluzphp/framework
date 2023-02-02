@@ -56,7 +56,7 @@ class ConfigLoaderTest extends Unit
     public function testLoad(): void
     {
         $loader = new Config\ConfigLoader();
-        $loader->load($this->path.'/default');
+        $loader->load($this->path . '/default');
     }
 
     /**
@@ -65,10 +65,10 @@ class ConfigLoaderTest extends Unit
     public function testLoadAndMerge(): void
     {
         $loader = new Config\ConfigLoader();
-        $loader->load($this->path .'/default');
+        $loader->load($this->path . '/default');
         $configWithoutEnvironment = $loader->getConfig();
 
-        $loader->load($this->path .'/testing');
+        $loader->load($this->path . '/testing');
         $configWithEnvironment = $loader->getConfig();
 
         self::assertArrayHasSize($configWithoutEnvironment, 1);

@@ -41,9 +41,9 @@ use Bluz\Validator\ValidatorForm;
 trait Validator
 {
     /**
-     * @var ValidatorForm instance
+     * @var ValidatorForm|null instance
      */
-    private $validatorForm;
+    private ValidatorForm|null $validatorForm = null;
 
     /**
      * Get ValidatorBuilder

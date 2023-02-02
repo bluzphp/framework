@@ -339,7 +339,8 @@ class Session
      */
     protected function setSavePath(string $savePath): void
     {
-        if (!is_dir($savePath)
+        if (
+            !is_dir($savePath)
             || !is_writable($savePath)
         ) {
             throw new ComponentException('Session path is not writable');

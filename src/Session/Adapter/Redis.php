@@ -24,7 +24,7 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
     /**
      * @var array default Redis settings
      */
-    protected $settings = [
+    protected array $settings = [
         'host' => '127.0.0.1',
         'port' => 6379,
         'timeout' => 0,

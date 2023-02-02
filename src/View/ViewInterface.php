@@ -25,7 +25,7 @@ interface ViewInterface
      * Example of usage
      *     $view->getPath();
      *
-     * @return string
+     * @return string|null
      */
     public function getPath(): ?string;
 
@@ -47,7 +47,7 @@ interface ViewInterface
      * Example of usage
      *     $view->getTemplate();
      *
-     * @return string
+     * @return string|null
      */
     public function getTemplate(): ?string;
 

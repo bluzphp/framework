@@ -34,12 +34,12 @@ class Session
     /**
      * @var string namespace
      */
-    protected $namespace = 'bluz';
+    protected string $namespace = 'bluz';
 
     /**
      * @var string Session handler name
      */
-    protected $adapter = 'files';
+    protected string $adapter = 'files';
 
     /**
      * @var SessionHandlerInterface Session save handler
@@ -339,8 +339,7 @@ class Session
      */
     protected function setSavePath(string $savePath): void
     {
-        if (
-            !is_dir($savePath)
+        if (!is_dir($savePath)
             || !is_writable($savePath)
         ) {
             throw new ComponentException('Session path is not writable');

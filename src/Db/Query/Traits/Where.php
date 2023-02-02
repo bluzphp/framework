@@ -12,6 +12,9 @@ declare(strict_types=1);
 namespace Bluz\Db\Query\Traits;
 
 use Bluz\Db\Query\CompositeBuilder;
+use Bluz\Db\Query\Delete;
+use Bluz\Db\Query\Select;
+use Bluz\Db\Query\Update;
 
 /**
  * Order Trait
@@ -29,7 +32,7 @@ trait Where
     /**
      * @var string|CompositeBuilder|null
      */
-    protected $where;
+    protected mixed $where = null;
 
     /**
      * Set WHERE condition
@@ -46,8 +49,9 @@ trait Where
      * </code>
      *
      * @param array $conditions optional the query restriction predicates
+     * @return Delete|Select|Update
      */
-    public function where(...$conditions): self
+    public function where(...$conditions): Delete|Select|Update
     {
         $this->where = $this->prepareCondition($conditions);
         return $this;
@@ -68,8 +72,9 @@ trait Where
      * </code>
      *
      * @param array $conditions Optional the query restriction predicates
+     * @return Delete|Select|Update
      */
-    public function andWhere(...$conditions): self
+    public function andWhere(...$conditions): Delete|Select|Update
     {
         $condition = $this->prepareCondition($conditions);
 
@@ -98,8 +103,9 @@ trait Where
      * </code>
      *
      * @param array $conditions Optional the query restriction predicates
+     * @return Delete|Select|Update
      */
-    public function orWhere(...$conditions): self
+    public function orWhere(...$conditions): Delete|Select|Update
     {
         $condition = $this->prepareCondition($conditions);
 

@@ -61,7 +61,7 @@ abstract class AbstractTable extends Table
      * @param string $provider
      * @param string $foreignKey
      *
-     * @return RowInterface
+     * @return RowInterface|null
      * @throws InvalidArgumentException
      * @throws DbException
      * @throws InvalidPrimaryKeyException

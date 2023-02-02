@@ -53,42 +53,42 @@ class Router
     /**
      * @var string default module
      */
-    protected $defaultModule = self::DEFAULT_MODULE;
+    protected string $defaultModule = self::DEFAULT_MODULE;
 
     /**
      * @var string default Controller
      */
-    protected $defaultController = self::DEFAULT_CONTROLLER;
+    protected string $defaultController = self::DEFAULT_CONTROLLER;
 
     /**
      * @var string error module
      */
-    protected $errorModule = self::ERROR_MODULE;
+    protected string $errorModule = self::ERROR_MODULE;
 
     /**
      * @var string error Controller
      */
-    protected $errorController = self::ERROR_CONTROLLER;
+    protected string $errorController = self::ERROR_CONTROLLER;
 
     /**
      * @var array instance parameters
      */
-    protected $params = [];
+    protected array $params = [];
 
     /**
      * @var array instance raw parameters
      */
-    protected $rawParams = [];
+    protected array $rawParams = [];
 
     /**
      * @var array[] routers map
      */
-    protected $routers = [];
+    protected mixed $routers = [];
 
     /**
      * @var array[] reverse map
      */
-    protected $reverse = [];
+    protected mixed $reverse = [];
 
     /**
      * Constructor of Router

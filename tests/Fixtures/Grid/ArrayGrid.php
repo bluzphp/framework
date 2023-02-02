@@ -12,6 +12,7 @@
 namespace Bluz\Tests\Fixtures\Grid;
 
 use Bluz\Grid\Grid;
+use Bluz\Grid\GridException;
 use Bluz\Grid\Source\ArraySource;
 
 /**
@@ -31,7 +32,7 @@ class ArrayGrid extends Grid
      * Init ArraySource
      *
      * @return void
-     * @throws \Bluz\Grid\GridException
+     * @throws GridException
      */
     public function init(): void
     {

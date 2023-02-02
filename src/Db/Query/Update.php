@@ -27,7 +27,7 @@ class Update extends AbstractBuilder
     /**
      * @var string Table name
      */
-    protected $table;
+    protected string $table;
 
     /**
      * {@inheritdoc}
@@ -58,7 +58,7 @@ class Update extends AbstractBuilder
      *
      * @return Update instance
      */
-    public function update($table): Update
+    public function update(string $table): Update
     {
         $this->table = $table;
         return $this;

@@ -49,7 +49,7 @@ trait RowRelations
      *
      * @param string $modelName
      *
-     * @return RowInterface
+     * @return RowInterface|null
      * @throws RelationNotFoundException
      * @throws TableNotFoundException
      */

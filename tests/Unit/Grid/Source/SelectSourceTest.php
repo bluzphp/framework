@@ -22,6 +22,7 @@ class SelectSourceTest extends Unit
 {
     /**
      * Select Source
+     * @throws GridException
      */
     public function testSelectGrid()
     {

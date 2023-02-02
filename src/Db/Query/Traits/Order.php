@@ -11,6 +11,9 @@ declare(strict_types=1);
 
 namespace Bluz\Db\Query\Traits;
 
+use Bluz\Db\Query\Delete;
+use Bluz\Db\Query\Select;
+
 /**
  * Order Trait
  *
@@ -27,7 +30,7 @@ trait Order
     /**
      * @var array
      */
-    protected $orderBy = [];
+    protected array $orderBy = [];
 
     /**
      * Specifies an ordering for the query results
@@ -36,9 +39,9 @@ trait Order
      * @param string $sort Sort expression
      * @param string $order Sort direction (ASC or DESC)
      *
-     * @return $this
+     * @return Delete|Select
      */
-    public function orderBy(string $sort, string $order = 'ASC'): self
+    public function orderBy(string $sort, string $order = 'ASC'): Delete|Select
     {
         $order = 'ASC' === strtoupper($order) ? 'ASC' : 'DESC';
         $this->orderBy = [$sort => $order];
@@ -51,9 +54,9 @@ trait Order
      * @param string $sort Sort expression
      * @param string $order Sort direction (ASC or DESC)
      *
-     * @return $this
+     * @return Delete|Select
      */
-    public function addOrderBy(string $sort, string $order = 'ASC'): self
+    public function addOrderBy(string $sort, string $order = 'ASC'): Delete|Select
     {
         $order = 'ASC' === strtoupper($order) ? 'ASC' : 'DESC';
         $this->orderBy[$sort] = $order;

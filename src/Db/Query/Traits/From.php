@@ -68,8 +68,9 @@ trait From
      *
      * @param string $from The table
      * @param string $alias The alias of the table
+     * @return Select
      */
-    public function from(string $from, string $alias): self
+    public function from(string $from, string $alias): Select
     {
         $this->aliases[] = $alias;
 
@@ -97,8 +98,9 @@ trait From
      * @param string $join The table name to join
      * @param string $alias The alias of the join table
      * @param string|null $condition The condition for the join
+     * @return Select
      */
-    public function join(string $fromAlias, string $join, string $alias, string $condition = null): self
+    public function join(string $fromAlias, string $join, string $alias, string $condition = null): Select
     {
         return $this->innerJoin($fromAlias, $join, $alias, $condition);
     }
@@ -119,8 +121,9 @@ trait From
      * @param string $join The table name to join
      * @param string $alias The alias of the join table
      * @param string|null $condition The condition for the join
+     * @return Select
      */
-    public function innerJoin(string $fromAlias, string $join, string $alias, string $condition = null): self
+    public function innerJoin(string $fromAlias, string $join, string $alias, string $condition = null): Select
     {
         return $this->addJoin('inner', $fromAlias, $join, $alias, $condition);
     }
@@ -141,8 +144,9 @@ trait From
      * @param string $join The table name to join
      * @param string $alias The alias of the join table
      * @param string|null $condition The condition for the join
+     * @return Select
      */
-    public function leftJoin(string $fromAlias, string $join, string $alias, string $condition = null): self
+    public function leftJoin(string $fromAlias, string $join, string $alias, string $condition = null): Select
     {
         return $this->addJoin('left', $fromAlias, $join, $alias, $condition);
     }
@@ -163,8 +167,9 @@ trait From
      * @param string $join The table name to join
      * @param string $alias The alias of the join table
      * @param string|null $condition The condition for the join
+     * @return Select
      */
-    public function rightJoin(string $fromAlias, string $join, string $alias, string $condition = null): self
+    public function rightJoin(string $fromAlias, string $join, string $alias, string $condition = null): Select
     {
         return $this->addJoin('right', $fromAlias, $join, $alias, $condition);
     }
@@ -177,6 +182,7 @@ trait From
      * @param string $join The table name to join
      * @param string $alias The alias of the join table
      * @param string|null $condition The condition for the join
+     * @return Select
      */
     protected function addJoin(
         string $type,
@@ -184,7 +190,7 @@ trait From
         string $join,
         string $alias,
         string $condition = null
-    ): self {
+    ): Select {
         $this->aliases[] = $alias;
 
         $this->join[$fromAlias][] = [
@@ -200,9 +206,9 @@ trait From
      * setFromQueryPart
      *
      * @param string $table
-     * @return Select|From
+     * @return Select
      */
-    protected function setFromQueryPart(string $table): self
+    protected function setFromQueryPart(string $table): Select
     {
         return $this->from($table, $table);
     }

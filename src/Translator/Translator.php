@@ -31,12 +31,12 @@ class Translator
      * @var string
      * @link http://www.loc.gov/standards/iso639-2/php/code_list.php
      */
-    protected $locale = 'en_US';
+    protected string $locale = 'en_US';
 
     /**
      * @var string text domain
      */
-    protected $domain = 'messages';
+    protected string $domain = 'messages';
 
     /**
      * @var string path to text domain files

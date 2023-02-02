@@ -11,8 +11,10 @@ declare(strict_types=1);
 
 namespace Bluz\Layout;
 
+use Bluz\Common\Exception\CommonException;
 use Bluz\Container\RegularAccess;
 use Bluz\View\View;
+use Bluz\View\ViewInterface;
 use Exception;
 
 /**
@@ -39,12 +41,13 @@ class Layout extends View
     /**
      * @var mixed content container, usually is instance of View
      */
-    protected $content;
+    protected mixed $content;
 
     /**
      * Layout constructor
      *  - init Layout helpers
      *  - call parent View constructor
+     * @throws CommonException
      */
     public function __construct()
     {
@@ -58,9 +61,9 @@ class Layout extends View
     /**
      * Get content
      *
-     * @return View|callable
+     * @return mixed
      */
-    public function getContent()
+    public function getContent(): mixed
     {
         return $this->content;
     }
@@ -68,11 +71,11 @@ class Layout extends View
     /**
      * Set content
      *
-     * @param View|callable $content
+     * @param mixed $content
      *
      * @return void
      */
-    public function setContent($content): void
+    public function setContent(mixed $content): void
     {
         try {
             $this->content = value($content);

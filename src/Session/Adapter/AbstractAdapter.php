@@ -26,12 +26,12 @@ abstract class AbstractAdapter
     /**
      * @var string prefix for session store
      */
-    protected $prefix = 'PHPSESSID:';
+    protected string $prefix = 'PHPSESSID:';
 
     /**
      * @var integer TTL of session
      */
-    protected $ttl = 1800;
+    protected int $ttl = 1800;
 
     /**
      * Prepare Id - add prefix

@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace Bluz\Db\Query\Traits;
 
+use Bluz\Db\Query\Insert;
+use Bluz\Db\Query\Update;
 use Bluz\Proxy\Db;
 use PDO;
 
@@ -36,7 +38,7 @@ trait Set
      *
      * @var array
      */
-    protected $set = [];
+    protected array $set = [];
 
     /**
      * Set key-value pair
@@ -54,9 +56,9 @@ trait Set
      * @param string|integer $value The value, expression, placeholder, etc
      * @param int $type The type of value on of PDO::PARAM_* params
      *
-     * @return $this
+     * @return Update|Insert
      */
-    public function set(string $key, $value, $type = PDO::PARAM_STR): self
+    public function set(string $key, int|string $value, int $type = PDO::PARAM_STR): Insert|Update
     {
         $this->setParam(null, $value, $type);
         $this->set[] = Db::quoteIdentifier($key) . ' = ?';
@@ -79,9 +81,9 @@ trait Set
      *
      * @param array $data
      *
-     * @return $this
+     * @return Insert|Update
      */
-    public function setArray(array $data): self
+    public function setArray(array $data): Insert|Update
     {
         foreach ($data as $key => $value) {
             $this->set($key, $value);

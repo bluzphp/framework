@@ -36,23 +36,23 @@ class Select extends AbstractBuilder
      *
      * @var array[]
      */
-    protected $select = [];
-    protected $groupBy = [];
-    protected $having = null;
+    protected array $select = [];
+    protected array $groupBy = [];
+    protected string|CompositeBuilder|null $having = null;
 
     /**
      * @var mixed PDO fetch types or object class
      */
-    protected $fetchType = \PDO::FETCH_ASSOC;
+    protected mixed $fetchType = \PDO::FETCH_ASSOC;
 
     /**
      * {@inheritdoc}
      *
-     * @param integer|string|object $fetchType
+     * @param object|int|string|null $fetchType
      *
-     * @return integer|string|array
+     * @return array|int|string
      */
-    public function execute($fetchType = null)
+    public function execute(object|int|string $fetchType = null): array|int|string
     {
         if (!$fetchType) {
             $fetchType = $this->fetchType;
@@ -72,11 +72,11 @@ class Select extends AbstractBuilder
     /**
      * Setup fetch type, any of PDO, or any Class
      *
-     * @param string $fetchType
+     * @param object|int|string $fetchType
      *
      * @return Select instance
      */
-    public function setFetchType($fetchType): Select
+    public function setFetchType(object|int|string $fetchType): Select
     {
         $this->fetchType = $fetchType;
         return $this;
@@ -224,8 +224,7 @@ class Select extends AbstractBuilder
     {
         $condition = $this->prepareCondition($conditions);
 
-        if (
-            $this->having instanceof CompositeBuilder
+        if ($this->having instanceof CompositeBuilder
             && $this->having->getType() === 'AND'
         ) {
             $this->having->addPart($condition);
@@ -247,8 +246,7 @@ class Select extends AbstractBuilder
     {
         $condition = $this->prepareCondition($conditions);
 
-        if (
-            $this->having instanceof CompositeBuilder
+        if ($this->having instanceof CompositeBuilder
             && $this->having->getType() === 'OR'
         ) {
             $this->having->addPart($condition);

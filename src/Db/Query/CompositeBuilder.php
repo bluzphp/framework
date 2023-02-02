@@ -21,12 +21,12 @@ class CompositeBuilder implements \Countable
     /**
      * @var string type AND|OR
      */
-    private $type;
+    private string $type;
 
     /**
      * @var array parts of the composite expression
      */
-    private $parts = [];
+    private array $parts = [];
 
     /**
      * Constructor
@@ -48,23 +48,23 @@ class CompositeBuilder implements \Countable
      *
      * @return CompositeBuilder
      */
-    public function addParts($parts): CompositeBuilder
+    public function addParts(array $parts): CompositeBuilder
     {
+        $parts = array_filter($parts);
         foreach ($parts as $part) {
             $this->addPart($part);
         }
-
         return $this;
     }
 
     /**
      * Adds an expression to composite expression
      *
-     * @param mixed $part
+     * @param string|CompositeBuilder $part
      *
      * @return CompositeBuilder
      */
-    public function addPart($part): CompositeBuilder
+    public function addPart(string|CompositeBuilder $part): CompositeBuilder
     {
         if (!empty($part) || ($part instanceof self && $part->count() > 0)) {
             $this->parts[] = $part;

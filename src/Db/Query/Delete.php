@@ -27,7 +27,7 @@ class Delete extends AbstractBuilder
     /**
      * @var string Table name
      */
-    protected $table;
+    protected string $table;
 
     /**
      * {@inheritdoc}
@@ -58,7 +58,7 @@ class Delete extends AbstractBuilder
      *
      * @return Delete instance
      */
-    public function delete($table): Delete
+    public function delete(string $table): Delete
     {
         $this->table = $table;
         return $this;

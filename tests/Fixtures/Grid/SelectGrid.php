@@ -13,6 +13,7 @@ namespace Bluz\Tests\Fixtures\Grid;
 
 use Bluz\Db\Query\Select;
 use Bluz\Grid\Grid;
+use Bluz\Grid\GridException;
 use Bluz\Grid\Source\SelectSource;
 
 /**
@@ -32,7 +33,7 @@ class SelectGrid extends Grid
      * Init SelectSource
      *
      * @return void
-     * @throws \Bluz\Grid\GridException
+     * @throws GridException
      */
     public function init(): void
     {

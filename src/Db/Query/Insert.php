@@ -25,16 +25,16 @@ class Insert extends AbstractBuilder
     /**
      * @var string Table name
      */
-    protected $table;
+    protected string $table;
 
     /**
      * {@inheritdoc}
      *
      * @param null $sequence
      *
-     * @return integer|string|array
+     * @return : array|int|string
      */
-    public function execute($sequence = null)
+    public function execute($sequence = null): array|int|string
     {
         $result = Db::query($this->getSql(), $this->params, $this->types);
         if ($result) {
@@ -72,7 +72,7 @@ class Insert extends AbstractBuilder
      *
      * @return Insert instance
      */
-    public function insert($table): Insert
+    public function insert(string $table): Insert
     {
         $this->table = $table;
         return $this;

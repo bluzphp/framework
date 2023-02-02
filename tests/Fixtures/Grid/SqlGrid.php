@@ -12,6 +12,7 @@
 namespace Bluz\Tests\Fixtures\Grid;
 
 use Bluz\Grid\Grid;
+use Bluz\Grid\GridException;
 use Bluz\Grid\Source\SqlSource;
 
 /**
@@ -31,7 +32,7 @@ class SqlGrid extends Grid
      * Init SqlSource
      *
      * @return void
-     * @throws \Bluz\Grid\GridException
+     * @throws GridException
      */
     public function init(): void
     {

@@ -27,29 +27,29 @@ abstract class AbstractBuilder
     /**
      * @var array list of table aliases
      */
-    protected $aliases = [];
+    protected array $aliases = [];
 
     /**
      * @var array the query parameters
      */
-    protected $params = [];
+    protected array $params = [];
 
     /**
      * @var array the parameter type map of this query
      */
-    protected $types = [];
+    protected array $types = [];
 
     /**
      * @var string the complete SQL string for this query
      */
-    protected $sql;
+    protected string $sql;
 
     /**
      * Execute this query using the bound parameters and their types
      *
-     * @return integer|string|array
+     * @return array|int|string
      */
-    public function execute()
+    public function execute(): array|int|string
     {
         return Db::query($this->getSql(), $this->params, $this->types);
     }

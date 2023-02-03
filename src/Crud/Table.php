@@ -11,11 +11,10 @@ declare(strict_types=1);
 
 namespace Bluz\Crud;
 
-use Bluz\Application\Exception\ApplicationException;
+use Bluz\Db;
 use Bluz\Db\Exception\InvalidPrimaryKeyException;
 use Bluz\Db\Exception\TableNotFoundException;
 use Bluz\Http\Exception\NotFoundException;
-use Bluz\Db;
 use Bluz\Proxy;
 
 /**

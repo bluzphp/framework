@@ -45,10 +45,6 @@ class ConfigLoader
      */
     public function load(string $path): void
     {
-        if (!$path) {
-            throw new ConfigException('Configuration directory is required');
-        }
-
         if (!is_dir($path)) {
             throw new ConfigException('Configuration directory is not exists');
         }

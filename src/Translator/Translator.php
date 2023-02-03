@@ -41,7 +41,7 @@ class Translator
     /**
      * @var string path to text domain files
      */
-    protected $path;
+    protected string $path;
 
     /**
      * Set domain

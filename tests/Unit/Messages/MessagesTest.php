@@ -7,7 +7,6 @@
 
 namespace Bluz\Tests\Unit\Messages;
 
-use Bluz\Messages\Messages;
 use Bluz\Proxy;
 use Bluz\Tests\Unit\Unit;
 
@@ -25,7 +24,7 @@ class MessagesTest extends Unit
      * setUp
      *
      * @return void
-     * @throws \Bluz\Application\Exception\ApplicationException
+     * @throws \Bluz\Application\ApplicationException
      */
     public function setUp(): void
     {

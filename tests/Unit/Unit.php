@@ -8,7 +8,7 @@
 namespace Bluz\Tests\Unit;
 
 use Bluz\Application\Application;
-use Bluz\Application\Exception\ApplicationException;
+use Bluz\Application\ApplicationException;
 use Bluz\Http;
 use Bluz\Proxy;
 use Codeception\Test\Unit as TestUnit;

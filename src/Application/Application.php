@@ -11,16 +11,15 @@ declare(strict_types=1);
 
 namespace Bluz\Application;
 
-use Bluz\Application\Exception\ApplicationException;
-use Bluz\Config\ConfigException;
-use Bluz\Config\ConfigLoader;
-use Bluz\Http\Exception\ForbiddenException;
-use Bluz\Http\Exception\RedirectException;
 use Bluz\Common;
 use Bluz\Common\Exception\CommonException;
 use Bluz\Common\Exception\ComponentException;
+use Bluz\Config\ConfigException;
+use Bluz\Config\ConfigLoader;
 use Bluz\Controller\Controller;
 use Bluz\Controller\ControllerException;
+use Bluz\Http\Exception\ForbiddenException;
+use Bluz\Http\Exception\RedirectException;
 use Bluz\Proxy\Config;
 use Bluz\Proxy\Layout;
 use Bluz\Proxy\Logger;
@@ -31,13 +30,13 @@ use Bluz\Proxy\Router;
 use Bluz\Proxy\Session;
 use Bluz\Proxy\Translator;
 use Bluz\Request\RequestFactory;
-use Bluz\Response\Response as ResponseInstance;
 use Bluz\Response\ContentType;
+use Bluz\Response\Response as ResponseInstance;
 use Exception;
 use InvalidArgumentException;
+use Laminas\Diactoros\ServerRequest;
 use ReflectionClass;
 use ReflectionException;
-use Laminas\Diactoros\ServerRequest;
 
 /**
  * Application

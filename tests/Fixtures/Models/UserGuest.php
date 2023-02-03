@@ -6,7 +6,7 @@
 
 namespace Bluz\Tests\Fixtures\Models;
 
-use Bluz\Application\Exception\ApplicationException;
+use Bluz\Application\ApplicationException;
 use Bluz\Auth\AbstractIdentity;
 
 /**

@@ -33,7 +33,4 @@ jobs:
         run: php vendor/bin/codecept run --debug
 
       - name: Check code style
-        run: php vendor/bin/phpcs ./src --standard=PSR12 --encoding=utf-8
-
-      - name: Check code style for tests
-        run: php vendor/bin/phpcs ./tests --standard=PSR12 --encoding=utf-8
+        run: php vendor/bin/phpcs

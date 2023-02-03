@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Bluz\Application\Exception;
+namespace Bluz\Application;
 
 use Bluz\Common\Exception\CommonException;
 

@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Bluz\Controller;
 
-use Bluz\Application\Exception\ApplicationException;
+use Bluz\Application\ApplicationException;
 
 /**
  * ControllerException

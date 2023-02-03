@@ -90,7 +90,7 @@ class ViewTest extends Unit
      * Get new View instance
      *
      * @return View
-     * @throws \Bluz\Application\Exception\ApplicationException
+     * @throws \Bluz\Application\ApplicationException
      * @throws \Bluz\Common\Exception\CommonException
      * @throws \ReflectionException
      */

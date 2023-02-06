@@ -51,6 +51,7 @@ class CrudTest extends Unit
         $controller = $this->mapper->run();
 
         $data = $controller->getData();
+
         self::assertArrayHasKey('primary', $data);
         self::assertArrayHasKey('id', $data['primary']);
         self::assertEquals(42, $data['primary']['id']);

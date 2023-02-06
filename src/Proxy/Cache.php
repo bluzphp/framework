@@ -50,7 +50,7 @@ final class Cache
     /**
      * @var array
      */
-    private static $pools = [];
+    private static array $pools = [];
 
     /**
      * Init cache instance

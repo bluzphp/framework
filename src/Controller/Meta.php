@@ -14,6 +14,7 @@ namespace Bluz\Controller;
 use Bluz\Common\Exception\ComponentException;
 use Bluz\Common\Options;
 use Bluz\Proxy\Request;
+use Bluz\Response\ContentType;
 use Closure;
 use ReflectionException;
 
@@ -259,9 +260,9 @@ class Meta
     {
         // accept map
         $acceptMap = [
-            'ANY' => Request::TYPE_ANY,
-            'HTML' => Request::TYPE_HTML,
-            'JSON' => Request::TYPE_JSON
+            'ANY' => ContentType::ANY,
+            'HTML' => ContentType::HTML,
+            'JSON' => ContentType::JSON
         ];
 
         $accept = strtoupper($accept);

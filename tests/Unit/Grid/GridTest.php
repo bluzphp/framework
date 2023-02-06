@@ -33,7 +33,7 @@ class GridTest extends Unit
      */
     public function testProcessRequest()
     {
-        $request = Request::getInstance();
+        $request = Request::getServerRequest();
 
         $request = $request->withQueryParams(
             [
@@ -45,7 +45,7 @@ class GridTest extends Unit
             ]
         );
 
-        Request::setInstance($request);
+        Request::setServerRequest($request);
 
         $grid = new ArrayGrid();
 
@@ -59,7 +59,7 @@ class GridTest extends Unit
      */
     public function testRequestWithAliases()
     {
-        $request = Request::getInstance();
+        $request = Request::getServerRequest();
 
         $request = $request->withQueryParams(
             [
@@ -67,7 +67,7 @@ class GridTest extends Unit
             ]
         );
 
-        Request::setInstance($request);
+        Request::setServerRequest($request);
 
         $grid = new ArrayGrid();
 

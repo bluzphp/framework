@@ -50,15 +50,6 @@ class Bootstrap extends Application
     protected Exception $exception;
 
     /**
-     * Try to detect path of the Application
-     * @return string
-     */
-    protected function detectPath(): string
-    {
-        return dirname(__DIR__) . DIRECTORY_SEPARATOR . '_application'; // level up
-    }
-
-    /**
      * Get dispatched module name
      *
      * @return string|null
@@ -136,7 +127,7 @@ class Bootstrap extends Application
         }
 
         // setup layout, if needed
-        if ($this->useLayout()) {
+        if ($this->hasLayout()) {
             // render view to layout
             // needed for headScript and headStyle helpers
             Layout::setContent($result->render());

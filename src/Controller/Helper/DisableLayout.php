@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Bluz\Controller\Helper;
 
-use Bluz\Application\Application;
 use Bluz\Controller\Controller;
+use Bluz\Proxy\Application;
 
 /**
  * Switch layout or disable it
@@ -24,5 +24,5 @@ return
         /**
          * @var Controller $this
          */
-        Application::getInstance()->useLayout(false);
+        Application::getInstance()->disableLayout();
     };

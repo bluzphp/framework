@@ -21,6 +21,7 @@ use Bluz\Proxy\Logger;
 use Bluz\Proxy\Messages;
 use Bluz\Proxy\Response;
 use Bluz\Proxy\Request;
+use Bluz\Response\ContentType;
 
 /**
  * @route  /error/{$code}
@@ -84,7 +85,7 @@ return function ($code, $exception = null) {
 
     // check CLI or HTTP request
     // simple AJAX call, accept JSON
-    if (Request::isHttp() && Request::checkAccept([Request::TYPE_JSON])) {
+    if (Request::isHttp() && Request::checkAccept([ContentType::JSON])) {
         $this->useJson();
         Messages::addError($description);
         return [

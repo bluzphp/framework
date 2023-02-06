@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace Bluz\Controller\Mapper;
 
-use Bluz\Application\Application;
 use Bluz\Common\Exception\CommonException;
 use Bluz\Common\Exception\ComponentException;
 use Bluz\Controller\Controller;
@@ -23,6 +22,7 @@ use Bluz\Http\Exception\NotAllowedException;
 use Bluz\Http\Exception\NotImplementedException;
 use Bluz\Http\RequestMethod;
 use Bluz\Proxy\Acl;
+use Bluz\Proxy\Application;
 use Bluz\Proxy\Request;
 use Bluz\Proxy\Router;
 use ReflectionException;
@@ -252,14 +252,14 @@ abstract class AbstractMapper
     protected function prepareRequest(): void
     {
         // HTTP method
-        $method = strtoupper(Request::getMethod());
-        $this->method = RequestMethod::tryFrom($method);
+        $this->method = Request::getMethod();
 
         // get path
         // %module% / %controller% / %id% / %relation% / %id%
-        $path = Router::getCleanUri();
+        $path = Request::getUri()->getPath();
 
         $this->params = explode('/', rtrim($path, '/'));
+
         // module
         $this->module = array_shift($this->params);
 

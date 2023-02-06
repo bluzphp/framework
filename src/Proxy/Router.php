@@ -31,14 +31,9 @@ use Bluz\Router\Router as Instance;
  *
  * @method   static string getBaseUrl()
  * @see      Instance::getBaseUrl()
+ *
  * @method   static void   setBaseUrl($baseUrl)
  * @see      Instance::setBaseUrl()
- *
- * @method   static string getUrl($module = 'index', $controller = 'index', $params = [])
- * @see      Instance::getUrl()
- *
- * @method   static string getFullUrl($module = 'index', $controller = 'index', $params = [])
- * @see      Instance::getFullUrl()
  *
  * @method   static string getCleanUri()
  * @see      Instance::getCleanUri()
@@ -70,5 +65,49 @@ final class Router
     private static function initInstance()
     {
         throw new ComponentException("Class `Proxy\\Router` required external initialization");
+    }
+
+    /**
+     * Build URL to controller
+     *
+     * @param string|null $module
+     * @param string|null $controller
+     * @param array $params
+     *
+     * @return string
+     */
+    public static function getUrl(
+        ?string $module = Instance::DEFAULT_MODULE,
+        ?string $controller = Instance::DEFAULT_CONTROLLER,
+        array $params = []
+    ): string {
+        $module = $module ?? Request::getModule();
+        $controller = $controller ?? Request::getController();
+
+        return self::getInstance()->getUrl($module, $controller, $params);
+    }
+
+    /**
+     * Build full URL to controller
+     *
+     * @param string|null $module
+     * @param string|null $controller
+     * @param array $params
+     *
+     * @return string
+     */
+    public static function getFullUrl(
+        ?string $module = Instance::DEFAULT_MODULE,
+        ?string $controller = Instance::DEFAULT_CONTROLLER,
+        array $params = []
+    ): string {
+        $scheme = Request::getUri()->getScheme() . '://';
+        $host = Request::getUri()->getHost();
+        $port = Request::getUri()->getPort();
+        if ($port && !in_array($port, [80, 443], true)) {
+            $host .= ':' . $port;
+        }
+        $url = self::getUrl($module, $controller, $params);
+        return $scheme . $host . $url;
     }
 }

@@ -9,6 +9,7 @@ namespace Bluz\Tests\Unit;
 
 use Bluz\Application\Application;
 use Bluz\Application\ApplicationException;
+use Bluz\Common\Exception\CommonException;
 use Bluz\Http;
 use Bluz\Proxy;
 use Codeception\Test\Unit as TestUnit;
@@ -28,16 +29,16 @@ class Unit extends TestUnit
     /**
      * Application entity
      *
-     * @var Application|null
+     * @var Proxy\Application|null
      */
-    protected static ?Application $app = null;
+    protected static ?Proxy\Application $app = null;
 
     /**
      * Setup TestCase
      */
     protected function setUp(): void
     {
-        self::getApp();
+        self::initApp();
     }
 
     /**
@@ -50,19 +51,26 @@ class Unit extends TestUnit
 
     /**
      * Get Application instance
-     *
-     * @return Application
-     * @throws ApplicationException
+     * @throws CommonException
      */
-    protected static function getApp(): Application
+    protected static function initApp()
     {
-        if (!self::$app) {
-            $env = getenv('BLUZ_ENV') ?: 'testing';
-            self::$app = Bootstrap::getInstance();
-            self::$app->setEnvironment($env);
-            self::$app->init();
-        }    // Environment
-        return self::$app;
+        // Environment
+        $app = new Bootstrap(
+            path: PATH_APPLICATION,
+            baseUrl: '/',
+            environment: getenv('BLUZ_ENV') ?: 'testing'
+        );
+        $app->init();
+    }
+
+    /**
+     * Get Application instance
+     * @return Application
+     */
+    protected static function getApp()
+    {
+        return Proxy\Application::getInstance();
     }
 
     /**
@@ -70,29 +78,25 @@ class Unit extends TestUnit
      */
     protected static function resetApp()
     {
-        if (self::$app) {
-            self::$app::resetInstance();
-            self::$app = null;
-        }
-
-        Proxy\Acl::resetInstance();
-        Proxy\Auth::resetInstance();
-        Proxy\Cache::resetInstance();
-        Proxy\Config::resetInstance();
-        Proxy\Db::resetInstance();
-        Proxy\EventManager::resetInstance();
-        Proxy\HttpCacheControl::resetInstance();
-        Proxy\Layout::resetInstance();
-        Proxy\Logger::resetInstance();
-        Proxy\Mailer::resetInstance();
-        Proxy\Messages::resetInstance();
-        Proxy\Registry::resetInstance();
-        Proxy\Request::resetInstance();
-        Proxy\Request::resetAccept();
-        Proxy\Response::resetInstance();
-        Proxy\Router::resetInstance();
-        Proxy\Session::resetInstance();
-        Proxy\Translator::resetInstance();
+//        Proxy\Acl::resetInstance();
+//        Proxy\Application::resetInstance();
+//        Proxy\Auth::resetInstance();
+//        Proxy\Cache::resetInstance();
+//        Proxy\Config::resetInstance();
+//        Proxy\Db::resetInstance();
+//        Proxy\EventManager::resetInstance();
+//        Proxy\HttpCacheControl::resetInstance();
+//        Proxy\Layout::resetInstance();
+//        Proxy\Logger::resetInstance();
+//        Proxy\Mailer::resetInstance();
+//        Proxy\Messages::resetInstance();
+//        Proxy\Registry::resetInstance();
+//        Proxy\Request::resetInstance();
+//        Proxy\Request::resetAccept();
+//        Proxy\Response::resetInstance();
+//        Proxy\Router::resetInstance();
+//        Proxy\Session::resetInstance();
+//        Proxy\Translator::resetInstance();
     }
 
     /**
@@ -123,11 +127,11 @@ class Unit extends TestUnit
     /**
      * Assert Array Size
      *
-     * @param array|\ArrayObject $array
+     * @param \ArrayObject|array $array
      * @param int $size
-     * @param string $message
+     * @param string|null $message
      */
-    protected static function assertArrayHasSize($array, $size, $message = null)
+    protected static function assertArrayHasSize(\ArrayObject|array $array, int $size, string $message = null)
     {
         self::assertCount(
             $size,
@@ -139,12 +143,12 @@ class Unit extends TestUnit
     /**
      * Assert Array Key has Size
      *
-     * @param array|\ArrayObject $array
+     * @param \ArrayObject|array $array
      * @param string $key
      * @param int $size
      * @param string|null $message
      */
-    protected static function assertArrayHasKeyAndSize($array, string $key, int $size, string $message = null)
+    protected static function assertArrayHasKeyAndSize(\ArrayObject|array $array, string $key, int $size, string $message = null)
     {
         if (!$message) {
             $message = 'Failed asserting that array has key ' . $key . ' with size ' . $size
@@ -177,6 +181,7 @@ class Unit extends TestUnit
     ) {
         $uri = 'http://127.0.0.1/' . $path;
 
+        codecept_debug($headers);
         return new ServerRequest([], [], $uri, $method->value, 'php://input', $headers, $cookies, $query, $params);
     }
 
@@ -202,7 +207,7 @@ class Unit extends TestUnit
     ) {
         $request = self::prepareRequest($path, $query, $params, $method, $headers, $cookies);
 
-        Proxy\Request::setInstance($request);
+        Proxy\Request::getInstance()->setServerRequest($request);
 
         return $request;
     }

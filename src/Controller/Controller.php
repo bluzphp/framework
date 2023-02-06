@@ -11,12 +11,11 @@ declare(strict_types=1);
 
 namespace Bluz\Controller;
 
-use Bluz\Application\Application;
 use Bluz\Auth\IdentityInterface;
 use Bluz\Common\Exception\CommonException;
 use Bluz\Common\Exception\ComponentException;
 use Bluz\Common\Helper;
-use Bluz\Http\Exception\ForbiddenException;
+use Bluz\Proxy\Application;
 use Bluz\Proxy\Cache;
 use Bluz\Proxy\Logger;
 use Bluz\Response\ResponseTrait;
@@ -56,6 +55,11 @@ class Controller implements JsonSerializable
     /**
      * @var string
      */
+    protected string $path;
+
+    /**
+     * @var string
+     */
     protected string $module;
 
     /**
@@ -69,9 +73,9 @@ class Controller implements JsonSerializable
     protected array $params;
 
     /**
-     * @var string Cache key
+     * @var array
      */
-    protected string $key;
+    protected array $types = [];
 
     /**
      * @var string|null Template name, by default is equal to controller name
@@ -81,12 +85,7 @@ class Controller implements JsonSerializable
     /**
      * @var string|null
      */
-    protected ?string $file = null;
-
-    /**
-     * @var Meta|null
-     */
-    protected ?Meta $meta = null;
+    protected ?string $file;
 
     /**
      * @var Data|null
@@ -96,23 +95,26 @@ class Controller implements JsonSerializable
     /**
      * Constructor of Statement
      *
+     * @param string $path
      * @param string $module
      * @param string $controller
      * @param array $params
      *
      * @throws CommonException
+     * @throws ControllerException
      */
-    public function __construct(string $module, string $controller, array $params = [])
+    public function __construct(string $path, string $module, string $controller, array $params = [])
     {
         // initial default helper path
         $this->addHelperPath(__DIR__ . '/Helper/');
 
-        $this->setModule($module);
-        $this->setController($controller);
-        $this->setParams($params);
-        $this->setTemplate($controller . '.phtml');
+        $this->path = $path;
+        $this->module = $module;
+        $this->controller = $controller;
+        $this->params = $params;
 
-        $this->key = "data.$module.$controller." . md5(http_build_query($params));
+        $this->setTemplate($controller . '.phtml');
+        $this->findFile();
     }
 
     /**
@@ -124,27 +126,11 @@ class Controller implements JsonSerializable
     }
 
     /**
-     * @param string $module
-     */
-    protected function setModule(string $module): void
-    {
-        $this->module = $module;
-    }
-
-    /**
      * @return string
      */
     public function getController(): string
     {
         return $this->controller;
-    }
-
-    /**
-     * @param string $controller
-     */
-    protected function setController(string $controller): void
-    {
-        $this->controller = $controller;
     }
 
     /**
@@ -156,11 +142,19 @@ class Controller implements JsonSerializable
     }
 
     /**
-     * @param array $params
+     * @return array
      */
-    protected function setParams(array $params): void
+    public function getTypes(): array
     {
-        $this->params = $params;
+        return $this->types;
+    }
+
+    /**
+     * @param array $types
+     */
+    public function setTypes(array $types): void
+    {
+        $this->types = $types;
     }
 
     /**
@@ -180,23 +174,6 @@ class Controller implements JsonSerializable
     }
 
     /**
-     * Run controller logic
-     *
-     * @return Data
-     * @throws ComponentException
-     * @throws ControllerException
-     * @throws ReflectionException
-     */
-    public function run(): Data
-    {
-        if (!$this->loadData()) {
-            $this->process();
-            $this->saveData();
-        }
-        return $this->data;
-    }
-
-    /**
      * Controller run
      *
      * @return Data
@@ -204,7 +181,7 @@ class Controller implements JsonSerializable
      * @throws ControllerException
      * @throws ReflectionException
      */
-    protected function process(): Data
+    public function process(): Data
     {
         // initial variables for use inside controller
         $module = $this->module;
@@ -221,7 +198,7 @@ class Controller implements JsonSerializable
         }
 
         // process params
-        $params = $this->getMeta()->params($params);
+        $params = $this->params();
 
         // call Closure or Controller
         $result = $controllerClosure(...$params);
@@ -251,6 +228,34 @@ class Controller implements JsonSerializable
     }
 
     /**
+     * Process request params
+     *
+     *  - type conversion
+     *  - set default value
+     *
+     * @return array
+     */
+    protected function params(): array
+    {
+        // apply type and default value for request params
+        $params = [];
+        foreach ($this->types as $param => $type) {
+            if (isset($this->params[$param])) {
+                $params[] = match ($type) {
+                    'bool' => (bool)$this->params[$param],
+                    'int' => (int)$this->params[$param],
+                    'float' => (float)$this->params[$param],
+                    'string' => (string)$this->params[$param],
+                    'array' => (array)$this->params[$param],
+                    default => $this->params[$param],
+                };
+            }
+        }
+        return $params;
+    }
+
+
+    /**
      * Setup controller file
      *
      * @return void
@@ -258,8 +263,7 @@ class Controller implements JsonSerializable
      */
     protected function findFile(): void
     {
-        $path = Application::getInstance()->getPath();
-        $file = "$path/modules/{$this->module}/controllers/{$this->controller}.php";
+        $file = "{$this->path}/modules/{$this->module}/controllers/{$this->controller}.php";
 
         if (!file_exists($file)) {
             throw new ControllerException("Controller file not found '{$this->module}/{$this->controller}'", 404);
@@ -272,57 +276,10 @@ class Controller implements JsonSerializable
      * Get controller file path
      *
      * @return string
-     * @throws ControllerException
      */
     protected function getFile(): string
     {
-        if (!$this->file) {
-            $this->findFile();
-        }
         return $this->file;
-    }
-
-    /**
-     * Retrieve reflection for anonymous function
-     *
-     * @return void
-     * @throws ComponentException
-     * @throws ControllerException
-     * @throws ReflectionException
-     */
-    protected function initMeta(): void
-    {
-        // cache for reflection data
-        $cacheKey = "meta.{$this->module}.{$this->controller}";
-
-        if (!$meta = Cache::get($cacheKey)) {
-            $meta = new Meta($this->getFile());
-            $meta->process();
-
-            Cache::set(
-                $cacheKey,
-                $meta,
-                Cache::TTL_NO_EXPIRY,
-                ['system', 'meta']
-            );
-        }
-        $this->meta = $meta;
-    }
-
-    /**
-     * Get meta information
-     *
-     * @return Meta
-     * @throws ControllerException
-     * @throws ComponentException
-     * @throws ReflectionException
-     */
-    public function getMeta(): Meta
-    {
-        if (!$this->meta) {
-            $this->initMeta();
-        }
-        return $this->meta;
     }
 
     /**
@@ -333,7 +290,7 @@ class Controller implements JsonSerializable
      *
      * @return void
      */
-    public function assign(string $key, $value): void
+    public function assign(string $key, mixed $value): void
     {
         $this->getData()->set($key, $value);
     }
@@ -352,43 +309,14 @@ class Controller implements JsonSerializable
     }
 
     /**
-     * Load Data from cache
+     * Set controller Data container
      *
-     * @return bool
-     * @throws ComponentException
-     * @throws ControllerException
-     * @throws ReflectionException
+     * @param Data $data
+     * @return void
      */
-    private function loadData(): bool
+    public function setData(Data $data): void
     {
-        $cacheTime = $this->getMeta()->getCache();
-
-        if ($cacheTime && $cached = Cache::get($this->key)) {
-            $this->data = $cached;
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Save Data to cache
-     *
-     * @return bool
-     * @throws ComponentException
-     * @throws ControllerException
-     * @throws ReflectionException
-     */
-    private function saveData(): bool
-    {
-        if ($cacheTime = $this->getMeta()->getCache()) {
-            return Cache::set(
-                $this->key,
-                $this->getData(),
-                $cacheTime,
-                ['system', 'data']
-            );
-        }
-        return false;
+        $this->data = $data;
     }
 
     /**
@@ -416,22 +344,21 @@ class Controller implements JsonSerializable
             // $view for use in closure
             $view = new View();
 
-            $path = Application::getInstance()->getPath();
-
             // setup additional helper path
-            $view->addHelperPath($path . '/layouts/helpers');
+            $view->addHelperPath($this->path . '/layouts/helpers');
 
             // setup additional partial path
-            $view->addPartialPath($path . '/layouts/partial');
+            $view->addPartialPath($this->path . '/layouts/partial');
 
             // setup default path
-            $view->setPath($path . '/modules/' . $this->module . '/views');
+            $view->setPath($this->path . '/modules/' . $this->module . '/views');
 
             // setup template
             $view->setTemplate($this->template);
 
             // setup data
             $view->setFromArray($this->getData()->toArray());
+
             return $view->render();
         } catch (Exception $e) {
             // save log

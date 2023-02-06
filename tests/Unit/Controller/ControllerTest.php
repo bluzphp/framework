@@ -10,6 +10,7 @@ namespace Bluz\Tests\Unit\Controller;
 use Bluz\Controller;
 use Bluz\Http\Exception\ForbiddenException;
 use Bluz\Proxy\Layout;
+use Bluz\Proxy\Response;
 use Bluz\Response\ContentType;
 use Bluz\Tests\Unit\Unit;
 
@@ -23,13 +24,14 @@ class ControllerTest extends Unit
     /**
      * @var Controller\Controller
      */
-    protected $controller;
+    protected Controller\Controller $controller;
 
     /**
      * Create `index/index` controller
      */
     public function setUp(): void
     {
+        parent::setUp();
         $this->controller = self::getApp()->dispatch('index', 'index');
     }
 
@@ -38,8 +40,8 @@ class ControllerTest extends Unit
         $this->controller->attachment('some.jpg');
 
         self::assertNull($this->controller->getTemplate());
-        self::assertEquals(ContentType::FILE, self::getApp()->getResponse()->getContentType());
-        self::assertFalse(self::getApp()->useLayout());
+        self::assertEquals(ContentType::FILE, Response::getContentType());
+        self::assertFalse(self::getApp()->hasLayout());
     }
 
     /**
@@ -83,9 +85,9 @@ class ControllerTest extends Unit
 
     public function testHelperDisableLayout()
     {
-        self::assertTrue(self::getApp()->useLayout());
+        self::assertTrue(self::getApp()->hasLayout());
         $this->controller->disableLayout();
-        self::assertFalse(self::getApp()->useLayout());
+        self::assertFalse(self::getApp()->hasLayout());
     }
 
     public function testHelperDisableView()
@@ -107,13 +109,13 @@ class ControllerTest extends Unit
     public function testHelperUseJson()
     {
         $this->controller->useJson();
-        self::assertFalse(self::getApp()->useLayout());
+        self::assertFalse(self::getApp()->hasLayout());
     }
 
     public function testHelperUseLayout()
     {
         $this->controller->useLayout('small.phtml');
-        self::assertTrue(self::getApp()->useLayout());
+        self::assertTrue(self::getApp()->hasLayout());
         self::assertEquals(Layout::getTemplate(), 'small.phtml');
     }
 

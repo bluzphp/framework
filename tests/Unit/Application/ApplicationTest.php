@@ -7,6 +7,7 @@
 
 namespace Bluz\Tests\Unit\Application;
 
+use Bluz\Http\MimeType;
 use Bluz\Http\RequestMethod;
 use Bluz\Http\StatusCode;
 use Bluz\Proxy;
@@ -27,7 +28,8 @@ class ApplicationTest extends Unit
     public function testFullApplicationCircle()
     {
         self::getApp();
-        self::setRequestParams('', [], [], RequestMethod::GET, ['Accept' => Proxy\Request::TYPE_HTML]);
+        self::setRequestParams('', [], [], RequestMethod::GET, ['Accept' => MimeType::HTML->value]);
+
         self::getApp()->run();
 
         self::assertEquals(StatusCode::OK, Response::getStatusCode());
@@ -39,16 +41,6 @@ class ApplicationTest extends Unit
         self::assertEquals(PATH_APPLICATION, self::getApp()->getPath());
     }
 
-    public function testGetRequestPackage()
-    {
-        self::assertInstanceOf(ServerRequest::class, self::getApp()->getRequest());
-    }
-
-    public function testGetResponsePackage()
-    {
-        self::assertInstanceOf(\Bluz\Response\Response::class, self::getApp()->getResponse());
-    }
-
     public function testPreProcessShouldDisableLayoutForAjaxRequests()
     {
         // setup Request
@@ -57,18 +49,18 @@ class ApplicationTest extends Unit
         // run Application
         self::getApp()->process();
 
-        self::assertFalse(self::getApp()->useLayout());
+        self::assertFalse(self::getApp()->hasLayout());
     }
 
     public function testPreProcessShouldSwitchToJsonResponseForAcceptJsonHeader()
     {
         // setup Request
-        self::setRequestParams('', [], [], RequestMethod::GET, ['Accept' => Proxy\Request::TYPE_JSON]);
+        self::setRequestParams('', [], [], RequestMethod::GET, ['Accept' => MimeType::JSON->value]);
 
         // run Application
         self::getApp()->process();
 
-        self::assertFalse(self::getApp()->useLayout());
+        self::assertFalse(self::getApp()->hasLayout());
         self::assertEquals(ContentType::JSON, self::getApp()->getResponse()->getContentType());
     }
 
@@ -78,7 +70,7 @@ class ApplicationTest extends Unit
     public function testIndexController()
     {
         // setup Request
-        self::setRequestParams('', [], [], RequestMethod::GET, ['Accept' => Proxy\Request::TYPE_HTML]);
+        self::setRequestParams('', [], [], RequestMethod::GET, ['Accept' => MimeType::HTML->value]);
 
         // run Application
         self::getApp()->process();

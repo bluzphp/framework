@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Bluz\Controller\Helper;
 
-use Bluz\Application\Application;
 use Bluz\Controller\Controller;
+use Bluz\Proxy\Application;
 use Bluz\Proxy\Layout;
 
 /**
@@ -25,6 +25,6 @@ return
         /**
          * @var Controller $this
          */
-        Application::getInstance()->useLayout(true);
+        Application::getInstance()->enableLayout();
         Layout::setTemplate($layout);
     };

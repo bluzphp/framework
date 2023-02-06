@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Bluz\View\Helper;
 
-use Bluz\Application\Application;
 use Bluz\Http\Exception\ForbiddenException;
+use Bluz\Proxy\Application;
 use Bluz\View\View;
 
 /**

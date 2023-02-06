@@ -27,7 +27,7 @@ class ViewTest extends Unit
      */
     public static function setUpBeforeClass(): void
     {
-        self::getApp();
+        self::initApp();
     }
 
     /**

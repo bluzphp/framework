@@ -29,7 +29,7 @@ return
         /**
          * @var Application $this
          */
-        $this->useLayout(false);
+        $this->disableLayout();
 
         Response::removeHeaders();
         Response::clearBody();

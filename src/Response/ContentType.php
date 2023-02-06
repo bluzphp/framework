@@ -18,6 +18,7 @@ namespace Bluz\Response;
  */
 enum ContentType: string
 {
+    case ANY = 'ANY';
     case CLI = 'CLI';
     case HTML = 'HTML';
     case JSON = 'JSON';

@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Bluz\View\Helper;
 
-use Bluz\Application\Application;
+use Bluz\Proxy\Application;
 
 /**
  * Return Exception message

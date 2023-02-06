@@ -11,11 +11,11 @@ declare(strict_types=1);
 
 namespace Bluz\Controller\Helper;
 
-use Bluz\Application\Application;
 use Bluz\Common\Exception\CommonException;
 use Bluz\Common\Exception\ComponentException;
 use Bluz\Controller\Controller;
 use Bluz\Controller\ControllerException;
+use Bluz\Proxy\Application;
 use ReflectionException;
 
 /**

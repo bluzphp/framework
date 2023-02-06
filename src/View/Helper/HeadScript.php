@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Bluz\View\Helper;
 
-use Bluz\Application\Application;
+use Bluz\Proxy\Application;
 use Bluz\Proxy\Layout;
 use Bluz\View\View;
 
@@ -28,7 +28,7 @@ return
         /**
          * @var View $this
          */
-        if (Application::getInstance()->useLayout()) {
+        if (Application::getInstance()->hasLayout()) {
             return Layout::headScript($src, $attributes);
         }
         // it's just alias to script() call

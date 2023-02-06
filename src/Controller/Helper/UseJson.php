@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Bluz\Controller\Helper;
 
-use Bluz\Application\Application;
 use Bluz\Controller\Controller;
+use Bluz\Proxy\Application;
 use Bluz\Proxy\Response;
 use Bluz\Response\ContentType;
 
@@ -26,6 +26,6 @@ return
         /**
          * @var Controller $this
          */
-        Application::getInstance()->useLayout(false);
+        Application::getInstance()->disableLayout();
         Response::setContentType(ContentType::JSON);
     };

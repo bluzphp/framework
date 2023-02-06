@@ -11,31 +11,37 @@ declare(strict_types=1);
 
 namespace Bluz\Application;
 
-use Bluz\Common;
 use Bluz\Common\Exception\CommonException;
 use Bluz\Common\Exception\ComponentException;
+use Bluz\Common\Helper;
+use Bluz\Common\Nil;
+use Bluz\Config\Config;
 use Bluz\Config\ConfigException;
 use Bluz\Config\ConfigLoader;
 use Bluz\Controller\Controller;
 use Bluz\Controller\ControllerException;
 use Bluz\Http\Exception\ForbiddenException;
 use Bluz\Http\Exception\RedirectException;
-use Bluz\Proxy\Config;
-use Bluz\Proxy\Layout;
-use Bluz\Proxy\Logger;
-use Bluz\Proxy\Messages;
-use Bluz\Proxy\Request;
-use Bluz\Proxy\Response;
-use Bluz\Proxy\Router;
-use Bluz\Proxy\Session;
-use Bluz\Proxy\Translator;
-use Bluz\Request\RequestFactory;
-use Bluz\Response\ContentType;
-use Bluz\Response\Response as ResponseInstance;
-use Exception;
-use InvalidArgumentException;
-use Laminas\Diactoros\ServerRequest;
-use ReflectionClass;
+use Bluz\Http\MimeType;
+use Bluz\Logger\Logger;
+use Bluz\Messages\Messages;
+use Bluz\Proxy\Application as ApplicationProxy;
+use Bluz\Proxy\Cache as CacheProxy;
+use Bluz\Proxy\Config as ConfigProxy;
+use Bluz\Proxy\Layout as LayoutProxy;
+use Bluz\Proxy\Logger as LoggerProxy;
+use Bluz\Proxy\Messages as MessagesProxy;
+use Bluz\Proxy\Request as RequestProxy;
+use Bluz\Proxy\Response as ResponseProxy;
+use Bluz\Proxy\Router as RouterProxy;
+use Bluz\Proxy\Session as SessionProxy;
+use Bluz\Proxy\Translator as TranslatorProxy;
+use Bluz\Request\Request;
+use Bluz\Response\Response;
+use Bluz\Router\Router;
+use Bluz\Session\Session;
+use Bluz\Translator\Translator;
+use Psr\Cache\CacheException;
 use ReflectionException;
 
 /**
@@ -43,8 +49,8 @@ use ReflectionException;
  *
  * @package  Bluz\Application
  * @link     https://github.com/bluzphp/framework/wiki/Application
+ *
  * @author   Anton Shevchuk
- * @created  06.07.11 16:25
  *
  * @method Controller error(Exception $exception)
  * @method mixed forbidden(ForbiddenException $exception)
@@ -52,18 +58,7 @@ use ReflectionException;
  */
 class Application
 {
-    use Common\Helper;
-    use Common\Singleton;
-
-    /**
-     * @var string Environment name
-     */
-    protected string $environment = 'production';
-
-    /**
-     * @var string|null Application path
-     */
-    protected ?string $path = null;
+    use Helper;
 
     /**
      * @var bool Debug application flag
@@ -76,8 +71,45 @@ class Application
     protected bool $layoutFlag = true;
 
     /**
-     * Get application environment
-     *
+     * @var Data of the Application, cached!
+     */
+    private Data $data;
+
+    /**
+     * @param string $path
+     * @param string $baseUrl
+     * @param string $environment
+     * @throws CommonException
+     */
+    public function __construct(
+        protected string $path,
+        protected string $baseUrl = '/',
+        protected string $environment = 'production'
+    ) {
+        // initial default helper path
+        $this->addHelperPath(__DIR__ . '/Helper/');
+
+        // setup singleton instance
+        ApplicationProxy::setInstance($this);
+    }
+
+    /**
+     * @return string
+     */
+    public function getPath(): string
+    {
+        return $this->path;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBaseUrl(): string
+    {
+        return $this->baseUrl;
+    }
+
+    /**
      * @return string
      */
     public function getEnvironment(): string
@@ -86,49 +118,13 @@ class Application
     }
 
     /**
-     * Get path to Application
+     * Return Application data
      *
-     * @return string
-     * @throws ApplicationException
+     * @return Data
      */
-    public function getPath(): string
+    public function getData(): Data
     {
-        if (!$this->path) {
-            $this->setPath(
-                $this->detectPath()
-            );
-        }
-        return $this->path;
-    }
-
-    /**
-     * @param string $environment
-     */
-    public function setEnvironment(string $environment): void
-    {
-        $this->environment = $environment;
-    }
-
-    /**
-     * @param string $path
-     * @throws ApplicationException
-     */
-    public function setPath(string $path): void
-    {
-        if (!is_readable($path)) {
-            throw new ApplicationException('Application path is not readable');
-        }
-        $this->path = $path;
-    }
-
-    /**
-     * Try to detect path of the Application
-     * @return string
-     */
-    protected function detectPath(): string
-    {
-        $reflection = new ReflectionClass($this);
-        return dirname($reflection->getFileName(), 3); // 3 level up
+        return $this->data;
     }
 
     /**
@@ -142,19 +138,29 @@ class Application
     }
 
     /**
-     * Return/setup Layout Flag
-     *
-     * @param bool|null $flag
+     * Return Layout flag
      *
      * @return bool
      */
-    public function useLayout(?bool $flag = null): bool
+    public function hasLayout(): bool
     {
-        if (is_bool($flag)) {
-            $this->layoutFlag = $flag;
-        }
-
         return $this->layoutFlag;
+    }
+
+    /**
+     * @return void
+     */
+    public function enableLayout(): void
+    {
+        $this->layoutFlag = true;
+    }
+
+    /**
+     * @return void
+     */
+    public function disableLayout(): void
+    {
+        $this->layoutFlag = false;
     }
 
     /**
@@ -166,148 +172,207 @@ class Application
     public function init(): void
     {
         try {
-            // initial default helper path
-            $this->addHelperPath(__DIR__ . '/Helper/');
-
-            // init Config
             $this->initConfig();
+            $this->initLogger();
 
-            // first log message
-            Logger::info('app:init');
+            {
+                $this->applyConfig();
+            }
 
-            // init Session, start inside class (if needed)
-            Session::getInstance();
-
-            // init Messages
-            Messages::getInstance();
-
-            // init Request
+            $this->initCache();
+            $this->initData();
+            $this->initSession();
+            $this->initMessages();
             $this->initRequest();
-
-            // init Response
             $this->initResponse();
-
-            // init Translator
-            $this->initTranslator();
-
-            // init Router
             $this->initRouter();
-        } catch (Exception $e) {
+            $this->initTranslator();
+        } catch (\Throwable $e) {
             throw new ApplicationException("Application can't be loaded: " . $e->getMessage());
         }
     }
 
     /**
-     * Initial Request instance
+     * Initial Config Proxy
      *
      * @return void
      * @throws ConfigException
-     * @throws ApplicationException
      */
     protected function initConfig(): void
     {
+        // load and merge configs
         $loader = new ConfigLoader();
-        // load default configuration
         $loader->load($this->getPath() . '/configs/default');
-        // and merge it with environment configuration
-        $loader->load($this->getPath() . '/configs/' . $this->getEnvironment());
+        $loader->load($this->getPath() . '/configs/' . $this->environment);
 
-        $config = new \Bluz\Config\Config();
+        // initial Config instance
+        $config = new Config();
         $config->setFromArray($loader->getConfig());
 
-        Config::setInstance($config);
+        ConfigProxy::setInstance($config);
+    }
 
-        // setup configuration for current environment
-        if ($debug = Config::get('debug')) {
-            $this->debugFlag = (bool)$debug;
+    /**
+     * Initial Logger Proxy
+     *
+     * @return void
+     */
+    protected function initLogger(): void
+    {
+        if (ConfigProxy::get('logger')) {
+            $logger = new Logger();
+        } else {
+            $logger = new Nil();
         }
 
-        // initial php settings
-        if ($ini = Config::get('php')) {
+        LoggerProxy::setInstance($logger);
+    }
+
+    /**
+     * Apply Config settings
+     *
+     * @return void
+     */
+    protected function applyConfig(): void
+    {
+        // setup debug option
+        $this->debugFlag = ConfigProxy::get('debug');
+        LoggerProxy::info('app:init:debug:' . $this->debugFlag);
+
+        // setup php settings
+        if ($ini = ConfigProxy::get('php')) {
             foreach ($ini as $key => $value) {
                 $result = ini_set($key, $value);
-                Logger::info('app:init:php:' . $key . ':' . ($result ?: '---'));
+                LoggerProxy::info('app:init:php:' . $key . ':' . ($result ?: '---'));
             }
         }
     }
 
     /**
-     * Initial Request instance
+     * Initial Cache Proxy
      *
      * @return void
-     * @throws InvalidArgumentException
+     * @throws ComponentException
      */
-    protected function initRequest(): void
+    protected function initCache(): void
     {
-        $request = RequestFactory::fromGlobals();
-
-        Request::setInstance($request);
+        if (ConfigProxy::get('cache', 'enabled') && $adapterName = ConfigProxy::get('cache', 'adapter')) {
+            $adapter = ConfigProxy::get('cache', 'pools', $adapterName);
+            if (!$adapter) {
+                throw new ComponentException("Class `Proxy\\Cache` required configuration for `$adapterName` adapter");
+            }
+            if (!is_callable($adapter)) {
+                throw new ComponentException("Class `Proxy\\Cache` required callable function `$adapterName` adapter");
+            }
+            $cache = $adapter();
+            CacheProxy::setInstance($cache);
+        }
     }
 
     /**
-     * Initial Response instance
+     * Initial Session Proxy
      *
      * @return void
+     * @throws ApplicationException
+     * @throws ReflectionException
      */
-    protected function initResponse(): void
+    protected function initData(): void
     {
-        $response = new ResponseInstance();
+        $this->data = new Data($this->path);
 
-        Response::setInstance($response);
+        if ($data = CacheProxy::get('application.data')) {
+            $this->data->setFromArray($data);
+        } else {
+            $this->data->init();
+            CacheProxy::set('application.data', $this->data->toArray(), CacheProxy::TTL_NO_EXPIRY, ['system']);
+        }
     }
 
     /**
-     * Get Response instance
-     *
-     * @return ResponseInstance
-     */
-    public function getResponse(): ResponseInstance
-    {
-        return Response::getInstance();
-    }
-
-    /**
-     * Get Request instance
-     *
-     * @return ServerRequest
-     */
-    public function getRequest(): ServerRequest
-    {
-        return Request::getInstance();
-    }
-
-    /**
-     * Initial Router instance
+     * Initial Session Proxy
      *
      * @return void
      */
-    protected function initRouter(): void
+    protected function initSession(): void
     {
-        $router = new \Bluz\Router\Router();
-        $router->setOptions(Config::get('router'));
-
-        Router::setInstance($router);
+        $session = new Session();
+        $session->setOptions(ConfigProxy::get('session'));
+        SessionProxy::setInstance($session);
     }
 
     /**
-     * Initial Translator instance
+     * Initial Messages Proxy
      *
      * @return void
-     * @throws Common\Exception\ConfigurationException
      */
-    protected function initTranslator(): void
+    private function initMessages(): void
     {
-        $translator = new \Bluz\Translator\Translator();
-        $translator->setOptions(Config::get('translator'));
+        $messages = new Messages();
+        $messages->setOptions(ConfigProxy::get('messages'));
+        MessagesProxy::setInstance($messages);
+    }
+
+    /**
+     * Initial Request Proxy
+     *
+     * @return void
+     */
+    private function initRequest(): void
+    {
+        $request = new Request(
+            baseUrl: $this->baseUrl,
+        );
+        RequestProxy::setInstance($request);
+    }
+
+    /**
+     * Initial Response Proxy
+     *
+     * @return void
+     */
+    private function initResponse(): void
+    {
+        $response = new Response();
+        ResponseProxy::setInstance($response);
+    }
+
+    /**
+     * Initial Router Proxy
+     *
+     * @return void
+     */
+    private function initRouter(): void
+    {
+        $router = new Router(
+            baseUrl: $this->baseUrl,
+            path:    RequestProxy::getPath(),
+            modules: $this->getData()->getModules(),
+            routes:  $this->getData()->getRoutes()
+        );
+        $router->setOptions(ConfigProxy::get('router'));
+        RouterProxy::setInstance($router);
+    }
+
+    /**
+     * Initial Translator Proxy
+     *
+     * @return void
+     * @throws \Bluz\Common\Exception\ConfigurationException
+     */
+    private function initTranslator(): void
+    {
+        $translator = new Translator();
+        $translator->setOptions(ConfigProxy::get('translator'));
         $translator->init();
 
-        Translator::setInstance($translator);
+        TranslatorProxy::setInstance($translator);
     }
 
     /**
      * Run application
      *
      * @return void
+     * @throws CacheException
      */
     public function run(): void
     {
@@ -324,6 +389,7 @@ class Application
      * - Because it deprecated ({@link http://tools.ietf.org/html/rfc6648})
      *
      * @return void
+     * @throws CacheException
      */
     public function process(): void
     {
@@ -342,17 +408,25 @@ class Application
      */
     protected function preProcess(): void
     {
-        Router::process();
+        // analyse request and find required route
+        RouterProxy::process();
+
+        // rewrite request params with route data
+        RequestProxy::reset(
+            RouterProxy::getDefaultModule(),
+            RouterProxy::getDefaultController(),
+            RouterProxy::getParams()
+        );
 
         // disable Layout for XmlHttpRequests
-        if (Request::isXmlHttpRequest()) {
-            $this->layoutFlag = false;
+        if (RequestProxy::isXmlHttpRequest()) {
+            $this->disableLayout();
         }
 
         // switch to JSON response based on Accept header
-        if (Request::checkAccept([Request::TYPE_HTML, Request::TYPE_JSON]) === Request::TYPE_JSON) {
-            $this->layoutFlag = false;
-            Response::setContentType(ContentType::JSON);
+        if (RequestProxy::checkAccept([MimeType::HTML, MimeType::JSON]) === MimeType::JSON) {
+            $this->disableLayout();
+            ResponseProxy::setType('JSON');
         }
     }
 
@@ -365,13 +439,13 @@ class Application
      * - Setup response body
      *
      * @return void
+     * @throws CacheException
      */
     protected function doProcess(): void
     {
-        $module = Request::getModule();
-        $controller = Request::getController();
-        $params = Request::getParams();
-
+        $module = RequestProxy::getModule();
+        $controller = RequestProxy::getController();
+        $params = RequestProxy::getParams();
         try {
             // try to dispatch controller
             $result = $this->dispatch($module, $controller, $params);
@@ -381,19 +455,19 @@ class Application
         } catch (RedirectException $e) {
             // should return `null` for disable output and setup redirect headers
             $result = $this->redirect($e);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             // dispatch default error controller
             $result = $this->error($e);
         }
 
         // setup layout, if needed
-        if ($this->useLayout()) {
+        if ($this->hasLayout()) {
             // render view to layout
             // needed for headScript and headStyle helpers
-            Layout::setContent($result->render());
-            Response::setBody(Layout::getInstance());
+            LayoutProxy::setContent($result->render());
+            ResponseProxy::setBody(LayoutProxy::getInstance());
         } else {
-            Response::setBody($result);
+            ResponseProxy::setBody($result);
         }
     }
 
@@ -418,6 +492,7 @@ class Application
      * @param array $params
      *
      * @return Controller
+     * @throws CacheException
      * @throws CommonException
      * @throws ComponentException
      * @throws ControllerException
@@ -425,15 +500,15 @@ class Application
      */
     public function dispatch(string $module, string $controller, array $params = []): Controller
     {
-        $instance = new Controller($module, $controller, $params);
+        $instance = new Controller($this->getPath(), $module, $controller, $params);
 
-        Logger::info("app:dispatch:>>>: $module/$controller");
+        LoggerProxy::info("app:dispatch:>>>: $module/$controller");
         $this->preDispatch($instance);
 
-        Logger::info("app:dispatch:===: $module/$controller");
+        LoggerProxy::info("app:dispatch:===: $module/$controller");
         $this->doDispatch($instance);
 
-        Logger::info("app:dispatch:<<<: $module/$controller");
+        LoggerProxy::info("app:dispatch:<<<: $module/$controller");
         $this->postDispatch($instance);
 
         return $instance;
@@ -449,13 +524,13 @@ class Application
     protected function preDispatch(Controller $controller): void
     {
         // check HTTP method
-        $controller->checkHttpMethod();
+        // $controller->checkHttpMethod();
 
         // check ACL privileges
-        $controller->checkPrivilege();
+        // $controller->checkPrivilege();
 
         // check HTTP Accept header
-        $controller->checkHttpAccept();
+        // $controller->checkHttpAccept();
     }
 
     /**
@@ -464,14 +539,46 @@ class Application
      * @param Controller $controller
      *
      * @return void
+     * @throws CacheException
+     * @throws ReflectionException
      * @throws ComponentException
      * @throws ControllerException
-     * @throws ReflectionException
      */
     protected function doDispatch(Controller $controller): void
     {
-        // run controller
-        $controller->run();
+        $cacheKey = "data." .
+            $controller->getModule() . "." .
+            $controller->getController() . "." .
+            md5(http_build_query($controller->getParams()));
+
+        $cacheTtl = $this->getData()->getAttribute(
+            $controller->getModule(),
+            $controller->getController(),
+            'cache'
+        );
+
+        if ($cacheTtl && $data = CacheProxy::get($cacheKey)) {
+            $controller->setData($data);
+        } else {
+            if (
+                $types = $this->getData()->getParams(
+                    $controller->getModule(),
+                    $controller->getController()
+                )
+            ) {
+                $controller->setTypes($types);
+            }
+
+            $controller->process();
+            if ($cacheTtl) {
+                CacheProxy::set(
+                    $cacheKey,
+                    $controller->getData(),
+                    $cacheTtl,
+                    ['system', 'data', $controller->getModule() . ':' . $controller->getController()]
+                );
+            }
+        }
     }
 
     /**
@@ -493,7 +600,7 @@ class Application
      */
     public function render(): void
     {
-        Response::send();
+        ResponseProxy::send();
     }
 
     /**

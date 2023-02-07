@@ -95,6 +95,21 @@ class Bootstrap extends Application
     }
 
     /**
+     * Extension point: pre process
+     *
+     * - Router processing
+     * - Analyse request headers
+     *
+     * @return void
+     */
+    protected function preProcess(): void
+    {
+        $this->initRouter();
+
+        parent::preProcess();
+    }
+
+    /**
      * @inheritdoc
      */
     protected function doProcess(): void
@@ -105,8 +120,6 @@ class Bootstrap extends Application
 
         // try to dispatch controller
         try {
-            codecept_debug('');
-            codecept_debug(' >> ' . $module . '/' . $controller);
             // dispatch controller
             $result = $this->dispatch($module, $controller, $params);
         } catch (ForbiddenException $e) {
@@ -115,7 +128,7 @@ class Bootstrap extends Application
         } catch (RedirectException $e) {
             $this->setException($e);
             $result = $this->redirect($e);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->setException($e);
             $result = $this->error($e);
         }
@@ -123,7 +136,6 @@ class Bootstrap extends Application
         if ($result instanceof Controller) {
             $this->dispatchModule = $result->getModule();
             $this->dispatchController = $result->getController();
-            codecept_debug(' << ' . $this->getModule() . '/' . $this->getController());
         }
 
         // setup layout, if needed

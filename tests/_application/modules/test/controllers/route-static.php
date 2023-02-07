@@ -14,11 +14,14 @@
 
 namespace Application;
 
+use Bluz\Controller\Attribute\Route;
+
 /**
- * @route /static-route/
- * @route /another-route.html
  * @return bool
  */
-return function () {
-    return false;
-};
+return
+    #[Route('/static-route/')]
+    #[Route('/another-route.html')]
+    function () {
+        return false;
+    };

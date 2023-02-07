@@ -181,7 +181,6 @@ class Unit extends TestUnit
     ) {
         $uri = 'http://127.0.0.1/' . $path;
 
-        codecept_debug($headers);
         return new ServerRequest([], [], $uri, $method->value, 'php://input', $headers, $cookies, $query, $params);
     }
 

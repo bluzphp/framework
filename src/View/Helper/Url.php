@@ -13,6 +13,7 @@ namespace Bluz\View\Helper;
 
 use Bluz\Controller\Controller;
 use Bluz\Http\Exception\ForbiddenException;
+use Bluz\Proxy\Application;
 use Bluz\Proxy\Request;
 use Bluz\Proxy\Router;
 use Bluz\View\View;
@@ -37,7 +38,7 @@ return
         try {
             if ($checkAccess) {
                 try {
-                    $controllerInstance = new Controller($module, $controller);
+                    $controllerInstance = new Controller(Application::getPath(), $module, $controller);
                     $controllerInstance->checkPrivilege();
                 } catch (ForbiddenException $e) {
                     return null;

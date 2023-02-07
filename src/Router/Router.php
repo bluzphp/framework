@@ -77,12 +77,12 @@ class Router
     /**
      * @var array routers map module/controller => route
      */
-    protected array $modules = [];
+    protected array $modules;
 
     /**
      * @var array reverse map route => module/controller
      */
-    protected array $routes = [];
+    protected array $routes;
 
     /**
      * Constructor of Router
@@ -300,7 +300,7 @@ class Router
             }
         }
         // clean optional params
-        $url = preg_replace('/\{\$[a-z0-9]+\}/i', '', $url);
+        $url = preg_replace('/\{\$[a-z0-9]+}/i', '', $url);
         // clean regular expression (.*)
         $url = preg_replace('/\(\.\*\)/', '', $url);
         // replace "//" with "/"

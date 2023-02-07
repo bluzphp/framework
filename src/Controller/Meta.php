@@ -226,17 +226,11 @@ class Meta
             $time = substr($cache, $pos);
         }
 
-        switch ($time) {
-            case 'day':
-            case 'days':
-                return $num * 86400;
-            case 'hour':
-            case 'hours':
-                return $num * 3600;
-            case 'min':
-            default:
-                return $num * 60;
-        }
+        return match ($time) {
+            'day', 'days' => $num * 86400,
+            'hour', 'hours' => $num * 3600,
+            default => $num * 60,
+        };
     }
 
     /**
@@ -337,7 +331,7 @@ class Meta
     {
         // prepare params data
         // setup param types
-        if (strpos($param, '$') === false) {
+        if (!str_contains($param, '$')) {
             return;
         }
 

@@ -38,11 +38,11 @@ return
         // some controllers haven't @accept tag
         if (!$allowAccept) {
             // but by default allow just HTML output
-            $allowAccept = [ContentType::HTML, ContentType::ANY];
+            $allowAccept = [ContentType::HTML->value, ContentType::ANY->value];
         }
 
         // get Accept with high priority
-        $accept = Request::checkAccept($allowAccept);
+        $accept = Request::checkAccept(...$allowAccept);
 
         // some controllers allow any type (*/*)
         // and client doesn't send Accept header

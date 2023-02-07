@@ -37,10 +37,12 @@ use Bluz\Proxy\Router as RouterProxy;
 use Bluz\Proxy\Session as SessionProxy;
 use Bluz\Proxy\Translator as TranslatorProxy;
 use Bluz\Request\Request;
+use Bluz\Response\ContentType;
 use Bluz\Response\Response;
 use Bluz\Router\Router;
 use Bluz\Session\Session;
 use Bluz\Translator\Translator;
+use Exception;
 use Psr\Cache\CacheException;
 use ReflectionException;
 
@@ -341,7 +343,7 @@ class Application
      *
      * @return void
      */
-    private function initRouter(): void
+    protected function initRouter(): void
     {
         $router = new Router(
             baseUrl: $this->baseUrl,
@@ -424,9 +426,9 @@ class Application
         }
 
         // switch to JSON response based on Accept header
-        if (RequestProxy::checkAccept([MimeType::HTML, MimeType::JSON]) === MimeType::JSON) {
+        if (RequestProxy::checkAccept(MimeType::JSON)) {
             $this->disableLayout();
-            ResponseProxy::setType('JSON');
+            ResponseProxy::setContentType(ContentType::JSON);
         }
     }
 
@@ -455,7 +457,7 @@ class Application
         } catch (RedirectException $e) {
             // should return `null` for disable output and setup redirect headers
             $result = $this->redirect($e);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // dispatch default error controller
             $result = $this->error($e);
         }

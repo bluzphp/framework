@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Bluz\Request;
 
+use Bluz\Http\MimeType;
 use Bluz\Http\RequestMethod;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\UploadedFile;
@@ -47,15 +48,9 @@ class Request
     /**
      * @param string $baseUrl
      */
-    public function __construct(string $baseUrl)
+    public function __construct(protected string $baseUrl)
     {
         $this->request = RequestFactory::fromGlobals();
-
-        $path = $this->getUri()->getPath();
-        if ($baseUrl && str_starts_with($path, $baseUrl)) {
-            $path = substr($path, strlen($baseUrl));
-        }
-        $this->path = $path;
     }
 
     /**
@@ -90,7 +85,11 @@ class Request
      */
     public function getPath(): string
     {
-        return $this->path;
+        $path = $this->getUri()->getPath();
+        if (str_starts_with($path, $this->baseUrl)) {
+            $path = substr($path, strlen($this->baseUrl));
+        }
+        return $path;
     }
 
     /**
@@ -188,7 +187,7 @@ class Request
     }
 
     /**
-     * Access values contained in the superglobals as public members
+     * Access values contained in the super-globals as public members
      * Order of precedence: 1. GET, 2. POST
      *
      * @param string $key
@@ -328,48 +327,13 @@ class Request
     }
 
     /**
-     * Reset accept for tests
+     * Reset accept headers for tests
      *
      * @return void
      */
     public function resetAccept(): void
     {
         $this->accept = null;
-    }
-
-    /**
-     * Check Accept header
-     *
-     * @todo Remove this logic from Request
-     *
-     * @param array $allowTypes
-     *
-     * @return string|false
-     */
-    public function checkAccept(array $allowTypes = []): bool|string
-    {
-        $accept = $this->getAccept();
-
-        // if no parameter was passed, just return first mime type from parsed data
-        if (empty($allowTypes)) {
-            return current(array_keys($accept));
-        }
-
-        $allowTypes = array_map(
-            function ($type) {
-                return $type->value;
-            },
-            $allowTypes
-        );
-
-        // let’s check our supported types:
-        foreach ($accept as $mime => $quality) {
-            if ($quality && in_array($mime, $allowTypes, true)) {
-                return $mime;
-            }
-        }
-        // no mime-type found
-        return false;
     }
 
     /**

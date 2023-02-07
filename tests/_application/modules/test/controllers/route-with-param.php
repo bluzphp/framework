@@ -14,14 +14,14 @@
 
 namespace Application;
 
+use Bluz\Controller\Attribute\Route;
+
 /**
- * @route /test/param/$
- * @route /test/param/{$a}/
- *
- * @param int $a
- *
  * @return bool
  */
-return function ($a = 42) {
-    return false;
-};
+return
+    #[Route('/test/param/$')]
+    #[Route('/test/param/{$a}/')]
+    function (int $a = 42) {
+        return false;
+    };

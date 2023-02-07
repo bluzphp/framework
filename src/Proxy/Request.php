@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Bluz\Proxy;
 
 use Bluz\Common\Exception\ComponentException;
+use Bluz\Http\MimeType;
 use Bluz\Http\RequestMethod;
 use Bluz\Request\Request as Instance;
 use Laminas\Diactoros\ServerRequest;
@@ -36,11 +37,27 @@ use Psr\Http\Message\UriInterface;
  *
  * @todo    Proxy class should be clean
  *
- * @method  static Instance getInstance()
- * @method  static UriInterface getUri()
- * @method  static RequestMethod getMethod()
- * @method  static ServerRequest getServerRequest()
- * @method  static void setServerRequest(ServerRequest $request)
+ * @method static Instance getInstance()
+ * @method static RequestMethod getMethod()
+ * @method static ServerRequest getServerRequest()
+ * @method static void setServerRequest(ServerRequest $request)
+ * @method static UriInterface getUri()
+ * @method static string getPath()
+ * @method static mixed getQuery(?string $key = null, ?string $default = null)
+ * @method static mixed getPost(?string $key = null, ?string $default = null)
+ * @method static string|null getServer(?string $key = null, ?string $default = null)
+ * @method static string|null getCookie(?string $key = null, ?string $default = null)
+ * @method static string|null getEnv(?string $key = null, ?string $default = null)
+ * @method static string|null getHeader(string $header, mixed $default = null)
+ * @method static mixed getParam(string $key, mixed $default = null)
+ * @method static array getParams()
+ * @method static bool isCli()
+ * @method static bool isHttp()
+ * @method static bool isGet()
+ * @method static bool isPost()
+ * @method static bool isPut()
+ * @method static bool isDelete()
+ * @method static bool isXmlHttpRequest()
  */
 final class Request
 {
@@ -74,6 +91,26 @@ final class Request
     public static function getController(): string
     {
         return self::getInstance()->getParam('_controller', Router::getDefaultController());
+    }
+
+    /**
+     * Check Accept header
+     *
+     * @param MimeType[] $allowTypes
+     *
+     * @return bool
+     */
+    public static function checkAccept(...$allowTypes): bool
+    {
+        $accept = self::getInstance()->getAccept();
+
+        foreach ($allowTypes as $mimeType) {
+            if (array_key_exists($mimeType->value, $accept)) {
+                return true;
+            }
+        }
+        // no mime-type found
+        return false;
     }
 
     /**

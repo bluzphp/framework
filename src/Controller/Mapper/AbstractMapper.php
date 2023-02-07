@@ -256,7 +256,7 @@ abstract class AbstractMapper
 
         // get path
         // %module% / %controller% / %id% / %relation% / %id%
-        $path = Request::getUri()->getPath();
+        $path = Request::getPath();
 
         $this->params = explode('/', rtrim($path, '/'));
 

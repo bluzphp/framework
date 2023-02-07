@@ -14,15 +14,13 @@
 
 namespace Application;
 
+use Bluz\Controller\Attribute\Route;
+
 /**
- * @route /{$a}-{$b}-{$c}/
- *
- * @param int $a
- * @param float $b
- * @param string $c
- *
  * @return bool
  */
-return function ($a, $b, $c) {
-    return false;
-};
+return
+    #[Route('/{$a}-{$b}-{$c}/')]
+    function (int $a, float $b, string $c) {
+        return false;
+    };

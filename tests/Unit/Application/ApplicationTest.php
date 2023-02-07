@@ -61,7 +61,7 @@ class ApplicationTest extends Unit
         self::getApp()->process();
 
         self::assertFalse(self::getApp()->hasLayout());
-        self::assertEquals(ContentType::JSON, self::getApp()->getResponse()->getContentType());
+        self::assertEquals(ContentType::JSON, Response::getContentType());
     }
 
     /**
@@ -107,9 +107,9 @@ class ApplicationTest extends Unit
 
         self::assertEquals(Router::getErrorModule(), self::getApp()->getModule());
         self::assertEquals(Router::getErrorController(), self::getApp()->getController());
-        self::assertEquals(Response::getStatusCode(), StatusCode::INTERNAL_SERVER_ERROR);
-        self::assertEquals(Response::getBody()->getData()->get('code'), StatusCode::INTERNAL_SERVER_ERROR->value);
-        self::assertEquals(Response::getBody()->getData()->get('message'), 'Message');
+        self::assertEquals(StatusCode::INTERNAL_SERVER_ERROR, Response::getStatusCode());
+        self::assertEquals(StatusCode::INTERNAL_SERVER_ERROR->value, Response::getBody()->getData()->get('code'));
+        self::assertEquals('Message', Response::getBody()->getData()->get('message'));
     }
 
     /**
@@ -125,9 +125,9 @@ class ApplicationTest extends Unit
 
         self::assertEquals(Router::getErrorModule(), self::getApp()->getModule());
         self::assertEquals(Router::getErrorController(), self::getApp()->getController());
-        self::assertEquals(Response::getStatusCode(), StatusCode::FORBIDDEN);
-        self::assertEquals(Response::getBody()->getData()->get('code'), StatusCode::FORBIDDEN->value);
-        self::assertEquals(Response::getBody()->getData()->get('message'), StatusCode::FORBIDDEN->message());
+        self::assertEquals(StatusCode::FORBIDDEN, Response::getStatusCode());
+        self::assertEquals(StatusCode::FORBIDDEN->value, Response::getBody()->getData()->get('code'));
+        self::assertEquals(StatusCode::FORBIDDEN->message(), Response::getBody()->getData()->get('message'));
     }
 
     /**
@@ -141,8 +141,8 @@ class ApplicationTest extends Unit
         // run Application
         self::getApp()->process();
 
-        self::assertEquals(Response::getStatusCode(), StatusCode::FOUND);
-        self::assertEquals(Response::getHeader('Location'), Router::getFullUrl());
+        self::assertEquals(StatusCode::FOUND, Response::getStatusCode());
+        self::assertEquals(Router::getFullUrl(), Response::getHeader('Location'));
     }
 
     /**
@@ -162,7 +162,7 @@ class ApplicationTest extends Unit
         // run Application
         self::getApp()->process();
 
-        self::assertEquals(Response::getStatusCode(), StatusCode::NO_CONTENT);
-        self::assertEquals(Response::getHeader('Bluz-Redirect'), Router::getFullUrl());
+        self::assertEquals(StatusCode::NO_CONTENT, Response::getStatusCode());
+        self::assertEquals(Router::getFullUrl(), Response::getHeader('Bluz-Redirect'));
     }
 }

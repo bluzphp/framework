@@ -16,13 +16,13 @@
 
 namespace Application;
 
+use Bluz\Controller\Attribute\Route;
+
 /**
- * @route /test/route-with-other-params/{$alias}(.*)
- *
- * @param $alias
- *
  * @return bool
  */
-return function ($alias) {
-    return false;
-};
+return
+    #[Route('/test/route-with-other-params/{$alias}(.*)')]
+    function (string $alias) {
+        return false;
+    };

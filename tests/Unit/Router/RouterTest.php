@@ -27,11 +27,11 @@ class RouterTest extends Unit
      * @dataProvider providerForDefaultRoutes
      *
      * @param string $url
-     * @param string $module
-     * @param string $controller
+     * @param string|null $module
+     * @param string|null $controller
      * @param array $params
      */
-    public function testRouterUrl($url, $module, $controller, $params = [])
+    public function testRouterUrl(string $url, ?string $module, ?string $controller, array $params = [])
     {
         self::assertEquals($url, Router::getUrl($module, $controller, $params));
     }
@@ -42,11 +42,11 @@ class RouterTest extends Unit
      * @dataProvider providerForCustomRoutes
      *
      * @param string $url
-     * @param string $module
-     * @param string $controller
+     * @param string|null $module
+     * @param string|null $controller
      * @param array $params
      */
-    public function testRouterUrlWithCustomControllerRoute($url, $module, $controller, $params = [])
+    public function testRouterUrlWithCustomRoute(string $url, ?string $module, ?string $controller, array $params = [])
     {
         self::assertEquals($url, Router::getUrl($module, $controller, $params));
     }

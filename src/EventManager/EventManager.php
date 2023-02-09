@@ -35,12 +35,8 @@ class EventManager
      */
     public function attach(string $eventName, callable $callback, int $priority = 1): void
     {
-        if (!isset($this->listeners[$eventName])) {
-            $this->listeners[$eventName] = [];
-        }
-        if (!isset($this->listeners[$eventName][$priority])) {
-            $this->listeners[$eventName][$priority] = [];
-        }
+        $this->listeners[$eventName] ??= [];
+        $this->listeners[$eventName][$priority] ??= [];
         $this->listeners[$eventName][$priority][] = $callback;
     }
 

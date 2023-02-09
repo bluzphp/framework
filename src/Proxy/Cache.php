@@ -80,9 +80,8 @@ final class Cache
             if (!isset($config['pools'][$adapter])) {
                 throw new ComponentException("Class `Proxy\\Cache` required configuration for `$adapter` adapter");
             }
-            if (!isset(Cache::$pools[$adapter])) {
-                Cache::$pools[$adapter] = $config['pools'][$adapter]();
-            }
+
+            Cache::$pools[$adapter] ??= $config['pools'][$adapter]();
             return Cache::$pools[$adapter];
         }
         return false;

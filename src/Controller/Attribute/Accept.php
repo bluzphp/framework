@@ -12,17 +12,13 @@ declare(strict_types=1);
 namespace Bluz\Controller\Attribute;
 
 use Attribute;
+use Bluz\Http\MimeType;
 
-#[Attribute(Attribute::TARGET_FUNCTION)]
-class Permission
+#[Attribute(Attribute::TARGET_FUNCTION | Attribute::IS_REPEATABLE)]
+class Accept
 {
-    public const NONE = 0;
-    public const READ = 1;
-    public const WRITE = 2;
-    public const EXEC = 4;
-
     public function __construct(
-        public int $permission
+        public MimeType $type
     ) {
     }
 }

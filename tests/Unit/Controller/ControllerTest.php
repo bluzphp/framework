@@ -9,9 +9,13 @@ namespace Bluz\Tests\Unit\Controller;
 
 use Bluz\Controller;
 use Bluz\Http\Exception\ForbiddenException;
+use Bluz\Http\Exception\NotAllowedException;
+use Bluz\Http\RequestMethod;
+use Bluz\Http\StatusCode;
 use Bluz\Proxy\Layout;
 use Bluz\Proxy\Response;
-use Bluz\Response\ContentType;
+use Bluz\Proxy\Router;
+use Bluz\Response\ResponseType;
 use Bluz\Tests\Unit\Unit;
 
 /**
@@ -40,41 +44,8 @@ class ControllerTest extends Unit
         $this->controller->attachment('some.jpg');
 
         self::assertNull($this->controller->getTemplate());
-        self::assertEquals(ContentType::FILE, Response::getContentType());
+        self::assertEquals(ResponseType::FILE, Response::getContentType());
         self::assertFalse(self::getApp()->hasLayout());
-    }
-
-    /**
-     * @todo Implement testHelperCheckHttpAccept().
-     */
-    public function testHelperCheckHttpAccept()
-    {
-        // 12 tests:
-        //   -/- -> ANY,JSON,HTML
-        //   */* -> ANY,JSON,HTML
-        //   html/text -> ANY,JSON,HTML
-        //   application/json -> ANY,JSON,HTML
-
-        // Remove the following lines when you implement this test.
-        self::markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /**
-     * @todo Implement testHelperCheckMethod().
-     */
-    public function testHelperCheckMethod()
-    {
-        // Remove the following lines when you implement this test.
-        self::markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /**
-     * @todo Implement testHelperCheckPrivilege().
-     */
-    public function testHelperCheckPrivilege()
-    {
-        // Remove the following lines when you implement this test.
-        self::markTestIncomplete('This test has not been implemented yet.');
     }
 
     public function testHelperDenied()

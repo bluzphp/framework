@@ -27,9 +27,7 @@ trait Instance
      */
     public static function getInstance(): static
     {
-        if (!isset(static::$instances[static::class])) {
-            static::$instances[static::class] = new static();
-        }
+        static::$instances[static::class] ??= new static();
         return static::$instances[static::class];
     }
 }

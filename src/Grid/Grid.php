@@ -707,9 +707,7 @@ abstract class Grid
         if (!$this->checkFilterName($filter)) {
             throw new GridException('Filter name is incorrect');
         }
-        if (!isset($this->filters[$column])) {
-            $this->filters[$column] = [];
-        }
+        $this->filters[$column] ??= [];
         $this->filters[$column][$filter] = $value;
     }
 

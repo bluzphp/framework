@@ -135,7 +135,7 @@ class DbTest extends Unit
     {
         $result = $this->db->fetchUniqueGroup('SELECT id, name, status FROM test');
 
-        self::assertArrayHasSize($result, 42);
+        self::assertCount(42, $result);
         self::assertArrayHasKey('1', $result);
         self::assertArrayHasKey('name', $result[1]);
         self::assertArrayHasKey('status', $result[1]);

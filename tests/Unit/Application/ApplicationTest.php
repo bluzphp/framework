@@ -10,12 +10,10 @@ namespace Bluz\Tests\Unit\Application;
 use Bluz\Http\MimeType;
 use Bluz\Http\RequestMethod;
 use Bluz\Http\StatusCode;
-use Bluz\Proxy;
 use Bluz\Proxy\Response;
 use Bluz\Proxy\Router;
-use Bluz\Response\ContentType;
+use Bluz\Response\ResponseType;
 use Bluz\Tests\Unit\Unit;
-use Laminas\Diactoros\ServerRequest;
 
 /**
  * ApplicationTest
@@ -27,13 +25,12 @@ class ApplicationTest extends Unit
 {
     public function testFullApplicationCircle()
     {
-        self::getApp();
         self::setRequestParams('', [], [], RequestMethod::GET, ['Accept' => MimeType::HTML->value]);
 
         self::getApp()->run();
 
         self::assertEquals(StatusCode::OK, Response::getStatusCode());
-        self::assertEquals(ContentType::HTML, Response::getContentType());
+        self::assertEquals(ResponseType::HTML, Response::getContentType());
     }
 
     public function testGetApplicationPath()
@@ -61,7 +58,7 @@ class ApplicationTest extends Unit
         self::getApp()->process();
 
         self::assertFalse(self::getApp()->hasLayout());
-        self::assertEquals(ContentType::JSON, Response::getContentType());
+        self::assertEquals(ResponseType::JSON, Response::getContentType());
     }
 
     /**

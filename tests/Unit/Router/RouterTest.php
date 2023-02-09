@@ -85,11 +85,11 @@ class RouterTest extends Unit
     public function providerForCustomRoutes()
     {
         return [
-            ['/another-route.html', 'test', 'route-static'],
-            ['/another-route.html?foo%5B0%5D=bar&foo%5B1%5D=baz', 'test', 'route-static', ['foo' => ['bar', 'baz']]],
-            ['/test/param/42/', 'test', 'route-with-param', ['a' => 42]],
-            ['/foo-bar-baz/', 'test', 'route-with-params', ['a' => 'foo', 'b' => 'bar', 'c' => 'baz']],
-            ['/test/route-with-other-params/about', 'test', 'route-with-other-params', ['alias' => 'about']],
+            ['/another-route.html', 'routes', 'route-static'],
+            ['/another-route.html?foo%5B0%5D=bar&foo%5B1%5D=baz', 'routes', 'route-static', ['foo' => ['bar', 'baz']]],
+            ['/test/param/42/', 'routes', 'route-with-param', ['a' => 42]],
+            ['/foo-bar-baz/', 'routes', 'route-with-params', ['a' => 'foo', 'b' => 'bar', 'c' => 'baz']],
+            ['/test/route-with-other-params/about', 'routes', 'route-with-other-params', ['alias' => 'about']],
         ];
     }
 }

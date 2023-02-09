@@ -32,9 +32,6 @@ use ReflectionException;
  * @author   Anton Shevchuk
  *
  * @method void attachment(string $file)
- * @method void checkHttpAccept()
- * @method void checkHttpMethod()
- * @method void checkPrivilege()
  * @method void denied()
  * @method void disableLayout()
  * @method void disableView()

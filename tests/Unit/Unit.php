@@ -11,7 +11,10 @@ use Bluz\Application\Application;
 use Bluz\Application\ApplicationException;
 use Bluz\Common\Exception\CommonException;
 use Bluz\Http;
+use Bluz\Http\StatusCode;
 use Bluz\Proxy;
+use Bluz\Proxy\Response;
+use Bluz\Proxy\Router;
 use Codeception\Test\Unit as TestUnit;
 use Laminas\Diactoros\ServerRequest;
 use Psr\Http\Message\ServerRequestInterface;
@@ -35,6 +38,7 @@ class Unit extends TestUnit
 
     /**
      * Setup TestCase
+     * @throws CommonException
      */
     protected function setUp(): void
     {
@@ -51,7 +55,6 @@ class Unit extends TestUnit
 
     /**
      * Get Application instance
-     * @throws CommonException
      */
     protected static function initApp()
     {
@@ -125,22 +128,6 @@ class Unit extends TestUnit
     }
 
     /**
-     * Assert Array Size
-     *
-     * @param \ArrayObject|array $array
-     * @param int $size
-     * @param string|null $message
-     */
-    protected static function assertArrayHasSize(\ArrayObject|array $array, int $size, string $message = null)
-    {
-        self::assertCount(
-            $size,
-            $array,
-            $message ?: 'Failed asserting that array has size ' . $size . ' matches expected ' . count($array) . '.'
-        );
-    }
-
-    /**
      * Assert Array Key has Size
      *
      * @param \ArrayObject|array $array
@@ -148,8 +135,12 @@ class Unit extends TestUnit
      * @param int $size
      * @param string|null $message
      */
-    protected static function assertArrayHasKeyAndSize(\ArrayObject|array $array, string $key, int $size, string $message = null)
-    {
+    protected static function assertArrayHasKeyAndSize(
+        \ArrayObject|array $array,
+        string $key,
+        int $size,
+        string $message = null
+    ) {
         if (!$message) {
             $message = 'Failed asserting that array has key ' . $key . ' with size ' . $size
                 . ' matches expected ' . count($array) . '.';

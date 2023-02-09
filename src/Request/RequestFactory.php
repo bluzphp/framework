@@ -13,7 +13,7 @@ namespace Bluz\Request;
 
 use Bluz\Http\RequestMethod;
 use Bluz\Proxy\Request;
-use Bluz\Response\ContentType;
+use Bluz\Response\ResponseType;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\ServerRequestFactory;
 use Laminas\Diactoros\ServerRequestFilter\FilterServerRequestInterface;
@@ -42,7 +42,7 @@ class RequestFactory extends ServerRequestFactory
         $contentType = current($request->getHeader('Content-Type'));
 
         // support header like "application/json" and "application/json; charset=utf-8"
-        if (false !== $contentType && false !== stripos($contentType, ContentType::JSON->value)) {
+        if (false !== $contentType && false !== stripos($contentType, ResponseType::JSON->value)) {
             $input = file_get_contents('php://input');
             $data = (array)json_decode($input, false);
         } elseif ($request->getMethod() === RequestMethod::POST->value) {

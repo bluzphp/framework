@@ -36,7 +36,7 @@ class LoggerTest extends Unit
         $errors = Proxy::get('error');
         $error = current($errors);
 
-        self::assertArrayHasSize($errors, 1);
+        self::assertCount(1, $errors);
         self::assertEquals('Message [' . __FILE__ . ':' . $line . ']', $error);
     }
 }

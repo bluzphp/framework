@@ -14,7 +14,7 @@ namespace Bluz\Proxy;
 use Bluz\Common\Exception\ComponentException;
 use Bluz\Controller\Controller;
 use Bluz\Http\Exception\RedirectException;
-use Bluz\Response\ContentType as ContentType;
+use Bluz\Response\ResponseType as ResponseType;
 use Bluz\Response\Response as Instance;
 use Bluz\Http\StatusCode as StatusCode;
 
@@ -81,9 +81,9 @@ use Bluz\Http\StatusCode as StatusCode;
  * @method   static array getCookie()
  * @see      Instance::getCookie()
  *
- * @method   static ContentType getContentType()
+ * @method   static ResponseType getContentType()
  * @see      Instance::getContentType()
- * @method   static void setContentType(ContentType $type)
+ * @method   static void setContentType(ResponseType $type)
  * @see      Instance::setContentType()
  *
  * @method   static void  send()

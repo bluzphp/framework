@@ -66,9 +66,9 @@ class Response
     protected $body;
 
     /**
-     * @var ContentType
+     * @var ResponseType
      */
-    protected ContentType $contentType = ContentType::HTML;
+    protected ResponseType $contentType = ResponseType::HTML;
 
     /**
      * send
@@ -80,7 +80,7 @@ class Response
         $this->sendCookies();
 
         switch (true) {
-            case ContentType::CLI === $this->contentType:
+            case ResponseType::CLI === $this->contentType:
                 // no CLI response
                 return;
             case null === $body:
@@ -98,7 +98,7 @@ class Response
                     $this->getHeaders()
                 );
                 break;
-            case ContentType::JSON === $this->contentType:
+            case ResponseType::JSON === $this->contentType:
                 // JSON response
                 // setup messages
                 if (Messages::count()) {
@@ -111,7 +111,7 @@ class Response
                     $this->getHeaders()
                 );
                 break;
-            case ContentType::FILE === $this->contentType:
+            case ResponseType::FILE === $this->contentType:
                 // File attachment
                 $response = new AttachmentResponse(
                     $this->body->getData()->get('FILE'),
@@ -119,7 +119,7 @@ class Response
                     $this->getHeaders()
                 );
                 break;
-            case ContentType::HTML === $this->contentType:
+            case ResponseType::HTML === $this->contentType:
             default:
                 // HTML response
                 $response = new HtmlResponse(
@@ -137,9 +137,9 @@ class Response
     /**
      * Get response type
      *
-     * @return ContentType
+     * @return ResponseType
      */
-    public function getContentType(): ContentType
+    public function getContentType(): ResponseType
     {
         return $this->contentType;
     }
@@ -147,18 +147,18 @@ class Response
     /**
      * Set Response Type, one of JSON, HTML or CLI
      *
-     * @param ContentType $contentType
+     * @param ResponseType $contentType
      */
-    public function setContentType(ContentType $contentType): void
+    public function setContentType(ResponseType $contentType): void
     {
         // switch statement by content type
         switch ($contentType) {
-            case ContentType::JSON:
+            case ResponseType::JSON:
                 $this->setHeader('Content-Type', 'application/json');
                 break;
-            case ContentType::CLI:
-            case ContentType::FILE:
-            case ContentType::HTML:
+            case ResponseType::CLI:
+            case ResponseType::FILE:
+            case ResponseType::HTML:
                 break;
         }
 

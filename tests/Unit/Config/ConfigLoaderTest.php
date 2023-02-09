@@ -71,7 +71,7 @@ class ConfigLoaderTest extends Unit
         $loader->load($this->path . '/testing');
         $configWithEnvironment = $loader->getConfig();
 
-        self::assertArrayHasSize($configWithoutEnvironment, 1);
-        self::assertArrayHasSize($configWithEnvironment, 2);
+        self::assertCount(1, $configWithoutEnvironment);
+        self::assertCount(2, $configWithEnvironment);
     }
 }

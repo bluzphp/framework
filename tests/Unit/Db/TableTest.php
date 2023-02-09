@@ -97,7 +97,7 @@ class TableTest extends Unit
     public function testGetMetaInformation()
     {
         $meta = TestTable::getMeta();
-        self::assertArrayHasSize($meta, 6);
+        self::assertCount(6, $meta);
         self::assertArrayHasKey('id', $meta);
         self::assertArrayHasKey('name', $meta);
         self::assertEqualsArray(['type' => 'int', 'default' => '', 'key' => 'PRI'], $meta['id']);
@@ -109,7 +109,7 @@ class TableTest extends Unit
     public function testGetColumns()
     {
         $columns = TestTable::getColumns();
-        self::assertArrayHasSize($columns, 6);
+        self::assertCount(6, $columns);
         self::assertEqualsArray(['id', 'name', 'email', 'status', 'created', 'updated'], $columns);
     }
 

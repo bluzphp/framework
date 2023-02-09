@@ -70,9 +70,7 @@ trait RowRelations
      */
     public function getRelations($modelName): array
     {
-        if (!isset($this->relations[$modelName])) {
-            $this->relations[$modelName] = Relations::findRelation($this, $modelName);
-        }
+        $this->relations[$modelName] ??= Relations::findRelation($this, $modelName);
 
         return $this->relations[$modelName];
     }

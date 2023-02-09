@@ -20,16 +20,6 @@ use Bluz\Auth\AbstractIdentity;
 class UserGuest extends AbstractIdentity
 {
     /**
-     * Can entity login
-     *
-     * @throws ApplicationException
-     */
-    public function tryLogin()
-    {
-        throw new ApplicationException("User status is undefined in system");
-    }
-
-    /**
      * Get user privileges
      *
      * @return array
@@ -37,18 +27,6 @@ class UserGuest extends AbstractIdentity
     public function getPrivileges(): array
     {
         return [];
-    }
-
-    /**
-     * Check user role
-     *
-     * @param int $roleId
-     *
-     * @return boolean
-     */
-    public function hasRole($roleId)
-    {
-        return false;
     }
 
     /**

@@ -20,16 +20,6 @@ use Bluz\Proxy\Auth;
 class UserAdmin extends AbstractIdentity
 {
     /**
-     * Can entity login
-     *
-     * @return void
-     */
-    public function tryLogin()
-    {
-        Auth::setIdentity($this);
-    }
-
-    /**
      * Get user privileges
      *
      * @return array
@@ -37,18 +27,6 @@ class UserAdmin extends AbstractIdentity
     public function getPrivileges(): array
     {
         return [];
-    }
-
-    /**
-     * Check user role
-     *
-     * @param int $roleId
-     *
-     * @return boolean
-     */
-    public function hasRole($roleId)
-    {
-        return true;
     }
 
     /**

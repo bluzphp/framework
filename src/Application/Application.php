@@ -13,6 +13,7 @@ namespace Bluz\Application;
 
 use Bluz\Common\Exception\CommonException;
 use Bluz\Common\Exception\ComponentException;
+use Bluz\Common\Exception\ConfigurationException;
 use Bluz\Common\Helper;
 use Bluz\Common\Nil;
 use Bluz\Config\Config;
@@ -21,10 +22,13 @@ use Bluz\Config\ConfigLoader;
 use Bluz\Controller\Controller;
 use Bluz\Controller\ControllerException;
 use Bluz\Http\Exception\ForbiddenException;
+use Bluz\Http\Exception\NotAcceptableException;
+use Bluz\Http\Exception\NotAllowedException;
 use Bluz\Http\Exception\RedirectException;
 use Bluz\Http\MimeType;
 use Bluz\Logger\Logger;
 use Bluz\Messages\Messages;
+use Bluz\Proxy\Acl as AclProxy;
 use Bluz\Proxy\Application as ApplicationProxy;
 use Bluz\Proxy\Cache as CacheProxy;
 use Bluz\Proxy\Config as ConfigProxy;
@@ -37,7 +41,7 @@ use Bluz\Proxy\Router as RouterProxy;
 use Bluz\Proxy\Session as SessionProxy;
 use Bluz\Proxy\Translator as TranslatorProxy;
 use Bluz\Request\Request;
-use Bluz\Response\ContentType;
+use Bluz\Response\ResponseType;
 use Bluz\Response\Response;
 use Bluz\Router\Router;
 use Bluz\Session\Session;
@@ -359,7 +363,7 @@ class Application
      * Initial Translator Proxy
      *
      * @return void
-     * @throws \Bluz\Common\Exception\ConfigurationException
+     * @throws ConfigurationException
      */
     private function initTranslator(): void
     {
@@ -428,7 +432,7 @@ class Application
         // switch to JSON response based on Accept header
         if (RequestProxy::checkAccept(MimeType::JSON)) {
             $this->disableLayout();
-            ResponseProxy::setContentType(ContentType::JSON);
+            ResponseProxy::setContentType(ResponseType::JSON);
         }
     }
 
@@ -522,17 +526,98 @@ class Application
      * @param Controller $controller
      *
      * @return void
+     *
+     * @throws ForbiddenException
+     * @throws NotAllowedException
+     * @throws NotAcceptableException
      */
     protected function preDispatch(Controller $controller): void
     {
         // check HTTP method
-        // $controller->checkHttpMethod();
+        $this->checkHttpMethod($controller);
 
         // check ACL privileges
-        // $controller->checkPrivilege();
+        $this->checkPrivilege($controller);
 
         // check HTTP Accept header
-        // $controller->checkHttpAccept();
+        $this->checkHttpAccept($controller);
+    }
+
+    /**
+     * @throws NotAllowedException
+     */
+    protected function checkHttpMethod($controller): void
+    {
+        $methods = $this->getData()->getAttribute(
+            $controller->getModule(),
+            $controller->getController(),
+            'method'
+        );
+
+        if (empty($methods) || in_array(RequestProxy::getMethod(), $methods, true)) {
+            return;
+        }
+
+        // prepare list of the allowed methods
+        $methods = array_map(function ($method) {
+            return $method->value;
+        }, $methods);
+        throw new NotAllowedException(implode(',', $methods));
+    }
+
+    /**
+     * @throws ForbiddenException
+     */
+    protected function checkPrivilege($controller): void
+    {
+        $privileges = $this->getData()->getAttribute(
+            $controller->getModule(),
+            $controller->getController(),
+            'privilege'
+        );
+
+        if (empty($privileges)) {
+            return;
+        }
+
+        $privileges = array_map('strtolower', $privileges);
+        $privileges = array_unique($privileges);
+
+        foreach ($privileges as $privilege) {
+            if (AclProxy::isAllowed($controller->getModule(), $privilege)) {
+                return;
+            }
+        }
+        throw new ForbiddenException();
+    }
+
+    /**
+     * @throws NotAcceptableException
+     */
+    protected function checkHttpAccept($controller): void
+    {
+        $acceptTypes = $this->getData()->getAttribute(
+            $controller->getModule(),
+            $controller->getController(),
+            'accept'
+        );
+
+        // check accept header only if you need this
+        // mime type "ANY" allow anything
+        if (empty($acceptTypes) || in_array(MimeType::ANY, $acceptTypes)) {
+            return;
+        }
+
+        $acceptRequest = RequestProxy::getAccept();
+
+        // try to search allowed types
+        foreach ($acceptRequest as $type => $q) {
+            $mimeType = MimeType::tryFrom($type);
+            if ($mimeType && in_array($mimeType, $acceptTypes)) {
+                return;
+            }
+        }
+        throw new NotAcceptableException();
     }
 
     /**
@@ -541,7 +626,6 @@ class Application
      * @param Controller $controller
      *
      * @return void
-     * @throws CacheException
      * @throws ReflectionException
      * @throws ComponentException
      * @throws ControllerException

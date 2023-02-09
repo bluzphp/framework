@@ -281,7 +281,7 @@ class Router
      */
     protected function urlCustom(string $module, string $controller, array $params): string
     {
-        $url = $this->modules[$module][$controller]['@']['route'];
+        $url = end($this->modules[$module][$controller]['@']['route']);
 
         $getParams = [];
         foreach ($params as $key => $value) {

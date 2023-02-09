@@ -15,7 +15,9 @@ use Bluz\Collection\Collection;
 use Bluz\Container\Container;
 use Bluz\Container\JsonSerialize;
 use Bluz\Container\RegularAccess;
+use GlobIterator;
 use ReflectionException;
+use SplFileInfo;
 
 /**
  * Data
@@ -44,7 +46,7 @@ class Data implements \JsonSerializable
     public function init(): void
     {
         $path = $this->path . '/modules/*/controllers/*.php';
-        foreach (new \GlobIterator($path) as $file) {
+        foreach (new GlobIterator($path) as $file) {
             /* @var SplFileInfo $file */
             $module = $file->getPathInfo()->getPathInfo()->getBasename();
             $controller = $file->getBasename('.php');
@@ -81,9 +83,21 @@ class Data implements \JsonSerializable
                         params: $this->container['modules'][$module][$controller]['params'] ?? []
                     );
                 }
-                $this->container['modules'][$module][$controller]['@'][$name] = $argument;
+                $this->setAttribute($module, $controller, $name, $argument);
             }
         }
+    }
+
+    /**
+     * @param string $module
+     * @param string $controller
+     * @param string $attribute
+     * @param mixed $value
+     * @return void
+     */
+    protected function setAttribute(string $module, string $controller, string $attribute, mixed $value): void
+    {
+        Collection::add($this->container, 'modules', $module, $controller, '@', $attribute, $value);
     }
 
     /**

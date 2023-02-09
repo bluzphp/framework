@@ -79,9 +79,6 @@ class Bootstrap extends Application
     public function setException(Exception $exception): void
     {
         $this->exception = $exception;
-
-        codecept_debug(' ## ' . $exception->getCode());
-        codecept_debug(' ## ' . $exception->getMessage());
     }
 
     /**

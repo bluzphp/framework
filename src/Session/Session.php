@@ -361,9 +361,7 @@ class Session
     {
         $this->start();
         // check storage
-        if (!isset($_SESSION[$this->getNamespace()])) {
-            $_SESSION[$this->getNamespace()] = [];
-        }
+        $_SESSION[$this->getNamespace()] ??= [];
         $_SESSION[$this->namespace][$key] = $value;
     }
 

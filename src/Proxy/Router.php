@@ -38,6 +38,9 @@ use Bluz\Router\Router as Instance;
  * @method   static string getCleanUri()
  * @see      Instance::getCleanUri()
  *
+ * @method   static mixed getParam(mixed $key, mixed $default = null)
+ * @method   static array getParams()
+ *
  * @method   static void process()
  * @see      Instance::process()
  *

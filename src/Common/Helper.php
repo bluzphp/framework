@@ -51,9 +51,7 @@ trait Helper
         }
 
         // create store of helpers
-        if (!isset(static::$helpersPath[$class])) {
-            static::$helpersPath[$class] = [];
-        }
+        static::$helpersPath[$class] ??= [];
 
         if (!in_array($realPath, static::$helpersPath[$class], true)) {
             static::$helpersPath[$class][] = $realPath;
@@ -125,9 +123,7 @@ trait Helper
         $class = static::class;
 
         // create store of helpers for this class
-        if (!isset(static::$helpers[$class])) {
-            static::$helpers[$class] = [];
-        }
+        static::$helpers[$class] ??= [];
 
         $helper = include $path;
 

@@ -18,10 +18,6 @@ use Bluz\Request\Request as Instance;
 use Laminas\Diactoros\ServerRequest;
 use Psr\Http\Message\UriInterface;
 
-//use Psr\Http\Message\UriInterface;
-//use Laminas\Diactoros\ServerRequest as Instance;
-//use Laminas\Diactoros\UploadedFile;
-
 /**
  * Proxy to Request
  *
@@ -49,6 +45,7 @@ use Psr\Http\Message\UriInterface;
  * @method static string|null getCookie(?string $key = null, ?string $default = null)
  * @method static string|null getEnv(?string $key = null, ?string $default = null)
  * @method static string|null getHeader(string $header, mixed $default = null)
+ * @method static array getAccept()
  * @method static mixed getParam(string $key, mixed $default = null)
  * @method static array getParams()
  * @method static bool isCli()

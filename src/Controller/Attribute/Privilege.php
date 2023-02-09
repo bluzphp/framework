@@ -13,7 +13,7 @@ namespace Bluz\Controller\Attribute;
 
 use Attribute;
 
-#[Attribute(Attribute::TARGET_FUNCTION)]
+#[Attribute(Attribute::TARGET_FUNCTION | Attribute::IS_REPEATABLE)]
 class Privilege
 {
     public function __construct(

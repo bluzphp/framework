@@ -23,7 +23,6 @@ use Bluz\Proxy\Logger;
 use Bluz\Proxy\Messages;
 use Bluz\Proxy\Response;
 use Bluz\Proxy\Request;
-use Bluz\Response\ContentType;
 use Exception;
 
 /**

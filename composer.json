@@ -22,7 +22,7 @@
   "require-dev": {
     "codeception/codeception": "~5.0",
     "codeception/module-asserts": "~3.0",
-    "codeception/module-phpbrowser": "~2.5",
+    "codeception/module-phpbrowser": "~3.0",
     "php-coveralls/php-coveralls": "~2.5",
     "squizlabs/php_codesniffer": "~3.7",
     "phploc/phploc": "~7.0"

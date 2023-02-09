@@ -14,7 +14,7 @@ namespace Bluz\Controller\Helper;
 use Bluz\Controller\Controller;
 use Bluz\Proxy\Application;
 use Bluz\Proxy\Response;
-use Bluz\Response\ContentType;
+use Bluz\Response\ResponseType;
 
 /**
  * Switch to JSON content
@@ -27,5 +27,5 @@ return
          * @var Controller $this
          */
         Application::getInstance()->disableLayout();
-        Response::setContentType(ContentType::JSON);
+        Response::setContentType(ResponseType::JSON);
     };

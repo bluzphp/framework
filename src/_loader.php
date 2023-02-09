@@ -28,9 +28,11 @@ require_once __DIR__ . '/Common/Singleton.php';
 
 // application
 require_once __DIR__ . '/Application/Application.php';
+require_once __DIR__ . '/Application/Data.php';
 
 // proxy package
 require_once __DIR__ . '/Proxy/ProxyTrait.php';
+require_once __DIR__ . '/Proxy/Application.php';
 require_once __DIR__ . '/Proxy/Cache.php';
 require_once __DIR__ . '/Proxy/Config.php';
 require_once __DIR__ . '/Proxy/Logger.php';
@@ -45,7 +47,6 @@ require_once __DIR__ . '/Proxy/Translator.php';
 require_once __DIR__ . '/Config/Config.php';
 require_once __DIR__ . '/Controller/Controller.php';
 require_once __DIR__ . '/Controller/Data.php';
-require_once __DIR__ . '/Controller/Meta.php';
 require_once __DIR__ . '/Http/RequestMethod.php';
 require_once __DIR__ . '/Http/StatusCode.php';
 require_once __DIR__ . '/Messages/Messages.php';

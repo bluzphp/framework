@@ -20,9 +20,9 @@ use Bluz\Tests\Unit\Unit;
 class TableTest extends Unit
 {
     /**
-     * @var Table
+     * @var Table|Db\ConcreteTable
      */
-    protected $table;
+    protected Table|Db\ConcreteTable $table;
 
     /**
      * Sets up the fixture, for example, opens a network connection.

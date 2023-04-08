@@ -140,6 +140,7 @@ class Table extends AbstractCrud
         $data = $this->filterData($data);
 
         $row->setFromArray($data);
+
         return $row->save();
     }
 

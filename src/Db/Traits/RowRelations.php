@@ -28,7 +28,7 @@ trait RowRelations
     /**
      * @var array relations rows
      */
-    protected $relations = [];
+    private array $relations = [];
 
     /**
      * Set relation

@@ -62,7 +62,7 @@ class ConfigLoader
      */
     protected function loadFile(string $path): mixed
     {
-        if (!is_file($path) && !is_readable($path)) {
+        if (!is_file($path) || !is_readable($path)) {
             throw new ConfigException("Configuration file `$path` not found");
         }
         return include $path;
@@ -88,6 +88,7 @@ class ConfigLoader
             $path . '/*.php',
             FilesystemIterator::KEY_AS_FILENAME | FilesystemIterator::CURRENT_AS_PATHNAME
         );
+
 
         foreach ($iterator as $name => $file) {
             $name = substr($name, 0, -4);

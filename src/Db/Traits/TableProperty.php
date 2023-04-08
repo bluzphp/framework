@@ -25,7 +25,7 @@ trait TableProperty
     /**
      * @var TableInterface|null instance
      */
-    protected ?TableInterface $table = null;
+    private ?TableInterface $tableInstance = null;
 
     /**
      * Setup Table instance
@@ -36,7 +36,7 @@ trait TableProperty
      */
     public function setTable(TableInterface $table): void
     {
-        $this->table = $table;
+        $this->tableInstance = $table;
     }
 
     /**
@@ -47,10 +47,10 @@ trait TableProperty
      */
     public function getTable(): TableInterface
     {
-        if (!$this->table) {
+        if (!$this->tableInstance) {
             $this->initTable();
         }
-        return $this->table;
+        return $this->tableInstance;
     }
 
     /**

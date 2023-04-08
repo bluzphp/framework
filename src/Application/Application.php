@@ -49,6 +49,7 @@ use Bluz\Translator\Translator;
 use Exception;
 use Psr\Cache\CacheException;
 use ReflectionException;
+use Throwable;
 
 /**
  * Application
@@ -193,7 +194,7 @@ class Application
             $this->initResponse();
             $this->initRouter();
             $this->initTranslator();
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             throw new ApplicationException("Application can't be loaded: " . $e->getMessage());
         }
     }
@@ -445,7 +446,6 @@ class Application
      * - Setup response body
      *
      * @return void
-     * @throws CacheException
      */
     protected function doProcess(): void
     {
@@ -498,7 +498,6 @@ class Application
      * @param array $params
      *
      * @return Controller
-     * @throws CacheException
      * @throws CommonException
      * @throws ComponentException
      * @throws ControllerException

@@ -40,7 +40,7 @@ class TableTest extends Unit
 
         Db::query(
             'INSERT INTO `test`(`id`, `name`, `email`, `status`) ' .
-            'VALUES (100, "CrudTestTable", "table@test.com", "disable")'
+            'VALUES (100, \'CrudTestTable\', \'table@test.com\', \'disable\')'
         );
     }
 
@@ -50,7 +50,7 @@ class TableTest extends Unit
     public function tearDown(): void
     {
         Db::query(
-            'DELETE FROM `test` WHERE `name` = "CrudTestTable"'
+            'DELETE FROM `test` WHERE `name` = \'CrudTestTable\''
         );
         parent::tearDown();
     }
@@ -86,7 +86,7 @@ class TableTest extends Unit
 
     /**
      * Method readOne with $primary should return instance of row
-     * Data should filtered by fields
+     * Data should filter by fields
      */
     public function testReadOneWithFilter()
     {
@@ -142,6 +142,7 @@ class TableTest extends Unit
                 'status' => 'disable'
             ]
         );
+
         self::assertArrayHasKey('id', $result);
     }
 

@@ -21,6 +21,8 @@ use PHPMailer\PHPMailer\PHPMailer;
 /**
  * Wrapper over PHPMailer
  *
+ * @todo migrate to Symfony\Component\Mailer
+ *
  * @package  Bluz\Mailer
  * @author   Pavel Machekhin
  * @link     https://github.com/bluzphp/framework/wiki/Mailer

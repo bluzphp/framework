@@ -30,7 +30,7 @@ class ConfigTest extends Unit
         //  - configs/default/
         //  - configs/testing/
         // hardcoded numbers of configuration items
-        self::assertCount(14, Proxy::get());
+        self::assertCount(15, Proxy::get());
         self::assertEquals(['foo' => 'bar'], Proxy::get('test'));
         self::assertEquals('bar', Proxy::get('test', 'foo'));
     }

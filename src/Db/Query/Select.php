@@ -46,7 +46,7 @@ class Select extends AbstractBuilder
     protected mixed $fetchType = \PDO::FETCH_ASSOC;
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      *
      * @param object|int|string|null $fetchType
      *
@@ -83,7 +83,7 @@ class Select extends AbstractBuilder
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function getSql(): string
     {

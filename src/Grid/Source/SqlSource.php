@@ -44,7 +44,7 @@ class SqlSource extends AbstractSource
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function process(int $page, int $limit, array $filters = [], array $orders = []): Data
     {

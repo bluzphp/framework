@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace Bluz\Common\Exception;
 
 /**
- * Basic Exception for Bluz framework
+ * Basic Exception for the framework
  *
  * @package  Bluz\Common\Exception
  * @author   Anton Shevchuk

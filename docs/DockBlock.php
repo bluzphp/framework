@@ -1,6 +1,7 @@
 <?php
+
 /**
- * An complex example of how to write "dockblock", based on PEAR standard
+ * A complex example of how to write "dockblock", based on PEAR standard
  *
  * PEAR standard you can find at http://pear.php.net/manual/tr/standards.sample.php
  * PSR proposal you can find at https://github.com/phpDocumentor/fig-standards/tree/master/proposed
@@ -36,11 +37,11 @@
  * Short description for file
  *
  * Usually this block is the same for all files in your project
- * It's should consists the following tags:
+ * It's should consist the following tags:
  *  - copyright string
  *  - license with link to full text
  *  - link to library repository or project homepage
- * All other information should be write in class dockblock
+ * All other information should write in class dockblock
  *
  * Syntax and order of tags:
  * @.copyright [description]
@@ -56,11 +57,13 @@ declare(strict_types=1);
 
 namespace Bluz;
 
+use Exception as ExceptionAlias;
+
 /**
  * Short summary for class
  *
  * You should know the simple rule - one class in one file,
- * then all information about package, author, version, etc
+ * then all information about package, author, version, etc.
  * you can write in dockblock of class
  *
  * Syntax and order of tags:
@@ -104,12 +107,12 @@ class DockBlock
      * @link https://github.com/bluzphp/framework
      * @see  DockBlock
      */
-    protected $foo = 'bar';
+    protected string $foo = 'bar';
 
     /**
      * @var string simple property description
      */
-    protected $bar;
+    protected string $bar;
 
     /**
      * Registers the status of foo's universe
@@ -175,25 +178,24 @@ class DockBlock
      *                      Indent to the description's starting point
      *                      for long ones.
      *
-     * @return int the integer of the set mode used. FALSE if foo
+     * @return bool|int the integer of the set mode used. FALSE if foo
      *             foo could not be set.
      *
-     * @throws \Exception if first argument is not a string
-     *
+     * @throws ExceptionAlias if first argument is not a string
      * @see        DockBlock::$foo, DockBlock::setFoo()
      * @since      1.3.0 Added the $arg2
      * @since      1.2.0
      * @deprecated 2.0.0
      */
-    public function setFoo($arg1, $arg2 = 0)
+    public function setFoo(string $arg1, int $arg2 = 0): bool|int
     {
         /*
          * This is a "Block Comment." The format is the same as
          * Docblock Comments except there is only one asterisk at the
          * top. phpDocumentor doesn't parse these.
          */
-        if (is_int($arg1)) {
-            throw new \Exception("First argument should be string");
+        if ($arg2 < 0) {
+            throw new ExceptionAlias("Second argument should be great than zero");
         }
 
         if ($arg1 == 'good' || $arg1 == 'fair') {

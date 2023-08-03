@@ -12,7 +12,6 @@
 namespace Bluz\Tests\Fixtures\Models\Test;
 
 use Bluz\Db\TableInterface;
-use Bluz\Validator\Traits\Validator;
 
 /**
  * Test Row
@@ -26,8 +25,6 @@ use Bluz\Validator\Traits\Validator;
  */
 class Row extends \Bluz\Db\Row
 {
-    use Validator;
-
     /**
      * Return table instance for manipulation
      *

@@ -24,7 +24,7 @@ class ConcreteTable extends Table
 {
     use TableRelations;
 
-    protected $name = 'foo';
-    protected $primary = ['bar', 'baz'];
-    protected $rowClass = 'ConcreteRow';
+    protected string $name = 'foo';
+    protected array $primary = ['bar', 'baz'];
+    protected string $rowClass = 'ConcreteRow';
 }

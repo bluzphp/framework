@@ -123,7 +123,7 @@ class View implements ViewInterface, \JsonSerializable
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      *
      * @return string
      */
@@ -133,7 +133,7 @@ class View implements ViewInterface, \JsonSerializable
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      *
      * @param string $path
      *
@@ -145,7 +145,7 @@ class View implements ViewInterface, \JsonSerializable
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      *
      * @return string
      */
@@ -155,7 +155,7 @@ class View implements ViewInterface, \JsonSerializable
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      *
      * @param string $file
      *

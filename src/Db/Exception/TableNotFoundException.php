@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace Bluz\Db\Exception;
 
 /**
- * Table Not Found Exception
+ * Table Didn't Find
  *
  * @package  Bluz\Db\Exception
  * @author   Eugene Zabolotniy <realbaziak@gmail.com>

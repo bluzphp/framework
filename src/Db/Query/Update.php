@@ -30,7 +30,7 @@ class Update extends AbstractBuilder
     protected string $table;
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function getSql(): string
     {

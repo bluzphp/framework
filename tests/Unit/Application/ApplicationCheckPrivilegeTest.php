@@ -76,7 +76,7 @@ class ApplicationCheckPrivilegeTest extends Unit
     /**
      * @return array
      */
-    public function providerForPass(): array
+    public static function providerForPass(): array
     {
         return [
             ['privilege/index', []],
@@ -89,7 +89,7 @@ class ApplicationCheckPrivilegeTest extends Unit
     /**
      * @return array
      */
-    public function providerForFail(): array
+    public static function providerForFail(): array
     {
         return [
             ['privilege/some', []],

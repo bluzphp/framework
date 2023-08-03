@@ -68,6 +68,7 @@ class Redis extends AbstractAdapter implements \SessionHandlerInterface
      * @param string $sessionName
      *
      * @return bool
+     * @throws \RedisException
      */
     public function open($savePath, $sessionName): bool
     {

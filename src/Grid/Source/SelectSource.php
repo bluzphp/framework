@@ -43,7 +43,7 @@ class SelectSource extends AbstractSource
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      *
      * @throws Grid\GridException
      * @throws Db\Exception\DbException

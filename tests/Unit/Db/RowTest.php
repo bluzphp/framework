@@ -50,6 +50,7 @@ class RowTest extends Unit
     public function testSet()
     {
         $this->row->someValue = 'foo';
+        codecept_debug($this->row);
         self::assertEquals('foo', $this->row->someValue);
     }
 
@@ -150,46 +151,5 @@ class RowTest extends Unit
     {
         $this->row->setFromArray(['someValue' => 'foo']);
         self::assertEquals('foo', $this->row->someValue);
-    }
-
-    /**
-     * Test ArrayAccess interface
-     *  - offsetSet
-     */
-    public function testOffsetSet()
-    {
-        $this->row['someValue'] = 'foo';
-        self::assertEquals('foo', $this->row->someValue);
-    }
-
-    /**
-     * Test ArrayAccess interface
-     *  - offsetExists
-     */
-    public function testOffsetExists()
-    {
-        $this->row->someValue = 'foo';
-        self::assertTrue(isset($this->row['someValue']));
-    }
-
-    /**
-     * Test ArrayAccess interface
-     *  - offsetUnset
-     */
-    public function testOffsetUnset()
-    {
-        $this->row->someValue = 'foo';
-        unset($this->row['someValue']);
-        self::assertFalse(isset($this->row['someValue']));
-    }
-
-    /**
-     * Test ArrayAccess interface
-     *  - offsetGet
-     */
-    public function testOffsetGet()
-    {
-        $this->row->someValue = 'foo';
-        self::assertEquals('foo', $this->row['someValue']);
     }
 }

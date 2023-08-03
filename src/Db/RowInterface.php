@@ -12,7 +12,7 @@ namespace Bluz\Db;
  * @package  Bluz\Db
  * @author   Anton Shevchuk
  */
-interface RowInterface
+interface RowInterface extends \JsonSerializable
 {
     /**
      * Create Row instance
@@ -20,13 +20,6 @@ interface RowInterface
      * @param array $data
      */
     public function __construct(array $data = []);
-
-    /**
-     * Returns the column/value data as an array
-     *
-     * @return array
-     */
-    public function toArray(): array;
 
     /**
      * Sets all data in the row from an array
@@ -38,27 +31,9 @@ interface RowInterface
     public function setFromArray(array $data): void;
 
     /**
-     * Saves the properties to the database.
+     * Returns the column/value data as an array
      *
-     * This performs an intelligent insert/update, and reloads the
-     * properties with fresh data from the table on success.
-     *
-     * @return mixed The primary key value(s), as an associative array if the
-     *               key is compound, or a scalar if the key is single-column
+     * @return array
      */
-    public function save();
-
-    /**
-     * Delete existing row
-     *
-     * @return bool Removed or not
-     */
-    public function delete(): bool;
-
-    /**
-     * Refreshes properties from the database
-     *
-     * @return void
-     */
-    public function refresh(): void;
+    public function toArray(): array;
 }

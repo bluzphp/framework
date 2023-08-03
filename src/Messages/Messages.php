@@ -84,7 +84,7 @@ class Messages
     }
 
     /**
-     * Add message to container
+     * Add a message to container
      *
      * @param string $type One of error, notice or success
      * @param string $message

@@ -21,7 +21,7 @@ abstract class AbstractAdapter
     /**
      * @var mixed instance of Redis or Cache or some other
      */
-    protected $handler = null;
+    protected mixed $handler = null;
 
     /**
      * @var string prefix for session store

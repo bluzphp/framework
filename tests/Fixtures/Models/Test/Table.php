@@ -26,19 +26,19 @@ class Table extends \Bluz\Db\Table
      *
      * @var string
      */
-    protected $name = 'test';
+    protected string $name = 'test';
 
     /**
      * Primary key(s)
      *
      * @var array
      */
-    protected $primary = ['id'];
+    protected array $primary = ['id'];
 
     /**
      * Class name
      *
      * @var string
      */
-    protected $rowClass = Row::class;
+    protected string $rowClass = Row::class;
 }

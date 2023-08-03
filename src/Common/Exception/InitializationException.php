@@ -9,16 +9,14 @@
 
 declare(strict_types=1);
 
-namespace Bluz\Validator\Exception;
-
-use Bluz\Common\Exception;
+namespace Bluz\Common\Exception;
 
 /**
- * Component Exception
+ * Exception throws when class has wrong initialization options
  *
- * @package  Bluz\Validator\Exception
+ * @package  Bluz\Common\Exception
  * @author   Anton Shevchuk
  */
-class ComponentException extends Exception\ComponentException
+class InitializationException extends ComponentException
 {
 }

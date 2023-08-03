@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Bluz\Db;
 
+use Bluz\Common\Exception\InitializationException;
 use Bluz\Common\Instance;
 use Bluz\Db\Exception\DbException;
 use Bluz\Db\Exception\InvalidPrimaryKeyException;
@@ -50,56 +51,59 @@ abstract class Table implements TableInterface
     /**
      * @var string the table name
      */
-    protected $name;
+    protected string $name;
 
     /**
      * @var string the model name
      */
-    protected $model;
+    protected string $model;
 
     /**
      * @var array table meta
      */
-    protected $meta = [];
+    protected array $meta = [];
 
     /**
      * @var string default SQL query for select
      */
-    protected $select = '';
+    protected string $select = '';
 
     /**
      * @var array the primary key column or columns (only as array).
      */
-    protected $primary;
+    protected array $primary;
 
     /**
      * @var string the sequence name, required for PostgreSQL
      */
-    protected $sequence;
+    protected string $sequence;
 
     /**
      * @var string row class name
      */
-    protected $rowClass;
+    protected string $rowClass;
 
     /**
      * Create and initialize Table instance
      */
-    private function __construct()
+    public function __construct()
     {
         $tableClass = static::class;
         $namespace = class_namespace($tableClass);
 
-        // autodetect model name
-        if (!$this->model) {
-            $this->model = substr($namespace, strrpos($namespace, '\\') + 1);
+        // check table name
+        if (!$this->name) {
+            throw new InitializationException('The table name should be set before initialization');
         }
 
-        // autodetect table name - camelCase to uppercase
-        if (!$this->name) {
-            $table = preg_replace('/(?<=\\w)(?=[A-Z])/', '_$1', $this->model);
-            $this->name = strtolower($table);
+        // check primary key(s)
+        if (!$this->primary) {
+            throw new InitializationException('The table primary key(s) should be set before initialization');
         }
+        if (!is_array($this->primary)) {
+            throw new InvalidPrimaryKeyException('The primary key must be set as an array');
+        }
+
 
         // autodetect row class
         if (!$this->rowClass) {
@@ -131,13 +135,9 @@ abstract class Table implements TableInterface
      * Get primary key(s)
      *
      * @return array
-     * @throws InvalidPrimaryKeyException if primary key was not set or has wrong format
      */
     public function getPrimaryKey(): array
     {
-        if (!is_array($this->primary)) {
-            throw new InvalidPrimaryKeyException('The primary key must be set as an array');
-        }
         return $this->primary;
     }
 
@@ -212,9 +212,9 @@ abstract class Table implements TableInterface
      *
      * @return array
      */
-    public static function filterColumns(array $data): array
+    public function filterColumns(array $data): array
     {
-        return array_intersect_key($data, array_flip(static::getColumns()));
+        return array_intersect_key($data, array_flip($this->getColumns()));
     }
 
     /**
@@ -225,22 +225,21 @@ abstract class Table implements TableInterface
      *
      * @return RowInterface[] of rows results in FETCH_CLASS mode
      */
-    protected static function fetch(string $sql, array $params = []): array
+    protected function fetch(string $sql, array $params = []): array
     {
-        $self = static::getInstance();
-        return DbProxy::fetchObjects($sql, $params, $self->rowClass);
+        return DbProxy::fetchObjects($sql, $params, $this->rowClass);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      *
      * @throws DbException
      * @throws InvalidPrimaryKeyException if wrong count of values passed
      * @throws InvalidArgumentException
      */
-    public static function find(...$keys): array
+    public function find(...$keys): array
     {
-        $keyNames = array_values(static::getInstance()->getPrimaryKey());
+        $keyNames = array_values($this->getPrimaryKey());
         $whereList = [];
 
         foreach ($keys as $keyValues) {
@@ -261,19 +260,17 @@ abstract class Table implements TableInterface
                 $whereList[] = $keyValues;
             }
         }
-        return static::findWhere(...$whereList);
+        return $this->findWhere(...$whereList);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      *
      * @throws InvalidArgumentException
      * @throws Exception\DbException
      */
-    public static function findWhere(...$where): array
+    public function findWhere(...$where): array
     {
-        $self = static::getInstance();
-
         $whereParams = [];
 
         if (count($where) === 2 && is_string($where[0])) {
@@ -290,17 +287,17 @@ abstract class Table implements TableInterface
                             $keyValue
                         );
                         $keyValue = implode(',', $keyValue);
-                        $whereAndTerms[] = $self->name . '.' . $keyName . ' IN (' . $keyValue . ')';
+                        $whereAndTerms[] = $this->name . '.' . $keyName . ' IN (' . $keyValue . ')';
                     } elseif (null === $keyValue) {
-                        $whereAndTerms[] = $self->name . '.' . $keyName . ' IS NULL';
+                        $whereAndTerms[] = $this->name . '.' . $keyName . ' IS NULL';
                     } elseif (
                         is_string($keyValue)
-                        && ('%' === substr($keyValue, 0, 1) || '%' === substr($keyValue, -1, 1))
+                        && (str_starts_with($keyValue, '%') || str_ends_with($keyValue, '%'))
                     ) {
-                        $whereAndTerms[] = $self->name . '.' . $keyName . ' LIKE ?';
+                        $whereAndTerms[] = $this->name . '.' . $keyName . ' LIKE ?';
                         $whereParams[] = $keyValue;
                     } else {
-                        $whereAndTerms[] = $self->name . '.' . $keyName . ' = ?';
+                        $whereAndTerms[] = $this->name . '.' . $keyName . ' = ?';
                         $whereParams[] = $keyValue;
                     }
                     if (!is_scalar($keyValue) && !is_null($keyValue)) {
@@ -319,36 +316,36 @@ abstract class Table implements TableInterface
             );
         }
 
-        return self::fetch($self->select . ' WHERE ' . $whereClause, $whereParams);
+        return self::fetch($this->select . ' WHERE ' . $whereClause, $whereParams);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      *
      * @throws DbException
      * @throws InvalidArgumentException
      * @throws InvalidPrimaryKeyException
      */
-    public static function findRow($primaryKey): ?RowInterface
+    public function findRow(mixed $primaryKey): ?RowInterface
     {
-        $result = static::find($primaryKey);
+        $result = $this->find($primaryKey);
         return current($result) ?: null;
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      *
      * @throws DbException
      * @throws InvalidArgumentException
      */
-    public static function findRowWhere(array $whereList): ?RowInterface
+    public function findRowWhere(array $whereList): ?RowInterface
     {
-        $result = static::findWhere($whereList);
+        $result = $this->findWhere($whereList);
         return current($result) ?: null;
     }
 
     /**
-     * Prepare array for WHERE or SET statements
+     * Prepare an array for WHERE or SET statements
      *
      * @param array $where
      *
@@ -384,50 +381,34 @@ abstract class Table implements TableInterface
      *
      * @return Query\Select
      */
-    public static function select(): Query\Select
+    public function select(): Query\Select
     {
-        $self = static::getInstance();
-
         $select = new Query\Select();
-        $select->select(DbProxy::quoteIdentifier($self->name) . '.*')
-            ->from($self->name, $self->name)
-            ->setFetchType($self->rowClass);
+        $select->select(DbProxy::quoteIdentifier($this->name) . '.*')
+            ->from($this->name, $this->name)
+            ->setFetchType($this->rowClass);
 
         return $select;
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public static function create(array $data = []): RowInterface
-    {
-        $rowClass = static::getInstance()->rowClass;
-        /** @var Row $row */
-        $row = new $rowClass($data);
-        $row->setTable(static::getInstance());
-        return $row;
-    }
-
-    /**
-     * {@inheritdoc}
+     * @inheritDoc
      *
      * @throws Exception\DbException
      */
-    public static function insert(array $data)
+    public function insert(array $data): ?string
     {
-        $self = static::getInstance();
-
-        $data = static::filterColumns($data);
+        $data = $this->filterColumns($data);
 
         if (!count($data)) {
             throw new DbException(
-                "Invalid field names of table `{$self->name}`. Please check use of `insert()` method"
+                "Invalid field names of table `{$this->name}`. Please check use of `insert()` method"
             );
         }
 
-        $table = DbProxy::quoteIdentifier($self->name);
+        $table = DbProxy::quoteIdentifier($this->name);
 
-        $sql = "INSERT INTO $table SET " . implode(',', self::prepareStatement($data));
+        $sql = "INSERT INTO $table SET " . implode(',', $this->prepareStatement($data));
         $result = DbProxy::query($sql, array_values($data));
         if (!$result) {
             return null;
@@ -442,36 +423,34 @@ abstract class Table implements TableInterface
          *
          * If the PDO driver does not support this capability, PDO::lastInsertId() triggers an IM001 SQLSTATE.
          */
-        return DbProxy::handler()->lastInsertId($self->sequence);
+        return DbProxy::handler()->lastInsertId($this->sequence);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      *
      * @throws Exception\DbException
      */
-    public static function update(array $data, array $where): int
+    public function update(array $data, array $where): int
     {
-        $self = static::getInstance();
-
-        $data = static::filterColumns($data);
+        $data = $this->filterColumns($data);
 
         if (!count($data)) {
             throw new DbException(
-                "Invalid field names of table `{$self->name}`. Please check use of `update()` method"
+                "Invalid field names of table `{$this->name}`. Please check use of `update()` method"
             );
         }
 
-        $where = static::filterColumns($where);
+        $where = $this->filterColumns($where);
 
         if (!count($where)) {
             throw new DbException(
-                "Method `Table::update()` can't update all records in the table `{$self->name}`,\n" .
+                "Method `Table::update()` can't update all records in the table `{$this->name}`,\n" .
                 "please use `Db::query()` instead (of cause if you know what are you doing)"
             );
         }
 
-        $table = DbProxy::quoteIdentifier($self->name);
+        $table = DbProxy::quoteIdentifier($this->name);
 
         $sql = "UPDATE $table SET " . implode(',', self::prepareStatement($data))
             . " WHERE " . implode(' AND ', self::prepareStatement($where));
@@ -480,11 +459,11 @@ abstract class Table implements TableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      *
      * @throws DbException
      */
-    public static function delete(array $where): int
+    public function delete(array $where): int
     {
         $self = static::getInstance();
 
@@ -496,15 +475,15 @@ abstract class Table implements TableInterface
         }
 
 
-        $where = static::filterColumns($where);
+        $where = $this->filterColumns($where);
 
         if (!count($where)) {
             throw new DbException(
-                "Invalid field names of table `{$self->name}`. Please check use of `delete()` method"
+                "Invalid field names of table `{$this->name}`. Please check use of `delete()` method"
             );
         }
 
-        $table = DbProxy::quoteIdentifier($self->name);
+        $table = DbProxy::quoteIdentifier($this->name);
 
         $sql = "DELETE FROM $table WHERE " . implode(' AND ', self::prepareStatement($where));
         return DbProxy::query($sql, array_values($where));

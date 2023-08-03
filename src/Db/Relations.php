@@ -168,9 +168,9 @@ class Relations
         /* @var Query\Select $tableTwoSelect */
         $tableTwoSelect = $tableTwoClass::getInstance()::select();
 
-        // check many to many relation
+        // check many-to-many relation
         if (is_int(\array_keys($relations)[0])) {
-            // many to many relation over third table
+            // many-to-many relation over third table
             $modelThree = $relations[0];
 
             // relations between target table and third table
@@ -277,7 +277,7 @@ class Relations
         foreach ($input as $i => $row) {
             $model = '';
             foreach ($row as $key => $value) {
-                if (strpos($key, '__') === 0) {
+                if (str_starts_with($key, '__')) {
                     $model = substr($key, 2);
                     continue;
                 }

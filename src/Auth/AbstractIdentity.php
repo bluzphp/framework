@@ -25,20 +25,20 @@ use Bluz\Db\Row;
 abstract class AbstractIdentity extends Row implements IdentityInterface
 {
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     abstract public function getPrivileges(): array;
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function getId(): ?int
     {
-        return $this->id ? (int)$this->id : null;
+        return $this->id;
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function hasPrivilege(string $module, string $privilege): bool
     {

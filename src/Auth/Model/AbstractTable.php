@@ -48,12 +48,12 @@ abstract class AbstractTable extends Table
     /**
      * @var string Table
      */
-    protected $name = 'auth';
+    protected string $name = 'auth';
 
     /**
      * @var array Primary key(s)
      */
-    protected $primary = ['provider', 'foreignKey'];
+    protected array $primary = ['provider', 'foreignKey'];
 
     /**
      * Get AuthRow

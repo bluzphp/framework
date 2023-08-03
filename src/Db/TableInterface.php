@@ -17,17 +17,10 @@ use Bluz\Db\Exception\InvalidPrimaryKeyException;
 interface TableInterface
 {
     /**
-     * Get Table instance
-     *
-     * @return TableInterface
-     */
-    public static function getInstance();
-
-    /**
      * Get primary key(s)
      *
      * @return array
-     * @throws InvalidPrimaryKeyException if primary key was not set or has wrong format
+     * @throws InvalidPrimaryKeyException if the primary key was not set or has a wrong format
      */
     public function getPrimaryKey(): array;
 
@@ -44,15 +37,6 @@ interface TableInterface
      * @return string
      */
     public function getModel(): string;
-
-    /**
-     * Create Row instance
-     *
-     * @param array $data
-     *
-     * @return RowInterface
-     */
-    public static function create(array $data = []): RowInterface;
 
     /**
      * Fetches rows by primary key.  The argument specifies one or more primary
@@ -83,7 +67,7 @@ interface TableInterface
      *
      * @return RowInterface[]
      */
-    public static function find(...$keys): array;
+    public function find(...$keys): array;
 
     /**
      * Find rows by WHERE
@@ -104,25 +88,25 @@ interface TableInterface
      *
      * @return RowInterface[]
      */
-    public static function findWhere(...$where): array;
+    public function findWhere(...$where): array;
 
     /**
      * Find row by primary key
      *
      * @param mixed $primaryKey
      *
-     * @return RowInterface
+     * @return RowInterface|null
      */
-    public static function findRow($primaryKey): ?RowInterface;
+    public function findRow(mixed $primaryKey): ?RowInterface;
 
     /**
      * Find row by where condition
      *
      * @param array $whereList
      *
-     * @return RowInterface
+     * @return RowInterface|null
      */
-    public static function findRowWhere(array $whereList): ?RowInterface;
+    public function findRowWhere(array $whereList): ?RowInterface;
 
     /**
      * Prepare Db\Query\Select for current table:
@@ -145,26 +129,26 @@ interface TableInterface
      *
      * @return Query\Select
      */
-    public static function select(): Query\Select;
+    public function select(): Query\Select;
 
     /**
      * Insert new record to table and return last insert Id
      *
      * <code>
-     *     Table::insert(['login' => 'Man', 'email' => 'man@example.com'])
+     *     $table->insert(['login' => 'Man', 'email' => 'man@example.com'])
      * </code>
      *
      * @param array $data Column-value pairs
      *
      * @return string|null Primary key or null
      */
-    public static function insert(array $data);
+    public function insert(array $data): ?string;
 
     /**
      * Updates existing rows
      *
      * <code>
-     *     Table::update(['login' => 'Man', 'email' => 'man@domain.com'], ['id' => 42])
+     *     $table->update(['login' => 'Man', 'email' => 'man@domain.com'], ['id' => 42])
      * </code>
      *
      * @param array $data Column-value pairs.
@@ -172,18 +156,18 @@ interface TableInterface
      *
      * @return integer The number of rows updated
      */
-    public static function update(array $data, array $where): int;
+    public function update(array $data, array $where): int;
 
     /**
      * Deletes existing rows
      *
      * <code>
-     *     Table::delete(['login' => 'Man'])
+     *     $table->deleteWhere(['login' => 'Man'])
      * </code>
      *
      * @param array $where An array of SQL WHERE clause(s)
      *
      * @return integer The number of rows deleted
      */
-    public static function delete(array $where): int;
+    public function delete(array $where): int;
 }

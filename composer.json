@@ -14,7 +14,6 @@
     "bluzphp/container": "~1.1",
     "laminas/laminas-diactoros": "~2.24",
     "laminas/laminas-httphandlerrunner": "~2.5",
-    "phpmailer/phpmailer": "~6.7",
     "psr/log": "^2.0",
     "symfony/cache": "~6.2",
     "symfony/validator": "^6.2"

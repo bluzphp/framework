@@ -28,7 +28,7 @@ class Insert extends AbstractBuilder
     protected string $table;
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      *
      * @param null $sequence
      *
@@ -44,7 +44,7 @@ class Insert extends AbstractBuilder
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      *
      * @return string
      */

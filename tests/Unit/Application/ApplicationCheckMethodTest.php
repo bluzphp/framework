@@ -74,7 +74,7 @@ class ApplicationCheckMethodTest extends Unit
     /**
      * @return array
      */
-    public function providerForPass(): array
+    public static function providerForPass(): array
     {
         return [
             ['methods/get', RequestMethod::GET],
@@ -86,7 +86,7 @@ class ApplicationCheckMethodTest extends Unit
     /**
      * @return array
      */
-    public function providerForFail(): array
+    public static function providerForFail(): array
     {
         return [
             ['methods/get', RequestMethod::POST],

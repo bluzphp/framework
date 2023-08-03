@@ -43,7 +43,6 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
      * @param string $id
      *
      * @return string
-     * @throws \Psr\Cache\InvalidArgumentException
      */
     public function read($id): string
     {
@@ -57,7 +56,6 @@ class Cache extends AbstractAdapter implements \SessionHandlerInterface
      * @param string $data
      *
      * @return bool
-     * @throws \Psr\Cache\InvalidArgumentException
      */
     public function write($id, $data): bool
     {

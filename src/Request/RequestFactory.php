@@ -27,7 +27,7 @@ use Laminas\Diactoros\ServerRequestFilter\FilterServerRequestInterface;
 class RequestFactory extends ServerRequestFactory
 {
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public static function fromGlobals(
         array $server = null,

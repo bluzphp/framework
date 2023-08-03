@@ -79,7 +79,7 @@ class ApplicationCheckAcceptTest extends Unit
     /**
      * @return array
      */
-    public function providerForPass(): array
+    public static function providerForPass(): array
     {
         return [
             ['accept/any', ''],
@@ -103,7 +103,7 @@ class ApplicationCheckAcceptTest extends Unit
     /**
      * @return array
      */
-    public function providerForFail(): array
+    public static function providerForFail(): array
     {
         return [
             ['accept/html', ''],

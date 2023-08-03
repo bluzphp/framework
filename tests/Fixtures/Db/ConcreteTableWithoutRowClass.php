@@ -21,6 +21,6 @@ use Bluz\Db\Table;
  */
 class ConcreteTableWithoutRowClass extends Table
 {
-    protected $name = 'foo';
-    protected $primary = ['bar', 'baz'];
+    protected string $name = 'foo';
+    protected array $primary = ['bar', 'baz'];
 }

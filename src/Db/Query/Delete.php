@@ -30,7 +30,7 @@ class Delete extends AbstractBuilder
     protected string $table;
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      *
      * @return string
      */

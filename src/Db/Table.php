@@ -51,12 +51,12 @@ abstract class Table implements TableInterface
     /**
      * @var string the table name
      */
-    protected string $name;
+    protected string $name = '';
 
     /**
      * @var string the model name
      */
-    protected string $model;
+    protected string $model = '';
 
     /**
      * @var array table meta
@@ -81,10 +81,11 @@ abstract class Table implements TableInterface
     /**
      * @var string row class name
      */
-    protected string $rowClass;
+    protected string $rowClass = '';
 
     /**
      * Create and initialize Table instance
+     * @throws InitializationException
      */
     public function __construct()
     {
@@ -99,9 +100,6 @@ abstract class Table implements TableInterface
         // check primary key(s)
         if (!$this->primary) {
             throw new InitializationException('The table primary key(s) should be set before initialization');
-        }
-        if (!is_array($this->primary)) {
-            throw new InvalidPrimaryKeyException('The primary key must be set as an array');
         }
 
 

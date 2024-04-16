@@ -26,7 +26,7 @@ class DbTest extends Unit
     /**
      * @var Db\Db
      */
-    protected $db;
+    protected Db\Db $db;
 
     /**
      * setUp

@@ -53,9 +53,8 @@ class RowTest extends Unit
         $this->row->email = 'foo';
 
         codecept_debug($this->row);
-
         $builder = Validation::createValidatorBuilder();
-        $builder->enableAnnotationMapping();
+        $builder->enableAttributeMapping();
         $validator = $builder->getValidator();
         $errors = $validator->validate($this->row);
         codecept_debug($errors->count());

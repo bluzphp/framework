@@ -34,7 +34,7 @@ abstract class AbstractTable extends Table
     /**
      * Providers
      *  - equals - login + password
-     *  - token  - token with ttl
+     *  - token - token with ttl
      *  - cookie - cookie token with ttl
      */
     public const PROVIDER_COOKIE = 'cookie';
@@ -66,8 +66,8 @@ abstract class AbstractTable extends Table
      * @throws DbException
      * @throws InvalidPrimaryKeyException
      */
-    public static function getAuthRow(string $provider, string $foreignKey): ?RowInterface
+    public function getAuthRow(string $provider, string $foreignKey): ?RowInterface
     {
-        return static::findRow(['provider' => $provider, 'foreignKey' => $foreignKey]);
+        return $this->findRow(['provider' => $provider, 'foreignKey' => $foreignKey]);
     }
 }

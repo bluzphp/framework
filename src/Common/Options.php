@@ -98,7 +98,7 @@ trait Options
      * Setup, check and init options
      *
      * Requirements
-     * - options must be a array
+     * - options must be an array
      * - options can be null
      *
      * @param array|null $options

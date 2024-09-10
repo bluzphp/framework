@@ -7,6 +7,7 @@
 
 namespace Bluz\Tests\Unit\Auth;
 
+use Bluz\Auth\Model\AbstractTable as AuthTable;
 use Bluz\Proxy\Auth;
 use Bluz\Proxy\Session;
 use Bluz\Tests\Fixtures\Models\Auth\Table;
@@ -77,7 +78,8 @@ class AuthTest extends Unit
      */
     public function testGetAuthRow()
     {
-        $authRow = Table::getInstance()::getAuthRow(Table::PROVIDER_EQUALS, 'admin');
+        $authRow = Table::getInstance()
+            ->getAuthRow(AuthTable::PROVIDER_EQUALS, 'admin');
 
         self::assertInstanceOf(AbstractRow::class, $authRow);
     }

@@ -78,7 +78,7 @@ class QueryTest extends Unit
             ->setParams([':month1' => 2, ':month2' => 4]);
 
         $check = 'SELECT p.*'
-            . ' FROM `pages` AS `p`'
+            . ' FROM "pages" AS "p"'
             . ' GROUP BY p.userId, MONTH(p.created)'
             . ' HAVING ((MONTH(p.created) = :month1) OR (MONTH(p.created) = :month2)) AND (p.userId <> 0)';
 
@@ -99,7 +99,7 @@ class QueryTest extends Unit
             ->join('u', 'pages', 'p', 'p.userId = u.id');
 
         $check = 'SELECT u.*, p.*'
-            . ' FROM `users` AS `u` INNER JOIN `pages` AS `p` ON p.userId = u.id';
+            . ' FROM "users" AS "u" INNER JOIN "pages" AS "p" ON p.userId = u.id';
 
         self::assertEquals($builder->getQuery(), $check);
     }
@@ -116,7 +116,7 @@ class QueryTest extends Unit
             ->rightJoin('u', 'pages', 'p', 'p.userId = u.id');
 
         $check = 'SELECT u.*, p.*'
-            . ' FROM `users` AS `u` RIGHT JOIN `pages` AS `p` ON p.userId = u.id';
+            . ' FROM "users" AS "u" RIGHT JOIN "pages" AS "p" ON p.userId = u.id';
 
         self::assertEquals($builder->getQuery(), $check);
     }
@@ -134,7 +134,7 @@ class QueryTest extends Unit
             ->where('u.id = ? OR u.id = ?', 4, 5);
 
         $check = 'SELECT u.*, p.*'
-            . ' FROM `users` AS `u` INNER JOIN `pages` AS `p` ON p.userId = u.id'
+            . ' FROM "users" AS "u" INNER JOIN "pages" AS "p" ON p.userId = u.id'
             . ' WHERE u.id = ? OR u.id = ?';
 
         self::assertEquals($check, (string)$builder);
@@ -150,7 +150,7 @@ class QueryTest extends Unit
             ->insert('test')
             ->set('name', 'example')
             ->set('email', 'example@domain.com');
-        $check = 'INSERT INTO `test` SET `name` = "example", `email` = "example@domain.com"';
+        $check = 'INSERT INTO "test" SET `name` = "example", `email` = "example@domain.com"';
 
         self::assertEquals($builder->getQuery(), $check);
         self::assertGreaterThan(0, $builder->execute());
@@ -170,7 +170,7 @@ class QueryTest extends Unit
                 ]
             )
             ->where('`email` = ?', 'example@domain.com');
-        $check = 'UPDATE `test` SET `status` = "disable" WHERE `email` = "example@domain.com"';
+        $check = 'UPDATE "test" SET `status` = "disable" WHERE `email` = "example@domain.com"';
 
         self::assertEquals($builder->getQuery(), $check);
         self::assertEquals(0, $builder->execute());
@@ -186,7 +186,7 @@ class QueryTest extends Unit
             ->delete('test')
             ->where('`email` = ?', 'example@domain.com')
             ->limit(1);
-        $check = 'DELETE FROM `test` WHERE `email` = "example@domain.com" LIMIT 1';
+        $check = 'DELETE FROM "test" WHERE `email` = "example@domain.com" LIMIT 1';
 
         self::assertEquals($check, $builder->getQuery());
         self::assertEquals(0, $builder->execute());

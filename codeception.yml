@@ -14,7 +14,7 @@ extensions:
 modules:
     config:
         Db:
-            dsn: 'mysql:host=localhost;dbname=bluz'
+            dsn: 'sqlite:tests/framework.sqlite'
             user: 'root'
             password: ''
             dump: tests/_data/dump.sql

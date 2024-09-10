@@ -122,7 +122,7 @@ trait Helper
     {
         $class = static::class;
 
-        // create store of helpers for this class
+        // create a store of helpers for this class
         static::$helpers[$class] ??= [];
 
         $helper = include $path;

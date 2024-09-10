@@ -130,12 +130,28 @@ class Db
         try {
             $this->checkConnect();
             $this->log('Connect to ' . $this->connect['host']);
-            $this->handler = new PDO(
-                $this->connect['type'] . ':host=' . $this->connect['host'] . ';dbname=' . $this->connect['name'],
-                $this->connect['user'],
-                $this->connect['pass'],
-                $this->connect['options']
-            );
+
+            switch ($this->connect['type']) {
+                case 'sqlite':
+                    $pdoOptions = [
+                        $this->connect['type'] . ':' . $this->connect['name']
+                    ];
+                    break;
+                case 'mysql':
+                case 'pgsql':
+                default:
+                    $pdoOptions = [
+                        $this->connect['type'] .
+                        ':host=' . $this->connect['host'] .
+                        ';dbname=' .  $this->connect['name'],
+                        $this->connect['user'],
+                        $this->connect['pass'],
+                        $this->connect['options']
+                    ];
+                    break;
+            }
+
+            $this->handler = new PDO(...$pdoOptions);
 
             foreach ($this->attributes as $attribute => $value) {
                 $this->handler->setAttribute($attribute, $value);
